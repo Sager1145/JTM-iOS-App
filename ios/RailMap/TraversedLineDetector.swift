@@ -35,6 +35,42 @@ final class TraversedLineDetector {
     private var cache: [String: CachedResult] = [:]
     private var task: Task<Void, Never>?
 
+    /// Selected route identity is already known when the map receives a ride.
+    /// Publishing it never starts or restarts an edge-index geometry match.
+    func publishSelected(rides: [RiddenRouteStore.DrawnRide]) {
+        task?.cancel()
+        task = nil
+        var lines: [String: [Statistics.TraversedLine]] = [:]
+        for ride in rides {
+            let selected = Self.selectedLines(ride)
+            if !selected.isEmpty { lines[ride.id] = selected }
+            else if let hit = cache[ride.id], hit.digest == Self.detectionDigest(ride) {
+                lines[ride.id] = hit.lines
+            }
+        }
+        RideStatusCenter.shared.publish(traversedLines: lines)
+    }
+
+    private nonisolated static func selectedLines(_ ride: RiddenRouteStore.DrawnRide) -> [Statistics.TraversedLine] {
+        var seenSelections: [Int: [RiddenRouteStore.PhysicalRouteSelection]] = [:]
+        var positions: [String: Int] = [:]
+        var lines: [Statistics.TraversedLine] = []
+        for segment in ride.segments {
+            guard let selected = segment.physicalRoute,
+                  !(seenSelections[segment.segmentIndex] ?? []).contains(selected) else { continue }
+            seenSelections[segment.segmentIndex, default: []].append(selected)
+            for line in selected.lines {
+                if let index = positions[line.lineID] { lines[index].km += line.km }
+                else {
+                    positions[line.lineID] = lines.count
+                    lines.append(.init(name: line.name, operatorName: line.operatorName,
+                                       km: line.km, selectedLineID: line.lineID))
+                }
+            }
+        }
+        return lines
+    }
+
     /// Re-detect whatever changed in `rides` and publish the full dictionary.
     ///
     /// Unchanged rides (same id, same `geometryDigest`) are served from
@@ -49,7 +85,12 @@ final class TraversedLineDetector {
         var stale: [RiddenRouteStore.DrawnRide] = []
         var reusable: [String: [Statistics.TraversedLine]] = [:]
         for ride in rides {
-            if let hit = cache[ride.id], hit.digest == Self.detectionDigest(ride) {
+            let selected = Self.selectedLines(ride)
+            if !selected.isEmpty && ride.segments.allSatisfy({ $0.physicalRoute != nil }) {
+                let digest = Self.detectionDigest(ride)
+                cache[ride.id] = CachedResult(digest: digest, lines: selected)
+                reusable[ride.id] = selected
+            } else if let hit = cache[ride.id], hit.digest == Self.detectionDigest(ride) {
                 reusable[ride.id] = hit.lines
             } else {
                 stale.append(ride)
@@ -73,7 +114,7 @@ final class TraversedLineDetector {
                 }
                 for ride in group {
                     guard !Task.isCancelled else { return }
-                    let features = ride.segments.map { segment in
+                    let features = ride.segments.filter { $0.physicalRoute == nil }.map { segment in
                         Statistics.RouteFeature(
                             lines: [segment.sourceCoordinates], hasGeometry: true,
                             // The route the train runs, not the stretch the
@@ -83,7 +124,10 @@ final class TraversedLineDetector {
                     }
                     let entry = Statistics.collectTrainStatsEntry(
                         features: features, index: index, rideDate: ride.daySpan.date)
-                    let lines = Statistics.traversedLines(edges: entry.edges, index: index)
+                    let selected = Self.selectedLines(ride)
+                    let names = Set(selected.map { TrainServiceBranding.canonicalLineName($0.name) })
+                    let lines = selected + Statistics.traversedLines(edges: entry.edges, index: index)
+                        .filter { !names.contains(TrainServiceBranding.canonicalLineName($0.name)) }
                     fresh[ride.id] = (Self.detectionDigest(ride), lines)
                 }
             }

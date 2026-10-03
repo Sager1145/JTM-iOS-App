@@ -59,6 +59,10 @@ function main() {
 
   execFileSync("python3", [path.join(APP_DIR, "scripts", "railway", "build-jp-station-english.py"), "--check"],
     { stdio: options.quiet ? "pipe" : "inherit" });
+  execFileSync("python3", [path.join(APP_DIR, "scripts", "railway", "build-station-english.py"), "--check", "--require-english"],
+    { stdio: options.quiet ? "pipe" : "inherit" });
+  execFileSync("python3", [path.join(APP_DIR, "scripts", "railway", "build-station-names.py"), "--check"],
+    { stdio: options.quiet ? "pipe" : "inherit" });
   log(`Building ${path.relative(APP_DIR, options.outFile)}${options.geometry ? "" : " (no geometry)"}`);
   const counts = buildDatabase({ ...options, log });
 

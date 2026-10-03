@@ -1,6 +1,7 @@
 import Foundation
 import Observation
 import RailCore
+import RailPresentation
 
 /// Owner of the 里程統計 numbers.
 ///
@@ -93,7 +94,7 @@ final class MileageStatisticsStore {
     /// the distributions, the ranked lists, the superlatives. See
     /// ``PassportStatistics``, which is where the reasoning lives.
     ///
-    /// All-time for the region in scope, like ``view``'s `overall` and unlike
+    /// For the selected year and region, like ``view``'s `overall` and unlike
     /// its `daily`: the day slice answers a question the reader asked in the
     /// panel header, and these cards answer the passport's own. So it is
     /// computed once per load and left alone by ``selectDate(_:)``.
@@ -106,12 +107,96 @@ final class MileageStatisticsStore {
     /// Deliberately not shared with `RailWorkspaceView.selectedDate`.
     private(set) var selectedDate: String = Dates.allDates
 
-    /// The distribution card's month/weekday year. `nil` tracks the current
-    /// Gregorian year; the share poster reads the same choice as the screen.
-    private(set) var selectedRhythmYear: Int?
+    /// Passport's time range. `nil` includes every year and undated rides.
+    private(set) var selectedYear: Int?
 
-    func selectRhythmYear(_ year: Int?) {
-        selectedRhythmYear = year
+    enum Classification: String, CaseIterable {
+        case date, journeyGroup
+    }
+
+    private(set) var classification: Classification = .date
+    private(set) var dateSelection = StatisticsDateSelection()
+    private(set) var selectedJourneyGroupID: String?
+
+    func selectClassification(_ mode: Classification) {
+        guard mode != classification else { return }
+        classification = mode
+        selectedJourneyGroupID = nil
+        dateSelection.clear()
+        selectedDate = Dates.allDates
+        invalidateScope()
+    }
+
+    func selectJourneyGroup(_ groupID: String?) {
+        guard groupID != selectedJourneyGroupID || classification != .journeyGroup else { return }
+        classification = .journeyGroup
+        selectedJourneyGroupID = groupID
+        dateSelection.clear()
+        selectedDate = Dates.allDates
+        invalidateScope()
+    }
+
+    func includesJourneyGroup(_ train: Train) -> Bool {
+        guard let selectedJourneyGroupID else { return true }
+        return train.journeyGroup?.id == selectedJourneyGroupID
+    }
+
+    func includesDate(_ train: Train) -> Bool {
+        guard !dateSelection.isEmpty else { return true }
+        return dateSelection.contains(Dates.trainDate(
+            Dates.Train(id: train.id, date: train.date, stops: [])))
+    }
+
+    func tapDate(_ date: String, availableDates: Set<String>) {
+        var selection = dateSelection
+        selection.tap(date, availableDates: availableDates)
+        guard selection != dateSelection else { return }
+        classification = .date
+        selectedJourneyGroupID = nil
+        dateSelection = selection
+        // The day ticket remains meaningful only for a single-day scope.
+        selectedDate = selection.start == selection.end
+            ? selection.start ?? Dates.allDates : Dates.allDates
+        invalidateScope()
+    }
+
+    func clearDates() {
+        guard !dateSelection.isEmpty || selectedDate != Dates.allDates else { return }
+        dateSelection.clear()
+        selectedDate = Dates.allDates
+        invalidateScope()
+    }
+
+    func selectYear(_ year: Int?) {
+        guard year != selectedYear || !dateSelection.isEmpty || selectedDate != Dates.allDates else { return }
+        selectedYear = year
+        dateSelection.clear()
+        selectedDate = Dates.allDates
+        invalidateScope()
+    }
+
+    private func invalidateScope() {
+        task?.cancel()
+        passportTask?.cancel()
+        scopeTask?.cancel()
+        servedFingerprint = nil
+        context = nil
+        contextFingerprint = nil
+        availableDates = []
+        view = nil
+        passport = nil
+        progress = Progress(stage: .aggregating)
+        state = .loading
+    }
+
+    static func year(of train: Train) -> Int? {
+        let date = Dates.trainDate(Dates.Train(id: train.id, date: train.date, stops: []))
+        return date == Dates.undated ? nil : Int(date.prefix(4))
+    }
+
+    func includesYear(_ train: Train) -> Bool {
+        guard let selectedYear else { return true }
+        return Self.year(of: train) == selectedYear
     }
 
     /// The date buckets the loaded rides actually occupy, in date-bar order.
@@ -422,7 +507,6 @@ final class MileageStatisticsStore {
         lineOperators = [:]
         passport = nil
         progress = nil
-        selectedDate = Dates.allDates
         availableDates = []
         entryCache = [:]
         entryCacheIndexKey = ""

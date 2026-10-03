@@ -216,6 +216,13 @@ final class AppLocalization {
         naming(region, code)?.stationNameAliases(name, code: code) ?? []
     }
 
+    /// All stored translations and pronunciations for the detail card.
+    func stationNameFields(
+        _ name: String?, code: String? = nil, alternateCode: String? = nil, region: Region? = nil
+    ) -> [Localization.StationNameField] {
+        naming(region, code)?.stationNameFields(name, code: code, alternateCode: alternateCode) ?? []
+    }
+
     /// `I18N.nameReadings` — the enabled readings joined with `" / "`.
     func nameReadings(_ name: String?, code: String? = nil, region: Region? = nil) -> String {
         naming(region, code)?.nameReadings(name, code: code) ?? ""

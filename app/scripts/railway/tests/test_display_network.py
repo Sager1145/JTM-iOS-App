@@ -1413,6 +1413,44 @@ class DisplayNetworkTests(unittest.TestCase):
                          if drawn["lineKey"] == "us|us-test"]
             self.assertEqual(fragments[0]["withheld"], [])
 
+    def test_reviewed_display_overrides_anchor_plain_and_embedded_chains(self):
+        start, source_middle, end = [139.0, 35.0], [139.01, 35.0], [139.02, 35.0]
+        display_middle = [139.01, 35.001]
+        display_points = [start, [139.005, 35.001], display_middle, end]
+        line = {
+            "id": "override", "name": "Override", "operator": "Test Rail",
+            "rank": 0, "color": "#123456",
+            "stations": [["a", "A", *start], ["b", "B", *source_middle],
+                         ["c", "C", *end]],
+            "segments": [[1, 0, [start, source_middle]], [1, 0, [source_middle, end]]],
+            "displayStationCoordinates": {"b": display_middle},
+            "displayIntervalCoordinates": {"0": display_points[:3],
+                                           "1": display_points[2:]},
+        }
+        package = {"format": "compact-v1", "version": "test", "country": "JP",
+                   "lines": [line]}
+        for embedded in (False, True):
+            with self.subTest(embedded=embedded), tempfile.TemporaryDirectory() as root:
+                rail, out = Path(root) / "rail", Path(root) / "out"
+                rail.mkdir()
+                for region, copy in self.region_packages(package, "jp").items():
+                    (rail / f"{region}-2025.json").write_text(json.dumps(copy))
+                source_bytes = (rail / "jp-2025.json").read_bytes()
+                part = (["override", 0, -1, -1, 4, 2000, "complex", display_points, []]
+                        if embedded else ["override", 0, 0, 1, 4, 2000, None, None, []])
+                (rail / "display-lanes.json").write_text(json.dumps({
+                    "format": display_network.DISPLAY_LANES_FORMAT,
+                    "byRegion": {"jp": []}, "partsByRegion": {"jp": [part]},
+                }))
+                display_network.build(rail, out)
+                payload = self.load_region_payload(out, "jp")
+                station = next(s for s in payload["stations"] if s["stationCode"] == "b")
+                self.assertEqual([station["lon"], station["lat"]], display_middle)
+                self.assertEqual(station["slot"], [0, 2])
+                parts = payload["lines"][0]["parts"]
+                self.assertIn(display_middle, [point for part in parts for point in part])
+                self.assertEqual((rail / "jp-2025.json").read_bytes(), source_bytes)
+
     def test_display_derivative_preserves_shared_station_anchors_and_geometry(self):
         a = self.line("a", "commuter", ("shared", -71.0, 42.0), [
             [-71.0, 42.0], [-70.995, 42.0], [-70.990, 42.0], [-70.985, 42.0],

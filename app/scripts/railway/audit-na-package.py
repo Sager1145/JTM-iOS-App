@@ -51,6 +51,7 @@ from na_profile import (CROSSCHECK_TOLERANCE_M,                    # noqa: E402
 from na_provenance import (SOURCES as OFFICIAL_NETWORK_SOURCES,  # noqa: E402
                            file_sha256)
 from na_release import release_locks
+import na_geo
 
 EARTH_R = 6_371_008.8
 
@@ -515,10 +516,24 @@ def audit_line(line, country, found, verified_official=()):
 
     # -- stations ----------------------------------------------------------
     prefix = ID_PREFIX.get(country)
-    for station in stations:
+    border = line.get('borderConnector') or {}
+    endpoint_countries = border.get('stationCountries') or []
+    valid_border = bool(
+        border.get('sourceLineId') and border.get('evidence')
+        and isinstance(border.get('sourceInterval'), int)
+        and border['sourceInterval'] >= 0
+        and len(stations) == 2 and len(segments) == 1
+        and len(endpoint_countries) == 2
+        and set(endpoint_countries) == {'us', 'ca'}
+        and endpoint_countries[0] == str(country).lower())
+    if border and not valid_border:
+        found.add('ERROR', 'station.borderContract', country, lid,
+                  'border connector lacks exact surveyed-interval ownership evidence')
+    for index, station in enumerate(stations):
         sid, name = station[0], station[1]
         seen_ids[sid] += 1
-        if prefix and not str(sid).startswith(prefix):
+        expected_prefix = endpoint_countries[index] + '-' if valid_border else prefix
+        if expected_prefix and not str(sid).startswith(expected_prefix):
             found.add('ERROR', 'station.prefix', country, lid,
                       'station id "%s" does not name its region' % sid)
         if not str(name).strip():
@@ -685,6 +700,38 @@ def audit_branch_duplicates(package, found):
             drawn = {fold.get(station[0], station[0]) for station in stations}
             if not drawn or not drawn <= trunk_stations:
                 continue
+            # A distinct direction uses its own surveyed platform endpoints.
+            # Station membership alone cannot distinguish it from a short turn.
+            # Require matching source hashes AND measure actual track divergence;
+            # a free-form annotation or fabricated maxDeviation is not an escape.
+            branch = by_id[line_id]
+            reviewed = branch.get('directionSpecificGeometry') or {}
+            source = reviewed.get('source') or {}
+            provenance = ((package.get('geometrySource') or {})
+                          .get('verifiedOfficialNetworks') or {}).get(
+                              branch.get('geometrySource')) or {}
+            declared = bool(
+                reviewed.get('canonicalLineId') == trunk
+                and reviewed.get('canonicalGeometrySource') == by_id[trunk].get('geometrySource')
+                and reviewed.get('geometrySource') == branch.get('geometrySource')
+                and branch.get('geometrySource') != by_id[trunk].get('geometrySource')
+                and len(reviewed.get('evidence') or []) >= 2
+                and source.get('url') == provenance.get('url')
+                and source.get('publisher') == provenance.get('publisher')
+                and source.get('rawSha256') == provenance.get('rawSha256')
+                and source.get('normalizedSha256') == provenance.get('sha256')
+                and re.fullmatch(r'[a-f0-9]{64}', str(source.get('normalizedSha256') or '')))
+            if declared:
+                reference = na_geo.ReferenceIndex()
+                for points in decode_intervals(by_id[trunk]):
+                    reference.add_line(points)
+                displacement = max((reference.nearest(p)[0]
+                                    for points in decode_intervals(branch) for p in points), default=0)
+                if math.isfinite(displacement) and displacement > 30:
+                    found.add('NOTE', 'line.reviewedDirectionalAlignment', country, line_id,
+                              'separate reviewed physical direction differs from trunk by %.1f m'
+                              % displacement, trunk=trunk, metres=round(displacement, 2))
+                    continue
             folded = sorted({station[0] for station in stations
                              if fold.get(station[0], station[0]) != station[0]})
             found.add('ERROR', 'line.branchDuplicatesTrunk', country, line_id,

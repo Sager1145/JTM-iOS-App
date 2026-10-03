@@ -41,11 +41,13 @@ enum AppStrings {
         ("ShellStrings", ShellStrings.table),
         ("DataStrings", DataStrings.table),
         ("EditorStrings", EditorStrings.table),
+        ("RouteGuideStrings", RouteGuideStrings.table),
         ("JourneyStrings", JourneyStrings.table),
         ("StatisticsStrings", StatisticsStrings.table),
         ("TransferGuideStrings", TransferGuideStrings.table),
         ("ClockStrings", ClockStrings.table),
         ("JourneyCompletionStrings", JourneyCompletionStrings.table),
+        ("StationCardStrings", StationCardStrings.table),
     ]
 
     typealias Table = [String: [Localization.Language: String]]

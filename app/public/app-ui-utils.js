@@ -32,13 +32,13 @@ function popupTimesHtml(entries, date, { dateAlways = false } = {}) {
     : "";
 }
 
-function buildStationLinesPopup(pr, train) {
+function buildStationLinesPopup(pr, train, opts = {}) {
   const net = typeof RailMap !== "undefined" ? RailMap._network : null;
   if (!net || typeof RailMapPopup === "undefined") return null;
   const group = stationGroupCode({ properties: pr });
   const members = group ? net.groupMembers.get(String(group)) : null;
   if (!members || !members.length) return null;
-  const model = RailMapPopup.buildPopupModel(net, members[0].stationId);
+  const model = RailMapPopup.buildPopupModel(net, members[0].stationId, null, opts);
   if (!model || !model.lines.length) return null;
   const subhead = popupTimesHtml(
     [
@@ -47,7 +47,7 @@ function buildStationLinesPopup(pr, train) {
     ],
     train ? dateLabel(getTrainDate(train)) : "",
   );
-  return RailMapPopup.stationPopupHtml(model, { subhead });
+  return RailMapPopup.stationPopupHtml(model, { ...opts, subhead });
 }
 
 function buildStopPopup(stopFeature, train) {
@@ -55,12 +55,10 @@ function buildStopPopup(stopFeature, train) {
   const stopTypeLabel = STOP_TYPES.includes(p.stop_type)
     ? I18N.t(`stoptype.${p.stop_type}`)
     : p.stop_type;
-  return popupHtml(`${train.number || ""}`, [
+  const trainInfo = popupHtml(`${train.number || ""}`, [
     [I18N.t("popup.trainId"), train.id],
     [I18N.t("popup.typeCompany"), trainTypeCompanyLabel(train) || "-"],
-    // Station name from the readings reference list (kana / romaji / Chinese
-    // per the 顯示 toggles), each reading stacked under the name.
-    [I18N.t("popup.station"), stationNameCellHtml(p.name, p.n02_station_code)],
+    [I18N.t("popup.station"), I18N.stationName(p.name, p.n02_station_code)],
     [I18N.t("popup.arrival"), p.arrival || "-"],
     [I18N.t("popup.departure"), p.departure || "-"],
     [I18N.t("popup.stopType"), stopTypeLabel],
@@ -89,6 +87,27 @@ function buildStopPopup(stopFeature, train) {
       p.source || I18N.t("popup.sourceStationOverlay"),
     ],
   ]);
+  let stationInfo = buildStationLinesPopup(p, train, { detailed: true });
+  if (!stationInfo && typeof RailMapPopup !== "undefined") {
+    // A recorded stop may have no platform in the loaded network. Its own
+    // official names and surveyed location remain useful without inventing lines.
+    const coordinate = stopFeature.geometry && stopFeature.geometry.type === "Point"
+      ? stopFeature.geometry.coordinates : [];
+    const code = p.n02_station_code || stationGroupCode(stopFeature);
+    const model = {
+      name: I18N.stationName(p.name, code), nameRoma: "", readings: [], lines: [],
+      details: {
+        rawName: p.name || "", code: stationGroupCode(stopFeature) || code,
+        country: train.region || train.country ||
+          (typeof activeCountry === "string" ? activeCountry : ""),
+        lon: coordinate[0], lat: coordinate[1],
+        names: typeof I18N.stationNames === "function"
+          ? I18N.stationNames(p.name, code, stationGroupCode(stopFeature)) : [],
+      },
+    };
+    stationInfo = RailMapPopup.stationPopupHtml(model, { detailed: true });
+  }
+  return `<div class="rp-stop-details">${stationInfo || ""}${trainInfo}</div>`;
 }
 
 function routeSectionForSegment(train, p) {

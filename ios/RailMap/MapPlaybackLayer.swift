@@ -275,16 +275,8 @@ final class MapPlaybackLayer {
         for index in renderedDoneCount..<done.count {
             let trail = done[index]
             guard trail.coords.count >= 2 else { continue }
-            let strideBy = max(1, trail.coords.count / 64)
-            var sampled = Swift.stride(
-                from: 0, to: trail.coords.count, by: strideBy
-            ).map { trail.coords[$0] }
-            if sampled.last != trail.coords.last, let last = trail.coords.last {
-                sampled.append(last)
-            }
-            guard sampled.count >= 2 else { continue }
             let line = MKPolyline(
-                coordinates: sampled.map(\.clLocation), count: sampled.count)
+                coordinates: trail.coords.map(\.clLocation), count: trail.coords.count)
             let styleKey = "playback-done|\(index)"
             line.title = styleKey
             overlayStyles[styleKey] = .init(
@@ -315,7 +307,11 @@ final class MapPlaybackLayer {
                 let to = indices[position]
                 return TrailStep(
                     runIndex: runIndex,
-                    start: run.coords[from], end: run.coords[to],
+                    run: Playback.Run(
+                        coords: Array(run.coords[from...to]),
+                        cum: run.cum[from...to].map { $0 - run.cum[from] },
+                        total: run.cum[to] - run.cum[from],
+                        offset: run.offset + run.cum[from]),
                     startDistance: run.offset + run.cum[from],
                     endDistance: run.offset + run.cum[to],
                     fraction: Double(position) / denominator)
@@ -347,7 +343,7 @@ final class MapPlaybackLayer {
             let index = completedStepCount
             let step = steps[index]
             guard step.endDistance <= distance else { break }
-            let points = [step.start.clLocation, step.end.clLocation]
+            let points = step.run.coords.map(\.clLocation)
             let line = MKPolyline(coordinates: points, count: points.count)
             let styleKey = "playback|\(trainID ?? "")|\(index)"
             line.title = styleKey
@@ -394,8 +390,15 @@ final class MapPlaybackLayer {
             $0.runIndex == currentRun
                 && $0.startDistance <= snapshot.frame.distance
                 && $0.endDistance > snapshot.frame.distance
-        }), step.start != head else { return }
-        let points = [step.start.clLocation, head.clLocation]
+        }), step.run.coords.first != head else { return }
+        var coordinates = Playback.trailCoordinates(
+            in: step.run, fromDistance: step.startDistance,
+            throughDistance: snapshot.frame.distance)
+        // Use the playhead's exact endpoint; equivalent interpolations from a
+        // chunk-local measure can differ by a floating-point rounding step.
+        guard coordinates.count >= 2 else { return }
+        coordinates[coordinates.count - 1] = head
+        let points = coordinates.map(\.clLocation)
         let line = MKPolyline(coordinates: points, count: points.count)
         let styleKey = "playback-partial|\(trainID ?? "")"
         line.title = styleKey
@@ -467,8 +470,7 @@ final class MapPlaybackLayer {
 
     private struct TrailStep {
         let runIndex: Int
-        let start: Coordinate
-        let end: Coordinate
+        let run: Playback.Run
         let startDistance: Double
         let endDistance: Double
         let fraction: Double

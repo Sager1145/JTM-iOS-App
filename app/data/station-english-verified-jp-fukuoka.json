@@ -1,0 +1,1181 @@
+{
+  "schema": "station-english-evidence/1",
+  "countries": [
+    "jp"
+  ],
+  "packageVersion": "2025.5.1",
+  "sources": {
+    "route-en.html": {
+      "url": "https://subway.city.fukuoka.lg.jp/eng/route/",
+      "finalUrl": "https://subway.city.fukuoka.lg.jp/eng/route/",
+      "retrievedAt": "2026-10-01T02:35:47.437890+00:00",
+      "sha256": "dcf8e7477bed3e3a8220488f00e65ccc0749f75fc5573f0fd98d9211438909e4",
+      "bytes": 11921,
+      "contentType": "text/html; charset=UTF-8"
+    },
+    "route-map.jpg": {
+      "url": "https://subway.city.fukuoka.lg.jp/eng/route/img/map.jpg",
+      "finalUrl": "https://subway.city.fukuoka.lg.jp/eng/route/img/map.jpg",
+      "retrievedAt": "2026-10-01T02:35:49.009579+00:00",
+      "sha256": "0c6f63931b3d2fe3d1244919a3b4b8eb58317d10b6d17f16d6411fa982d75e55",
+      "bytes": 1122857,
+      "contentType": "image/jpeg"
+    },
+    "route-map.pdf": {
+      "url": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "finalUrl": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+      "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+      "bytes": 4799701,
+      "contentType": "application/pdf"
+    },
+    "kushida.html": {
+      "url": "https://subway.city.fukuoka.lg.jp/eki/stations/kushida.php",
+      "finalUrl": "https://subway.city.fukuoka.lg.jp/eki/stations/kushida.php",
+      "retrievedAt": "2026-10-01T02:35:51.790570+00:00",
+      "sha256": "876d47d42b1125bb47aba330b32f49572b8e13a210599bef7fac5b014f4f9a4f",
+      "bytes": 19726,
+      "contentType": "text/html; charset=UTF-8"
+    },
+    "new-station-name.pdf": {
+      "url": "https://subway.city.fukuoka.lg.jp/subway_webapp/files/uploads/%E4%B8%83%E9%9A%88%E7%B7%9A%E6%96%B0%E9%A7%85%E5%90%8D%E7%A7%B0.pdf",
+      "finalUrl": "https://subway.city.fukuoka.lg.jp/subway_webapp/files/uploads/%E4%B8%83%E9%9A%88%E7%B7%9A%E6%96%B0%E9%A7%85%E5%90%8D%E7%A7%B0.pdf",
+      "retrievedAt": "2026-10-01T02:35:52.897691+00:00",
+      "sha256": "7724131da5af735f8c6dfd8f6f792bd0467737735a59d8c1f424710067932fd8",
+      "bytes": 181361,
+      "contentType": "application/pdf"
+    },
+    "home-ja.html": {
+      "url": "https://subway.city.fukuoka.lg.jp/",
+      "finalUrl": "https://subway.city.fukuoka.lg.jp/",
+      "retrievedAt": "2026-10-01T02:36:56.157159+00:00",
+      "sha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+      "bytes": 24941,
+      "contentType": "text/html; charset=UTF-8"
+    },
+    "maidashi.html": {
+      "url": "https://subway.city.fukuoka.lg.jp/eki/stations/maidashi.php",
+      "finalUrl": "https://subway.city.fukuoka.lg.jp/eki/stations/maidashi.php",
+      "retrievedAt": "2026-10-01T02:39:10.223755+00:00",
+      "sha256": "d74dcef3e6cfa1925972dacf542d25d28d6e7b167fb9c0c5c496cb2b5f73d80f",
+      "bytes": 19489,
+      "contentType": "text/html; charset=UTF-8"
+    },
+    "maidashi-title.jpg": {
+      "url": "https://subway.city.fukuoka.lg.jp/eki/stations/img/ttl_maidashi.jpg",
+      "finalUrl": "https://subway.city.fukuoka.lg.jp/eki/stations/img/ttl_maidashi.jpg",
+      "retrievedAt": "2026-10-01T02:39:11.050148+00:00",
+      "sha256": "ba937d0204a31d36ee15696db1b8b4dcc84251c7c1b8b8661cb1c1bc17496988",
+      "bytes": 21185,
+      "contentType": "image/jpeg"
+    }
+  },
+  "byLineStation": {
+    "jp-福岡市-1号線(空港線):009046": {
+      "country": "jp",
+      "lineId": "jp-福岡市-1号線(空港線)",
+      "stationCode": "009046",
+      "operator": "福岡市",
+      "name": "姪浜",
+      "en": "Meinohama",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "K01",
+          "stationNumber": "K01",
+          "officialLineName": "Airport Line",
+          "name": "姪浜",
+          "en": "Meinohama",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/meinohama.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label K01; Japanese home visible content_area area_k",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-1号線(空港線):009053": {
+      "country": "jp",
+      "lineId": "jp-福岡市-1号線(空港線)",
+      "stationCode": "009053",
+      "operator": "福岡市",
+      "name": "室見",
+      "en": "Muromi",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "K02",
+          "stationNumber": "K02",
+          "officialLineName": "Airport Line",
+          "name": "室見",
+          "en": "Muromi",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/muromi.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label K02; Japanese home visible content_area area_k",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-1号線(空港線):009052": {
+      "country": "jp",
+      "lineId": "jp-福岡市-1号線(空港線)",
+      "stationCode": "009052",
+      "operator": "福岡市",
+      "name": "藤崎",
+      "en": "Fujisaki",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "K03",
+          "stationNumber": "K03",
+          "officialLineName": "Airport Line",
+          "name": "藤崎",
+          "en": "Fujisaki",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/fujisaki.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label K03; Japanese home visible content_area area_k",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-1号線(空港線):009045": {
+      "country": "jp",
+      "lineId": "jp-福岡市-1号線(空港線)",
+      "stationCode": "009045",
+      "operator": "福岡市",
+      "name": "西新",
+      "en": "Nishijin",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "K04",
+          "stationNumber": "K04",
+          "officialLineName": "Airport Line",
+          "name": "西新",
+          "en": "Nishijin",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/nishijin.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label K04; Japanese home visible content_area area_k",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-1号線(空港線):009028": {
+      "country": "jp",
+      "lineId": "jp-福岡市-1号線(空港線)",
+      "stationCode": "009028",
+      "operator": "福岡市",
+      "name": "唐人町",
+      "en": "Tojinmachi",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "K05",
+          "stationNumber": "K05",
+          "officialLineName": "Airport Line",
+          "name": "唐人町",
+          "en": "Tojinmachi",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/tojinmachi.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label K05; Japanese home visible content_area area_k",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-1号線(空港線):009031": {
+      "country": "jp",
+      "lineId": "jp-福岡市-1号線(空港線)",
+      "stationCode": "009031",
+      "operator": "福岡市",
+      "name": "大濠公園",
+      "en": "Ohori Park",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "K06",
+          "stationNumber": "K06",
+          "officialLineName": "Airport Line",
+          "name": "大濠公園",
+          "en": "Ohori Park",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/oohori.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label K06; Japanese home visible content_area area_k",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-1号線(空港線):009037": {
+      "country": "jp",
+      "lineId": "jp-福岡市-1号線(空港線)",
+      "stationCode": "009037",
+      "operator": "福岡市",
+      "name": "赤坂",
+      "en": "Akasaka",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "K07",
+          "stationNumber": "K07",
+          "officialLineName": "Airport Line",
+          "name": "赤坂",
+          "en": "Akasaka",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/akasak.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label K07; Japanese home visible content_area area_k",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-1号線(空港線):009026": {
+      "country": "jp",
+      "lineId": "jp-福岡市-1号線(空港線)",
+      "stationCode": "009026",
+      "operator": "福岡市",
+      "name": "天神",
+      "en": "Tenjin",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "K08",
+          "stationNumber": "K08",
+          "officialLineName": "Airport Line",
+          "name": "天神",
+          "en": "Tenjin",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/tenjin.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label K08; Japanese home visible content_area area_k",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-1号線(空港線):009019": {
+      "country": "jp",
+      "lineId": "jp-福岡市-1号線(空港線)",
+      "stationCode": "009019",
+      "operator": "福岡市",
+      "name": "中洲川端",
+      "en": "Nakasu-Kawabata",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "K09",
+          "stationNumber": "K09",
+          "officialLineName": "Airport Line",
+          "name": "中洲川端",
+          "en": "Nakasu-Kawabata",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/nakasu.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label K09; Japanese home visible content_area area_k",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-1号線(空港線):009021": {
+      "country": "jp",
+      "lineId": "jp-福岡市-1号線(空港線)",
+      "stationCode": "009021",
+      "operator": "福岡市",
+      "name": "祇園",
+      "en": "Gion",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "K10",
+          "stationNumber": "K10",
+          "officialLineName": "Airport Line",
+          "name": "祇園",
+          "en": "Gion",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/gion.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label K10; Japanese home visible content_area area_k",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-1号線(空港線):009033": {
+      "country": "jp",
+      "lineId": "jp-福岡市-1号線(空港線)",
+      "stationCode": "009033",
+      "operator": "福岡市",
+      "name": "博多",
+      "en": "Hakata",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "K11",
+          "stationNumber": "K11",
+          "officialLineName": "Airport Line",
+          "name": "博多",
+          "en": "Hakata",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/hakata.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label K11; Japanese home visible content_area area_k",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-1号線(空港線):009032": {
+      "country": "jp",
+      "lineId": "jp-福岡市-1号線(空港線)",
+      "stationCode": "009032",
+      "operator": "福岡市",
+      "name": "東比恵",
+      "en": "Higashi-Hie",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "K12",
+          "stationNumber": "K12",
+          "officialLineName": "Airport Line",
+          "name": "東比恵",
+          "en": "Higashi-Hie",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/higashihie.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label K12; Japanese home visible content_area area_k",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-1号線(空港線):009015": {
+      "country": "jp",
+      "lineId": "jp-福岡市-1号線(空港線)",
+      "stationCode": "009015",
+      "operator": "福岡市",
+      "name": "福岡空港",
+      "en": "Fukuoka Airport",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "K13",
+          "stationNumber": "K13",
+          "officialLineName": "Airport Line",
+          "name": "福岡空港",
+          "en": "Fukuoka Airport",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/kuko.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label K13; Japanese home visible content_area area_k",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-2号線(箱崎線):009019": {
+      "country": "jp",
+      "lineId": "jp-福岡市-2号線(箱崎線)",
+      "stationCode": "009019",
+      "operator": "福岡市",
+      "name": "中洲川端",
+      "en": "Nakasu-Kawabata",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "H01",
+          "stationNumber": "H01",
+          "officialLineName": "Hakozaki Line",
+          "name": "中洲川端",
+          "en": "Nakasu-Kawabata",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/nakasu.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label H01; Japanese home visible content_area area_h",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-2号線(箱崎線):009014": {
+      "country": "jp",
+      "lineId": "jp-福岡市-2号線(箱崎線)",
+      "stationCode": "009014",
+      "operator": "福岡市",
+      "name": "呉服町",
+      "en": "Gofukumachi",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "H02",
+          "stationNumber": "H02",
+          "officialLineName": "Hakozaki Line",
+          "name": "呉服町",
+          "en": "Gofukumachi",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/gofuku.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label H02; Japanese home visible content_area area_h",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-2号線(箱崎線):009011": {
+      "country": "jp",
+      "lineId": "jp-福岡市-2号線(箱崎線)",
+      "stationCode": "009011",
+      "operator": "福岡市",
+      "name": "千代県庁口",
+      "en": "Chiyo-Kenchoguchi",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "H03",
+          "stationNumber": "H03",
+          "officialLineName": "Hakozaki Line",
+          "name": "千代県庁口",
+          "en": "Chiyo-Kenchoguchi",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/tiyo.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label H03; Japanese home visible content_area area_h",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-2号線(箱崎線):009000": {
+      "country": "jp",
+      "lineId": "jp-福岡市-2号線(箱崎線)",
+      "stationCode": "009000",
+      "operator": "福岡市",
+      "name": "馬出九大病院前",
+      "en": "Maidashi-Kyudaibyoinmae",
+      "source": "https://subway.city.fukuoka.lg.jp/eki/stations/img/ttl_maidashi.jpg",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "H04",
+          "stationNumber": "H04",
+          "officialLineName": "Hakozaki Line",
+          "name": "馬出九大病院前",
+          "en": "Maidashi-Kyudaibyoinmae",
+          "source": "https://subway.city.fukuoka.lg.jp/eki/stations/img/ttl_maidashi.jpg",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/maidashi.php",
+          "sha256": "ba937d0204a31d36ee15696db1b8b4dcc84251c7c1b8b8661cb1c1bc17496988",
+          "retrievedAt": "2026-10-01T02:39:11.050148+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator/native identity and station number on current bilingual title image, corroborated by current numbered English route map",
+          "sourceLocator": "Current official bilingual station title image: H04 / 馬出九大病院前 / Maidashi-Kyudaibyoinmae",
+          "transformation": "none",
+          "corroboratingSource": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "corroboratingSha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b"
+        }
+      ]
+    },
+    "jp-福岡市-2号線(箱崎線):008988": {
+      "country": "jp",
+      "lineId": "jp-福岡市-2号線(箱崎線)",
+      "stationCode": "008988",
+      "operator": "福岡市",
+      "name": "箱崎宮前",
+      "en": "Hakozaki-Miyamae",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "H05",
+          "stationNumber": "H05",
+          "officialLineName": "Hakozaki Line",
+          "name": "箱崎宮前",
+          "en": "Hakozaki-Miyamae",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/hakozakimiya.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label H05; Japanese home visible content_area area_h",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-2号線(箱崎線):008980": {
+      "country": "jp",
+      "lineId": "jp-福岡市-2号線(箱崎線)",
+      "stationCode": "008980",
+      "operator": "福岡市",
+      "name": "箱崎九大前",
+      "en": "Hakozaki-Kyudaimae",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "H06",
+          "stationNumber": "H06",
+          "officialLineName": "Hakozaki Line",
+          "name": "箱崎九大前",
+          "en": "Hakozaki-Kyudaimae",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/hakozakikyudai.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label H06; Japanese home visible content_area area_h",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-2号線(箱崎線):008967": {
+      "country": "jp",
+      "lineId": "jp-福岡市-2号線(箱崎線)",
+      "stationCode": "008967",
+      "operator": "福岡市",
+      "name": "貝塚",
+      "en": "Kaizuka",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "H07",
+          "stationNumber": "H07",
+          "officialLineName": "Hakozaki Line",
+          "name": "貝塚",
+          "en": "Kaizuka",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/kaizuka.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label H07; Japanese home visible content_area area_h",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-3号線(七隈線):009033": {
+      "country": "jp",
+      "lineId": "jp-福岡市-3号線(七隈線)",
+      "stationCode": "009033",
+      "operator": "福岡市",
+      "name": "博多",
+      "en": "Hakata",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "N18",
+          "stationNumber": "N18",
+          "officialLineName": "Nanakuma Line",
+          "name": "博多",
+          "en": "Hakata",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/hakata.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label N18; Japanese home visible content_area area_n",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration",
+          "transferIdentityNote": "Native Nanakuma list links 博多 using class k11; current English map prints the shared Hakata marker K11/N18."
+        }
+      ]
+    },
+    "jp-福岡市-3号線(七隈線):010162": {
+      "country": "jp",
+      "lineId": "jp-福岡市-3号線(七隈線)",
+      "stationCode": "010162",
+      "operator": "福岡市",
+      "name": "櫛田神社前",
+      "en": "Kushida Shrine",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "N17",
+          "stationNumber": "N17",
+          "officialLineName": "Nanakuma Line",
+          "name": "櫛田神社前",
+          "en": "Kushida Shrine",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/kushida.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label N17; Japanese home visible content_area area_n",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-3号線(七隈線):009038": {
+      "country": "jp",
+      "lineId": "jp-福岡市-3号線(七隈線)",
+      "stationCode": "009038",
+      "operator": "福岡市",
+      "name": "天神南",
+      "en": "Tenjin-minami",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "N16",
+          "stationNumber": "N16",
+          "officialLineName": "Nanakuma Line",
+          "name": "天神南",
+          "en": "Tenjin-minami",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/tenjinminami.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label N16; Japanese home visible content_area area_n",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-3号線(七隈線):009044": {
+      "country": "jp",
+      "lineId": "jp-福岡市-3号線(七隈線)",
+      "stationCode": "009044",
+      "operator": "福岡市",
+      "name": "渡辺通",
+      "en": "Watanabe-dori",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "N15",
+          "stationNumber": "N15",
+          "officialLineName": "Nanakuma Line",
+          "name": "渡辺通",
+          "en": "Watanabe-dori",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/watanabe.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label N15; Japanese home visible content_area area_n",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-3号線(七隈線):009049": {
+      "country": "jp",
+      "lineId": "jp-福岡市-3号線(七隈線)",
+      "stationCode": "009049",
+      "operator": "福岡市",
+      "name": "薬院",
+      "en": "Yakuin",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "N14",
+          "stationNumber": "N14",
+          "officialLineName": "Nanakuma Line",
+          "name": "薬院",
+          "en": "Yakuin",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/yakuin.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label N14; Japanese home visible content_area area_n",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-3号線(七隈線):009054": {
+      "country": "jp",
+      "lineId": "jp-福岡市-3号線(七隈線)",
+      "stationCode": "009054",
+      "operator": "福岡市",
+      "name": "薬院大通",
+      "en": "Yakuin-odori",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "N13",
+          "stationNumber": "N13",
+          "officialLineName": "Nanakuma Line",
+          "name": "薬院大通",
+          "en": "Yakuin-odori",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/yakuinoo.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label N13; Japanese home visible content_area area_n",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-3号線(七隈線):009064": {
+      "country": "jp",
+      "lineId": "jp-福岡市-3号線(七隈線)",
+      "stationCode": "009064",
+      "operator": "福岡市",
+      "name": "桜坂",
+      "en": "Sakurazaka",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "N12",
+          "stationNumber": "N12",
+          "officialLineName": "Nanakuma Line",
+          "name": "桜坂",
+          "en": "Sakurazaka",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/sakurazaka.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label N12; Japanese home visible content_area area_n",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-3号線(七隈線):009063": {
+      "country": "jp",
+      "lineId": "jp-福岡市-3号線(七隈線)",
+      "stationCode": "009063",
+      "operator": "福岡市",
+      "name": "六本松",
+      "en": "Ropponmatsu",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "N11",
+          "stationNumber": "N11",
+          "officialLineName": "Nanakuma Line",
+          "name": "六本松",
+          "en": "Ropponmatsu",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/roppon.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label N11; Japanese home visible content_area area_n",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-3号線(七隈線):009080": {
+      "country": "jp",
+      "lineId": "jp-福岡市-3号線(七隈線)",
+      "stationCode": "009080",
+      "operator": "福岡市",
+      "name": "別府",
+      "en": "Befu",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "N10",
+          "stationNumber": "N10",
+          "officialLineName": "Nanakuma Line",
+          "name": "別府",
+          "en": "Befu",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/befu.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label N10; Japanese home visible content_area area_n",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-3号線(七隈線):009100": {
+      "country": "jp",
+      "lineId": "jp-福岡市-3号線(七隈線)",
+      "stationCode": "009100",
+      "operator": "福岡市",
+      "name": "茶山",
+      "en": "Chayama",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "N09",
+          "stationNumber": "N09",
+          "officialLineName": "Nanakuma Line",
+          "name": "茶山",
+          "en": "Chayama",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/chayama.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label N09; Japanese home visible content_area area_n",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-3号線(七隈線):009116": {
+      "country": "jp",
+      "lineId": "jp-福岡市-3号線(七隈線)",
+      "stationCode": "009116",
+      "operator": "福岡市",
+      "name": "金山",
+      "en": "Kanayama",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "N08",
+          "stationNumber": "N08",
+          "officialLineName": "Nanakuma Line",
+          "name": "金山",
+          "en": "Kanayama",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/kanayama.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label N08; Japanese home visible content_area area_n",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-3号線(七隈線):009157": {
+      "country": "jp",
+      "lineId": "jp-福岡市-3号線(七隈線)",
+      "stationCode": "009157",
+      "operator": "福岡市",
+      "name": "七隈",
+      "en": "Nanakuma",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "N07",
+          "stationNumber": "N07",
+          "officialLineName": "Nanakuma Line",
+          "name": "七隈",
+          "en": "Nanakuma",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/nanakuma.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label N07; Japanese home visible content_area area_n",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-3号線(七隈線):009187": {
+      "country": "jp",
+      "lineId": "jp-福岡市-3号線(七隈線)",
+      "stationCode": "009187",
+      "operator": "福岡市",
+      "name": "福大前",
+      "en": "Fukuoka University",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "N06",
+          "stationNumber": "N06",
+          "officialLineName": "Nanakuma Line",
+          "name": "福大前",
+          "en": "Fukuoka University",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/fukudai.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label N06; Japanese home visible content_area area_n",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-3号線(七隈線):009194": {
+      "country": "jp",
+      "lineId": "jp-福岡市-3号線(七隈線)",
+      "stationCode": "009194",
+      "operator": "福岡市",
+      "name": "梅林",
+      "en": "Umebayashi",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "N05",
+          "stationNumber": "N05",
+          "officialLineName": "Nanakuma Line",
+          "name": "梅林",
+          "en": "Umebayashi",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/ume.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label N05; Japanese home visible content_area area_n",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-3号線(七隈線):009186": {
+      "country": "jp",
+      "lineId": "jp-福岡市-3号線(七隈線)",
+      "stationCode": "009186",
+      "operator": "福岡市",
+      "name": "野芥",
+      "en": "Noke",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "N04",
+          "stationNumber": "N04",
+          "officialLineName": "Nanakuma Line",
+          "name": "野芥",
+          "en": "Noke",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/noke.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label N04; Japanese home visible content_area area_n",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-3号線(七隈線):009174": {
+      "country": "jp",
+      "lineId": "jp-福岡市-3号線(七隈線)",
+      "stationCode": "009174",
+      "operator": "福岡市",
+      "name": "賀茂",
+      "en": "Kamo",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "N03",
+          "stationNumber": "N03",
+          "officialLineName": "Nanakuma Line",
+          "name": "賀茂",
+          "en": "Kamo",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/kamo.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label N03; Japanese home visible content_area area_n",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-3号線(七隈線):009160": {
+      "country": "jp",
+      "lineId": "jp-福岡市-3号線(七隈線)",
+      "stationCode": "009160",
+      "operator": "福岡市",
+      "name": "次郎丸",
+      "en": "Jiromaru",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "N02",
+          "stationNumber": "N02",
+          "officialLineName": "Nanakuma Line",
+          "name": "次郎丸",
+          "en": "Jiromaru",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/jiromaru.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label N02; Japanese home visible content_area area_n",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    },
+    "jp-福岡市-3号線(七隈線):009153": {
+      "country": "jp",
+      "lineId": "jp-福岡市-3号線(七隈線)",
+      "stationCode": "009153",
+      "operator": "福岡市",
+      "name": "橋本",
+      "en": "Hashimoto",
+      "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+      "identityEvidence": [
+        {
+          "operator": "福岡市",
+          "officialStationId": "N01",
+          "stationNumber": "N01",
+          "officialLineName": "Nanakuma Line",
+          "name": "橋本",
+          "en": "Hashimoto",
+          "source": "https://subway.city.fukuoka.lg.jp/eng/route/deta/map.pdf",
+          "identitySource": "https://subway.city.fukuoka.lg.jp/",
+          "stationPage": "https://subway.city.fukuoka.lg.jp/eki/stations/hashimoto.php",
+          "sha256": "e36d7746918c585ca0a07299457e36f970c8e902d7544922d5dc5d049cdd404b",
+          "retrievedAt": "2026-10-01T02:35:51.016540+00:00",
+          "identitySha256": "4c277471749262afea3884dbe638bf35cd0cf6e64bd600069b3fc604093b8b1c",
+          "identityRetrievedAt": "2026-10-01T02:36:56.157159+00:00",
+          "matchMethod": "Exact operator and native name within current visible line list, paired to reviewed current official English map by station number",
+          "sourceLocator": "English PDF page 1 numbered label N01; Japanese home visible content_area area_n",
+          "transformation": "Map label line-wrap joined with spaces; printed hyphen preserved; no transliteration"
+        }
+      ]
+    }
+  },
+  "unresolved": []
+}

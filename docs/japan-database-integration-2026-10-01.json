@@ -1,0 +1,42 @@
+{
+  "schema": "jp-database-incremental-publication/1",
+  "sourcePackageSHA256": "03632f69aa742c0096685ec80d125191975986459aa2a36d221af065648e5325",
+  "publication": {
+    "mode": "JP-only mapped incremental release",
+    "sourceVersion": "2025.5.2",
+    "sourcePackageSHA256": "03632f69aa742c0096685ec80d125191975986459aa2a36d221af065648e5325",
+    "originalSHA256": "2e54ba5064a68b7392f74e2be17a69d542beb2e5b3abdeb3ae67c55a5655d114",
+    "candidateSHA256": "0595059cf8e66509cb27046273385ad3c2b0b91434fe9b4d06da2a441d5169a5",
+    "publishedSHA256": "556781dc5511aef2b9214d22dde8a5f672f6ebac52eef5eee5c764ba1bd59681",
+    "publishedBytes": 200429568,
+    "allProtectedPartitionsExact": true,
+    "northAmericaSnapshotQueries": 27,
+    "quickCheck": "ok",
+    "foreignKeyViolations": 0,
+    "report": "/private/tmp/jtm-final-jp-db-merge-report-v2.json"
+  },
+  "protectedTablesVerified": 39,
+  "japanTablesVerified": 29,
+  "nonJapanRowsAndIdsExact": true,
+  "northAmericaSnapshotQueries": 27,
+  "quickCheck": "ok",
+  "foreignKeyViolations": 0,
+  "pointGeometryImport": "Four new JP Point station features emit exactly one coordinate each; existing LineString import unchanged.",
+  "sourceOrdinalIdentity": "JP source_section/source_station business keys use country_code+ord for current mirror identity; no permanent physical identity claim.",
+  "fullBuilderReplay": "node app/scripts/build/build-rail-database.mjs --out /tmp/candidate-rail.db --quiet; full candidate is isolated, not published wholesale.",
+  "incrementalMergeHelper": "/private/tmp/jtm-sync-japan-rail-db.py",
+  "incrementalMergeHelperSHA256": "48ca48e8501ef818f15bb409fb93038c437840b2128c750872e02fe2cdf9e5f0",
+  "protection": "Original global generated_at/generator, non-JP meta.sources and planner statistics retained; explicit JP incremental metadata records release. NA precompute and source/name artifacts frozen.",
+  "previousPublication": {
+    "mode": "JP-only mapped incremental publication",
+    "originalSHA256": "ed7f617a0d1a1df4c08ed78059a8517c94ad7347e52fa61c0bbd7e286007c225",
+    "candidateSHA256": "5ed2af79555c9cc6507e090b48ab30228c4e8129e00c63f1f4d8fa730601b5d4",
+    "publishedSHA256": "2e54ba5064a68b7392f74e2be17a69d542beb2e5b3abdeb3ae67c55a5655d114",
+    "publishedBytes": 200409088,
+    "allProtectedPartitionsExact": true,
+    "northAmericaSnapshotQueries": 27,
+    "sourcePointStationsVerified": 4,
+    "report": "/private/tmp/jtm-final-jp-db-merge-report.json"
+  },
+  "sourceVersion": "2025.5.2"
+}

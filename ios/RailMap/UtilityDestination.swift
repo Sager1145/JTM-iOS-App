@@ -107,24 +107,6 @@ struct UtilityDestinationView: View {
     }
 }
 
-// MARK: - what scrolling content has to clear
-//
-// Nothing, deliberately — and this note is here because the absence is the
-// decision.
-//
-// §4.3 asks scrolling content for `tabBarHeight + safeAreaBottom + 12pt` of
-// bottom clearance, and there used to be an environment value and a modifier
-// here to supply it. Both are gone: SwiftUI already gives every scroll view
-// inside the resident sheet exactly that strip as bottom safe area — 83 points
-// on an iPhone 17 Pro, measured from a `GeometryProxy` inside a `TabView`
-// page — and insets scrolling content by it without being asked. `tabPage`'s
-// own note says as much.
-//
-// What the modifier actually did was add a SECOND copy of that strip on top,
-// because `.contentMargins(_:_:for: .scrollContent)` composes with the safe
-// area rather than replacing it. Scrolled to its end, the ride card sat 200
-// points clear of the window instead of 83.
-//
-// So: do not reintroduce a hand-rolled bottom inset here. If a panel ever does
-// need extra room, give that panel its own padding and say why — the shared
-// strip is the system's to supply.
+// The workspace menu uses the system tab bar: transparent on iOS 26+, solid
+// before that. Utility sheets have no tab bar and keep the system's own
+// bottom inset. Do not add a second one.

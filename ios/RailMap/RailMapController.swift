@@ -21,6 +21,7 @@ import SwiftUI
 final class RailMapController {
 
     @ObservationIgnored private var cameraPolicy = MapCameraPolicy()
+    var cameraIntentRevision: UInt64 { cameraPolicy.intentRevision }
     private(set) var autoFocusRequest: MapCameraPolicy.FocusRequest?
 
     func requestAutoFocus(
@@ -88,16 +89,6 @@ final class RailMapController {
     /// The rest of the layers menu: which of the reader's own route lines,
     /// station dots and ridden-line categories are drawn. See ``MapLayers``.
     var layers = MapLayers()
-
-    /// 底圖不透明度: how much of Apple's basemap shows through the veil under
-    /// the railways. Below 1 by default so the rail lines read first; the
-    /// reader's choice survives relaunch.
-    static let defaultBasemapOpacity = 0.75
-    static let basemapOpacityKey = "map.basemapOpacity"
-    var basemapOpacity: Double = UserDefaults.standard.object(forKey: RailMapController.basemapOpacityKey)
-        as? Double ?? RailMapController.defaultBasemapOpacity {
-        didSet { UserDefaults.standard.set(basemapOpacity, forKey: Self.basemapOpacityKey) }
-    }
 
     /// Whether the reader has asked for less motion.
     ///
@@ -302,8 +293,17 @@ final class RailMapController {
     /// half of the screen — a frame nobody can read, and the reason both fit
     /// actions go through here rather than calling `setRegion`, which has no
     /// padding to give.
+#if DEBUG
+    private(set) var explicitFitRevision = 0
+    private(set) var lastExplicitFitBottom: CGFloat = 0
+#endif
+
     func fit(_ rect: MKMapRect, animated: Bool? = nil) {
         guard let mapView, !rect.isNull else { return }
+#if DEBUG
+        explicitFitRevision += 1
+        lastExplicitFitBottom = framingInsets.bottom
+#endif
         claimCamera()
         stopFollowingUser()
         mapView.setVisibleMapRect(
@@ -348,7 +348,7 @@ final class RailMapController {
         UIEdgeInsets(
             top: 40,
             left: max(40, leadingObstruction + 20),
-            bottom: max(40, bottomObstruction + 20),
+            bottom: max(40, (journeyMenuBottomObstruction ?? bottomObstruction) + 20),
             right: 40)
     }
 
@@ -400,6 +400,9 @@ final class RailMapController {
     /// How much of the map's bottom edge the resident sheet is covering right
     /// now. Written by the workspace as the sheet moves.
     @ObservationIgnored var bottomObstruction: CGFloat = 0
+    /// The presented journey menu owns the visible bottom edge while open.
+    /// Its live measurement is independent of the resident sheet underneath.
+    @ObservationIgnored var journeyMenuBottomObstruction: CGFloat?
 
     /// How much of the map's leading edge the docked menu card is covering
     /// right now, in the wide composition. Written by the workspace once,

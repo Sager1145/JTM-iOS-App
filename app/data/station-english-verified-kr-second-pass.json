@@ -1,0 +1,946 @@
+{
+  "byLineStation": {
+    "kr-ansim-hayang-bokseonjeoncheol:kr-official-ansim": {
+      "country": "kr",
+      "en": "Ansim(Innovation city · High-techMedical Complex)",
+      "groupCode": "kr-official-ansim",
+      "identityEvidence": [
+        {
+          "coordinateReview": "No Daegu operator geographic source in retained position inventory. Exact own operator/Line1/native/station number and explicit narrow physical-service bridge; no original coordinate blocker.",
+          "en": "Ansim(Innovation city · High-techMedical Complex)",
+          "identitySources": [
+            {
+              "en": "Ansim(Innovation city · High-techMedical Complex)",
+              "identitySource": "https://www.data.go.kr/data/15041043/fileData.do",
+              "name": "안심(혁신도시.첨복단지)",
+              "officialLine": "1호선",
+              "officialStationCode": "0146",
+              "operator": "대구교통공사",
+              "rawFile": "15041043.xlsx",
+              "rawRoot": "data/station-english-sources/kr",
+              "retrievedAt": "2026-10-01T00:57:20.021446+00:00",
+              "sha256": "ddf5ce844d8fc9a338f296e4f10d34c1fde2a58d5a4598cd06c95ce529e30055",
+              "source": "https://www.data.go.kr/data/15041043/fileData.do",
+              "sourceRow": 23
+            },
+            {
+              "rawFile": "daegu-province-current-search.html",
+              "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+              "retrievedAt": "2026-10-01T03:34:57.862215+00:00",
+              "sha256": "51d739ea816ae768cde244d7495ee01916021b8cfb8c2ef8684e7d51ba87f351",
+              "source": "https://www.gb.go.kr/page/10107/10004.do?pageDtlOrdrNo=1&pageIndex=1&boardMngNo=12&searchStrtDt=2024-12-01&searchEndDt=2024-12-31&searchCondition=1&searchKeyword=%EC%95%88%EC%8B%AC",
+              "sourceURL": "https://www.gb.go.kr/page/10107/10004.do?pageDtlOrdrNo=1&pageIndex=1&boardMngNo=12&searchStrtDt=2024-12-01&searchEndDt=2024-12-31&searchCondition=1&searchKeyword=%EC%95%88%EC%8B%AC"
+            },
+            {
+              "rawFile": "daegu-current-route.jpg",
+              "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+              "retrievedAt": "2026-10-01T03:35:42.597163+00:00",
+              "sha256": "d8b1c37b1bb32db96a2e7a0a4e92a0d40a3a01d8935f9c6ca99d67f37a226438",
+              "source": "https://www.kric.go.kr/KricFileDownload.do?file=M0101121041",
+              "sourceURL": "https://www.kric.go.kr/KricFileDownload.do?file=M0101121041"
+            }
+          ],
+          "lineId": "kr-ansim-hayang-bokseonjeoncheol",
+          "name": "안심",
+          "officialStationCode": "0146",
+          "officialStationCodeNamespace": "Own operator bilingual national table station number, leading zero preserved",
+          "operator": "대구교통공사",
+          "physicalServiceBridge": "Provincial opening notice explicitly states the Ansim–Hayang physical extension is Line1, identifies Ansim as existing eastern terminus, and names exactly three new stops Daegu Haany University Hospital, Buho and Hayang. Current own operator map republished by KRIC shows the same Line1 native sequence. No blanket service/physical alias.",
+          "publishedNative": "안심(혁신도시.첨복단지)",
+          "publishedOperator": "대구교통공사",
+          "publishedRouteCode": "1호선 / 안심~하양 연장구간"
+        }
+      ],
+      "lineId": "kr-ansim-hayang-bokseonjeoncheol",
+      "name": "안심",
+      "nameAliases": [],
+      "names": [
+        "안심"
+      ],
+      "operator": "대구교통공사",
+      "persistedStationCode": "KR-ANSIM-HAYANG-BOKSE-ANSIM",
+      "source": "https://www.data.go.kr/data/15041043/fileData.do",
+      "sourceURL": "https://www.data.go.kr/data/15041043/fileData.do",
+      "stationCode": "kr-official-ansim"
+    },
+    "kr-ansim-hayang-bokseonjeoncheol:kr-official-buho": {
+      "country": "kr",
+      "en": "Buho(Kyungil University･Hosan University)",
+      "groupCode": "kr-official-buho",
+      "identityEvidence": [
+        {
+          "coordinateReview": "No Daegu operator geographic source in retained position inventory. Exact own operator/Line1/native/station number and explicit narrow physical-service bridge; no original coordinate blocker.",
+          "en": "Buho(Kyungil University･Hosan University)",
+          "identitySources": [
+            {
+              "en": "Buho(Kyungil University･Hosan University)",
+              "identitySource": "https://www.data.go.kr/data/15041043/fileData.do",
+              "name": "부호",
+              "officialLine": "1호선",
+              "officialStationCode": "0148",
+              "operator": "대구교통공사",
+              "rawFile": "15041043.xlsx",
+              "rawRoot": "data/station-english-sources/kr",
+              "retrievedAt": "2026-10-01T00:57:20.021446+00:00",
+              "sha256": "ddf5ce844d8fc9a338f296e4f10d34c1fde2a58d5a4598cd06c95ce529e30055",
+              "source": "https://www.data.go.kr/data/15041043/fileData.do",
+              "sourceRow": 15
+            },
+            {
+              "rawFile": "daegu-province-current-search.html",
+              "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+              "retrievedAt": "2026-10-01T03:34:57.862215+00:00",
+              "sha256": "51d739ea816ae768cde244d7495ee01916021b8cfb8c2ef8684e7d51ba87f351",
+              "source": "https://www.gb.go.kr/page/10107/10004.do?pageDtlOrdrNo=1&pageIndex=1&boardMngNo=12&searchStrtDt=2024-12-01&searchEndDt=2024-12-31&searchCondition=1&searchKeyword=%EC%95%88%EC%8B%AC",
+              "sourceURL": "https://www.gb.go.kr/page/10107/10004.do?pageDtlOrdrNo=1&pageIndex=1&boardMngNo=12&searchStrtDt=2024-12-01&searchEndDt=2024-12-31&searchCondition=1&searchKeyword=%EC%95%88%EC%8B%AC"
+            },
+            {
+              "rawFile": "daegu-current-route.jpg",
+              "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+              "retrievedAt": "2026-10-01T03:35:42.597163+00:00",
+              "sha256": "d8b1c37b1bb32db96a2e7a0a4e92a0d40a3a01d8935f9c6ca99d67f37a226438",
+              "source": "https://www.kric.go.kr/KricFileDownload.do?file=M0101121041",
+              "sourceURL": "https://www.kric.go.kr/KricFileDownload.do?file=M0101121041"
+            }
+          ],
+          "lineId": "kr-ansim-hayang-bokseonjeoncheol",
+          "name": "부호",
+          "officialStationCode": "0148",
+          "officialStationCodeNamespace": "Own operator bilingual national table station number, leading zero preserved",
+          "operator": "대구교통공사",
+          "physicalServiceBridge": "Provincial opening notice explicitly states the Ansim–Hayang physical extension is Line1, identifies Ansim as existing eastern terminus, and names exactly three new stops Daegu Haany University Hospital, Buho and Hayang. Current own operator map republished by KRIC shows the same Line1 native sequence. No blanket service/physical alias.",
+          "publishedNative": "부호",
+          "publishedOperator": "대구교통공사",
+          "publishedRouteCode": "1호선 / 안심~하양 연장구간"
+        }
+      ],
+      "lineId": "kr-ansim-hayang-bokseonjeoncheol",
+      "name": "부호",
+      "nameAliases": [],
+      "names": [
+        "부호"
+      ],
+      "operator": "대구교통공사",
+      "persistedStationCode": "KR-ANSIM-HAYANG-BOKSE-BUHO",
+      "source": "https://www.data.go.kr/data/15041043/fileData.do",
+      "sourceURL": "https://www.data.go.kr/data/15041043/fileData.do",
+      "stationCode": "kr-official-buho"
+    },
+    "kr-ansim-hayang-bokseonjeoncheol:kr-official-daeguhanuidaebyeongwon": {
+      "country": "kr",
+      "en": "Daegu Haany University Hospital",
+      "groupCode": "kr-official-daeguhanuidaebyeongwon",
+      "identityEvidence": [
+        {
+          "coordinateReview": "No Daegu operator geographic source in retained position inventory. Exact own operator/Line1/native/station number and explicit narrow physical-service bridge; no original coordinate blocker.",
+          "en": "Daegu Haany University Hospital",
+          "identitySources": [
+            {
+              "en": "Daegu Haany University Hospital",
+              "identitySource": "https://www.data.go.kr/data/15041043/fileData.do",
+              "name": "대구한의대병원",
+              "officialLine": "1호선",
+              "officialStationCode": "0147",
+              "operator": "대구교통공사",
+              "rawFile": "15041043.xlsx",
+              "rawRoot": "data/station-english-sources/kr",
+              "retrievedAt": "2026-10-01T00:57:20.021446+00:00",
+              "sha256": "ddf5ce844d8fc9a338f296e4f10d34c1fde2a58d5a4598cd06c95ce529e30055",
+              "source": "https://www.data.go.kr/data/15041043/fileData.do",
+              "sourceRow": 6
+            },
+            {
+              "rawFile": "daegu-province-current-search.html",
+              "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+              "retrievedAt": "2026-10-01T03:34:57.862215+00:00",
+              "sha256": "51d739ea816ae768cde244d7495ee01916021b8cfb8c2ef8684e7d51ba87f351",
+              "source": "https://www.gb.go.kr/page/10107/10004.do?pageDtlOrdrNo=1&pageIndex=1&boardMngNo=12&searchStrtDt=2024-12-01&searchEndDt=2024-12-31&searchCondition=1&searchKeyword=%EC%95%88%EC%8B%AC",
+              "sourceURL": "https://www.gb.go.kr/page/10107/10004.do?pageDtlOrdrNo=1&pageIndex=1&boardMngNo=12&searchStrtDt=2024-12-01&searchEndDt=2024-12-31&searchCondition=1&searchKeyword=%EC%95%88%EC%8B%AC"
+            },
+            {
+              "rawFile": "daegu-current-route.jpg",
+              "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+              "retrievedAt": "2026-10-01T03:35:42.597163+00:00",
+              "sha256": "d8b1c37b1bb32db96a2e7a0a4e92a0d40a3a01d8935f9c6ca99d67f37a226438",
+              "source": "https://www.kric.go.kr/KricFileDownload.do?file=M0101121041",
+              "sourceURL": "https://www.kric.go.kr/KricFileDownload.do?file=M0101121041"
+            }
+          ],
+          "lineId": "kr-ansim-hayang-bokseonjeoncheol",
+          "name": "대구한의대병원",
+          "officialStationCode": "0147",
+          "officialStationCodeNamespace": "Own operator bilingual national table station number, leading zero preserved",
+          "operator": "대구교통공사",
+          "physicalServiceBridge": "Provincial opening notice explicitly states the Ansim–Hayang physical extension is Line1, identifies Ansim as existing eastern terminus, and names exactly three new stops Daegu Haany University Hospital, Buho and Hayang. Current own operator map republished by KRIC shows the same Line1 native sequence. No blanket service/physical alias.",
+          "publishedNative": "대구한의대병원",
+          "publishedOperator": "대구교통공사",
+          "publishedRouteCode": "1호선 / 안심~하양 연장구간"
+        }
+      ],
+      "lineId": "kr-ansim-hayang-bokseonjeoncheol",
+      "name": "대구한의대병원",
+      "nameAliases": [],
+      "names": [
+        "대구한의대병원"
+      ],
+      "operator": "대구교통공사",
+      "persistedStationCode": "KR-ANSIM-HAYANG-BOKSE-DAEGUHANUIDAEBYEONGWON",
+      "source": "https://www.data.go.kr/data/15041043/fileData.do",
+      "sourceURL": "https://www.data.go.kr/data/15041043/fileData.do",
+      "stationCode": "kr-official-daeguhanuidaebyeongwon"
+    },
+    "kr-ansim-hayang-bokseonjeoncheol:kr-official-hayang": {
+      "country": "kr",
+      "en": "Hayang(Daegu Catholic University)",
+      "groupCode": "kr-official-hayang",
+      "identityEvidence": [
+        {
+          "coordinateReview": "No Daegu operator geographic source in retained position inventory. Exact own operator/Line1/native/station number and explicit narrow physical-service bridge; no original coordinate blocker.",
+          "en": "Hayang(Daegu Catholic University)",
+          "identitySources": [
+            {
+              "en": "Hayang(Daegu Catholic University)",
+              "identitySource": "https://www.data.go.kr/data/15041043/fileData.do",
+              "name": "하양",
+              "officialLine": "1호선",
+              "officialStationCode": "0149",
+              "operator": "대구교통공사",
+              "rawFile": "15041043.xlsx",
+              "rawRoot": "data/station-english-sources/kr",
+              "retrievedAt": "2026-10-01T00:57:20.021446+00:00",
+              "sha256": "ddf5ce844d8fc9a338f296e4f10d34c1fde2a58d5a4598cd06c95ce529e30055",
+              "source": "https://www.data.go.kr/data/15041043/fileData.do",
+              "sourceRow": 33
+            },
+            {
+              "rawFile": "daegu-province-current-search.html",
+              "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+              "retrievedAt": "2026-10-01T03:34:57.862215+00:00",
+              "sha256": "51d739ea816ae768cde244d7495ee01916021b8cfb8c2ef8684e7d51ba87f351",
+              "source": "https://www.gb.go.kr/page/10107/10004.do?pageDtlOrdrNo=1&pageIndex=1&boardMngNo=12&searchStrtDt=2024-12-01&searchEndDt=2024-12-31&searchCondition=1&searchKeyword=%EC%95%88%EC%8B%AC",
+              "sourceURL": "https://www.gb.go.kr/page/10107/10004.do?pageDtlOrdrNo=1&pageIndex=1&boardMngNo=12&searchStrtDt=2024-12-01&searchEndDt=2024-12-31&searchCondition=1&searchKeyword=%EC%95%88%EC%8B%AC"
+            },
+            {
+              "rawFile": "daegu-current-route.jpg",
+              "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+              "retrievedAt": "2026-10-01T03:35:42.597163+00:00",
+              "sha256": "d8b1c37b1bb32db96a2e7a0a4e92a0d40a3a01d8935f9c6ca99d67f37a226438",
+              "source": "https://www.kric.go.kr/KricFileDownload.do?file=M0101121041",
+              "sourceURL": "https://www.kric.go.kr/KricFileDownload.do?file=M0101121041"
+            }
+          ],
+          "lineId": "kr-ansim-hayang-bokseonjeoncheol",
+          "name": "하양",
+          "officialStationCode": "0149",
+          "officialStationCodeNamespace": "Own operator bilingual national table station number, leading zero preserved",
+          "operator": "대구교통공사",
+          "physicalServiceBridge": "Provincial opening notice explicitly states the Ansim–Hayang physical extension is Line1, identifies Ansim as existing eastern terminus, and names exactly three new stops Daegu Haany University Hospital, Buho and Hayang. Current own operator map republished by KRIC shows the same Line1 native sequence. No blanket service/physical alias.",
+          "publishedNative": "하양",
+          "publishedOperator": "대구교통공사",
+          "publishedRouteCode": "1호선 / 안심~하양 연장구간"
+        }
+      ],
+      "lineId": "kr-ansim-hayang-bokseonjeoncheol",
+      "name": "하양",
+      "nameAliases": [],
+      "names": [
+        "하양"
+      ],
+      "operator": "대구교통공사",
+      "persistedStationCode": "KR-ANSIM-HAYANG-BOKSE-HAYANG",
+      "source": "https://www.data.go.kr/data/15041043/fileData.do",
+      "sourceURL": "https://www.data.go.kr/data/15041043/fileData.do",
+      "stationCode": "kr-official-hayang"
+    },
+    "kr-busan-dosicheoldo-2hoseon:kr-official-gukjegeumyungsenteo-busaneunhaeng": {
+      "country": "kr",
+      "en": "Busan Int'l Finance Center·Busan Bank",
+      "groupCode": "kr-official-gukjegeumyungsenteo-busaneunhaeng",
+      "identityEvidence": [
+        {
+          "coordinateDistanceKm": 0.003886,
+          "coordinateIdentityEvidence": {
+            "lat": 35.145817,
+            "lon": 129.066755,
+            "name": "국제금융센터·부산은행",
+            "officialLine": "2호선",
+            "operator": "부산교통공사",
+            "retrievedAt": "2026-10-01T00:58:15.985201+00:00",
+            "sha256": "79852ddc3878a476a8f85c4bc2f3fa2e43a6374bb557a5a31c4c0ec24db9230c",
+            "source": "https://www.data.go.kr/data/15041166/fileData.do"
+          },
+          "coordinateReview": "Own native/code/route bilingual identity, with independently retained same operator/service/native official coordinates checked below.",
+          "en": "Busan Int'l Finance Center·Busan Bank",
+          "identitySources": [
+            {
+              "rawFile": "busan-broadcast217.html",
+              "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+              "retrievedAt": "2026-10-01T03:25:11.727129+00:00",
+              "sha256": "3ec6daa1b5ff6263c363116c003d6cc747a0b32b51e0c7f2f3a1a463e40cbda0",
+              "source": "https://www2.humetro.busan.kr/homepage/default/broadcast/list.do?CODE=217&SUB_CODE=2",
+              "sourceURL": "https://www2.humetro.busan.kr/homepage/default/broadcast/list.do?CODE=217&SUB_CODE=2"
+            },
+            {
+              "rawFile": "busan-cyber.html",
+              "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+              "retrievedAt": "2026-10-01T03:25:12.056812+00:00",
+              "sha256": "448ce91307b22d5b52d4ae6d2844a27a61de73b57c56c3b5f2e3bcd061189290",
+              "source": "https://www2.humetro.busan.kr/homepage/cyberstation/map.do",
+              "sourceURL": "https://www2.humetro.busan.kr/homepage/cyberstation/map.do"
+            }
+          ],
+          "lineId": "kr-busan-dosicheoldo-2hoseon",
+          "name": "국제금융센터·부산은행",
+          "officialCoordinates": [
+            129.066755,
+            35.145817
+          ],
+          "officialStationCode": "217",
+          "officialStationCodeNamespace": "Own CODE / map station number",
+          "operator": "부산교통공사",
+          "publishedOperator": "부산교통공사",
+          "publishedRouteCode": "2"
+        }
+      ],
+      "lineId": "kr-busan-dosicheoldo-2hoseon",
+      "name": "국제금융센터·부산은행",
+      "nameAliases": [],
+      "names": [
+        "국제금융센터·부산은행"
+      ],
+      "operator": "부산교통공사",
+      "persistedStationCode": "KR-BUSAN-DOSICHEOLDO--GUKJEGEUMYUNGSENTEO-BUSA",
+      "source": "https://www2.humetro.busan.kr/homepage/default/broadcast/list.do?CODE=217&SUB_CODE=2",
+      "sourceURL": "https://www2.humetro.busan.kr/homepage/default/broadcast/list.do?CODE=217&SUB_CODE=2",
+      "stationCode": "kr-official-gukjegeumyungsenteo-busaneunhaeng"
+    },
+    "kr-haeundae-haebyeonyeolcha:kr-official-cheongsapo": {
+      "country": "kr",
+      "en": "Cheongsapo",
+      "groupCode": "kr-official-cheongsapo",
+      "identityEvidence": [
+        {
+          "coordinateReview": "Own route-coded native/English identity; these publications contain no geographic coordinates. No original checkpoint coordinate blocker.",
+          "en": "Cheongsapo",
+          "identitySources": [
+            {
+              "rawFile": "blueline-stations-en.html",
+              "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+              "retrievedAt": "2026-10-01T03:23:53.152314+00:00",
+              "sha256": "1406f622a12441fb7f4930cecc3923703de7c24c67f5b74eddecab62de3b6c5e",
+              "source": "https://www.bluelinepark.com/eng/tourFacilityList.do",
+              "sourceURL": "https://www.bluelinepark.com/eng/tourFacilityList.do"
+            },
+            {
+              "rawFile": "blueline-map-ko.pdf",
+              "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+              "retrievedAt": "2026-10-01T03:23:54.949945+00:00",
+              "sha256": "47216f47b6ee959d5550fcd349d4f017f8c8b1d9d7117c96e90a163d2de238cb",
+              "source": "https://www.bluelinepark.com/images/guidemap/GUIDEBOOK_KOR.pdf",
+              "sourceURL": "https://www.bluelinepark.com/images/guidemap/GUIDEBOOK_KOR.pdf"
+            },
+            {
+              "rawFile": "blueline-map-en.pdf",
+              "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+              "retrievedAt": "2026-10-01T03:23:54.661342+00:00",
+              "sha256": "982d28eda092c1eab000b03628a6511e7d7fa28c970dbfce1b6104484398b6eb",
+              "source": "https://www.bluelinepark.com/images/guidemap/GUIDEBOOK_ENG.pdf",
+              "sourceURL": "https://www.bluelinepark.com/images/guidemap/GUIDEBOOK_ENG.pdf"
+            }
+          ],
+          "lineId": "kr-haeundae-haebyeonyeolcha",
+          "name": "청사포",
+          "officialStationCode": "04",
+          "officialStationCodeNamespace": "Own guide map route marker, not national stop code",
+          "operator": "해운대블루라인(주)",
+          "printedNumberTranscription": "Manual visual review of page2 in both own guide PDFs: identical route marker numbers pair native and English labels. These markers also describe nearby attractions; do not claim a national or fare-system stop code.",
+          "publishedOperator": "해운대블루라인(주)",
+          "publishedRouteCode": "해운대 해변열차"
+        }
+      ],
+      "lineId": "kr-haeundae-haebyeonyeolcha",
+      "name": "청사포",
+      "nameAliases": [],
+      "names": [
+        "청사포"
+      ],
+      "operator": "해운대블루라인(주)",
+      "persistedStationCode": "KR-HAEUNDAE-HAEBYEONY-CHEONGSAPO",
+      "source": "https://www.bluelinepark.com/eng/tourFacilityList.do",
+      "sourceURL": "https://www.bluelinepark.com/eng/tourFacilityList.do",
+      "stationCode": "kr-official-cheongsapo"
+    },
+    "kr-haeundae-haebyeonyeolcha:kr-official-dalmatiteoneol": {
+      "country": "kr",
+      "en": "Dalmaji Tunnel",
+      "groupCode": "kr-official-dalmatiteoneol",
+      "identityEvidence": [
+        {
+          "coordinateReview": "Own route-coded native/English identity; these publications contain no geographic coordinates. No original checkpoint coordinate blocker.",
+          "en": "Dalmaji Tunnel",
+          "identitySources": [
+            {
+              "rawFile": "blueline-stations-en.html",
+              "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+              "retrievedAt": "2026-10-01T03:23:53.152314+00:00",
+              "sha256": "1406f622a12441fb7f4930cecc3923703de7c24c67f5b74eddecab62de3b6c5e",
+              "source": "https://www.bluelinepark.com/eng/tourFacilityList.do",
+              "sourceURL": "https://www.bluelinepark.com/eng/tourFacilityList.do"
+            },
+            {
+              "rawFile": "blueline-map-ko.pdf",
+              "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+              "retrievedAt": "2026-10-01T03:23:54.949945+00:00",
+              "sha256": "47216f47b6ee959d5550fcd349d4f017f8c8b1d9d7117c96e90a163d2de238cb",
+              "source": "https://www.bluelinepark.com/images/guidemap/GUIDEBOOK_KOR.pdf",
+              "sourceURL": "https://www.bluelinepark.com/images/guidemap/GUIDEBOOK_KOR.pdf"
+            },
+            {
+              "rawFile": "blueline-map-en.pdf",
+              "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+              "retrievedAt": "2026-10-01T03:23:54.661342+00:00",
+              "sha256": "982d28eda092c1eab000b03628a6511e7d7fa28c970dbfce1b6104484398b6eb",
+              "source": "https://www.bluelinepark.com/images/guidemap/GUIDEBOOK_ENG.pdf",
+              "sourceURL": "https://www.bluelinepark.com/images/guidemap/GUIDEBOOK_ENG.pdf"
+            }
+          ],
+          "lineId": "kr-haeundae-haebyeonyeolcha",
+          "name": "달맞이터널",
+          "officialStationCode": "02",
+          "officialStationCodeNamespace": "Own guide map route marker, not national stop code",
+          "operator": "해운대블루라인(주)",
+          "printedNumberTranscription": "Manual visual review of page2 in both own guide PDFs: identical route marker numbers pair native and English labels. These markers also describe nearby attractions; do not claim a national or fare-system stop code.",
+          "publishedOperator": "해운대블루라인(주)",
+          "publishedRouteCode": "해운대 해변열차"
+        }
+      ],
+      "lineId": "kr-haeundae-haebyeonyeolcha",
+      "name": "달맞이터널",
+      "nameAliases": [],
+      "names": [
+        "달맞이터널"
+      ],
+      "operator": "해운대블루라인(주)",
+      "persistedStationCode": "KR-HAEUNDAE-HAEBYEONY-DALMATITEONEOL",
+      "source": "https://www.bluelinepark.com/eng/tourFacilityList.do",
+      "sourceURL": "https://www.bluelinepark.com/eng/tourFacilityList.do",
+      "stationCode": "kr-official-dalmatiteoneol"
+    },
+    "kr-haeundae-haebyeonyeolcha:kr-official-daritdoljeonmangdae": {
+      "country": "kr",
+      "en": "Daritdol Skywalk",
+      "groupCode": "kr-official-daritdoljeonmangdae",
+      "identityEvidence": [
+        {
+          "coordinateReview": "Own route-coded native/English identity; these publications contain no geographic coordinates. No original checkpoint coordinate blocker.",
+          "en": "Daritdol Skywalk",
+          "identitySources": [
+            {
+              "rawFile": "blueline-stations-en.html",
+              "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+              "retrievedAt": "2026-10-01T03:23:53.152314+00:00",
+              "sha256": "1406f622a12441fb7f4930cecc3923703de7c24c67f5b74eddecab62de3b6c5e",
+              "source": "https://www.bluelinepark.com/eng/tourFacilityList.do",
+              "sourceURL": "https://www.bluelinepark.com/eng/tourFacilityList.do"
+            },
+            {
+              "rawFile": "blueline-map-ko.pdf",
+              "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+              "retrievedAt": "2026-10-01T03:23:54.949945+00:00",
+              "sha256": "47216f47b6ee959d5550fcd349d4f017f8c8b1d9d7117c96e90a163d2de238cb",
+              "source": "https://www.bluelinepark.com/images/guidemap/GUIDEBOOK_KOR.pdf",
+              "sourceURL": "https://www.bluelinepark.com/images/guidemap/GUIDEBOOK_KOR.pdf"
+            },
+            {
+              "rawFile": "blueline-map-en.pdf",
+              "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+              "retrievedAt": "2026-10-01T03:23:54.661342+00:00",
+              "sha256": "982d28eda092c1eab000b03628a6511e7d7fa28c970dbfce1b6104484398b6eb",
+              "source": "https://www.bluelinepark.com/images/guidemap/GUIDEBOOK_ENG.pdf",
+              "sourceURL": "https://www.bluelinepark.com/images/guidemap/GUIDEBOOK_ENG.pdf"
+            }
+          ],
+          "lineId": "kr-haeundae-haebyeonyeolcha",
+          "name": "다릿돌전망대",
+          "officialStationCode": "05",
+          "officialStationCodeNamespace": "Own guide map route marker, not national stop code",
+          "operator": "해운대블루라인(주)",
+          "printedNumberTranscription": "Manual visual review of page2 in both own guide PDFs: identical route marker numbers pair native and English labels. These markers also describe nearby attractions; do not claim a national or fare-system stop code.",
+          "publishedOperator": "해운대블루라인(주)",
+          "publishedRouteCode": "해운대 해변열차"
+        }
+      ],
+      "lineId": "kr-haeundae-haebyeonyeolcha",
+      "name": "다릿돌전망대",
+      "nameAliases": [],
+      "names": [
+        "다릿돌전망대"
+      ],
+      "operator": "해운대블루라인(주)",
+      "persistedStationCode": "KR-HAEUNDAE-HAEBYEONY-DARITDOLJEONMANGDAE",
+      "source": "https://www.bluelinepark.com/eng/tourFacilityList.do",
+      "sourceURL": "https://www.bluelinepark.com/eng/tourFacilityList.do",
+      "stationCode": "kr-official-daritdoljeonmangdae"
+    },
+    "kr-haeundae-haebyeonyeolcha:kr-official-gudeokpo": {
+      "country": "kr",
+      "en": "Gudeokpo",
+      "groupCode": "kr-official-gudeokpo",
+      "identityEvidence": [
+        {
+          "coordinateReview": "Own route-coded native/English identity; these publications contain no geographic coordinates. No original checkpoint coordinate blocker.",
+          "en": "Gudeokpo",
+          "identitySources": [
+            {
+              "rawFile": "blueline-stations-en.html",
+              "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+              "retrievedAt": "2026-10-01T03:23:53.152314+00:00",
+              "sha256": "1406f622a12441fb7f4930cecc3923703de7c24c67f5b74eddecab62de3b6c5e",
+              "source": "https://www.bluelinepark.com/eng/tourFacilityList.do",
+              "sourceURL": "https://www.bluelinepark.com/eng/tourFacilityList.do"
+            },
+            {
+              "rawFile": "blueline-map-ko.pdf",
+              "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+              "retrievedAt": "2026-10-01T03:23:54.949945+00:00",
+              "sha256": "47216f47b6ee959d5550fcd349d4f017f8c8b1d9d7117c96e90a163d2de238cb",
+              "source": "https://www.bluelinepark.com/images/guidemap/GUIDEBOOK_KOR.pdf",
+              "sourceURL": "https://www.bluelinepark.com/images/guidemap/GUIDEBOOK_KOR.pdf"
+            },
+            {
+              "rawFile": "blueline-map-en.pdf",
+              "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+              "retrievedAt": "2026-10-01T03:23:54.661342+00:00",
+              "sha256": "982d28eda092c1eab000b03628a6511e7d7fa28c970dbfce1b6104484398b6eb",
+              "source": "https://www.bluelinepark.com/images/guidemap/GUIDEBOOK_ENG.pdf",
+              "sourceURL": "https://www.bluelinepark.com/images/guidemap/GUIDEBOOK_ENG.pdf"
+            }
+          ],
+          "lineId": "kr-haeundae-haebyeonyeolcha",
+          "name": "구덕포",
+          "officialStationCode": "06",
+          "officialStationCodeNamespace": "Own guide map route marker, not national stop code",
+          "operator": "해운대블루라인(주)",
+          "printedNumberTranscription": "Manual visual review of page2 in both own guide PDFs: identical route marker numbers pair native and English labels. These markers also describe nearby attractions; do not claim a national or fare-system stop code.",
+          "publishedOperator": "해운대블루라인(주)",
+          "publishedRouteCode": "해운대 해변열차"
+        }
+      ],
+      "lineId": "kr-haeundae-haebyeonyeolcha",
+      "name": "구덕포",
+      "nameAliases": [],
+      "names": [
+        "구덕포"
+      ],
+      "operator": "해운대블루라인(주)",
+      "persistedStationCode": "KR-HAEUNDAE-HAEBYEONY-GUDEOKPO",
+      "source": "https://www.bluelinepark.com/eng/tourFacilityList.do",
+      "sourceURL": "https://www.bluelinepark.com/eng/tourFacilityList.do",
+      "stationCode": "kr-official-gudeokpo"
+    },
+    "kr-haeundae-haebyeonyeolcha:kr-official-haewoljeonmangdae": {
+      "country": "kr",
+      "en": "Haewol Skywalk",
+      "groupCode": "kr-official-haewoljeonmangdae",
+      "identityEvidence": [
+        {
+          "coordinateReview": "Own route-coded native/English identity; these publications contain no geographic coordinates. No original checkpoint coordinate blocker.",
+          "en": "Haewol Skywalk",
+          "identitySources": [
+            {
+              "rawFile": "blueline-stations-en.html",
+              "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+              "retrievedAt": "2026-10-01T03:23:53.152314+00:00",
+              "sha256": "1406f622a12441fb7f4930cecc3923703de7c24c67f5b74eddecab62de3b6c5e",
+              "source": "https://www.bluelinepark.com/eng/tourFacilityList.do",
+              "sourceURL": "https://www.bluelinepark.com/eng/tourFacilityList.do"
+            },
+            {
+              "rawFile": "blueline-map-ko.pdf",
+              "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+              "retrievedAt": "2026-10-01T03:23:54.949945+00:00",
+              "sha256": "47216f47b6ee959d5550fcd349d4f017f8c8b1d9d7117c96e90a163d2de238cb",
+              "source": "https://www.bluelinepark.com/images/guidemap/GUIDEBOOK_KOR.pdf",
+              "sourceURL": "https://www.bluelinepark.com/images/guidemap/GUIDEBOOK_KOR.pdf"
+            },
+            {
+              "rawFile": "blueline-map-en.pdf",
+              "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+              "retrievedAt": "2026-10-01T03:23:54.661342+00:00",
+              "sha256": "982d28eda092c1eab000b03628a6511e7d7fa28c970dbfce1b6104484398b6eb",
+              "source": "https://www.bluelinepark.com/images/guidemap/GUIDEBOOK_ENG.pdf",
+              "sourceURL": "https://www.bluelinepark.com/images/guidemap/GUIDEBOOK_ENG.pdf"
+            }
+          ],
+          "lineId": "kr-haeundae-haebyeonyeolcha",
+          "name": "해월전망대",
+          "officialStationCode": "03",
+          "officialStationCodeNamespace": "Own guide map route marker, not national stop code",
+          "operator": "해운대블루라인(주)",
+          "printedNumberTranscription": "Manual visual review of page2 in both own guide PDFs: identical route marker numbers pair native and English labels. These markers also describe nearby attractions; do not claim a national or fare-system stop code.",
+          "publishedOperator": "해운대블루라인(주)",
+          "publishedRouteCode": "해운대 해변열차"
+        }
+      ],
+      "lineId": "kr-haeundae-haebyeonyeolcha",
+      "name": "해월전망대",
+      "nameAliases": [],
+      "names": [
+        "해월전망대"
+      ],
+      "operator": "해운대블루라인(주)",
+      "persistedStationCode": "KR-HAEUNDAE-HAEBYEONY-HAEWOLJEONMANGDAE",
+      "source": "https://www.bluelinepark.com/eng/tourFacilityList.do",
+      "sourceURL": "https://www.bluelinepark.com/eng/tourFacilityList.do",
+      "stationCode": "kr-official-haewoljeonmangdae"
+    },
+    "kr-haeundae-haebyeonyeolcha:kr-official-mipo": {
+      "country": "kr",
+      "en": "Mipo",
+      "groupCode": "kr-official-mipo",
+      "identityEvidence": [
+        {
+          "coordinateReview": "Own route-coded native/English identity; these publications contain no geographic coordinates. No original checkpoint coordinate blocker.",
+          "en": "Mipo",
+          "identitySources": [
+            {
+              "rawFile": "blueline-stations-en.html",
+              "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+              "retrievedAt": "2026-10-01T03:23:53.152314+00:00",
+              "sha256": "1406f622a12441fb7f4930cecc3923703de7c24c67f5b74eddecab62de3b6c5e",
+              "source": "https://www.bluelinepark.com/eng/tourFacilityList.do",
+              "sourceURL": "https://www.bluelinepark.com/eng/tourFacilityList.do"
+            },
+            {
+              "rawFile": "blueline-map-ko.pdf",
+              "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+              "retrievedAt": "2026-10-01T03:23:54.949945+00:00",
+              "sha256": "47216f47b6ee959d5550fcd349d4f017f8c8b1d9d7117c96e90a163d2de238cb",
+              "source": "https://www.bluelinepark.com/images/guidemap/GUIDEBOOK_KOR.pdf",
+              "sourceURL": "https://www.bluelinepark.com/images/guidemap/GUIDEBOOK_KOR.pdf"
+            },
+            {
+              "rawFile": "blueline-map-en.pdf",
+              "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+              "retrievedAt": "2026-10-01T03:23:54.661342+00:00",
+              "sha256": "982d28eda092c1eab000b03628a6511e7d7fa28c970dbfce1b6104484398b6eb",
+              "source": "https://www.bluelinepark.com/images/guidemap/GUIDEBOOK_ENG.pdf",
+              "sourceURL": "https://www.bluelinepark.com/images/guidemap/GUIDEBOOK_ENG.pdf"
+            }
+          ],
+          "lineId": "kr-haeundae-haebyeonyeolcha",
+          "name": "미포",
+          "officialStationCode": "01",
+          "officialStationCodeNamespace": "Own guide map route marker, not national stop code",
+          "operator": "해운대블루라인(주)",
+          "printedNumberTranscription": "Manual visual review of page2 in both own guide PDFs: identical route marker numbers pair native and English labels. These markers also describe nearby attractions; do not claim a national or fare-system stop code.",
+          "publishedOperator": "해운대블루라인(주)",
+          "publishedRouteCode": "해운대 해변열차"
+        }
+      ],
+      "lineId": "kr-haeundae-haebyeonyeolcha",
+      "name": "미포",
+      "nameAliases": [],
+      "names": [
+        "미포"
+      ],
+      "operator": "해운대블루라인(주)",
+      "persistedStationCode": "KR-HAEUNDAE-HAEBYEONY-MIPO",
+      "source": "https://www.bluelinepark.com/eng/tourFacilityList.do",
+      "sourceURL": "https://www.bluelinepark.com/eng/tourFacilityList.do",
+      "stationCode": "kr-official-mipo"
+    }
+  },
+  "checkpointRawFile": "reviewed-scope.json",
+  "checkpointRawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+  "checkpointSha256": "06a14c059660d1272fec62f1ff8efd95d7aedb2f5cc948908c22a5d2f767c41c",
+  "countries": [
+    "kr"
+  ],
+  "coverage": {
+    "groupsWithVerifiedMembership": 11,
+    "unresolvedMemberships": 0,
+    "verifiedMemberships": 11
+  },
+  "excludedPreviousVerifiedKeys": [
+    "kr-4hoseon:kr-official-isu",
+    "kr-gimpo-goldeurain:kr-official-geolpobukbyeon",
+    "kr-gimpo-goldeurain:kr-official-gimpogonghang",
+    "kr-gimpo-goldeurain:kr-official-gochon",
+    "kr-gimpo-goldeurain:kr-official-gurae",
+    "kr-gimpo-goldeurain:kr-official-janggi",
+    "kr-gimpo-goldeurain:kr-official-masan",
+    "kr-gimpo-goldeurain:kr-official-pungmu",
+    "kr-gimpo-goldeurain:kr-official-sau",
+    "kr-gimpo-goldeurain:kr-official-unyang",
+    "kr-gimpo-goldeurain:kr-official-yangchon",
+    "kr-seoul-gyeongjeoncheol-sinrimseon:kr-official-boramae",
+    "kr-seoul-gyeongjeoncheol-sinrimseon:kr-official-boramaebyeongwon",
+    "kr-seoul-gyeongjeoncheol-sinrimseon:kr-official-boramaegongwon",
+    "kr-seoul-gyeongjeoncheol-sinrimseon:kr-official-daebang",
+    "kr-seoul-gyeongjeoncheol-sinrimseon:kr-official-danggok",
+    "kr-seoul-gyeongjeoncheol-sinrimseon:kr-official-gwanaksan",
+    "kr-seoul-gyeongjeoncheol-sinrimseon:kr-official-saetgang",
+    "kr-seoul-gyeongjeoncheol-sinrimseon:kr-official-seouldaebencheotaun",
+    "kr-seoul-gyeongjeoncheol-sinrimseon:kr-official-seouljibangbyeongmucheong",
+    "kr-seoul-gyeongjeoncheol-sinrimseon:kr-official-seowon",
+    "kr-seoul-gyeongjeoncheol-sinrimseon:kr-official-sinrim",
+    "kr-seoul-jihacheol-7hoseon:kr-official-isu",
+    "kr-sudogwongwangyeokgeuphaengcheoldoeiseon:kr-official-daegok",
+    "kr-sudogwongwangyeokgeuphaengcheoldoeiseon:kr-official-kintekseu",
+    "kr-sudogwongwangyeokgeuphaengcheoldoeiseon:kr-official-seoulyeok",
+    "kr-sudogwongwangyeokgeuphaengcheoldoeiseon:kr-official-suseo",
+    "kr-sudogwongwangyeokgeuphaengcheoldoeiseon:kr-official-unjeongjungang",
+    "kr-sudogwongwangyeokgeuphaengcheoldoeiseon:kr-official-yeonsinnae",
+    "kr-uisinseolseon:kr-official-4-19minjumyoji",
+    "kr-uisinseolseon:kr-official-bomun",
+    "kr-uisinseolseon:kr-official-bukhansanbogukmun",
+    "kr-uisinseolseon:kr-official-bukhansanui",
+    "kr-uisinseolseon:kr-official-gaori",
+    "kr-uisinseolseon:kr-official-hwagye",
+    "kr-uisinseolseon:kr-official-jeongreung",
+    "kr-uisinseolseon:kr-official-samyang",
+    "kr-uisinseolseon:kr-official-samyangsageori",
+    "kr-uisinseolseon:kr-official-seongsinyeodaeipgu",
+    "kr-uisinseolseon:kr-official-sinseoldong",
+    "kr-uisinseolseon:kr-official-solbatgongwon",
+    "kr-uisinseolseon:kr-official-solsaem",
+    "kr-yongingyeongjeoncheol:kr-official-chodang",
+    "kr-yongingyeongjeoncheol:kr-official-dongbaek",
+    "kr-yongingyeongjeoncheol:kr-official-eojeong",
+    "kr-yongingyeongjeoncheol:kr-official-gangnamdae",
+    "kr-yongingyeongjeoncheol:kr-official-giheung",
+    "kr-yongingyeongjeoncheol:kr-official-gimryangjang",
+    "kr-yongingyeongjeoncheol:kr-official-jiseok",
+    "kr-yongingyeongjeoncheol:kr-official-myeongjidae",
+    "kr-yongingyeongjeoncheol:kr-official-samga",
+    "kr-yongingyeongjeoncheol:kr-official-sicheong-yongindae",
+    "kr-yongingyeongjeoncheol:kr-official-yonginjungangsijang"
+  ],
+  "method": "Second bounded scratch pass only on first-pass107 remaining frozen unresolved memberships. Own coded route/native/operator proof and narrow published physical-service bridge. No original coordinate conflict override, company-name inference, regional operator inference, list-order code fabrication, or English/native guess.",
+  "previousDeltaRawFile": "station-english-kr-second-pass-first-baseline.json",
+  "previousDeltaRawRoot": "data",
+  "previousDeltaSha256": "8794c687065c2ca7c9c487e97d3e53c611259171cffa5875cb18cc0f092be722",
+  "schema": "station-english-evidence/1",
+  "sourceReviewRawFile": "station-english-kr-second-pass-review.json",
+  "sourceReviewRawRoot": "data",
+  "sources": [
+    {
+      "downloadURL": "https://www.bluelinepark.com/images/guidemap/GUIDEBOOK_ENG.pdf",
+      "file": "blueline-map-en.pdf",
+      "finalURL": "https://www.bluelinepark.com/images/guidemap/GUIDEBOOK_ENG.pdf",
+      "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+      "retrievedAt": "2026-10-01T03:23:54.661342+00:00",
+      "sha256": "982d28eda092c1eab000b03628a6511e7d7fa28c970dbfce1b6104484398b6eb",
+      "sourceURL": "https://www.bluelinepark.com/images/guidemap/GUIDEBOOK_ENG.pdf"
+    },
+    {
+      "downloadURL": "https://www.bluelinepark.com/images/guidemap/GUIDEBOOK_KOR.pdf",
+      "file": "blueline-map-ko.pdf",
+      "finalURL": "https://www.bluelinepark.com/images/guidemap/GUIDEBOOK_KOR.pdf",
+      "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+      "retrievedAt": "2026-10-01T03:23:54.949945+00:00",
+      "sha256": "47216f47b6ee959d5550fcd349d4f017f8c8b1d9d7117c96e90a163d2de238cb",
+      "sourceURL": "https://www.bluelinepark.com/images/guidemap/GUIDEBOOK_KOR.pdf"
+    },
+    {
+      "downloadURL": "https://www.bluelinepark.com/eng/tourFacilityList.do",
+      "file": "blueline-stations-en.html",
+      "finalURL": "https://www.bluelinepark.com/eng/tourFacilityList.do",
+      "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+      "retrievedAt": "2026-10-01T03:23:53.152314+00:00",
+      "sha256": "1406f622a12441fb7f4930cecc3923703de7c24c67f5b74eddecab62de3b6c5e",
+      "sourceURL": "https://www.bluelinepark.com/eng/tourFacilityList.do"
+    },
+    {
+      "downloadURL": "https://www.bluelinepark.com/tourFacilityList.do",
+      "file": "blueline-stations-ko.html",
+      "finalURL": "https://www.bluelinepark.com/tourFacilityList.do",
+      "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+      "retrievedAt": "2026-10-01T03:23:53.355317+00:00",
+      "sha256": "f111661176b2641da57ea7cb3b52bf586a9fedac5c7b7bfba84427adafe02949",
+      "sourceURL": "https://www.bluelinepark.com/tourFacilityList.do"
+    },
+    {
+      "downloadURL": "https://www2.humetro.busan.kr/homepage/default/broadcast/list.do?CODE=217&SUB_CODE=2",
+      "file": "busan-broadcast217.html",
+      "finalURL": "https://www2.humetro.busan.kr/homepage/default/broadcast/list.do?CODE=217&SUB_CODE=2",
+      "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+      "retrievedAt": "2026-10-01T03:25:11.727129+00:00",
+      "sha256": "3ec6daa1b5ff6263c363116c003d6cc747a0b32b51e0c7f2f3a1a463e40cbda0",
+      "sourceURL": "https://www2.humetro.busan.kr/homepage/default/broadcast/list.do?CODE=217&SUB_CODE=2"
+    },
+    {
+      "downloadURL": "https://www2.humetro.busan.kr/homepage/cyberstation/map.do",
+      "file": "busan-cyber.html",
+      "finalURL": "https://www2.humetro.busan.kr/homepage/cyberstation/map.do",
+      "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+      "retrievedAt": "2026-10-01T03:25:12.056812+00:00",
+      "sha256": "448ce91307b22d5b52d4ae6d2844a27a61de73b57c56c3b5f2e3bcd061189290",
+      "sourceURL": "https://www2.humetro.busan.kr/homepage/cyberstation/map.do"
+    },
+    {
+      "downloadURL": "https://www.humetro.busan.kr/homepage/default/main",
+      "file": "busan-main.html",
+      "finalURL": "https://www.humetro.busan.kr/homepage/default/main",
+      "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+      "retrievedAt": "2026-10-01T03:23:54.237960+00:00",
+      "sha256": "339a860d52bc47d1bce5d16f4e597adf777d9f842ad58a94a400eb8eb4d26f53",
+      "sourceURL": "https://www.humetro.busan.kr/homepage/default/main"
+    },
+    {
+      "downloadURL": "https://www.kric.go.kr/KricFileDownload.do?file=M0101121021",
+      "file": "busan-route4.pdf",
+      "finalURL": "https://www.kric.go.kr/KricFileDownload.do?file=M0101121021",
+      "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+      "retrievedAt": "2026-10-01T03:35:42.911134+00:00",
+      "sha256": "03be333ca8334ce1b7b1090d9a7e1da598510c597fbc3e5597256930bd6f798a",
+      "sourceURL": "https://www.kric.go.kr/KricFileDownload.do?file=M0101121021"
+    },
+    {
+      "downloadURL": "https://www.kric.go.kr/KricFileDownload.do?file=M0101121041",
+      "file": "daegu-current-route.jpg",
+      "finalURL": "https://www.kric.go.kr/KricFileDownload.do?file=M0101121041",
+      "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+      "retrievedAt": "2026-10-01T03:35:42.597163+00:00",
+      "sha256": "d8b1c37b1bb32db96a2e7a0a4e92a0d40a3a01d8935f9c6ca99d67f37a226438",
+      "sourceURL": "https://www.kric.go.kr/KricFileDownload.do?file=M0101121041"
+    },
+    {
+      "downloadURL": "https://www.dtro.or.kr/",
+      "file": "daegu-main.html",
+      "finalURL": "https://www.dtro.or.kr/",
+      "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+      "retrievedAt": "2026-10-01T03:24:12.483965+00:00",
+      "sha256": "0f705468946f0650759f2cef1f69231cad9268b12d454409c8e455e7bc1c3826",
+      "sourceURL": "https://www.dtro.or.kr/"
+    },
+    {
+      "downloadURL": "https://www.gb.go.kr/board/view.do?pageDtlOrdrNo=1&boardMngNo=12&boardNo=1316850",
+      "file": "daegu-province-current-article.html",
+      "finalURL": "https://www.gb.go.kr/board/view.do?pageDtlOrdrNo=1&boardMngNo=12&boardNo=1316850",
+      "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+      "retrievedAt": "2026-10-01T03:35:38.126560+00:00",
+      "sha256": "9fa9b11ddbe50adec01f42e84819817afa76bfe13483d1f6ab890c053e31c7ef",
+      "sourceURL": "https://www.gb.go.kr/board/view.do?pageDtlOrdrNo=1&boardMngNo=12&boardNo=1316850"
+    },
+    {
+      "downloadURL": "https://www.gb.go.kr/page/10107/10004.do?pageDtlOrdrNo=1&pageIndex=1&boardMngNo=12&searchStrtDt=2024-12-01&searchEndDt=2024-12-31&searchCondition=1&searchKeyword=%EC%95%88%EC%8B%AC",
+      "file": "daegu-province-current-search.html",
+      "finalURL": "https://www.gb.go.kr/page/10107/10004.do?pageDtlOrdrNo=1&pageIndex=1&boardMngNo=12&searchStrtDt=2024-12-01&searchEndDt=2024-12-31&searchCondition=1&searchKeyword=%EC%95%88%EC%8B%AC",
+      "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+      "retrievedAt": "2026-10-01T03:34:57.862215+00:00",
+      "sha256": "51d739ea816ae768cde244d7495ee01916021b8cfb8c2ef8684e7d51ba87f351",
+      "sourceURL": "https://www.gb.go.kr/page/10107/10004.do?pageDtlOrdrNo=1&pageIndex=1&boardMngNo=12&searchStrtDt=2024-12-01&searchEndDt=2024-12-31&searchCondition=1&searchKeyword=%EC%95%88%EC%8B%AC"
+    },
+    {
+      "downloadURL": "https://gb.go.kr/Main/governor/page.do?BD_CODE=bbs_bodo&B_LEVEL=0&B_NUM=477240001&B_STEP=477240000&Start=50&V_NUM=10540&bdName=&cmd=2&dept_code=&dept_name=&key=4&mnu_uid=6792&p1=0&p2=0&tbbscode1=bbs_bodo&word=",
+      "file": "daegu-province-extension.html",
+      "finalURL": "https://www.gb.go.kr/page/10107/10004.do",
+      "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+      "retrievedAt": "2026-10-01T03:31:43.064137+00:00",
+      "sha256": "a2e7570ab1ae690460e690133da77fc9dda1cc84965be11d07a0489dd7bde0c0",
+      "sourceURL": "https://gb.go.kr/Main/governor/page.do?BD_CODE=bbs_bodo&B_LEVEL=0&B_NUM=477240001&B_STEP=477240000&Start=50&V_NUM=10540&bdName=&cmd=2&dept_code=&dept_name=&key=4&mnu_uid=6792&p1=0&p2=0&tbbscode1=bbs_bodo&word="
+    },
+    {
+      "downloadURL": "https://www.gb.go.kr/Main/page.do?BD_CODE=bbs_bodo&B_LEVEL=0&B_NUM=477240001&B_STEP=477240000&Start=50&V_NUM=10532&bdName=&cmd=2&dept_code=&dept_name=&key=4&mnu_uid=6792&p1=0&p2=0&tbbscode1=bbs_bodo&word=",
+      "file": "daegu-province-press.html",
+      "finalURL": "https://www.gb.go.kr/page/10107/10004.do",
+      "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+      "retrievedAt": "2026-10-01T03:32:53.020691+00:00",
+      "sha256": "5cd46f7c7912e462d08567690ca797f5ba402a087f8b28751ed6e9f62b43b9c5",
+      "sourceURL": "https://www.gb.go.kr/Main/page.do?BD_CODE=bbs_bodo&B_LEVEL=0&B_NUM=477240001&B_STEP=477240000&Start=50&V_NUM=10532&bdName=&cmd=2&dept_code=&dept_name=&key=4&mnu_uid=6792&p1=0&p2=0&tbbscode1=bbs_bodo&word="
+    },
+    {
+      "downloadURL": "https://uljin.qposkorea.kr/skyrail/resources/templates/front/assets/images/sub/all_course_2208.jpg",
+      "file": "skyrail-course-map.jpg",
+      "finalURL": "https://uljin.qposkorea.kr/skyrail/resources/templates/front/assets/images/sub/all_course_2208.jpg",
+      "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+      "retrievedAt": "2026-10-01T03:32:22.465024+00:00",
+      "sha256": "ec1a51d889e7f1f86caf64de8fe836d9f099e257212d72ee58edcc6fe9ac2af6",
+      "sourceURL": "https://uljin.qposkorea.kr/skyrail/resources/templates/front/assets/images/sub/all_course_2208.jpg"
+    },
+    {
+      "downloadURL": "https://uljin.qposkorea.kr/skyrail/page/5045.html",
+      "file": "skyrail-route.html",
+      "finalURL": "https://uljin.qposkorea.kr/skyrail/page/5045.html",
+      "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+      "retrievedAt": "2026-10-01T03:31:39.945487+00:00",
+      "sha256": "89cc805bd08f0a974ad15a98c9abd5bd22363bcc5be2287f0a5a22b28918dfbb",
+      "sourceURL": "https://uljin.qposkorea.kr/skyrail/page/5045.html"
+    },
+    {
+      "downloadURL": "https://www.ulrt.co.kr/notice/4265",
+      "file": "ulrt-legacy-notice.html",
+      "finalURL": "https://www.ulrt.co.kr/doc/",
+      "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+      "retrievedAt": "2026-10-01T03:25:12.457643+00:00",
+      "sha256": "d7fa593039c5e73b853d7e628e0a08c3545a5a5241ab8ac3d0f2be512ec74a71",
+      "sourceURL": "https://www.ulrt.co.kr/notice/4265"
+    },
+    {
+      "downloadURL": "https://www.ulrt.co.kr/support/1368",
+      "file": "ulrt-legacy-support.html",
+      "finalURL": "https://www.ulrt.co.kr/doc/",
+      "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+      "retrievedAt": "2026-10-01T03:25:12.473081+00:00",
+      "sha256": "d7fa593039c5e73b853d7e628e0a08c3545a5a5241ab8ac3d0f2be512ec74a71",
+      "sourceURL": "https://www.ulrt.co.kr/support/1368"
+    },
+    {
+      "downloadURL": "https://www.wolmiseatrain.or.kr/",
+      "file": "wolmi-main.html",
+      "finalURL": "https://www.wolmiseatrain.or.kr/",
+      "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+      "retrievedAt": "2026-10-01T03:27:05.310883+00:00",
+      "sha256": "3cbe1cac2898b3163f9f5ad7a9084ceaf44f309728fc66170a1ac922976556e0",
+      "sourceURL": "https://www.wolmiseatrain.or.kr/"
+    },
+    {
+      "downloadURL": "https://www.ictr.or.kr/main/wst/intro.jsp",
+      "file": "wolmi-operator-route.html",
+      "finalURL": "https://www.ictr.or.kr/main/wst/intro.jsp",
+      "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+      "retrievedAt": "2026-10-01T03:31:38.839627+00:00",
+      "sha256": "acc2f31811ac04b750d8e9da34b55f6cfd98c84f57c22af44052491432b5701a",
+      "sourceURL": "https://www.ictr.or.kr/main/wst/intro.jsp"
+    },
+    {
+      "downloadURL": "https://www.ictr.or.kr/foreign/eng/wst/intro.jsp",
+      "file": "wolmi-route-en.html",
+      "finalURL": "https://www.ictr.or.kr/foreign/eng/wst/intro.jsp",
+      "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+      "retrievedAt": "2026-10-01T03:33:32.161228+00:00",
+      "sha256": "0add2b268b8500c80b79a83a7a8b9fdba90b909099251b2edf2e28158586b532",
+      "sourceURL": "https://www.ictr.or.kr/foreign/eng/wst/intro.jsp"
+    },
+    {
+      "downloadURL": "https://www.ictr.or.kr/foreign/eng/img/wst_intro_img02.jpg",
+      "file": "wolmi-route-map-en.jpg",
+      "finalURL": "https://www.ictr.or.kr/foreign/eng/img/wst_intro_img02.jpg",
+      "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+      "retrievedAt": "2026-10-01T03:34:03.906184+00:00",
+      "sha256": "5b76c32359b84373e19f3ae6f20e651cf99af6bdd3ebd6b1c59ab9f014c44392",
+      "sourceURL": "https://www.ictr.or.kr/foreign/eng/img/wst_intro_img02.jpg"
+    },
+    {
+      "downloadURL": "https://www.ictr.or.kr/main/img/contents/wst_intro_img02.jpg",
+      "file": "wolmi-route-map.jpg",
+      "finalURL": "https://www.ictr.or.kr/main/img/contents/wst_intro_img02.jpg",
+      "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+      "retrievedAt": "2026-10-01T03:33:04.164951+00:00",
+      "sha256": "66552e92d65500da24b98a291d27404c639fe08b0ce30c7c020866ffebce5366",
+      "sourceURL": "https://www.ictr.or.kr/main/img/contents/wst_intro_img02.jpg"
+    },
+    {
+      "downloadURL": "https://www.ictr.or.kr/main/wst/infomation.jsp",
+      "file": "wolmi-route.html",
+      "finalURL": "https://www.ictr.or.kr/main/wst/infomation.jsp",
+      "rawRoot": "data/station-english-sources/next-official/kr-operators-second-pass",
+      "retrievedAt": "2026-10-01T03:32:22.401965+00:00",
+      "sha256": "e77f97053e820d712682ce637c69083631e1964bd98e40421851f98558b1bda4",
+      "sourceURL": "https://www.ictr.or.kr/main/wst/infomation.jsp"
+    }
+  ],
+  "unresolved": []
+}

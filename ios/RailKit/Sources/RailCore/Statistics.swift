@@ -1267,10 +1267,13 @@ public enum Statistics {
         public var operatorName: String?
         /// Matched edge km attributed to this line over the whole ride.
         public var km: Double
-        public init(name: String, operatorName: String?, km: Double) {
+        /// Physical line identity when this metadata comes from the selected route.
+        public var selectedLineID: String?
+        public init(name: String, operatorName: String?, km: Double, selectedLineID: String? = nil) {
             self.name = name
             self.operatorName = operatorName
             self.km = km
+            self.selectedLineID = selectedLineID
         }
     }
 

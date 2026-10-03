@@ -607,7 +607,7 @@ struct RailDisplayNetworkIndex: Sendable {
 /// The station identity table for one region (`{region}.stations.json`,
 /// docs §4): every line's station rows merged by package station id, with
 /// homonym groups, id collisions and similar-name clusters resolved once at
-/// build time. Read on demand only — nothing in the app wires this up yet.
+/// build time. Read on demand for selected-journey station priorities.
 struct RailDisplayStationTable: Decodable, Sendable {
     struct Station: Decodable, Sendable {
         var key: String
@@ -833,11 +833,6 @@ enum RailDisplayNetwork {
                 detail: effectiveDetail)
     }
 
-    /// Reads and format-checks a region's station identity table
-    /// (`{region}.stations.json`, docs §4). Nothing in the app currently
-    /// loads this — it exists for a future station-identity feature — so
-    /// this is a plain read rather than an `mmap`, and there is no chunk to
-    /// slice.
     /// The history side file, when the manifest names one and the bundle has
     /// it. A missing file is not a failed region — the current network still
     /// draws. A named file whose bytes or digest disagree is.
@@ -863,6 +858,8 @@ enum RailDisplayNetwork {
         return file
     }
 
+    /// Reads station identities separately from viewport geometry, so selected
+    /// journeys can rank hubs even with the network hidden or evicted.
     static func stationIdentity(
         region record: RailDisplayNetworkManifest.RegionRecord, bundle: Bundle = .main
     ) throws -> RailDisplayStationTable {
@@ -1019,7 +1016,8 @@ enum RailDisplayNetwork {
                 company: OperatorBranding.companyFor(
                     operator: line.operator, lineName: line.name),
                 label: label, color: line.color, logo: logo,
-                logoNeedsDarkMatte: OperatorBranding.logoNeedsDarkMatte(logo)))
+                logoNeedsDarkMatte: OperatorBranding.logoNeedsDarkMatte(logo),
+                operatorName: line.operator))
         }
         rows.sort {
             $0.label.compare($1.label, options: [], locale: Locale(identifier: "en_US"))

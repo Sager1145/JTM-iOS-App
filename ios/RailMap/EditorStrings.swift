@@ -20,6 +20,64 @@ import RailCore
 enum EditorStrings {
 
     static let table: [String: [Localization.Language: String]] = [
+
+        "ios.editor.generatedStation": [
+            .zhHans: "由实际线路自动补齐", .zhHant: "由實際路線自動補齊",
+            .ja: "実際の路線から自動補完", .en: "Added from the physical line",
+        ],
+        "ios.editor.chooseEndpointsFirst": [
+            .zhHans: "选择两端车站后，选择实际经过的线路。", .zhHant: "選擇兩端車站後，選擇實際經過的路線。",
+            .ja: "両端の駅を選んでから、実際に走る路線を選択します。", .en: "Choose both endpoint stations, then the physical line.",
+        ],
+        "ios.editor.physicalRouteNote": [
+            .zhHans: "仅显示连接两端的实际线路。中间站会自动补齐为未填写时刻的途经站；时刻与停站信息可另行补充。",
+            .zhHant: "僅顯示連接兩端的實際路線。中間站會自動補齊為未填寫時刻的途經站；時刻與停站資訊可另行補充。",
+            .ja: "両端を結ぶ実際の路線のみ表示します。途中駅は時刻未設定の通過駅として補完し、時刻や停車情報は後から入力できます。",
+            .en: "Only physical lines connecting both endpoints are shown. Intermediate stations are added as untimed pass-through visits; add times and passenger stops separately.",
+        ],
+        "ios.editor.noViableRoute": [
+            .zhHans: "没有符合列车类型且避开已删除车站的可用线路。请选择其他两端车站，或撤销删除。",
+            .zhHant: "沒有符合列車類型且避開已刪除車站的可用路線。請選擇其他兩端車站，或復原刪除。",
+            .ja: "列車種別に合い、削除した駅を避ける経路がありません。両端の駅を変更するか、削除を取り消してください。",
+            .en: "No viable physical route matches this train type and avoids the deleted stations. Change the endpoints or undo the deletion.",
+        ],
+
+        "ios.editor.useOfficialEnglishName": [
+            .zhHans: "使用官方英文名称", .zhHant: "使用官方英文名稱",
+            .ja: "公式英語名を使用", .en: "Use official English name",
+        ],
+        "ios.editor.officialEnglishNameUnavailable": [
+            .zhHans: "暂无匹配的官方英文名称，可自行填写。", .zhHant: "暫無相符的官方英文名稱，可自行填寫。",
+            .ja: "一致する公式英語名は未収録です。自由に入力できます。", .en: "No matching official English name is available. You can enter your own.",
+        ],
+        "ios.editor.sectionServices": [
+            .zhHans: "分段公司、线路与车次", .zhHant: "分段公司、路線與車次",
+            .ja: "区間ごとの会社・路線・列車番号", .en: "Operators, lines and train numbers by section",
+        ],
+        "ios.editor.sectionService": [
+            .zhHans: "区间列车信息", .zhHant: "區間列車資訊",
+            .ja: "区間の列車情報", .en: "Section service",
+        ],
+        "ios.editor.addSectionService": [
+            .zhHans: "添加区间列车信息", .zhHant: "新增區間列車資訊",
+            .ja: "区間の列車情報を追加", .en: "Add section service",
+        ],
+        "ios.editor.applySectionService": [
+            .zhHans: "应用", .zhHant: "套用",
+            .ja: "適用", .en: "Apply",
+        ],
+        "ios.editor.clearSectionService": [
+            .zhHans: "清除所选区间信息", .zhHant: "清除所選區間資訊",
+            .ja: "選択区間の情報を消去", .en: "Clear selected section details",
+        ],
+        "ios.editor.sectionNumberUnknown": [
+            .zhHans: "未填写", .zhHant: "未填寫",
+            .ja: "未入力", .en: "Not entered",
+        ],
+        "ios.editor.sectionServicesNote": [
+            .zhHans: "直通列车可按公司或车次变化处分段。选择起终站后填写该区间的公司、线路及车次；不知道的车次留空。线路及公司也用于确定地图路线。", .zhHant: "直通列車可按公司或車次變化處分段。選擇起終站後填寫該區間的公司、路線及車次；不知道的車次留空。路線及公司也用於確定地圖路徑。",
+            .ja: "直通列車は会社や列車番号が変わる駅で区切れます。開始・終了駅を選び、その区間の会社・路線・列車番号を入力してください。不明な番号は空欄にします。路線と会社は地図の経路探索にも使われます。", .en: "For through-running trains, divide the journey where the operator or number changes. Select the stations and enter that section’s operator, line and train number. Leave unknown numbers blank. Lines and operators also guide the map route.",
+        ],
         "ios.editor.selectExpressStops": [
             .zhHans: "从特急班次导入停站", .zhHant: "從特急班次匯入停站",
             .ja: "特急から駅を入力", .en: "Use limited express stops",
@@ -144,10 +202,10 @@ enum EditorStrings {
             .en: "Type to find suggestions or enter your own value. Vehicle suggestions come from saved journeys.",
         ],
         "ios.editor.step.region": [
-            .zhHans: "选择地区",
-            .zhHant: "選擇地區",
-            .ja: "地域を選択",
-            .en: "Choose a region",
+            .zhHans: "地区与列车类型",
+            .zhHant: "地區與列車類型",
+            .ja: "地域と列車種別",
+            .en: "Region and train type",
         ],
         "ios.editor.step.route": [
             .zhHans: "车站与线路",
@@ -174,16 +232,16 @@ enum EditorStrings {
             .en: "Review journey",
         ],
         "ios.editor.step.regionNote": [
-            .zhHans: "先选择行程所在地区，以显示对应的车站和线路。",
-            .zhHant: "先選擇行程所在地區，以顯示對應的車站和路線。",
-            .ja: "地域を選ぶと、その地域の駅と路線を検索できます。",
-            .en: "Choose the region to search its stations and lines.",
+            .zhHans: "先选择地区和列车类型，再选择两端车站及实际线路。",
+            .zhHant: "先選擇地區和列車類型，再選擇兩端車站及實際路線。",
+            .ja: "地域と列車種別を選んでから、両端の駅と実際の路線を選択します。",
+            .en: "Choose the region and train type first, then the endpoints and physical line.",
         ],
         "ios.editor.step.routeNote": [
-            .zhHans: "依次选择出发站、到达站和途经站，可输入搜索线路。",
-            .zhHant: "依序選擇出發站、到達站和途經站，可輸入搜尋路線。",
-            .ja: "出発駅・到着駅・経由駅を指定し、路線を検索できます。",
-            .en: "Choose departure, arrival and intermediate stops. Search for a line if needed.",
+            .zhHans: "先选择出发站与到达站，再选择连接两端的实际线路。中间站自动补齐。",
+            .zhHant: "先選擇出發站與到達站，再選擇連接兩端的實際路線。中間站自動補齊。",
+            .ja: "出発駅と到着駅を選んでから、両端を結ぶ実際の路線を選択します。途中駅は自動補完されます。",
+            .en: "Choose departure and arrival stations, then a physical line connecting both. Intermediate stations fill automatically.",
         ],
         "ios.editor.step.serviceNote": [
             .zhHans: "特急请填写名称；车次可在下一步从时刻表或 AI 补全。普通列车可留空。",

@@ -95,18 +95,22 @@ bead diameter in `railmap-style.js` are measured against macOS 「地圖」→
 大眾運輸 at 東京駅. Putting the railway back over the reference it was designed
 against is the shorter distance.
 
-The basemap keeps MapKit's default emphasis, so the detail Apple shows at each
-zoom — roads, labels, terrain — is Apple's own; only the railway is tiered by
-zoom (see `NetworkLOD`). Points of interest are excluded so Apple's station pins
-do not compete with our own station marks.
+The standard basemap uses MapKit's default emphasis normally and muted emphasis
+when a journey is selected. Roads and terrain remain visible at normal
+brightness; Apple's place names become less prominent, while the
+app's station names remain available. MapKit's muted style still shows some
+geographic labels. Only the railway is tiered by zoom (see `NetworkLOD`). Points
+of interest are excluded so Apple's station pins do not compete with our own
+station marks. Picking a journey frames its complete route even from an overview;
+its highlight fades in and out, and another pick retargets the running fade.
 
 Every railway mounts at `MKOverlayLevel.aboveLabels` for the same reason. The
 base map's own labelling — road names, expressway shields — is drawn between
 `.aboveRoads` and `.aboveLabels`, so a railway at the lower level is a railway
 a motorway badge can be printed on top of. The web app stacks its rail layers
-above the whole OpenFreeMap style, labels included; this is that order. The one
-thing deliberately left at `.aboveRoads` is the 底圖不透明度 veil, which is what
-keeps the dimming under the railways rather than over them.
+above the whole OpenFreeMap style, labels included; this is that order. The
+basemap is rendered directly without a dark overlay, so camera movement cannot
+shift a dimming mask across the map.
 
 The cost is that the S tier does not port as data. MapLibre style JSON would
 have been read by both renderers; MapKit has no style spec, so the design

@@ -91,8 +91,12 @@ function railScopeCountriesForCountry(country) {
 function railPackageUrlsForCountry(country) {
   return railScopeCountriesForCountry(country).map(railPackageUrlForCountry);
 }
+// Derived table joins curated readings and operator-specific English names.
 function stationReadingsApiForCountry(country) {
-  return AppCore.countrySuffixed("station-readings", country);
+  return AppCore.countrySuffixed(
+    country === "us" || country === "ca" ? "station-readings" : "station-names",
+    country,
+  );
 }
 // Rail-history overlays are optional per region. Listing shipped overlays
 // explicitly distinguishes "this region has no overlay" from a failed fetch
@@ -194,9 +198,8 @@ const COUNTRY_SAMPLE_DATA_APIS = {
   hk: "sample-data-hk",
   mo: "sample-data-mo",
   kr: "sample-data-kr",
-  // No precomputed sample dataset for the two North American packages: the
-  // 資料 card offers a country's loaders only when it has one, and these two
-  // ship their sample itineraries as an ordinary train store instead.
+  us: "sample-data-us",
+  ca: "sample-data-ca",
 };
 const NEW_YEAR_GRAND_LOOP_API = "new-year-grand-loop-data";
 const TOKYO_LIMITED_EXPRESS_LOOP_API = "tokyo-limited-express-loop-data";
@@ -241,7 +244,9 @@ const ROUTE_CACHE_STORE_NAME = "routes";
 // periods until the ride-date filter selects the applicable variant.
 // 24: line/operator-pinned solves must traverse matching physical rail and
 // cannot settle a route made only from station-transfer connectors.
-const ROUTE_SOLVER_CACHE_VERSION = "24";
+// 25: source station memberships prevent transfer connectors from attaching
+// to a sibling branch that does not serve the station.
+const ROUTE_SOLVER_CACHE_VERSION = "25";
 const JAPAN_MAIN_ISLANDS_BOUNDS = [
   [30.85, 129.1],
   [45.75, 146.2],

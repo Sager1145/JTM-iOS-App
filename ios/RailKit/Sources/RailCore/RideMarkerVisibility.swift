@@ -6,6 +6,20 @@
 /// limited express and rapid service declutter at the same scale as an ordinary
 /// train. Station spacing still adjusts that shared floor locally.
 public enum RideMarkerVisibility {
+    /// Selection keeps boundaries and sparse calls visible. Dense stopping
+    /// lists can supply an importance floor; pass-throughs keep their own floor.
+    public static func isVisible(
+        role: String, isSelected: Bool, mapLibreZoom: Double, minimumMapLibreZoom: Double?,
+        selectedCallMinimum: Double? = nil
+    ) -> Bool {
+        if role == "terminal" || role == "xday" { return true }
+        if isSelected && role != "pass" {
+            return selectedCallMinimum.map { mapLibreZoom >= $0 } ?? true
+        }
+        guard let minimumMapLibreZoom else { return true }
+        return mapLibreZoom >= minimumMapLibreZoom
+    }
+
     /// The MapLibre zoom at which a marker starts drawing, or `nil` when it is
     /// a journey boundary and therefore remains visible at every scale.
     ///

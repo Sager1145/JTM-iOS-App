@@ -598,9 +598,12 @@ function collectTrainStatsEntry(train, idx) {
     // category mask can be summed back out of the shared accumulators.
     const edgeStart = edges.length;
     const spanStart = spans.length;
-    if (f.geometry.type === "LineString") walk(f.geometry.coordinates);
-    else if (f.geometry.type === "MultiLineString")
-      f.geometry.coordinates.forEach(walk);
+    const geometry = f.properties.section_codes?.length &&
+      typeof RailMap.sourceRouteGeometry === "function"
+      ? RailMap.sourceRouteGeometry(f.properties) || f.geometry : f.geometry;
+    if (geometry.type === "LineString") walk(geometry.coordinates);
+    else if (geometry.type === "MultiLineString")
+      geometry.coordinates.forEach(walk);
     const from = f.properties.from;
     const to = f.properties.to;
     if (from && to && from !== to) {

@@ -71,9 +71,60 @@ function setRouteSolveInProgress(inProgress) {
   routeSolveInProgress = Boolean(inProgress);
 }
 
+// The reader's Tokyo corridor default. Keep it distinct from a uniqueness
+// claim, and never replace an explicit physical or surface assignment.
+function inferredTokyoConventionalSection(section, train) {
+  const tunnel = "jp-東日本旅客鉄道-総武線-3";
+  const surface = "jp-東日本旅客鉄道-東海道線";
+  const ordered = ["003766", "003872", "004095"];
+  const surfaceStops = new Set(["003795", "003949", "004000", "004061"]);
+  const code = (value, name) => value || ({
+    東京: "003766", 东京: "003766", tokyo: "003766",
+    新橋: "003872", 新桥: "003872", shimbashi: "003872", shinbashi: "003872",
+    品川: "004095", shinagawa: "004095", 有楽町: "003795", 有乐町: "003795",
+    yurakucho: "003795", "yūrakuchō": "003795", 浜松町: "003949", 滨松町: "003949",
+    hamamatsucho: "003949", 田町: "004000", tamachi: "004000",
+    高輪ゲートウェイ: "004061", "高轮gateway": "004061", "takanawa gateway": "004061",
+  }[String(name || "").toLowerCase()]);
+  const type = String(train.train_type || "").toLowerCase();
+  const company = String(train.company || "").toLowerCase();
+  if ((train.region || activeCountry) !== "jp" || section.section_codes?.length
+      || ["highspeed", "high speed", "high-speed", "shinkansen", "新幹線", "新干线", "高速"].some((s) => type.includes(s))
+      || (company && !["jr", "東日本旅客鉄道", "东日本旅客铁道"].some((s) => company.includes(s)))) return section;
+  const untouchedGenerated = (stop) => {
+    const id = stop.n02_station_code;
+    const marker = `railway-route:${stop.ride_segment !== false}:${String(id || "").length}:${id}:${stop.name}`;
+    return id && stop.route_editing?.generated_by === marker && stop.stop_type === "pass_through"
+      && stop.platform_number == null && stop.arrival == null && stop.departure == null
+      && stop.actual_arrival == null && stop.actual_departure == null;
+  };
+  if ((train.stops || []).some((s) => !untouchedGenerated(s)
+      && surfaceStops.has(code(s.n02_station_code, s.name)))
+      || (train.route_sections || []).some((s) => s.line_ids?.includes(surface)
+        || s.section_codes?.some((c) => c.startsWith(`${surface}@`)))) return section;
+  if (section.line_ids?.length) {
+    if (section.line_ids.some((id) => id !== tunnel)) return section;
+  } else if ((section.line_names || []).some((name) =>
+      !["総武", "总武", "横須賀", "横须贺", "sobu", "sōbu", "yokosuka"]
+        .some((s) => String(name).toLowerCase().includes(s)))) return section;
+  const from = code(section.from_n02_station_code, section.from);
+  const to = code(section.to_n02_station_code, section.to);
+  const start = ordered.indexOf(from), end = ordered.indexOf(to);
+  if (start < 0 || end < 0 || start === end) return section;
+  const codes = [];
+  for (let i = Math.min(start, end); i < Math.max(start, end); i++)
+    codes.push(`${tunnel}@${ordered[i]}:${ordered[i + 1]}`);
+  if (start > end) codes.reverse();
+  return { ...section, from_n02_station_code: from, to_n02_station_code: to,
+    line_ids: [tunnel], section_codes: codes,
+    line_names: section.line_names?.length ? section.line_names : ["総武線"],
+    operator_names: section.operator_names?.length ? section.operator_names : ["東日本旅客鉄道"] };
+}
+
 function getTrainRouteTemplateKey(train) {
   return (train.route_sections || [])
-    .map((section) => {
+    .map((value) => {
+      const section = inferredTokyoConventionalSection(value, train);
       const from = section.from_n02_station_code || section.from || "";
       const to = section.to_n02_station_code || section.to || "";
       const lines = (section.line_names || [])
@@ -90,7 +141,10 @@ function getTrainRouteTemplateKey(train) {
       // line_names/operator_names change the route solver constraints, so they
       // must be part of the cache/template key.  Without this, editing only
       // line_names could incorrectly reuse an earlier path for the same endpoints.
-      return `${from}->${to}|lines:${lines}|operators:${operators}`;
+      let key = `${from}->${to}|lines:${lines}|operators:${operators}`;
+      if (section.line_ids?.length) key += `|line_ids:${[...section.line_ids].sort().join(",")}`;
+      if (section.section_codes?.length) key += `|section_codes:${section.section_codes.join(",")}`;
+      return key;
     })
     .join("|");
 }
@@ -587,7 +641,10 @@ function solveTrainRouteSection(
   warnings,
   continuityAnchor = null,
 ) {
-  const result =
+  section = inferredTokyoConventionalSection(section, train);
+  const result = section.section_codes?.length
+    ? solvePhysicalRouteSection(section, segmentIndex, train, allowedCodes)
+    :
     solveTaiwanRouteSectionOnOfficialInterval(
       section,
       segmentIndex,
@@ -609,6 +666,29 @@ function solveTrainRouteSection(
     return;
   }
   generated.push(result);
+}
+
+function solvePhysicalRouteSection(section, segmentIndex, train, allowedCodes) {
+  const properties = {
+    train_id: train.id, route_id: `${train.id}-runtime-primary`,
+    variant_rank: 0, is_primary: true, segment_index: segmentIndex,
+    from: section.from, to: section.to,
+    from_n02_station_code: section.from_n02_station_code,
+    to_n02_station_code: section.to_n02_station_code,
+    required_line_ids: [...(section.line_ids || [])],
+    required_line_names: [...(section.line_names || [])],
+    required_operator_names: [...(section.operator_names || [])],
+    section_codes: [...section.section_codes],
+    allowed_institution_type_codes: allowedCodes,
+    source: "compact_package_physical_intervals",
+    route_choice: "selected_physical_intervals", geometry_role: "single_primary_segment",
+    route_template_key: routeKeyDigest(getTrainRouteTemplateKey(train)),
+    preserve_ordered_geometry: true,
+  };
+  const geometry = typeof RailMap.sourceRouteGeometry === "function"
+    ? RailMap.sourceRouteGeometry(properties) : null;
+  if (!geometry) return null;
+  return { type: "Feature", properties, geometry };
 }
 
 function routeSectionBoundarySharesExplicitStop(previousSection, section) {

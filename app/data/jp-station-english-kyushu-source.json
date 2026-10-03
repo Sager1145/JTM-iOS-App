@@ -1,0 +1,4595 @@
+{
+  "source": "https://www.jrkyushu.co.jp/english/pdf/howtosearch_tips.pdf",
+  "publisher": "Kyushu Railway Company",
+  "operator": "九州旅客鉄道",
+  "retrievedAt": "2026-10-01",
+  "sha256": "119b83b1298e2081acf7c6df2d594cbc425a51f7acc92c9e94e1012b2073ce50",
+  "description": "English and Japanese columns of the operator's multilingual station table; exact operator/Japanese-name identity joins only. Stale and misspelled Japanese rows remain in the review ledger.",
+  "extraction": "pypdf plain text; English cell before Korean text; final cell is Japanese. Remove PDF letter-spacing, preserve known multiword cells, title-case display names. Duplicate route rows collapse only if both language cells agree.",
+  "rebuild": "python3 app/scripts/railway/build-jp-station-english.py --import-jr-kyushu /path/to/howtosearch_tips.pdf (requires pypdf); then run builder without arguments. Two curated bilingual timetable rows retain their page/source evidence.",
+  "licenseNote": "No bulk reuse license identified; short station-name facts only, with attribution.",
+  "supplement": {
+    "source": "https://www.jrkyushu.co.jp/english/pdf/timetable_20260314_20270228.pdf",
+    "validFrom": "2026-03-14",
+    "validUntil": "2027-02-28",
+    "extraction": "Two bilingual station cells on PDF page 5, checked against the published PDF; not decoded through the timetable's broken embedded text font."
+  },
+  "byJapaneseName": {
+    "いこいの村": {
+      "ja": "いこいの村",
+      "en": "Ikoinomura",
+      "publishedEn": "IKOINOMURA",
+      "pages": [
+        6
+      ]
+    },
+    "うきは": {
+      "ja": "うきは",
+      "en": "Ukiha",
+      "publishedEn": "UKIHA",
+      "pages": [
+        5
+      ]
+    },
+    "えびの": {
+      "ja": "えびの",
+      "en": "Ebino",
+      "publishedEn": "EBINO",
+      "pages": [
+        7
+      ]
+    },
+    "えびの上江": {
+      "ja": "えびの上江",
+      "en": "Ebino-Uwae",
+      "publishedEn": "EBINO-UWAE",
+      "pages": [
+        7
+      ]
+    },
+    "えびの飯野": {
+      "ja": "えびの飯野",
+      "en": "Ebino-Iino",
+      "publishedEn": "EBINO-IINO",
+      "pages": [
+        7
+      ]
+    },
+    "けやき台": {
+      "ja": "けやき台",
+      "en": "Keyakidai",
+      "publishedEn": "KEYAKIDAI",
+      "pages": [
+        2
+      ]
+    },
+    "ししぶ": {
+      "ja": "ししぶ",
+      "en": "Shishibu",
+      "publishedEn": "SHISHIBU",
+      "pages": [
+        2
+      ]
+    },
+    "スペースワールド": {
+      "ja": "スペースワールド",
+      "en": "Space World",
+      "publishedEn": "SPACE WORLD",
+      "pages": [
+        2
+      ]
+    },
+    "ハウステンボス": {
+      "ja": "ハウステンボス",
+      "en": "Huis Ten Bosch",
+      "publishedEn": "HUIS TEN BOSCH",
+      "pages": [
+        3
+      ]
+    },
+    "一勝地": {
+      "ja": "一勝地",
+      "en": "Isshochi",
+      "publishedEn": "ISSHOCHI",
+      "pages": [
+        7
+      ]
+    },
+    "一本松": {
+      "ja": "一本松",
+      "en": "Ippommatsu",
+      "publishedEn": "IPPOMMATSU",
+      "pages": [
+        6
+      ]
+    },
+    "一貴山": {
+      "ja": "一貴山",
+      "en": "Ikisan",
+      "publishedEn": "IKISAN",
+      "pages": [
+        4
+      ]
+    },
+    "万ヶ塚": {
+      "ja": "万ヶ塚",
+      "en": "Mangatsuka",
+      "publishedEn": "MANGATSUKA",
+      "pages": [
+        7
+      ]
+    },
+    "三毛門": {
+      "ja": "三毛門",
+      "en": "Mikekado",
+      "publishedEn": "MIKEKADO",
+      "pages": [
+        4
+      ]
+    },
+    "三河内": {
+      "ja": "三河内",
+      "en": "Mikawachi",
+      "publishedEn": "MIKAWACHI",
+      "pages": [
+        3
+      ]
+    },
+    "三股": {
+      "ja": "三股",
+      "en": "Mimata",
+      "publishedEn": "MIMATA",
+      "pages": [
+        5
+      ]
+    },
+    "三角": {
+      "ja": "三角",
+      "en": "Misumi",
+      "publishedEn": "MISUMI",
+      "pages": [
+        4
+      ]
+    },
+    "三里木": {
+      "ja": "三里木",
+      "en": "Sanrigi",
+      "publishedEn": "SANRIGI",
+      "pages": [
+        6
+      ]
+    },
+    "三重町": {
+      "ja": "三重町",
+      "en": "Miemachi",
+      "publishedEn": "MIEMACHI",
+      "pages": [
+        6
+      ]
+    },
+    "三間坂": {
+      "ja": "三間坂",
+      "en": "Mimasaka",
+      "publishedEn": "MIMASAKA",
+      "pages": [
+        3
+      ]
+    },
+    "上三緒": {
+      "ja": "上三緒",
+      "en": "Kami-Mio",
+      "publishedEn": "KAMI-MIO",
+      "pages": [
+        6
+      ]
+    },
+    "上伊万里": {
+      "ja": "上伊万里",
+      "en": "Kami-Imari",
+      "publishedEn": "KAMI-IMARI",
+      "pages": [
+        4
+      ]
+    },
+    "上伊集院": {
+      "ja": "上伊集院",
+      "en": "Kami-Ijuin",
+      "publishedEn": "KAMI-IJUIN",
+      "pages": [
+        3
+      ]
+    },
+    "上岡": {
+      "ja": "上岡",
+      "en": "Kamioka",
+      "publishedEn": "KAMIOKA",
+      "pages": [
+        5
+      ]
+    },
+    "上有田": {
+      "ja": "上有田",
+      "en": "Kami-Arita",
+      "publishedEn": "KAMI-ARITA",
+      "pages": [
+        3
+      ]
+    },
+    "上熊本": {
+      "ja": "上熊本",
+      "en": "Kami-Kumamoto",
+      "publishedEn": "KAMI-KUMAMOTO",
+      "pages": [
+        3
+      ]
+    },
+    "上穂波": {
+      "ja": "上穂波",
+      "en": "Kami-Honami",
+      "publishedEn": "KAMI-HONAMI",
+      "pages": [
+        6
+      ]
+    },
+    "上臼杵": {
+      "ja": "上臼杵",
+      "en": "Kami-Usuki",
+      "publishedEn": "KAMI-USUKI",
+      "pages": [
+        5
+      ]
+    },
+    "下ノ江": {
+      "ja": "下ノ江",
+      "en": "Shitanoe",
+      "publishedEn": "SHITANOE",
+      "pages": [
+        4
+      ]
+    },
+    "下山門": {
+      "ja": "下山門",
+      "en": "Shimoyamato",
+      "publishedEn": "SHIMOYAMATO",
+      "pages": [
+        4
+      ]
+    },
+    "下曽根": {
+      "ja": "下曽根",
+      "en": "Shimo-Sone",
+      "publishedEn": "SHIMO-SONE",
+      "pages": [
+        4
+      ]
+    },
+    "下鴨生": {
+      "ja": "下鴨生",
+      "en": "Shimo-Kamoo",
+      "publishedEn": "SHIMO-KAMOO",
+      "pages": [
+        6
+      ]
+    },
+    "中判田": {
+      "ja": "中判田",
+      "en": "Naka-Handa",
+      "publishedEn": "NAKA-HANDA",
+      "pages": [
+        6
+      ]
+    },
+    "中原": {
+      "ja": "中原",
+      "en": "Nakabaru",
+      "publishedEn": "NAKABARU",
+      "pages": [
+        3
+      ]
+    },
+    "中名": {
+      "ja": "中名",
+      "en": "Nakamyo",
+      "publishedEn": "NAKAMYO",
+      "pages": [
+        7
+      ]
+    },
+    "中多久": {
+      "ja": "中多久",
+      "en": "Naka-Taku",
+      "publishedEn": "NAKA-TAKU",
+      "pages": [
+        4
+      ]
+    },
+    "中山香": {
+      "ja": "中山香",
+      "en": "Naka-Yamaga",
+      "publishedEn": "NAKA-YAMAGA",
+      "pages": [
+        4
+      ]
+    },
+    "中津": {
+      "ja": "中津",
+      "en": "Nakatsu",
+      "publishedEn": "NAKATSU",
+      "pages": [
+        4
+      ]
+    },
+    "中福良": {
+      "ja": "中福良",
+      "en": "Naka-Fukura",
+      "publishedEn": "NAKA-FUKURA",
+      "pages": [
+        7
+      ]
+    },
+    "中間": {
+      "ja": "中間",
+      "en": "Nakama",
+      "publishedEn": "NAKAMA",
+      "pages": [
+        6
+      ]
+    },
+    "串木野": {
+      "ja": "串木野",
+      "en": "Kushikino",
+      "publishedEn": "KUSHIKINO",
+      "pages": [
+        3
+      ]
+    },
+    "串間": {
+      "ja": "串間",
+      "en": "Kushima",
+      "publishedEn": "KUSHIMA",
+      "pages": [
+        8
+      ]
+    },
+    "久保田": {
+      "ja": "久保田",
+      "en": "Kubota",
+      "publishedEn": "KUBOTA",
+      "pages": [
+        3
+      ]
+    },
+    "久留米": {
+      "ja": "久留米",
+      "en": "Kurume",
+      "publishedEn": "KURUME",
+      "pages": [
+        2
+      ]
+    },
+    "久留米大学前": {
+      "ja": "久留米大学前",
+      "en": "Kurume-Daigakumae",
+      "publishedEn": "KURUME-DAIGAKUMAE",
+      "pages": [
+        5
+      ]
+    },
+    "久留米高校前": {
+      "ja": "久留米高校前",
+      "en": "Kurumekoko-Mae",
+      "publishedEn": "KURUMEKOKO-MAE",
+      "pages": [
+        5
+      ]
+    },
+    "九大学研都市": {
+      "ja": "九大学研都市",
+      "en": "Kyudai-Gakkentoshi",
+      "publishedEn": "KYUDAI-GAKKENTOSHI",
+      "pages": [
+        4
+      ]
+    },
+    "九州工大前": {
+      "ja": "九州工大前",
+      "en": "Kyushukodai-Mae",
+      "publishedEn": "KYUSHUKODAI-MAE",
+      "pages": [
+        2
+      ]
+    },
+    "九産大前": {
+      "ja": "九産大前",
+      "en": "Kyusandai-Mae",
+      "publishedEn": "KYUSANDAI-MAE",
+      "pages": [
+        2
+      ]
+    },
+    "九郎原": {
+      "ja": "九郎原",
+      "en": "Kurobaru",
+      "publishedEn": "KUROBARU",
+      "pages": [
+        6
+      ]
+    },
+    "亀川": {
+      "ja": "亀川",
+      "en": "Kamegawa",
+      "publishedEn": "KAMEGAWA",
+      "pages": [
+        4
+      ]
+    },
+    "二島": {
+      "ja": "二島",
+      "en": "Futajima",
+      "publishedEn": "FUTAJIMA",
+      "pages": [
+        6
+      ]
+    },
+    "二日市": {
+      "ja": "二日市",
+      "en": "Futsukaichi",
+      "publishedEn": "FUTSUKAICHI",
+      "pages": [
+        2
+      ]
+    },
+    "二月田": {
+      "ja": "二月田",
+      "en": "Nigatsuden",
+      "publishedEn": "NIGATSUDEN",
+      "pages": [
+        7
+      ]
+    },
+    "五位野": {
+      "ja": "五位野",
+      "en": "Goino",
+      "publishedEn": "GOINO",
+      "pages": [
+        7
+      ]
+    },
+    "五十市": {
+      "ja": "五十市",
+      "en": "Isoichi",
+      "publishedEn": "ISOICHI",
+      "pages": [
+        5
+      ]
+    },
+    "京町温泉": {
+      "ja": "京町温泉",
+      "en": "Kyomachi-Onsen",
+      "publishedEn": "KYOMACHI-ONSEN",
+      "pages": [
+        7
+      ]
+    },
+    "人吉": {
+      "ja": "人吉",
+      "en": "Hitoyoshi",
+      "publishedEn": "HITOYOSHI",
+      "pages": [
+        7
+      ]
+    },
+    "今宿": {
+      "ja": "今宿",
+      "en": "Imajuku",
+      "publishedEn": "IMAJUKU",
+      "pages": [
+        4
+      ]
+    },
+    "今山": {
+      "ja": "今山",
+      "en": "Imayama",
+      "publishedEn": "IMAYAMA",
+      "pages": [
+        6
+      ]
+    },
+    "今津": {
+      "ja": "今津",
+      "en": "Imazu",
+      "publishedEn": "IMAZU",
+      "pages": [
+        4
+      ]
+    },
+    "伊万里": {
+      "ja": "伊万里",
+      "en": "Imari",
+      "publishedEn": "IMARI",
+      "pages": [
+        4
+      ]
+    },
+    "伊比井": {
+      "ja": "伊比井",
+      "en": "Ibii",
+      "publishedEn": "IBII",
+      "pages": [
+        7
+      ]
+    },
+    "伊賀": {
+      "ja": "伊賀",
+      "en": "Iga",
+      "publishedEn": "IGA",
+      "pages": [
+        7
+      ]
+    },
+    "伊賀屋": {
+      "ja": "伊賀屋",
+      "en": "Igaya",
+      "publishedEn": "IGAYA",
+      "pages": [
+        3
+      ]
+    },
+    "伊集院": {
+      "ja": "伊集院",
+      "en": "Ijuin",
+      "publishedEn": "IJUIN",
+      "pages": [
+        3
+      ]
+    },
+    "住吉": {
+      "ja": "住吉",
+      "en": "Sumiyoshi",
+      "publishedEn": "SUMIYOSHI",
+      "pages": [
+        4
+      ]
+    },
+    "佐世保": {
+      "ja": "佐世保",
+      "en": "Sasebo",
+      "publishedEn": "SASEBO",
+      "pages": [
+        3
+      ]
+    },
+    "佐伯": {
+      "ja": "佐伯",
+      "en": "Saiki",
+      "publishedEn": "SAIKI",
+      "pages": [
+        5
+      ]
+    },
+    "佐土原": {
+      "ja": "佐土原",
+      "en": "Sadowara",
+      "publishedEn": "SADOWARA",
+      "pages": [
+        5
+      ]
+    },
+    "佐志生": {
+      "ja": "佐志生",
+      "en": "Sashiu",
+      "publishedEn": "SASHIU",
+      "pages": [
+        4
+      ]
+    },
+    "佐賀": {
+      "ja": "佐賀",
+      "en": "Saga",
+      "publishedEn": "SAGA",
+      "pages": [
+        3
+      ]
+    },
+    "佐里": {
+      "ja": "佐里",
+      "en": "Sari",
+      "publishedEn": "SARI",
+      "pages": [
+        4
+      ]
+    },
+    "光の森": {
+      "ja": "光の森",
+      "en": "Hikarinomori",
+      "publishedEn": "HIKARINOMORI",
+      "pages": [
+        6
+      ]
+    },
+    "光岡": {
+      "ja": "光岡",
+      "en": "Teruoka",
+      "publishedEn": "TERUOKA",
+      "pages": [
+        5
+      ]
+    },
+    "入野": {
+      "ja": "入野",
+      "en": "Irino",
+      "publishedEn": "IRINO",
+      "pages": [
+        7
+      ]
+    },
+    "八代": {
+      "ja": "八代",
+      "en": "Yatsushiro",
+      "publishedEn": "YATSUSHIRO",
+      "pages": [
+        3
+      ]
+    },
+    "八幡": {
+      "ja": "八幡",
+      "en": "Yahata",
+      "publishedEn": "YAHATA",
+      "pages": [
+        2
+      ]
+    },
+    "内之田": {
+      "ja": "内之田",
+      "en": "Uchinoda",
+      "publishedEn": "UCHINODA",
+      "pages": [
+        8
+      ]
+    },
+    "内海": {
+      "ja": "内海",
+      "en": "Uchiumi",
+      "publishedEn": "UCHIUMI",
+      "pages": [
+        7
+      ]
+    },
+    "内牧": {
+      "ja": "内牧",
+      "en": "Uchinomaki",
+      "publishedEn": "UCHINOMAKI",
+      "pages": [
+        6
+      ]
+    },
+    "出水": {
+      "ja": "出水",
+      "en": "Izumi",
+      "publishedEn": "IZUMI",
+      "pages": [
+        3
+      ]
+    },
+    "別府": {
+      "ja": "別府",
+      "en": "Beppu",
+      "publishedEn": "BEPPU",
+      "pages": [
+        4
+      ]
+    },
+    "別府大学": {
+      "ja": "別府大学",
+      "en": "Beppudaigaku",
+      "publishedEn": "BEPPUDAIGAKU",
+      "pages": [
+        4
+      ]
+    },
+    "前之浜": {
+      "ja": "前之浜",
+      "en": "Maenohama",
+      "publishedEn": "MAENOHAMA",
+      "pages": [
+        7
+      ]
+    },
+    "加布里": {
+      "ja": "加布里",
+      "en": "Kafuri",
+      "publishedEn": "KAFURI",
+      "pages": [
+        4
+      ]
+    },
+    "加治木": {
+      "ja": "加治木",
+      "en": "Kajiki",
+      "publishedEn": "KAJIKI",
+      "pages": [
+        5
+      ]
+    },
+    "加納": {
+      "ja": "加納",
+      "en": "Kano",
+      "publishedEn": "KANO",
+      "pages": [
+        5
+      ]
+    },
+    "勝野": {
+      "ja": "勝野",
+      "en": "Katsuno",
+      "publishedEn": "KATSUNO",
+      "pages": [
+        6
+      ]
+    },
+    "北山田": {
+      "ja": "北山田",
+      "en": "Kita-Yamada",
+      "publishedEn": "KITA-YAMADA",
+      "pages": [
+        5
+      ]
+    },
+    "北川": {
+      "ja": "北川",
+      "en": "Kitagawa",
+      "publishedEn": "KITAGAWA",
+      "pages": [
+        5
+      ]
+    },
+    "北延岡": {
+      "ja": "北延岡",
+      "en": "Kita-Nobeoka",
+      "publishedEn": "KITA-NOBEOKA",
+      "pages": [
+        5
+      ]
+    },
+    "北方": {
+      "ja": "北方",
+      "en": "Kitagata",
+      "publishedEn": "KITAGATA",
+      "pages": [
+        3
+      ]
+    },
+    "北永野田": {
+      "ja": "北永野田",
+      "en": "Kita-Naganoda",
+      "publishedEn": "KITA-NAGANODA",
+      "pages": [
+        5
+      ]
+    },
+    "北郷": {
+      "ja": "北郷",
+      "en": "Kitago",
+      "publishedEn": "KITAGO",
+      "pages": [
+        8
+      ]
+    },
+    "千丁": {
+      "ja": "千丁",
+      "en": "Sencho",
+      "publishedEn": "SENCHO",
+      "pages": [
+        3
+      ]
+    },
+    "千早": {
+      "ja": "千早",
+      "en": "Chihaya",
+      "publishedEn": "CHIHAYA",
+      "pages": [
+        2
+      ]
+    },
+    "千綿": {
+      "ja": "千綿",
+      "en": "Chiwata",
+      "publishedEn": "CHIWATA",
+      "pages": [
+        3
+      ]
+    },
+    "千鳥": {
+      "ja": "千鳥",
+      "en": "Chidori",
+      "publishedEn": "CHIDORI",
+      "pages": [
+        2
+      ]
+    },
+    "南久留米": {
+      "ja": "南久留米",
+      "en": "Minami-Kurume",
+      "publishedEn": "MINAMI-KURUME",
+      "pages": [
+        5
+      ]
+    },
+    "南大分": {
+      "ja": "南大分",
+      "en": "Minami-Oita",
+      "publishedEn": "MINAMI-OITA",
+      "pages": [
+        5
+      ]
+    },
+    "南宮崎": {
+      "ja": "南宮崎",
+      "en": "Minami-Miyazaki",
+      "publishedEn": "MINAMI-MIYAZAKI",
+      "pages": [
+        5
+      ]
+    },
+    "南小倉": {
+      "ja": "南小倉",
+      "en": "Minami-Kokura",
+      "publishedEn": "MINAMI-KOKURA",
+      "pages": [
+        4
+      ]
+    },
+    "南延岡": {
+      "ja": "南延岡",
+      "en": "Minami-Nobeoka",
+      "publishedEn": "MINAMI-NOBEOKA",
+      "pages": [
+        5
+      ]
+    },
+    "南方": {
+      "ja": "南方",
+      "en": "Minamikata",
+      "publishedEn": "MINAMIKATA",
+      "pages": [
+        7
+      ]
+    },
+    "南日向": {
+      "ja": "南日向",
+      "en": "Minami-Hyuga",
+      "publishedEn": "MINAMI-HYUGA",
+      "pages": [
+        5
+      ]
+    },
+    "南瀬高": {
+      "ja": "南瀬高",
+      "en": "Minami-Setaka",
+      "publishedEn": "MINAMI-SETAKA",
+      "pages": [
+        2
+      ]
+    },
+    "南熊本": {
+      "ja": "南熊本",
+      "en": "Minami-Kumamoto",
+      "publishedEn": "MINAMI-KUMAMOTO",
+      "pages": [
+        6
+      ]
+    },
+    "南由布": {
+      "ja": "南由布",
+      "en": "Minami-Yufu",
+      "publishedEn": "MINAMI-YUFU",
+      "pages": [
+        5
+      ]
+    },
+    "南福岡": {
+      "ja": "南福岡",
+      "en": "Minami-Fukuoka",
+      "publishedEn": "MINAMI-FUKUOKA",
+      "pages": [
+        2
+      ]
+    },
+    "南荒尾": {
+      "ja": "南荒尾",
+      "en": "Minami-Arao",
+      "publishedEn": "MINAMI-ARAO",
+      "pages": [
+        2
+      ]
+    },
+    "南行橋": {
+      "ja": "南行橋",
+      "en": "Minami-Yukuhashi",
+      "publishedEn": "MINAMI-YUKUHASHI",
+      "pages": [
+        4
+      ]
+    },
+    "南郷": {
+      "ja": "南郷",
+      "en": "Nango",
+      "publishedEn": "NANGO",
+      "pages": [
+        8
+      ]
+    },
+    "南風崎": {
+      "ja": "南風崎",
+      "en": "Haenosaki",
+      "publishedEn": "HAENOSAKI",
+      "pages": [
+        3
+      ]
+    },
+    "南鹿児島": {
+      "ja": "南鹿児島",
+      "en": "Minami-Kagoshima",
+      "publishedEn": "MINAMI-KAGOSHIMA",
+      "pages": [
+        7
+      ]
+    },
+    "博多": {
+      "ja": "博多",
+      "en": "Hakata",
+      "publishedEn": "HAKATA",
+      "pages": [
+        2
+      ]
+    },
+    "原水": {
+      "ja": "原水",
+      "en": "Haramizu",
+      "publishedEn": "HARAMIZU",
+      "pages": [
+        6
+      ]
+    },
+    "原田": {
+      "ja": "原田",
+      "en": "Haruda",
+      "publishedEn": "HARUDA",
+      "pages": [
+        2
+      ]
+    },
+    "原町": {
+      "ja": "原町",
+      "en": "Harumachi",
+      "publishedEn": "HARUMACHI",
+      "pages": [
+        6
+      ]
+    },
+    "厳木": {
+      "ja": "厳木",
+      "en": "Kyuragi",
+      "publishedEn": "KYURAGI",
+      "pages": [
+        4
+      ]
+    },
+    "古国府": {
+      "ja": "古国府",
+      "en": "Furugo",
+      "publishedEn": "FURUGO",
+      "pages": [
+        5
+      ]
+    },
+    "古賀": {
+      "ja": "古賀",
+      "en": "Koga",
+      "publishedEn": "KOGA",
+      "pages": [
+        2
+      ]
+    },
+    "吉塚": {
+      "ja": "吉塚",
+      "en": "Yoshizuka",
+      "publishedEn": "YOSHIZUKA",
+      "pages": [
+        2
+      ]
+    },
+    "吉富": {
+      "ja": "吉富",
+      "en": "Yoshitomi",
+      "publishedEn": "YOSHITOMI",
+      "pages": [
+        4
+      ]
+    },
+    "吉尾": {
+      "ja": "吉尾",
+      "en": "Yoshio",
+      "publishedEn": "YOSHIO",
+      "pages": [
+        7
+      ]
+    },
+    "吉松": {
+      "ja": "吉松",
+      "en": "Yoshimatsu",
+      "publishedEn": "YOSHIMATSU",
+      "pages": [
+        7
+      ]
+    },
+    "吉野": {
+      "ja": "吉野",
+      "en": "Yoshino",
+      "publishedEn": "YOSHINO",
+      "pages": [
+        2
+      ]
+    },
+    "吉野ヶ里公園": {
+      "ja": "吉野ヶ里公園",
+      "en": "Yoshinogari-Koen",
+      "publishedEn": "YOSHINOGARI-KOEN",
+      "pages": [
+        3
+      ]
+    },
+    "向之原": {
+      "ja": "向之原",
+      "en": "Mukainoharu",
+      "publishedEn": "MUKAINOHARU",
+      "pages": [
+        5
+      ]
+    },
+    "周船寺": {
+      "ja": "周船寺",
+      "en": "Susenji",
+      "publishedEn": "SUSENJI",
+      "pages": [
+        4
+      ]
+    },
+    "呼野": {
+      "ja": "呼野",
+      "en": "Yobuno",
+      "publishedEn": "YOBUNO",
+      "pages": [
+        6
+      ]
+    },
+    "和多田": {
+      "ja": "和多田",
+      "en": "Watada",
+      "publishedEn": "WATADA",
+      "pages": [
+        4
+      ]
+    },
+    "和白": {
+      "ja": "和白",
+      "en": "Wajiro",
+      "publishedEn": "WAJIRO",
+      "pages": [
+        7
+      ]
+    },
+    "唐津": {
+      "ja": "唐津",
+      "en": "Karatsu",
+      "publishedEn": "KARATSU",
+      "pages": [
+        4
+      ]
+    },
+    "善導寺": {
+      "ja": "善導寺",
+      "en": "Zendoji",
+      "publishedEn": "ZENDOJI",
+      "pages": [
+        5
+      ]
+    },
+    "喜々津": {
+      "ja": "喜々津",
+      "en": "Kikitsu",
+      "publishedEn": "KIKITSU",
+      "pages": [
+        3
+      ]
+    },
+    "喜入": {
+      "ja": "喜入",
+      "en": "Kiire",
+      "publishedEn": "KIIRE",
+      "pages": [
+        7
+      ]
+    },
+    "嘉例川": {
+      "ja": "嘉例川",
+      "en": "Kareigawa",
+      "publishedEn": "KAREIGAWA",
+      "pages": [
+        7
+      ]
+    },
+    "国分": {
+      "ja": "国分",
+      "en": "Kokubu",
+      "publishedEn": "KOKUBU",
+      "pages": [
+        5
+      ]
+    },
+    "土々呂": {
+      "ja": "土々呂",
+      "en": "Totoro",
+      "publishedEn": "TOTORO",
+      "pages": [
+        5
+      ]
+    },
+    "土井": {
+      "ja": "土井",
+      "en": "Doi",
+      "publishedEn": "DOI",
+      "pages": [
+        7
+      ]
+    },
+    "坂ノ市": {
+      "ja": "坂ノ市",
+      "en": "Sakanoichi",
+      "publishedEn": "SAKANOICHI",
+      "pages": [
+        4
+      ]
+    },
+    "坂之上": {
+      "ja": "坂之上",
+      "en": "Sakanoue",
+      "publishedEn": "SAKANOUE",
+      "pages": [
+        7
+      ]
+    },
+    "坂本": {
+      "ja": "坂本",
+      "en": "Sakamoto",
+      "publishedEn": "SAKAMOTO",
+      "pages": [
+        7
+      ]
+    },
+    "城戸南蔵院前": {
+      "ja": "城戸南蔵院前",
+      "en": "Kidonanzoin-Mae",
+      "publishedEn": "KIDONANZOIN-MAE",
+      "pages": [
+        6
+      ]
+    },
+    "城野": {
+      "ja": "城野",
+      "en": "Jono",
+      "publishedEn": "JONO",
+      "pages": [
+        4
+      ]
+    },
+    "基山": {
+      "ja": "基山",
+      "en": "Kiyama",
+      "publishedEn": "KIYAMA",
+      "pages": [
+        2
+      ]
+    },
+    "多久": {
+      "ja": "多久",
+      "en": "Taku",
+      "publishedEn": "TAKU",
+      "pages": [
+        4
+      ]
+    },
+    "多良": {
+      "ja": "多良",
+      "en": "Tara",
+      "publishedEn": "TARA",
+      "pages": [
+        3
+      ]
+    },
+    "夜明": {
+      "ja": "夜明",
+      "en": "Yoake",
+      "publishedEn": "YOAKE",
+      "pages": [
+        5
+      ]
+    },
+    "大入": {
+      "ja": "大入",
+      "en": "Dainyu",
+      "publishedEn": "DAINYU",
+      "pages": [
+        4
+      ]
+    },
+    "大分": {
+      "ja": "大分",
+      "en": "Oita",
+      "publishedEn": "OITA",
+      "pages": [
+        4
+      ]
+    },
+    "大分大学前": {
+      "ja": "大分大学前",
+      "en": "Oitadaigakumae",
+      "publishedEn": "OITADAIGAKUMAE",
+      "pages": [
+        6
+      ]
+    },
+    "大在": {
+      "ja": "大在",
+      "en": "Ozai",
+      "publishedEn": "OZAI",
+      "pages": [
+        4
+      ]
+    },
+    "大堂津": {
+      "ja": "大堂津",
+      "en": "Odotsu",
+      "publishedEn": "ODOTSU",
+      "pages": [
+        8
+      ]
+    },
+    "大塔": {
+      "ja": "大塔",
+      "en": "Daito",
+      "publishedEn": "DAITO",
+      "pages": [
+        3
+      ]
+    },
+    "大山": {
+      "ja": "大山",
+      "en": "Oyama",
+      "publishedEn": "OYAMA",
+      "pages": [
+        7
+      ]
+    },
+    "大川野": {
+      "ja": "大川野",
+      "en": "Okawano",
+      "publishedEn": "OKAWANO",
+      "pages": [
+        4
+      ]
+    },
+    "大村": {
+      "ja": "大村",
+      "en": "Omura",
+      "publishedEn": "OMURA",
+      "pages": [
+        4
+      ]
+    },
+    "大村車両基地前": {
+      "ja": "大村車両基地前",
+      "en": "Omura Rail Yard",
+      "publishedEn": "OMURA RAIL YARD",
+      "pages": [
+        3
+      ]
+    },
+    "大牟田": {
+      "ja": "大牟田",
+      "en": "Omuta",
+      "publishedEn": "OMUTA",
+      "pages": [
+        2
+      ]
+    },
+    "大町": {
+      "ja": "大町",
+      "en": "Omachi",
+      "publishedEn": "OMACHI",
+      "pages": [
+        3
+      ]
+    },
+    "大畑": {
+      "ja": "大畑",
+      "en": "Okoba",
+      "publishedEn": "OKOBA",
+      "pages": [
+        7
+      ]
+    },
+    "大神": {
+      "ja": "大神",
+      "en": "Oga",
+      "publishedEn": "OGA",
+      "pages": [
+        4
+      ]
+    },
+    "大草": {
+      "ja": "大草",
+      "en": "Okusa",
+      "publishedEn": "OKUSA",
+      "pages": [
+        3
+      ]
+    },
+    "大行司": {
+      "ja": "大行司",
+      "en": "Daigyoji",
+      "publishedEn": "DAIGYOJI",
+      "pages": [
+        6
+      ]
+    },
+    "大野下": {
+      "ja": "大野下",
+      "en": "Onoshimo",
+      "publishedEn": "ONOSHIMO",
+      "pages": [
+        2
+      ]
+    },
+    "大野城": {
+      "ja": "大野城",
+      "en": "Onojo",
+      "publishedEn": "ONOJO",
+      "pages": [
+        2
+      ]
+    },
+    "大隅夏井": {
+      "ja": "大隅夏井",
+      "en": "Osumi-Natsui",
+      "publishedEn": "OSUMI-NATSUI",
+      "pages": [
+        8
+      ]
+    },
+    "大隅大川原": {
+      "ja": "大隅大川原",
+      "en": "Osumi-Okawara",
+      "publishedEn": "OSUMI-OKAWARA",
+      "pages": [
+        5
+      ]
+    },
+    "大隅横川": {
+      "ja": "大隅横川",
+      "en": "Osumi-Yokogawa",
+      "publishedEn": "OSUMI-YOKOGAWA",
+      "pages": [
+        7
+      ]
+    },
+    "大鶴": {
+      "ja": "大鶴",
+      "en": "Otsuru",
+      "publishedEn": "OTSURU",
+      "pages": [
+        6
+      ]
+    },
+    "天ヶ瀬": {
+      "ja": "天ヶ瀬",
+      "en": "Amagase",
+      "publishedEn": "AMAGASE",
+      "pages": [
+        5
+      ]
+    },
+    "天拝山": {
+      "ja": "天拝山",
+      "en": "Tempaizan",
+      "publishedEn": "TEMPAIZAN",
+      "pages": [
+        2
+      ]
+    },
+    "天津": {
+      "ja": "天津",
+      "en": "Amatsu",
+      "publishedEn": "AMATSU",
+      "pages": [
+        4
+      ]
+    },
+    "天神山": {
+      "ja": "天神山",
+      "en": "Tenjinyama",
+      "publishedEn": "TENJINYAMA",
+      "pages": [
+        5
+      ]
+    },
+    "天道": {
+      "ja": "天道",
+      "en": "Tento",
+      "publishedEn": "TENTO",
+      "pages": [
+        6
+      ]
+    },
+    "奈多": {
+      "ja": "奈多",
+      "en": "Nata",
+      "publishedEn": "NATA",
+      "pages": [
+        6
+      ]
+    },
+    "奥洞海": {
+      "ja": "奥洞海",
+      "en": "Oku-Dokai",
+      "publishedEn": "OKU-DOKAI",
+      "pages": [
+        6
+      ]
+    },
+    "姪浜": {
+      "ja": "姪浜",
+      "en": "Meinohama",
+      "publishedEn": "MEINOHAMA",
+      "pages": [
+        4
+      ]
+    },
+    "姶良": {
+      "ja": "姶良",
+      "en": "Aira",
+      "publishedEn": "AIRA",
+      "pages": [
+        5
+      ]
+    },
+    "嬉野温泉": {
+      "ja": "嬉野温泉",
+      "en": "Ureshino-Onsen",
+      "publishedEn": "URESHINO-ONSEN",
+      "pages": [
+        8
+      ]
+    },
+    "子供の国": {
+      "ja": "子供の国",
+      "en": "Kodomonokuni",
+      "publishedEn": "KODOMONOKUNI",
+      "pages": [
+        7
+      ]
+    },
+    "宇佐": {
+      "ja": "宇佐",
+      "en": "Usa",
+      "publishedEn": "USA",
+      "pages": [
+        4
+      ]
+    },
+    "宇土": {
+      "ja": "宇土",
+      "en": "Uto",
+      "publishedEn": "UTO",
+      "pages": [
+        3
+      ]
+    },
+    "宇宿": {
+      "ja": "宇宿",
+      "en": "Usuki",
+      "publishedEn": "USUKI",
+      "pages": [
+        7
+      ]
+    },
+    "宇島": {
+      "ja": "宇島",
+      "en": "Unoshima",
+      "publishedEn": "UNOSHIMA",
+      "pages": [
+        4
+      ]
+    },
+    "宇美": {
+      "ja": "宇美",
+      "en": "Umi",
+      "publishedEn": "UMI",
+      "pages": [
+        7
+      ]
+    },
+    "安部山公园": {
+      "ja": "安部山公园",
+      "en": "Abeyama-Koen",
+      "publishedEn": "ABEYAMA-KOEN",
+      "pages": [
+        4
+      ]
+    },
+    "宗太郎": {
+      "ja": "宗太郎",
+      "en": "Sotaro",
+      "publishedEn": "SOTARO",
+      "pages": [
+        5
+      ]
+    },
+    "宝珠山": {
+      "ja": "宝珠山",
+      "en": "Hoshuyama",
+      "publishedEn": "HOSHUYAMA",
+      "pages": [
+        6
+      ]
+    },
+    "宮ヶ浜": {
+      "ja": "宮ヶ浜",
+      "en": "Miyagahama",
+      "publishedEn": "MIYAGAHAMA",
+      "pages": [
+        7
+      ]
+    },
+    "宮地": {
+      "ja": "宮地",
+      "en": "Miyaji",
+      "publishedEn": "MIYAJI",
+      "pages": [
+        6
+      ]
+    },
+    "宮崎": {
+      "ja": "宮崎",
+      "en": "Miyazaki",
+      "publishedEn": "MIYAZAKI",
+      "pages": [
+        5
+      ]
+    },
+    "宮崎神宮": {
+      "ja": "宮崎神宮",
+      "en": "Miyazakijingu",
+      "publishedEn": "MIYAZAKIJINGU",
+      "pages": [
+        5
+      ]
+    },
+    "宮崎空港": {
+      "ja": "宮崎空港",
+      "en": "Miyazakiairport",
+      "publishedEn": "MIYAZAKIAIRPORT",
+      "pages": [
+        5
+      ]
+    },
+    "富合": {
+      "ja": "富合",
+      "en": "Tomiai",
+      "publishedEn": "TOMIAI",
+      "pages": [
+        3
+      ]
+    },
+    "小串郷": {
+      "ja": "小串郷",
+      "en": "Ogushigo",
+      "publishedEn": "OGUSHIGO",
+      "pages": [
+        3
+      ]
+    },
+    "小倉": {
+      "ja": "小倉",
+      "en": "Kokura",
+      "publishedEn": "KOKURA",
+      "pages": [
+        2
+      ]
+    },
+    "小内海": {
+      "ja": "小内海",
+      "en": "Kouchiumi",
+      "publishedEn": "KOUCHIUMI",
+      "pages": [
+        7
+      ]
+    },
+    "小城": {
+      "ja": "小城",
+      "en": "Ogi",
+      "publishedEn": "OGI",
+      "pages": [
+        4
+      ]
+    },
+    "小川": {
+      "ja": "小川",
+      "en": "Ogawa",
+      "publishedEn": "OGAWA",
+      "pages": [
+        3
+      ]
+    },
+    "小林": {
+      "ja": "小林",
+      "en": "Kobayashi",
+      "publishedEn": "KOBAYASHI",
+      "pages": [
+        7
+      ]
+    },
+    "小森江": {
+      "ja": "小森江",
+      "en": "Komorie",
+      "publishedEn": "KOMORIE",
+      "pages": [
+        2
+      ]
+    },
+    "小江": {
+      "ja": "小江",
+      "en": "Oe",
+      "publishedEn": "OE",
+      "pages": [
+        3
+      ]
+    },
+    "小波瀬西工大前": {
+      "ja": "小波瀬西工大前",
+      "en": "Obasenishikodai-Mae",
+      "publishedEn": "OBASENISHIKODAI-MAE",
+      "pages": [
+        4
+      ]
+    },
+    "小竹": {
+      "ja": "小竹",
+      "en": "Kotake",
+      "publishedEn": "KOTAKE",
+      "pages": [
+        6
+      ]
+    },
+    "小野屋": {
+      "ja": "小野屋",
+      "en": "Onoya",
+      "publishedEn": "ONOYA",
+      "pages": [
+        5
+      ]
+    },
+    "小長井": {
+      "ja": "小長井",
+      "en": "Konagai",
+      "publishedEn": "KONAGAI",
+      "pages": [
+        3
+      ]
+    },
+    "山之口": {
+      "ja": "山之口",
+      "en": "Yamanokuchi",
+      "publishedEn": "YAMANOKUCHI",
+      "pages": [
+        5
+      ]
+    },
+    "山川": {
+      "ja": "山川",
+      "en": "Yamakawa",
+      "publishedEn": "YAMAKAWA",
+      "pages": [
+        7
+      ]
+    },
+    "山本": {
+      "ja": "山本",
+      "en": "Yamamoto",
+      "publishedEn": "YAMAMOTO",
+      "pages": [
+        4
+      ]
+    },
+    "岩屋": {
+      "ja": "岩屋",
+      "en": "Iwaya",
+      "publishedEn": "IWAYA",
+      "pages": [
+        4
+      ]
+    },
+    "岩松": {
+      "ja": "岩松",
+      "en": "Iwamatsu",
+      "publishedEn": "IWAMATSU",
+      "pages": [
+        4
+      ]
+    },
+    "崇城大学前": {
+      "ja": "崇城大学前",
+      "en": "Sojodaigaku-Mae",
+      "publishedEn": "SOJODAIGAKU-MAE",
+      "pages": [
+        3
+      ]
+    },
+    "川内": {
+      "ja": "川内",
+      "en": "Sendai",
+      "publishedEn": "SENDAI",
+      "pages": [
+        3
+      ]
+    },
+    "川南": {
+      "ja": "川南",
+      "en": "Kawaminami",
+      "publishedEn": "KAWAMINAMI",
+      "pages": [
+        5
+      ]
+    },
+    "川尻": {
+      "ja": "川尻",
+      "en": "Kawashiri",
+      "publishedEn": "KAWASHIRI",
+      "pages": [
+        3
+      ]
+    },
+    "川棚": {
+      "ja": "川棚",
+      "en": "Kawatana",
+      "publishedEn": "KAWATANA",
+      "pages": [
+        3
+      ]
+    },
+    "市ノ川": {
+      "ja": "市ノ川",
+      "en": "Ichinokawa",
+      "publishedEn": "ICHINOKAWA",
+      "pages": [
+        6
+      ]
+    },
+    "市布": {
+      "ja": "市布",
+      "en": "Ichinuno",
+      "publishedEn": "ICHINUNO",
+      "pages": [
+        3
+      ]
+    },
+    "市来": {
+      "ja": "市来",
+      "en": "Ichiki",
+      "publishedEn": "ICHIKI",
+      "pages": [
+        3
+      ]
+    },
+    "市棚": {
+      "ja": "市棚",
+      "en": "Ichitana",
+      "publishedEn": "ICHITANA",
+      "pages": [
+        5
+      ]
+    },
+    "帖佐": {
+      "ja": "帖佐",
+      "en": "Chosa",
+      "publishedEn": "CHOSA",
+      "pages": [
+        5
+      ]
+    },
+    "平川": {
+      "ja": "平川",
+      "en": "Hirakawa",
+      "publishedEn": "HIRAKAWA",
+      "pages": [
+        7
+      ]
+    },
+    "平成": {
+      "ja": "平成",
+      "en": "Heisei",
+      "publishedEn": "HEISEI",
+      "pages": [
+        6
+      ]
+    },
+    "幸崎": {
+      "ja": "幸崎",
+      "en": "Kozaki",
+      "publishedEn": "KOZAKI",
+      "pages": [
+        4
+      ]
+    },
+    "広原": {
+      "ja": "広原",
+      "en": "Hirowara",
+      "publishedEn": "HIROWARA",
+      "pages": [
+        7
+      ]
+    },
+    "広木": {
+      "ja": "広木",
+      "en": "Hiroki",
+      "publishedEn": "HIROKI",
+      "pages": [
+        3
+      ]
+    },
+    "庄内": {
+      "ja": "庄内",
+      "en": "Shonai",
+      "publishedEn": "SHONAI",
+      "pages": [
+        5
+      ]
+    },
+    "延岡": {
+      "ja": "延岡",
+      "en": "Nobeoka",
+      "publishedEn": "NOBEOKA",
+      "pages": [
+        5
+      ]
+    },
+    "引治": {
+      "ja": "引治",
+      "en": "Hikiji",
+      "publishedEn": "HIKIJI",
+      "pages": [
+        5
+      ]
+    },
+    "弥生が丘": {
+      "ja": "弥生が丘",
+      "en": "Yayoigaoka",
+      "publishedEn": "YAYOIGAOKA",
+      "pages": [
+        2
+      ]
+    },
+    "彦山": {
+      "ja": "彦山",
+      "en": "Hikosan",
+      "publishedEn": "HIKOSAN",
+      "pages": [
+        6
+      ]
+    },
+    "彼杵": {
+      "ja": "彼杵",
+      "en": "Sonogi",
+      "publishedEn": "SONOGI",
+      "pages": [
+        3
+      ]
+    },
+    "御井": {
+      "ja": "御井",
+      "en": "Mii",
+      "publishedEn": "MII",
+      "pages": [
+        5
+      ]
+    },
+    "御領": {
+      "ja": "御領",
+      "en": "Goryo",
+      "publishedEn": "GORYO",
+      "pages": [
+        7
+      ]
+    },
+    "志井": {
+      "ja": "志井",
+      "en": "Shii",
+      "publishedEn": "SHII",
+      "pages": [
+        6
+      ]
+    },
+    "志井公園": {
+      "ja": "志井公園",
+      "en": "Shii-Koen",
+      "publishedEn": "SHII-KOEN",
+      "pages": [
+        6
+      ]
+    },
+    "志布志": {
+      "ja": "志布志",
+      "en": "Shibushi",
+      "publishedEn": "SHIBUSHI",
+      "pages": [
+        8
+      ]
+    },
+    "恵良": {
+      "ja": "恵良",
+      "en": "Era",
+      "publishedEn": "ERA",
+      "pages": [
+        5
+      ]
+    },
+    "慈眼寺": {
+      "ja": "慈眼寺",
+      "en": "Jigenji",
+      "publishedEn": "JIGENJI",
+      "pages": [
+        7
+      ]
+    },
+    "戸畑": {
+      "ja": "戸畑",
+      "en": "Tobata",
+      "publishedEn": "TOBATA",
+      "pages": [
+        2
+      ]
+    },
+    "折尾": {
+      "ja": "折尾",
+      "en": "Orio",
+      "publishedEn": "ORIO",
+      "pages": [
+        2,
+        6
+      ]
+    },
+    "折生迫": {
+      "ja": "折生迫",
+      "en": "Oryuzako",
+      "publishedEn": "ORYUZAKO",
+      "pages": [
+        7
+      ]
+    },
+    "指宿": {
+      "ja": "指宿",
+      "en": "Ibusuki",
+      "publishedEn": "IBUSUKI",
+      "pages": [
+        7
+      ]
+    },
+    "採銅所": {
+      "ja": "採銅所",
+      "en": "Saidosho",
+      "publishedEn": "SAIDOSHO",
+      "pages": [
+        6
+      ]
+    },
+    "教育大前": {
+      "ja": "教育大前",
+      "en": "Kyoikudai-Mae",
+      "publishedEn": "KYOIKUDAI-MAE",
+      "pages": [
+        2
+      ]
+    },
+    "敷戸": {
+      "ja": "敷戸",
+      "en": "Shikido",
+      "publishedEn": "SHIKIDO",
+      "pages": [
+        6
+      ]
+    },
+    "新入": {
+      "ja": "新入",
+      "en": "Shinnyu",
+      "publishedEn": "SHINNYU",
+      "pages": [
+        6
+      ]
+    },
+    "新八代": {
+      "ja": "新八代",
+      "en": "Shin-Yatsushiro",
+      "publishedEn": "SHIN-YATSUSHIRO",
+      "pages": [
+        3
+      ]
+    },
+    "新原": {
+      "ja": "新原",
+      "en": "Shimbaru",
+      "publishedEn": "SHIMBARU",
+      "pages": [
+        7
+      ]
+    },
+    "新大村": {
+      "ja": "新大村",
+      "en": "Shin-Ōmura",
+      "publishedEn": "Shin-Ōmura",
+      "pages": [
+        5
+      ],
+      "source": "https://www.jrkyushu.co.jp/english/pdf/timetable_20260314_20270228.pdf",
+      "note": "Current bilingual timetable corrects the older station-list SIN-OMURA typo.",
+      "supersededEvidence": {
+        "ja": "新大村",
+        "en": "Sin-Omura",
+        "publishedEn": "SIN-OMURA",
+        "pages": [
+          8
+        ],
+        "source": "https://www.jrkyushu.co.jp/english/pdf/howtosearch_tips.pdf"
+      }
+    },
+    "新大牟田": {
+      "ja": "新大牟田",
+      "en": "Shin-Omuta",
+      "publishedEn": "SHIN-OMUTA",
+      "pages": [
+        2
+      ]
+    },
+    "新宮中央": {
+      "ja": "新宮中央",
+      "en": "Shingu-Chuo",
+      "publishedEn": "SHINGU-CHUO",
+      "pages": [
+        2
+      ]
+    },
+    "新水俣": {
+      "ja": "新水俣",
+      "en": "Shin-Minamata",
+      "publishedEn": "SHIN-MINAMATA",
+      "pages": [
+        3
+      ]
+    },
+    "新水前寺": {
+      "ja": "新水前寺",
+      "en": "Shin-Suizenji",
+      "publishedEn": "SHIN-SUIZENJI",
+      "pages": [
+        6
+      ]
+    },
+    "新玉名": {
+      "ja": "新玉名",
+      "en": "Shin-Tamana",
+      "publishedEn": "SHIN-TAMANA",
+      "pages": [
+        3
+      ]
+    },
+    "新田原": {
+      "ja": "新田原",
+      "en": "Shindembaru",
+      "publishedEn": "SHINDEMBARU",
+      "pages": [
+        4
+      ]
+    },
+    "新飯塚": {
+      "ja": "新飯塚",
+      "en": "Shin-Iizuka",
+      "publishedEn": "SHIN-IIZUKA",
+      "pages": [
+        6
+      ]
+    },
+    "新鳥栖": {
+      "ja": "新鳥栖",
+      "en": "Shin-Tosu",
+      "publishedEn": "SHIN-TOSU",
+      "pages": [
+        3
+      ]
+    },
+    "日代": {
+      "ja": "日代",
+      "en": "Hishiro",
+      "publishedEn": "HISHIRO",
+      "pages": [
+        5
+      ]
+    },
+    "日出": {
+      "ja": "日出",
+      "en": "Hiji",
+      "publishedEn": "HIJI",
+      "pages": [
+        4
+      ]
+    },
+    "日南": {
+      "ja": "日南",
+      "en": "Nichinan",
+      "publishedEn": "NICHINAN",
+      "pages": [
+        8
+      ]
+    },
+    "日向住吉": {
+      "ja": "日向住吉",
+      "en": "Hyuga-Sumiyoshi",
+      "publishedEn": "HYUGA-SUMIYOSHI",
+      "pages": [
+        5
+      ]
+    },
+    "日向前田": {
+      "ja": "日向前田",
+      "en": "Hyuga-Maeda",
+      "publishedEn": "HYUGA-MAEDA",
+      "pages": [
+        7
+      ]
+    },
+    "日向北方": {
+      "ja": "日向北方",
+      "en": "Hyuga-Kitakata",
+      "publishedEn": "HYUGA-KITAKATA",
+      "pages": [
+        8
+      ]
+    },
+    "日向大束": {
+      "ja": "日向大束",
+      "en": "Hyuga-Otsuka",
+      "publishedEn": "HYUGA-OTSUKA",
+      "pages": [
+        8
+      ]
+    },
+    "日向市": {
+      "ja": "日向市",
+      "en": "Hyugashi",
+      "publishedEn": "HYUGASHI",
+      "pages": [
+        5
+      ]
+    },
+    "日向庄内": {
+      "ja": "日向庄内",
+      "en": "Hyuga-Shonai",
+      "publishedEn": "HYUGA-SHONAI",
+      "pages": [
+        7
+      ]
+    },
+    "日向新富": {
+      "ja": "日向新富",
+      "en": "Hyuga-Shintomi",
+      "publishedEn": "HYUGA-SHINTOMI",
+      "pages": [
+        5
+      ]
+    },
+    "日向沓掛": {
+      "ja": "日向沓掛",
+      "en": "Hyuga-Kutsukake",
+      "publishedEn": "HYUGA-KUTSUKAKE",
+      "pages": [
+        5
+      ]
+    },
+    "日向長井": {
+      "ja": "日向長井",
+      "en": "Hyuga-Nagai",
+      "publishedEn": "HYUGA-NAGAI",
+      "pages": [
+        5
+      ]
+    },
+    "日宇": {
+      "ja": "日宇",
+      "en": "Hiu",
+      "publishedEn": "HIU",
+      "pages": [
+        3
+      ]
+    },
+    "日当山": {
+      "ja": "日当山",
+      "en": "Hinatayama",
+      "publishedEn": "HINATAYAMA",
+      "pages": [
+        7
+      ]
+    },
+    "日田": {
+      "ja": "日田",
+      "en": "Hita",
+      "publishedEn": "HITA",
+      "pages": [
+        5
+      ]
+    },
+    "早岐": {
+      "ja": "早岐",
+      "en": "Haiki",
+      "publishedEn": "HAIKI",
+      "pages": [
+        3
+      ]
+    },
+    "旭ヶ丘": {
+      "ja": "旭ヶ丘",
+      "en": "Asahigaoka",
+      "publishedEn": "ASAHIGAOKA",
+      "pages": [
+        5
+      ]
+    },
+    "春日": {
+      "ja": "春日",
+      "en": "Kasuga",
+      "publishedEn": "KASUGA",
+      "pages": [
+        2
+      ]
+    },
+    "暘谷": {
+      "ja": "暘谷",
+      "en": "Yokoku",
+      "publishedEn": "YOKOKU",
+      "pages": [
+        4
+      ]
+    },
+    "曽山寺": {
+      "ja": "曽山寺",
+      "en": "Sosanji",
+      "publishedEn": "SOSANJI",
+      "pages": [
+        7
+      ]
+    },
+    "有佐": {
+      "ja": "有佐",
+      "en": "Arisa",
+      "publishedEn": "ARISA",
+      "pages": [
+        3
+      ]
+    },
+    "有田": {
+      "ja": "有田",
+      "en": "Arita",
+      "publishedEn": "ARITA",
+      "pages": [
+        3
+      ]
+    },
+    "朝地": {
+      "ja": "朝地",
+      "en": "Asaji",
+      "publishedEn": "ASAJI",
+      "pages": [
+        6
+      ]
+    },
+    "木場茶屋": {
+      "ja": "木場茶屋",
+      "en": "Kobanchaya",
+      "publishedEn": "KOBANCHAYA",
+      "pages": [
+        3
+      ]
+    },
+    "木花": {
+      "ja": "木花",
+      "en": "Kibana",
+      "publishedEn": "KIBANA",
+      "pages": [
+        7
+      ]
+    },
+    "木葉": {
+      "ja": "木葉",
+      "en": "Konoha",
+      "publishedEn": "KONOHA",
+      "pages": [
+        3
+      ]
+    },
+    "本城": {
+      "ja": "本城",
+      "en": "Honjo",
+      "publishedEn": "HONJO",
+      "pages": [
+        6
+      ]
+    },
+    "本川内": {
+      "ja": "本川内",
+      "en": "Honkawachi",
+      "publishedEn": "HONKAWACHI",
+      "pages": [
+        3
+      ]
+    },
+    "本牟田部": {
+      "ja": "本牟田部",
+      "en": "Hon-Mutabe",
+      "publishedEn": "HON-MUTABE",
+      "pages": [
+        4
+      ]
+    },
+    "朽網": {
+      "ja": "朽網",
+      "en": "Kusami",
+      "publishedEn": "KUSAMI",
+      "pages": [
+        4
+      ]
+    },
+    "杉河内": {
+      "ja": "杉河内",
+      "en": "Sugikawachi",
+      "publishedEn": "SUGIKAWACHI",
+      "pages": [
+        5
+      ]
+    },
+    "東中津": {
+      "ja": "東中津",
+      "en": "Higashi-Nakatsu",
+      "publishedEn": "HIGASHI-NAKATSU",
+      "pages": [
+        4
+      ]
+    },
+    "東別府": {
+      "ja": "東別府",
+      "en": "Higashi-Beppu",
+      "publishedEn": "HIGASHI-BEPPU",
+      "pages": [
+        4
+      ]
+    },
+    "東唐津": {
+      "ja": "東唐津",
+      "en": "Higashi-Karatsu",
+      "publishedEn": "HIGASHI-KARATSU",
+      "pages": [
+        4
+      ]
+    },
+    "東園": {
+      "ja": "東園",
+      "en": "Higashisono",
+      "publishedEn": "HIGASHISONO",
+      "pages": [
+        3
+      ]
+    },
+    "東多久": {
+      "ja": "東多久",
+      "en": "Higashi-Taku",
+      "publishedEn": "HIGASHI-TAKU",
+      "pages": [
+        4
+      ]
+    },
+    "東市来": {
+      "ja": "東市来",
+      "en": "Higashi-Ichiki",
+      "publishedEn": "HIGASHI-ICHIKI",
+      "pages": [
+        3
+      ]
+    },
+    "東水巻": {
+      "ja": "東水巻",
+      "en": "Higashi-Mizumaki",
+      "publishedEn": "HIGASHI-MIZUMAKI",
+      "pages": [
+        6
+      ]
+    },
+    "東海学園前": {
+      "ja": "東海学園前",
+      "en": "Tokaigakuen-Mae",
+      "publishedEn": "TOKAIGAKUEN-MAE",
+      "pages": [
+        6
+      ]
+    },
+    "東福間": {
+      "ja": "東福間",
+      "en": "Higashi-Fukuma",
+      "publishedEn": "HIGASHI-FUKUMA",
+      "pages": [
+        2
+      ]
+    },
+    "東諌早": {
+      "ja": "東諌早",
+      "en": "Higashi-Isahaya",
+      "publishedEn": "HIGASHI-ISAHAYA",
+      "pages": [
+        3
+      ]
+    },
+    "東郷": {
+      "ja": "東郷",
+      "en": "Togo",
+      "publishedEn": "TOGO",
+      "pages": [
+        2
+      ]
+    },
+    "東都農": {
+      "ja": "東都農",
+      "en": "Higashi-Tsuno",
+      "publishedEn": "HIGASHI-TSUNO",
+      "pages": [
+        5
+      ]
+    },
+    "東開聞": {
+      "ja": "東開聞",
+      "en": "Higashi-Kaimon",
+      "publishedEn": "HIGASHI-KAIMON",
+      "pages": [
+        7
+      ]
+    },
+    "東高崎": {
+      "ja": "東高崎",
+      "en": "Higashi-Takasaki",
+      "publishedEn": "HIGASHI-TAKASAKI",
+      "pages": [
+        7
+      ]
+    },
+    "杵築": {
+      "ja": "杵築",
+      "en": "Kitsuki",
+      "publishedEn": "KITSUKI",
+      "pages": [
+        4
+      ]
+    },
+    "松ヶ浦": {
+      "ja": "松ヶ浦",
+      "en": "Matsugaura",
+      "publishedEn": "MATSUGAURA",
+      "pages": [
+        7
+      ]
+    },
+    "松原": {
+      "ja": "松原",
+      "en": "Matsubara",
+      "publishedEn": "MATSUBARA",
+      "pages": [
+        3
+      ]
+    },
+    "松橋": {
+      "ja": "松橋",
+      "en": "Matsubase",
+      "publishedEn": "MATSUBASE",
+      "pages": [
+        3
+      ]
+    },
+    "枕崎": {
+      "ja": "枕崎",
+      "en": "Makurazaki",
+      "publishedEn": "MAKURAZAKI",
+      "pages": [
+        7
+      ]
+    },
+    "枝光": {
+      "ja": "枝光",
+      "en": "Edamitsu",
+      "publishedEn": "EDAMITSU",
+      "pages": [
+        2
+      ]
+    },
+    "柚須": {
+      "ja": "柚須",
+      "en": "Yusu",
+      "publishedEn": "YUSU",
+      "pages": [
+        6
+      ]
+    },
+    "柳浦": {
+      "ja": "柳浦",
+      "en": "Yanagigaura",
+      "publishedEn": "YANAGIGAURA",
+      "pages": [
+        4
+      ]
+    },
+    "栗野": {
+      "ja": "栗野",
+      "en": "Kurino",
+      "publishedEn": "KURINO",
+      "pages": [
+        7
+      ]
+    },
+    "桂川": {
+      "ja": "桂川",
+      "en": "Keisen",
+      "publishedEn": "KEISEN",
+      "pages": [
+        6
+      ]
+    },
+    "桃川": {
+      "ja": "桃川",
+      "en": "Momonokawa",
+      "publishedEn": "MOMONOKAWA",
+      "pages": [
+        4
+      ]
+    },
+    "植木": {
+      "ja": "植木",
+      "en": "Ueki",
+      "publishedEn": "UEKI",
+      "pages": [
+        3
+      ]
+    },
+    "植村": {
+      "ja": "植村",
+      "en": "Uemura",
+      "publishedEn": "UEMURA",
+      "pages": [
+        7
+      ]
+    },
+    "椎田": {
+      "ja": "椎田",
+      "en": "Shiida",
+      "publishedEn": "SHIIDA",
+      "pages": [
+        4
+      ]
+    },
+    "榎原": {
+      "ja": "榎原",
+      "en": "Yowara",
+      "publishedEn": "YOWARA",
+      "pages": [
+        8
+      ]
+    },
+    "歓遊舎ひこさん": {
+      "ja": "歓遊舎ひこさん",
+      "en": "Kanyusha-Hikosan",
+      "publishedEn": "KANYUSHA-HIKOSAN",
+      "pages": [
+        6
+      ]
+    },
+    "武蔵塚": {
+      "ja": "武蔵塚",
+      "en": "Musashizuka",
+      "publishedEn": "MUSASHIZUKA",
+      "pages": [
+        6
+      ]
+    },
+    "武雄温泉": {
+      "ja": "武雄温泉",
+      "en": "Takeo-Onsen",
+      "publishedEn": "TAKEO-ONSEN",
+      "pages": [
+        3
+      ]
+    },
+    "段": {
+      "ja": "段",
+      "en": "Dan",
+      "publishedEn": "DAN",
+      "pages": [
+        7
+      ]
+    },
+    "水前寺": {
+      "ja": "水前寺",
+      "en": "Suizenji",
+      "publishedEn": "SUIZENJI",
+      "pages": [
+        6
+      ]
+    },
+    "水城": {
+      "ja": "水城",
+      "en": "Mizuki",
+      "publishedEn": "MIZUKI",
+      "pages": [
+        2
+      ]
+    },
+    "水巻": {
+      "ja": "水巻",
+      "en": "Mizumaki",
+      "publishedEn": "MIZUMAKI",
+      "pages": [
+        2
+      ]
+    },
+    "水成川": {
+      "ja": "水成川",
+      "en": "Mizunarikawa",
+      "publishedEn": "MIZUNARIKAWA",
+      "pages": [
+        7
+      ]
+    },
+    "永尾": {
+      "ja": "永尾",
+      "en": "Nagao",
+      "publishedEn": "NAGAO",
+      "pages": [
+        3
+      ]
+    },
+    "江北": {
+      "ja": "江北",
+      "en": "Kōhoku",
+      "publishedEn": "Kōhoku",
+      "pages": [
+        5
+      ],
+      "source": "https://www.jrkyushu.co.jp/english/pdf/timetable_20260314_20270228.pdf",
+      "note": "Current bilingual timetable uses 江北; old 肥前山口 row remains unmatched."
+    },
+    "池尻": {
+      "ja": "池尻",
+      "en": "Ikejiri",
+      "publishedEn": "IKEJIRI",
+      "pages": [
+        6
+      ]
+    },
+    "油津": {
+      "ja": "油津",
+      "en": "Aburatsu",
+      "publishedEn": "ABURATSU",
+      "pages": [
+        8
+      ]
+    },
+    "波多江": {
+      "ja": "波多江",
+      "en": "Hatae",
+      "publishedEn": "HATAE",
+      "pages": [
+        4
+      ]
+    },
+    "波多浦": {
+      "ja": "波多浦",
+      "en": "Hataura",
+      "publishedEn": "HATAURA",
+      "pages": [
+        4
+      ]
+    },
+    "波野": {
+      "ja": "波野",
+      "en": "Namino",
+      "publishedEn": "NAMINO",
+      "pages": [
+        6
+      ]
+    },
+    "津久見": {
+      "ja": "津久見",
+      "en": "Tsukumi",
+      "publishedEn": "TSUKUMI",
+      "pages": [
+        5
+      ]
+    },
+    "浅海井": {
+      "ja": "浅海井",
+      "en": "Azamui",
+      "publishedEn": "AZAMUI",
+      "pages": [
+        5
+      ]
+    },
+    "浜崎": {
+      "ja": "浜崎",
+      "en": "Hamasaki",
+      "publishedEn": "HAMASAKI",
+      "pages": [
+        4
+      ]
+    },
+    "浦上": {
+      "ja": "浦上",
+      "en": "Urakami",
+      "publishedEn": "URAKAMI",
+      "pages": [
+        3
+      ]
+    },
+    "浦田": {
+      "ja": "浦田",
+      "en": "Urata",
+      "publishedEn": "URATA",
+      "pages": [
+        6
+      ]
+    },
+    "海ノ中道": {
+      "ja": "海ノ中道",
+      "en": "Uminonakamichi",
+      "publishedEn": "UMINONAKAMICHI",
+      "pages": [
+        6
+      ]
+    },
+    "海崎": {
+      "ja": "海崎",
+      "en": "Kaizaki",
+      "publishedEn": "KAIZAKI",
+      "pages": [
+        5
+      ]
+    },
+    "海老津": {
+      "ja": "海老津",
+      "en": "Ebitsu",
+      "publishedEn": "EBITSU",
+      "pages": [
+        2
+      ]
+    },
+    "海路": {
+      "ja": "海路",
+      "en": "Kaiji",
+      "publishedEn": "KAIJI",
+      "pages": [
+        7
+      ]
+    },
+    "添田": {
+      "ja": "添田",
+      "en": "Soeda",
+      "publishedEn": "SOEDA",
+      "pages": [
+        6
+      ]
+    },
+    "清武": {
+      "ja": "清武",
+      "en": "Kiyotake",
+      "publishedEn": "KIYOTAKE",
+      "pages": [
+        5
+      ]
+    },
+    "渡": {
+      "ja": "渡",
+      "en": "Watari",
+      "publishedEn": "WATARI",
+      "pages": [
+        7
+      ]
+    },
+    "渡瀬": {
+      "ja": "渡瀬",
+      "en": "Wataze",
+      "publishedEn": "WATAZE",
+      "pages": [
+        2
+      ]
+    },
+    "湯之元": {
+      "ja": "湯之元",
+      "en": "Yunomoto",
+      "publishedEn": "YUNOMOTO",
+      "pages": [
+        3
+      ]
+    },
+    "湯平": {
+      "ja": "湯平",
+      "en": "Yunohira",
+      "publishedEn": "YUNOHIRA",
+      "pages": [
+        5
+      ]
+    },
+    "湯江": {
+      "ja": "湯江",
+      "en": "Yue",
+      "publishedEn": "YUE",
+      "pages": [
+        3
+      ]
+    },
+    "滝尾": {
+      "ja": "滝尾",
+      "en": "Takio",
+      "publishedEn": "TAKIO",
+      "pages": [
+        6
+      ]
+    },
+    "滝水": {
+      "ja": "滝水",
+      "en": "Takimizu",
+      "publishedEn": "TAKIMIZU",
+      "pages": [
+        6
+      ]
+    },
+    "瀬々串": {
+      "ja": "瀬々串",
+      "en": "Sesekushi",
+      "publishedEn": "SESEKUSHI",
+      "pages": [
+        7
+      ]
+    },
+    "瀬戸石": {
+      "ja": "瀬戸石",
+      "en": "Setoishi",
+      "publishedEn": "SETOISHI",
+      "pages": [
+        7
+      ]
+    },
+    "瀬田": {
+      "ja": "瀬田",
+      "en": "Seta",
+      "publishedEn": "SETA",
+      "pages": [
+        6
+      ]
+    },
+    "瀬高": {
+      "ja": "瀬高",
+      "en": "Setaka",
+      "publishedEn": "SETAKA",
+      "pages": [
+        2
+      ]
+    },
+    "熊崎": {
+      "ja": "熊崎",
+      "en": "Kumasaki",
+      "publishedEn": "KUMASAKI",
+      "pages": [
+        5
+      ]
+    },
+    "熊本": {
+      "ja": "熊本",
+      "en": "Kumamoto",
+      "publishedEn": "KUMAMOTO",
+      "pages": [
+        3
+      ]
+    },
+    "牛津": {
+      "ja": "牛津",
+      "en": "Ushizu",
+      "publishedEn": "USHIZU",
+      "pages": [
+        3
+      ]
+    },
+    "牧": {
+      "ja": "牧",
+      "en": "Maki",
+      "publishedEn": "MAKI",
+      "pages": [
+        4
+      ]
+    },
+    "犬飼": {
+      "ja": "犬飼",
+      "en": "Inukai",
+      "publishedEn": "INUKAI",
+      "pages": [
+        6
+      ]
+    },
+    "狩生": {
+      "ja": "狩生",
+      "en": "Kariu",
+      "publishedEn": "KARIU",
+      "pages": [
+        5
+      ]
+    },
+    "玉名": {
+      "ja": "玉名",
+      "en": "Tamana",
+      "publishedEn": "TAMANA",
+      "pages": [
+        3
+      ]
+    },
+    "玉来": {
+      "ja": "玉来",
+      "en": "Tamarai",
+      "publishedEn": "TAMARAI",
+      "pages": [
+        6
+      ]
+    },
+    "現川": {
+      "ja": "現川",
+      "en": "Utsutsugawa",
+      "publishedEn": "UTSUTSUGAWA",
+      "pages": [
+        3
+      ]
+    },
+    "球泉洞": {
+      "ja": "球泉洞",
+      "en": "Kyusendo",
+      "publishedEn": "KYUSENDO",
+      "pages": [
+        7
+      ]
+    },
+    "生見": {
+      "ja": "生見",
+      "en": "Nukumi",
+      "publishedEn": "NUKUMI",
+      "pages": [
+        7
+      ]
+    },
+    "田主丸": {
+      "ja": "田主丸",
+      "en": "Tanushimaru",
+      "publishedEn": "TANUSHIMARU",
+      "pages": [
+        5
+      ]
+    },
+    "田代": {
+      "ja": "田代",
+      "en": "Tashiro",
+      "publishedEn": "TASHIRO",
+      "pages": [
+        2
+      ]
+    },
+    "田原坂": {
+      "ja": "田原坂",
+      "en": "Tabaruzaka",
+      "publishedEn": "TABARUZAKA",
+      "pages": [
+        3
+      ]
+    },
+    "田吉": {
+      "ja": "田吉",
+      "en": "Tayoshi",
+      "publishedEn": "TAYOSHI",
+      "pages": [
+        5,
+        7
+      ]
+    },
+    "田川伊田": {
+      "ja": "田川伊田",
+      "en": "Tagawaita",
+      "publishedEn": "TAGAWAITA",
+      "pages": [
+        6
+      ]
+    },
+    "田川後藤寺": {
+      "ja": "田川後藤寺",
+      "en": "Tagawagotoji",
+      "publishedEn": "TAGAWAGOTOJI",
+      "pages": [
+        6
+      ]
+    },
+    "田野": {
+      "ja": "田野",
+      "en": "Tano",
+      "publishedEn": "TANO",
+      "pages": [
+        5
+      ]
+    },
+    "由布院": {
+      "ja": "由布院",
+      "en": "Yufuin",
+      "publishedEn": "YUFUIN",
+      "pages": [
+        5
+      ]
+    },
+    "白沢": {
+      "ja": "白沢",
+      "en": "Shirasawa",
+      "publishedEn": "SHIRASAWA",
+      "pages": [
+        7
+      ]
+    },
+    "白石": {
+      "ja": "白石",
+      "en": "Shiroishi",
+      "publishedEn": "SHIROISHI",
+      "pages": [
+        7
+      ]
+    },
+    "直川": {
+      "ja": "直川",
+      "en": "Naokawa",
+      "publishedEn": "NAOKAWA",
+      "pages": [
+        5
+      ]
+    },
+    "直方": {
+      "ja": "直方",
+      "en": "Nogata",
+      "publishedEn": "NOGATA",
+      "pages": [
+        6
+      ]
+    },
+    "直見": {
+      "ja": "直見",
+      "en": "Naomi",
+      "publishedEn": "NAOMI",
+      "pages": [
+        5
+      ]
+    },
+    "相知": {
+      "ja": "相知",
+      "en": "Ochi",
+      "publishedEn": "OCHI",
+      "pages": [
+        4
+      ]
+    },
+    "真幸": {
+      "ja": "真幸",
+      "en": "Masaki",
+      "publishedEn": "MASAKI",
+      "pages": [
+        7
+      ]
+    },
+    "矢岳": {
+      "ja": "矢岳",
+      "en": "Yatake",
+      "publishedEn": "YATAKE",
+      "pages": [
+        7
+      ]
+    },
+    "石原町": {
+      "ja": "石原町",
+      "en": "Ishiharamachi",
+      "publishedEn": "ISHIHARAMACHI",
+      "pages": [
+        6
+      ]
+    },
+    "石垣": {
+      "ja": "石垣",
+      "en": "Ishikaki",
+      "publishedEn": "ISHIKAKI",
+      "pages": [
+        7
+      ]
+    },
+    "石打ダム": {
+      "ja": "石打ダム",
+      "en": "Ishiuchi-Dam",
+      "publishedEn": "ISHIUCHI-DAM",
+      "pages": [
+        4
+      ]
+    },
+    "石田": {
+      "ja": "石田",
+      "en": "Ishida",
+      "publishedEn": "ISHIDA",
+      "pages": [
+        6
+      ]
+    },
+    "神崎": {
+      "ja": "神崎",
+      "en": "Kanzaki",
+      "publishedEn": "KANZAKI",
+      "pages": [
+        3
+      ]
+    },
+    "神村学園前": {
+      "ja": "神村学園前",
+      "en": "Kamimuragakuen-Mae",
+      "publishedEn": "KAMIMURAGAKUEN-MAE",
+      "pages": [
+        3
+      ]
+    },
+    "福吉": {
+      "ja": "福吉",
+      "en": "Fukuyoshi",
+      "publishedEn": "FUKUYOSHI",
+      "pages": [
+        4
+      ]
+    },
+    "福島今町": {
+      "ja": "福島今町",
+      "en": "Fukushima-Imamachi",
+      "publishedEn": "FUKUSHIMA-IMAMACHI",
+      "pages": [
+        8
+      ]
+    },
+    "福島高松": {
+      "ja": "福島高松",
+      "en": "Fukushima-Takamatsu",
+      "publishedEn": "FUKUSHIMA-TAKAMATSU",
+      "pages": [
+        8
+      ]
+    },
+    "福工大前": {
+      "ja": "福工大前",
+      "en": "Fukkodai-Mae",
+      "publishedEn": "FUKKODAI-MAE",
+      "pages": [
+        2
+      ]
+    },
+    "福間": {
+      "ja": "福間",
+      "en": "Fukuma",
+      "publishedEn": "FUKUMA",
+      "pages": [
+        2
+      ]
+    },
+    "立石": {
+      "ja": "立石",
+      "en": "Tateishi",
+      "publishedEn": "TATEISHI",
+      "pages": [
+        4
+      ]
+    },
+    "立野": {
+      "ja": "立野",
+      "en": "Tateno",
+      "publishedEn": "TATENO",
+      "pages": [
+        6
+      ]
+    },
+    "竜ヶ水": {
+      "ja": "竜ヶ水",
+      "en": "Ryugamizu",
+      "publishedEn": "RYUGAMIZU",
+      "pages": [
+        5
+      ]
+    },
+    "竜田口": {
+      "ja": "竜田口",
+      "en": "Tatsutaguchi",
+      "publishedEn": "TATSUTAGUCHI",
+      "pages": [
+        6
+      ]
+    },
+    "竹下": {
+      "ja": "竹下",
+      "en": "Takeshita",
+      "publishedEn": "TAKESHITA",
+      "pages": [
+        2
+      ]
+    },
+    "竹中": {
+      "ja": "竹中",
+      "en": "Takenaka",
+      "publishedEn": "TAKENAKA",
+      "pages": [
+        6
+      ]
+    },
+    "竹松": {
+      "ja": "竹松",
+      "en": "Takematsu",
+      "publishedEn": "TAKEMATSU",
+      "pages": [
+        3
+      ]
+    },
+    "笹原": {
+      "ja": "笹原",
+      "en": "Sasabaru",
+      "publishedEn": "SASABARU",
+      "pages": [
+        2
+      ]
+    },
+    "筑前内野": {
+      "ja": "筑前内野",
+      "en": "Chikuzen-Uchino",
+      "publishedEn": "CHIKUZEN-UCHINO",
+      "pages": [
+        6
+      ]
+    },
+    "筑前前原": {
+      "ja": "筑前前原",
+      "en": "Chikuzen-Maebaru",
+      "publishedEn": "CHIKUZEN-MAEBARU",
+      "pages": [
+        4
+      ]
+    },
+    "筑前垣生": {
+      "ja": "筑前垣生",
+      "en": "Chikuzen-Habu",
+      "publishedEn": "CHIKUZEN-HABU",
+      "pages": [
+        6
+      ]
+    },
+    "筑前大分": {
+      "ja": "筑前大分",
+      "en": "Chikuzen-Daibu",
+      "publishedEn": "CHIKUZEN-DAIBU",
+      "pages": [
+        6
+      ]
+    },
+    "筑前山家": {
+      "ja": "筑前山家",
+      "en": "Chikuzen-Yamae",
+      "publishedEn": "CHIKUZEN-YAMAE",
+      "pages": [
+        6
+      ]
+    },
+    "筑前山手": {
+      "ja": "筑前山手",
+      "en": "Chikuzen-Yamate",
+      "publishedEn": "CHIKUZEN-YAMATE",
+      "pages": [
+        6
+      ]
+    },
+    "筑前岩屋": {
+      "ja": "筑前岩屋",
+      "en": "Chikuzen-Iwaya",
+      "publishedEn": "CHIKUZEN-IWAYA",
+      "pages": [
+        6
+      ]
+    },
+    "筑前庄内": {
+      "ja": "筑前庄内",
+      "en": "Chikuzen-Shonai",
+      "publishedEn": "CHIKUZEN-SHONAI",
+      "pages": [
+        6
+      ]
+    },
+    "筑前植木": {
+      "ja": "筑前植木",
+      "en": "Chikuzen-Ueki",
+      "publishedEn": "CHIKUZEN-UEKI",
+      "pages": [
+        6
+      ]
+    },
+    "筑前深江": {
+      "ja": "筑前深江",
+      "en": "Chikuzen-Fukae",
+      "publishedEn": "CHIKUZEN-FUKAE",
+      "pages": [
+        4
+      ]
+    },
+    "筑城": {
+      "ja": "筑城",
+      "en": "Tsuiki",
+      "publishedEn": "TSUIKI",
+      "pages": [
+        4
+      ]
+    },
+    "筑後吉井": {
+      "ja": "筑後吉井",
+      "en": "Chikugo-Yoshii",
+      "publishedEn": "CHIKUGO-YOSHII",
+      "pages": [
+        5
+      ]
+    },
+    "筑後大石": {
+      "ja": "筑後大石",
+      "en": "Chikugo-Oishi",
+      "publishedEn": "CHIKUGO-OISHI",
+      "pages": [
+        5
+      ]
+    },
+    "筑後船小屋": {
+      "ja": "筑後船小屋",
+      "en": "Chikugo-Funagoya",
+      "publishedEn": "CHIKUGO-FUNAGOYA",
+      "pages": [
+        2
+      ]
+    },
+    "筑後草野": {
+      "ja": "筑後草野",
+      "en": "Chikugo-Kusano",
+      "publishedEn": "CHIKUGO-KUSANO",
+      "pages": [
+        5
+      ]
+    },
+    "箱崎": {
+      "ja": "箱崎",
+      "en": "Hakozaki",
+      "publishedEn": "HAKOZAKI",
+      "pages": [
+        2
+      ]
+    },
+    "篠栗": {
+      "ja": "篠栗",
+      "en": "Sasaguri",
+      "publishedEn": "SASAGURI",
+      "pages": [
+        6
+      ]
+    },
+    "糸島高校前": {
+      "ja": "糸島高校前",
+      "en": "Itoshimakoko-Mae",
+      "publishedEn": "ITOSHIMAKOKO-MAE",
+      "pages": [
+        4
+      ]
+    },
+    "網田": {
+      "ja": "網田",
+      "en": "Oda",
+      "publishedEn": "ODA",
+      "pages": [
+        4
+      ]
+    },
+    "緑川": {
+      "ja": "緑川",
+      "en": "Midorikawa",
+      "publishedEn": "MIDORIKAWA",
+      "pages": [
+        4
+      ]
+    },
+    "緒方": {
+      "ja": "緒方",
+      "en": "Ogata",
+      "publishedEn": "OGATA",
+      "pages": [
+        6
+      ]
+    },
+    "美々津": {
+      "ja": "美々津",
+      "en": "Mimitsu",
+      "publishedEn": "MIMITSU",
+      "pages": [
+        5
+      ]
+    },
+    "美咲が丘": {
+      "ja": "美咲が丘",
+      "en": "Misakigaoka",
+      "publishedEn": "MISAKIGAOKA",
+      "pages": [
+        4
+      ]
+    },
+    "羽犬塚": {
+      "ja": "羽犬塚",
+      "en": "Hainuzuka",
+      "publishedEn": "HAINUZUKA",
+      "pages": [
+        2
+      ]
+    },
+    "肥前七浦": {
+      "ja": "肥前七浦",
+      "en": "Hizen-Nanaura",
+      "publishedEn": "HIZEN-NANAURA",
+      "pages": [
+        3
+      ]
+    },
+    "肥前久保": {
+      "ja": "肥前久保",
+      "en": "Hizen-Kubo",
+      "publishedEn": "HIZEN-KUBO",
+      "pages": [
+        4
+      ]
+    },
+    "肥前古賀": {
+      "ja": "肥前古賀",
+      "en": "Hizen-Koga",
+      "publishedEn": "HIZEN-KOGA",
+      "pages": [
+        3
+      ]
+    },
+    "肥前大浦": {
+      "ja": "肥前大浦",
+      "en": "Hizen-Oura",
+      "publishedEn": "HIZEN-OURA",
+      "pages": [
+        3
+      ]
+    },
+    "肥前山口": {
+      "ja": "肥前山口",
+      "en": "Hizen-Yamaguchi",
+      "publishedEn": "HIZEN-YAMAGUCHI",
+      "pages": [
+        3
+      ]
+    },
+    "肥前旭": {
+      "ja": "肥前旭",
+      "en": "Hizen-Asahi",
+      "publishedEn": "HIZEN-ASAHI",
+      "pages": [
+        2
+      ]
+    },
+    "肥前浜": {
+      "ja": "肥前浜",
+      "en": "Hizen-Hama",
+      "publishedEn": "HIZEN-HAMA",
+      "pages": [
+        3
+      ]
+    },
+    "肥前白石": {
+      "ja": "肥前白石",
+      "en": "Hizen-Shiroishi",
+      "publishedEn": "HIZEN-SHIROISHI",
+      "pages": [
+        3
+      ]
+    },
+    "肥前竜王": {
+      "ja": "肥前竜王",
+      "en": "Hizen-Ryuo",
+      "publishedEn": "HIZEN-RYUO",
+      "pages": [
+        3
+      ]
+    },
+    "肥前長田": {
+      "ja": "肥前長田",
+      "en": "Hizen-Nagata",
+      "publishedEn": "HIZEN-NAGATA",
+      "pages": [
+        3
+      ]
+    },
+    "肥前長野": {
+      "ja": "肥前長野",
+      "en": "Hizen-Nagano",
+      "publishedEn": "HIZEN-NAGANO",
+      "pages": [
+        4
+      ]
+    },
+    "肥前飯田": {
+      "ja": "肥前飯田",
+      "en": "Hizen-Iida",
+      "publishedEn": "HIZEN-IIDA",
+      "pages": [
+        3
+      ]
+    },
+    "肥前鹿島": {
+      "ja": "肥前鹿島",
+      "en": "Hizen-Kashima",
+      "publishedEn": "HIZEN-KASHIMA",
+      "pages": [
+        3
+      ]
+    },
+    "肥前麓": {
+      "ja": "肥前麓",
+      "en": "Hizen-Fumoto",
+      "publishedEn": "HIZEN-FUMOTO",
+      "pages": [
+        3
+      ]
+    },
+    "肥後伊倉": {
+      "ja": "肥後伊倉",
+      "en": "Higo-Ikura",
+      "publishedEn": "HIGO-IKURA",
+      "pages": [
+        3
+      ]
+    },
+    "肥後大津": {
+      "ja": "肥後大津",
+      "en": "Higo-Ozu",
+      "publishedEn": "HIGO-OZU",
+      "pages": [
+        6
+      ]
+    },
+    "肥後長浜": {
+      "ja": "肥後長浜",
+      "en": "Higo-Nagahama",
+      "publishedEn": "HIGO-NAGAHAMA",
+      "pages": [
+        4
+      ]
+    },
+    "臼杵": {
+      "ja": "臼杵",
+      "en": "Usuki",
+      "publishedEn": "USUKI",
+      "pages": [
+        5
+      ]
+    },
+    "舞松原": {
+      "ja": "舞松原",
+      "en": "Maimatsubara",
+      "publishedEn": "MAIMATSUBARA",
+      "pages": [
+        7
+      ]
+    },
+    "船尾": {
+      "ja": "船尾",
+      "en": "Funao",
+      "publishedEn": "FUNAO",
+      "pages": [
+        6
+      ]
+    },
+    "苅田": {
+      "ja": "苅田",
+      "en": "Kanda",
+      "publishedEn": "KANDA",
+      "pages": [
+        4
+      ]
+    },
+    "若松": {
+      "ja": "若松",
+      "en": "Wakamatsu",
+      "publishedEn": "WAKAMATSU",
+      "pages": [
+        6
+      ]
+    },
+    "荒尾": {
+      "ja": "荒尾",
+      "en": "Arao",
+      "publishedEn": "ARAO",
+      "pages": [
+        2
+      ]
+    },
+    "荒木": {
+      "ja": "荒木",
+      "en": "Araki",
+      "publishedEn": "ARAKI",
+      "pages": [
+        2
+      ]
+    },
+    "菅尾": {
+      "ja": "菅尾",
+      "en": "Sugao",
+      "publishedEn": "SUGAO",
+      "pages": [
+        6
+      ]
+    },
+    "葉木": {
+      "ja": "葉木",
+      "en": "Haki",
+      "publishedEn": "HAKI",
+      "pages": [
+        7
+      ]
+    },
+    "蓮ヶ池": {
+      "ja": "蓮ヶ池",
+      "en": "Hasugaike",
+      "publishedEn": "HASUGAIKE",
+      "pages": [
+        5
+      ]
+    },
+    "薩摩今和泉": {
+      "ja": "薩摩今和泉",
+      "en": "Satsuma-Imaizumi",
+      "publishedEn": "SATSUMA-IMAIZUMI",
+      "pages": [
+        7
+      ]
+    },
+    "薩摩塩屋": {
+      "ja": "薩摩塩屋",
+      "en": "Satsuma-Shioya",
+      "publishedEn": "SATSUMA-SHIOYA",
+      "pages": [
+        7
+      ]
+    },
+    "薩摩川尻": {
+      "ja": "薩摩川尻",
+      "en": "Satsuma-Kawashiri",
+      "publishedEn": "SATSUMA-KAWASHIRI",
+      "pages": [
+        7
+      ]
+    },
+    "薩摩松元": {
+      "ja": "薩摩松元",
+      "en": "Satsuma-Matsumoto",
+      "publishedEn": "SATSUMA-MATSUMOTO",
+      "pages": [
+        3
+      ]
+    },
+    "薩摩板敷": {
+      "ja": "薩摩板敷",
+      "en": "Satsuma-Itashiki",
+      "publishedEn": "SATSUMA-ITASHIKI",
+      "pages": [
+        7
+      ]
+    },
+    "藤ノ木": {
+      "ja": "藤ノ木",
+      "en": "Fujinoki",
+      "publishedEn": "FUJINOKI",
+      "pages": [
+        6
+      ]
+    },
+    "虹ノ松原": {
+      "ja": "虹ノ松原",
+      "en": "Nijinomatsubara",
+      "publishedEn": "NIJINOMATSUBARA",
+      "pages": [
+        4
+      ]
+    },
+    "行橋": {
+      "ja": "行橋",
+      "en": "Yukuhashi",
+      "publishedEn": "YUKUHASHI",
+      "pages": [
+        4
+      ]
+    },
+    "表木山": {
+      "ja": "表木山",
+      "en": "Hyokiyama",
+      "publishedEn": "HYOKIYAMA",
+      "pages": [
+        7
+      ]
+    },
+    "西人吉": {
+      "ja": "西人吉",
+      "en": "Nishi-Hitoyoshi",
+      "publishedEn": "NISHI-HITOYOSHI",
+      "pages": [
+        7
+      ]
+    },
+    "西唐津": {
+      "ja": "西唐津",
+      "en": "Nishi-Karatsu",
+      "publishedEn": "NISHI-KARATSU",
+      "pages": [
+        4
+      ]
+    },
+    "西大分": {
+      "ja": "西大分",
+      "en": "Nishi-Oita",
+      "publishedEn": "NISHI-OITA",
+      "pages": [
+        4
+      ]
+    },
+    "西大山": {
+      "ja": "西大山",
+      "en": "Nishi-Oyama",
+      "publishedEn": "NISHI-OYAMA",
+      "pages": [
+        7
+      ]
+    },
+    "西小倉": {
+      "ja": "西小倉",
+      "en": "Nishi-Kokura",
+      "publishedEn": "NISHI-KOKURA",
+      "pages": [
+        2
+      ]
+    },
+    "西小林": {
+      "ja": "西小林",
+      "en": "Nishi-Kobayashi",
+      "publishedEn": "NISHI-KOBAYASHI",
+      "pages": [
+        7
+      ]
+    },
+    "西屋敷": {
+      "ja": "西屋敷",
+      "en": "Nishiyashiki",
+      "publishedEn": "NISHIYASHIKI",
+      "pages": [
+        4
+      ]
+    },
+    "西戸崎": {
+      "ja": "西戸崎",
+      "en": "Saitozaki",
+      "publishedEn": "SAITOZAKI",
+      "pages": [
+        6
+      ]
+    },
+    "西浦上": {
+      "ja": "西浦上",
+      "en": "Nishi-Urakami",
+      "publishedEn": "NISHI-URAKAMI",
+      "pages": [
+        3
+      ]
+    },
+    "西添田": {
+      "ja": "西添田",
+      "en": "Nishi-Soeda",
+      "publishedEn": "NISHI-SOEDA",
+      "pages": [
+        6
+      ]
+    },
+    "西熊本": {
+      "ja": "西熊本",
+      "en": "Nishi-Kumamoto",
+      "publishedEn": "NISHI-KUMAMOTO",
+      "pages": [
+        3
+      ]
+    },
+    "西牟田": {
+      "ja": "西牟田",
+      "en": "Nishimuta",
+      "publishedEn": "NISHIMUTA",
+      "pages": [
+        2
+      ]
+    },
+    "西相知": {
+      "ja": "西相知",
+      "en": "Nishi-Ochi",
+      "publishedEn": "NISHI-OCHI",
+      "pages": [
+        4
+      ]
+    },
+    "西諌早": {
+      "ja": "西諌早",
+      "en": "Nishi-Isahaya",
+      "publishedEn": "NISHI-ISAHAYA",
+      "pages": [
+        3
+      ]
+    },
+    "西都城": {
+      "ja": "西都城",
+      "en": "Nishi-Miyakonojo",
+      "publishedEn": "NISHI-MIYAKONOJO",
+      "pages": [
+        5
+      ]
+    },
+    "西里": {
+      "ja": "西里",
+      "en": "Nishisato",
+      "publishedEn": "NISHISATO",
+      "pages": [
+        3
+      ]
+    },
+    "西頴娃": {
+      "ja": "西頴娃",
+      "en": "Nishi-Ei",
+      "publishedEn": "NISHI-EI",
+      "pages": [
+        7
+      ]
+    },
+    "諏訪": {
+      "ja": "諏訪",
+      "en": "Suwa",
+      "publishedEn": "SUWA",
+      "pages": [
+        4
+      ]
+    },
+    "諫早": {
+      "ja": "諫早",
+      "en": "Isahaya",
+      "publishedEn": "ISAHAYA",
+      "pages": [
+        3
+      ]
+    },
+    "谷之口": {
+      "ja": "谷之口",
+      "en": "Taninokuchi",
+      "publishedEn": "TANINOKUCHI",
+      "pages": [
+        8
+      ]
+    },
+    "谷山": {
+      "ja": "谷山",
+      "en": "Taniyama",
+      "publishedEn": "TANIYAMA",
+      "pages": [
+        7
+      ]
+    },
+    "谷頭": {
+      "ja": "谷頭",
+      "en": "Tanigashira",
+      "publishedEn": "TANIGASHIRA",
+      "pages": [
+        7
+      ]
+    },
+    "豊前善光寺": {
+      "ja": "豊前善光寺",
+      "en": "Buzen-Zenkoji",
+      "publishedEn": "BUZEN-ZENKOJI",
+      "pages": [
+        4
+      ]
+    },
+    "豊前川崎": {
+      "ja": "豊前川崎",
+      "en": "Buzen-Kawasaki",
+      "publishedEn": "BUZEN-KAWASAKI",
+      "pages": [
+        6
+      ]
+    },
+    "豊前松江": {
+      "ja": "豊前松江",
+      "en": "Buzen-Shoe",
+      "publishedEn": "BUZEN-SHOE",
+      "pages": [
+        4
+      ]
+    },
+    "豊前桝田": {
+      "ja": "豊前桝田",
+      "en": "Buzen-Masuda",
+      "publishedEn": "BUZEN-MASUDA",
+      "pages": [
+        6
+      ]
+    },
+    "豊前長洲": {
+      "ja": "豊前長洲",
+      "en": "Buzen-Nagasu",
+      "publishedEn": "BUZEN-NAGASU",
+      "pages": [
+        4
+      ]
+    },
+    "豊後三芳": {
+      "ja": "豊後三芳",
+      "en": "Bungo-Miyoshi",
+      "publishedEn": "BUNGO-MIYOSHI",
+      "pages": [
+        5
+      ]
+    },
+    "豊後中川": {
+      "ja": "豊後中川",
+      "en": "Bungo-Nakagawa",
+      "publishedEn": "BUNGO-NAKAGAWA",
+      "pages": [
+        5
+      ]
+    },
+    "豊後中村": {
+      "ja": "豊後中村",
+      "en": "Bungo-Nakamura",
+      "publishedEn": "BUNGO-NAKAMURA",
+      "pages": [
+        5
+      ]
+    },
+    "豊後国分": {
+      "ja": "豊後国分",
+      "en": "Bungo-Kokubu",
+      "publishedEn": "BUNGO-KOKUBU",
+      "pages": [
+        5
+      ]
+    },
+    "豊後森": {
+      "ja": "豊後森",
+      "en": "Bungo-Mori",
+      "publishedEn": "BUNGO-MORI",
+      "pages": [
+        5
+      ]
+    },
+    "豊後清川": {
+      "ja": "豊後清川",
+      "en": "Bungo-Kiyokawa",
+      "publishedEn": "BUNGO-KIYOKAWA",
+      "pages": [
+        6
+      ]
+    },
+    "豊後竹田": {
+      "ja": "豊後竹田",
+      "en": "Bungo-Taketa",
+      "publishedEn": "BUNGO-TAKETA",
+      "pages": [
+        6
+      ]
+    },
+    "豊後荻": {
+      "ja": "豊後荻",
+      "en": "Bungo-Ogi",
+      "publishedEn": "BUNGO-OGI",
+      "pages": [
+        6
+      ]
+    },
+    "豊後豊岡": {
+      "ja": "豊後豊岡",
+      "en": "Bungo-Toyooka",
+      "publishedEn": "BUNGO-TOYOOKA",
+      "pages": [
+        4
+      ]
+    },
+    "財光寺": {
+      "ja": "財光寺",
+      "en": "Zaikoji",
+      "publishedEn": "ZAIKOJI",
+      "pages": [
+        5
+      ]
+    },
+    "財部": {
+      "ja": "財部",
+      "en": "Takarabe",
+      "publishedEn": "TAKARABE",
+      "pages": [
+        5
+      ]
+    },
+    "賀来": {
+      "ja": "賀来",
+      "en": "Kaku",
+      "publishedEn": "KAKU",
+      "pages": [
+        5
+      ]
+    },
+    "赤水": {
+      "ja": "赤水",
+      "en": "Akamizu",
+      "publishedEn": "AKAMIZU",
+      "pages": [
+        6
+      ]
+    },
+    "赤瀬": {
+      "ja": "赤瀬",
+      "en": "Akase",
+      "publishedEn": "AKASE",
+      "pages": [
+        4
+      ]
+    },
+    "赤間": {
+      "ja": "赤間",
+      "en": "Akama",
+      "publishedEn": "AKAMA",
+      "pages": [
+        2
+      ]
+    },
+    "運動公園": {
+      "ja": "運動公園",
+      "en": "Undo-Koen",
+      "publishedEn": "UNDO-KOEN",
+      "pages": [
+        7
+      ]
+    },
+    "道ノ尾": {
+      "ja": "道ノ尾",
+      "en": "Michinoo",
+      "publishedEn": "MICHINOO",
+      "pages": [
+        3
+      ]
+    },
+    "遠賀川": {
+      "ja": "遠賀川",
+      "en": "Ongagawa",
+      "publishedEn": "ONGAGAWA",
+      "pages": [
+        2
+      ]
+    },
+    "那良口": {
+      "ja": "那良口",
+      "en": "Naraguchi",
+      "publishedEn": "NARAGUCHI",
+      "pages": [
+        7
+      ]
+    },
+    "郡元": {
+      "ja": "郡元",
+      "en": "Korimoto",
+      "publishedEn": "KORIMOTO",
+      "pages": [
+        7
+      ]
+    },
+    "都城": {
+      "ja": "都城",
+      "en": "Miyakonojo",
+      "publishedEn": "MIYAKONOJO",
+      "pages": [
+        5
+      ]
+    },
+    "都府楼南": {
+      "ja": "都府楼南",
+      "en": "Tofurominami",
+      "publishedEn": "TOFUROMINAMI",
+      "pages": [
+        2
+      ]
+    },
+    "都農": {
+      "ja": "都農",
+      "en": "Tsuno",
+      "publishedEn": "TSUNO",
+      "pages": [
+        5
+      ]
+    },
+    "酒殿": {
+      "ja": "酒殿",
+      "en": "Sakado",
+      "publishedEn": "SAKADO",
+      "pages": [
+        7
+      ]
+    },
+    "重富": {
+      "ja": "重富",
+      "en": "Shigetomi",
+      "publishedEn": "SHIGETOMI",
+      "pages": [
+        5
+      ]
+    },
+    "重岡": {
+      "ja": "重岡",
+      "en": "Shigeoka",
+      "publishedEn": "SHIGEOKA",
+      "pages": [
+        5
+      ]
+    },
+    "野矢": {
+      "ja": "野矢",
+      "en": "Noya",
+      "publishedEn": "NOYA",
+      "pages": [
+        5
+      ]
+    },
+    "金石原": {
+      "ja": "金石原",
+      "en": "Kanaishihara",
+      "publishedEn": "KANAISHIHARA",
+      "pages": [
+        4
+      ]
+    },
+    "銀水": {
+      "ja": "銀水",
+      "en": "Ginsui",
+      "publishedEn": "GINSUI",
+      "pages": [
+        2
+      ]
+    },
+    "錦江": {
+      "ja": "錦江",
+      "en": "Kinko",
+      "publishedEn": "KINKO",
+      "pages": [
+        5
+      ]
+    },
+    "鍋島": {
+      "ja": "鍋島",
+      "en": "Nabeshima",
+      "publishedEn": "NABESHIMA",
+      "pages": [
+        3
+      ]
+    },
+    "鎌瀬": {
+      "ja": "鎌瀬",
+      "en": "Kamase",
+      "publishedEn": "KAMASE",
+      "pages": [
+        7
+      ]
+    },
+    "長与": {
+      "ja": "長与",
+      "en": "Nagayo",
+      "publishedEn": "NAGAYO",
+      "pages": [
+        3
+      ]
+    },
+    "長崎": {
+      "ja": "長崎",
+      "en": "Nagasaki",
+      "publishedEn": "NAGASAKI",
+      "pages": [
+        3
+      ]
+    },
+    "長洲": {
+      "ja": "長洲",
+      "en": "Nagasu",
+      "publishedEn": "NAGASU",
+      "pages": [
+        2
+      ]
+    },
+    "長者原": {
+      "ja": "長者原",
+      "en": "Chojabaru",
+      "publishedEn": "CHOJABARU",
+      "pages": [
+        6,
+        7
+      ]
+    },
+    "長里": {
+      "ja": "長里",
+      "en": "Nagasato",
+      "publishedEn": "NAGASATO",
+      "pages": [
+        3
+      ]
+    },
+    "門司": {
+      "ja": "門司",
+      "en": "Moji",
+      "publishedEn": "MOJI",
+      "pages": [
+        2
+      ]
+    },
+    "門司港": {
+      "ja": "門司港",
+      "en": "Mojiko",
+      "publishedEn": "MOJIKO",
+      "pages": [
+        2
+      ]
+    },
+    "門川": {
+      "ja": "門川",
+      "en": "Kadogawa",
+      "publishedEn": "KADOGAWA",
+      "pages": [
+        5
+      ]
+    },
+    "門松": {
+      "ja": "門松",
+      "en": "Kadomatsu",
+      "publishedEn": "KADOMATSU",
+      "pages": [
+        6
+      ]
+    },
+    "開聞": {
+      "ja": "開聞",
+      "en": "Kaimon",
+      "publishedEn": "KAIMON",
+      "pages": [
+        7
+      ]
+    },
+    "阿蘇": {
+      "ja": "阿蘇",
+      "en": "Aso",
+      "publishedEn": "ASO",
+      "pages": [
+        6
+      ]
+    },
+    "陣原": {
+      "ja": "陣原",
+      "en": "Jinnoharu",
+      "publishedEn": "JINNOHARU",
+      "pages": [
+        2
+      ]
+    },
+    "隈之城": {
+      "ja": "隈之城",
+      "en": "Kumanojo",
+      "publishedEn": "KUMANOJO",
+      "pages": [
+        3
+      ]
+    },
+    "隼人": {
+      "ja": "隼人",
+      "en": "Hayato",
+      "publishedEn": "HAYATO",
+      "pages": [
+        5
+      ]
+    },
+    "雁ノ巣": {
+      "ja": "雁ノ巣",
+      "en": "Gannosu",
+      "publishedEn": "GANNOSU",
+      "pages": [
+        6
+      ]
+    },
+    "霧島温泉": {
+      "ja": "霧島温泉",
+      "en": "Kirishima-Onsen",
+      "publishedEn": "KIRISHIMA-ONSEN",
+      "pages": [
+        7
+      ]
+    },
+    "霧島神宮": {
+      "ja": "霧島神宮",
+      "en": "Kirishima-Jingu",
+      "publishedEn": "KIRISHIMA-JINGU",
+      "pages": [
+        5
+      ]
+    },
+    "青井岳": {
+      "ja": "青井岳",
+      "en": "Aoidake",
+      "publishedEn": "AOIDAKE",
+      "pages": [
+        5
+      ]
+    },
+    "青島": {
+      "ja": "青島",
+      "en": "Aoshima",
+      "publishedEn": "AOSHIMA",
+      "pages": [
+        7
+      ]
+    },
+    "鞍手": {
+      "ja": "鞍手",
+      "en": "Kurate",
+      "publishedEn": "KURATE",
+      "pages": [
+        6
+      ]
+    },
+    "須恵": {
+      "ja": "須恵",
+      "en": "Sue",
+      "publishedEn": "SUE",
+      "pages": [
+        7
+      ]
+    },
+    "須恵中央": {
+      "ja": "須恵中央",
+      "en": "Sue-Chuo",
+      "publishedEn": "SUE-CHUO",
+      "pages": [
+        7
+      ]
+    },
+    "頴娃": {
+      "ja": "頴娃",
+      "en": "Ei",
+      "publishedEn": "EI",
+      "pages": [
+        7
+      ]
+    },
+    "頴娃大川": {
+      "ja": "頴娃大川",
+      "en": "Ei-Okawa",
+      "publishedEn": "EI-OKAWA",
+      "pages": [
+        7
+      ]
+    },
+    "飫肥": {
+      "ja": "飫肥",
+      "en": "Obi",
+      "publishedEn": "OBI",
+      "pages": [
+        8
+      ]
+    },
+    "飯塚": {
+      "ja": "飯塚",
+      "en": "Iizuka",
+      "publishedEn": "IIZUKA",
+      "pages": [
+        6
+      ]
+    },
+    "餅原": {
+      "ja": "餅原",
+      "en": "Mochibaru",
+      "publishedEn": "MOCHIBARU",
+      "pages": [
+        5
+      ]
+    },
+    "香春": {
+      "ja": "香春",
+      "en": "Kawara",
+      "publishedEn": "KAWARA",
+      "pages": [
+        6
+      ]
+    },
+    "香椎": {
+      "ja": "香椎",
+      "en": "Kashii",
+      "publishedEn": "KASHII",
+      "pages": [
+        2
+      ]
+    },
+    "香椎神宮": {
+      "ja": "香椎神宮",
+      "en": "Kashii-Jingu",
+      "publishedEn": "KASHII-JINGU",
+      "pages": [
+        7
+      ]
+    },
+    "駒鳴": {
+      "ja": "駒鳴",
+      "en": "Komanaki",
+      "publishedEn": "KOMANAKI",
+      "pages": [
+        4
+      ]
+    },
+    "高原": {
+      "ja": "高原",
+      "en": "Takaharu",
+      "publishedEn": "TAKAHARU",
+      "pages": [
+        7
+      ]
+    },
+    "高城": {
+      "ja": "高城",
+      "en": "Takajo",
+      "publishedEn": "TAKAJO",
+      "pages": [
+        4
+      ]
+    },
+    "高崎新田": {
+      "ja": "高崎新田",
+      "en": "Takasakishinden",
+      "publishedEn": "TAKASAKISHINDEN",
+      "pages": [
+        7
+      ]
+    },
+    "高橋": {
+      "ja": "高橋",
+      "en": "Takahashi",
+      "publishedEn": "TAKAHASHI",
+      "pages": [
+        3
+      ]
+    },
+    "高田": {
+      "ja": "高田",
+      "en": "Koda",
+      "publishedEn": "KODA",
+      "pages": [
+        3
+      ]
+    },
+    "高鍋": {
+      "ja": "高鍋",
+      "en": "Takanabe",
+      "publishedEn": "TAKANABE",
+      "pages": [
+        5
+      ]
+    },
+    "鬼塚": {
+      "ja": "鬼塚",
+      "en": "Onizuka",
+      "publishedEn": "ONIZUKA",
+      "pages": [
+        4
+      ]
+    },
+    "鬼瀬": {
+      "ja": "鬼瀬",
+      "en": "Onigase",
+      "publishedEn": "ONIGASE",
+      "pages": [
+        5
+      ]
+    },
+    "鯰田": {
+      "ja": "鯰田",
+      "en": "Namazuta",
+      "publishedEn": "NAMAZUTA",
+      "pages": [
+        6
+      ]
+    },
+    "鳥栖": {
+      "ja": "鳥栖",
+      "en": "Tosu",
+      "publishedEn": "TOSU",
+      "pages": [
+        2
+      ]
+    },
+    "鶴丸": {
+      "ja": "鶴丸",
+      "en": "Tsurumaru",
+      "publishedEn": "TSURUMARU",
+      "pages": [
+        7
+      ]
+    },
+    "鶴崎": {
+      "ja": "鶴崎",
+      "en": "Tsurusaki",
+      "publishedEn": "TSURUSAKI",
+      "pages": [
+        4
+      ]
+    },
+    "鹿児島": {
+      "ja": "鹿児島",
+      "en": "Kagoshima",
+      "publishedEn": "KAGOSHIMA",
+      "pages": [
+        3
+      ]
+    },
+    "鹿児島中央": {
+      "ja": "鹿児島中央",
+      "en": "Kagoshima-Chuo",
+      "publishedEn": "KAGOSHIMA-CHUO",
+      "pages": [
+        3
+      ]
+    },
+    "鹿家": {
+      "ja": "鹿家",
+      "en": "Shikaka",
+      "publishedEn": "SHIKAKA",
+      "pages": [
+        4
+      ]
+    },
+    "黒崎": {
+      "ja": "黒崎",
+      "en": "Kurosaki",
+      "publishedEn": "KUROSAKI",
+      "pages": [
+        2
+      ]
+    }
+  }
+}

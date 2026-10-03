@@ -57,6 +57,10 @@ public struct RouteHints: Sendable, Equatable {
     public var requiredOperatorNames: [String?]
     public var preferredOperatorNames: [String?]
     public var usedOperatorNames: [String]
+    public var requiredLineIDs: [String]
+    public var sectionCodes: [String]
+    public var fromStationCode: String?
+    public var toStationCode: String?
 
     public init(
         requiredLineNames: [String?] = [],
@@ -64,7 +68,9 @@ public struct RouteHints: Sendable, Equatable {
         usedLineNames: [String] = [],
         requiredOperatorNames: [String?] = [],
         preferredOperatorNames: [String?] = [],
-        usedOperatorNames: [String] = []
+        usedOperatorNames: [String] = [],
+        requiredLineIDs: [String] = [], sectionCodes: [String] = [],
+        fromStationCode: String? = nil, toStationCode: String? = nil
     ) {
         self.requiredLineNames = requiredLineNames
         self.preferredLineNames = preferredLineNames
@@ -72,6 +78,10 @@ public struct RouteHints: Sendable, Equatable {
         self.requiredOperatorNames = requiredOperatorNames
         self.preferredOperatorNames = preferredOperatorNames
         self.usedOperatorNames = usedOperatorNames
+        self.requiredLineIDs = requiredLineIDs
+        self.sectionCodes = sectionCodes
+        self.fromStationCode = fromStationCode
+        self.toStationCode = toStationCode
     }
 }
 
@@ -97,6 +107,8 @@ public struct CanonicalRoute: Sendable, Equatable {
     public var geometry: RouteGeometry
     /// `display_line_ids` — deduplicated in first-seen order.
     public var displayLineIds: [String]
+    public var matchedSectionCodes: [String] = []
+    public var directionCorrected: Bool = false
     /// `display_geometry_source`. A constant, and a promise: these coordinates
     /// came off the complete display line rather than the solver's own path.
     public var displayGeometrySource: String { "all-railways-complete-line" }
@@ -148,6 +160,8 @@ public struct RouteNetwork: Sendable {
         public let alignmentDirection: String?
         /// One entry per disjoint drawn stroke.
         public let parts: [[Coordinate]]
+        public let intervals: [RailIntervalCodes.Interval]
+        public let compactLine: CompactPackage.Line?
 
         public init(
             lineId: String,
@@ -155,7 +169,9 @@ public struct RouteNetwork: Sendable {
             operator operatorName: String?,
             isLoop: Bool,
             alignmentDirection: String?,
-            parts: [[Coordinate]]
+            parts: [[Coordinate]],
+            intervals: [RailIntervalCodes.Interval] = [],
+            compactLine: CompactPackage.Line? = nil
         ) {
             self.lineId = lineId
             self.name = name
@@ -163,6 +179,8 @@ public struct RouteNetwork: Sendable {
             self.isLoop = isLoop
             self.alignmentDirection = alignmentDirection
             self.parts = parts
+            self.intervals = intervals
+            self.compactLine = compactLine
         }
     }
 
@@ -178,6 +196,11 @@ public struct RouteNetwork: Sendable {
     /// memoises this onto the line object the first time it is asked for;
     /// building it up front is the same numbers with no hidden mutation.
     let metrics: [[PartMetric]]
+    let intervalByCode: [String: (lineIndex: Int, intervalIndex: Int, interval: RailIntervalCodes.Interval)]
+    let knownStationCodes: Set<String>
+    let stationLineIndices: [String: Set<Int>]
+    let familyLineIndices: [String: [Int]]
+    let sourceMetrics: [[SourceMetric]]
 
     public init(lines: [Line]) {
         self.lines = lines
@@ -191,6 +214,34 @@ public struct RouteNetwork: Sendable {
         }
         linesByName = byName
         linesByOperator = byOperator
+        var intervalIndex: [String: (lineIndex: Int, intervalIndex: Int, interval: RailIntervalCodes.Interval)] = [:]
+        var stationCodes: Set<String> = []
+        var stationLines: [String: Set<Int>] = [:]
+        for (index, line) in lines.enumerated() {
+            for (offset, interval) in line.intervals.enumerated() {
+                if intervalIndex[interval.code] == nil { intervalIndex[interval.code] = (index, offset, interval) }
+                stationCodes.insert(interval.fromStationCode)
+                stationCodes.insert(interval.toStationCode)
+                stationLines[interval.fromStationCode, default: []].insert(index)
+                stationLines[interval.toStationCode, default: []].insert(index)
+            }
+        }
+        intervalByCode = intervalIndex
+        knownStationCodes = stationCodes
+        stationLineIndices = stationLines
+        var families: [String: [Int]] = [:]
+        for (index, line) in lines.enumerated() {
+            families[Self.familyKey(line), default: []].append(index)
+        }
+        familyLineIndices = families
+        sourceMetrics = lines.map { line in line.intervals.compactMap { interval in
+            guard interval.coordinates.count >= 2 else { return nil }
+            let points = interval.coordinates
+            return SourceMetric(
+                coordinates: points, cumulative: Self.cumulativeMeasures(points),
+                minLon: points.map(\.lon).min()!, maxLon: points.map(\.lon).max()!,
+                minLat: points.map(\.lat).min()!, maxLat: points.map(\.lat).max()!)
+        } }
         metrics = lines.map { line in
             line.parts.map { coordinates in
                 var cumulative = [0.0]
@@ -214,6 +265,19 @@ public struct RouteNetwork: Sendable {
     struct PartMetric: Sendable {
         let coordinates: [Coordinate]
         let cumulative: [Double]
+    }
+
+    struct SourceMetric: Sendable {
+        let coordinates: [Coordinate]
+        let cumulative: [Double]
+        let minLon: Double
+        let maxLon: Double
+        let minLat: Double
+        let maxLat: Double
+    }
+
+    static func familyKey(_ line: Line) -> String {
+        (line.operator ?? "") + "\0" + (line.compactLine?.nameNorm ?? line.name ?? "")
     }
 
     /// Where a point lands on a part, and how far along.
@@ -509,10 +573,21 @@ public struct RouteNetwork: Sendable {
         rawStart: Coordinate,
         rawEnd: Coordinate,
         continueFrom: Coordinate?,
+        fromStationCode: String? = nil,
+        toStationCode: String? = nil,
         cache: inout RouteProjectionCache
     ) -> Fit? {
         var best: Fit?
         for lineIndex in lineIndices {
+            // A nearby trunk station does not belong to the branch. A hop
+            // spanning package rows has no single-row slice; returning nil
+            // lets the caller retain the solver's complete surveyed path.
+            let intervals = lines[lineIndex].intervals
+            if !intervals.isEmpty {
+                let codes = Set(intervals.flatMap { [$0.fromStationCode, $0.toStationCode] })
+                if let fromStationCode, knownStationCodes.contains(fromStationCode), !codes.contains(fromStationCode) { continue }
+                if let toStationCode, knownStationCodes.contains(toStationCode), !codes.contains(toStationCode) { continue }
+            }
             // Both endpoints must land on the SAME part. Parts are separate
             // railways — a trunk and its branch — so allowing one endpoint on
             // each is exactly the "train turns onto the wrong line" bug: the
@@ -548,8 +623,13 @@ public struct RouteNetwork: Sendable {
                 // states which bore is which.
                 var bias = 0.0
                 let alignment = lines[lineIndex].alignmentDirection
+                if let compact = lines[lineIndex].compactLine, let traversal = compact.permittedTraversal,
+                   (traversal == "forward" && start.measure > end.measure)
+                    || (traversal == "reverse" && start.measure < end.measure) { continue }
                 if alignment == "up" || alignment == "down" {
-                    let rode = start.measure <= end.measure ? "down" : "up"
+                    let order = lines[lineIndex].compactLine?.stationOrderDirection ?? "down"
+                    let rode = start.measure <= end.measure ? order : (order == "down" ? "up" : "down")
+                    if lines[lineIndex].compactLine?.stationOrderDirection != nil, alignment != rode { continue }
                     bias = alignment == rode ? -Self.alignmentMatchBonus : Self.alignmentMatchBonus
                 }
 
@@ -561,6 +641,89 @@ public struct RouteNetwork: Sendable {
             }
         }
         return best
+    }
+
+    /// A verified interval chain chooses the track by identity before any
+    /// proximity comparison. Each interval is sliced from the same groomed
+    /// display part used by the complete network.
+    private func canonicalizeIntervals(
+        _ feature: RouteFeature, cache: inout RouteProjectionCache
+    ) -> CanonicalRoute? {
+        var current = feature.hints.fromStationCode
+        var coordinates: [Coordinate] = []
+        var parts: [[Coordinate]] = []
+        var used: [String] = []
+        for code in feature.hints.sectionCodes {
+            guard let record = intervalByCode[code] else { return nil }
+            let lineIndex = record.lineIndex, interval = record.interval
+            if current == nil, let rawStart = feature.geometry?.lines.first?.first {
+                current = Geometry.distanceMeters(rawStart, interval.from) <= Geometry.distanceMeters(rawStart, interval.to)
+                    ? interval.fromStationCode : interval.toStationCode
+            }
+            let forward: Bool
+            if current == interval.fromStationCode { forward = true }
+            else if current == interval.toStationCode { forward = false }
+            else { return nil }
+            guard allowedDirections(for: code).contains(forward ? 1 : -1) else { return nil }
+            if !feature.hints.requiredLineIDs.isEmpty,
+               !feature.hints.requiredLineIDs.contains(interval.lineID) { return nil }
+            let sourceStart = forward ? interval.from : interval.to
+            let sourceEnd = forward ? interval.to : interval.from
+            let displayAnchors = lines[lineIndex].compactLine?.displayStationCoordinates ?? [:]
+            let startCode = forward ? interval.fromStationCode : interval.toStationCode
+            let endCode = forward ? interval.toStationCode : interval.fromStationCode
+            let start = displayAnchors[startCode] ?? sourceStart
+            let end = displayAnchors[endCode] ?? sourceEnd
+            if coordinates.isEmpty, let rawStart = feature.geometry?.lines.first?.first,
+               Geometry.distanceMeters(rawStart, sourceStart) > Geometry.distanceMeters(rawStart, sourceEnd) + 50 { return nil }
+            guard let best = bestFit(over: [lineIndex], rawStart: start, rawEnd: end,
+                                     continueFrom: coordinates.last, cache: &cache),
+                  best.reach <= Self.endpointSnapMeters else { return nil }
+            var slice = canonicalLineSlice(lineIndex: lineIndex, start: best.start,
+                                           end: best.end, rawCoordinates: [start, end])
+            guard slice.count >= 2 else { return nil }
+            Self.snapEndpoint(&slice, 0, start, best.start.distance)
+            Self.snapEndpoint(&slice, slice.count - 1, end, best.end.distance)
+            if let last = coordinates.last, last == slice[0] {
+                coordinates += slice.dropFirst()
+            } else if coordinates.isEmpty { coordinates = slice }
+            else {
+                parts.append(coordinates)
+                coordinates = slice
+            }
+            current = forward ? interval.toStationCode : interval.fromStationCode
+            if !used.contains(interval.lineID) { used.append(interval.lineID) }
+        }
+        guard coordinates.count >= 2 else { return nil }
+        if let toCode = feature.hints.toStationCode, current != toCode { return nil }
+        parts.append(coordinates)
+        let geometry: RouteGeometry = parts.count == 1 ? .lineString(parts[0]) : .multiLineString(parts)
+        return CanonicalRoute(geometry: geometry, displayLineIds: used)
+    }
+
+    /// The selected physical intervals' source path, kept separate from the
+    /// groomed display path for mileage and exports. Platform gaps stay as
+    /// separate parts; no unsurveyed connector is added between them.
+    public func sourceGeometry(for hints: RouteHints) -> RouteGeometry? {
+        var current = hints.fromStationCode
+        var parts: [[Coordinate]] = []
+        for code in hints.sectionCodes {
+            guard let interval = intervalByCode[code]?.interval else { return nil }
+            if !hints.requiredLineIDs.isEmpty && !hints.requiredLineIDs.contains(interval.lineID) { return nil }
+            let forward: Bool
+            if current == interval.fromStationCode { forward = true }
+            else if current == interval.toStationCode { forward = false }
+            else { return nil }
+            guard allowedDirections(for: code).contains(forward ? 1 : -1) else { return nil }
+            let path = forward ? interval.coordinates : Array(interval.coordinates.reversed())
+            guard path.count >= 2 else { return nil }
+            if let last = parts.last?.last, last == path.first {
+                parts[parts.count - 1] += path.dropFirst()
+            } else { parts.append(path) }
+            current = forward ? interval.toStationCode : interval.fromStationCode
+        }
+        guard !parts.isEmpty, hints.toStationCode == nil || current == hints.toStationCode else { return nil }
+        return parts.count == 1 ? .lineString(parts[0]) : .multiLineString(parts)
     }
 
     // MARK: - the function
@@ -608,6 +771,18 @@ public struct RouteNetwork: Sendable {
         continueFrom: Coordinate?,
         cache: inout RouteProjectionCache
     ) -> CanonicalRoute? {
+        if !feature.hints.sectionCodes.isEmpty {
+            return canonicalizeIntervals(feature, cache: &cache)
+        }
+        if let matched = matchRouteAcrossLineRows(feature) ?? directedEndpointIntervals(feature) {
+            var hints = feature.hints
+            hints.sectionCodes = matched.sectionCodes
+            hints.requiredLineIDs = matched.lineIDs
+            guard var route = canonicalizeIntervals(RouteFeature(geometry: feature.geometry, hints: hints), cache: &cache) else { return nil }
+            route.matchedSectionCodes = matched.sectionCodes
+            route.directionCorrected = matched.corrected
+            return route
+        }
         let rawLines = (feature.geometry?.lines ?? []).filter { $0.count >= 2 }
         guard !rawLines.isEmpty else { return nil }
 
@@ -640,6 +815,12 @@ public struct RouteNetwork: Sendable {
         // Nothing usable was hinted, so every line is a candidate.
         if candidates.isEmpty { candidates = Array(lines.indices) }
 
+        if !feature.hints.requiredLineIDs.isEmpty {
+            let required = Set(feature.hints.requiredLineIDs)
+            candidates = lines.indices.filter { required.contains(lines[$0].lineId) }
+            guard !candidates.isEmpty else { return nil }
+        }
+
         var canonicalLines: [[Coordinate]] = []
         var usedLineIds: [String] = []
 
@@ -648,7 +829,9 @@ public struct RouteNetwork: Sendable {
             let rawEnd = rawCoordinates[rawCoordinates.count - 1]
             var best = bestFit(
                 over: candidates, rawStart: rawStart, rawEnd: rawEnd,
-                continueFrom: continueFrom, cache: &cache)
+                continueFrom: continueFrom,
+                fromStationCode: feature.hints.fromStationCode,
+                toStationCode: feature.hints.toStationCode, cache: &cache)
 
             // The hint names the RAILWAY the solver rode; it cannot make a line
             // reach a platform it does not serve. Where the package draws that
@@ -663,10 +846,13 @@ public struct RouteNetwork: Sendable {
             // Anything in between is a disagreement about WHICH platform, which
             // the hint is still the better judge of, and which the
             // route-approach audit reports rather than papers over.
-            if (best?.reach ?? .infinity) > Self.hintedLineMaxReachMeters {
+            if feature.hints.requiredLineIDs.isEmpty
+                && (best?.reach ?? .infinity) > Self.hintedLineMaxReachMeters {
                 let anywhere = bestFit(
                     over: Array(lines.indices), rawStart: rawStart, rawEnd: rawEnd,
-                    continueFrom: continueFrom, cache: &cache)
+                    continueFrom: continueFrom,
+                    fromStationCode: feature.hints.fromStationCode,
+                    toStationCode: feature.hints.toStationCode, cache: &cache)
                 if (anywhere?.reach ?? .infinity) <= Self.replacementMaxReachMeters {
                     best = anywhere
                 }

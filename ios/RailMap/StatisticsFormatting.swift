@@ -113,7 +113,13 @@ enum StatisticsFormat {
 /// live there with the other four screens' entry points.
 enum StatisticsStrings {
     static let table: [String: [Localization.Language: String]] = [
+        "ios.stats.allTime": [
+            .en: "All Time", .ja: "全期間", .zhHans: "全部时间", .zhHant: "全部時間",
+        ],
         // MARK: 券面 — the ticket face's own words
+        "ios.ticket.kind.history": [
+            .en: "History", .ja: "乗車記録", .zhHans: "乗車記録", .zhHant: "乗車記録",
+        ],
         //
         // §5.7's figures, re-labelled for a printed form. The passport's cards
         // set every label at one size in a two-column block, which is a much
@@ -170,13 +176,13 @@ enum StatisticsStrings {
             .zhHans: "{y}年{m}月{d}日", .zhHant: "{y}年{m}月{d}日",
         ],
         "ios.ticket.span": [
-            .en: "Totalled {from} to {to}",
+            .en: "From {from} to {to}",
             .ja: "{from}から　{to}まで集計",
             .zhHans: "统计 {from} 至 {to}",
             .zhHant: "統計 {from} 至 {to}",
         ],
         "ios.ticket.spanDay": [
-            .en: "Totalled {date}", .ja: "{date}分を集計",
+            .en: "From {date}", .ja: "{date}分を集計",
             .zhHans: "统计 {date}", .zhHant: "統計 {date}",
         ],
         // 最下行の左: 「集計日　RAILMAP 発行」. The design's own form carries a

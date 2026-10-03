@@ -1,0 +1,1403 @@
+{
+  "schema": "station-english-official-source/1",
+  "country": "TW",
+  "operator": "Alishan Forest Railway and Cultural Heritage Office",
+  "retrievedAt": "2026-10-01",
+  "snapshotKind": "reviewed bilingual station-name excerpts with verified raw HTML snapshots",
+  "note": "English names transcribed from the operator station-specific page titles with the generic suffix Station removed. Chinese and English pages share the same official page ID. AFR codes and group IDs are joined to the package by reviewed Chinese identity; the website page ID is not an AFR dataset ID. The official homepage explicitly identifies 木屐寮 as another name of 木履寮. No transliteration is generated.",
+  "selectionPolicy": "Station-specific title/body takes precedence over homepage and map-link spelling variants; preserve parentheses in station titles.",
+  "byCode": {
+    "AFR-I0000000551": {
+      "stationCode": "AFR-I0000000551",
+      "stationGroupCode": "tw-official-afr-i0000000551",
+      "name": "北門",
+      "zh_Hant": "北門",
+      "en": "Beimen",
+      "officialStationId": "0000082",
+      "source": "https://afrch.forest.gov.tw/en/0000082",
+      "identitySource": "https://afrch.forest.gov.tw/0000082",
+      "retrievedAt": "2026-10-01",
+      "englishEvidence": "Beimen Station",
+      "chineseEvidence": "北門車站",
+      "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name",
+      "rawSourceVerification": {
+        "stationPageId": "0000082",
+        "english": {
+          "heading": "Beimen Station",
+          "pageId": "0000082",
+          "cmsRelations": [
+            "SP_130000082"
+          ],
+          "source": "https://afrch.forest.gov.tw/en/0000082",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/en/0000082",
+          "sha256": "c60f7798cafbafab1f175d38e9b3865d9913dcbe9d99f77e806265f9a328a060",
+          "rawSource": "a5c535251114714d.html.gz"
+        },
+        "chinese": {
+          "heading": "北門車站",
+          "pageId": "0000082",
+          "cmsRelations": [
+            "SP_130000082"
+          ],
+          "source": "https://afrch.forest.gov.tw/0000082",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/0000082",
+          "sha256": "b86774654b8e9c39f3f3af5d297965c21d109c137325b4a6e65389cbcb6c56ac",
+          "rawSource": "4939ffa4c18cc7d7.html.gz"
+        },
+        "packageMemberships": [
+          {
+            "lineId": "tw-alsr-alishan",
+            "operator": "阿里山林業鐵路及文化資產管理處",
+            "name": "北門"
+          }
+        ]
+      },
+      "identityEvidence": [
+        {
+          "operator": "阿里山林業鐵路及文化資產管理處",
+          "publisher": "Alishan Forest Railway and Cultural Heritage Office",
+          "stationPageId": "0000082",
+          "stationDatasetCode": "AFR-I0000000551",
+          "stationGroupCode": "tw-official-afr-i0000000551",
+          "zh_Hant": "北門",
+          "en": "Beimen",
+          "source": "https://afrch.forest.gov.tw/en/0000082",
+          "identitySource": "https://afrch.forest.gov.tw/0000082",
+          "publishedEnglishHeading": "Beimen Station",
+          "publishedChineseHeading": "北門車站",
+          "sha256": "c60f7798cafbafab1f175d38e9b3865d9913dcbe9d99f77e806265f9a328a060",
+          "identitySha256": "b86774654b8e9c39f3f3af5d297965c21d109c137325b4a6e65389cbcb6c56ac",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "identityRetrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "rawSource": "data/station-english-sources/tw-afr-stations/a5c535251114714d.html.gz",
+          "identityRawSource": "data/station-english-sources/tw-afr-stations/4939ffa4c18cc7d7.html.gz",
+          "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name"
+        }
+      ]
+    },
+    "AFR-Q0000004483": {
+      "stationCode": "AFR-Q0000004483",
+      "stationGroupCode": "tw-official-afr-q0000004483",
+      "name": "鹿麻產",
+      "zh_Hant": "鹿麻產",
+      "en": "Lumachan",
+      "officialStationId": "0000083",
+      "source": "https://afrch.forest.gov.tw/en/0000083",
+      "identitySource": "https://afrch.forest.gov.tw/0000083",
+      "retrievedAt": "2026-10-01",
+      "englishEvidence": "Lumachan Station",
+      "chineseEvidence": "鹿麻產車站",
+      "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name",
+      "rawSourceVerification": {
+        "stationPageId": "0000083",
+        "english": {
+          "heading": "Lumachan Station",
+          "pageId": "0000083",
+          "cmsRelations": [
+            "SP_130000083"
+          ],
+          "source": "https://afrch.forest.gov.tw/en/0000083",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/en/0000083",
+          "sha256": "b47a6a731229a17aef24d3a1d07cf786bbadd701032e308ca5cc0b17b05983c6",
+          "rawSource": "fc6455c83e665607.html.gz"
+        },
+        "chinese": {
+          "heading": "鹿麻產車站",
+          "pageId": "0000083",
+          "cmsRelations": [
+            "SP_130000083"
+          ],
+          "source": "https://afrch.forest.gov.tw/0000083",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/0000083",
+          "sha256": "0d9a40f6d7677cd602a23a4d14fe04e1d08e992b543e5e24e175857f1ce468d6",
+          "rawSource": "56a7780cbeeae9d9.html.gz"
+        },
+        "packageMemberships": [
+          {
+            "lineId": "tw-alsr-alishan",
+            "operator": "阿里山林業鐵路及文化資產管理處",
+            "name": "鹿麻產"
+          }
+        ]
+      },
+      "identityEvidence": [
+        {
+          "operator": "阿里山林業鐵路及文化資產管理處",
+          "publisher": "Alishan Forest Railway and Cultural Heritage Office",
+          "stationPageId": "0000083",
+          "stationDatasetCode": "AFR-Q0000004483",
+          "stationGroupCode": "tw-official-afr-q0000004483",
+          "zh_Hant": "鹿麻產",
+          "en": "Lumachan",
+          "source": "https://afrch.forest.gov.tw/en/0000083",
+          "identitySource": "https://afrch.forest.gov.tw/0000083",
+          "publishedEnglishHeading": "Lumachan Station",
+          "publishedChineseHeading": "鹿麻產車站",
+          "sha256": "b47a6a731229a17aef24d3a1d07cf786bbadd701032e308ca5cc0b17b05983c6",
+          "identitySha256": "0d9a40f6d7677cd602a23a4d14fe04e1d08e992b543e5e24e175857f1ce468d6",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "identityRetrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "rawSource": "data/station-english-sources/tw-afr-stations/fc6455c83e665607.html.gz",
+          "identityRawSource": "data/station-english-sources/tw-afr-stations/56a7780cbeeae9d9.html.gz",
+          "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name"
+        }
+      ]
+    },
+    "AFR-Q0000001023": {
+      "stationCode": "AFR-Q0000001023",
+      "stationGroupCode": "tw-official-afr-q0000001023",
+      "name": "竹崎",
+      "zh_Hant": "竹崎",
+      "en": "Zhuqi",
+      "officialStationId": "0000084",
+      "source": "https://afrch.forest.gov.tw/en/0000084",
+      "identitySource": "https://afrch.forest.gov.tw/0000084",
+      "retrievedAt": "2026-10-01",
+      "englishEvidence": "Zhuqi Station",
+      "chineseEvidence": "竹崎車站",
+      "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name",
+      "alternativeOfficialEnglish": [
+        "Jhuci"
+      ],
+      "reviewNote": "Station page title and body say Zhuqi; map link says Jhuci. Use station title/body.",
+      "rawSourceVerification": {
+        "stationPageId": "0000084",
+        "english": {
+          "heading": "Zhuqi Station",
+          "pageId": "0000084",
+          "cmsRelations": [
+            "SP_130000084"
+          ],
+          "source": "https://afrch.forest.gov.tw/en/0000084",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/en/0000084",
+          "sha256": "25991957c064832058af89f75fb63d671ef31d563479002573a8c2ac9292df4b",
+          "rawSource": "bf7a79d886f77d9b.html.gz"
+        },
+        "chinese": {
+          "heading": "竹崎車站",
+          "pageId": "0000084",
+          "cmsRelations": [
+            "SP_130000084"
+          ],
+          "source": "https://afrch.forest.gov.tw/0000084",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/0000084",
+          "sha256": "ce4e6c80b009004ddf36faa34d96208806b49d8f72950e70e024979393672c4a",
+          "rawSource": "1611c278f23f7055.html.gz"
+        },
+        "packageMemberships": [
+          {
+            "lineId": "tw-alsr-alishan",
+            "operator": "阿里山林業鐵路及文化資產管理處",
+            "name": "竹崎"
+          }
+        ]
+      },
+      "identityEvidence": [
+        {
+          "operator": "阿里山林業鐵路及文化資產管理處",
+          "publisher": "Alishan Forest Railway and Cultural Heritage Office",
+          "stationPageId": "0000084",
+          "stationDatasetCode": "AFR-Q0000001023",
+          "stationGroupCode": "tw-official-afr-q0000001023",
+          "zh_Hant": "竹崎",
+          "en": "Zhuqi",
+          "source": "https://afrch.forest.gov.tw/en/0000084",
+          "identitySource": "https://afrch.forest.gov.tw/0000084",
+          "publishedEnglishHeading": "Zhuqi Station",
+          "publishedChineseHeading": "竹崎車站",
+          "sha256": "25991957c064832058af89f75fb63d671ef31d563479002573a8c2ac9292df4b",
+          "identitySha256": "ce4e6c80b009004ddf36faa34d96208806b49d8f72950e70e024979393672c4a",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "identityRetrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "rawSource": "data/station-english-sources/tw-afr-stations/bf7a79d886f77d9b.html.gz",
+          "identityRawSource": "data/station-english-sources/tw-afr-stations/1611c278f23f7055.html.gz",
+          "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name"
+        }
+      ]
+    },
+    "AFR-Q0000004496": {
+      "stationCode": "AFR-Q0000004496",
+      "stationGroupCode": "tw-official-afr-q0000004496",
+      "name": "木屐寮",
+      "zh_Hant": "木履寮",
+      "en": "Mululiao",
+      "officialStationId": "0000085",
+      "source": "https://afrch.forest.gov.tw/en/0000085",
+      "identitySource": "https://afrch.forest.gov.tw/0000085",
+      "retrievedAt": "2026-10-01",
+      "englishEvidence": "Mululiao Station",
+      "chineseEvidence": "木履寮車站",
+      "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name",
+      "identityAliases": [
+        "木屐寮"
+      ],
+      "identityAliasSource": "https://afrch.forest.gov.tw/",
+      "identityAliasEvidence": "木履寮又叫木屐寮",
+      "rawSourceVerification": {
+        "stationPageId": "0000085",
+        "english": {
+          "heading": "Mululiao Station",
+          "pageId": "0000085",
+          "cmsRelations": [
+            "SP_130000085"
+          ],
+          "source": "https://afrch.forest.gov.tw/en/0000085",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/en/0000085",
+          "sha256": "84676af574de0e572308449c86aa8a6381293757b97159668bd13183c506bf0b",
+          "rawSource": "005031560dbbff76.html.gz"
+        },
+        "chinese": {
+          "heading": "木履寮車站",
+          "pageId": "0000085",
+          "cmsRelations": [
+            "SP_130000085"
+          ],
+          "source": "https://afrch.forest.gov.tw/0000085",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/0000085",
+          "sha256": "fe14514f9798ceba44b1abfefc5d8ee945d0be290710b02616ec5d38083f7afc",
+          "rawSource": "b2f253bfcc1dfa41.html.gz"
+        },
+        "packageMemberships": [
+          {
+            "lineId": "tw-alsr-alishan",
+            "operator": "阿里山林業鐵路及文化資產管理處",
+            "name": "木履寮"
+          }
+        ],
+        "nativeAlias": {
+          "source": "https://afrch.forest.gov.tw/",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/",
+          "sha256": "07630cb71a5e816c3971776c6cbbbd600b638b8534f0230f6c9bb2f9d9b090f8",
+          "rawSource": "6fb294bab1f0605d.html.gz",
+          "publishedStatement": "木履寮又叫木屐寮"
+        }
+      },
+      "identityEvidence": [
+        {
+          "operator": "阿里山林業鐵路及文化資產管理處",
+          "publisher": "Alishan Forest Railway and Cultural Heritage Office",
+          "stationPageId": "0000085",
+          "stationDatasetCode": "AFR-Q0000004496",
+          "stationGroupCode": "tw-official-afr-q0000004496",
+          "zh_Hant": "木履寮",
+          "en": "Mululiao",
+          "source": "https://afrch.forest.gov.tw/en/0000085",
+          "identitySource": "https://afrch.forest.gov.tw/0000085",
+          "publishedEnglishHeading": "Mululiao Station",
+          "publishedChineseHeading": "木履寮車站",
+          "sha256": "84676af574de0e572308449c86aa8a6381293757b97159668bd13183c506bf0b",
+          "identitySha256": "fe14514f9798ceba44b1abfefc5d8ee945d0be290710b02616ec5d38083f7afc",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "identityRetrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "rawSource": "data/station-english-sources/tw-afr-stations/005031560dbbff76.html.gz",
+          "identityRawSource": "data/station-english-sources/tw-afr-stations/b2f253bfcc1dfa41.html.gz",
+          "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name",
+          "nativeAliasEvidence": {
+            "source": "https://afrch.forest.gov.tw/",
+            "sha256": "07630cb71a5e816c3971776c6cbbbd600b638b8534f0230f6c9bb2f9d9b090f8",
+            "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+            "publishedStatement": "木履寮又叫木屐寮",
+            "rawSource": "data/station-english-sources/tw-afr-stations/6fb294bab1f0605d.html.gz"
+          }
+        }
+      ]
+    },
+    "AFR-Q0000001054": {
+      "stationCode": "AFR-Q0000001054",
+      "stationGroupCode": "tw-official-afr-q0000001054",
+      "name": "樟腦寮",
+      "zh_Hant": "樟腦寮",
+      "en": "Zhangnaoliao",
+      "officialStationId": "0000086",
+      "source": "https://afrch.forest.gov.tw/EN/0000086",
+      "identitySource": "https://afrch.forest.gov.tw/0000086",
+      "retrievedAt": "2026-10-01",
+      "englishEvidence": "Zhangnaoliao Station",
+      "chineseEvidence": "樟腦寮車站",
+      "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name",
+      "rawSourceVerification": {
+        "stationPageId": "0000086",
+        "english": {
+          "heading": "Zhangnaoliao Station",
+          "pageId": "0000086",
+          "cmsRelations": [
+            "SP_130000086"
+          ],
+          "source": "https://afrch.forest.gov.tw/EN/0000086",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/EN/0000086",
+          "sha256": "110dfd21aa0c261466bc1b10a11b77e0e68089033189b9e862ec06967321cd58",
+          "rawSource": "b7ecd8b1b64703f1.html.gz"
+        },
+        "chinese": {
+          "heading": "樟腦寮車站",
+          "pageId": "0000086",
+          "cmsRelations": [
+            "SP_130000086"
+          ],
+          "source": "https://afrch.forest.gov.tw/0000086",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/0000086",
+          "sha256": "3c53dfc7f1129e25e3629fac7f29ac9845a21582fb2ca3a34af9c9656b3c0d4d",
+          "rawSource": "89a23ad1d014bc92.html.gz"
+        },
+        "packageMemberships": [
+          {
+            "lineId": "tw-alsr-alishan",
+            "operator": "阿里山林業鐵路及文化資產管理處",
+            "name": "樟腦寮"
+          }
+        ]
+      },
+      "identityEvidence": [
+        {
+          "operator": "阿里山林業鐵路及文化資產管理處",
+          "publisher": "Alishan Forest Railway and Cultural Heritage Office",
+          "stationPageId": "0000086",
+          "stationDatasetCode": "AFR-Q0000001054",
+          "stationGroupCode": "tw-official-afr-q0000001054",
+          "zh_Hant": "樟腦寮",
+          "en": "Zhangnaoliao",
+          "source": "https://afrch.forest.gov.tw/EN/0000086",
+          "identitySource": "https://afrch.forest.gov.tw/0000086",
+          "publishedEnglishHeading": "Zhangnaoliao Station",
+          "publishedChineseHeading": "樟腦寮車站",
+          "sha256": "110dfd21aa0c261466bc1b10a11b77e0e68089033189b9e862ec06967321cd58",
+          "identitySha256": "3c53dfc7f1129e25e3629fac7f29ac9845a21582fb2ca3a34af9c9656b3c0d4d",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "identityRetrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "rawSource": "data/station-english-sources/tw-afr-stations/b7ecd8b1b64703f1.html.gz",
+          "identityRawSource": "data/station-english-sources/tw-afr-stations/89a23ad1d014bc92.html.gz",
+          "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name"
+        }
+      ]
+    },
+    "AFR-Q0000001073": {
+      "stationCode": "AFR-Q0000001073",
+      "stationGroupCode": "tw-official-afr-q0000001073",
+      "name": "獨立山",
+      "zh_Hant": "獨立山",
+      "en": "Dulishan",
+      "officialStationId": "0000087",
+      "source": "https://afrch.forest.gov.tw/en/0000087",
+      "identitySource": "https://afrch.forest.gov.tw/",
+      "retrievedAt": "2026-10-01",
+      "englishEvidence": "Dulishan Station",
+      "chineseEvidence": "獨立山",
+      "matchMethod": "official Chinese homepage 獨立山 link and English station-specific page share page ID 0000087; reviewed Chinese package name",
+      "reviewNote": "Chinese station-detail fetch unavailable; official Chinese homepage identifies 獨立山 and links the corresponding page 0000087.",
+      "rawSourceVerification": {
+        "stationPageId": "0000087",
+        "english": {
+          "heading": "Dulishan Station",
+          "pageId": "0000087",
+          "cmsRelations": [
+            "SP_130000087"
+          ],
+          "source": "https://afrch.forest.gov.tw/en/0000087",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/en/0000087",
+          "sha256": "05a7a0948bb8a7001a0b28b5ef8cad0a529cbc566971acde77a2f519e856c4b7",
+          "rawSource": "c50d40970d2f82e9.html.gz"
+        },
+        "chinese": {
+          "heading": "獨立山",
+          "pageId": "0000087",
+          "linkedHref": "0000087",
+          "matchMethod": "official-homepage-exact-native-anchor-and-station-page-id",
+          "source": "https://afrch.forest.gov.tw/",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/",
+          "sha256": "07630cb71a5e816c3971776c6cbbbd600b638b8534f0230f6c9bb2f9d9b090f8",
+          "rawSource": "6fb294bab1f0605d.html.gz"
+        },
+        "packageMemberships": [
+          {
+            "lineId": "tw-alsr-alishan",
+            "operator": "阿里山林業鐵路及文化資產管理處",
+            "name": "獨立山"
+          }
+        ]
+      },
+      "identityEvidence": [
+        {
+          "operator": "阿里山林業鐵路及文化資產管理處",
+          "publisher": "Alishan Forest Railway and Cultural Heritage Office",
+          "stationPageId": "0000087",
+          "stationDatasetCode": "AFR-Q0000001073",
+          "stationGroupCode": "tw-official-afr-q0000001073",
+          "zh_Hant": "獨立山",
+          "en": "Dulishan",
+          "source": "https://afrch.forest.gov.tw/en/0000087",
+          "identitySource": "https://afrch.forest.gov.tw/",
+          "publishedEnglishHeading": "Dulishan Station",
+          "publishedChineseHeading": "獨立山",
+          "sha256": "05a7a0948bb8a7001a0b28b5ef8cad0a529cbc566971acde77a2f519e856c4b7",
+          "identitySha256": "07630cb71a5e816c3971776c6cbbbd600b638b8534f0230f6c9bb2f9d9b090f8",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "identityRetrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "rawSource": "data/station-english-sources/tw-afr-stations/c50d40970d2f82e9.html.gz",
+          "identityRawSource": "data/station-english-sources/tw-afr-stations/6fb294bab1f0605d.html.gz",
+          "matchMethod": "official Chinese homepage 獨立山 link and English station-specific page share page ID 0000087; reviewed Chinese package name"
+        }
+      ]
+    },
+    "AFR-Q0000001080": {
+      "stationCode": "AFR-Q0000001080",
+      "stationGroupCode": "tw-official-afr-q0000001080",
+      "name": "梨園寮",
+      "zh_Hant": "梨園寮",
+      "en": "Liyuanliao",
+      "officialStationId": "0000088",
+      "source": "https://afrch.forest.gov.tw/en/0000088",
+      "identitySource": "https://afrch.forest.gov.tw/0000088",
+      "retrievedAt": "2026-10-01",
+      "englishEvidence": "Liyuanliao Station",
+      "chineseEvidence": "梨園寮車站",
+      "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name",
+      "rawSourceVerification": {
+        "stationPageId": "0000088",
+        "english": {
+          "heading": "Liyuanliao Station",
+          "pageId": "0000088",
+          "cmsRelations": [
+            "SP_130000088"
+          ],
+          "source": "https://afrch.forest.gov.tw/en/0000088",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/en/0000088",
+          "sha256": "93a55e8deda86870419c611043c850cb2ecd3355e31d9a9614be9e0b07beef43",
+          "rawSource": "632d772746710dbe.html.gz"
+        },
+        "chinese": {
+          "heading": "梨園寮車站",
+          "pageId": "0000088",
+          "cmsRelations": [
+            "SP_130000088"
+          ],
+          "source": "https://afrch.forest.gov.tw/0000088",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/0000088",
+          "sha256": "9b0ac870d87e07d3015277ab7dcaec30e07cac940a01a49b50c24ff2c94336f3",
+          "rawSource": "026cea62363334f4.html.gz"
+        },
+        "packageMemberships": [
+          {
+            "lineId": "tw-alsr-alishan",
+            "operator": "阿里山林業鐵路及文化資產管理處",
+            "name": "梨園寮"
+          }
+        ]
+      },
+      "identityEvidence": [
+        {
+          "operator": "阿里山林業鐵路及文化資產管理處",
+          "publisher": "Alishan Forest Railway and Cultural Heritage Office",
+          "stationPageId": "0000088",
+          "stationDatasetCode": "AFR-Q0000001080",
+          "stationGroupCode": "tw-official-afr-q0000001080",
+          "zh_Hant": "梨園寮",
+          "en": "Liyuanliao",
+          "source": "https://afrch.forest.gov.tw/en/0000088",
+          "identitySource": "https://afrch.forest.gov.tw/0000088",
+          "publishedEnglishHeading": "Liyuanliao Station",
+          "publishedChineseHeading": "梨園寮車站",
+          "sha256": "93a55e8deda86870419c611043c850cb2ecd3355e31d9a9614be9e0b07beef43",
+          "identitySha256": "9b0ac870d87e07d3015277ab7dcaec30e07cac940a01a49b50c24ff2c94336f3",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "identityRetrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "rawSource": "data/station-english-sources/tw-afr-stations/632d772746710dbe.html.gz",
+          "identityRawSource": "data/station-english-sources/tw-afr-stations/026cea62363334f4.html.gz",
+          "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name"
+        }
+      ]
+    },
+    "AFR-Q0000001047": {
+      "stationCode": "AFR-Q0000001047",
+      "stationGroupCode": "tw-official-afr-q0000001047",
+      "name": "交力坪",
+      "zh_Hant": "交力坪",
+      "en": "Jiaoliping",
+      "officialStationId": "0000089",
+      "source": "https://afrch.forest.gov.tw/en/0000089",
+      "identitySource": "https://afrch.forest.gov.tw/0000089",
+      "retrievedAt": "2026-10-01",
+      "englishEvidence": "Jiaoliping Station",
+      "chineseEvidence": "交力坪車站",
+      "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name",
+      "rawSourceVerification": {
+        "stationPageId": "0000089",
+        "english": {
+          "heading": "Jiaoliping Station",
+          "pageId": "0000089",
+          "cmsRelations": [
+            "SP_130000089"
+          ],
+          "source": "https://afrch.forest.gov.tw/en/0000089",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/en/0000089",
+          "sha256": "acb63e89fbd3f71f9fa240837daddaa2a035a589d0a92c2cf33716219dee3859",
+          "rawSource": "aec7f01febc16fff.html.gz"
+        },
+        "chinese": {
+          "heading": "交力坪車站",
+          "pageId": "0000089",
+          "cmsRelations": [
+            "SP_130000089"
+          ],
+          "source": "https://afrch.forest.gov.tw/0000089",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/0000089",
+          "sha256": "2c63b9b11c01d27e7f3372cf73a6936ac6bfc1516296f75ddf453582e7337d09",
+          "rawSource": "1b766f051eb209e7.html.gz"
+        },
+        "packageMemberships": [
+          {
+            "lineId": "tw-alsr-alishan",
+            "operator": "阿里山林業鐵路及文化資產管理處",
+            "name": "交力坪"
+          }
+        ]
+      },
+      "identityEvidence": [
+        {
+          "operator": "阿里山林業鐵路及文化資產管理處",
+          "publisher": "Alishan Forest Railway and Cultural Heritage Office",
+          "stationPageId": "0000089",
+          "stationDatasetCode": "AFR-Q0000001047",
+          "stationGroupCode": "tw-official-afr-q0000001047",
+          "zh_Hant": "交力坪",
+          "en": "Jiaoliping",
+          "source": "https://afrch.forest.gov.tw/en/0000089",
+          "identitySource": "https://afrch.forest.gov.tw/0000089",
+          "publishedEnglishHeading": "Jiaoliping Station",
+          "publishedChineseHeading": "交力坪車站",
+          "sha256": "acb63e89fbd3f71f9fa240837daddaa2a035a589d0a92c2cf33716219dee3859",
+          "identitySha256": "2c63b9b11c01d27e7f3372cf73a6936ac6bfc1516296f75ddf453582e7337d09",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "identityRetrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "rawSource": "data/station-english-sources/tw-afr-stations/aec7f01febc16fff.html.gz",
+          "identityRawSource": "data/station-english-sources/tw-afr-stations/1b766f051eb209e7.html.gz",
+          "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name"
+        }
+      ]
+    },
+    "AFR-Q0000002368": {
+      "stationCode": "AFR-Q0000002368",
+      "stationGroupCode": "tw-official-afr-q0000002368",
+      "name": "水社寮",
+      "zh_Hant": "水社寮",
+      "en": "Shuisheliao",
+      "officialStationId": "0000090",
+      "source": "https://afrch.forest.gov.tw/en/0000090",
+      "identitySource": "https://afrch.forest.gov.tw/0000090",
+      "retrievedAt": "2026-10-01",
+      "englishEvidence": "Shuisheliao Station",
+      "chineseEvidence": "水社寮車站",
+      "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name",
+      "alternativeOfficialEnglish": [
+        "Shueisheliao"
+      ],
+      "reviewNote": "Station page title and body say Shuisheliao; homepage and map link say Shueisheliao. Use station title/body.",
+      "rawSourceVerification": {
+        "stationPageId": "0000090",
+        "english": {
+          "heading": "Shuisheliao Station",
+          "pageId": "0000090",
+          "cmsRelations": [
+            "SP_130000090"
+          ],
+          "source": "https://afrch.forest.gov.tw/en/0000090",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/en/0000090",
+          "sha256": "1b60120960b7368df032423aabcd86c9899b538a2fd3bf1c48df1a3735c3ecc0",
+          "rawSource": "478f97e6f27c0ca9.html.gz"
+        },
+        "chinese": {
+          "heading": "水社寮車站",
+          "pageId": "0000090",
+          "cmsRelations": [
+            "SP_130000090"
+          ],
+          "source": "https://afrch.forest.gov.tw/0000090",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/0000090",
+          "sha256": "3a636002b12144ec87d1a6375dd99ec2437c3a5769c0b19cd9c6fdeaeae8b993",
+          "rawSource": "afc785c03d872615.html.gz"
+        },
+        "packageMemberships": [
+          {
+            "lineId": "tw-alsr-alishan",
+            "operator": "阿里山林業鐵路及文化資產管理處",
+            "name": "水社寮"
+          }
+        ]
+      },
+      "identityEvidence": [
+        {
+          "operator": "阿里山林業鐵路及文化資產管理處",
+          "publisher": "Alishan Forest Railway and Cultural Heritage Office",
+          "stationPageId": "0000090",
+          "stationDatasetCode": "AFR-Q0000002368",
+          "stationGroupCode": "tw-official-afr-q0000002368",
+          "zh_Hant": "水社寮",
+          "en": "Shuisheliao",
+          "source": "https://afrch.forest.gov.tw/en/0000090",
+          "identitySource": "https://afrch.forest.gov.tw/0000090",
+          "publishedEnglishHeading": "Shuisheliao Station",
+          "publishedChineseHeading": "水社寮車站",
+          "sha256": "1b60120960b7368df032423aabcd86c9899b538a2fd3bf1c48df1a3735c3ecc0",
+          "identitySha256": "3a636002b12144ec87d1a6375dd99ec2437c3a5769c0b19cd9c6fdeaeae8b993",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "identityRetrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "rawSource": "data/station-english-sources/tw-afr-stations/478f97e6f27c0ca9.html.gz",
+          "identityRawSource": "data/station-english-sources/tw-afr-stations/afc785c03d872615.html.gz",
+          "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name"
+        }
+      ]
+    },
+    "AFR-Q0000002380": {
+      "stationCode": "AFR-Q0000002380",
+      "stationGroupCode": "tw-official-afr-q0000002380",
+      "name": "奮起湖",
+      "zh_Hant": "奮起湖",
+      "en": "Fenqihu",
+      "officialStationId": "0000091",
+      "source": "https://afrch.forest.gov.tw/en/0000091",
+      "identitySource": "https://afrch.forest.gov.tw/0000091",
+      "retrievedAt": "2026-10-01",
+      "englishEvidence": "Fenqihu Station",
+      "chineseEvidence": "奮起湖車站",
+      "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name",
+      "rawSourceVerification": {
+        "stationPageId": "0000091",
+        "english": {
+          "heading": "Fenqihu Station",
+          "pageId": "0000091",
+          "cmsRelations": [
+            "SP_130000091"
+          ],
+          "source": "https://afrch.forest.gov.tw/en/0000091",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/en/0000091",
+          "sha256": "f4b00dfc9086727e3bd6fb5bd5aa21a3ed960489a976fa3974350ca16afefd62",
+          "rawSource": "6500698730199d9e.html.gz"
+        },
+        "chinese": {
+          "heading": "奮起湖車站",
+          "pageId": "0000091",
+          "cmsRelations": [
+            "SP_130000091"
+          ],
+          "source": "https://afrch.forest.gov.tw/0000091",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/0000091",
+          "sha256": "79b72d8378ad4d46de773e9247ec16edd56f7be77b3833adc9a3768cc338c0af",
+          "rawSource": "36811045ce40408f.html.gz"
+        },
+        "packageMemberships": [
+          {
+            "lineId": "tw-alsr-alishan",
+            "operator": "阿里山林業鐵路及文化資產管理處",
+            "name": "奮起湖"
+          }
+        ]
+      },
+      "identityEvidence": [
+        {
+          "operator": "阿里山林業鐵路及文化資產管理處",
+          "publisher": "Alishan Forest Railway and Cultural Heritage Office",
+          "stationPageId": "0000091",
+          "stationDatasetCode": "AFR-Q0000002380",
+          "stationGroupCode": "tw-official-afr-q0000002380",
+          "zh_Hant": "奮起湖",
+          "en": "Fenqihu",
+          "source": "https://afrch.forest.gov.tw/en/0000091",
+          "identitySource": "https://afrch.forest.gov.tw/0000091",
+          "publishedEnglishHeading": "Fenqihu Station",
+          "publishedChineseHeading": "奮起湖車站",
+          "sha256": "f4b00dfc9086727e3bd6fb5bd5aa21a3ed960489a976fa3974350ca16afefd62",
+          "identitySha256": "79b72d8378ad4d46de773e9247ec16edd56f7be77b3833adc9a3768cc338c0af",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "identityRetrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "rawSource": "data/station-english-sources/tw-afr-stations/6500698730199d9e.html.gz",
+          "identityRawSource": "data/station-english-sources/tw-afr-stations/36811045ce40408f.html.gz",
+          "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name"
+        }
+      ]
+    },
+    "AFR-Q0000001597": {
+      "stationCode": "AFR-Q0000001597",
+      "stationGroupCode": "tw-official-afr-q0000001597",
+      "name": "多林",
+      "zh_Hant": "多林",
+      "en": "Duolin",
+      "officialStationId": "0000092",
+      "source": "https://afrch.forest.gov.tw/en/0000092",
+      "identitySource": "https://afrch.forest.gov.tw/0000092",
+      "retrievedAt": "2026-10-01",
+      "englishEvidence": "Duolin Station",
+      "chineseEvidence": "多林車站",
+      "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name",
+      "rawSourceVerification": {
+        "stationPageId": "0000092",
+        "english": {
+          "heading": "Duolin Station",
+          "pageId": "0000092",
+          "cmsRelations": [
+            "SP_130000092"
+          ],
+          "source": "https://afrch.forest.gov.tw/en/0000092",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/en/0000092",
+          "sha256": "09a930bf6446c0b7546e5939962317485240a61e8d7bd3fd20bbcde6f904acec",
+          "rawSource": "238f6a9bbc730bc7.html.gz"
+        },
+        "chinese": {
+          "heading": "多林車站",
+          "pageId": "0000092",
+          "cmsRelations": [
+            "SP_130000092"
+          ],
+          "source": "https://afrch.forest.gov.tw/0000092",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/0000092",
+          "sha256": "338ca61d8286ca852731db391fcc8cc5b26b3c5c3536a6ebb608a35a940f49e1",
+          "rawSource": "fc4a9a3fc08e0318.html.gz"
+        },
+        "packageMemberships": [
+          {
+            "lineId": "tw-alsr-alishan",
+            "operator": "阿里山林業鐵路及文化資產管理處",
+            "name": "多林"
+          }
+        ]
+      },
+      "identityEvidence": [
+        {
+          "operator": "阿里山林業鐵路及文化資產管理處",
+          "publisher": "Alishan Forest Railway and Cultural Heritage Office",
+          "stationPageId": "0000092",
+          "stationDatasetCode": "AFR-Q0000001597",
+          "stationGroupCode": "tw-official-afr-q0000001597",
+          "zh_Hant": "多林",
+          "en": "Duolin",
+          "source": "https://afrch.forest.gov.tw/en/0000092",
+          "identitySource": "https://afrch.forest.gov.tw/0000092",
+          "publishedEnglishHeading": "Duolin Station",
+          "publishedChineseHeading": "多林車站",
+          "sha256": "09a930bf6446c0b7546e5939962317485240a61e8d7bd3fd20bbcde6f904acec",
+          "identitySha256": "338ca61d8286ca852731db391fcc8cc5b26b3c5c3536a6ebb608a35a940f49e1",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "identityRetrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "rawSource": "data/station-english-sources/tw-afr-stations/238f6a9bbc730bc7.html.gz",
+          "identityRawSource": "data/station-english-sources/tw-afr-stations/fc4a9a3fc08e0318.html.gz",
+          "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name"
+        }
+      ]
+    },
+    "AFR-Q0000001623": {
+      "stationCode": "AFR-Q0000001623",
+      "stationGroupCode": "tw-official-afr-q0000001623",
+      "name": "十字路",
+      "zh_Hant": "十字路",
+      "en": "Shizilu",
+      "officialStationId": "0000093",
+      "source": "https://afrch.forest.gov.tw/en/0000093",
+      "identitySource": "https://afrch.forest.gov.tw/0000093",
+      "retrievedAt": "2026-10-01",
+      "englishEvidence": "Shizilu Station",
+      "chineseEvidence": "十字路車站",
+      "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name",
+      "rawSourceVerification": {
+        "stationPageId": "0000093",
+        "english": {
+          "heading": "Shizilu Station",
+          "pageId": "0000093",
+          "cmsRelations": [
+            "SP_130000093"
+          ],
+          "source": "https://afrch.forest.gov.tw/en/0000093",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/en/0000093",
+          "sha256": "493b532dcad9b4dd779c98a67220a10e7fbc48d10f65b9cab1b6fbc50855abe7",
+          "rawSource": "07e7ad5a28219be2.html.gz"
+        },
+        "chinese": {
+          "heading": "十字路車站",
+          "pageId": "0000093",
+          "cmsRelations": [
+            "SP_130000093"
+          ],
+          "source": "https://afrch.forest.gov.tw/0000093",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/0000093",
+          "sha256": "3d794211c8aad61bb8e14f372c6740eb8ee20b260c30ac343da453ce473450ff",
+          "rawSource": "2a6dc8e1ac61e943.html.gz"
+        },
+        "packageMemberships": [
+          {
+            "lineId": "tw-alsr-alishan",
+            "operator": "阿里山林業鐵路及文化資產管理處",
+            "name": "十字路"
+          }
+        ]
+      },
+      "identityEvidence": [
+        {
+          "operator": "阿里山林業鐵路及文化資產管理處",
+          "publisher": "Alishan Forest Railway and Cultural Heritage Office",
+          "stationPageId": "0000093",
+          "stationDatasetCode": "AFR-Q0000001623",
+          "stationGroupCode": "tw-official-afr-q0000001623",
+          "zh_Hant": "十字路",
+          "en": "Shizilu",
+          "source": "https://afrch.forest.gov.tw/en/0000093",
+          "identitySource": "https://afrch.forest.gov.tw/0000093",
+          "publishedEnglishHeading": "Shizilu Station",
+          "publishedChineseHeading": "十字路車站",
+          "sha256": "493b532dcad9b4dd779c98a67220a10e7fbc48d10f65b9cab1b6fbc50855abe7",
+          "identitySha256": "3d794211c8aad61bb8e14f372c6740eb8ee20b260c30ac343da453ce473450ff",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "identityRetrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "rawSource": "data/station-english-sources/tw-afr-stations/07e7ad5a28219be2.html.gz",
+          "identityRawSource": "data/station-english-sources/tw-afr-stations/2a6dc8e1ac61e943.html.gz",
+          "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name"
+        }
+      ]
+    },
+    "AFR-Q0000001627": {
+      "stationCode": "AFR-Q0000001627",
+      "stationGroupCode": "tw-official-afr-q0000001627",
+      "name": "屏遮那",
+      "zh_Hant": "屏遮那",
+      "en": "Pingzhena",
+      "officialStationId": "0000094",
+      "source": "https://afrch.forest.gov.tw/EN/0000094",
+      "identitySource": "https://afrch.forest.gov.tw/0000094",
+      "retrievedAt": "2026-10-01",
+      "englishEvidence": "Pingzhena Station",
+      "chineseEvidence": "屏遮那車站",
+      "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name",
+      "rawSourceVerification": {
+        "stationPageId": "0000094",
+        "english": {
+          "heading": "Pingzhena Station",
+          "pageId": "0000094",
+          "cmsRelations": [
+            "SP_130000094"
+          ],
+          "source": "https://afrch.forest.gov.tw/EN/0000094",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/EN/0000094",
+          "sha256": "6a5acb5ac6a84a0b0a288c2a8a3356ad167250e52384c61797bdb0087ff1045a",
+          "rawSource": "c98e16f299d981cf.html.gz"
+        },
+        "chinese": {
+          "heading": "屏遮那車站",
+          "pageId": "0000094",
+          "cmsRelations": [
+            "SP_130000094"
+          ],
+          "source": "https://afrch.forest.gov.tw/0000094",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/0000094",
+          "sha256": "0bfe88bd9af2d5aa37e36edda9a780c2507b571a82442252d7cc6633e99b4a67",
+          "rawSource": "89f6d7b668878bb9.html.gz"
+        },
+        "packageMemberships": [
+          {
+            "lineId": "tw-alsr-alishan",
+            "operator": "阿里山林業鐵路及文化資產管理處",
+            "name": "屏遮那"
+          }
+        ]
+      },
+      "identityEvidence": [
+        {
+          "operator": "阿里山林業鐵路及文化資產管理處",
+          "publisher": "Alishan Forest Railway and Cultural Heritage Office",
+          "stationPageId": "0000094",
+          "stationDatasetCode": "AFR-Q0000001627",
+          "stationGroupCode": "tw-official-afr-q0000001627",
+          "zh_Hant": "屏遮那",
+          "en": "Pingzhena",
+          "source": "https://afrch.forest.gov.tw/EN/0000094",
+          "identitySource": "https://afrch.forest.gov.tw/0000094",
+          "publishedEnglishHeading": "Pingzhena Station",
+          "publishedChineseHeading": "屏遮那車站",
+          "sha256": "6a5acb5ac6a84a0b0a288c2a8a3356ad167250e52384c61797bdb0087ff1045a",
+          "identitySha256": "0bfe88bd9af2d5aa37e36edda9a780c2507b571a82442252d7cc6633e99b4a67",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "identityRetrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "rawSource": "data/station-english-sources/tw-afr-stations/c98e16f299d981cf.html.gz",
+          "identityRawSource": "data/station-english-sources/tw-afr-stations/89f6d7b668878bb9.html.gz",
+          "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name"
+        }
+      ]
+    },
+    "AFR-Q0000001630": {
+      "stationCode": "AFR-Q0000001630",
+      "stationGroupCode": "tw-official-afr-q0000001630",
+      "name": "二萬平",
+      "zh_Hant": "二萬平",
+      "en": "Erwanping",
+      "officialStationId": "0000095",
+      "source": "https://afrch.forest.gov.tw/en/0000095",
+      "identitySource": "https://afrch.forest.gov.tw/0000095",
+      "retrievedAt": "2026-10-01",
+      "englishEvidence": "Erwanping Station",
+      "chineseEvidence": "二萬平車站",
+      "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name",
+      "rawSourceVerification": {
+        "stationPageId": "0000095",
+        "english": {
+          "heading": "Erwanping Station",
+          "pageId": "0000095",
+          "cmsRelations": [
+            "SP_130000095"
+          ],
+          "source": "https://afrch.forest.gov.tw/en/0000095",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/en/0000095",
+          "sha256": "13497a6390cd70c8caca26a3189797240986211a7acc8e9c76264e313807908f",
+          "rawSource": "e97bf3d6a4279982.html.gz"
+        },
+        "chinese": {
+          "heading": "二萬平車站",
+          "pageId": "0000095",
+          "cmsRelations": [
+            "SP_130000095"
+          ],
+          "source": "https://afrch.forest.gov.tw/0000095",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/0000095",
+          "sha256": "71b4f89e3d20c90b3ab5f72c0d5c2b08aa2ba102ac47d4a1448d9e5ceff17f5f",
+          "rawSource": "c44f293168b2158b.html.gz"
+        },
+        "packageMemberships": [
+          {
+            "lineId": "tw-alsr-alishan",
+            "operator": "阿里山林業鐵路及文化資產管理處",
+            "name": "二萬平"
+          }
+        ]
+      },
+      "identityEvidence": [
+        {
+          "operator": "阿里山林業鐵路及文化資產管理處",
+          "publisher": "Alishan Forest Railway and Cultural Heritage Office",
+          "stationPageId": "0000095",
+          "stationDatasetCode": "AFR-Q0000001630",
+          "stationGroupCode": "tw-official-afr-q0000001630",
+          "zh_Hant": "二萬平",
+          "en": "Erwanping",
+          "source": "https://afrch.forest.gov.tw/en/0000095",
+          "identitySource": "https://afrch.forest.gov.tw/0000095",
+          "publishedEnglishHeading": "Erwanping Station",
+          "publishedChineseHeading": "二萬平車站",
+          "sha256": "13497a6390cd70c8caca26a3189797240986211a7acc8e9c76264e313807908f",
+          "identitySha256": "71b4f89e3d20c90b3ab5f72c0d5c2b08aa2ba102ac47d4a1448d9e5ceff17f5f",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "identityRetrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "rawSource": "data/station-english-sources/tw-afr-stations/e97bf3d6a4279982.html.gz",
+          "identityRawSource": "data/station-english-sources/tw-afr-stations/c44f293168b2158b.html.gz",
+          "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name"
+        }
+      ]
+    },
+    "AFR-Q0000001660": {
+      "stationCode": "AFR-Q0000001660",
+      "stationGroupCode": "tw-official-afr-q0000001660",
+      "name": "神木",
+      "zh_Hant": "神木",
+      "en": "Shenmu (Sacred Tree)",
+      "officialStationId": "0000096",
+      "source": "https://afrch.forest.gov.tw/EN/0000096",
+      "identitySource": "https://afrch.forest.gov.tw/0000096",
+      "retrievedAt": "2026-10-01",
+      "englishEvidence": "Shenmu (Sacred Tree) Station",
+      "chineseEvidence": "神木車站",
+      "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name",
+      "rawSourceVerification": {
+        "stationPageId": "0000096",
+        "english": {
+          "heading": "Shenmu (Sacred Tree) Station",
+          "pageId": "0000096",
+          "cmsRelations": [
+            "SP_130000096"
+          ],
+          "source": "https://afrch.forest.gov.tw/EN/0000096",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/EN/0000096",
+          "sha256": "5beb34442a78187ebc6c49dedbf0bb265cbe38f92ae723640c29bae914c4da4c",
+          "rawSource": "0e37fb56e35e5d08.html.gz"
+        },
+        "chinese": {
+          "heading": "神木車站",
+          "pageId": "0000096",
+          "cmsRelations": [
+            "SP_130000096"
+          ],
+          "source": "https://afrch.forest.gov.tw/0000096",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/0000096",
+          "sha256": "a317c6949cf58cdc58062de2ebc1a3d470964fe674a559aabcb0092048d26205",
+          "rawSource": "89a7da1273924b57.html.gz"
+        },
+        "packageMemberships": [
+          {
+            "lineId": "tw-alsr-alishan",
+            "operator": "阿里山林業鐵路及文化資產管理處",
+            "name": "神木"
+          },
+          {
+            "lineId": "tw-alsr-shenmu",
+            "operator": "阿里山林業鐵路及文化資產管理處",
+            "name": "神木"
+          }
+        ]
+      },
+      "identityEvidence": [
+        {
+          "operator": "阿里山林業鐵路及文化資產管理處",
+          "publisher": "Alishan Forest Railway and Cultural Heritage Office",
+          "stationPageId": "0000096",
+          "stationDatasetCode": "AFR-Q0000001660",
+          "stationGroupCode": "tw-official-afr-q0000001660",
+          "zh_Hant": "神木",
+          "en": "Shenmu (Sacred Tree)",
+          "source": "https://afrch.forest.gov.tw/EN/0000096",
+          "identitySource": "https://afrch.forest.gov.tw/0000096",
+          "publishedEnglishHeading": "Shenmu (Sacred Tree) Station",
+          "publishedChineseHeading": "神木車站",
+          "sha256": "5beb34442a78187ebc6c49dedbf0bb265cbe38f92ae723640c29bae914c4da4c",
+          "identitySha256": "a317c6949cf58cdc58062de2ebc1a3d470964fe674a559aabcb0092048d26205",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "identityRetrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "rawSource": "data/station-english-sources/tw-afr-stations/0e37fb56e35e5d08.html.gz",
+          "identityRawSource": "data/station-english-sources/tw-afr-stations/89a7da1273924b57.html.gz",
+          "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name"
+        }
+      ]
+    },
+    "AFR-Q0000001651": {
+      "stationCode": "AFR-Q0000001651",
+      "stationGroupCode": "tw-official-afr-q0000001651",
+      "name": "阿里山",
+      "zh_Hant": "阿里山",
+      "en": "Alishan",
+      "officialStationId": "0000097",
+      "source": "https://afrch.forest.gov.tw/en/0000097",
+      "identitySource": "https://afrch.forest.gov.tw/0000097",
+      "retrievedAt": "2026-10-01",
+      "englishEvidence": "Alishan Station",
+      "chineseEvidence": "阿里山車站",
+      "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name",
+      "rawSourceVerification": {
+        "stationPageId": "0000097",
+        "english": {
+          "heading": "Alishan Station",
+          "pageId": "0000097",
+          "cmsRelations": [
+            "SP_130000097"
+          ],
+          "source": "https://afrch.forest.gov.tw/en/0000097",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/en/0000097",
+          "sha256": "7e18ff9cc9bece5bbd177b9d53f2bc058e0116deb49ea95f205eb4524c5c72a4",
+          "rawSource": "3df06c587f100a8f.html.gz"
+        },
+        "chinese": {
+          "heading": "阿里山車站",
+          "pageId": "0000097",
+          "cmsRelations": [
+            "SP_130000097"
+          ],
+          "source": "https://afrch.forest.gov.tw/0000097",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/0000097",
+          "sha256": "09c75552dc1fea2e59cc740fb9be3d5f2dfba33e65fb8aed301022b79d407ce8",
+          "rawSource": "0950c1f639e1079a.html.gz"
+        },
+        "packageMemberships": [
+          {
+            "lineId": "tw-alsr-alishan",
+            "operator": "阿里山林業鐵路及文化資產管理處",
+            "name": "阿里山"
+          },
+          {
+            "lineId": "tw-alsr-shenmu",
+            "operator": "阿里山林業鐵路及文化資產管理處",
+            "name": "阿里山"
+          },
+          {
+            "lineId": "tw-alsr-zhaoping",
+            "operator": "阿里山林業鐵路及文化資產管理處",
+            "name": "阿里山"
+          },
+          {
+            "lineId": "tw-alsr-zhushan",
+            "operator": "阿里山林業鐵路及文化資產管理處",
+            "name": "阿里山"
+          }
+        ]
+      },
+      "identityEvidence": [
+        {
+          "operator": "阿里山林業鐵路及文化資產管理處",
+          "publisher": "Alishan Forest Railway and Cultural Heritage Office",
+          "stationPageId": "0000097",
+          "stationDatasetCode": "AFR-Q0000001651",
+          "stationGroupCode": "tw-official-afr-q0000001651",
+          "zh_Hant": "阿里山",
+          "en": "Alishan",
+          "source": "https://afrch.forest.gov.tw/en/0000097",
+          "identitySource": "https://afrch.forest.gov.tw/0000097",
+          "publishedEnglishHeading": "Alishan Station",
+          "publishedChineseHeading": "阿里山車站",
+          "sha256": "7e18ff9cc9bece5bbd177b9d53f2bc058e0116deb49ea95f205eb4524c5c72a4",
+          "identitySha256": "09c75552dc1fea2e59cc740fb9be3d5f2dfba33e65fb8aed301022b79d407ce8",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "identityRetrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "rawSource": "data/station-english-sources/tw-afr-stations/3df06c587f100a8f.html.gz",
+          "identityRawSource": "data/station-english-sources/tw-afr-stations/0950c1f639e1079a.html.gz",
+          "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name"
+        }
+      ]
+    },
+    "AFR-Q0000002437": {
+      "stationCode": "AFR-Q0000002437",
+      "stationGroupCode": "tw-official-afr-q0000002437",
+      "name": "沼平",
+      "zh_Hant": "沼平",
+      "en": "Zhaoping",
+      "officialStationId": "0000098",
+      "source": "https://afrch.forest.gov.tw/en/0000098",
+      "identitySource": "https://afrch.forest.gov.tw/0000098",
+      "retrievedAt": "2026-10-01",
+      "englishEvidence": "Zhaoping Station",
+      "chineseEvidence": "沼平車站",
+      "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name",
+      "rawSourceVerification": {
+        "stationPageId": "0000098",
+        "english": {
+          "heading": "Zhaoping Station",
+          "pageId": "0000098",
+          "cmsRelations": [
+            "SP_130000098"
+          ],
+          "source": "https://afrch.forest.gov.tw/en/0000098",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/en/0000098",
+          "sha256": "f1d1e2ae9a3663ea33f0e8921276e69416a4affc6fb218fb766f0867f62921b7",
+          "rawSource": "d9737ca0801eaac1.html.gz"
+        },
+        "chinese": {
+          "heading": "沼平車站",
+          "pageId": "0000098",
+          "cmsRelations": [
+            "SP_130000098"
+          ],
+          "source": "https://afrch.forest.gov.tw/0000098",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/0000098",
+          "sha256": "30125224f7348c3815c1fbb567b171aead1530ff22987447afd4f89a5d0f38a7",
+          "rawSource": "e8de94089385cbc1.html.gz"
+        },
+        "packageMemberships": [
+          {
+            "lineId": "tw-alsr-zhaoping",
+            "operator": "阿里山林業鐵路及文化資產管理處",
+            "name": "沼平"
+          }
+        ]
+      },
+      "identityEvidence": [
+        {
+          "operator": "阿里山林業鐵路及文化資產管理處",
+          "publisher": "Alishan Forest Railway and Cultural Heritage Office",
+          "stationPageId": "0000098",
+          "stationDatasetCode": "AFR-Q0000002437",
+          "stationGroupCode": "tw-official-afr-q0000002437",
+          "zh_Hant": "沼平",
+          "en": "Zhaoping",
+          "source": "https://afrch.forest.gov.tw/en/0000098",
+          "identitySource": "https://afrch.forest.gov.tw/0000098",
+          "publishedEnglishHeading": "Zhaoping Station",
+          "publishedChineseHeading": "沼平車站",
+          "sha256": "f1d1e2ae9a3663ea33f0e8921276e69416a4affc6fb218fb766f0867f62921b7",
+          "identitySha256": "30125224f7348c3815c1fbb567b171aead1530ff22987447afd4f89a5d0f38a7",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "identityRetrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "rawSource": "data/station-english-sources/tw-afr-stations/d9737ca0801eaac1.html.gz",
+          "identityRawSource": "data/station-english-sources/tw-afr-stations/e8de94089385cbc1.html.gz",
+          "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name"
+        }
+      ]
+    },
+    "AFR-M0000005225": {
+      "stationCode": "AFR-M0000005225",
+      "stationGroupCode": "tw-official-afr-m0000005225",
+      "name": "對高岳",
+      "zh_Hant": "對高岳",
+      "en": "Duigaoyue",
+      "officialStationId": "0000101",
+      "source": "https://afrch.forest.gov.tw/en/0000101",
+      "identitySource": "https://afrch.forest.gov.tw/0000101",
+      "retrievedAt": "2026-10-01",
+      "englishEvidence": "Duigaoyue Station",
+      "chineseEvidence": "對高岳車站",
+      "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name",
+      "alternativeOfficialEnglish": [
+        "Dueigaoyue"
+      ],
+      "reviewNote": "Station page title, map label and body say Duigaoyue; homepage says Dueigaoyue. Use station-specific page.",
+      "rawSourceVerification": {
+        "stationPageId": "0000101",
+        "english": {
+          "heading": "Duigaoyue Station",
+          "pageId": "0000101",
+          "cmsRelations": [
+            "SP_130000101"
+          ],
+          "source": "https://afrch.forest.gov.tw/en/0000101",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/en/0000101",
+          "sha256": "7f7a54359ecfbf925718b31b0c9b4a2b119b63ba10564c1fe61382d9b71c5acc",
+          "rawSource": "23501c25282e3197.html.gz"
+        },
+        "chinese": {
+          "heading": "對高岳車站",
+          "pageId": "0000101",
+          "cmsRelations": [
+            "SP_130000101"
+          ],
+          "source": "https://afrch.forest.gov.tw/0000101",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/0000101",
+          "sha256": "b3bec8862e6259626df3be1ef249db5c48763d98fbe70032dc9386115cbb0d2f",
+          "rawSource": "51e52030e8487336.html.gz"
+        },
+        "packageMemberships": [
+          {
+            "lineId": "tw-alsr-zhushan",
+            "operator": "阿里山林業鐵路及文化資產管理處",
+            "name": "對高岳"
+          }
+        ]
+      },
+      "identityEvidence": [
+        {
+          "operator": "阿里山林業鐵路及文化資產管理處",
+          "publisher": "Alishan Forest Railway and Cultural Heritage Office",
+          "stationPageId": "0000101",
+          "stationDatasetCode": "AFR-M0000005225",
+          "stationGroupCode": "tw-official-afr-m0000005225",
+          "zh_Hant": "對高岳",
+          "en": "Duigaoyue",
+          "source": "https://afrch.forest.gov.tw/en/0000101",
+          "identitySource": "https://afrch.forest.gov.tw/0000101",
+          "publishedEnglishHeading": "Duigaoyue Station",
+          "publishedChineseHeading": "對高岳車站",
+          "sha256": "7f7a54359ecfbf925718b31b0c9b4a2b119b63ba10564c1fe61382d9b71c5acc",
+          "identitySha256": "b3bec8862e6259626df3be1ef249db5c48763d98fbe70032dc9386115cbb0d2f",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "identityRetrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "rawSource": "data/station-english-sources/tw-afr-stations/23501c25282e3197.html.gz",
+          "identityRawSource": "data/station-english-sources/tw-afr-stations/51e52030e8487336.html.gz",
+          "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name"
+        }
+      ]
+    },
+    "AFR-Q0000004704": {
+      "stationCode": "AFR-Q0000004704",
+      "stationGroupCode": "tw-official-afr-q0000004704",
+      "name": "祝山",
+      "zh_Hant": "祝山",
+      "en": "Zhushan",
+      "officialStationId": "0000100",
+      "source": "https://afrch.forest.gov.tw/en/0000100",
+      "identitySource": "https://afrch.forest.gov.tw/0000100",
+      "retrievedAt": "2026-10-01",
+      "englishEvidence": "Zhushan Station",
+      "chineseEvidence": "祝山車站",
+      "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name",
+      "rawSourceVerification": {
+        "stationPageId": "0000100",
+        "english": {
+          "heading": "Zhushan Station",
+          "pageId": "0000100",
+          "cmsRelations": [
+            "SP_130000100"
+          ],
+          "source": "https://afrch.forest.gov.tw/en/0000100",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/en/0000100",
+          "sha256": "f0fa3fa25f97455f73758ee1683ab48d274b6cd4193fb226ed631c5eaab18709",
+          "rawSource": "ecd46d1b77958f84.html.gz"
+        },
+        "chinese": {
+          "heading": "祝山車站",
+          "pageId": "0000100",
+          "cmsRelations": [
+            "SP_130000100"
+          ],
+          "source": "https://afrch.forest.gov.tw/0000100",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "finalSource": "https://afrch.forest.gov.tw/0000100",
+          "sha256": "98e9af89870a5a9bf4baad529f880d2c9290c6bdf877b8be957276775eab1186",
+          "rawSource": "58d637672f8b0a9b.html.gz"
+        },
+        "packageMemberships": [
+          {
+            "lineId": "tw-alsr-zhushan",
+            "operator": "阿里山林業鐵路及文化資產管理處",
+            "name": "祝山"
+          }
+        ]
+      },
+      "identityEvidence": [
+        {
+          "operator": "阿里山林業鐵路及文化資產管理處",
+          "publisher": "Alishan Forest Railway and Cultural Heritage Office",
+          "stationPageId": "0000100",
+          "stationDatasetCode": "AFR-Q0000004704",
+          "stationGroupCode": "tw-official-afr-q0000004704",
+          "zh_Hant": "祝山",
+          "en": "Zhushan",
+          "source": "https://afrch.forest.gov.tw/en/0000100",
+          "identitySource": "https://afrch.forest.gov.tw/0000100",
+          "publishedEnglishHeading": "Zhushan Station",
+          "publishedChineseHeading": "祝山車站",
+          "sha256": "f0fa3fa25f97455f73758ee1683ab48d274b6cd4193fb226ed631c5eaab18709",
+          "identitySha256": "98e9af89870a5a9bf4baad529f880d2c9290c6bdf877b8be957276775eab1186",
+          "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "identityRetrievedAt": "2026-10-01T01:50:53.697200+00:00",
+          "rawSource": "data/station-english-sources/tw-afr-stations/ecd46d1b77958f84.html.gz",
+          "identityRawSource": "data/station-english-sources/tw-afr-stations/58d637672f8b0a9b.html.gz",
+          "matchMethod": "operator website station page ID shared by Chinese and English pages; reviewed Chinese package name"
+        }
+      ]
+    }
+  },
+  "rawSourceManifest": "data/station-english-sources/tw-afr-stations/manifest.json",
+  "rawVerification": {
+    "schema": "station-page-integrity/1",
+    "stationCodes": 19,
+    "officialPages": 38,
+    "retrievedAt": "2026-10-01T01:50:53.697200+00:00",
+    "labelsChanged": 0,
+    "reviewedExcerptSha256": "2df0aa16370bd6bbb5c9179bb19338ddcdbef3369dea308f44d24051aba3d3bd",
+    "manifestSha256": "c0cd3a28b9fbea2e02c7e1ba6ddde1b7ead18b0b94e54197ffeba8fda9a795b7"
+  }
+}

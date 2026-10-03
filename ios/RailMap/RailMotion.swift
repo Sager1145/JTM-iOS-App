@@ -96,6 +96,33 @@ enum RailMotion {
     /// so it uses ease-out rather than a symmetric morphing curve.
     static let enter = Animation.easeOut(duration: 0.18)
 
+    /// Selection paint uses the same short arrival timing, without moving geometry.
+    static func mapHighlightDuration(reduceMotion: Bool) -> TimeInterval {
+        reduceMotion ? 0.16 : 0.18
+    }
+
+    /// Map detail arriving or leaving at a zoom threshold, without moving it.
+    static func mapDetailDuration(reduceMotion: Bool) -> TimeInterval {
+        reduceMotion ? 0.16 : 0.24
+    }
+
+    /// Strong ease-out, cubic-bezier(0.23, 1, 0.32, 1), for MapKit opacity.
+    static func mapHighlightProgress(_ fraction: Double) -> CGFloat {
+        let x = min(max(fraction, 0), 1)
+        if x == 0 || x == 1 { return CGFloat(x) }
+        var lower = 0.0
+        var upper = 1.0
+        for _ in 0..<14 {
+            let t = (lower + upper) / 2
+            let inverse = 1 - t
+            let sampledX = 3 * inverse * inverse * t * 0.23
+                + 3 * inverse * t * t * 0.32 + t * t * t
+            if sampledX < x { lower = t } else { upper = t }
+        }
+        let t = (lower + upper) / 2
+        return CGFloat(1 - pow(1 - t, 3))
+    }
+
     /// The Reduce Motion stand-in for anything that would otherwise spring or
     /// slide: the same change, cross-faded in place.
     ///

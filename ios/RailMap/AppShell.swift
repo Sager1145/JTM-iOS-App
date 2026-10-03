@@ -187,6 +187,9 @@ struct ContentView: View {
             let trains = loaded.trains.filter { train in
                 if let region, Region.resolved(train) != region { return false }
                 return RideLedger.hasBeenRidden(train)
+                    && mileageStatistics.includesYear(train)
+                    && mileageStatistics.includesJourneyGroup(train)
+                    && mileageStatistics.includesDate(train)
             }
             let ids = Set(trains.map(\.id))
             mileageStatistics.load(
@@ -300,6 +303,10 @@ struct ContentView: View {
     /// whether they actually moved belongs to the store that knows.
     private var statisticsLoadKey: StatisticsLoadKey {
         StatisticsLoadKey(
+            year: mileageStatistics.selectedYear,
+            groupID: mileageStatistics.selectedJourneyGroupID,
+            dates: mileageStatistics.dateSelection,
+            classification: mileageStatistics.classification,
             region: regionScopeCode,
             trains: routeLoadKey,
             rides: riddenRoutes.rides.map { RideKey(id: $0.id, geometry: $0.geometryDigest) })
@@ -311,6 +318,10 @@ struct ContentView: View {
     }
 
     private struct StatisticsLoadKey: Equatable {
+        var year: Int?
+        var groupID: String?
+        var dates: StatisticsDateSelection
+        var classification: MileageStatisticsStore.Classification
         var region: String
         var trains: [Train]?
         var rides: [RideKey]

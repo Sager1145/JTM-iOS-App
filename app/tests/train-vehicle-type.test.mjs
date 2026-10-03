@@ -80,3 +80,14 @@ test("vehicle_type must be a string when present", () => {
     /vehicle_type must be a string when present/,
   );
 });
+
+test("journey notes survive import/export without changing absent legacy records", () => {
+  const source = train("N700S");
+  source.notes = "  Number changes at the operator boundary\nTicket retained  ";
+  assert.equal(canonicalRoundTrip(source).notes,
+    "Number changes at the operator boundary\nTicket retained");
+  assert.equal(Object.hasOwn(canonicalRoundTrip(train(undefined)), "notes"), false);
+  context.__train = { ...source, notes: 42 };
+  assert.throws(() => run("validateTrain(__train, 0, new Set())"),
+    /notes must be a string when present/);
+});

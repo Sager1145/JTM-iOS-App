@@ -95,7 +95,7 @@ test("manifest provenance must match the current shipped solver and history over
   const shippedOverlayBytes = fs.readFileSync(shippedOverlayPath);
   const shippedOverlay = JSON.parse(shippedOverlayBytes.toString("utf8"));
   assert.deepEqual(current, {
-    solver_version: "24",
+    solver_version: "25",
     history_revisions: { jp: shippedOverlay.revision },
     history_hashes: {
       jp: createHash("sha256").update(shippedOverlayBytes).digest("hex"),
@@ -185,4 +185,18 @@ test("published sample manifest must carry the current overlay revision", () => 
     current.history_hashes,
     "rerun `npm run precompute` from app/",
   );
+});
+
+
+test("North American manifests combine domestic and cross-border provenance", () => {
+  const domestic = context({history_revisions: {us: "none"}, history_hashes: undefined});
+  const border = context({history_revisions: {ca: "none", us: "none"}, history_hashes: undefined});
+  const expected = {solver_version: "22", history_revisions: {ca: "none", us: "none"}};
+  assert.deepEqual(deriveManifestSolverContext([domestic, border]), expected);
+  assert.deepEqual(deriveManifestSolverContext([border, domestic]), expected);
+  assert.deepEqual(deriveManifestSolverContext([domestic], expected), expected);
+  assert.throws(() => deriveManifestSolverContext([border,
+    context({history_revisions: {ca: "changed"}, history_hashes: {ca: EXAMPLE_HISTORY_HASH}})]), /disagrees/);
+  for (const country of ["us", "ca"])
+    assert.deepEqual(currentPrecomputeSolverContext({country}).history_revisions, {ca: "none", us: "none"});
 });

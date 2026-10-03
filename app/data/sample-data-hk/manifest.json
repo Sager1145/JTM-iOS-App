@@ -5,16 +5,29 @@
   "solved": 1,
   "unsolvable": 0,
   "no_route": 0,
+  "solver_context": {
+    "solver_version": "25",
+    "history_revisions": {
+      "hk": "none"
+    }
+  },
+  "source_hashes": {
+    "hk-2025.json": "cbf78eca08becf515bd5f9bf71bd92203f9253e23a906921d9b8fea52e605184",
+    "matched-routes.json": "e53bfa63157c64aedfbd2a1e78c553d212d6753b3d6e16cbd0b9dda65b057226",
+    "matched-stops.json": "8468a0e34e19e22822a7933ec376505ecc2e933b1529af67eddb7e1a306f36c7",
+    "rail-sections-hk.json": "459b61aa1c582970cfa77f2cd5db79e06c7e64f6b6ac01a78ee1c036a61e8561",
+    "stations-hk.json": "8c2041a38ebeb1e7fcaf14d596e12c5b353162ec71b3d065562926a07f99d1a4"
+  },
   "parts": [
     "part-000"
   ],
+  "part_train_ids": {
+    "part-000": "HK-SAMPLE-EAL-LOW"
+  },
   "full": "sample-full",
   "dates": {
     "2026-08-10": [
       "part-000"
     ]
-  },
-  "part_train_ids": {
-    "part-000": "HK-SAMPLE-EAL-LOW"
   }
 }

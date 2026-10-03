@@ -31,18 +31,23 @@ final class PlaybackVideoExporter {
     @ObservationIgnored private var appendedFrames = 0
 
     @ObservationIgnored private var writer: AVAssetWriter?
+    /// A replacement export can start before an earlier writer has finished.
+    /// Keep those writers alive until their own completion, without letting
+    /// them own the new run's writer or callbacks.
+    @ObservationIgnored private var retiringWriters: [URL: AVAssetWriter] = [:]
     @ObservationIgnored private var input: AVAssetWriterInput?
     @ObservationIgnored private var adapter: AVAssetWriterInputPixelBufferAdaptor?
     @ObservationIgnored private weak var mapView: UIView?
     @ObservationIgnored private weak var playback: PlaybackController?
     @ObservationIgnored private var outputURL: URL?
     @ObservationIgnored private var startedAt: CFTimeInterval = 0
-    @ObservationIgnored private var lastFrameAt: CFTimeInterval = -.infinity
+    @ObservationIgnored private var captureLink: CADisplayLink?
+    @ObservationIgnored private var captureTarget: CaptureTarget?
+    @ObservationIgnored private var latestSnapshot: PlaybackMapSnapshot?
     @ObservationIgnored private var outputSize = CGSize.zero
     /// The rectangle of the map being filmed, in the map view's own points.
     /// The whole view until a shape narrows it — see `VideoExportSettings`.
     @ObservationIgnored private var crop = CGRect.zero
-    @ObservationIgnored private var frameInterval = 1.0 / 60.0
 
     // Frame-invariant drawing state.
     //
@@ -80,6 +85,26 @@ final class PlaybackVideoExporter {
 
     var isRecording: Bool { state == .recording || state == .finishing }
 
+    /// Keep the export result reachable after the playback transport closes.
+    var hasPendingResult: Bool {
+        switch state {
+        case .finishing, .finished, .failed: return true
+        case .idle, .recording: return false
+        }
+    }
+
+    /// Dismiss the offer, retaining the file for any system share operation
+    /// that already received its URL. A writer still finishing cannot dismiss.
+    func dismissResult() {
+        switch state {
+        case .finished, .failed:
+            state = .idle
+            progress = 0
+        case .idle, .recording, .finishing:
+            break
+        }
+    }
+
     func start(
         playback: PlaybackController,
         mapView: UIView,
@@ -89,7 +114,14 @@ final class PlaybackVideoExporter {
         reducedMotion: Bool,
         settings: VideoExportSettings
     ) {
+        let restoringSelection = playback.restoreSelectedTrainID
         cancel(clearPlayback: false)
+        if state == .finishing, let writer, let outputURL {
+            retiringWriters[outputURL] = writer
+        }
+        // Setup can fail before a new writer exists. Detach the retiring
+        // attempt first so failure cleanup cannot cancel its partial movie.
+        resetWriter()
         do {
             // `uncoveredRect`: the map the panel is not covering, which is
             // where the playback camera now centres its train.
@@ -108,10 +140,11 @@ final class PlaybackVideoExporter {
                 displayScale: mapView.window?.screen.scale ?? UIScreen.main.scale)
             let size = plan.size
             crop = plan.crop
-            frameInterval = 1.0 / Double(VideoExportSettings.framesPerSecond)
             let url = FileManager.default.temporaryDirectory
                 .appending(path: "RailMap-\(UUID().uuidString).mp4")
             let writer = try AVAssetWriter(outputURL: url, fileType: .mp4)
+            self.writer = writer
+            self.outputURL = url
             let settings: [String: Any] = [
                 AVVideoCodecKey: AVVideoCodecType.h264,
                 AVVideoWidthKey: Int(size.width),
@@ -148,22 +181,23 @@ final class PlaybackVideoExporter {
             self.outputURL = url
             self.outputSize = size
             self.startedAt = CACurrentMediaTime()
-            self.lastFrameAt = -.infinity
             self.appendedFrames = 0
             self.progress = 0
             resetFrameCaches()
             self.state = .recording
 
             playback.onFrame = { [weak self] snapshot in
-                self?.append(snapshot)
+                self?.latestSnapshot = snapshot
             }
             playback.onFinish = { [weak self] in self?.finish() }
             // `autoBegin`: nobody is going to press play on a recording, so
             // the run begins once the opening overview has landed.
             guard playback.start(
                 trains: trains, rides: rides, reducedMotion: reducedMotion,
+                restoringSelection: restoringSelection,
                 autoBegin: true)
             else { throw ExportError.noPlayableGeometry }
+            startCaptureClock()
         } catch {
             fail(error)
         }
@@ -181,9 +215,23 @@ final class PlaybackVideoExporter {
     /// path still discards the empty file rather than offering an unplayable
     /// one.
     func cancel(clearPlayback: Bool = true) {
+        // Workspace disappearance calls cancel too. Finished/failed results
+        // are offers the reader must explicitly dismiss, not recordings to
+        // discard when changing tabs; dropping them here orphaned a valid URL.
+        guard state == .recording || state == .finishing else { return }
         playback?.onFrame = nil
         playback?.onFinish = nil
         if clearPlayback { playback?.stop() }
+        // No more frames need the controller once closing starts. Releasing
+        // this hook also prevents a repeated cancel on this old exporter from
+        // clearing callbacks installed by another workspace's new export.
+        playback = nil
+        stopCaptureClock()
+
+        // Finishing is already the result of a stop. A second tap or a
+        // workspace disappearance must not cancel the writer while it closes
+        // a film we have promised to keep.
+        if state == .finishing { return }
 
         guard state == .recording, let writer, let input, let outputURL,
             writer.status == .writing, appendedFrames > 0
@@ -197,9 +245,10 @@ final class PlaybackVideoExporter {
         }
         state = .finishing
         input.markAsFinished()
+        let writerID = ObjectIdentifier(writer)
         writer.finishWriting { [weak self] in
             Task { @MainActor [weak self] in
-                self?.completeFinish(outputURL: outputURL, partial: true)
+                self?.completeFinish(writerID: writerID, outputURL: outputURL, partial: true)
             }
         }
     }
@@ -209,8 +258,6 @@ final class PlaybackVideoExporter {
               let adapter, let pool = adapter.pixelBufferPool,
               let mapView else { return }
         let now = CACurrentMediaTime()
-        guard now - lastFrameAt >= frameInterval else { return }
-        lastFrameAt = now
         let interval = RailSignpost.jobs.begin("video.frame")
         defer { RailSignpost.jobs.end("video.frame", interval) }
         var optionalBuffer: CVPixelBuffer?
@@ -235,12 +282,30 @@ final class PlaybackVideoExporter {
             x: -filmed.minX * layout.scale,
             y: outputSize.height + filmed.minY * layout.scale)
         context.scaleBy(x: layout.scale, y: -layout.scale)
-        mapView.layer.render(in: context)
+        // Use UIKit's view-hierarchy snapshot path for MapKit's rendered
+        // surfaces; CALayer.render does not reproduce the on-screen hierarchy
+        // reliably when subviews draw through the render server.
+        UIGraphicsPushContext(context)
+        let captured = mapView.drawHierarchy(in: mapView.bounds, afterScreenUpdates: false)
+        UIGraphicsPopContext()
+        guard captured else {
+            context.restoreGState()
+            return
+        }
         drawCaption(snapshot, in: context, layout: layout)
         context.restoreGState()
 
+        // Begin at zero even if the encoder or view was not ready on its
+        // first display-link callback. An absent first frame is not a black
+        // preamble that should consume time in the encoded movie.
+        if appendedFrames == 0 { startedAt = now }
         let elapsed = max(0, now - startedAt)
-        adapter.append(buffer, withPresentationTime: CMTime(seconds: elapsed, preferredTimescale: 600))
+        guard adapter.append(
+            buffer, withPresentationTime: CMTime(seconds: elapsed, preferredTimescale: 600))
+        else {
+            fail(writer?.error ?? ExportError.cannotAppendFrame)
+            return
+        }
         appendedFrames += 1
         publish(progress: snapshot.frame.progress)
     }
@@ -361,20 +426,35 @@ final class PlaybackVideoExporter {
 
     private func finish() {
         guard state == .recording, let writer, let input, let outputURL else { return }
+        guard appendedFrames > 0 else {
+            fail(ExportError.noCapturedFrames)
+            return
+        }
         state = .finishing
+        stopCaptureClock()
         playback?.onFrame = nil
         playback?.onFinish = nil
+        playback = nil
         input.markAsFinished()
+        let writerID = ObjectIdentifier(writer)
         writer.finishWriting { [weak self] in
-            Task { @MainActor [weak self] in self?.completeFinish(outputURL: outputURL) }
+            Task { @MainActor [weak self] in
+                self?.completeFinish(writerID: writerID, outputURL: outputURL)
+            }
         }
     }
 
-    private func completeFinish(outputURL: URL, partial: Bool = false) {
-        guard let writer else { return }
+    private func completeFinish(writerID: ObjectIdentifier, outputURL: URL, partial: Bool = false) {
+        retiringWriters.removeValue(forKey: outputURL)
+        // A new export may start while the old writer finishes. Its completion
+        // belongs to the captured writer, never whichever one is installed now.
+        guard self.outputURL == outputURL, let writer, ObjectIdentifier(writer) == writerID else {
+            try? FileManager.default.removeItem(at: outputURL)
+            return
+        }
         if writer.status == .completed {
             resetWriter()
-            progress = 1
+            if !partial { progress = 1 }
             state = .finished(outputURL, partial: partial)
         } else {
             // A partial film that will not close is not a failure the reader
@@ -389,11 +469,15 @@ final class PlaybackVideoExporter {
         writer?.cancelWriting()
         playback?.onFrame = nil
         playback?.onFinish = nil
+        playback?.stop()
+        if let outputURL { try? FileManager.default.removeItem(at: outputURL) }
         resetWriter()
         state = .failed(error.localizedDescription)
     }
 
     private func resetWriter() {
+        stopCaptureClock()
+        latestSnapshot = nil
         writer = nil
         input = nil
         adapter = nil
@@ -401,6 +485,48 @@ final class PlaybackVideoExporter {
         playback = nil
         outputURL = nil
         resetFrameCaches()
+    }
+
+    /// The recording clock continues during overview, intro, terminus holds
+    /// and finale. Playback emits new geometry only while its train moves;
+    /// filming solely from that callback cut every camera move out of the film.
+    private func startCaptureClock() {
+        let target = CaptureTarget { [weak self] in
+            guard let self else { return }
+            // Stops from other owners (a language/data change, for example)
+            // do not necessarily pass through the workspace's Stop button.
+            // Close the partial film before capturing a cleared map forever.
+            if self.playback == nil || self.mapView == nil || self.playback?.phase == .idle {
+                self.cancel(clearPlayback: false)
+                return
+            }
+            guard let snapshot = self.latestSnapshot else { return }
+            self.append(snapshot)
+        }
+        let link = CADisplayLink(target: target, selector: #selector(CaptureTarget.fire(_:)))
+        let fps = Float(VideoExportSettings.framesPerSecond)
+        link.preferredFrameRateRange = CAFrameRateRange(minimum: fps, maximum: fps, preferred: fps)
+        link.add(to: .main, forMode: .common)
+        captureTarget = target
+        captureLink = link
+    }
+
+    private func stopCaptureClock() {
+        captureLink?.invalidate()
+        captureLink = nil
+        captureTarget = nil
+    }
+
+    isolated deinit {
+        captureLink?.invalidate()
+        writer?.cancelWriting()
+        for writer in retiringWriters.values { writer.cancelWriting() }
+    }
+
+    private final class CaptureTarget: NSObject {
+        let callback: () -> Void
+        init(callback: @escaping () -> Void) { self.callback = callback }
+        @objc func fire(_ link: CADisplayLink) { callback() }
     }
 
     /// Everything held for one film's frames.
@@ -439,12 +565,16 @@ final class PlaybackVideoExporter {
         case cannotAddInput
         case cannotStartWriter
         case cannotFinishWriter
+        case cannotAppendFrame
+        case noCapturedFrames
         case noPlayableGeometry
         var errorDescription: String? {
             switch self {
             case .cannotAddInput: "The video encoder could not accept its input."
             case .cannotStartWriter: "The video encoder could not start."
             case .cannotFinishWriter: "The video encoder could not finish the movie."
+            case .cannotAppendFrame: "The video encoder could not write a frame."
+            case .noCapturedFrames: "The map could not be recorded. Keep it visible and try again."
             case .noPlayableGeometry: "No routed journey is available to record."
             }
         }

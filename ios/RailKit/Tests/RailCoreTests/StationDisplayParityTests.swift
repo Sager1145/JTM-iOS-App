@@ -44,6 +44,7 @@ struct StationDisplayParityTests {
             let lines: [Line]
             let elected: [String]
             let droppedByMerge: [Dropped]
+            /// Drawable station circles. Logical popup aliases can share one.
             let stationCount: Int
             let groupCount: Int
         }
@@ -332,11 +333,13 @@ struct StationDisplayParityTests {
         var total = 0
         for entry in fixture.packages {
             let network = try Self.network(entry)
+            let logicalStationCount = try PortFixtures.package(country: entry.country)
+                .lines.reduce(0) { $0 + $1.stations.count }
             #expect(
-                network.stations.count == entry.stationCount,
+                network.stations.count == logicalStationCount,
                 """
                 \(entry.country): \(network.stations.count) stations, \
-                expected \(entry.stationCount)
+                expected \(logicalStationCount) logical rows from the shipped package
                 """)
             total += network.stations.count
 
@@ -362,6 +365,64 @@ struct StationDisplayParityTests {
             }
         }
         #expect(total == shippedStationCount, "every shipped station row, got \(total)")
+    }
+
+    @Test("Tokyo circle aliases remain available to station groups and popups")
+    func tokyoLogicalAliases() throws {
+        let fixture = Self.fixture
+        let japan = try #require(fixture.packages.first { $0.country == "jp" })
+        let network = try Self.network(japan)
+        let aliases = [
+            ("jp-東日本旅客鉄道-東北線-2:003766", "jp-東日本旅客鉄道-東海道線:003766"),
+            ("jp-東日本旅客鉄道-総武線-3:003766", "jp-東日本旅客鉄道-総武線:003766"),
+        ]
+        let corridorAliases = [
+            ("jp-東日本旅客鉄道-総武線-3:004095", "jp-東日本旅客鉄道-東海道線:004095"),
+        ]
+        #expect(network.stations.count == japan.stationCount + network.circleAliasStationIDs.count)
+        for entry in fixture.packages where entry.country != "jp" {
+            #expect(try Self.network(entry).stations.count == entry.stationCount)
+        }
+
+        // The compact Swift decoder intentionally omits drawing policy. Read
+        // the source ownership declarations to identify exactly which logical
+        // rows share circles, rather than accepting any two missing marks.
+        let packageURL = try PortFixtures.repositoryRoot()
+            .appending(path: "app/public/rail/jp-2025.json")
+        let raw = try #require(try JSONSerialization.jsonObject(with: Data(contentsOf: packageURL))
+            as? [String: Any])
+        let lines = try #require(raw["lines"] as? [[String: Any]])
+        let declaredAliases = lines.flatMap { line -> [String] in
+            guard let id = line["id"] as? String,
+                let owners = line["stationCircleOwnerByCode"] as? [String: String]
+            else { return [] }
+            return owners.filter { $0.value != id }.map { "\(id):\($0.key)" }
+        }
+        #expect(Set(declaredAliases).isSuperset(of: Set((aliases + corridorAliases).map { $0.0 })))
+        for (aliasID, ownerID) in corridorAliases {
+            let alias = try #require(network.station(id: aliasID))
+            let owner = try #require(network.station(id: ownerID))
+            #expect(alias.coordinate == owner.coordinate)
+        }
+        for (aliasID, ownerID) in aliases {
+            let alias = try #require(network.station(id: aliasID))
+            let owner = try #require(network.station(id: ownerID))
+            let line = try #require(lines.first { ($0["id"] as? String) == String(aliasID.split(separator: ":")[0]) })
+            let owners = try #require(line["stationCircleOwnerByCode"] as? [String: String])
+            #expect(owners["003766"] == String(ownerID.split(separator: ":")[0]))
+            #expect(Self.same(alias.name, "東京"))
+            #expect(Self.same(alias.stationGroupID, "003766"))
+            #expect(alias.coordinate == owner.coordinate,
+                    "Circle ownership must share a platform, not erase another location.")
+            let members = network.groupMembers(ofStationID: aliasID)
+            #expect(members.contains { Self.same(network.stations[$0].stationID, aliasID) })
+            #expect(members.contains { Self.same(network.stations[$0].stationID, ownerID) })
+            let popupCase = try #require(fixture.cases.first { Self.same($0.stationId, aliasID) })
+            #expect(popupCase.country == "jp")
+            #expect(popupCase.rows.count == 6, "The alias must retain Tokyo's complete interchange popup.")
+            let popup = StationDisplay.buildPopupModel(network: network, stationID: aliasID)
+            #expect(popup.lines.map(\.lineID) == popupCase.rows.map { japan.lines[$0].lineId })
+        }
     }
 
     // MARK: - the popup model
@@ -406,6 +467,9 @@ struct StationDisplayParityTests {
                 #expect(
                     row.logoNeedsDarkMatte == expected.logoNeedsDarkMatte,
                     "\(expected.lineId): dark matte disagrees")
+                #expect(
+                    Self.same(row.operatorName, network.line(id: expected.lineId)?.operator),
+                    "\(expected.lineId): the detail card must retain the full operator name")
             }
         }
     }
@@ -419,7 +483,12 @@ struct StationDisplayParityTests {
     @Test("every station's popup lists the same lines in the same order")
     func popupOrder() throws {
         let fixture = Self.fixture
-        #expect(fixture.cases.count == fixture.packages.reduce(0) { $0 + $1.stationCount })
+        let shippedStationCount = try PortFixtures.countries.reduce(into: 0) { count, country in
+            count += try PortFixtures.package(country: country).lines.reduce(0) {
+                $0 + $1.stations.count
+            }
+        }
+        #expect(fixture.cases.count == shippedStationCount)
         var multiRow = 0
         var checked = 0
         for entry in fixture.packages {
@@ -709,6 +778,31 @@ struct StationDisplayParityTests {
     /// The records come from the real `buildDeckMarkerRecords`, so the ROLES
     /// are the app's own — which matters, because the role is what the three
     /// tiers key on and what the rank table orders.
+    @Test("Narita Express underground sections emit only Tokyo, Shimbashi and Shinagawa")
+    func undergroundNaritaExpressMarkers() throws {
+        let japan = try #require(Self.fixture.rides.first { $0.country == "jp" })
+        let trainID = "20260727_08_narita_express"
+        let rows = japan.records.filter { Self.same(Self.cells($0)[11], trainID) }
+        // These are the unchanged sample's explicit Sobu-3 sections
+        // 003766→003872→004095. Surface Tokaido stations must not leak in.
+        let expected: [(String, String, Double, Double)] = [
+            ("東京", "terminal", 139.766685, 35.680965),
+            ("新橋", "pass", 139.75873, 35.666205),
+            ("品川", "terminal", 139.7394857, 35.6290157),
+        ]
+        let records = try rows.map(Self.record)
+        #expect(records.count == expected.count)
+        for (record, expected) in zip(records, expected) {
+            #expect(Self.same(record.name, expected.0))
+            #expect(Self.same(record.role, expected.1))
+            #expect(record.position == Coordinate(lon: expected.2, lat: expected.3))
+        }
+        for name in ["有楽町", "浜松町", "田町", "高輪ゲートウェイ"] {
+            #expect(!records.contains { Self.same($0.name, name) },
+                    "Underground Narita Express must not acquire surface station \(name).")
+        }
+    }
+
     @Test("every ride's markers name the same stations")
     func rideLabels() throws {
         let fixture = Self.fixture
@@ -734,7 +828,9 @@ struct StationDisplayParityTests {
                 if !features[index].name.isEmpty { totalNamed += 1 }
             }
         }
-        #expect(totalRecords == 4085, "4,085 marker records, got \(totalRecords)")
+        // The current NEX underground sections omit four surface-line pass
+        // stations; undergroundNaritaExpressMarkers pins the exact replacement.
+        #expect(totalRecords == 4083, "4,083 marker records, got \(totalRecords)")
         // Two fifths of them: a station reached by several trains ships one
         // record per train and one of those wins, and every intermediate stop
         // also ships a stop-center that can never win at all.

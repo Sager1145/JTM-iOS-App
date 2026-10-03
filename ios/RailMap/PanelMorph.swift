@@ -4,11 +4,9 @@ import SwiftUI
 /// header has opened, 0…1 — as a value the few views that morph with it
 /// OBSERVE, rather than one the whole page tree is rebuilt around.
 ///
-/// Written by whichever layout owns the panel's height: the docked card's
-/// header drag (``DockedCard``) and the phone sheet's live height
-/// (`mapLayout`). Read by `PanelHeader`, `RideCard` and `WorkspacePanelPage`.
-/// Nothing else should depend on it, so a drag frame re-evaluates those
-/// three and nothing above them.
+/// Written by the docked card's selected stop and the phone sheet's live
+/// height. Read by `RideCard`, `PanelStageReader` and `WorkspacePanelPage`;
+/// the ordinary title bar does not observe the panel's height.
 @MainActor @Observable
 final class PanelMorph {
     var stage: SheetStage

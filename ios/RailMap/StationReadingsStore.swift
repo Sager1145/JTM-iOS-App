@@ -1,51 +1,32 @@
 import Foundation
 import RailCore
 
-/// The station-name readings table, read out of the app bundle.
+/// The derived station-name table, read out of the app bundle.
 ///
-/// `RailCore.Localization` already carries every rule this table feeds — the
-/// code-before-name lookup, the kana/romaji/zh selection, the TW/HK/MO/KR
-/// "localise the name itself" branch — but it deliberately owns no file
-/// access, so until something hands it a table it answers as if the table were
-/// empty. That is exactly what the app did before this file existed: five
-/// `station-readings*.json` were being copied into the bundle by
-/// `copy-rail-packages.sh` and nothing ever opened them.
+/// `station-names` joins the curated readings with the station English
+/// database, retaining exact platform and line membership identities.
 ///
-/// ## The resource name is the web app's rule, not a second manifest
+/// `RailCore.Localization` owns the code-before-name lookup and display rules;
+/// this actor decodes the country-scoped projection once per region.
+/// Japan retains Japanese base names with optional kana, English/romaji and
+/// Chinese sublines. Other countries localise the base station name itself.
+/// Detail cards retain all stored name fields independently of reading toggles.
 ///
-/// `AppCore.countrySuffixed` gives Japan the historical unsuffixed name and
-/// every other country a `-{country}` suffix. `copy-rail-packages.sh` copies
-/// the files under exactly those names for exactly this reason, so the rule is
-/// spelled here once and the loader needs no table of its own.
-///
-/// ## What the five files actually contain
-///
-/// Japan's table is *pronunciation*: `kana`, `katakana`, `romaji`, `zh_Hant`,
-/// `zh_Hans`, and no `country` field at all — which is why
-/// `Localization.StationReadings` reads a missing country as `"JP"` and
-/// annotates rather than replaces. The other four declare `country` and carry
-/// `zh_Hant` / `zh_Hans` / `ja` / `en` official names instead, with no kana or
-/// romaji anywhere; for those, `Localization` localises the base station name
-/// and returns no reading sublines at all.
-///
-/// `katakana` and `name` are read by nobody: `StationReadingRow` has no field
-/// for either, and neither does the JavaScript's row reader.
+/// Resource names follow the web app's `countrySuffixed` rule: Japan uses
+/// `station-names.json`, other countries use `station-names-{country}.json`.
+/// US and Canada retain their existing `station-readings` resources.
 actor StationReadingsStore {
 
     static let shared = StationReadingsStore()
 
-    /// All five, because all five are on screen at once.
-    ///
-    /// This used to hold one table and say so: the app had a region switch, so
-    /// four of the five could never be asked for. Now every region is drawn
-    /// together and a station's names come from its own region's table, so the
-    /// cache holds what the map can ask for. About a megabyte of JSON in
-    /// total, decoded once each.
+    /// Every regional table may be needed while all regions are on screen.
     private var tables: [String: Localization.StationReadings] = [:]
 
-    /// `AppCore.countrySuffixed("station-readings", country)`.
+    /// `AppCore.countrySuffixed("station-names", country)`.
     nonisolated static func resourceName(country: String) -> String {
-        Region.countrySuffixed("station-readings", country: country)
+        Region.countrySuffixed(
+            country == "us" || country == "ca" ? "station-readings" : "station-names",
+            country: country)
     }
 
     /// The table for a country, or `.empty` when the bundle has no such file.
@@ -75,7 +56,7 @@ actor StationReadingsStore {
     }
 
     /// The file as shipped. Every unknown key — `note`, `languages`, `stats`,
-    /// `sources`, and the rows' own `name` / `katakana` — is ignored by
+    /// `sources`, and the rows' own `name` — is ignored by
     /// `Decodable`, which is what keeps this loader from having to track the
     /// generators that write those files.
     private struct RawTable: Decodable {
@@ -86,6 +67,7 @@ actor StationReadingsStore {
 
     private struct RawRow: Decodable {
         let kana: String?
+        let katakana: String?
         let romaji: String?
         let zhHant: String?
         let zhHans: String?
@@ -93,7 +75,7 @@ actor StationReadingsStore {
         let en: String?
 
         enum CodingKeys: String, CodingKey {
-            case kana, romaji, ja, en
+            case kana, katakana, romaji, ja, en
             case zhHant = "zh_Hant"
             case zhHans = "zh_Hans"
         }
@@ -106,7 +88,7 @@ actor StationReadingsStore {
             Localization.StationReadingRow(
                 kana: kana, romaji: romaji,
                 zhHant: zhHant, zhHans: zhHans,
-                ja: ja, en: en)
+                ja: ja, en: en, katakana: katakana)
         }
     }
 }

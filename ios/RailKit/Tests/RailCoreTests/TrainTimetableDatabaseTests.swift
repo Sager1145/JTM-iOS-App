@@ -550,7 +550,7 @@ struct TrainTimetableDatabaseTests {
     }
 }
 
-private final class FixtureDatabase {
+final class FixtureDatabase {
     let url: URL
 
     init(

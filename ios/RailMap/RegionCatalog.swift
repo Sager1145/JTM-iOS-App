@@ -85,17 +85,16 @@ enum Region: String, CaseIterable, Identifiable, Sendable, Hashable {
 
     // MARK: - the North America switch
 
-    /// The settings key behind ``northAmericaEnabled``. Off unless the reader
-    /// turned it on: North America is an opt-in, and with it off the app
-    /// behaves as if `us` and `ca` did not ship — no lines, no stations, no
-    /// pickers, no rides. The rides are hidden, never deleted; they live in a
+    /// The settings key behind ``northAmericaEnabled``. All shipped countries
+    /// are available by default. An explicit reader preference can hide North
+    /// America; its rides are hidden, never deleted, and live in a
     /// file of their own (see `RideStorage`) that is left untouched while off.
     static let northAmericaDefaultsKey = "feature-north-america-enabled"
 
     /// Read straight from `UserDefaults`, which is thread-safe, so that the
     /// storage actor and the network loader can ask without a main-actor hop.
     nonisolated static var northAmericaEnabled: Bool {
-        UserDefaults.standard.bool(forKey: northAmericaDefaultsKey)
+        (UserDefaults.standard.object(forKey: northAmericaDefaultsKey) as? Bool) ?? true
     }
 
     var isNorthAmerica: Bool { self == .us || self == .ca }
@@ -345,7 +344,22 @@ enum Region: String, CaseIterable, Identifiable, Sendable, Hashable {
     /// drift by a kilometre if a package is resurveyed without it: what it
     /// decides is where a camera opens, not what is drawn there.
     var networkExtent: MKCoordinateRegion {
-        let box = Self.networkBounds(of: self)
+        extent(of: Self.networkBounds(of: self))
+    }
+
+    /// Explicit country picks include every railway, including the US
+    /// networks in Alaska and Hawaii that the launch overview leaves out.
+    var completeNetworkExtent: MKCoordinateRegion {
+        switch self {
+        case .us: extent(of: (21.332468, -158.052073, 64.926145, -70.256919))
+        case .ca: extent(of: (42.295503, -123.178268, 53.601592, -73.178482))
+        default: networkExtent
+        }
+    }
+
+    private func extent(
+        of box: (south: Double, west: Double, north: Double, east: Double)
+    ) -> MKCoordinateRegion {
         // Through the same shift the drawn network takes. `AppleMapDatum`'s
         // note has the sizes — half a kilometre in Taiwan, Hong Kong, Macao
         // and Korea — which is nothing across a country and everything across

@@ -163,6 +163,7 @@ function restrictNetwork(network, ids) {
     lineById,
     linesByName,
     linesByOperator,
+    sectionByCode: new Map([...network.sectionByCode].filter(([, interval]) => ids.has(interval.lineId))),
     // Fresh per call. The cache is a memo keyed on `lineId#part|lon,lat` with
     // the coordinate at 7 decimals, so it cannot change an answer unless two
     // points a centimetre apart share a key — but starting empty makes every
@@ -278,6 +279,10 @@ function hintArrays(properties) {
     requiredOperatorNames: arrayOf("required_operator_names"),
     preferredOperatorNames: arrayOf("preferred_operator_names"),
     usedOperatorNames: keysOf("used_operator_names"),
+    requiredLineIds: arrayOf("required_line_ids"),
+    sectionCodes: arrayOf("section_codes"),
+    fromStationCode: properties.from_n02_station_code || properties.from_station_code || null,
+    toStationCode: properties.to_n02_station_code || properties.to_station_code || null,
   };
 }
 
@@ -426,6 +431,42 @@ export function build({ RailNetwork, railPackage, APP_DIR }) {
     });
     return feature;
   };
+
+  // Physical-code and inferred-code paths exercise the same final slicer.
+  // Pin a trunk→branch→trunk ride whose endpoints both belong to the trunk:
+  // endpoint fitting alone would silently replace it with the shorter trunk.
+  {
+    const trunk = "jp-北海道旅客鉄道-函館線", branch = `${trunk}-2`;
+    const branchLine = lineOf("jp", branch);
+    const codeFor = (id, from, to) => `${id}@${[from, to].sort().join(":")}`;
+    const forwardCodes = [codeFor(trunk, "000424", "000420"),
+      ...branchLine.stations.slice(0, -1).map((station, index) =>
+        codeFor(branch, station[0], branchLine.stations[index + 1][0])),
+      codeFor(trunk, "000427", "000426")];
+    for (const reverse of [false, true]) {
+      const properties = {
+        required_line_names: ["函館線"], required_operator_names: ["北海道旅客鉄道"],
+        from_n02_station_code: reverse ? "000426" : "000424",
+        to_n02_station_code: reverse ? "000424" : "000426",
+        section_codes: reverse ? forwardCodes.slice().reverse() : forwardCodes,
+      };
+      const geometry = RailNetwork.sourceGeometryForIntervals(networkFor("jp"), properties);
+      for (const inferred of [false, true]) {
+        const hints = { ...properties };
+        if (inferred) delete hints.section_codes;
+        add({ name: `jp/hakodate-joins/${reverse ? "reverse" : "forward"}/${inferred ? "inferred" : "explicit"}`,
+          why: "The shared 森 and 大沼 station identities join trunk→砂原支線→trunk; whole-path evidence preserves the explicit detour in either direction.",
+          country: "jp", group: "hakodate-joins", feature: { type: "Feature", properties: hints, geometry } });
+      }
+    }
+    const pair = lineOf("jp", `${trunk}-p1`);
+    const reversed = RailNetwork.decodeIntervals(pair)[0].slice().reverse();
+    add({ name: "jp/hakodate-joins/raw-up-fujishiro-corrected",
+      why: "The legacy graph follows the down-only 藤城線 backwards; source-path matching identifies it before substituting the permitted base track via 新函館北斗.",
+      country: "jp", group: "hakodate-joins", feature: hopFeature(pair, reversed, {
+        from_n02_station_code: "000427", to_n02_station_code: "000431",
+      }) });
+  }
 
   // Macao is the whole network in 168 vertices, which makes it the one place
   // the "no usable hint, scan everything" path can be frozen honestly.
@@ -972,6 +1013,7 @@ export function build({ RailNetwork, railPackage, APP_DIR }) {
         operator: line.operator,
         isLoop: Boolean(line.isLoop),
         alignmentDirection: line.alignmentDirection || null,
+        compactLine: lineOf(country, line.lineId),
         parts: line.parts.map(encodePath),
       })),
     });

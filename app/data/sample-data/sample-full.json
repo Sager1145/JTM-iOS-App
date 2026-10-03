@@ -701,7 +701,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Haruka 38"
     },
     {
       "id": "20260703_02_tokaido_shinkansen_hikari_kodama",
@@ -935,7 +937,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Kodama"
     },
     {
       "id": "20260703_03_tokaido_main_local",
@@ -989,7 +993,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260704_01_local",
@@ -1049,7 +1054,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260704_02_kodama918",
@@ -1161,7 +1167,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Kodama 918"
     },
     {
       "id": "20260704_03_keikyu_asakusa_line",
@@ -1260,7 +1268,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260704_04_oedo_line",
@@ -1320,7 +1329,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260704_05_mita_line",
@@ -1434,7 +1444,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260704_06_marunouchi_line",
@@ -1602,7 +1613,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260704_07_saikyo_line",
@@ -1897,7 +1909,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Saikyō Line"
     },
     {
       "id": "20260704_08_shonan_shinjuku_line",
@@ -2481,7 +2495,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Shōnan-Shinjuku Line"
     },
     {
       "id": "20260704_09_negishi_line",
@@ -2541,7 +2557,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260704_10_minatomirai_line",
@@ -2619,7 +2636,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260704_11_keihin_tohoku_line",
@@ -2679,7 +2697,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260704_12_yokohama_line",
@@ -2775,7 +2794,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260704_13_kodama915",
@@ -2869,7 +2889,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Kodama 915"
     },
     {
       "id": "20260704_14_local",
@@ -2929,7 +2951,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260705_01_local",
@@ -2989,7 +3012,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260705_02_kodama802",
@@ -3119,7 +3143,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Kodama 802"
     },
     {
       "id": "20260705_03_chuo_line",
@@ -3341,7 +3367,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Chūō Rapid"
     },
     {
       "id": "20260705_04_chuo_sobu_line",
@@ -3473,7 +3501,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260705_05_yurakucho_line",
@@ -3551,7 +3580,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260705_06_yurakucho_line",
@@ -3647,7 +3677,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260705_07_yamanote_line",
@@ -3833,7 +3864,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260705_08_hayabusa59",
@@ -4037,7 +4069,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Hayabusa 59"
     },
     {
       "id": "20260706_01_hayabusa11",
@@ -4293,7 +4327,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Hayabusa 11"
     },
     {
       "id": "20260706_02_super_tsugaru2",
@@ -5017,7 +5053,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Super Tsugaru 2"
     },
     {
       "id": "20260706_03_inaho14",
@@ -6174,7 +6212,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Inaho 14"
     },
     {
       "id": "20260707_01_toki308",
@@ -6318,7 +6358,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Toki 308"
     },
     {
       "id": "20260707_02_hakutaka555",
@@ -6444,7 +6486,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Hakutaka 555"
     },
     {
       "id": "20260707_03_local",
@@ -6553,7 +6597,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Local"
     },
     {
       "id": "20260707_04_local",
@@ -6662,7 +6708,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Local"
     },
     {
       "id": "20260707_05_local",
@@ -6914,7 +6962,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260707_06_a_ltdexp",
@@ -7166,7 +7215,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260707_07_hakutaka565",
@@ -7368,7 +7418,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Hakutaka 565"
     },
     {
       "id": "20260708_01_tsurugi17",
@@ -7476,7 +7528,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Tsurugi 17"
     },
     {
       "id": "20260708_02_shirasagi2",
@@ -7510,7 +7564,8 @@
           ],
           "operator_names": [
             "西日本旅客鉄道"
-          ]
+          ],
+          "number": "6M"
         },
         {
           "from_n02_station_code": "004256",
@@ -7520,7 +7575,8 @@
           ],
           "operator_names": [
             "西日本旅客鉄道"
-          ]
+          ],
+          "number": "6M"
         },
         {
           "from_n02_station_code": "004401",
@@ -7530,7 +7586,8 @@
           ],
           "operator_names": [
             "西日本旅客鉄道"
-          ]
+          ],
+          "number": "6M"
         },
         {
           "from_n02_station_code": "004421",
@@ -7540,7 +7597,8 @@
           ],
           "operator_names": [
             "西日本旅客鉄道"
-          ]
+          ],
+          "number": "6M"
         },
         {
           "from_n02_station_code": "004509",
@@ -7550,7 +7608,8 @@
           ],
           "operator_names": [
             "西日本旅客鉄道"
-          ]
+          ],
+          "number": "6M"
         },
         {
           "from_n02_station_code": "004613",
@@ -7560,7 +7619,8 @@
           ],
           "operator_names": [
             "西日本旅客鉄道"
-          ]
+          ],
+          "number": "6M"
         },
         {
           "from_n02_station_code": "004684",
@@ -7570,7 +7630,8 @@
           ],
           "operator_names": [
             "西日本旅客鉄道"
-          ]
+          ],
+          "number": "6M"
         },
         {
           "from_n02_station_code": "004755",
@@ -7580,7 +7641,8 @@
           ],
           "operator_names": [
             "西日本旅客鉄道"
-          ]
+          ],
+          "number": "6M"
         },
         {
           "from_n02_station_code": "004895",
@@ -7590,7 +7652,8 @@
           ],
           "operator_names": [
             "西日本旅客鉄道"
-          ]
+          ],
+          "number": "6M"
         },
         {
           "from_n02_station_code": "004954",
@@ -7600,7 +7663,8 @@
           ],
           "operator_names": [
             "西日本旅客鉄道"
-          ]
+          ],
+          "number": "6M"
         },
         {
           "from_n02_station_code": "005006",
@@ -7610,7 +7674,8 @@
           ],
           "operator_names": [
             "西日本旅客鉄道"
-          ]
+          ],
+          "number": "6M"
         }
       ],
       "stops": [
@@ -7681,7 +7746,7 @@
         {
           "name": "長浜",
           "n02_station_code": "004895",
-          "arrival": null,
+          "arrival": "11:37",
           "departure": "11:38",
           "stop_type": "passenger_stop",
           "ride_segment": true
@@ -7710,7 +7775,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Shirasagi 6"
     },
     {
       "id": "20260708_03_hikari648",
@@ -7782,7 +7849,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Hikari 648"
     },
     {
       "id": "20260708_04_hikari706",
@@ -7944,7 +8013,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Hikari 706"
     },
     {
       "id": "20260708_05_local",
@@ -7998,7 +8069,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260709_01_local",
@@ -8052,7 +8124,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260709_02_hikari713",
@@ -8268,7 +8341,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Hikari 713"
     },
     {
       "id": "20260709_03_miyakoji_rapid",
@@ -8448,7 +8523,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260709_04_d_section_rapid",
@@ -8628,7 +8704,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260710_01_nozomi252",
@@ -8718,7 +8795,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260710_02_kodama824",
@@ -8880,7 +8958,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260710_03_local",
@@ -8934,7 +9013,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260710_04_local",
@@ -8988,7 +9068,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260710_05_hikari718",
@@ -9114,7 +9195,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260710_06_yamabiko221",
@@ -9186,7 +9268,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Yamabiko 221"
     },
     {
       "id": "20260710_07_keihin_tohoku_local",
@@ -9312,7 +9396,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Keihin-Tōhoku Line Local"
     },
     {
       "id": "20260711_01_keihin_tohoku_negishi_local",
@@ -9438,7 +9524,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Keihin-Tōhoku / Negishi Line Local"
     },
     {
       "id": "20260711_02_kagayaki501",
@@ -9744,7 +9832,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Kagayaki 501"
     },
     {
       "id": "20260711_03_hakutaka560",
@@ -10050,7 +10140,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Hakutaka 560"
     },
     {
       "id": "20260711_04_saikyo_local",
@@ -10338,7 +10430,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Saikyō Line Local"
     },
     {
       "id": "20260711_05_seibu_ikebukuro_semiexp",
@@ -10680,7 +10774,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260711_06_seibu_sayama_local",
@@ -10752,7 +10847,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260712_01_musashino_local",
@@ -10902,7 +10998,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Musashino Line Local"
     },
     {
       "id": "20260712_02_seibu_ikebukuro_semiexp",
@@ -10980,7 +11078,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260712_03_seibu_sayama_local",
@@ -11058,7 +11157,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260712_04_seibu_sayama_ikebukuro_local",
@@ -11173,7 +11273,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260712_05_musashino_local",
@@ -11323,7 +11424,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Musashino Line Local"
     },
     {
       "id": "20260713_01_keihin_tohoku_negishi_local",
@@ -11653,7 +11756,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260713_02_kodama801",
@@ -11785,7 +11889,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Kodama 801"
     },
     {
       "id": "20260713_03_tokaido_main_local",
@@ -11845,7 +11951,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260713_04_tokaido_main_local",
@@ -11905,7 +12012,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260713_05_kodama816",
@@ -12037,7 +12145,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Kodama 816"
     },
     {
       "id": "20260713_06_hayabusa27",
@@ -12531,7 +12641,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Hayabusa 27"
     },
     {
       "id": "20260713_07_hokuto21",
@@ -13655,7 +13767,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Hokuto 21"
     },
     {
       "id": "20260714_01_ozora3",
@@ -14471,7 +14585,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Ōzora 3"
     },
     {
       "id": "20260714_02_nemuro_main_local",
@@ -14799,7 +14915,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Nemuro Main Line Local"
     },
     {
       "id": "20260714_03_nemuro_main_local",
@@ -15127,7 +15245,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Nemuro Main Line Local"
     },
     {
       "id": "20260714_04_ozora12",
@@ -15943,7 +16063,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Ōzora 12"
     },
     {
       "id": "20260715_01_soya",
@@ -17064,7 +17186,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Sōya"
     },
     {
       "id": "20260715_02_soya",
@@ -18185,7 +18309,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Sōya"
     },
     {
       "id": "20260716_01_sapporo_subway_namboku_sapporo_susukino",
@@ -18263,7 +18389,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260716_02_sapporo_subway_namboku_odori_nakajimakoen",
@@ -18341,7 +18468,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260716_03_sapporo_streetcar_nakajimakoendori_susukino",
@@ -18455,7 +18583,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260716_04_sapporo_streetcar_susukino_chuokuyakushomae",
@@ -18570,7 +18699,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260716_05_sapporo_subway_tozai_nishi11_odori",
@@ -18630,7 +18760,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260716_06_sapporo_subway_namboku_odori_sapporo",
@@ -18690,7 +18821,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260716_07_hokuto20",
@@ -19904,7 +20036,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Hokuto 20"
     },
     {
       "id": "20260717_01_hakodate_tram",
@@ -20091,7 +20225,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260717_02_hakodate_tram",
@@ -20223,7 +20358,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260718_01_hakodate_liner",
@@ -20349,7 +20485,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Hakodate Liner"
     },
     {
       "id": "20260718_02_hayabusa10",
@@ -20480,7 +20618,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Hayabusa 10"
     },
     {
       "id": "20260718_03_hayabusa95",
@@ -20556,7 +20696,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Hayabusa 95"
     },
     {
       "id": "20260718_04_ou_main_local",
@@ -20614,7 +20756,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Ōu Main Line Local"
     },
     {
       "id": "20260718_05_ou_main_local",
@@ -20672,7 +20816,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260718_06_hayabusa",
@@ -20802,7 +20947,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Hayabusa 54"
     },
     {
       "id": "20260718_07_yamabiko",
@@ -21144,7 +21291,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Yamabiko 56"
     },
     {
       "id": "20260718_08_kodama839",
@@ -21276,7 +21425,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Kodama 839"
     },
     {
       "id": "20260718_09_tokaido_main_local",
@@ -21336,7 +21487,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260718_10_tokaido_main_local",
@@ -21396,7 +21548,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260718_11_hikari659",
@@ -21558,7 +21711,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Hikari 659"
     },
     {
       "id": "20260719_01_hikari703",
@@ -21720,7 +21875,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Hikari 703"
     },
     {
       "id": "20260719_02_yakumo11",
@@ -22358,7 +22515,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Yakumo 11"
     },
     {
       "id": "20260719_03_super_oki5",
@@ -23679,7 +23838,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Super Oki 5"
     },
     {
       "id": "20260719_04_sakura770",
@@ -23775,7 +23936,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Sakura 770"
     },
     {
       "id": "20260720_41_hiroden1_hiroshimaeki_fukuromachi",
@@ -23955,7 +24118,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260720_42_astram_hondori_johoku",
@@ -24027,7 +24191,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260720_43_hiroden2_kamiyachonishi_shokocenter",
@@ -24351,7 +24516,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260720_44_sanyo_local_shininokuchi_hiroshima",
@@ -24459,7 +24625,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260720_45_sakura753_hiroshima_hakata",
@@ -24621,7 +24788,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260720_46_tsubame325_hakata_shintosu",
@@ -24675,7 +24843,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260720_47_midori35_shintosu_arita",
@@ -25035,7 +25204,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260720_48_mr627d_arita_imari",
@@ -25251,7 +25421,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260720_49_mr369d_imari_tabirahiradoguchi",
@@ -25629,7 +25800,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260720_50_mr_tabirahiradoguchi_sasebo",
@@ -26151,7 +26323,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260720_51_seasideliner3233d_sasebo_nagasaki",
@@ -26619,7 +26792,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260721_01_nagasaki_tram3_nagasakieki_heiwakoen",
@@ -26779,7 +26953,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260721_02_nagasaki_tram3_urakamieki_nagasakieki",
@@ -26894,7 +27069,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260721_03_nagasaki_tram1_nagasakieki_dejima",
@@ -26979,7 +27155,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260721_04_nagasaki_tram1_dejima_nagasakieki",
@@ -27064,7 +27241,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260721_05_kamome22",
@@ -27164,7 +27342,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Kamome 22"
     },
     {
       "id": "20260721_06_relay_kamome22",
@@ -27416,7 +27596,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Relay Kamome 22"
     },
     {
       "id": "20260721_07_sakura749",
@@ -27532,7 +27714,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Sakura 749"
     },
     {
       "id": "20260721_08_asoboy3",
@@ -27857,7 +28041,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Aso Boy! 3"
     },
     {
       "id": "20260721_09_asoboy4",
@@ -28182,7 +28368,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Aso Boy! 4"
     },
     {
       "id": "20260721_10_kumamoto_tram_a_kumamotoeki_karashimacho",
@@ -28297,7 +28485,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260721_11_kumamoto_tram_karashimacho_suidocho",
@@ -28397,7 +28586,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260721_12_hohi_local1493m_shinsuizenji_musashizuka",
@@ -28497,7 +28687,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260721_13_hohi_local1498m_musashizuka_kumamoto",
@@ -28642,7 +28833,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260721_14_sakura767",
@@ -28758,7 +28950,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Sakura 767"
     },
     {
       "id": "20260722_01_ibusuki_1321d_kagoshima_yamakawa",
@@ -29068,7 +29262,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260722_02_ibusuki_5321d_yamakawa_nishioyama",
@@ -29138,7 +29333,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260722_03_ibusuki_1326d_nishioyama_minamikagoshima",
@@ -29448,7 +29644,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260722_03a_kagoshima_tram_kagoshimachuoeki_miyakodori",
@@ -29508,7 +29705,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260722_03b_nanohana3328d_minamikagoshima_kagoshima",
@@ -29578,7 +29776,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260722_04_kirishima8",
@@ -30039,7 +30238,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Kirishima 8"
     },
     {
       "id": "20260722_05_nichirin10",
@@ -30756,7 +30957,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Nichirin 10"
     },
     {
       "id": "20260722_06_sonic44",
@@ -31824,7 +32027,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Sonic 44"
     },
     {
       "id": "20260722_07_kirameki6",
@@ -32284,7 +32489,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Kirameki 6"
     },
     {
       "id": "20260722_08_sonic54_kokura_kurosaki",
@@ -32453,7 +32660,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "vehicle_type": "885系"
     },
     {
       "id": "20260722_09_chikuho_electric_kurosaki_nogata",
@@ -32855,7 +33064,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260722_10_heichiku_ita_nogata_tagawaita",
@@ -33149,7 +33359,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260722_11_hitahikosan_986d_tagawaita_kokura",
@@ -33408,7 +33619,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260722_12_monorail_kokura_kikugaoka",
@@ -33666,7 +33878,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260722_13_monorail_kikugaoka_kokura",
@@ -33924,7 +34137,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260723_01_sakura740",
@@ -34145,7 +34359,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Sakura 740"
     },
     {
       "id": "20260723_02_shiokaze5",
@@ -34182,84 +34398,96 @@
           "to_n02_station_code": "007440",
           "line_names": [
             "宇野線"
-          ]
+          ],
+          "number": "5M"
         },
         {
           "from_n02_station_code": "007440",
           "to_n02_station_code": "007503",
           "line_names": [
             "宇野線"
-          ]
+          ],
+          "number": "5M"
         },
         {
           "from_n02_station_code": "007503",
           "to_n02_station_code": "007584",
           "line_names": [
             "宇野線"
-          ]
+          ],
+          "number": "5M"
         },
         {
           "from_n02_station_code": "007584",
           "to_n02_station_code": "007591",
           "line_names": [
             "宇野線"
-          ]
+          ],
+          "number": "5M"
         },
         {
           "from_n02_station_code": "007591",
           "to_n02_station_code": "007596",
           "line_names": [
             "宇野線"
-          ]
+          ],
+          "number": "5M"
         },
         {
           "from_n02_station_code": "007596",
           "to_n02_station_code": "007625",
           "line_names": [
             "宇野線"
-          ]
+          ],
+          "number": "5M"
         },
         {
           "from_n02_station_code": "007625",
           "to_n02_station_code": "007663",
           "line_names": [
             "宇野線"
-          ]
+          ],
+          "number": "5M"
         },
         {
           "from_n02_station_code": "007663",
           "to_n02_station_code": "007732",
           "line_names": [
             "本四備讃線"
-          ]
+          ],
+          "number": "5M"
         },
         {
           "from_n02_station_code": "007732",
           "to_n02_station_code": "007780",
           "line_names": [
             "本四備讃線"
-          ]
+          ],
+          "number": "5M"
         },
         {
           "from_n02_station_code": "007780",
           "to_n02_station_code": "007859",
           "line_names": [
             "本四備讃線"
-          ]
+          ],
+          "number": "5M"
         },
         {
           "from_n02_station_code": "007859",
           "to_n02_station_code": "007919",
           "line_names": [
             "本四備讃線"
-          ]
+          ],
+          "number": "5M"
         },
         {
           "from_n02_station_code": "007919",
           "to_n02_station_code": "008253",
           "line_names": [
             "本四備讃線"
-          ]
+          ],
+          "number": "5M"
         }
       ],
       "stops": [
@@ -34354,7 +34582,7 @@
         {
           "name": "児島",
           "n02_station_code": "007919",
-          "arrival": null,
+          "arrival": "09:46",
           "departure": "09:47",
           "stop_type": "passenger_stop",
           "ride_segment": true
@@ -34367,7 +34595,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Shiokaze 5"
     },
     {
       "id": "20260723_03_ishizuchi10",
@@ -34542,7 +34772,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Ishizuchi 10"
     },
     {
       "id": "20260723_04_kotoku_local_takamatsu_ritsurin",
@@ -34627,7 +34859,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260723_05_uzushio10",
@@ -34712,7 +34945,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Uzushio 10"
     },
     {
       "id": "20260724_01_ishizuchi9",
@@ -34916,12 +35151,14 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Ishizuchi 9"
     },
     {
       "id": "20260724_02_nanpu9",
       "date": "2026-07-24",
-      "number": "南風9号（Nanpū 9）（9D）",
+      "number": "南風9号（Nanpū 9）（39D）",
       "train_type": "特急",
       "company": "JR四国",
       "origin": "宇多津",
@@ -34957,7 +35194,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "39D"
         },
         {
           "from_n02_station_code": "008271",
@@ -34967,7 +35205,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "39D"
         },
         {
           "from_n02_station_code": "008278",
@@ -34977,7 +35216,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "39D"
         },
         {
           "from_n02_station_code": "008300",
@@ -34987,7 +35227,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "39D"
         },
         {
           "from_n02_station_code": "008342",
@@ -34997,7 +35238,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "39D"
         },
         {
           "from_n02_station_code": "008371",
@@ -35007,7 +35249,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "39D"
         },
         {
           "from_n02_station_code": "008408",
@@ -35017,7 +35260,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "39D"
         },
         {
           "from_n02_station_code": "008440",
@@ -35027,7 +35271,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "39D"
         },
         {
           "from_n02_station_code": "008456",
@@ -35037,7 +35282,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "39D"
         },
         {
           "from_n02_station_code": "008463",
@@ -35047,7 +35293,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "39D"
         },
         {
           "from_n02_station_code": "008522",
@@ -35057,7 +35304,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "39D"
         },
         {
           "from_n02_station_code": "008541",
@@ -35067,7 +35315,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "39D"
         },
         {
           "from_n02_station_code": "008552",
@@ -35077,7 +35326,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "39D"
         }
       ],
       "stops": [
@@ -35092,8 +35342,8 @@
         {
           "name": "丸亀",
           "n02_station_code": "008271",
-          "arrival": null,
-          "departure": null,
+          "arrival": "12:42",
+          "departure": "12:42",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -35108,8 +35358,8 @@
         {
           "name": "多度津",
           "n02_station_code": "008300",
-          "arrival": null,
-          "departure": null,
+          "arrival": "12:46",
+          "departure": "12:47",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -35124,16 +35374,16 @@
         {
           "name": "善通寺",
           "n02_station_code": "008371",
-          "arrival": null,
-          "departure": null,
+          "arrival": "12:52",
+          "departure": "12:53",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
           "name": "琴平",
           "n02_station_code": "008408",
-          "arrival": null,
-          "departure": null,
+          "arrival": "12:58",
+          "departure": "12:59",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -35193,7 +35443,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Nanpū 9"
     },
     {
       "id": "20260724_03_tsurugisan6",
@@ -35398,7 +35650,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Tsurugisan 6"
     },
     {
       "id": "20260724_04_tokushima_local_463d",
@@ -35512,12 +35766,13 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260724_05_nanpu17",
       "date": "2026-07-24",
-      "number": "南風17号（Nanpū 17）（17D）",
+      "number": "南風17号（Nanpū 17）（47D）",
       "train_type": "特急",
       "company": "JR四国",
       "origin": "阿波池田",
@@ -35552,7 +35807,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "47D"
         },
         {
           "from_n02_station_code": "008578",
@@ -35562,7 +35818,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "47D"
         },
         {
           "from_n02_station_code": "008600",
@@ -35572,7 +35829,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "47D"
         },
         {
           "from_n02_station_code": "008614",
@@ -35582,7 +35840,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "47D"
         },
         {
           "from_n02_station_code": "008650",
@@ -35592,7 +35851,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "47D"
         },
         {
           "from_n02_station_code": "008691",
@@ -35602,7 +35862,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "47D"
         },
         {
           "from_n02_station_code": "008790",
@@ -35612,7 +35873,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "47D"
         },
         {
           "from_n02_station_code": "008819",
@@ -35622,7 +35884,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "47D"
         },
         {
           "from_n02_station_code": "008829",
@@ -35632,7 +35895,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "47D"
         },
         {
           "from_n02_station_code": "008835",
@@ -35642,7 +35906,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "47D"
         },
         {
           "from_n02_station_code": "008850",
@@ -35652,7 +35917,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "47D"
         },
         {
           "from_n02_station_code": "008884",
@@ -35662,7 +35928,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "47D"
         },
         {
           "from_n02_station_code": "008897",
@@ -35672,7 +35939,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "47D"
         },
         {
           "from_n02_station_code": "008912",
@@ -35682,7 +35950,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "47D"
         },
         {
           "from_n02_station_code": "008946",
@@ -35692,7 +35961,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "47D"
         },
         {
           "from_n02_station_code": "009004",
@@ -35702,7 +35972,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "47D"
         },
         {
           "from_n02_station_code": "009009",
@@ -35712,7 +35983,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "47D"
         },
         {
           "from_n02_station_code": "009024",
@@ -35722,7 +35994,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "47D"
         },
         {
           "from_n02_station_code": "009057",
@@ -35732,7 +36005,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "47D"
         },
         {
           "from_n02_station_code": "009066",
@@ -35742,7 +36016,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "47D"
         },
         {
           "from_n02_station_code": "009071",
@@ -35752,7 +36027,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "47D"
         },
         {
           "from_n02_station_code": "009059",
@@ -35762,7 +36038,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "47D"
         },
         {
           "from_n02_station_code": "009061",
@@ -35772,7 +36049,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "47D"
         }
       ],
       "stops": [
@@ -35819,8 +36097,8 @@
         {
           "name": "大歩危",
           "n02_station_code": "008691",
-          "arrival": null,
-          "departure": null,
+          "arrival": "17:41",
+          "departure": "17:42",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -35859,9 +36137,9 @@
         {
           "name": "大杉",
           "n02_station_code": "008850",
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through",
+          "arrival": "18:04",
+          "departure": "18:05",
+          "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
@@ -35899,8 +36177,8 @@
         {
           "name": "土佐山田",
           "n02_station_code": "009004",
-          "arrival": null,
-          "departure": null,
+          "arrival": "18:24",
+          "departure": "18:26",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -35923,8 +36201,8 @@
         {
           "name": "後免",
           "n02_station_code": "009057",
-          "arrival": null,
-          "departure": null,
+          "arrival": "18:30",
+          "departure": "18:31",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -35968,12 +36246,14 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Nanpū 17"
     },
     {
       "id": "20260724_06_nanpu28",
       "date": "2026-07-24",
-      "number": "南風28号（Nanpū 28）（28D）",
+      "number": "南風28号（Nanpū 28）（58D）",
       "train_type": "特急",
       "company": "JR四国/JR西日本",
       "origin": "高知",
@@ -36012,7 +36292,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "009061",
@@ -36022,7 +36303,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "009059",
@@ -36032,7 +36314,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "009071",
@@ -36042,7 +36325,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "009066",
@@ -36052,7 +36336,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "009057",
@@ -36062,7 +36347,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "009024",
@@ -36072,7 +36358,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "009009",
@@ -36082,7 +36369,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "009004",
@@ -36092,7 +36380,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "008946",
@@ -36102,7 +36391,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "008912",
@@ -36112,7 +36402,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "008897",
@@ -36122,7 +36413,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "008884",
@@ -36132,7 +36424,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "008850",
@@ -36142,7 +36435,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "008835",
@@ -36152,7 +36446,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "008829",
@@ -36162,7 +36457,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "008819",
@@ -36172,7 +36468,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "008790",
@@ -36182,7 +36479,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "008691",
@@ -36192,7 +36490,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "008650",
@@ -36202,7 +36501,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "008614",
@@ -36212,7 +36512,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "008600",
@@ -36222,7 +36523,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "008578",
@@ -36232,7 +36534,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "008561",
@@ -36242,7 +36545,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "008552",
@@ -36252,7 +36556,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "008541",
@@ -36262,7 +36567,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "008522",
@@ -36272,7 +36578,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "008463",
@@ -36282,7 +36589,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "008456",
@@ -36292,7 +36600,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "008440",
@@ -36302,7 +36611,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "008408",
@@ -36312,7 +36622,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "008371",
@@ -36322,7 +36633,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "008342",
@@ -36332,7 +36644,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "008300",
@@ -36342,7 +36655,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "008278",
@@ -36352,7 +36666,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "008271",
@@ -36362,7 +36677,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "008252",
@@ -36372,7 +36688,8 @@
           ],
           "operator_names": [
             "四国旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "007919",
@@ -36382,7 +36699,8 @@
           ],
           "operator_names": [
             "西日本旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "007859",
@@ -36392,7 +36710,8 @@
           ],
           "operator_names": [
             "西日本旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "007780",
@@ -36402,7 +36721,8 @@
           ],
           "operator_names": [
             "西日本旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "007732",
@@ -36412,7 +36732,8 @@
           ],
           "operator_names": [
             "西日本旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "007663",
@@ -36422,7 +36743,8 @@
           ],
           "operator_names": [
             "西日本旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "007625",
@@ -36432,7 +36754,8 @@
           ],
           "operator_names": [
             "西日本旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "007596",
@@ -36442,7 +36765,8 @@
           ],
           "operator_names": [
             "西日本旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "007591",
@@ -36452,7 +36776,8 @@
           ],
           "operator_names": [
             "西日本旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "007584",
@@ -36462,7 +36787,8 @@
           ],
           "operator_names": [
             "西日本旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "007503",
@@ -36472,7 +36798,8 @@
           ],
           "operator_names": [
             "西日本旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         },
         {
           "from_n02_station_code": "007440",
@@ -36482,7 +36809,8 @@
           ],
           "operator_names": [
             "西日本旅客鉄道"
-          ]
+          ],
+          "number": "58D"
         }
       ],
       "stops": [
@@ -36529,8 +36857,8 @@
         {
           "name": "後免",
           "n02_station_code": "009057",
-          "arrival": null,
-          "departure": null,
+          "arrival": "19:41",
+          "departure": "19:42",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -36553,8 +36881,8 @@
         {
           "name": "土佐山田",
           "n02_station_code": "009004",
-          "arrival": null,
-          "departure": null,
+          "arrival": "19:46",
+          "departure": "19:46",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -36593,9 +36921,9 @@
         {
           "name": "大杉",
           "n02_station_code": "008850",
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through",
+          "arrival": "20:05",
+          "departure": "20:06",
+          "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
@@ -36633,8 +36961,8 @@
         {
           "name": "大歩危",
           "n02_station_code": "008691",
-          "arrival": null,
-          "departure": null,
+          "arrival": "20:23",
+          "departure": "20:23",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -36673,8 +37001,8 @@
         {
           "name": "阿波池田",
           "n02_station_code": "008561",
-          "arrival": null,
-          "departure": null,
+          "arrival": "20:41",
+          "departure": "20:42",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -36729,16 +37057,16 @@
         {
           "name": "琴平",
           "n02_station_code": "008408",
-          "arrival": null,
-          "departure": null,
+          "arrival": "21:04",
+          "departure": "21:05",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
           "name": "善通寺",
           "n02_station_code": "008371",
-          "arrival": null,
-          "departure": null,
+          "arrival": "21:09",
+          "departure": "21:09",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -36753,8 +37081,8 @@
         {
           "name": "多度津",
           "n02_station_code": "008300",
-          "arrival": null,
-          "departure": null,
+          "arrival": "21:14",
+          "departure": "21:15",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -36769,24 +37097,24 @@
         {
           "name": "丸亀",
           "n02_station_code": "008271",
-          "arrival": null,
-          "departure": null,
+          "arrival": "21:19",
+          "departure": "21:19",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
           "name": "宇多津",
           "n02_station_code": "008252",
-          "arrival": null,
-          "departure": null,
+          "arrival": "21:22",
+          "departure": "21:23",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
           "name": "児島",
           "n02_station_code": "007919",
-          "arrival": null,
-          "departure": null,
+          "arrival": "21:36",
+          "departure": "21:38",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -36878,7 +37206,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Nanpū 28"
     },
     {
       "id": "20260724_07_kodama970",
@@ -36956,7 +37286,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "vehicle_type": "500系"
     },
     {
       "id": "20260724_08_tosaden_south",
@@ -37052,7 +37384,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260724_09_tosaden_north",
@@ -37148,7 +37481,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260725_05_hikari706",
@@ -37318,7 +37652,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Hikari 706"
     },
     {
       "id": "20260725_06_local",
@@ -37378,7 +37714,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260726_01_local_numazu",
@@ -37437,7 +37774,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Local"
     },
     {
       "id": "20260726_02_local_mishima",
@@ -37496,7 +37835,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Local"
     },
     {
       "id": "20260726_03_hikari706",
@@ -37592,7 +37933,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Hikari 706"
     },
     {
       "id": "20260726_04_chuo_rapid_shinjuku",
@@ -37788,7 +38131,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Chūō Line Rapid"
     },
     {
       "id": "20260726_05_chuo_rapid_tokyo",
@@ -37984,7 +38329,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Chūō Line Rapid"
     },
     {
       "id": "20260726_06_kodama_atami",
@@ -38098,7 +38445,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260726_07_odoriko",
@@ -38684,7 +39032,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Odoriko"
     },
     {
       "id": "20260726_08_chuo_rapid_shinjuku2",
@@ -38880,7 +39230,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Chūō Line Rapid"
     },
     {
       "id": "20260726_09_shonan_shinjuku_yokohama",
@@ -39152,7 +39504,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Shōnan-Shinjuku Line Rapid"
     },
     {
       "id": "20260727_01_tokaido_through_numazu",
@@ -39552,7 +39906,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Tōkaidō Line Through Local"
     },
     {
       "id": "20260727_02_local_mishima",
@@ -39611,7 +39967,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Local"
     },
     {
       "id": "20260727_03_hikari702",
@@ -39707,7 +40065,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260727_04_nasuno259",
@@ -39785,7 +40144,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260727_05_komachi",
@@ -39863,7 +40223,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Komachi"
     },
     {
       "id": "20260727_06_local_akihabara",
@@ -39939,7 +40301,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Local"
     },
     {
       "id": "20260727_07_local_tokyo",
@@ -40015,7 +40379,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Local"
     },
     {
       "id": "20260727_08_narita_express",
@@ -40049,103 +40415,53 @@
       "route_sections": [
         {
           "from": "東京",
-          "to": "有楽町",
-          "from_n02_station_code": "003770",
-          "to_n02_station_code": "003798",
-          "line_names": [
-            "東海道線"
-          ]
-        },
-        {
-          "from": "有楽町",
           "to": "新橋",
-          "from_n02_station_code": "003798",
+          "from_n02_station_code": "003766",
           "to_n02_station_code": "003872",
           "line_names": [
-            "東海道線"
+            "総武線"
+          ],
+          "operator_names": [
+            "東日本旅客鉄道"
+          ],
+          "line_ids": [
+            "jp-東日本旅客鉄道-総武線-3"
+          ],
+          "section_codes": [
+            "jp-東日本旅客鉄道-総武線-3@003766:003872"
           ]
         },
         {
           "from": "新橋",
-          "to": "浜松町",
-          "from_n02_station_code": "003872",
-          "to_n02_station_code": "003949",
-          "line_names": [
-            "東海道線"
-          ]
-        },
-        {
-          "from": "浜松町",
-          "to": "田町",
-          "from_n02_station_code": "003949",
-          "to_n02_station_code": "004000",
-          "line_names": [
-            "東海道線"
-          ]
-        },
-        {
-          "from": "田町",
-          "to": "高輪ゲートウェイ",
-          "from_n02_station_code": "004000",
-          "to_n02_station_code": "004061",
-          "line_names": [
-            "東海道線"
-          ]
-        },
-        {
-          "from": "高輪ゲートウェイ",
           "to": "品川",
-          "from_n02_station_code": "004061",
+          "from_n02_station_code": "003872",
           "to_n02_station_code": "004095",
           "line_names": [
-            "東海道線"
+            "総武線"
+          ],
+          "operator_names": [
+            "東日本旅客鉄道"
+          ],
+          "line_ids": [
+            "jp-東日本旅客鉄道-総武線-3"
+          ],
+          "section_codes": [
+            "jp-東日本旅客鉄道-総武線-3@003872:004095"
           ]
         }
       ],
       "stops": [
         {
           "name": "東京",
-          "n02_station_code": "003770",
+          "n02_station_code": "003766",
           "arrival": null,
           "departure": "15:16",
           "stop_type": "origin",
           "ride_segment": true
         },
         {
-          "name": "有楽町",
-          "n02_station_code": "003798",
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through",
-          "ride_segment": true
-        },
-        {
           "name": "新橋",
           "n02_station_code": "003872",
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through",
-          "ride_segment": true
-        },
-        {
-          "name": "浜松町",
-          "n02_station_code": "003949",
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through",
-          "ride_segment": true
-        },
-        {
-          "name": "田町",
-          "n02_station_code": "004000",
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through",
-          "ride_segment": true
-        },
-        {
-          "name": "高輪ゲートウェイ",
-          "n02_station_code": "004061",
           "arrival": null,
           "departure": null,
           "stop_type": "pass_through",
@@ -40159,7 +40475,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Narita Express"
     },
     {
       "id": "20260727_09_kodama837",
@@ -40273,7 +40591,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260727_10_local_numazu",
@@ -40332,7 +40651,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Local"
     },
     {
       "id": "20260728_01_local_mishima",
@@ -40391,7 +40712,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Local"
     },
     {
       "id": "20260728_02_kodama829",
@@ -40505,7 +40828,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260728_03_entetsu_sukenobu",
@@ -40615,7 +40939,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Enshu Railway"
     },
     {
       "id": "20260728_04_entetsu_return",
@@ -40725,7 +41051,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Enshu Railway"
     },
     {
       "id": "20260728_05_kodama834",
@@ -40839,7 +41167,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260728_06_local_numazu",
@@ -40898,7 +41227,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Local"
     },
     {
       "id": "20260729_01_local_mishima",
@@ -40957,7 +41288,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Local"
     },
     {
       "id": "20260729_02_kodama840",
@@ -41089,7 +41422,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260729_03_kodama911",
@@ -41221,7 +41555,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260729_04_local_numazu",
@@ -41280,7 +41615,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Local"
     },
     {
       "id": "20260729_05_sunrise_izumo",
@@ -41323,7 +41660,8 @@
           "to_n02_station_code": "005635",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "片浜",
@@ -41332,7 +41670,8 @@
           "to_n02_station_code": "005609",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "原",
@@ -41341,7 +41680,8 @@
           "to_n02_station_code": "005570",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "東田子の浦",
@@ -41350,7 +41690,8 @@
           "to_n02_station_code": "005544",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "吉原",
@@ -41359,7 +41700,8 @@
           "to_n02_station_code": "005523",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "富士",
@@ -41368,7 +41710,8 @@
           "to_n02_station_code": "005560",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "富士川",
@@ -41377,7 +41720,8 @@
           "to_n02_station_code": "005630",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "新蒲原",
@@ -41386,7 +41730,8 @@
           "to_n02_station_code": "005654",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "蒲原",
@@ -41395,7 +41740,8 @@
           "to_n02_station_code": "005707",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "由比",
@@ -41404,7 +41750,8 @@
           "to_n02_station_code": "005825",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "興津",
@@ -41413,7 +41760,8 @@
           "to_n02_station_code": "005898",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "清水",
@@ -41422,7 +41770,8 @@
           "to_n02_station_code": "006002",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "草薙",
@@ -41431,7 +41780,8 @@
           "to_n02_station_code": "006085",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "東静岡",
@@ -41440,7 +41790,8 @@
           "to_n02_station_code": "006128",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "静岡",
@@ -41449,7 +41800,8 @@
           "to_n02_station_code": "006211",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "安倍川",
@@ -41458,7 +41810,8 @@
           "to_n02_station_code": "006259",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "用宗",
@@ -41467,7 +41820,8 @@
           "to_n02_station_code": "006382",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "焼津",
@@ -41476,7 +41830,8 @@
           "to_n02_station_code": "006410",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "西焼津",
@@ -41485,7 +41840,8 @@
           "to_n02_station_code": "006441",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "藤枝",
@@ -41494,7 +41850,8 @@
           "to_n02_station_code": "006471",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "六合",
@@ -41503,7 +41860,8 @@
           "to_n02_station_code": "006489",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "島田",
@@ -41512,7 +41870,8 @@
           "to_n02_station_code": "006547",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "金谷",
@@ -41521,7 +41880,8 @@
           "to_n02_station_code": "006790",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "菊川",
@@ -41530,7 +41890,8 @@
           "to_n02_station_code": "006746",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "掛川",
@@ -41539,7 +41900,8 @@
           "to_n02_station_code": "006823",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "愛野",
@@ -41548,7 +41910,8 @@
           "to_n02_station_code": "006867",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "袋井",
@@ -41557,7 +41920,8 @@
           "to_n02_station_code": "006979",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "御厨",
@@ -41566,7 +41930,8 @@
           "to_n02_station_code": "007025",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "磐田",
@@ -41575,7 +41940,8 @@
           "to_n02_station_code": "007015",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "豊田町",
@@ -41584,7 +41950,8 @@
           "to_n02_station_code": "006990",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "天竜川",
@@ -41593,7 +41960,8 @@
           "to_n02_station_code": "007059",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "浜松",
@@ -41602,7 +41970,8 @@
           "to_n02_station_code": "007147",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "高塚",
@@ -41611,7 +41980,8 @@
           "to_n02_station_code": "007172",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "舞阪",
@@ -41620,7 +41990,8 @@
           "to_n02_station_code": "007150",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "弁天島",
@@ -41629,7 +42000,8 @@
           "to_n02_station_code": "007111",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "新居町",
@@ -41638,7 +42010,8 @@
           "to_n02_station_code": "006993",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "鷲津",
@@ -41647,7 +42020,8 @@
           "to_n02_station_code": "006960",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "新所原",
@@ -41656,7 +42030,8 @@
           "to_n02_station_code": "006947",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "二川",
@@ -41665,7 +42040,8 @@
           "to_n02_station_code": "006786",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "豊橋",
@@ -41674,7 +42050,8 @@
           "to_n02_station_code": "006649",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "西小坂井",
@@ -41683,7 +42060,8 @@
           "to_n02_station_code": "006576",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "愛知御津",
@@ -41692,7 +42070,8 @@
           "to_n02_station_code": "006566",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "三河大塚",
@@ -41701,7 +42080,8 @@
           "to_n02_station_code": "006549",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "三河三谷",
@@ -41710,7 +42090,8 @@
           "to_n02_station_code": "006529",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "蒲郡",
@@ -41719,7 +42100,8 @@
           "to_n02_station_code": "006521",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "三河塩津",
@@ -41728,7 +42110,8 @@
           "to_n02_station_code": "006472",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "三ヶ根",
@@ -41737,7 +42120,8 @@
           "to_n02_station_code": "006411",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "幸田",
@@ -41746,7 +42130,8 @@
           "to_n02_station_code": "006342",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "相見",
@@ -41755,7 +42140,8 @@
           "to_n02_station_code": "006251",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "岡崎",
@@ -41764,7 +42150,8 @@
           "to_n02_station_code": "006202",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "西岡崎",
@@ -41773,7 +42160,8 @@
           "to_n02_station_code": "006166",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "安城",
@@ -41782,7 +42170,8 @@
           "to_n02_station_code": "006133",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "三河安城",
@@ -41791,7 +42180,8 @@
           "to_n02_station_code": "006111",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "東刈谷",
@@ -41800,7 +42190,8 @@
           "to_n02_station_code": "006086",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "野田新町",
@@ -41809,7 +42200,8 @@
           "to_n02_station_code": "006052",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "刈谷",
@@ -41818,7 +42210,8 @@
           "to_n02_station_code": "006015",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "逢妻",
@@ -41827,7 +42220,8 @@
           "to_n02_station_code": "005974",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "大府",
@@ -41836,7 +42230,8 @@
           "to_n02_station_code": "005867",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "共和",
@@ -41845,7 +42240,8 @@
           "to_n02_station_code": "005822",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "南大高",
@@ -41854,7 +42250,8 @@
           "to_n02_station_code": "005770",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "大高",
@@ -41863,7 +42260,8 @@
           "to_n02_station_code": "005712",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "笠寺",
@@ -41872,7 +42270,8 @@
           "to_n02_station_code": "005587",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "熱田",
@@ -41881,7 +42280,8 @@
           "to_n02_station_code": "005552",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "金山",
@@ -41890,7 +42290,8 @@
           "to_n02_station_code": "005539",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "尾頭橋",
@@ -41899,7 +42300,8 @@
           "to_n02_station_code": "005448",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "名古屋",
@@ -41908,7 +42310,8 @@
           "to_n02_station_code": "005349",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "枇杷島",
@@ -41917,7 +42320,8 @@
           "to_n02_station_code": "005290",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "清洲",
@@ -41926,7 +42330,8 @@
           "to_n02_station_code": "005226",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "稲沢",
@@ -41935,7 +42340,8 @@
           "to_n02_station_code": "005111",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "尾張一宮",
@@ -41944,7 +42350,8 @@
           "to_n02_station_code": "004974",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "木曽川",
@@ -41953,7 +42360,8 @@
           "to_n02_station_code": "004789",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "岐阜",
@@ -41962,7 +42370,8 @@
           "to_n02_station_code": "004801",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "西岐阜",
@@ -41971,7 +42380,8 @@
           "to_n02_station_code": "004841",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "穂積",
@@ -41980,7 +42390,8 @@
           "to_n02_station_code": "004923",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "大垣",
@@ -41989,7 +42400,8 @@
           "to_n02_station_code": "004914",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "垂井",
@@ -41998,7 +42410,8 @@
           "to_n02_station_code": "004934",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "関ヶ原",
@@ -42007,7 +42420,8 @@
           "to_n02_station_code": "004982",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "柏原",
@@ -42016,7 +42430,8 @@
           "to_n02_station_code": "004950",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "近江長岡",
@@ -42025,7 +42440,8 @@
           "to_n02_station_code": "005033",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "醒ヶ井",
@@ -42034,7 +42450,8 @@
           "to_n02_station_code": "005075",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "米原",
@@ -42043,7 +42460,8 @@
           "to_n02_station_code": "005176",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "彦根",
@@ -42052,7 +42470,8 @@
           "to_n02_station_code": "005249",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "南彦根",
@@ -42061,7 +42480,8 @@
           "to_n02_station_code": "005292",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "河瀬",
@@ -42070,7 +42490,8 @@
           "to_n02_station_code": "005341",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "稲枝",
@@ -42079,7 +42500,8 @@
           "to_n02_station_code": "005415",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "能登川",
@@ -42088,7 +42510,8 @@
           "to_n02_station_code": "005553",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "安土",
@@ -42097,7 +42520,8 @@
           "to_n02_station_code": "005619",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "近江八幡",
@@ -42106,7 +42530,8 @@
           "to_n02_station_code": "005700",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "篠原",
@@ -42115,7 +42540,8 @@
           "to_n02_station_code": "005772",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "野洲",
@@ -42124,7 +42550,8 @@
           "to_n02_station_code": "005831",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "守山",
@@ -42133,7 +42560,8 @@
           "to_n02_station_code": "005862",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "栗東",
@@ -42142,7 +42570,8 @@
           "to_n02_station_code": "005901",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "草津",
@@ -42151,7 +42580,8 @@
           "to_n02_station_code": "005991",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "南草津",
@@ -42160,7 +42590,8 @@
           "to_n02_station_code": "006069",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "瀬田",
@@ -42169,7 +42600,8 @@
           "to_n02_station_code": "006098",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "石山",
@@ -42178,7 +42610,8 @@
           "to_n02_station_code": "006012",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "膳所",
@@ -42187,7 +42620,8 @@
           "to_n02_station_code": "006000",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "大津",
@@ -42196,7 +42630,8 @@
           "to_n02_station_code": "006044",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "山科",
@@ -42205,7 +42640,8 @@
           "to_n02_station_code": "006077",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "京都",
@@ -42214,7 +42650,8 @@
           "to_n02_station_code": "006096",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "西大路",
@@ -42223,7 +42660,8 @@
           "to_n02_station_code": "006152",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "桂川",
@@ -42232,7 +42670,8 @@
           "to_n02_station_code": "006178",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "向日町",
@@ -42241,7 +42680,8 @@
           "to_n02_station_code": "006258",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "長岡京",
@@ -42250,7 +42690,8 @@
           "to_n02_station_code": "006329",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "山崎",
@@ -42259,7 +42700,8 @@
           "to_n02_station_code": "006359",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "島本",
@@ -42268,7 +42710,8 @@
           "to_n02_station_code": "006432",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "高槻",
@@ -42277,7 +42720,8 @@
           "to_n02_station_code": "006467",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "摂津富田",
@@ -42286,7 +42730,8 @@
           "to_n02_station_code": "006498",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "JR総持寺",
@@ -42295,7 +42740,8 @@
           "to_n02_station_code": "006567",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "茨木",
@@ -42304,7 +42750,8 @@
           "to_n02_station_code": "006672",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "千里丘",
@@ -42313,7 +42760,8 @@
           "to_n02_station_code": "006721",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "岸辺",
@@ -42322,7 +42770,8 @@
           "to_n02_station_code": "006779",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "吹田",
@@ -42331,7 +42780,8 @@
           "to_n02_station_code": "006878",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "東淀川",
@@ -42340,7 +42790,8 @@
           "to_n02_station_code": "006910",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "新大阪",
@@ -42349,7 +42800,8 @@
           "to_n02_station_code": "007068",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "大阪",
@@ -42358,7 +42810,8 @@
           "to_n02_station_code": "007009",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "塚本",
@@ -42367,7 +42820,8 @@
           "to_n02_station_code": "006919",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "尼崎",
@@ -42376,7 +42830,8 @@
           "to_n02_station_code": "006886",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "立花",
@@ -42385,7 +42840,8 @@
           "to_n02_station_code": "006879",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "甲子園口",
@@ -42394,7 +42850,8 @@
           "to_n02_station_code": "006881",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "西宮",
@@ -42403,7 +42860,8 @@
           "to_n02_station_code": "006880",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "さくら夙川",
@@ -42412,7 +42870,8 @@
           "to_n02_station_code": "006908",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "芦屋",
@@ -42421,7 +42880,8 @@
           "to_n02_station_code": "006926",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "甲南山手",
@@ -42430,7 +42890,8 @@
           "to_n02_station_code": "006941",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "摂津本山",
@@ -42439,7 +42900,8 @@
           "to_n02_station_code": "006974",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "住吉",
@@ -42448,7 +42910,8 @@
           "to_n02_station_code": "007004",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "六甲道",
@@ -42457,7 +42920,8 @@
           "to_n02_station_code": "007033",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "摩耶",
@@ -42466,7 +42930,8 @@
           "to_n02_station_code": "007046",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "灘",
@@ -42475,7 +42940,8 @@
           "to_n02_station_code": "007105",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "三ノ宮",
@@ -42484,7 +42950,8 @@
           "to_n02_station_code": "007151",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "元町",
@@ -42493,7 +42960,8 @@
           "to_n02_station_code": "007225",
           "line_names": [
             "東海道線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "神戸",
@@ -42502,7 +42970,8 @@
           "to_n02_station_code": "007298",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "兵庫",
@@ -42511,7 +42980,8 @@
           "to_n02_station_code": "007386",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "新長田",
@@ -42520,7 +42990,8 @@
           "to_n02_station_code": "007417",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "鷹取",
@@ -42529,7 +43000,8 @@
           "to_n02_station_code": "007441",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "須磨海浜公園",
@@ -42538,7 +43010,8 @@
           "to_n02_station_code": "007466",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "須磨",
@@ -42547,7 +43020,8 @@
           "to_n02_station_code": "007495",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "塩屋",
@@ -42556,7 +43030,8 @@
           "to_n02_station_code": "007516",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "垂水",
@@ -42565,7 +43040,8 @@
           "to_n02_station_code": "007497",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "舞子",
@@ -42574,7 +43050,8 @@
           "to_n02_station_code": "007453",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "朝霧",
@@ -42583,7 +43060,8 @@
           "to_n02_station_code": "007428",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "明石",
@@ -42592,7 +43070,8 @@
           "to_n02_station_code": "007328",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "西明石",
@@ -42601,7 +43080,8 @@
           "to_n02_station_code": "007196",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "大久保",
@@ -42610,7 +43090,8 @@
           "to_n02_station_code": "007096",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "魚住",
@@ -42619,7 +43100,8 @@
           "to_n02_station_code": "006969",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "土山",
@@ -42628,7 +43110,8 @@
           "to_n02_station_code": "006854",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "東加古川",
@@ -42637,7 +43120,8 @@
           "to_n02_station_code": "006755",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "加古川",
@@ -42646,7 +43130,8 @@
           "to_n02_station_code": "006698",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "宝殿",
@@ -42655,7 +43140,8 @@
           "to_n02_station_code": "006665",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "曽根",
@@ -42664,7 +43150,8 @@
           "to_n02_station_code": "006605",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "ひめじ別所",
@@ -42673,7 +43160,8 @@
           "to_n02_station_code": "006558",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "御着",
@@ -42682,7 +43170,8 @@
           "to_n02_station_code": "006523",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "東姫路",
@@ -42691,7 +43180,8 @@
           "to_n02_station_code": "006509",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "姫路",
@@ -42700,7 +43190,8 @@
           "to_n02_station_code": "006573",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "英賀保",
@@ -42709,7 +43200,8 @@
           "to_n02_station_code": "006588",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "はりま勝原",
@@ -42718,7 +43210,8 @@
           "to_n02_station_code": "006571",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "網干",
@@ -42727,7 +43220,8 @@
           "to_n02_station_code": "006519",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "竜野",
@@ -42736,7 +43230,8 @@
           "to_n02_station_code": "006554",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "相生",
@@ -42745,7 +43240,8 @@
           "to_n02_station_code": "006494",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "有年",
@@ -42754,7 +43250,8 @@
           "to_n02_station_code": "006397",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "上郡",
@@ -42763,7 +43260,8 @@
           "to_n02_station_code": "006607",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "三石",
@@ -42772,7 +43270,8 @@
           "to_n02_station_code": "006578",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "吉永",
@@ -42781,7 +43280,8 @@
           "to_n02_station_code": "006647",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "和気",
@@ -42790,7 +43290,8 @@
           "to_n02_station_code": "006703",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "熊山",
@@ -42799,7 +43300,8 @@
           "to_n02_station_code": "006805",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "万富",
@@ -42808,7 +43310,8 @@
           "to_n02_station_code": "006903",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "瀬戸",
@@ -42817,7 +43320,8 @@
           "to_n02_station_code": "007082",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "上道",
@@ -42826,7 +43330,8 @@
           "to_n02_station_code": "007173",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "東岡山",
@@ -42835,7 +43340,8 @@
           "to_n02_station_code": "007186",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "高島",
@@ -42844,7 +43350,8 @@
           "to_n02_station_code": "007228",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "西川原",
@@ -42853,7 +43360,8 @@
           "to_n02_station_code": "007313",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "5031M"
         },
         {
           "from": "岡山",
@@ -42862,7 +43370,8 @@
           "to_n02_station_code": "007413",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "北長瀬",
@@ -42871,7 +43380,8 @@
           "to_n02_station_code": "007461",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "庭瀬",
@@ -42880,7 +43390,8 @@
           "to_n02_station_code": "007527",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "中庄",
@@ -42889,7 +43400,8 @@
           "to_n02_station_code": "007599",
           "line_names": [
             "山陽線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "倉敷",
@@ -42898,7 +43410,8 @@
           "to_n02_station_code": "007455",
           "line_names": [
             "伯備線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "清音",
@@ -42907,7 +43420,8 @@
           "to_n02_station_code": "007264",
           "line_names": [
             "伯備線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "総社",
@@ -42916,7 +43430,8 @@
           "to_n02_station_code": "007044",
           "line_names": [
             "伯備線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "豪渓",
@@ -42925,7 +43440,8 @@
           "to_n02_station_code": "006999",
           "line_names": [
             "伯備線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "日羽",
@@ -42934,7 +43450,8 @@
           "to_n02_station_code": "006973",
           "line_names": [
             "伯備線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "美袋",
@@ -42943,7 +43460,8 @@
           "to_n02_station_code": "006803",
           "line_names": [
             "伯備線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "備中広瀬",
@@ -42952,7 +43470,8 @@
           "to_n02_station_code": "006686",
           "line_names": [
             "伯備線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "備中高梁",
@@ -42961,7 +43480,8 @@
           "to_n02_station_code": "006518",
           "line_names": [
             "伯備線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "木野山",
@@ -42970,7 +43490,8 @@
           "to_n02_station_code": "006434",
           "line_names": [
             "伯備線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "備中川面",
@@ -42979,7 +43500,8 @@
           "to_n02_station_code": "006374",
           "line_names": [
             "伯備線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "方谷",
@@ -42988,7 +43510,8 @@
           "to_n02_station_code": "006233",
           "line_names": [
             "伯備線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "井倉",
@@ -42997,7 +43520,8 @@
           "to_n02_station_code": "006179",
           "line_names": [
             "伯備線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "石蟹",
@@ -43006,7 +43530,8 @@
           "to_n02_station_code": "006070",
           "line_names": [
             "伯備線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "新見",
@@ -43015,7 +43540,8 @@
           "to_n02_station_code": "006067",
           "line_names": [
             "伯備線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "布原",
@@ -43024,7 +43550,8 @@
           "to_n02_station_code": "006034",
           "line_names": [
             "伯備線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "備中神代",
@@ -43033,7 +43560,8 @@
           "to_n02_station_code": "005858",
           "line_names": [
             "伯備線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "足立",
@@ -43042,7 +43570,8 @@
           "to_n02_station_code": "005737",
           "line_names": [
             "伯備線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "新郷",
@@ -43051,7 +43580,8 @@
           "to_n02_station_code": "005662",
           "line_names": [
             "伯備線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "上石見",
@@ -43060,7 +43590,8 @@
           "to_n02_station_code": "005452",
           "line_names": [
             "伯備線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "生山",
@@ -43069,7 +43600,8 @@
           "to_n02_station_code": "005379",
           "line_names": [
             "伯備線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "上菅",
@@ -43078,7 +43610,8 @@
           "to_n02_station_code": "005330",
           "line_names": [
             "伯備線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "黒坂",
@@ -43087,7 +43620,8 @@
           "to_n02_station_code": "005255",
           "line_names": [
             "伯備線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "根雨",
@@ -43096,7 +43630,8 @@
           "to_n02_station_code": "005184",
           "line_names": [
             "伯備線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "武庫",
@@ -43105,7 +43640,8 @@
           "to_n02_station_code": "005152",
           "line_names": [
             "伯備線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "江尾",
@@ -43114,7 +43650,8 @@
           "to_n02_station_code": "004972",
           "line_names": [
             "伯備線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "伯耆溝口",
@@ -43123,7 +43660,8 @@
           "to_n02_station_code": "004869",
           "line_names": [
             "伯備線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "岸本",
@@ -43132,7 +43670,8 @@
           "to_n02_station_code": "004739",
           "line_names": [
             "伯備線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "伯耆大山",
@@ -43141,7 +43680,8 @@
           "to_n02_station_code": "004735",
           "line_names": [
             "山陰線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "東山公園",
@@ -43150,7 +43690,8 @@
           "to_n02_station_code": "004759",
           "line_names": [
             "山陰線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "米子",
@@ -43159,7 +43700,8 @@
           "to_n02_station_code": "004748",
           "line_names": [
             "山陰線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "安来",
@@ -43168,7 +43710,8 @@
           "to_n02_station_code": "004731",
           "line_names": [
             "山陰線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "荒島",
@@ -43177,7 +43720,8 @@
           "to_n02_station_code": "004750",
           "line_names": [
             "山陰線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "揖屋",
@@ -43186,7 +43730,8 @@
           "to_n02_station_code": "004697",
           "line_names": [
             "山陰線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "東松江",
@@ -43195,7 +43740,8 @@
           "to_n02_station_code": "004638",
           "line_names": [
             "山陰線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "松江",
@@ -43204,7 +43750,8 @@
           "to_n02_station_code": "004690",
           "line_names": [
             "山陰線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "乃木",
@@ -43213,7 +43760,8 @@
           "to_n02_station_code": "004736",
           "line_names": [
             "山陰線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "玉造温泉",
@@ -43222,7 +43770,8 @@
           "to_n02_station_code": "004764",
           "line_names": [
             "山陰線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "来待",
@@ -43231,7 +43780,8 @@
           "to_n02_station_code": "004793",
           "line_names": [
             "山陰線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "宍道",
@@ -43240,7 +43790,8 @@
           "to_n02_station_code": "004854",
           "line_names": [
             "山陰線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "荘原",
@@ -43249,7 +43800,8 @@
           "to_n02_station_code": "004879",
           "line_names": [
             "山陰線"
-          ]
+          ],
+          "number": "4031M"
         },
         {
           "from": "直江",
@@ -43258,7 +43810,8 @@
           "to_n02_station_code": "004943",
           "line_names": [
             "山陰線"
-          ]
+          ],
+          "number": "4031M"
         }
       ],
       "stops": [
@@ -44998,7 +45551,10 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "notes": "岡山まで5031M、岡山から4031M。東京—岡山間はサンライズ瀬戸に併結。",
+      "region": "jp",
+      "number_en": "Sunrise Izumo"
     },
     {
       "id": "20260730_01_ichibata_taisha",
@@ -45108,7 +45664,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Ichibata Taisha Line"
     },
     {
       "id": "20260730_02_ichibata_kitamatsue",
@@ -45218,7 +45776,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Ichibata Kita-Matsue Line"
     },
     {
       "id": "20260730_03_yakumo22",
@@ -46027,7 +46587,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260730_04_sakura762",
@@ -46087,7 +46648,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260730_05_shinkaisoku_osaka",
@@ -46146,7 +46708,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Special Rapid"
     },
     {
       "id": "20260730_06_osaka_loop",
@@ -46324,7 +46888,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Osaka Loop Line"
     },
     {
       "id": "20260730_07_nankai_sakai",
@@ -46502,7 +47068,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Nankai Main Line"
     },
     {
       "id": "20260731_01_nankai_shinimamiya",
@@ -46680,7 +47248,9 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp",
+      "number_en": "Nankai Main Line"
     },
     {
       "id": "20260731_02_rapit_alpha3",
@@ -47216,7 +47786,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260731_03_yui_naha_akamine",
@@ -47276,7 +47847,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260731_04_yui_akamine_naha",
@@ -47336,7 +47908,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260731_05_yui_tedako_shuri",
@@ -47450,7 +48023,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260731_06_yui_shuri_miebashi",
@@ -47618,7 +48192,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260731_07_yui_miebashi_naha",
@@ -47786,7 +48361,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260731_08_yui_naha_miebashi",
@@ -47954,7 +48530,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "20260801_01_yui_miebashi_naha",
@@ -48122,7 +48699,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     }
   ]
 }

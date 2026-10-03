@@ -21,6 +21,14 @@ else
     target_dir="${1:?usage: copy-rail-packages.sh <destination>}"
 fi
 
+# Canonical normalized facts are authoritative. Rebuild a stale derived
+# timetable before copying it, then refuse a mismatched solver/network snapshot.
+# This also refreshes RailKit's resource for package tests without touching facts.
+if ! python3 "$here/tools/verify-train-timetable-artifact.py" >/dev/null; then
+    python3 "$here/tools/build-train-timetable-db.py"
+    python3 "$here/tools/verify-train-timetable-artifact.py"
+fi
+
 mkdir -p "$target_dir"
 
 # Guard for directories this script fully owns: it deletes them before a
@@ -63,6 +71,7 @@ done
 # storage. compact-v1 files above remain the route solver/statistics source of
 # truth.
 network_dir="$target_dir/rail-display-network"
+prune_owned_dir "$network_dir"
 python3 "$source_dir/../../scripts/railway/build-display-network.py" \
     --rail-dir "$source_dir" --output "$network_dir" \
     --history-dir "$here/../app/data"
@@ -77,7 +86,11 @@ for country in jp tw hk mo kr us ca; do
         suffix="-$country"
     fi
 
-    for family in stations rail-sections station-readings; do
+    families="stations rail-sections station-readings"
+    if [ "$country" != "us" ] && [ "$country" != "ca" ]; then
+        families="$families station-names"
+    fi
+    for family in $families; do
         resource="$here/../app/data/$family$suffix.json"
         if [ ! -f "$resource" ]; then
             echo "error: missing $resource — the native route pipeline cannot load $country" >&2
@@ -173,6 +186,7 @@ done
 
 for dataset in \
     sample-data sample-data-tw sample-data-hk sample-data-mo sample-data-kr \
+    sample-data-us sample-data-ca \
     new-year-grand-loop-data tokyo-limited-express-loop-data
 do
     source="$here/../app/data/$dataset"
@@ -214,6 +228,7 @@ do
     if [ -f "$file" ]; then
         cp -p "$file" "$target_dir/$store.json"
     else
+        rm -f "$target_dir/$store.json"
         echo "note: $file absent — that sample will not be offered" >&2
     fi
 done
@@ -223,8 +238,16 @@ for sample in new-year-grand-loop tokyo-limited-express-loop; do
     if [ -f "$file" ]; then
         cp -p "$file" "$target_dir/$sample.json"
     else
+        rm -f "$target_dir/$sample.json"
         echo "note: $file absent — that sample will not be offered" >&2
     fi
 done
+
+# The service timetable has one canonical generated database. Snapshot it on
+# every build (including committed WAL updates) instead of using the historical
+# Swift-package copy. Revisions namespace persisted route caches by the exact
+# shipped solver, sample and display resources, across all seven regions.
+python3 "$here/tools/rail_resource_revisions.py" \
+    --repo "$here/.." --bundle "$target_dir"
 
 echo "copied map, route, localization and sample resources into $target_dir"

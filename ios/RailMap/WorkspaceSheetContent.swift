@@ -15,6 +15,11 @@ enum WorkspaceSheet: Identifiable {
     case chooseRide([Train])
     case utility(UtilityDestination)
 
+    var hidesWorkspaceMenu: Bool {
+        if case .detail = self { return true }
+        return false
+    }
+
     var id: String {
         switch self {
         case .newJourney(let train): "new:\(train.id)"
@@ -54,6 +59,8 @@ struct WorkspaceSheetContent: View {
     let onSaveEdit: (Train, String) -> Void
     let onSaveDetail: (Train, String) -> ItineraryStore.SaveOutcome
     let onRebuild: (Train) -> Int?
+    let onJourneyPrimary: (JourneyPresentation.PrimaryAction, Train) -> Void
+    let onJourneySecondary: (SecondaryAction, Train) -> Void
     let onStartExport: () -> Void
     let onDismiss: () -> Void
     let onPick: (Train) -> Void
@@ -78,6 +85,8 @@ struct WorkspaceSheetContent: View {
         onSaveEdit: @escaping (Train, String) -> Void,
         onSaveDetail: @escaping (Train, String) -> ItineraryStore.SaveOutcome,
         onRebuild: @escaping (Train) -> Int?,
+        onJourneyPrimary: @escaping (JourneyPresentation.PrimaryAction, Train) -> Void,
+        onJourneySecondary: @escaping (SecondaryAction, Train) -> Void,
         onStartExport: @escaping () -> Void,
         onDismiss: @escaping () -> Void,
         onPick: @escaping (Train) -> Void,
@@ -101,6 +110,8 @@ struct WorkspaceSheetContent: View {
         self.onSaveEdit = onSaveEdit
         self.onSaveDetail = onSaveDetail
         self.onRebuild = onRebuild
+        self.onJourneyPrimary = onJourneyPrimary
+        self.onJourneySecondary = onJourneySecondary
         self.onStartExport = onStartExport
         self.onDismiss = onDismiss
         self.onPick = onPick
@@ -136,21 +147,11 @@ struct WorkspaceSheetContent: View {
                     onStartExport()
                 }
             case .detail(let id):
-                NavigationStack {
-                    WorkspaceRideDetailView(
-                        trainID: id,
-                        itineraries: itineraries,
-                        onSave: onSaveDetail,
-                        onRebuild: onRebuild,
-                        onEditJourney: onEditJourney)
-                    .toolbar {
-                        ToolbarItem(placement: .cancellationAction) {
-                            Button(localization.text("ios.cancel", fallback: "Cancel")) {
-                                onDismiss()
-                            }
-                        }
-                    }
-                }
+                WorkspaceJourneyMenu(
+                    trainID: id, itineraries: itineraries, controller: controller,
+                    presentation: presentation, onSave: onSaveDetail,
+                    onRebuild: onRebuild, onPrimary: onJourneyPrimary,
+                    onSecondary: onJourneySecondary)
             case .importData:
                 DataImportView(
                     flow: importFlow,
@@ -183,9 +184,8 @@ struct WorkspaceSheetContent: View {
                     controller: controller)
             }
         }
-        // Secondary sheets use the same opaque content color as the resident
-        // menu. Lists and forms drop their separate grouped backdrop.
+        // Let native presentation glass show through lists and forms.
         .scrollContentBackground(.hidden)
-        .presentationBackground(Color.railMenuBackground)
+        .railMenuPresentationBackground()
     }
 }

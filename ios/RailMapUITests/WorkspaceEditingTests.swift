@@ -22,12 +22,10 @@ final class WorkspaceEditingTests: XCTestCase {
         let row = app.descendants(matching: .any)["journeyRow-20260703_01_haruka"].firstMatch
         XCTAssertTrue(row.waitForExistence(timeout: 30))
         row.tap()
-        // Search selects on the shared map; its resident detail belongs to All.
-        app.tabBars.firstMatch.buttons.element(boundBy: 2).tap()
+        // Detail opens over Search; closing it retains the resident query.
         let back = app.buttons["journeyBackToList"]
         XCTAssertTrue(back.waitForExistence(timeout: 8))
         back.tap()
-        app.tabBars.firstMatch.buttons.element(boundBy: 3).tap()
         XCTAssertTrue(row.waitForExistence(timeout: 8))
         let search = app.textFields["journeySearchField"]
         XCTAssertEqual(search.value as? String, "haruka")
@@ -55,50 +53,77 @@ final class WorkspaceEditingTests: XCTestCase {
     }
 
     func testDetailEditsSurviveVisibilityChange() {
-        let app = launch(sheet: "detail")
-        let edit = app.buttons["rideDetailEdit"]
+        // Open the known saved fixture through its native row so this isolated
+        // test starts with a confirmed record identity.
+        let fixtureID = "20260704_02_kodama918"
+        let originalNumber = "こだま918号（Kodama 918）（918A）"
+        let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
+                               "-interface-language", "en"]
+        app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
+        app.launchEnvironment["RAILMAP_UI_TEST_STATS_REGION"] = "all"
+        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "search"
+        app.launchEnvironment["RAILMAP_UI_TEST_QUERY"] = fixtureID
+        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
+        app.launch()
+        let row = app.buttons["journeyRow-\(fixtureID)"]
+        XCTAssertTrue(row.waitForExistence(timeout: 30))
+        row.tap()
+        let selected = app.descendants(matching: .any)["selectedJourney-\(fixtureID)"].firstMatch
+        XCTAssertTrue(selected.waitForExistence(timeout: 8))
+        let edit = app.buttons["journeyMenuEdit"]
         XCTAssertTrue(edit.waitForExistence(timeout: 30))
+        XCTAssertTrue(edit.isHittable)
         edit.tap()
         let number = app.otherElements["rideEditorNumber"].textFields.firstMatch
         XCTAssertTrue(number.waitForExistence(timeout: 8))
-        number.tap()
-        number.typeText("X")
+        XCTAssertEqual(number.value as? String, originalNumber)
+        EditorUITestSupport.tap(number, in: app)
+        number.typeText("X\n")
         let edited = number.value as? String ?? ""
         XCTAssertNotEqual(edited, "Review")
-        app.buttons["rideEditorSave"].tap()
+        XCTAssertEqual(edited.replacingOccurrences(of: "X", with: ""), originalNumber,
+                       "Typing must retain the complete original number.")
+        XCTAssertEqual(edited.filter { $0 == "X" }.count, 1,
+                       "The edited number must contain exactly the one inserted character.")
+        let save = app.buttons["rideEditorSave"]
+        save.tap()
+        XCTAssertTrue(save.waitForNonExistence(timeout: 8))
 
-        // Saving returns to the selected journey card. Capture its stable
-        // record identity, then search so this undated fixture remains reachable
-        // even when earlier tests have loaded hundreds of dated sample rides.
-        let selected = app.staticTexts.matching(NSPredicate(
-            format: "identifier BEGINSWITH %@", "selectedJourney-")).firstMatch
         XCTAssertTrue(selected.waitForExistence(timeout: 15))
         let savedID = String(selected.identifier.dropFirst("selectedJourney-".count))
+        XCTAssertEqual(savedID, fixtureID, "Editing must retain the saved record identity.")
         let back = app.buttons["journeyBackToList"]
         XCTAssertTrue(back.waitForExistence(timeout: 15))
         back.tap()
-        app.tabBars.firstMatch.buttons.element(boundBy: 3).tap()
+        // The resident Search query is the exact unchanged record ID, so it
+        // continues to locate this same record after its visible number changes.
         let search = app.textFields["journeySearchField"]
         XCTAssertTrue(search.waitForExistence(timeout: 8))
-        search.tap()
-        search.typeText(edited)
+        XCTAssertEqual(search.value as? String, fixtureID)
         let savedRow = app.buttons["journeyRow-\(savedID)"]
         XCTAssertTrue(savedRow.waitForExistence(timeout: 30))
         savedRow.press(forDuration: 1)
         let information = app.buttons["Journey information"]
         XCTAssertTrue(information.waitForExistence(timeout: 5))
         information.tap()
+        XCTAssertTrue(selected.waitForExistence(timeout: 8))
         XCTAssertTrue(edit.waitForExistence(timeout: 8))
-        let detailScroll = app.scrollViews["rideDetailScrollView"]
+        let detailScroll = app.scrollViews.containing(.button, identifier: "journeyMenuEdit").firstMatch
         XCTAssertTrue(detailScroll.waitForExistence(timeout: 5))
-        let hide = detailScroll.buttons["rideDetailHide"]
-        // Target the detail content. A gesture on `app` can resize the
-        // presenting sheet instead, leaving the lazy service card unbuilt and
-        // waiting minutes for a detent animation rather than testing Hide.
-        for _ in 0..<6 where !hide.isHittable { detailScroll.swipeUp() }
+        let more = detailScroll.buttons["More journey actions"].firstMatch
+        XCTAssertTrue(more.waitForExistence(timeout: 5))
+        // More shares the native action row with Edit. Require the actual
+        // foreground ScrollView to contain its complete tappable bounds.
+        XCTAssertTrue(more.isHittable)
+        XCTAssertTrue(detailScroll.frame.intersection(app.frame).contains(more.frame), app.debugDescription)
+        more.tap()
+        let hide = app.buttons["Hide from map"]
         XCTAssertTrue(hide.waitForExistence(timeout: 5))
         XCTAssertTrue(hide.isHittable)
         hide.tap()
+        XCTAssertTrue(selected.waitForExistence(timeout: 8))
+        XCTAssertTrue(edit.isHittable)
         edit.tap()
         XCTAssertTrue(number.waitForExistence(timeout: 8))
         XCTAssertEqual(number.value as? String, edited,
@@ -125,19 +150,73 @@ final class WorkspaceEditingTests: XCTestCase {
 
         func revealRegionControl() -> (element: XCUIElement, isPopUpButton: Bool) {
             let anyRegion = app.descendants(matching: .any)["importRegion"].firstMatch
-            for _ in 0..<4 {
-                if anyRegion.exists, !anyRegion.frame.isEmpty,
-                   app.frame.contains(anyRegion.frame) { break }
-                app.swipeUp()
-            }
             XCTAssertTrue(anyRegion.waitForExistence(timeout: 5))
-            XCTAssertFalse(anyRegion.frame.isEmpty)
+            let forms = app.collectionViews.containing(.any, identifier: "importRegion")
+            XCTAssertEqual(forms.count, 1, "Resolve the import region's own foreground Form.")
+            let form = forms.firstMatch
+            let navigation = app.navigationBars.containing(.button, identifier: "importCancel").firstMatch
+            XCTAssertTrue(navigation.exists)
+            // The outer scrollbar is a direct Form child. The JSON text editor's
+            // scrollbar is nested inside its TextView and must not be used here.
+            let scrollbar = form.children(matching: .other).matching(
+                NSPredicate(format: "label BEGINSWITH %@", "Vertical scroll bar")).firstMatch
+            XCTAssertTrue(scrollbar.exists, form.debugDescription)
+
+            func finiteNonempty(_ frame: CGRect) -> Bool {
+                !frame.isEmpty && [frame.minX, frame.minY, frame.maxX, frame.maxY].allSatisfy { $0.isFinite }
+            }
+            func usableFrame() -> CGRect {
+                let formFrame = form.frame
+                let barFrame = scrollbar.frame
+                XCTAssertTrue(finiteNonempty(app.frame))
+                XCTAssertTrue(finiteNonempty(formFrame) && app.frame.contains(formFrame))
+                XCTAssertTrue(finiteNonempty(barFrame) && formFrame.contains(barFrame))
+                XCTAssertTrue(finiteNonempty(navigation.frame) && app.frame.contains(navigation.frame))
+                var bottom = min(formFrame.maxY, barFrame.maxY)
+                for actionID in ["importValidate", "importCommit"] {
+                    let action = app.buttons[actionID].firstMatch
+                    if action.exists {
+                        XCTAssertTrue(finiteNonempty(action.frame) && app.frame.contains(action.frame))
+                        bottom = min(bottom, action.frame.minY)
+                    }
+                }
+                let top = max(formFrame.minY, barFrame.minY, navigation.frame.maxY)
+                let usable = CGRect(x: formFrame.minX, y: top, width: formFrame.width, height: bottom - top)
+                XCTAssertTrue(finiteNonempty(usable) && formFrame.contains(usable))
+                return usable
+            }
+
+            for _ in 0..<4 {
+                let usable = usableFrame()
+                let regionFrame = anyRegion.frame
+                XCTAssertTrue(finiteNonempty(regionFrame))
+                if usable.contains(regionFrame) { break }
+                // Never scroll to compensate for a native-hit failure alone.
+                XCTAssertTrue(form.isHittable, form.debugDescription)
+                XCTAssertTrue(scrollbar.isHittable, scrollbar.debugDescription)
+                XCTAssertTrue(regionFrame.minX >= usable.minX && regionFrame.maxX <= usable.maxX)
+                let distance = min(regionFrame.height, usable.height / 4)
+                let direction: CGFloat = regionFrame.maxY > usable.maxY ? -1 : 1
+                let startPoint = CGPoint(x: scrollbar.frame.midX, y: usable.midY)
+                let endPoint = CGPoint(x: startPoint.x, y: startPoint.y + direction * distance)
+                XCTAssertTrue(usable.contains(startPoint) && usable.contains(endPoint))
+                let start = app.coordinate(withNormalizedOffset: .zero).withOffset(
+                    CGVector(dx: startPoint.x - app.frame.minX, dy: startPoint.y - app.frame.minY))
+                start.press(forDuration: 0.05, thenDragTo: start.withOffset(
+                    CGVector(dx: 0, dy: direction * distance)))
+            }
             XCTAssertTrue(app.frame.contains(anyRegion.frame), anyRegion.debugDescription)
+            XCTAssertTrue(usableFrame().contains(anyRegion.frame), anyRegion.debugDescription)
+            XCTAssertTrue(anyRegion.isHittable, anyRegion.debugDescription)
 
             let popupRegion = app.popUpButtons["importRegion"].firstMatch
-            if popupRegion.exists { return (popupRegion, true) }
+            if popupRegion.exists {
+                XCTAssertTrue(popupRegion.isHittable, popupRegion.debugDescription)
+                return (popupRegion, true)
+            }
             let buttonRegion = app.buttons["importRegion"].firstMatch
             XCTAssertTrue(buttonRegion.exists, anyRegion.debugDescription)
+            XCTAssertTrue(buttonRegion.isHittable, buttonRegion.debugDescription)
             return (buttonRegion, false)
         }
 
@@ -254,17 +333,151 @@ final class WorkspaceEditingTests: XCTestCase {
     }
 
     func testServiceTypeSuggestionsAndCustomVehicleInput() {
-        let app = launch(sheet: "new")
-        advanceToServiceStep(in: app)
+        // Train-type autocomplete is an existing-record field; new journeys
+        // choose their type through the region-step Picker.
+        let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
+                               "-interface-language", "en"]
+        app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
+        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "search"
+        app.launchEnvironment["RAILMAP_UI_TEST_QUERY"] = "20260704_02_kodama918"
+        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
+        app.launch()
+        let row = app.buttons["journeyRow-20260704_02_kodama918"]
+        XCTAssertTrue(row.waitForExistence(timeout: 30))
+        row.tap()
+        XCTAssertTrue(app.descendants(matching: .any)["selectedJourney-20260704_02_kodama918"]
+            .firstMatch.waitForExistence(timeout: 8))
+        let edit = app.buttons["journeyMenuEdit"]
+        XCTAssertTrue(edit.waitForExistence(timeout: 8))
+        edit.tap()
+        XCTAssertTrue(app.descendants(matching: .any)["rideEditorForm"].firstMatch
+            .waitForExistence(timeout: 8))
+
+        let form = app.collectionViews["rideEditorForm"]
+        XCTAssertTrue(form.waitForExistence(timeout: 8))
+        // This method's existing-record service fields are below the lazy Basics
+        // cells. Measure native cell movement before each further upward reveal.
+        func revealServiceField(_ field: XCUIElement, stage: String) -> Bool {
+            func evidence(_ suffix: String) {
+                attach(app, named: "service-input-\(stage)-\(suffix)")
+                let targetExists = field.exists
+                let targetFrame = targetExists ? field.frame : .zero
+                let details = XCTAttachment(string:
+                    "Form=\(form.frame); targetExists=\(targetExists); targetFrame=\(targetFrame)\n" + app.debugDescription)
+                details.name = "service-input-\(stage)-\(suffix)-geometry-and-tree"
+                details.lifetime = .keepAlways
+                add(details)
+            }
+            for attempt in 0...6 {
+                let formFrame = form.frame
+                var visible = formFrame.intersection(app.frame).insetBy(dx: 8, dy: 8)
+                let navigationBottom = app.navigationBars.allElementsBoundByIndex
+                    .filter { $0.exists && $0.isHittable }.map { $0.frame.maxY }.max() ?? visible.minY
+                let top = max(visible.minY, navigationBottom + 8)
+                let keyboard = app.keyboards.firstMatch
+                let bottom = keyboard.exists ? min(visible.maxY, keyboard.frame.minY - 8) : visible.maxY
+                visible = CGRect(x: visible.minX, y: top, width: visible.width, height: max(0, bottom - top))
+                guard !visible.isEmpty else {
+                    evidence("empty-viewport")
+                    return false
+                }
+                if field.exists, field.isHittable, !field.frame.isEmpty, visible.contains(field.frame) {
+                    evidence("fully-revealed")
+                    return true
+                }
+                guard attempt < 6 else {
+                    evidence("bounded-reveal-exhausted")
+                    return false
+                }
+                let cells = form.cells.allElementsBoundByIndex.filter {
+                    $0.isHittable && visible.contains($0.frame)
+                        && $0.frame.midY >= visible.minY + visible.height * 0.4
+                }
+                // Use a real lower Form cell as the gesture origin, never the
+                // sheet's grabber or an application-wide swipe.
+                var anchoredCell: (cell: XCUIElement, label: String)?
+                for candidate in cells {
+                    let uniqueLabels = candidate.staticTexts.allElementsBoundByIndex.map { $0.label }
+                        .filter { !$0.isEmpty && form.staticTexts.matching(NSPredicate(format: "label == %@", $0)).count == 1 }
+                    if let label = uniqueLabels.last {
+                        anchoredCell = (candidate, label)
+                        break
+                    }
+                }
+                guard let anchoredCell else {
+                    evidence("stable-progress-anchor-missing")
+                    return false
+                }
+                let cell = anchoredCell.cell
+                let label = anchoredCell.label
+                let anchor = form.staticTexts.matching(NSPredicate(format: "label == %@", label)).firstMatch
+                let oldAnchorY = anchor.frame.midY
+                evidence("before-native-drag-\(attempt)")
+                let origin = app.coordinate(withNormalizedOffset: .zero)
+                let start = origin.withOffset(CGVector(dx: cell.frame.midX, dy: cell.frame.midY))
+                let distance = min(visible.height * 0.35, cell.frame.midY - visible.minY - 8)
+                guard distance > 30 else { return false }
+                start.press(forDuration: 0.05, thenDragTo: start.withOffset(CGVector(dx: 0, dy: -distance)))
+                evidence("after-native-drag-\(attempt)")
+                guard abs(form.frame.minY - formFrame.minY) < 3,
+                      abs(form.frame.height - formFrame.height) < 3 else {
+                    XCTFail("The native Form must retain its viewport while revealing service inputs.")
+                    return false
+                }
+                if anchor.exists && anchor.frame.midY >= oldAnchorY - 1 {
+                    XCTFail("The native Form cell did not move upward; stop before another drag.")
+                    return false
+                }
+                // A unique anchor leaving the lazy viewport is also recorded
+                // progress, with the unchanged Form geometry in the evidence.
+            }
+            return false
+        }
         let type = app.otherElements["rideEditorTrainType"].textFields.firstMatch
+        guard revealServiceField(type, stage: "train-type") else {
+            XCTFail("The existing editor train-type input must materialize fully inside its Form viewport.")
+            return
+        }
         EditorUITestSupport.tap(type, in: app)
+        XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 5))
+        if let initial = type.value as? String,
+           !initial.isEmpty && initial != type.placeholderValue {
+            type.press(forDuration: 1.1)
+            let selectAll = app.menuItems["Select All"].firstMatch
+            let button = app.buttons["Select All"].firstMatch
+            if button.waitForExistence(timeout: 3) {
+                button.tap()
+            } else {
+                XCTAssertTrue(selectAll.waitForExistence(timeout: 2))
+                selectAll.tap()
+            }
+        }
         type.typeText("Rap")
+        XCTAssertEqual(type.value as? String, "Rap", "The complete initial train type must be replaced.")
         let rapid = app.buttons["Rapid"].firstMatch
         XCTAssertTrue(rapid.waitForExistence(timeout: 5))
         rapid.tap()
         XCTAssertEqual(type.value as? String, "Rapid")
         let vehicle = app.otherElements["rideEditorVehicleType"].textFields.firstMatch
-        vehicle.tap()
+        guard revealServiceField(vehicle, stage: "vehicle") else {
+            XCTFail("The vehicle input must be fully inside the native Form viewport above the keyboard.")
+            return
+        }
+        EditorUITestSupport.tap(vehicle, in: app)
+        XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 5))
+        if let initial = vehicle.value as? String,
+           !initial.isEmpty && initial != vehicle.placeholderValue {
+            vehicle.press(forDuration: 1.1)
+            let selectAll = app.menuItems["Select All"].firstMatch
+            let button = app.buttons["Select All"].firstMatch
+            if button.waitForExistence(timeout: 3) {
+                button.tap()
+            } else {
+                XCTAssertTrue(selectAll.waitForExistence(timeout: 2))
+                selectAll.tap()
+            }
+        }
         vehicle.typeText("E235")
         XCTAssertEqual(vehicle.value as? String, "E235")
     }
@@ -675,14 +888,13 @@ final class WorkspaceEditingTests: XCTestCase {
     private func deleteFirstStop(in app: XCUIApplication) {
         let reorder = app.buttons["rideEditorReorderStops"]
         EditorUITestSupport.tap(reorder, in: app)
-        let firstStopCell = app.cells.containing(
-            .button, identifier: "rideEditorStop-0").firstMatch
-        let remove = firstStopCell.images["minus.circle.fill"].firstMatch
+        // The explicit edit-mode minus now executes the same deletion handler
+        // directly; a native second-stage Delete confirmation no longer exists.
+        let remove = app.buttons["rideEditorDeleteStop-0"]
         XCTAssertTrue(remove.waitForExistence(timeout: 5))
-        remove.tap()
-        let commit = app.buttons["Delete"].firstMatch
-        XCTAssertTrue(commit.waitForExistence(timeout: 5))
-        commit.tap()
+        EditorUITestSupport.tap(remove, in: app)
+        XCTAssertFalse(app.otherElements["rideEditorStopName"].textFields.firstMatch.exists,
+                       "The row's minus must delete without navigating into the stop editor.")
     }
 
     private func fillRequiredStops(

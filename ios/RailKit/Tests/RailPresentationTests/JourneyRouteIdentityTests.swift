@@ -131,4 +131,42 @@ struct JourneyRouteIdentityTests {
         let detected = [Statistics.TraversedLine(name: "東海道線", operatorName: "JR西日本", km: 3)]
         #expect(JourneyRouteIdentity.lineNames(of: express, detected: detected) == ["東海道線", "伯備線"])
     }
+
+    @Test func selectedPhysicalRouteOverridesOrdinaryRecordedLine() {
+        let local = train(type: "普通", lines: ["山手線"])
+        let selected = [Statistics.TraversedLine(
+            name: "東北線", operatorName: "東日本旅客鉄道", km: 5,
+            selectedLineID: "jp-東日本旅客鉄道-東北線")]
+        #expect(JourneyRouteIdentity.detectedApplies(local, detected: selected))
+        #expect(JourneyRouteIdentity.lineNames(of: local, detected: selected) == ["東北線"])
+        #expect(JourneyRouteIdentity.operatorNames(of: local, detected: selected) == ["東日本旅客鉄道"])
+    }
+
+    @Test func partialSelectedRouteDoesNotInventUnresolvedRecordedLegs() {
+        var local = train(type: "普通 直通", lines: ["東横線", "副都心線"])
+        local.routePolicy = RoutePolicy(preferredLineNames: ["東横線", "日比谷線"])
+        let selected = [Statistics.TraversedLine(
+            name: "副都心線", operatorName: "東京メトロ", km: 12,
+            selectedLineID: "jp-東京地下鉄-副都心線")]
+        #expect(JourneyRouteIdentity.lineNames(of: local, detected: selected) == ["副都心線"])
+        #expect(JourneyRouteIdentity.operatorNames(of: local, detected: selected) == ["東京メトロ"])
+    }
+
+    @Test func selectedOperatorsKeepPhysicalTraversalOrderAndRemoveDuplicates() {
+        let local = train(type: "普通", lines: ["Recorded"])
+        let selected = [
+            Statistics.TraversedLine(name: "A", operatorName: "Operator B", km: 1, selectedLineID: "a"),
+            Statistics.TraversedLine(name: "B", operatorName: "Operator A", km: 2, selectedLineID: "b"),
+            Statistics.TraversedLine(name: "A", operatorName: "Operator B", km: 3, selectedLineID: "a"),
+        ]
+        #expect(JourneyRouteIdentity.lineNames(of: local, detected: selected) == ["A", "B"])
+        #expect(JourneyRouteIdentity.operatorNames(of: local, detected: selected) == ["Operator B", "Operator A"])
+    }
+
+    @Test func emptySelectedDetectionKeepsExistingRecordedIdentityAndCompany() {
+        let local = train(type: "普通", lines: ["山手線"])
+        #expect(!JourneyRouteIdentity.detectedApplies(local, detected: []))
+        #expect(JourneyRouteIdentity.lineNames(of: local, detected: []) == ["山手線"])
+        #expect(JourneyRouteIdentity.operatorNames(of: local, detected: []) == ["JR東日本"])
+    }
 }

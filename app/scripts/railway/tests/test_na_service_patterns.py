@@ -860,6 +860,20 @@ class RealCatalogIntegrationTest(unittest.TestCase):
                                 copy.deepcopy(self.sections), {'repairs': self.to_apply})
         return {l['id']: l for l in summary['package']['lines']}, summary['sections']
 
+    def _assert_later_topology_removal(self, line_id, lines_by_id):
+        changes = self.package.get('topologyRepair', {}).get('changes', [])
+        removed = next((c for c in changes if c['lineId'] == line_id
+                        and c['op'] == 'removeCoveredBranch'), None)
+        if removed is None:
+            return False
+        catalog = json.loads((Path(__file__).parents[1] / 'na-topology-repairs.json').read_text())
+        self.assertTrue(any(c['id'] == removed['id'] and c['lineId'] == line_id
+                            and c['op'] == removed['op'] for c in catalog['repairs']))
+        self.assertTrue(removed['evidence'])
+        self.assertLessEqual(max(removed['coverageMeters'].values()), 3)
+        self.assertNotIn(line_id, lines_by_id)
+        return True
+
     def test_expected_station_counts_after_repair(self):
         lines_by_id, _ = self._repaired()
         for line_id, expected in self.EXPECTED_STATION_COUNTS.items():
@@ -875,6 +889,8 @@ class RealCatalogIntegrationTest(unittest.TestCase):
     def test_expected_station_counts_for_the_new_merge_entries(self):
         lines_by_id, _ = self._repaired()
         for line_id, expected in self.EXPECTED_NEW_STATION_COUNTS.items():
+            if self._assert_later_topology_removal(line_id, lines_by_id):
+                continue
             self.assertIn(line_id, lines_by_id, line_id)
             self.assertEqual(len(lines_by_id[line_id]['stations']), expected, line_id)
 
@@ -893,6 +909,8 @@ class RealCatalogIntegrationTest(unittest.TestCase):
     def test_every_line_segment_reconstructs_into_valid_sections_rows(self):
         lines_by_id, sections = self._repaired()
         for line_id in list(self.EXPECTED_STATION_COUNTS) + list(self.EXPECTED_NEW_STATION_COUNTS):
+            if self._assert_later_topology_removal(line_id, lines_by_id):
+                continue
             line = lines_by_id[line_id]
             decoded = _decode(line)
             rows = [f['geometry']['coordinates'] for f in sections['features']
@@ -918,6 +936,8 @@ class RealCatalogIntegrationTest(unittest.TestCase):
                 last_after_by_line.setdefault(change['lineId'], change['after'])
 
         for line_id, after in last_after_by_line.items():
+            if self._assert_later_topology_removal(line_id, lines_by_id):
+                continue
             if after is None:
                 self.assertNotIn(line_id, lines_by_id, line_id)      # dropLine
                 continue

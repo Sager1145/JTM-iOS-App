@@ -121,7 +121,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20251231_02",
@@ -443,7 +444,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20251231_03",
@@ -785,7 +787,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20251231_04",
@@ -1248,7 +1251,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20251231_05",
@@ -1650,7 +1654,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20251231_06",
@@ -1792,7 +1797,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20251231_07",
@@ -2095,7 +2101,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20251231_08",
@@ -2217,7 +2224,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20251231_09",
@@ -2599,7 +2607,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20251231_10",
@@ -2701,7 +2710,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20251231_11",
@@ -3024,7 +3034,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20251231_12",
@@ -3206,7 +3217,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20251231_13",
@@ -3328,7 +3340,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20251231_14",
@@ -3390,7 +3403,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20251231_15",
@@ -3512,7 +3526,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20251231_16",
@@ -3594,7 +3609,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20251231_17",
@@ -4016,7 +4032,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20251231_18",
@@ -4098,7 +4115,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20251231_19",
@@ -4280,7 +4298,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20251231_20",
@@ -4443,7 +4462,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20251231_21",
@@ -4565,7 +4585,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20251231_22",
@@ -4907,7 +4928,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20260101_23",
@@ -5129,7 +5151,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20260101_24",
@@ -5312,7 +5335,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20260101_25",
@@ -5614,7 +5638,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20260101_26",
@@ -5856,7 +5881,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20260101_27",
@@ -5978,7 +6004,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20260101_28",
@@ -6140,7 +6167,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20260101_29",
@@ -6462,7 +6490,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20260101_30",
@@ -6904,7 +6933,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20260101_31",
@@ -7126,7 +7156,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20260101_32",
@@ -7508,7 +7539,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20260101_33",
@@ -7630,7 +7662,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20260101_34",
@@ -7732,7 +7765,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20260101_35",
@@ -7794,7 +7828,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20260101_36",
@@ -7996,7 +8031,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20260101_37",
@@ -8239,7 +8275,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20260101_38",
@@ -8421,7 +8458,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "new_year_grand_loop_20260101_39",
@@ -8503,7 +8541,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     }
   ]
 }

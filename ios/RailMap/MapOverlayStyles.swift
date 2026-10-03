@@ -5,9 +5,9 @@ import UIKit
 ///
 /// ## Why this is a type rather than two dictionaries on the coordinator
 ///
-/// Four unrelated things write strokes to this map — the network rebuild, a
-/// recorded ride's rebuild, the basemap veil, and the playback trail — and all
-/// four have to agree about one thing: a style is stored as a full-scale TOKEN,
+/// Three unrelated things write strokes to this map — the network rebuild, a
+/// recorded ride's rebuild, and the playback trail — and all
+/// three have to agree about one thing: a style is stored as a full-scale TOKEN,
 /// and ``drawnWidth(_:atScale:)`` is the only place that token becomes points.
 /// That is a contract between the writers, not a detail of any one of them, and
 /// it was previously held by two `private var`s in the middle of a 2,600-line
@@ -49,6 +49,81 @@ final class MapOverlayStyles {
     /// a style after the fact would never be drawn.
     private var renderers: [String: MKOverlayRenderer] = [:]
 
+    private struct OpacityTransition {
+        var start: CGFloat
+        var target: CGFloat
+        var startedAt: CFTimeInterval
+        var duration: TimeInterval
+        var completion: (() -> Void)?
+
+        func alpha(at time: CFTimeInterval) -> CGFloat {
+            let progress = RailMotion.mapHighlightProgress((time - startedAt) / duration)
+            return start + (target - start) * progress
+        }
+    }
+
+    private var opacityTransitions: [String: OpacityTransition] = [:]
+    private var displayLink: CADisplayLink?
+
+    @MainActor
+    private final class OpacityClock: NSObject {
+        weak var owner: MapOverlayStyles?
+        init(owner: MapOverlayStyles) { self.owner = owner }
+        @objc func tick(_ link: CADisplayLink) {
+            guard let owner else { link.invalidate(); return }
+            owner.advanceOpacity(at: CACurrentMediaTime())
+        }
+    }
+
+    private func stopClockIfIdle() {
+        guard opacityTransitions.isEmpty else { return }
+        displayLink?.invalidate()
+        displayLink = nil
+    }
+
+    private func advanceOpacity(at time: CFTimeInterval) {
+        var completions: [() -> Void] = []
+        for (key, transition) in opacityTransitions {
+            let finished = time - transition.startedAt >= transition.duration
+            renderers[key]?.alpha = finished ? transition.target : transition.alpha(at: time)
+            if finished {
+                opacityTransitions.removeValue(forKey: key)
+                if let completion = transition.completion { completions.append(completion) }
+            }
+        }
+        stopClockIfIdle()
+        for completion in completions { completion() }
+    }
+
+    /// Animate one stored opacity. Retargeting cancels its previous completion
+    /// and starts at the currently presented alpha. Missing renderers can join
+    /// later via `remember`, which is how a newly installed casing fades in.
+    func animateOpacity(
+        forKey key: String, duration: TimeInterval, fromAlpha: CGFloat? = nil,
+        completion: (() -> Void)? = nil
+    ) {
+        guard let style = styles[key] else { return }
+        let now = CACurrentMediaTime()
+        let start = renderers[key]?.alpha
+            ?? opacityTransitions[key]?.alpha(at: now) ?? fromAlpha ?? style.alpha
+        opacityTransitions.removeValue(forKey: key)
+        guard duration > 0, start != style.alpha else {
+            renderers[key]?.alpha = style.alpha
+            stopClockIfIdle()
+            completion?()
+            return
+        }
+        renderers[key]?.alpha = start
+        opacityTransitions[key] = OpacityTransition(
+            start: start, target: style.alpha, startedAt: now,
+            duration: duration, completion: completion)
+        if displayLink == nil {
+            let link = CADisplayLink(target: OpacityClock(owner: self), selector: #selector(OpacityClock.tick(_:)))
+            link.add(to: .main, forMode: .common)
+            displayLink = link
+        }
+    }
+
     /// The style an overlay's title names, by that title.
     subscript(key: String) -> Style? {
         get { styles[key] }
@@ -57,6 +132,8 @@ final class MapOverlayStyles {
 
     /// Everything, forgotten — the whole-map teardown a rebuild begins with.
     func removeAll() {
+        opacityTransitions.removeAll(keepingCapacity: true)
+        stopClockIfIdle()
         styles.removeAll(keepingCapacity: true)
         renderers.removeAll(keepingCapacity: true)
     }
@@ -68,7 +145,9 @@ final class MapOverlayStyles {
             guard let key = overlay.title ?? nil else { continue }
             styles.removeValue(forKey: key)
             renderers.removeValue(forKey: key)
+            opacityTransitions.removeValue(forKey: key)
         }
+        stopClockIfIdle()
     }
 
     /// Forget one renderer while KEEPING its style — what a replacement stroke
@@ -76,16 +155,44 @@ final class MapOverlayStyles {
     /// own style entry by the time the old overlay comes off.
     func forgetRenderer(forKey key: String) {
         renderers.removeValue(forKey: key)
+        // A geometry replacement keeps this key and its presentation fade.
+        // An exit callback belongs to the removed overlay, so discard it.
+        if var transition = opacityTransitions[key] {
+            transition.completion = nil
+            opacityTransitions[key] = transition
+        }
     }
 
     func forgetStyle(forKey key: String) {
         styles.removeValue(forKey: key)
+        opacityTransitions.removeValue(forKey: key)
+        stopClockIfIdle()
+    }
+
+    func presentedAlpha(forKey key: String) -> CGFloat? {
+        renderers[key]?.alpha ?? opacityTransitions[key]?.alpha(at: CACurrentMediaTime())
+            ?? styles[key]?.alpha
+    }
+
+    /// Give an exiting batch its own key so a returning tier can mount while
+    /// the old renderer finishes its fade.
+    func rekey(from oldKey: String, to newKey: String) {
+        styles[newKey] = styles.removeValue(forKey: oldKey)
+        renderers[newKey] = renderers.removeValue(forKey: oldKey)
+        opacityTransitions[newKey] = opacityTransitions.removeValue(forKey: oldKey)
     }
 
     /// Keep the renderer MapKit just built, so ``rescale(to:)`` can reach it.
     func remember(_ renderer: MKOverlayRenderer, forKey key: String) {
         guard !key.isEmpty else { return }
         renderers[key] = renderer
+        if let style = styles[key] {
+            // Keep style opacity separate from colour so a fade changes only
+            // compositor alpha, never stroke geometry or per-frame paint.
+            if let polyline = renderer as? MKPolylineRenderer { polyline.strokeColor = style.color }
+            if let multi = renderer as? MKMultiPolylineRenderer { multi.strokeColor = style.color }
+            renderer.alpha = opacityTransitions[key]?.alpha(at: CACurrentMediaTime()) ?? style.alpha
+        }
     }
 
     /// Cross-day dash and the historical dot are different patterns. A style
@@ -107,12 +214,26 @@ final class MapOverlayStyles {
     /// pattern and asking each to redraw only marks them dirty. The cost in a
     /// rescale was never here — see `RailMapView.Surface.Coordinator`'s
     /// `displayedAnnotationViews`, which is about the station marks.
-    func rescale(to scale: CGFloat) {
+    func rescale(to scale: CGFloat, alphaTransitionDuration: TimeInterval? = nil) {
         for (key, renderer) in renderers {
             let style = styles[key]
             let width = Self.drawnWidth(style, atScale: scale)
             let dash = Self.dashPattern(style, atScale: scale)
-            let color = (style?.color ?? .systemBlue).withAlphaComponent(style?.alpha ?? 1)
+            let color = style?.color ?? .systemBlue
+            let targetAlpha = style?.alpha ?? 1
+            if let duration = alphaTransitionDuration {
+                if duration == 0 || opacityTransitions[key]?.target != targetAlpha {
+                    animateOpacity(forKey: key, duration: duration)
+                }
+            } else if let transition = opacityTransitions[key] {
+                if transition.target != targetAlpha {
+                    // A new nonanimated write cancels any old destination.
+                    opacityTransitions.removeValue(forKey: key)
+                    renderer.alpha = targetAlpha
+                }
+            } else {
+                renderer.alpha = targetAlpha
+            }
             if let polyline = renderer as? MKPolylineRenderer {
                 guard polyline.strokeColor != color || polyline.lineWidth != width
                     || polyline.lineDashPattern != dash else { continue }
@@ -130,5 +251,6 @@ final class MapOverlayStyles {
             }
             renderer.setNeedsDisplay()
         }
+        stopClockIfIdle()
     }
 }

@@ -42,12 +42,13 @@ struct MapControlBar: View {
     /// disappears with the overlay.
     var onInfo: () -> Void
 
-    /// One button's side. Apple Maps uses 48 rather than the 44-point minimum:
-    /// these are pressed while the other hand holds the phone, and they sit at
-    /// the screen edge where the thumb arrives at an angle.
-    static let side: CGFloat = 48
+    /// Apple Maps-sized map chrome. Keep this independent of sheet/menu
+    /// controls: both the glass surface and the non-overlapping hit band are
+    /// 50 pt, with no inset shrinking the visible control.
+    static let side: CGFloat = 50
+    fileprivate static let iconSize: CGFloat = 20
     /// Clear drawing space around the rail for Liquid Glass's touch-down
-    /// expansion. The scroll container supplies it; the buttons remain 48 pt.
+    /// expansion. The workspace supplies it outside the resting button frame.
     static let interactionBleed: CGFloat = 8
     /// Between separate glass surfaces. This is also the breathing room that
     /// keeps the two circular utility buttons from visually merging.
@@ -55,7 +56,7 @@ struct MapControlBar: View {
 
     /// The hairline between two buttons in one capsule. Narrower than the
     /// capsule, so it reads as a division rather than a cut.
-    private static let separatorWidth: CGFloat = 28
+    private static let separatorWidth: CGFloat = 24
 
     var body: some View {
         VStack(alignment: .trailing, spacing: Self.groupSpacing) {
@@ -139,10 +140,9 @@ struct MapControlBar: View {
             // `ContentView.keyboardShortcuts`). Removing a button is not a
             // reason to remove the only zoom a keyboard reader has.
             //
-            // What is left is three controls — 96 pt of capsule, 104 pt of
-            // circles and the compass — which fits the medium band with room
-            // to spare. That is what let the enclosing `ScrollView` and its
-            // top-edge fade go; see `ContentView.controlStackBody`.
+            // The workspace measures the complete rail, including the native
+            // compass, to fit it above the sheet and playback controls; see
+            // `ContentView.controlStackBody`.
 
             // Utilities remain separate circles because they do not change
             // the same state: one explains the map, one follows the device.
@@ -198,7 +198,7 @@ struct MapControlBar: View {
     }
 
     private var capsule: some Shape {
-        RoundedRectangle(cornerRadius: RailStyle.chromeCornerRadius, style: .continuous)
+        RoundedRectangle(cornerRadius: Self.side / 2, style: .continuous)
     }
 
     /// The hairlines between the controls in one vertical capsule.
@@ -340,11 +340,11 @@ private struct ControlButton: View {
         switch glyph {
         case .symbol(let name):
             Image(systemName: name)
-                // The control's meaning and 48-point hit target stay stable at
+                // The control's meaning and 50-point hit target stay stable at
                 // every Dynamic Type size. SF Symbols inside map chrome do not
                 // represent reading text, so allowing them to grow past their
                 // capsule makes the control less usable rather than more.
-                .font(.system(size: 20, weight: .medium))
+                .font(.system(size: MapControlBar.iconSize, weight: .medium))
                 .contentTransition(.symbolEffect(.replace))
         case .route(let filled):
             // No `contentTransition` — that is the symbol machinery, and this

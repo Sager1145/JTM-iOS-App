@@ -340,6 +340,10 @@ async function loadFixtureModules() {
     .sort();
   const loaded = [];
   for (const file of files) {
+    // Some modules compute their cases at import time. A targeted run must
+    // skip those imports as well as their builders (module/fixture basenames
+    // match throughout this directory).
+    if (only && file !== only.replace(/\.json$/, ".mjs")) continue;
     const module = await import(pathToFileURL(path.join(dir, file)).href);
     if (!module.name || typeof module.build !== "function") {
       console.error(`  ! ${file} exports no { name, build } — skipped`);

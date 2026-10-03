@@ -2,6 +2,22 @@ import RailCore
 
 enum JourneyCompletionStrings {
     static let table: [String: [Localization.Language: String]] = [
+        "ios.ai.researchTitle": [.zhHant: "使用 ChatGPT 查詢列車", .zhHans: "使用 ChatGPT 查询列车", .ja: "ChatGPTで列車を調べる", .en: "Ask ChatGPT about a train"],
+        "ios.ai.researchCheckTitle": [.zhHant: "核對公表時刻表", .zhHans: "核对公布时刻表", .ja: "公表時刻表を照合", .en: "Check published timetable"],
+        "ios.ai.researchTarget": [.zhHant: "查詢對象", .zhHans: "查询对象", .ja: "調査対象", .en: "Train query"],
+        "ios.ai.researchQuery": [.zhHant: "列車名稱、車次或路線", .zhHans: "列车名称、车次或路线", .ja: "列車名・列車番号・経路", .en: "Train name, number or route"],
+        "ios.ai.researchRequired": [.zhHant: "請輸入列車名稱、車次或路線及運行日期。", .zhHans: "请输入列车名称、车次或路线及运行日期。", .ja: "列車名・列車番号・経路と運転日を入力してください。", .en: "Enter a train name, number or route and an operating date."],
+        "ios.ai.researchReview": [.zhHant: "回答是調查建議。修改旅程前，請核對官方來源。", .zhHans: "回答是调查建议。修改旅程前，请核对官方来源。", .ja: "回答は調査の提案です。旅程を編集する前に公式の出典を確認してください。", .en: "Check the official sources before editing your journey. The answer is a research suggestion."],
+        "ios.ai.researchAnsweredPrompt": [.zhHant: "此回答的查詢內容", .zhHans: "此回答的查询内容", .ja: "この回答の依頼内容", .en: "Request for this answer"],
+        "ios.ai.researchClose": [.zhHant: "關閉", .zhHans: "关闭", .ja: "閉じる", .en: "Close"],
+        "ios.ai.researchSubscriptionInfo": [.zhHant: "使用實驗性的 Codex 訂閱介面，登入頁會顯示 Codex。模型與額度由帳號決定。查詢會將顯示的提示詞與備註傳送至 OpenAI。", .zhHans: "使用实验性的 Codex 订阅接口，登录页会显示 Codex。模型与额度由账号决定。查询会将显示的提示词与备注发送至 OpenAI。", .ja: "実験的なCodexサブスクリプション連携を使用し、認証画面にはCodexと表示されます。モデルと利用枠はアカウントに依存します。調査すると表示中の依頼内容と補足をOpenAIに送信します。", .en: "Uses the experimental Codex subscription interface; authorization displays Codex. Models and limits depend on your account. Querying sends the displayed request and remarks to OpenAI."],
+        "ios.ai.researchRun": [.zhHant: "使用 ChatGPT 查詢", .zhHans: "使用 ChatGPT 查询", .ja: "ChatGPTで調査", .en: "Query with ChatGPT"],
+        "ios.ai.researchCheck": [.zhHant: "使用 ChatGPT 核對", .zhHans: "使用 ChatGPT 核对", .ja: "ChatGPTで照合", .en: "Check with ChatGPT"],
+        "ios.ai.researchTrainNumber": [.zhHant: "運行列車編號", .zhHans: "运行列车编号", .ja: "運行列車番号", .en: "Operating train number"],
+        "ios.ai.remarks": [.zhHant: "額外備註（選填）", .zhHans: "额外备注（选填）", .ja: "補足・備考（任意）", .en: "Additional remarks (optional)"],
+        "ios.ai.notes": [.zhHant: "旅程備註", .zhHans: "行程备注", .ja: "旅程のメモ", .en: "Journey notes"],
+        "ios.ai.keepRemarks": [.zhHant: "將備註保存至旅程", .zhHans: "将备注保存到行程", .ja: "補足を旅程のメモに保存", .en: "Keep remarks in journey notes"],
+        "ios.ai.remarksInfo": [.zhHant: "可補充公司、直通區間、車號、票面資訊或查詢重點，協助核對官方資料。", .zhHans: "可补充公司、直通区间、车号、票面信息或查询重点，帮助核对官方资料。", .ja: "会社・直通区間・列車番号・きっぷの情報などを補足できます。", .en: "Add an operator, through-service interval, train number, ticket details or research focus to help check official sources."],
         "ios.ai.subscription": [.zhHant: "ChatGPT 訂閱", .zhHans: "ChatGPT 订阅", .ja: "ChatGPTサブスクリプション", .en: "ChatGPT subscription"],
         "ios.ai.subscriptionInfo": [.zhHant: "使用 Codex 訂閱介面，登入頁會顯示 Codex。這是實驗性整合，模型與額度由帳號決定。點擊補全會將旅程資料與辨識文字傳送至 OpenAI。", .zhHans: "使用 Codex 订阅接口，登录页会显示 Codex。这是实验性集成，模型与额度由账号决定。点击补全会将旅程资料与识别文字发送至 OpenAI。", .ja: "Codexのサブスクリプション接続を使用するため、認証画面にはCodexと表示されます。実験的な連携で、モデルと利用枠はアカウントに依存します。補完すると旅程情報と認識テキストがOpenAIに送信されます。", .en: "Uses the Codex subscription interface, so authorization displays Codex. This integration is experimental; models and limits depend on your account. Completing sends journey details and recognized text to OpenAI."],
         "ios.ai.account": [.zhHant: "帳號", .zhHans: "账号", .ja: "アカウント", .en: "Account"],

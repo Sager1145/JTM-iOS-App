@@ -72,6 +72,18 @@ Create a journey when you want full control over its date, service, stops, and r
 
 The app saves the record locally, resolves its route, and refreshes the map. A route that cannot be solved affects only that journey; the rest of the library remains available.
 
+### Record a through-running train
+
+In the service step, use **Section services** to select a start and end station, then enter that interval's operator, specific line, operating train number and optional service name. Repeat at company or number changes. Consecutive intervals with matching details appear as one leg in the journey details; unknown interval numbers remain unfilled. Journey notes can retain ticket details and other remarks.
+
+### Query and complete with ChatGPT
+
+The train-pattern picker offers **Ask ChatGPT about a train**. Enter a train name, number or route and its operating date, then add any research remarks. A published timetable's details also offer a ChatGPT comparison against its registered sources. Query answers include source links and remain separate from the journey draft.
+
+Use **AI completion** in the editor to fill missing service details, scheduled calls, platforms and per-interval operators, lines and numbers. You can sign in with your own ChatGPT account, select an account-provided model, or share the research prompt with ChatGPT and paste its JSON response. Add extra remarks to identify a ticket, through-service boundary or timetable question; optionally keep those remarks in the journey notes.
+
+Review the suggested additions and their sources, choose **Apply to draft**, then save the journey. Existing non-empty facts are preserved. Date-specific evidence is required for historical schedules, and unverified facts stay unknown. Direct account access uses the existing experimental Codex subscription integration: authorization displays Codex, availability depends on the account, and requests send the displayed journey context and remarks to OpenAI.
+
 ### Edit an existing journey
 
 Open a journey from **Upcoming**, **All**, or **Search**, then choose **Edit**. Saving replaces the complete journey record and refreshes its route, playback, and statistics.

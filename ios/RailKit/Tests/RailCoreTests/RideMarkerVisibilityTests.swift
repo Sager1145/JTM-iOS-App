@@ -2,6 +2,31 @@ import RailCore
 import Testing
 
 struct RideMarkerVisibilityTests {
+    @Test("selected pass-through dots and names wait for the density floor", arguments: [8, 10, 14])
+    func selectedPassVisibility(density: Int) throws {
+        let floor = try #require(RideMarkerVisibility.minimumMapLibreZoom(
+            role: "pass", trainType: "特急", country: "jp", densityMinZoom: density))
+        #expect(!RideMarkerVisibility.isVisible(
+            role: "pass", isSelected: true, mapLibreZoom: floor - 0.01, minimumMapLibreZoom: floor))
+        #expect(RideMarkerVisibility.isVisible(
+            role: "pass", isSelected: true, mapLibreZoom: floor, minimumMapLibreZoom: floor))
+        #expect(RideMarkerVisibility.isVisible(
+            role: "pass", isSelected: true, mapLibreZoom: floor + 1, minimumMapLibreZoom: floor))
+    }
+
+    @Test("selected calls remain visible while ordinary calls keep their zoom floor")
+    func selectedCallVisibility() {
+        for role in ["stop", "stop-center", "terminal", "xday"] {
+            let floor = RideMarkerVisibility.minimumMapLibreZoom(
+                role: role, trainType: "普通", country: "jp", densityMinZoom: 12)
+            #expect(RideMarkerVisibility.isVisible(
+                role: role, isSelected: true, mapLibreZoom: 3, minimumMapLibreZoom: floor))
+            #expect(RideMarkerVisibility.isVisible(
+                role: role, isSelected: false, mapLibreZoom: 3, minimumMapLibreZoom: floor)
+                == (floor == nil))
+        }
+    }
+
     @Test("every service type uses the ordinary-train timing")
     func serviceTimingIsUniform() throws {
         let types = ["新幹線", "新干线", "KTX", "特急", "Limited Express", "快速", "普通"]

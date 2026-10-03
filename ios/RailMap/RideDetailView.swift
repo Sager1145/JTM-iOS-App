@@ -2,6 +2,25 @@ import RailCore
 import RailPresentation
 import SwiftUI
 
+private struct DetailActionSizing: ViewModifier {
+    var prominent = false
+    var visualHeight: CGFloat?
+
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        if let visualHeight {
+            content
+                .buttonStyle(RailCapsuleButtonStyle(
+                    prominent: prominent, visualHeight: visualHeight))
+                .railMinimumTouchTarget()
+        } else if prominent {
+            content.buttonStyle(.borderedProminent).frame(minHeight: 44)
+        } else {
+            content.frame(minHeight: 44)
+        }
+    }
+}
+
 /// Resolves the sheet's record from its owner on every update. The presentation
 /// identity stays stable even when the editor changes the record's identifier.
 struct WorkspaceRideDetailView: View {
@@ -63,6 +82,7 @@ struct RideDetailView: View {
 
     @Environment(AppLocalization.self) private var localization
     @State private var showsEditor = false
+    @State private var showsShare = false
 
     var body: some View {
         RideDetailContent(
@@ -88,6 +108,12 @@ struct RideDetailView: View {
             .navigationTitle(train.number)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(localization.journeyShareText("title"), systemImage: "square.and.arrow.up") {
+                        showsShare = true
+                    }
+                    .accessibilityIdentifier("journeyShareButton")
+                }
                 if onSave != nil {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button(localization.text("ios.edit", fallback: "Edit"), systemImage: "pencil") {
@@ -96,6 +122,9 @@ struct RideDetailView: View {
                         .accessibilityIdentifier("rideDetailEdit")
                     }
                 }
+            }
+            .sheet(isPresented: $showsShare) {
+                JourneyShareView(train: train)
             }
             .sheet(isPresented: $showsEditor) {
                 RideEditorView(
@@ -184,38 +213,78 @@ struct RideDetailContent: View {
     /// it — this is where they do. Absent on a read-only surface, where the
     /// state is still reported and simply cannot be changed.
     var onSetRidden: ((Bool) -> Void)?
+    var actionButtonHeight: CGFloat? = nil
 
     @Environment(AppLocalization.self) private var localization
     /// The loaded packages, for the passenger spelling of a detected line —
     /// see ``RouteLogoSquare``, which declares this the same way.
     @Environment(RailNetworkStore.self) private var network: RailNetworkStore?
+    @Environment(\.colorScheme) private var colorScheme
     @State private var rebuild: RebuildPhase = .idle
+    @State private var prepared: JourneyDetailSnapshot?
+    @State private var detailRegion: Region = .jp
 
     private enum RebuildPhase: Equatable {
         case idle
         case done(sections: Int)
     }
 
-    @ViewBuilder
-    var body: some View {
-        if scrolls {
-            ScrollView { cards }
-                .accessibilityIdentifier("rideDetailScrollView")
-        } else {
-            cards
+    private struct DetailRequest: Equatable {
+        let train: Train
+
+        static func == (lhs: Self, rhs: Self) -> Bool {
+            // Retained COW buffers distinguish exact record edits, including
+            // Unicode spelling changes that Swift String equality folds.
+            lhs.train == rhs.train
+                && ArrayGeneration.same(lhs.train.stops, rhs.train.stops)
+                && ArrayGeneration.same(lhs.train.routeSections ?? [], rhs.train.routeSections ?? [])
         }
     }
 
-    private var cards: some View {
+    var body: some View {
+        Group {
+            if let prepared, DetailRequest(train: prepared.train) == DetailRequest(train: train) {
+                if scrolls {
+                    ScrollView { cards(prepared) }
+                        .accessibilityIdentifier("rideDetailScrollView")
+                } else {
+                    cards(prepared)
+                }
+            } else {
+                ProgressView(localization.journeyText("ios.journey.loadingTitle"))
+                    .frame(maxWidth: .infinity)
+                    .padding()
+            }
+        }
+        .task(id: DetailRequest(train: train)) {
+            let train = train
+            let worker = Task.detached(priority: .userInitiated) {
+                try Task.checkCancellation()
+                let result = JourneyDetailSnapshot(train: train)
+                try Task.checkCancellation()
+                return (result, Region.resolved(train))
+            }
+            do {
+                let result = try await withTaskCancellationHandler {
+                    try await worker.value
+                } onCancel: { worker.cancel() }
+                try Task.checkCancellation()
+                prepared = result.0
+                detailRegion = result.1
+            } catch { }
+        }
+    }
+
+    private func cards(_ detail: JourneyDetailSnapshot) -> some View {
         LazyVStack(spacing: 16) {
             if includesIdentity { identityCard }
             if includesStationPair { stationPairCard }
-            timelineCard
+            timelineCard(detail)
             if confirmation == .notRidden { notRiddenCard }
             if train.visible == false { hiddenCard }
             routeStateCard
             serviceCard
-            advancedCard
+            advancedCard(detail)
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
@@ -367,13 +436,20 @@ struct RideDetailContent: View {
 
     // MARK: - 3. Stop timeline (§7.4)
 
-    private var timelineCard: some View {
-        VStack(alignment: .leading, spacing: 0) {
+    private func timelineCard(_ detail: JourneyDetailSnapshot) -> some View {
+        let sections = detail.sections
+        // Deferring the card alone still lays out every stop when it appears.
+        return LazyVStack(alignment: .leading, spacing: 0) {
             Text(localization.countryText("sec.stops", fallback: "Stops"))
                 .font(.headline)
                 .padding(.bottom, 12)
             ForEach(Array(train.stops.enumerated()), id: \.offset) { index, stop in
-                timelineRow(stop, index: index)
+                let section = sections.indices.contains(index) ? sections[index] : nil
+                let previous = sections.indices.contains(index - 1) ? sections[index - 1] : nil
+                timelineRow(stop, index: index, detail: detail, section: section ?? previous,
+                            showsLineNames: section != nil && (index == 0
+                                || section?.lineNames != previous?.lineNames
+                                || section?.operatorNames != previous?.operatorNames))
             }
             localTimeNote
         }
@@ -384,6 +460,7 @@ struct RideDetailContent: View {
                 cornerRadius: RailStyle.cardCornerRadius,
                 style: .continuous))
         .accessibilityLabel(localization.countryText("table.stopsLabel", fallback: "Stops table"))
+        .accessibilityIdentifier("rideDetailStops")
     }
 
     /// Which clock the times above are on — said once, under the list.
@@ -445,37 +522,63 @@ struct RideDetailContent: View {
             ])
     }
 
-    private func timelineRow(_ stop: Stop, index: Int) -> some View {
-        HStack(alignment: .top, spacing: 12) {
+    private func timelineRow(_ stop: Stop, index: Int, detail: JourneyDetailSnapshot, section: RouteSection?,
+                             showsLineNames: Bool) -> some View {
+        let lines = timelineLines(for: section)
+        let markerColor = lines.first?.color ?? JourneyBranding.color(of: train)
+        return HStack(alignment: .top, spacing: 12) {
             VStack(spacing: 0) {
-                Image(systemName: symbol(for: stop))
-                    .font(.caption)
-                    .foregroundStyle(
-                        stop.rideSegment
-                            ? AnyShapeStyle(Color.accentColor)
-                            : AnyShapeStyle(.tertiary)
-                    )
+                Circle()
+                    .fill(stop.stopType == "pass_through" ? Color.clear : markerColor)
+                    .overlay {
+                        Circle().stroke(stop.stopType == "pass_through" ? markerColor : .white,
+                                        lineWidth: 1)
+                    }
+                    .frame(width: stop.stopType == "pass_through" ? 9 : 12,
+                           height: stop.stopType == "pass_through" ? 9 : 12)
+                    .opacity(stop.rideSegment ? 1 : 0.4)
                     .frame(width: 18, height: 18)
                     .accessibilityHidden(true)
                 if index < train.stops.count - 1 {
-                    Rectangle()
-                        .fill(stop.rideSegment ? Color.accentColor.opacity(0.45) : Color.secondary.opacity(0.2))
-                        .frame(width: 2)
-                        .frame(minHeight: 26)
+                    HStack(spacing: 2) {
+                        if lines.isEmpty {
+                            Rectangle().fill(markerColor)
+                        } else {
+                            ForEach(Array(lines.enumerated()), id: \.offset) { _, line in
+                                Rectangle().fill(line.color)
+                            }
+                        }
+                    }
+                        .frame(width: CGFloat(max(lines.count, 1) * 3 + max(lines.count - 1, 0) * 2))
+                        .opacity(stop.rideSegment ? 1 : 0.2)
+                        .frame(minHeight: showsLineNames && !lines.isEmpty ? 44 : 26)
                         .accessibilityHidden(true)
                 }
             }
             VStack(alignment: .leading, spacing: 3) {
-                Text(localization.stationName(stop.name, in: train, code: stop.n02StationCode))
-                    .font(.body.weight(stop.stopType == "pass_through" ? .regular : .semibold))
-                    .foregroundStyle(stop.rideSegment ? .primary : .secondary)
-                    // §14.5: a long station name wraps rather than truncating.
-                    .fixedSize(horizontal: false, vertical: true)
-                // §7.4: the type is text, never only a symbol…
-                if stop.stopType != "passenger_stop" {
-                    Text(stopTypeName(stop.stopType))
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                HStack(alignment: .firstTextBaseline, spacing: 6) {
+                    Text(localization.stationName(
+                        stop.name, code: detail.stationCode(named: stop.name, recorded: stop.n02StationCode),
+                        region: detailRegion))
+                        .font(.body.weight(stop.stopType == "pass_through" ? .regular : .semibold))
+                        .foregroundStyle(stop.rideSegment ? .primary : .secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                    if stop.stopType != "passenger_stop" && stop.stopType != "pass_through" {
+                        Text(stopTypeName(stop.stopType))
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .fixedSize()
+                    }
+                }
+                if showsLineNames {
+                    ForEach(Array(lines.enumerated()), id: \.offset) { _, line in
+                        HStack(spacing: 6) {
+                            Rectangle().fill(line.color).frame(width: 18, height: 3)
+                                .accessibilityHidden(true)
+                            Text(line.name).font(.caption).foregroundStyle(.secondary)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                    }
                 }
                 // …and `ride_segment == false` is spelled out rather than
                 // being carried by opacity alone.
@@ -490,7 +593,37 @@ struct RideDetailContent: View {
         }
         .frame(minHeight: 44, alignment: .top)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel(accessibilityLabel(for: stop))
+        .accessibilityLabel(([accessibilityLabel(for: stop)]
+            + (showsLineNames ? lines.map(\.name) : [])).joined(separator: ", "))
+        .accessibilityIdentifier("rideDetailStop-\(index)")
+    }
+
+    /// Each connecting straight line follows the recorded section's railway
+    /// palette, so a through service changes colour at its changeover station.
+    private func timelineLines(for section: RouteSection?) -> [(name: String, color: Color)] {
+        guard let section else { return [] }
+        let recordedNames = section.lineNames ?? []
+        let names = recordedNames.isEmpty
+            ? (section.lineIDs ?? []).compactMap { network?.badges.lineName(lineID: $0) }
+            : recordedNames
+        let region = detailRegion.code
+        return names.map { name in
+            // Names and IDs are independently normalized in the record;
+            // resolve complete identities rather than pairing array offsets.
+            let colorHex = (section.operatorNames ?? []).lazy.compactMap {
+                    network?.badges.color(region: region, operatorName: $0,
+                                          lineName: name, dark: colorScheme == .dark)
+                }.first
+                ?? (section.lineIDs ?? []).lazy.compactMap { lineID -> String? in
+                    guard network?.badges.lineName(lineID: lineID) == name else { return nil }
+                    return network?.badges.color(lineID: lineID, dark: colorScheme == .dark)
+                }.first
+                ?? network?.badges.color(region: region, operatorName: nil,
+                                         lineName: name, dark: colorScheme == .dark)
+            let displayName = network?.badges.passengerName(
+                region: region, operatorName: section.operatorNames?.first, lineName: name) ?? name
+            return (displayName, colorHex.flatMap { Color(hex: $0) } ?? JourneyBranding.color(of: train))
+        }
     }
 
     /// Arrival above departure, always in that order, trailing-aligned and
@@ -498,8 +631,18 @@ struct RideDetailContent: View {
     /// so the column does not reshuffle from row to row.
     private func timeColumn(_ stop: Stop) -> some View {
         VStack(alignment: .trailing, spacing: 2) {
-            timeRow(stop.arrival, emphasised: true)
-            timeRow(stop.departure, emphasised: false)
+            if stop.stopType == "pass_through",
+               stop.arrival?.isEmpty != false, stop.departure?.isEmpty != false {
+                Text("レ")
+                    .font(.subheadline.monospaced())
+                    .foregroundStyle(.secondary)
+                    .frame(width: 52)
+            } else {
+                timeRow(stop.arrival,
+                        title: localization.countryText("tag.arr", fallback: "Arr"), emphasised: true)
+                timeRow(stop.departure,
+                        title: localization.countryText("tag.dep", fallback: "Dep"), emphasised: false)
+            }
             actualTimeRow(localization.editorText("ios.editor.actualArrival"),
                           scheduled: stop.arrival, actual: stop.actualArrival)
             actualTimeRow(localization.editorText("ios.editor.actualDeparture"),
@@ -508,6 +651,7 @@ struct RideDetailContent: View {
                 platformBadge(platform)
             }
         }
+        .frame(minWidth: 52, alignment: .trailing)
         .accessibilityHidden(true)
     }
 
@@ -528,9 +672,10 @@ struct RideDetailContent: View {
     }
 
     @ViewBuilder
-    private func timeRow(_ time: String?, emphasised: Bool) -> some View {
+    private func timeRow(_ time: String?, title: String, emphasised: Bool) -> some View {
         if let time, !time.isEmpty {
             HStack(spacing: 4) {
+                Text(title).font(.caption2).foregroundStyle(.secondary)
                 Text(time)
                     .font(emphasised ? .subheadline : .caption)
                     .monospacedDigit()
@@ -603,8 +748,7 @@ struct RideDetailContent: View {
                 .fixedSize(horizontal: false, vertical: true)
             if let onSetRidden {
                 Button(localization.editorText("ios.detail.confirmRidden")) { onSetRidden(true) }
-                    .buttonStyle(.borderedProminent)
-                    .frame(minHeight: 44)
+                    .modifier(DetailActionSizing(prominent: true, visualHeight: actionButtonHeight))
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -632,8 +776,7 @@ struct RideDetailContent: View {
             // §8.5: showing it again is the primary action while hidden.
             if let onSetVisible {
                 Button(localization.editorText("ios.detail.showOnMap")) { onSetVisible(true) }
-                    .buttonStyle(.borderedProminent)
-                    .frame(minHeight: 44)
+                    .modifier(DetailActionSizing(prominent: true, visualHeight: actionButtonHeight))
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -673,6 +816,12 @@ struct RideDetailContent: View {
     private var serviceCard: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text(localization.editorText("ios.detail.service")).font(.headline)
+            if let notes = train.notes, !notes.isEmpty {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(localization.editorText("ios.ai.notes")).font(.subheadline.weight(.semibold))
+                    Text(notes).font(.subheadline).fixedSize(horizontal: false, vertical: true)
+                }
+            }
             if let company = train.company, !company.isEmpty {
                 LabeledContent(
                     localization.countryText("field.company", fallback: "Operator"), value: company)
@@ -708,7 +857,7 @@ struct RideDetailContent: View {
                 ) {
                     onSetRidden(false)
                 }
-                .frame(minHeight: 44)
+                .modifier(DetailActionSizing(visualHeight: actionButtonHeight))
             }
             LabeledContent(
                 localization.text("ios.visibility", fallback: "Visibility"),
@@ -725,7 +874,7 @@ struct RideDetailContent: View {
                     onSetVisible(false)
                 }
                 .accessibilityIdentifier("rideDetailHide")
-                .frame(minHeight: 44)
+                .modifier(DetailActionSizing(visualHeight: actionButtonHeight))
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -739,9 +888,9 @@ struct RideDetailContent: View {
 
     // MARK: - 6. Advanced record details
 
-    private var advancedCard: some View {
+    private func advancedCard(_ detail: JourneyDetailSnapshot) -> some View {
         DisclosureGroup {
-            VStack(alignment: .leading, spacing: 12) {
+            LazyVStack(alignment: .leading, spacing: 12) {
                 LabeledContent(
                     localization.countryText("field.id", fallback: "Identifier"), value: train.id)
                 LabeledContent(
@@ -756,11 +905,12 @@ struct RideDetailContent: View {
                 .font(.subheadline.weight(.semibold))
                 if let sections = train.routeSections, !sections.isEmpty {
                     ForEach(Array(sections.enumerated()), id: \.offset) { index, section in
-                        Text(sectionLabel(section, index: index))
+                        Text(sectionLabel(section, index: index, detail: detail))
                             .font(.caption)
                             .monospacedDigit()
                             .foregroundStyle(.secondary)
                             .fixedSize(horizontal: false, vertical: true)
+                            .accessibilityIdentifier("rideDetailSection-\(index)")
                     }
                 } else {
                     Text(localization.editorText("ios.detail.noRouteSections"))
@@ -773,6 +923,7 @@ struct RideDetailContent: View {
         } label: {
             Text(localization.editorText("ios.detail.advanced")).font(.headline)
         }
+        .accessibilityIdentifier("rideDetailAdvancedToggle")
         .padding(16)
         .background(
             surface,
@@ -792,13 +943,15 @@ struct RideDetailContent: View {
         }
     }
 
-    private func sectionLabel(_ section: RouteSection, index: Int) -> String {
+    private func sectionLabel(_ section: RouteSection, index: Int, detail: JourneyDetailSnapshot) -> String {
         localization.editorText(
             "ios.route.affectedSection",
             [
                 "index": .number(Double(index + 1)),
-                "from": .string(endpointName(section.from, code: section.fromN02StationCode, stopIndex: index)),
-                "to": .string(endpointName(section.to, code: section.toN02StationCode, stopIndex: index + 1)),
+                "from": .string(endpointName(section.from, code: section.fromN02StationCode,
+                                            stopIndex: index, detail: detail)),
+                "to": .string(endpointName(section.to, code: section.toN02StationCode,
+                                          stopIndex: index + 1, detail: detail)),
             ])
     }
 
@@ -810,16 +963,20 @@ struct RideDetailContent: View {
     /// section per adjacent stop pair — `rideRouteSections` builds it that way
     /// — so section *i* is the stretch from `stops[i]` to `stops[i+1]`, and
     /// the stop the reader typed is a better name than a six-digit code.
-    private func endpointName(_ name: String?, code: String?, stopIndex: Int) -> String {
+    private func endpointName(_ name: String?, code: String?, stopIndex: Int,
+                              detail: JourneyDetailSnapshot) -> String {
         let stop = train.stops.indices.contains(stopIndex) ? train.stops[stopIndex] : nil
         // Whichever spelling is used, it is named through the readings table
         // with the best code available — the section's own, else the stop's.
         if let name, !name.isEmpty {
-            return localization.stationName(
-                name, in: train, code: code ?? stop?.n02StationCode)
+            return localization.stationName(name,
+                code: detail.stationCode(named: name, recorded: code ?? stop?.n02StationCode),
+                region: detailRegion)
         }
         if let stop, !stop.name.isEmpty {
-            return localization.stationName(stop.name, in: train, code: stop.n02StationCode)
+            return localization.stationName(stop.name,
+                code: detail.stationCode(named: stop.name, recorded: stop.n02StationCode),
+                region: detailRegion)
         }
         if let code, !code.isEmpty { return code }
         return localization.editorText("ios.route.unnamedStation")
@@ -827,9 +984,8 @@ struct RideDetailContent: View {
 
     // MARK: - Values
 
-    private var riddenStops: [Stop] { train.stops.filter(\.rideSegment) }
-    private var firstRiddenStop: Stop? { riddenStops.first ?? train.stops.first }
-    private var lastRiddenStop: Stop? { riddenStops.last ?? train.stops.last }
+    private var firstRiddenStop: Stop? { train.stops.first(where: \.rideSegment) ?? train.stops.first }
+    private var lastRiddenStop: Stop? { train.stops.last(where: \.rideSegment) ?? train.stops.last }
 
     private var crossesMidnight: Bool {
         Dates.hasCrossDayTimes(train.forDates)
@@ -838,14 +994,6 @@ struct RideDetailContent: View {
     private func nextDayVoiceOver(_ time: String) -> String? {
         Dates.isCrossDayTimeString(time)
             ? localization.editorText("ios.detail.nextDay") : nil
-    }
-
-    private func symbol(for stop: Stop) -> String {
-        switch stop.stopType {
-        case "pass_through": "circle.dotted"
-        case "origin", "destination": "circle.fill"
-        default: "circle"
-        }
     }
 
     private func stopTypeName(_ type: String) -> String {

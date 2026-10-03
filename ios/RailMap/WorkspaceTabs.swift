@@ -24,10 +24,10 @@ struct WorkspaceTabs: View {
             Tab(title(.all), systemImage: PrimaryTab.all.systemImage,
                 value: PrimaryTab.all) { page(.all) }
             Tab(title(.search), systemImage: PrimaryTab.search.systemImage,
-                value: PrimaryTab.search) { page(.search) }
+                value: PrimaryTab.search, role: .search) { page(.search) }
         }
-        // Search stays a named destination with its own field. A search-role
-        // tab changes shape across OS versions and conflicts with the fixed bar.
+        // The system search role reproduces the reference's trailing circle.
+        // Its exact bar height and margins belong to the running iOS version.
         .tabViewStyle(.tabBarOnly)
         .railPersistentTabBar()
         .modifier(SystemSheetTabSurface())

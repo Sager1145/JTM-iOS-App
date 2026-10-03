@@ -167,6 +167,7 @@ public struct Localization: Sendable {
     /// and the shipped table stores missing translations as `""`.
     public struct StationReadingRow: Sendable, Equatable {
         public var kana: String?
+        public var katakana: String?
         public var romaji: String?
         public var zhHant: String?
         public var zhHans: String?
@@ -175,14 +176,32 @@ public struct Localization: Sendable {
         public init(
             kana: String? = nil, romaji: String? = nil,
             zhHant: String? = nil, zhHans: String? = nil,
-            ja: String? = nil, en: String? = nil
+            ja: String? = nil, en: String? = nil, katakana: String? = nil
         ) {
             self.kana = kana
+            self.katakana = katakana
             self.romaji = romaji
             self.zhHant = zhHant
             self.zhHans = zhHans
             self.ja = ja
             self.en = en
+        }
+    }
+
+    /// Complete, labelled names for a station detail card. These do not follow
+    /// the map's reading switches or suppress a translation equal to the title.
+    public enum StationNameKind: String, CaseIterable, Sendable, Hashable {
+        case ja, en, zhHant, zhHans, kana, katakana, romaji
+    }
+
+    public struct StationNameField: Identifiable, Sendable, Equatable {
+        public let kind: StationNameKind
+        public let text: String
+        public var id: StationNameKind { kind }
+
+        public init(kind: StationNameKind, text: String) {
+            self.kind = kind
+            self.text = text
         }
     }
 
@@ -543,14 +562,29 @@ public struct Localization: Sendable {
         nameReadingsTyped(name, code: code).map(\.text)
     }
 
+    public func stationNameFields(
+        _ name: String?, code: String? = nil, alternateCode: String? = nil
+    ) -> [StationNameField] {
+        guard let name, !name.isEmpty,
+            let row = stationReadingRow(code: code, name: nil)
+                ?? stationReadingRow(code: alternateCode, name: name)
+        else { return [] }
+        let fields: [(StationNameKind, String?)] = [
+            (.ja, row.ja), (.en, row.en), (.zhHant, row.zhHant),
+            (.zhHans, row.zhHans), (.kana, row.kana),
+            (.katakana, row.katakana), (.romaji, row.romaji),
+        ]
+        return fields.compactMap { kind, value in
+            guard let text = nonEmpty(value) else { return nil }
+            return StationNameField(kind: kind, text: text)
+        }
+    }
+
     /// Every name the readings table holds for a station, whatever the reader
     /// has the app set to.
     ///
-    /// This is not a display function and has no JavaScript counterpart: the
-    /// web app only ever needs the names for the ACTIVE language, and
-    /// `nameReadingsTyped` answers that — filtered by the three reading
-    /// toggles, and empty for the four countries whose table localises the name
-    /// itself.
+    /// Matching aliases are unlabelled. Detail cards use `stationNameFields`
+    /// to keep the language or script associated with each spelling.
     ///
     /// What needs all of them is matching a station against a service that
     /// answers in its own language rather than the app's. Apple Maps returns

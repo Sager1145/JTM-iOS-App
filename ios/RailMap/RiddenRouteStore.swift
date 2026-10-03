@@ -9,10 +9,22 @@ import RailPresentation
 /// Precomputed ridden geometry shipped by the main fork's progressive sample
 /// datasets. Each part contains one canonical train plus the exact route
 /// features produced by the web solver; the native map consumes those
-/// coordinates directly and never invents a straight-line fallback.
+/// source coordinates for statistics and slices the complete railway for display.
 @MainActor
 @Observable
 final class RiddenRouteStore {
+    /// Native selection semantics, separate from the attested JS solver's
+    /// version. Shared reference datasets are never relabeled with this value.
+    private nonisolated static let resolutionSemantics = "station-interval-v1"
+    struct PhysicalRouteSelection: Codable, Equatable, Sendable {
+        enum Provenance: String, Codable, Sendable { case explicit, stationSequence, matchedGeometry }
+        let fromStationCode: String
+        let toStationCode: String
+        let intervals: [StationIntervalResolver.DirectedInterval]
+        let lines: [ResolvedRailLine]
+        let provenance: Provenance
+    }
+
     struct DrawnSegment: Sendable {
         let segmentIndex: Int
         /// Which part of a MultiLineString this stroke came from — 0 for a
@@ -44,6 +56,9 @@ final class RiddenRouteStore {
         let validFrom: String?
         let validTo: String?
         let temporalKind: RouteGraph.TemporalKind
+        /// The physical choice that produced both source and display geometry.
+        /// Every part carries it; consumers count it once per section.
+        let physicalRoute: PhysicalRouteSelection?
 
         /// - Parameter sourceCoordinates: the N02-datum path, when it is not
         ///   the same array as what gets drawn. A hop re-drawn against the
@@ -67,7 +82,8 @@ final class RiddenRouteStore {
             historyIDs: [String] = [],
             validFrom: String? = nil,
             validTo: String? = nil,
-            temporalKind: RouteGraph.TemporalKind = .current
+            temporalKind: RouteGraph.TemporalKind = .current,
+            physicalRoute: PhysicalRouteSelection? = nil
         ) {
             self.segmentIndex = segmentIndex
             self.partIndex = partIndex
@@ -80,6 +96,7 @@ final class RiddenRouteStore {
             self.validFrom = validFrom
             self.validTo = validTo
             self.temporalKind = temporalKind
+            self.physicalRoute = physicalRoute
             var bounds = MKMapRect.null
             for coordinate in self.coordinates {
                 let point = MKMapPoint(CLLocationCoordinate2D(latitude: coordinate.lat, longitude: coordinate.lon))
@@ -163,10 +180,14 @@ final class RiddenRouteStore {
     private(set) var visibleRides: [DrawnRide] = []
     private var loadTask: Task<Void, Never>?
     private var loadRevision = 0
+    /// Same records arriving again must join the current batch, not restart it.
+    private var loadingInputs: [String: Train]?
+    private var requestedOrder: [String] = []
     /// Full records remain the invalidation boundary. Reuse happens per
     /// journey, so a same-ID edit cannot leave stale route geometry behind.
     private var completedInputs: [String: Train] = [:]
     private var resolutionTickets: [String: UUID] = [:]
+    private var resolutionTasks: [String: Task<Void, Never>] = [:]
 
     /// Solve and draw every ride, whatever region each belongs to.
     ///
@@ -176,12 +197,29 @@ final class RiddenRouteStore {
     /// file, the station table, the package, the route cache — are loaded once
     /// per region that actually has rides rather than once per app.
     func load(trains: [Train], preferredTrainID: String? = nil) {
-        loadTask?.cancel()
-        loadRevision += 1
-        let revision = loadRevision
-        RideStatusCenter.shared.routeStore = self
         let wanted = Dictionary(trains.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
         let wantedIDs = trains.map(\.id)
+        requestedOrder = wantedIDs
+        // View remounts and an order-only change share the batch already running.
+        // Neither network rendering arrivals nor partial route publications are
+        // solver inputs. Resource revisions are immutable for this app launch.
+        if loadingInputs == wanted {
+            rides = ordered(rides)
+            visibleRides = rides.filter(\.visible)
+            return
+        }
+        if completedInputs == wanted, case .loaded = state {
+            rides = ordered(rides)
+            visibleRides = rides.filter(\.visible)
+            state = .loaded(rides: rides)
+            return
+        }
+        loadTask?.cancel()
+        cancelResolutions()
+        loadRevision += 1
+        let revision = loadRevision
+        loadingInputs = wanted
+        RideStatusCenter.shared.routeStore = self
         let unchanged = Set(wanted.compactMap { id, train in
             completedInputs[id] == train ? id : nil
         })
@@ -189,14 +227,12 @@ final class RiddenRouteStore {
         let pending = wanted.filter { !unchanged.contains($0.key) }
         completedInputs = completedInputs.filter { unchanged.contains($0.key) }
 
-        @Sendable func ordered(_ values: [DrawnRide]) -> [DrawnRide] {
-            let byID = Dictionary(values.map { ($0.id, $0) },
-                uniquingKeysWith: { _, last in last })
-            return wantedIDs.compactMap { byID[$0] }
-        }
         rides = ordered(retained)
         visibleRides = rides.filter(\.visible)
+        TraversedLineDetector.shared.publishSelected(rides: rides)
         if pending.isEmpty {
+            loadingInputs = nil
+            loadTask = nil
             state = .loaded(rides: rides)
             RideStatusCenter.shared.publish(
                 entries: Self.statusEntries(for: rides, wanted: wantedIDs), phase: .loaded)
@@ -217,15 +253,17 @@ final class RiddenRouteStore {
                     completedInputs[primed.id] = wanted[primed.id]
                     RideStatusCenter.shared.publish(
                         entries: Self.statusEntries(for: rides, wanted: []), phase: .loading)
+                    TraversedLineDetector.shared.publishSelected(rides: rides)
                 }
                 let decoded = try await Self.decode(wanted: pending, primed: primed) { partial in
                     await MainActor.run {
                         guard !Task.isCancelled, self.loadRevision == revision else { return }
-                        self.rides = ordered(retained + partial)
+                        self.rides = self.ordered(retained + partial)
                         self.visibleRides = self.rides.filter(\.visible)
                         for ride in partial { self.completedInputs[ride.id] = wanted[ride.id] }
                         RideStatusCenter.shared.publish(
                             entries: Self.statusEntries(for: self.rides, wanted: []), phase: .loading)
+                        TraversedLineDetector.shared.publishSelected(rides: self.rides)
                     }
                 }
                 try Task.checkCancellation()
@@ -233,15 +271,20 @@ final class RiddenRouteStore {
                 rides = ordered(retained + decoded)
                 visibleRides = rides.filter(\.visible)
                 completedInputs = wanted
+                loadingInputs = nil
+                loadTask = nil
                 state = .loaded(rides: rides)
                 RideStatusCenter.shared.publish(
                     entries: Self.statusEntries(for: rides, wanted: wantedIDs), phase: .loaded)
                 detectTraversedLines()
                 Self.sweepRouteCacheOnce()
             } catch is CancellationError {
+                if loadRevision == revision { loadingInputs = nil; loadTask = nil }
                 return
             } catch {
                 guard loadRevision == revision else { return }
+                loadingInputs = nil
+                loadTask = nil
                 state = .failed(error.localizedDescription)
                 RideStatusCenter.shared.publish(
                     entries: Self.statusEntries(for: rides, wanted: []),
@@ -250,9 +293,14 @@ final class RiddenRouteStore {
         }
     }
 
+    private func ordered(_ values: [DrawnRide]) -> [DrawnRide] {
+        let byID = Dictionary(values.map { ($0.id, $0) }, uniquingKeysWith: { _, last in last })
+        return requestedOrder.compactMap { byID[$0] }
+    }
+
     /// Read the last-viewed route only. A miss deliberately does not solve:
     /// the complete decoder below owns expensive work and its cancellation.
-    private nonisolated static func loadPreferred(
+    @concurrent private nonisolated static func loadPreferred(
         id: String?, wanted: [String: Train]
     ) async -> DrawnRide? {
         guard let id, let train = wanted[id] else { return nil }
@@ -260,9 +308,12 @@ final class RiddenRouteStore {
     }
 
     func clear() {
+        loadingInputs = nil
+        requestedOrder = []
         loadRevision += 1
         completedInputs = [:]
         resolutionTickets = [:]
+        cancelResolutions()
         loadTask?.cancel()
         rides = []
         visibleRides = []
@@ -306,23 +357,30 @@ final class RiddenRouteStore {
         let id = train.id
         let revision = loadRevision
         let ticket = UUID()
+        resolutionTasks[id]?.cancel()
         resolutionTickets[id] = ticket
         RideStatusCenter.shared.beginResolving(id)
-        Task {
-            let resolved = await Task.detached(priority: .userInitiated) { () -> SingleResolve in
-                do {
-                    return .ride(try await Self.resolveOne(train, scope: scope))
-                } catch let error as LoadError {
-                    if case .invalidHistory = error {
-                        return .invalidHistory(error.localizedDescription)
-                    }
-                    return .failed
-                } catch {
-                    return .failed
+        resolutionTasks[id] = Task(priority: .userInitiated) {
+            let resolved: SingleResolve
+            do {
+                let ride = try await Self.resolveOne(train, scope: scope)
+                try Task.checkCancellation()
+                resolved = .ride(ride)
+            } catch is CancellationError {
+                return
+            } catch let error as LoadError {
+                if case .invalidHistory = error {
+                    resolved = .invalidHistory(error.localizedDescription)
+                } else {
+                    resolved = .failed
                 }
-            }.value
+            } catch {
+                resolved = .failed
+            }
 
-            guard loadRevision == revision, resolutionTickets[id] == ticket else { return }
+            guard !Task.isCancelled, loadRevision == revision,
+                  resolutionTickets[id] == ticket else { return }
+            resolutionTasks[id] = nil
             resolutionTickets[id] = nil
             completedInputs[id] = train
             let entry: RideStatusCenter.Entry
@@ -356,13 +414,22 @@ final class RiddenRouteStore {
         }
     }
 
+    /// A record edit also triggers AppShell's load. That load owns the new
+    /// working set; superseded single-route work must stop consuming CPU.
+    private func cancelResolutions() {
+        for task in resolutionTasks.values { task.cancel() }
+        resolutionTasks.removeAll()
+        resolutionTickets.removeAll()
+    }
+
     /// One journey through the same cache-then-solve path a full load uses.
     ///
     /// `nil` means the journey asked for no sections at all, which the caller
     /// records as `unavailable(expected: 0)` rather than as silence.
-    private nonisolated static func resolveOne(
+    @concurrent private nonisolated static func resolveOne(
         _ train: Train, scope: RouteScope
     ) async throws -> DrawnRide? {
+        try Task.checkCancellation()
         let cached = loadCached([train], country: scope.code)
         if let ride = cached.rides.first { return ride }
         return try await solveMissing(cached.missing, scope: scope).first
@@ -411,7 +478,7 @@ final class RiddenRouteStore {
     /// the map for as long as its country took to read.
     ///
     /// So `publish` is called with everything the cache answered before any
-    /// dataset is opened, and again as each remaining scope finishes. A warm
+    /// dataset is opened, and again as each remaining journey finishes. A warm
     /// load calls it zero times and is byte for byte what it was.
     ///
     /// ## …cheapest scope first, and in a fixed order
@@ -425,7 +492,7 @@ final class RiddenRouteStore {
     /// every time — and this order is the order the rides reach the map, which
     /// is the order the overlays are added in and therefore which line is
     /// drawn over which.
-    private nonisolated static func decode(
+    @concurrent private nonisolated static func decode(
         wanted: [String: Train], primed: DrawnRide? = nil,
         publish: @Sendable ([DrawnRide]) async -> Void = { _ in }
     ) async throws -> [DrawnRide] {
@@ -480,23 +547,41 @@ final class RiddenRouteStore {
 
         // Compact scopes first, for the same reason the launch badge index
         // takes them first: a reader whose uncached journeys are Taiwanese
-        // should not wait on Japan's datasets to see them. Each scope's rides
-        // are published as that scope finishes, so the map fills in country by
-        // country instead of in one step at the end.
+        // should not wait on Japan's datasets to see them. Publish each ride
+        // as it finishes, before asking the solver for the next one.
         for (scope, trains) in unresolved {
             var missing = Dictionary(
                 trains.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
+            // A fresh JS precompute remains a valid legacy fallback, but cannot
+            // decide a different physical route before station inference.
+            // This inexpensive pass never initializes a coordinate graph.
+            let previous = result
+            let rejections = PrecomputedRouteRejections()
+            let inferred = try await solveMissing(
+                trains, scope: scope, allowLegacy: false,
+                rejectPrecomputed: { await rejections.reject($0) }) { partial in
+                    await publish(previous + partial)
+                }
+            for ride in inferred { missing.removeValue(forKey: ride.id) }
+            result += inferred
             for dataset in RideLibrary.routeDatasets(for: scope.home) {
-                if missing.isEmpty { break }
+                let eligible = await rejections.allowed(missing)
+                if eligible.isEmpty { break }
+                let previous = result
                 let found = try await datasetRides(
-                    dataset: dataset, country: scope.code, wanted: missing)
+                    dataset: dataset, country: scope.code, wanted: eligible) { partial in
+                        await publish(previous + partial)
+                    }
                 for ride in found { missing.removeValue(forKey: ride.id) }
                 result += found
             }
             if !missing.isEmpty {
-                result += try await solveMissing(Array(missing.values), scope: scope)
+                let previous = result
+                result += try await solveMissing(
+                    trains.filter { missing[$0.id] != nil }, scope: scope, publish: { partial in
+                        await publish(previous + partial)
+                    })
             }
-            await publish(result)
         }
         return result
     }
@@ -512,13 +597,21 @@ final class RiddenRouteStore {
     /// reading the train id it had just paid for, so one journey missing from
     /// the route cache cost the whole dataset — 201 files and 7 MB for the
     /// Japanese sample — and the next journey cost it again.
-    private nonisolated static func datasetRides(
+    @concurrent private nonisolated static func datasetRides(
         dataset: String,
         country: String,
-        wanted: [String: Train]
+        wanted: [String: Train],
+        publish: @Sendable ([DrawnRide]) async -> Void = { _ in }
     ) async throws -> [DrawnRide] {
         let interval = RailSignpost.data.begin("route.datasetLookup")
         defer { RailSignpost.data.end("route.datasetLookup", interval) }
+        guard let manifestURL = Bundle.main.url(
+            forResource: "manifest", withExtension: "json", subdirectory: dataset),
+              let manifest = try? JSONDecoder().decode(
+                PrecomputedSources.self, from: Data(contentsOf: manifestURL)),
+              resourceRevisions?.acceptsPrecomputed(
+                sourceHashes: manifest.sourceHashes, country: country) == true
+        else { return [] }
         let index = try await DatasetPartIndex.shared.parts(in: dataset)
         // Sorted back into manifest order, because `wanted` is a dictionary
         // and has none of its own, and the order rides come back in is the
@@ -526,6 +619,8 @@ final class RiddenRouteStore {
         let hits = wanted.keys
             .flatMap { index[$0] ?? [] }
             .sorted { $0.position < $1.position }
+        let displayNetwork = try? await DisplayNetworkCache.shared.network(country: country)
+        var projectionCache = RouteProjectionCache()
         var result: [DrawnRide] = []
         result.reserveCapacity(hits.count)
         // A journey whose route spans several bundled parts hits this loop
@@ -548,10 +643,19 @@ final class RiddenRouteStore {
                 subdirectory: dataset
             ) else { throw LoadError.missingPart(dataset, hit.name) }
             let part = try JSONDecoder().decode(Part.self, from: Data(contentsOf: partURL))
-            guard let train = wanted[part.train.id] else { continue }
+            guard resourceRevisions?.acceptsPrecomputed(
+                manifestSourceHashes: manifest.sourceHashes,
+                partSourceHashes: part.sourceHashes, country: country) == true else { continue }
+            guard let train = wanted[part.train.id], !RouteScope(train).crossesBorder else { continue }
             guard let precomputedRoute = part.route,
                   let precomputedFeatures = precomputedRoute.features else { continue }
             let trainCanonical = canonical(for: train)
+            // Physical identities select package survey intervals directly.
+            // A legacy N02 precompute can attest the journey, but cannot
+            // attest which of the closely parallel platform tracks it rode.
+            if trainCanonical.routeSections?.contains(where: { $0.sectionCodes?.isEmpty == false }) == true {
+                continue
+            }
             let trainDigest = routeCacheDigest(trainCanonical, raw: train, country: country)
             guard trainDigest == routeCacheDigest(
                 normalizedTrain(part.train, country: country), raw: part.train, country: country
@@ -573,16 +677,10 @@ final class RiddenRouteStore {
             }
             let indicesAreAuthoritative = matchingFeatures
                 .allSatisfy { $0.properties?.segmentIndex != nil }
-            // The dataset stores the SOLVER's path, and it STAYS the solver's
-            // path. Re-drawing it against the display line — the step the web
-            // app takes in `app-route-features.js` before it paints — was
-            // tried here and reverted: `DrawnSegment.sourceCoordinates` is
-            // what the mileage statistics match against, the display network
-            // is not the same geometry as the N02 edge index they match on
-            // (東京駅's two Shinkansen are drawn on OpenStreetMap track, and a
-            // canonical slice interpolates its own endpoints), and the swap
-            // took the unmatched remainder from 3.3 km to 95.3 km. Drawn
-            // geometry belongs in `coordinates`; this is the other field.
+            // The precompute may contain a graph connector across a curve
+            // (Daimon–Akabanebashi). Slice the same complete display railway
+            // as the live solver, but keep its source path in the separate
+            // field consumed by statistics and exports.
             // `partIndex` is assigned AFTER resolving each stroke's
             // `segmentIndex` and dropping the too-short ones, using the same
             // per-`segmentIndex` output-order counter `readCached` uses — see
@@ -591,26 +689,52 @@ final class RiddenRouteStore {
             // whenever a short part was dropped, a feature carried no
             // authoritative `segment_index` (so the count restarted per
             // feature), or two features shared a `segmentIndex`.
+            let sections = canonicalSections(trainCanonical)
             let usableStrokes = matchingFeatures.flatMap { feature in
                 feature.geometry.strokes.enumerated().compactMap { offset, coordinates
-                    -> (segmentIndex: Int, from: String?, to: String?, coordinates: [Coordinate])? in
+                    -> (segmentIndex: Int, from: String?, to: String?, source: [Coordinate],
+                        hints: RouteHints, temporal: RouteGraph.TemporalKind, properties: Properties?)? in
                     guard coordinates.count >= 2 else { return nil }
+                    let index = feature.properties?.segmentIndex ?? offset
+                    let section = sections.indices.contains(index) ? sections[index] : nil
+                    let properties = feature.properties
                     return (
-                        segmentIndex: feature.properties?.segmentIndex ?? offset,
-                        from: feature.properties?.from,
-                        to: feature.properties?.to,
-                        coordinates: coordinates)
+                        segmentIndex: index, from: properties?.from, to: properties?.to,
+                        source: coordinates,
+                        hints: RouteHints(
+                            requiredLineNames: properties?.requiredLineNames ?? section?.lineNames ?? [],
+                            preferredLineNames: properties?.preferredLineNames ?? [],
+                            requiredOperatorNames: properties?.requiredOperatorNames ?? section?.operatorNames ?? [],
+                            preferredOperatorNames: properties?.preferredOperatorNames ?? [],
+                            requiredLineIDs: properties?.requiredLineIDs ?? section?.lineIDs ?? [],
+                            sectionCodes: properties?.sectionCodes ?? section?.sectionCodes ?? [],
+                            fromStationCode: properties?.fromStationCode ?? section?.fromN02StationCode,
+                            toStationCode: properties?.toStationCode ?? section?.toN02StationCode),
+                        temporal: properties?.temporalKind ?? .current, properties: properties)
                 }
             }
-            let segments = assigningPartIndex(to: usableStrokes, segmentIndex: { $0.segmentIndex })
+            let displayed = usableStrokes.flatMap { entry in
+                let parts = displayNetwork?.precomputedDisplayParts(
+                    source: entry.source, hints: entry.hints, temporalKind: entry.temporal,
+                    cache: &projectionCache)
+                return (parts ?? [.init(coordinates: entry.source, sourceCoordinates: entry.source)])
+                    .map { (entry: entry, part: $0) }
+            }
+            let segments = assigningPartIndex(to: displayed, segmentIndex: { $0.entry.segmentIndex })
                 .map { entry, partIndex -> DrawnSegment in
                     DrawnSegment(
-                        segmentIndex: entry.segmentIndex,
-                        partIndex: partIndex,
-                        from: entry.from,
-                        to: entry.to,
-                        coordinates: entry.coordinates,
-                        country: country)
+                        segmentIndex: entry.entry.segmentIndex, partIndex: partIndex,
+                        from: entry.entry.from, to: entry.entry.to,
+                        coordinates: entry.part.coordinates,
+                        sourceCoordinates: entry.part.sourceCoordinates, country: country,
+                        historyIDs: entry.entry.properties?.historyIDs ?? [],
+                        validFrom: entry.entry.properties?.validFrom,
+                        validTo: entry.entry.properties?.validTo,
+                        temporalKind: entry.entry.temporal,
+                        physicalRoute: displaySelection(
+                            lineIDs: entry.part.displayLineIDs, sectionCodes: entry.part.matchedSectionCodes,
+                            hints: entry.entry.hints, network: displayNetwork,
+                            sourceCoordinates: entry.entry.source))
                 }
             guard !segments.isEmpty else { continue }
             let ride = drawnRide(
@@ -623,8 +747,10 @@ final class RiddenRouteStore {
             // finds this journey without opening a dataset at all. That is
             // what keeps the dataset search a first-load cost rather than a
             // per-load one.
-            if let trainDigest { try? saveCache(ride, digest: trainDigest, country: country) }
+            if let trainDigest { try? saveCache(ride, digest: trainDigest, country: country, resourceScope: Region.scopeKey(Region.regionsTouched(train))) }
             result.append(ride)
+            try Task.checkCancellation()
+            await publish(result)
         }
         return result
     }
@@ -671,6 +797,13 @@ final class RiddenRouteStore {
             geometryHasher.combine(segment.segmentIndex)
             geometryHasher.combine(segment.partIndex)
             geometryHasher.combine(segment.sourceCoordinates)
+            geometryHasher.combine(segment.physicalRoute?.intervals)
+            for line in segment.physicalRoute?.lines ?? [] {
+                geometryHasher.combine(line.lineID)
+                geometryHasher.combine(line.name)
+                geometryHasher.combine(line.operatorName)
+                geometryHasher.combine(line.km)
+            }
         }
         return DrawnRide(
             id: train.id,
@@ -692,10 +825,10 @@ final class RiddenRouteStore {
     private nonisolated static func normalizedTrain(
         _ train: Train, country: String
     ) -> Train {
-        TrainValidation.normalizeExportTrain(
+        TokyoConventionalRouteInference.applying(to: TrainValidation.normalizeExportTrain(
             TrainValidation.restoringRouteSectionEndpointNames(train),
             country: country,
-            stations: TrainValidation.StationTable.empty)
+            stations: TrainValidation.StationTable.empty))
     }
 
     /// The canonical route sections a journey asks for — the same normalisation
@@ -726,10 +859,61 @@ final class RiddenRouteStore {
     /// and (3) the hops are matched on `n02_station_code`, which the North
     /// American build prefixes with the region (`US-…`, `CA-…`) precisely so a
     /// Windsor in Ontario cannot answer for a Windsor in Connecticut.
-    private nonisolated static func solveMissing(
-        _ trains: [Train], scope: RouteScope
+    /// Bulk loads and single-journey rebuilds share the same CPU budget.
+    /// A scope reuses its graph while solving one journey at a time.
+    @concurrent private nonisolated static func solveMissing(
+        _ trains: [Train], scope: RouteScope,
+        allowLegacy: Bool = true,
+        rejectPrecomputed: @Sendable (String) async -> Void = { _ in },
+        publish: @Sendable ([DrawnRide]) async -> Void = { _ in }
     ) async throws -> [DrawnRide] {
-        let country = scope.code
+        try await RouteSolveLimiter.shared.withPermit {
+            try await solveMissingWithPermit(trains, scope: scope, allowLegacy: allowLegacy,
+                                             rejectPrecomputed: rejectPrecomputed, publish: publish)
+        }
+    }
+
+    private struct SolverInputs: Sendable {
+        let sections: [RouteGraph.SectionFeature]
+        let stationCollection: Stations.FeatureCollection
+        let stationIndex: Stations.Index
+        let officialIntervals: RouteSolver.OfficialIntervalIndex
+    }
+
+    /// Immutable source/history inputs are shared by edits and batch loads.
+    /// Mutable graphs stay private to the permitted job and are created only
+    /// when a section cannot be resolved from physical station intervals.
+    private actor SolverInputCache {
+        static let shared = SolverInputCache()
+        private var ready: [String: SolverInputs] = [:]
+        private var order: [String] = []
+        private var running: [String: Task<SolverInputs, Error>] = [:]
+
+        func inputs(scope: RouteScope) async throws -> SolverInputs {
+            let revision = RiddenRouteStore.resourceRevisions?.revision(for: scope.key) ?? "unversioned"
+            let key = scope.key + ":" + revision
+            if let inputs = ready[key] { return inputs }
+            if let task = running[key] { return try await task.value }
+            let task = Task.detached(priority: .userInitiated) {
+                try RiddenRouteStore.prepareSolverInputs(scope: scope)
+            }
+            running[key] = task
+            do {
+                let inputs = try await task.value
+                running[key] = nil
+                ready[key] = inputs
+                order.removeAll { $0 == key }
+                order.append(key)
+                while order.count > 2 { ready.removeValue(forKey: order.removeFirst()) }
+                return inputs
+            } catch {
+                running[key] = nil
+                throw error
+            }
+        }
+    }
+
+    private nonisolated static func prepareSolverInputs(scope: RouteScope) throws -> SolverInputs {
         var sections: [RouteGraph.SectionFeature] = []
         var stationFeatures: [Stations.Feature] = []
         // In the CATALOG's order, not the ride's — see
@@ -739,6 +923,7 @@ final class RiddenRouteStore {
         // a section that names a station without a code. The same track, asked
         // about twice, has to answer the same.
         for region in scope.graphRegions {
+            try Task.checkCancellation()
             guard let sectionsURL = Bundle.main.url(
                 forResource: Region.countrySuffixed("rail-sections", country: region.code),
                 withExtension: "json"),
@@ -760,11 +945,15 @@ final class RiddenRouteStore {
         let stationCollection = Stations.FeatureCollection(features: stationFeatures)
         let stationIndex = Stations.Index(stationCollection)
         let officialIntervals = RouteSolver.OfficialIntervalIndex(sections: sections)
-        // Shared with the dataset path, which needs the same network for the
-        // same reason — see ``DisplayNetworkCache``. `try?` keeps the old
-        // behaviour of a bundle without a package: the ride is drawn on the
-        // solver's own path rather than not drawn at all.
-        let displayNetwork = try? await DisplayNetworkCache.shared.network(scope: scope)
+        return SolverInputs(sections: sections, stationCollection: stationCollection,
+                            stationIndex: stationIndex, officialIntervals: officialIntervals)
+    }
+
+    private nonisolated static func fallbackGraphStore(
+        inputs: SolverInputs, displayNetwork: RouteNetwork?
+    ) -> RouteGraph.RouteGraphStore {
+        let sections = inputs.sections
+        let stationCollection = inputs.stationCollection
         let graphStore = RouteGraph.RouteGraphStore(sections: sections)
         graphStore.augment = { graph, bbox in
             let features: [Stations.Feature]
@@ -778,8 +967,149 @@ final class RiddenRouteStore {
             } else {
                 features = stationCollection.features
             }
-            RouteSolver.addStationTransferConnectorEdges(graph: graph, stations: features)
+            RouteSolver.addStationTransferConnectorEdges(graph: graph, stations: features) { feature, point in
+                displayNetwork?.permitsStationConnectorNode(
+                    stationCode: Stations.stationCode(feature), point: point) ?? true
+            }
         }
+        return graphStore
+    }
+
+    private actor PrecomputedRouteRejections {
+        private var ids: Set<String> = []
+        func reject(_ id: String) { ids.insert(id) }
+        func allowed(_ trains: [String: Train]) -> [String: Train] {
+            trains.filter { !ids.contains($0.key) }
+        }
+    }
+
+    private struct StationSectionInference {
+        var hints: [Int: RouteHints] = [:]
+        var ambiguous: Set<Int> = []
+    }
+
+    /// Resolve the entire compatible station run so later via stations can
+    /// distinguish an earlier branch. Preferences and journey IDs never turn
+    /// multiple physical choices into a unique inferred choice.
+    private nonisolated static func inferStationSections(
+        _ sections: [RouteSection], resolver: StationIntervalResolver?, network: RouteNetwork?,
+        eligibility: StationRouteEligibility?, allowedCodes: [String], hard: Bool
+    ) -> StationSectionInference {
+        var result = StationSectionInference()
+        guard let resolver, let network, let eligibility else { return result }
+        let knownIDs = Set(network.lines.map(\.lineId))
+        var index = 0
+        while index < sections.count {
+            let first = sections[index]
+            guard first.sectionCodes?.isEmpty != false else { index += 1; continue }
+            let ids = first.lineIDs ?? [], names = first.lineNames ?? [], operators = first.operatorNames ?? []
+            var end = index + 1
+            while end < sections.count {
+                let next = sections[end]
+                guard next.sectionCodes?.isEmpty != false,
+                      (next.lineIDs ?? []) == ids, (next.lineNames ?? []) == names,
+                      (next.operatorNames ?? []) == operators,
+                      routeSectionBoundarySharesExplicitStop(sections[end - 1], next) else { break }
+                end += 1
+            }
+            defer { index = end }
+            if !ids.allSatisfy(knownIDs.contains) {
+                result.ambiguous.formUnion(index..<end)
+                continue
+            }
+            guard let candidates = resolver.candidateLineIDs(
+                requiredLineIDs: ids, requiredLineNames: names, requiredOperatorNames: operators),
+                  network.lines.filter({ candidates.contains($0.lineId) }).allSatisfy({
+                      eligibility.permits($0, allowedInstitutionCodes: allowedCodes, hard: hard)
+                  }),
+                  let from = eligibility.stationCode(first.fromN02StationCode) else { continue }
+            let destinations = sections[index..<end].compactMap { eligibility.stationCode($0.toN02StationCode) }
+            guard destinations.count == end - index,
+                  sections[(index + 1)..<end].enumerated().allSatisfy({ offset, section in
+                      eligibility.stationCode(section.fromN02StationCode) == destinations[offset]
+                  }) else { continue }
+            switch resolver.resolve(
+                stationCodes: [from] + destinations, requiredLineIDs: ids,
+                requiredLineNames: names, requiredOperatorNames: operators) {
+            case .resolved(let selection):
+                for offset in selection.legIntervals.indices {
+                    let leg = selection.legIntervals[offset]
+                    result.hints[index + offset] = RouteHints(
+                        requiredLineIDs: Array(Set(leg.map(\.lineID))).sorted(), sectionCodes: leg.map(\.code),
+                        fromStationCode: selection.stationCodes[offset],
+                        toStationCode: selection.stationCodes[offset + 1])
+                }
+            case .ambiguous: result.ambiguous.formUnion(index..<end)
+            case .unsupported: break
+            }
+        }
+        return result
+    }
+
+    private nonisolated static func physicalSelection(
+        hints: RouteHints, network: RouteNetwork?, provenance: PhysicalRouteSelection.Provenance
+    ) -> PhysicalRouteSelection? {
+        guard let network, let from = hints.fromStationCode, let to = hints.toStationCode,
+              let intervals = network.directedIntervals(sectionCodes: hints.sectionCodes,
+                                                       fromStationCode: from, toStationCode: to),
+              let lines = network.resolvedLines(sectionCodes: hints.sectionCodes) else { return nil }
+        return PhysicalRouteSelection(fromStationCode: from, toStationCode: to,
+                                      intervals: intervals, lines: lines, provenance: provenance)
+    }
+
+    /// A legacy path may have been sliced onto known display rows without a
+    /// complete interval match. Those actual drawn identities still determine
+    /// the card; this provenance does not claim station-topology inference.
+    private nonisolated static func canonicalSelection(
+        _ canonical: CanonicalRoute?, hints: RouteHints, network: RouteNetwork?,
+        sourceCoordinates: [Coordinate]
+    ) -> PhysicalRouteSelection? {
+        guard let canonical else { return nil }
+        return displaySelection(lineIDs: canonical.displayLineIds, sectionCodes: canonical.matchedSectionCodes,
+                                hints: hints, network: network, sourceCoordinates: sourceCoordinates)
+    }
+
+    private nonisolated static func displaySelection(
+        lineIDs: [String], sectionCodes: [String], hints: RouteHints, network: RouteNetwork?,
+        sourceCoordinates: [Coordinate]
+    ) -> PhysicalRouteSelection? {
+        guard let network else { return nil }
+        var selectedHints = hints
+        selectedHints.sectionCodes = sectionCodes
+        selectedHints.requiredLineIDs = lineIDs
+        if let exact = physicalSelection(hints: selectedHints, network: network, provenance: .matchedGeometry) {
+            return exact
+        }
+        let lines = lineIDs.compactMap { id -> ResolvedRailLine? in
+            guard let line = network.lines.first(where: { $0.lineId == id }),
+                  let name = line.compactLine?.nameNorm ?? line.name, !name.isEmpty else { return nil }
+            return ResolvedRailLine(lineID: id, name: name, operatorName: line.operator,
+                                    km: lineIDs.count == 1 ? zip(sourceCoordinates, sourceCoordinates.dropFirst()).reduce(0) {
+                                        $0 + RailCore.Geometry.distanceMeters($1.0, $1.1)
+                                    } / 1000 : 0)
+        }
+        guard !lines.isEmpty else { return nil }
+        return PhysicalRouteSelection(fromStationCode: hints.fromStationCode ?? "",
+                                      toStationCode: hints.toStationCode ?? "", intervals: [],
+                                      lines: lines, provenance: .matchedGeometry)
+    }
+
+    @concurrent private nonisolated static func solveMissingWithPermit(
+        _ trains: [Train], scope: RouteScope,
+        allowLegacy: Bool,
+        rejectPrecomputed: @Sendable (String) async -> Void,
+        publish: @Sendable ([DrawnRide]) async -> Void
+    ) async throws -> [DrawnRide] {
+        let country = scope.code
+        let displayNetwork = try? await DisplayNetworkCache.shared.network(scope: scope)
+        let inputs = try await SolverInputCache.shared.inputs(scope: scope)
+        let stationIndex = inputs.stationIndex
+        let officialIntervals = inputs.officialIntervals
+        let eligibility = displayNetwork.map {
+            StationRouteEligibility(network: $0, sections: inputs.sections, stations: inputs.stationCollection.features)
+        }
+        let intervalResolver = displayNetwork.map(StationIntervalResolver.init(network:))
+        var graphStore: RouteGraph.RouteGraphStore?
 
         var rides: [DrawnRide] = []
         for train in trains {
@@ -796,7 +1126,12 @@ final class RiddenRouteStore {
                 institutionFilterMode: context.institutionFilterMode)
             let allowedCodes = RouteGraph.allowedInstitutionTypeCodes(
                 cacheTrain, country: country)
+            let inferred = inferStationSections(
+                sections, resolver: intervalResolver, network: displayNetwork, eligibility: eligibility,
+                allowedCodes: allowedCodes, hard: context.institutionFilterMode == "hard")
+            if !inferred.ambiguous.isEmpty { await rejectPrecomputed(train.id) }
             var segments: [DrawnSegment] = []
+            var unsupported = false
             var lastSolvedIndex: Int?
             var continuity: Coordinate?
             var displayContinuity: Coordinate?
@@ -807,20 +1142,78 @@ final class RiddenRouteStore {
                     && lastSolvedIndex == index - 1
                     && routeSectionBoundarySharesExplicitStop(sections[index - 1], section)
                 let anchor = sharesBoundary ? continuity : nil
+                if inferred.ambiguous.contains(index) {
+                    continuity = nil
+                    displayContinuity = nil
+                    lastSolvedIndex = nil
+                    continue
+                }
+                if section.sectionCodes?.isEmpty == false || inferred.hints[index] != nil {
+                    // Selected physical intervals already define the path.
+                    // The N02 graph uses older railway names for the Tokyo
+                    // tunnel, so solving by those names first can discard a
+                    // perfectly valid ordinary Sobu/Yokosuka choice or return
+                    // the parallel surface railway. Resolve identity first.
+                    var hints = inferred.hints[index] ?? RouteHints(
+                        requiredLineIDs: section.lineIDs ?? [],
+                        sectionCodes: section.sectionCodes ?? [],
+                        fromStationCode: section.fromN02StationCode,
+                        toStationCode: section.toN02StationCode)
+                    hints.fromStationCode = eligibility?.stationCode(hints.fromStationCode) ?? hints.fromStationCode
+                    hints.toStationCode = eligibility?.stationCode(hints.toStationCode) ?? hints.toStationCode
+                    if let source = displayNetwork?.sourceGeometry(for: hints),
+                       let exact = displayNetwork?.canonicalizeRouteFeature(
+                        RouteFeature(geometry: nil, hints: hints),
+                        continueFrom: sharesBoundary ? displayContinuity : nil,
+                        cache: &projectionCache),
+                       source.lines.count == exact.geometry.lines.count,
+                       let selection = physicalSelection(
+                        hints: hints, network: displayNetwork,
+                        provenance: inferred.hints[index] == nil ? .explicit : .stationSequence) {
+                        for (partIndex, coordinates) in exact.geometry.lines.enumerated() {
+                            segments.append(DrawnSegment(
+                                segmentIndex: index, partIndex: partIndex,
+                                from: section.from ?? stationIndex.name(forCode: section.fromN02StationCode),
+                                to: section.to ?? stationIndex.name(forCode: section.toN02StationCode),
+                                coordinates: coordinates, sourceCoordinates: source.lines[partIndex],
+                                country: country, physicalRoute: selection))
+                        }
+                        lastSolvedIndex = index
+                        continuity = exact.geometry.lines.last?.last
+                        displayContinuity = continuity
+                        continue
+                    }
+                    continuity = nil
+                    displayContinuity = nil
+                    lastSolvedIndex = nil
+                    // An authored physical choice must not silently change.
+                    // A failed inferred materialization may use the dated solver.
+                    if inferred.hints[index] == nil { continue }
+                    unsupported = true
+                }
+                if !allowLegacy { unsupported = true; continue }
+                if graphStore == nil {
+                    graphStore = fallbackGraphStore(inputs: inputs, displayNetwork: displayNetwork)
+                }
                 let solved = RouteSolver.solveOfficialInterval(
                     section, segmentIndex: index, train: context, country: country,
                     allowedCodes: allowedCodes, intervalIndex: officialIntervals,
                     stations: stationIndex, continuityAnchor: anchor)
                     ?? RouteSolver.solveSectionOnDemand(
                         section, segmentIndex: index, train: context, country: country,
-                        graphStore: graphStore, stations: stationIndex,
+                        graphStore: graphStore!, stations: stationIndex,
                         continuityAnchor: anchor)
+                try Task.checkCancellation()
                 if let solved, solved.coordinates.count >= 2 {
                     let hints = RouteHints(
                         requiredLineNames: (section.lineNames ?? []).map(Optional.some),
                         preferredLineNames: context.preferredLineNames.map(Optional.some),
                         requiredOperatorNames: (section.operatorNames ?? []).map(Optional.some),
-                        preferredOperatorNames: context.preferredOperatorNames.map(Optional.some))
+                        preferredOperatorNames: context.preferredOperatorNames.map(Optional.some),
+                        requiredLineIDs: section.lineIDs ?? [],
+                        sectionCodes: section.sectionCodes ?? [],
+                        fromStationCode: section.fromN02StationCode,
+                        toStationCode: section.toN02StationCode)
                     // Historical and relocated geometry is not on the current
                     // display network. Canonicalizing it would pull the stroke
                     // onto today's alignment.
@@ -832,28 +1225,59 @@ final class RiddenRouteStore {
                             continueFrom: sharesBoundary ? displayContinuity : nil,
                             cache: &projectionCache)
                         : nil
-                    let drawnCoordinates = canonical?.geometry.lines.first
-                        ?? solved.coordinates
+                    let drawnParts = canonical?.geometry.lines ?? [solved.coordinates]
+                    let selected = canonicalSelection(canonical, hints: hints, network: displayNetwork,
+                                                      sourceCoordinates: solved.coordinates)
+                    // A matched physical chain can correct the legacy solver's
+                    // opposite-direction bore. Mileage and exports must use
+                    // the same corrected source intervals as the drawn path.
+                    var matchedSource: RouteGeometry?
+                    if let codes = canonical?.matchedSectionCodes, !codes.isEmpty {
+                        var matchedHints = hints
+                        matchedHints.sectionCodes = codes
+                        matchedHints.requiredLineIDs = canonical?.displayLineIds ?? []
+                        matchedSource = displayNetwork?.sourceGeometry(for: matchedHints)
+                    }
+                    var sourceStart = 0
+                    for (partIndex, drawnCoordinates) in drawnParts.enumerated() {
+                    let sourceEnd: Int
+                    if partIndex == drawnParts.count - 1 { sourceEnd = solved.coordinates.count - 1 }
+                    else if let end = drawnCoordinates.last {
+                        sourceEnd = (sourceStart..<solved.coordinates.count).min {
+                            RailCore.Geometry.distanceMeters(solved.coordinates[$0], end)
+                                < RailCore.Geometry.distanceMeters(solved.coordinates[$1], end)
+                        } ?? sourceStart
+                    } else { sourceEnd = sourceStart }
+                    let sourcePart: [Coordinate]
+                    if let matchedSource, matchedSource.lines.indices.contains(partIndex) {
+                        sourcePart = matchedSource.lines[partIndex]
+                    } else {
+                        sourcePart = Array(solved.coordinates[sourceStart...sourceEnd])
+                    }
+                    sourceStart = sourceEnd
                     segments.append(DrawnSegment(
-                        segmentIndex: index,
+                        segmentIndex: index, partIndex: partIndex,
                         from: section.from ?? stationIndex.name(forCode: section.fromN02StationCode),
                         to: section.to ?? stationIndex.name(forCode: section.toN02StationCode),
                         coordinates: drawnCoordinates,
                         // The map gets the canonical slice; the statistics get
                         // the path the solver actually walked, which is N02's
                         // own vertices and is the datum the edge index is in.
-                        sourceCoordinates: solved.coordinates,
+                        sourceCoordinates: sourcePart,
                         country: country,
                         historyIDs: solved.historyIDs,
                         validFrom: solved.validFrom,
                         validTo: solved.validTo,
-                        temporalKind: solved.temporalKind))
+                        temporalKind: solved.temporalKind, physicalRoute: selected))
+                    }
                     lastSolvedIndex = index
                     continuity = solved.coordinates.last
-                    displayContinuity = drawnCoordinates.last
+                    displayContinuity = drawnParts.last?.last
                 }
             }
-            graphStore.trimRegionalGraphCache(target: RouteGraph.regionalGraphNodeBudget)
+            graphStore?.trimRegionalGraphCache(target: RouteGraph.regionalGraphNodeBudget)
+            try Task.checkCancellation()
+            if unsupported && !allowLegacy { continue }
             // Emitted even when NOTHING solved. The old code appended only
             // `if !segments.isEmpty`, which is how a journey with no drawable
             // route became a journey the interface had never heard of — and a
@@ -864,8 +1288,10 @@ final class RiddenRouteStore {
             rides.append(ride)
             if !segments.isEmpty,
                let digest = routeCacheDigest(canonical, raw: train, country: country) {
-                try? saveCache(ride, digest: digest, country: country)
+                try? saveCache(ride, digest: digest, country: country, resourceScope: scope.key)
             }
+            try Task.checkCancellation()
+            await publish(rides)
         }
         return rides
     }
@@ -970,7 +1396,8 @@ final class RiddenRouteStore {
                 fromStationCode: section.fromN02StationCode,
                 toStationCode: section.toN02StationCode,
                 lineNames: section.lineNames ?? [],
-                operatorNames: section.operatorNames ?? [])
+                operatorNames: section.operatorNames ?? [],
+                lineIDs: section.lineIDs ?? [], sectionCodes: section.sectionCodes ?? [])
         }
         guard !sections.isEmpty else { return nil }
         return RouteGraph.keyDigest(RouteGraph.templateKey(sections: sections))
@@ -986,7 +1413,8 @@ final class RiddenRouteStore {
                 fromStationCode: section.fromN02StationCode,
                 toStationCode: section.toN02StationCode,
                 lineNames: section.lineNames ?? [],
-                operatorNames: section.operatorNames ?? [])
+                operatorNames: section.operatorNames ?? [],
+                lineIDs: section.lineIDs ?? [], sectionCodes: section.sectionCodes ?? [])
         }
         let policy = canonical.routePolicy
         guard let history = historyRevisionSet(for: raw) else { return nil }
@@ -1116,11 +1544,14 @@ final class RiddenRouteStore {
         // sections below, instead of each calling `normalizeExportTrain`
         // again for the same train.
         let canonical = normalizedTrain(train, country: country)
-        guard let digest = routeCacheDigest(canonical, raw: train, country: country),
+        guard let revision = resourceRevisions?.revision(for: Region.scopeKey(Region.regionsTouched(train))),
+              let digest = routeCacheDigest(canonical, raw: train, country: country),
               let data = try? Data(contentsOf: cacheURL(country: country, digest: digest)),
               let cache = try? JSONDecoder().decode(RuntimeCache.self, from: data),
               cache.version == RouteGraph.routeDrawnCacheVersion,
-              cache.digest == digest
+              cache.resolutionSemantics == resolutionSemantics,
+              cache.digest == digest,
+              cache.resourceRevision == revision
         else { return nil }
         // A given `segmentIndex` can carry more than one cached entry — one
         // per `MultiLineString` part, written in part order by `saveCache`.
@@ -1143,7 +1574,8 @@ final class RiddenRouteStore {
                     to: cached.to, coordinates: drawn, sourceCoordinates: source,
                     country: country,
                     historyIDs: cached.historyIDs, validFrom: cached.validFrom,
-                    validTo: cached.validTo, temporalKind: cached.temporalKind)
+                    validTo: cached.validTo, temporalKind: cached.temporalKind,
+                    physicalRoute: cached.physicalRoute)
             }
         guard !segments.isEmpty else { return nil }
         return drawnRide(
@@ -1158,20 +1590,23 @@ final class RiddenRouteStore {
     /// both) and passes the digest through rather than this function
     /// re-deriving it from the train again.
     private nonisolated static func saveCache(
-        _ ride: DrawnRide, digest: String, country: String
+        _ ride: DrawnRide, digest: String, country: String, resourceScope: String
     ) throws {
+        guard let revision = resourceRevisions?.revision(for: resourceScope) else { return }
         let directory = cacheDirectory(country: country)
         try FileManager.default.createDirectory(
             at: directory, withIntermediateDirectories: true)
         let cache = RuntimeCache(
-            version: RouteGraph.routeDrawnCacheVersion, digest: digest,
+            version: RouteGraph.routeDrawnCacheVersion, resolutionSemantics: resolutionSemantics,
+            digest: digest, resourceRevision: revision,
             segments: ride.segments.map {
                 CachedSegment(
                     segmentIndex: $0.segmentIndex, from: $0.from, to: $0.to,
                     coordinates: $0.sourceCoordinates.map(\.pair),
                     drawnCoordinates: $0.drawnCoordinates.map(\.pair),
                     historyIDs: $0.historyIDs, validFrom: $0.validFrom,
-                    validTo: $0.validTo, temporalKind: $0.temporalKind)
+                    validTo: $0.validTo, temporalKind: $0.temporalKind,
+                    physicalRoute: $0.physicalRoute)
             })
         try JSONEncoder().encode(cache).write(
             to: cacheURL(country: country, digest: digest), options: .atomic)
@@ -1283,6 +1718,11 @@ final class RiddenRouteStore {
     private struct Part: Decodable {
         let train: Train
         let route: CachedRoute?
+        let sourceHashes: [String: String]?
+        enum CodingKeys: String, CodingKey {
+            case train, route
+            case sourceHashes = "source_hashes"
+        }
     }
 
     private struct CachedRoute: Decodable {
@@ -1305,16 +1745,53 @@ final class RiddenRouteStore {
         let segmentIndex: Int?
         let from: String?
         let to: String?
+        let requiredLineNames: [String]?
+        let preferredLineNames: [String]?
+        let requiredOperatorNames: [String]?
+        let preferredOperatorNames: [String]?
+        let requiredLineIDs: [String]?
+        let sectionCodes: [String]?
+        let fromStationCode: String?
+        let toStationCode: String?
+        let temporalKind: RouteGraph.TemporalKind?
+        let historyIDs: [String]?
+        let validFrom: String?
+        let validTo: String?
         private enum CodingKeys: String, CodingKey {
             case routeTemplateKey = "route_template_key"
             case segmentIndex = "segment_index"
             case from, to
+            case requiredLineNames = "required_line_names"
+            case preferredLineNames = "preferred_line_names"
+            case requiredOperatorNames = "required_operator_names"
+            case preferredOperatorNames = "preferred_operator_names"
+            case requiredLineIDs = "required_line_ids"
+            case sectionCodes = "section_codes"
+            case fromStationCode = "from_n02_station_code"
+            case toStationCode = "to_n02_station_code"
+            case temporalKind = "temporal_kind"
+            case historyIDs = "history_ids"
+            case validFrom = "valid_from"
+            case validTo = "valid_to"
         }
+    }
+
+    private nonisolated static let resourceRevisions: RailResourceRevisions? = {
+        guard let url = Bundle.main.url(forResource: "rail-resource-revisions", withExtension: "json"),
+              let data = try? Data(contentsOf: url) else { return nil }
+        return try? JSONDecoder().decode(RailResourceRevisions.self, from: data)
+    }()
+
+    private struct PrecomputedSources: Decodable {
+        let sourceHashes: [String: String]?
+        enum CodingKeys: String, CodingKey { case sourceHashes = "source_hashes" }
     }
 
     private struct RuntimeCache: Codable {
         let version: String
+        let resolutionSemantics: String
         let digest: String
+        let resourceRevision: String?
         let segments: [CachedSegment]
     }
 
@@ -1339,17 +1816,18 @@ final class RiddenRouteStore {
         let validFrom: String?
         let validTo: String?
         let temporalKind: RouteGraph.TemporalKind
+        let physicalRoute: PhysicalRouteSelection?
 
         private enum CodingKeys: String, CodingKey {
             case segmentIndex, from, to, coordinates, drawnCoordinates
-            case historyIDs, validFrom, validTo, temporalKind
+            case historyIDs, validFrom, validTo, temporalKind, physicalRoute
         }
 
         init(
             segmentIndex: Int, from: String?, to: String?,
             coordinates: [[Double]], drawnCoordinates: [[Double]],
             historyIDs: [String], validFrom: String?, validTo: String?,
-            temporalKind: RouteGraph.TemporalKind
+            temporalKind: RouteGraph.TemporalKind, physicalRoute: PhysicalRouteSelection?
         ) {
             self.segmentIndex = segmentIndex
             self.from = from
@@ -1360,6 +1838,7 @@ final class RiddenRouteStore {
             self.validFrom = validFrom
             self.validTo = validTo
             self.temporalKind = temporalKind
+            self.physicalRoute = physicalRoute
         }
 
         init(from decoder: Decoder) throws {
@@ -1376,6 +1855,7 @@ final class RiddenRouteStore {
             validTo = try c.decodeIfPresent(String.self, forKey: .validTo)
             temporalKind = try c.decodeIfPresent(
                 RouteGraph.TemporalKind.self, forKey: .temporalKind) ?? .current
+            physicalRoute = try c.decodeIfPresent(PhysicalRouteSelection.self, forKey: .physicalRoute)
         }
 
         func encode(to encoder: Encoder) throws {
@@ -1389,6 +1869,7 @@ final class RiddenRouteStore {
             try c.encodeIfPresent(validFrom, forKey: .validFrom)
             try c.encodeIfPresent(validTo, forKey: .validTo)
             try c.encode(temporalKind, forKey: .temporalKind)
+            try c.encodeIfPresent(physicalRoute, forKey: .physicalRoute)
         }
     }
 

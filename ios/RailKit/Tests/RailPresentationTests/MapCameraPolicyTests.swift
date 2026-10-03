@@ -2,12 +2,28 @@ import RailPresentation
 import Testing
 
 struct MapCameraPolicyTests {
+    @Test("Explicit camera intent invalidates a passive resize snapshot")
+    func explicitIntentSupersedesResizeSnapshot() {
+        var camera = MapCameraPolicy()
+        let resizeRevision = camera.intentRevision
+        #expect(camera.intentRevision == resizeRevision)
+        camera.claimCamera()
+        #expect(camera.intentRevision != resizeRevision)
+        let explicitRevision = camera.intentRevision
+        camera.requestFocus(.journey("new-selection"), enabled: true, playbackIsActive: false)
+        #expect(camera.intentRevision != explicitRevision)
+    }
+
     @Test("Opening camera is set once, even after more packages arrive")
     func launchOnlyOnce() {
         var camera = MapCameraPolicy()
+        let beforeOpening = camera.intentRevision
         let opened = camera.openAtLaunch()
         #expect(opened)
+        #expect(camera.intentRevision != beforeOpening)
+        let afterOpening = camera.intentRevision
         #expect(camera.openAtLaunch() == false)
+        #expect(camera.intentRevision == afterOpening)
         #expect(camera.takeFocusRequest() == nil)
     }
 
@@ -33,13 +49,27 @@ struct MapCameraPolicyTests {
         #expect(camera.openAtLaunch() == false)
     }
 
-    @Test("Missing geometry is not a promise to focus when a solve finishes")
-    func routeCompletionDoesNotReissueFocus() {
+    @Test("A direct journey pick waits for geometry and commits only once")
+    func routeCompletionCommitsPendingFocus() throws {
         var camera = MapCameraPolicy()
         camera.requestFocus(.journey("loading"), enabled: true, playbackIsActive: false)
-        #expect(camera.takeFocusRequest() != nil)
-        // The renderer could not frame the request, then data arrives.
+        let request = try #require(camera.pendingFocusRequest)
+        // Render updates without route geometry leave the intent pending.
+        #expect(camera.pendingFocusRequest == request)
+        #expect(camera.isCurrent(request))
+        // Once the route is available, framing consumes the original pick.
+        #expect(camera.takeFocusRequest() == request)
         #expect(camera.takeFocusRequest() == nil)
+    }
+
+    @Test("A gesture while route geometry loads cancels the pending pick")
+    func gestureCancelsLoadingJourney() throws {
+        var camera = MapCameraPolicy()
+        camera.requestFocus(.journey("loading"), enabled: true, playbackIsActive: false)
+        let request = try #require(camera.pendingFocusRequest)
+        camera.claimCamera()
+        #expect(camera.pendingFocusRequest == nil)
+        #expect(camera.isCurrent(request) == false)
     }
 
     @Test("Replacing a renderer between observation and framing keeps the request")

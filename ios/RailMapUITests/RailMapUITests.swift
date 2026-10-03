@@ -7,6 +7,42 @@ final class RailMapUITests: XCTestCase {
         continueAfterFailure = false
     }
 
+    func testAllJourneyFinalCardClearsTabBar() throws {
+        try XCTSkipUnless(UIDevice.current.userInterfaceIdiom == .phone)
+        XCUIDevice.shared.orientation = .portrait
+
+        for stage in ["medium", "expanded"] {
+            let app = launch(tab: "all", stage: stage, sample: "train-store")
+            XCTAssertTrue(element("journeyRow-20260703_01_haruka", in: app)
+                .waitForExistence(timeout: 20))
+            let date = element("journeyDateButton", in: app)
+            XCTAssertTrue(date.isHittable)
+            date.tap()
+            let day = app.buttons.matching(NSPredicate(
+                format: "label CONTAINS %@", "2026-07-03")).firstMatch
+            XCTAssertTrue(day.waitForExistence(timeout: 5))
+            day.tap()
+
+            let viewport = element("workspaceMenuViewport", in: app)
+            let tabs = app.tabBars.firstMatch
+            let last = element("journeyRow-20260703_03_tokaido_main_local", in: app)
+            for _ in 0..<6 {
+                if last.exists && last.isHittable,
+                   last.frame.minY >= viewport.frame.minY,
+                   last.frame.maxY <= tabs.frame.minY - 12 { break }
+                viewport.swipeUp()
+            }
+            XCTAssertTrue(last.exists)
+            XCTAssertTrue(last.isHittable)
+            XCTAssertGreaterThanOrEqual(last.frame.minY, viewport.frame.minY)
+            XCTAssertLessThanOrEqual(
+                last.frame.maxY, tabs.frame.minY - 12,
+                "The entire final All journey card must scroll clear of the tab bar.")
+            attach(app, named: "all-final-card-above-tab-bar-\(stage)")
+            app.terminate()
+        }
+    }
+
     func testSearchDestinationAlwaysExposesAField() {
         let app = launch(tab: "search", stage: "medium")
         XCTAssertTrue(
@@ -14,21 +50,123 @@ final class RailMapUITests: XCTestCase {
             "The semantic Search destination must never open without a text field.")
     }
 
-    func testCompactSelectedJourneyKeepsHeaderAndMapControlsReachable() throws {
-        try XCTSkipUnless(
-            UIDevice.current.userInterfaceIdiom == .phone,
-            "The compact overlay is a phone-window assertion.")
+    func testMenuContentFollowsSystemTabBar() {
+        let app = launch(tab: "all", stage: "medium", sample: "train-store")
+        let tabs = app.tabBars.firstMatch
+        XCTAssertTrue(tabs.waitForExistence(timeout: 8))
 
-        let app = launch(tab: "all", stage: "compact", selectedJourney: "0")
+        for index in [2, 1, 0, 3] {
+            tabs.buttons.element(boundBy: index).tap()
+            let viewport = element("workspaceMenuViewport", in: app)
+            XCTAssertTrue(viewport.waitForExistence(timeout: 8))
+            assertViewportFollowsSystemTabBar(viewport, tabs: tabs, in: app)
+        }
+        attach(app, named: "menu-content-under-tab-bar")
+    }
+
+
+    // Check excess bottom space separately from final-card clearance.
+    func testPhoneMediumMenuDoesNotReserveTabBarTwice() throws {
+        try assertPhoneMenuBottomGap(stage: "medium")
+    }
+    func testPhoneExpandedMenuDoesNotReserveTabBarTwice() throws {
+        try assertPhoneMenuBottomGap(stage: "expanded")
+    }
+    private func assertPhoneMenuBottomGap(stage: String) throws {
+        try XCTSkipUnless(UIDevice.current.userInterfaceIdiom == .phone)
+        XCUIDevice.shared.orientation = .portrait
+        let app = launch(tab: "all", stage: stage, sample: "train-store")
+        let viewport = element("workspaceMenuViewport", in: app)
+        let tabs = app.tabBars.firstMatch
+        XCTAssertTrue(tabs.waitForExistence(timeout: 8))
+        XCTAssertTrue(viewport.waitForExistence(timeout: 8))
+        let viewportFrame = viewport.frame
+        let tabFrame = tabs.frame
+        let gap = tabFrame.minY - viewportFrame.maxY
+        let payload: [String: Any] = [
+            "stage": stage, "viewport": [viewportFrame.minX, viewportFrame.minY, viewportFrame.width, viewportFrame.height],
+            "tabBar": [tabFrame.minX, tabFrame.minY, tabFrame.width, tabFrame.height],
+            "viewportToTabTopGap": gap, "tabHeight": tabFrame.height,
+            "scope": "Native viewport and tab-bar frames; full-card clearance is checked separately"]
+        let data = try JSONSerialization.data(withJSONObject: payload, options: [.sortedKeys])
+        let evidence = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+        evidence.name = "menu-bottom-gap-" + stage
+        evidence.lifetime = .keepAlways
+        add(evidence)
+        attach(app, named: "menu-bottom-gap-" + stage)
+        assertViewportFollowsSystemTabBar(viewport, tabs: tabs, in: app, gap: gap)
+        app.terminate()
+    }
+
+    /// iOS 26+ draws a transparent bar and the menu continues beneath it.
+    /// Earlier systems draw a solid bar, and the menu stops at that bar
+    /// without a second reserved strip.
+    private func assertViewportFollowsSystemTabBar(
+        _ viewport: XCUIElement,
+        tabs: XCUIElement,
+        in app: XCUIApplication,
+        gap: CGFloat? = nil
+    ) {
+        XCTAssertGreaterThan(viewport.frame.height, 0)
+        XCTAssertLessThan(viewport.frame.minY, tabs.frame.minY)
+        let space = gap ?? (tabs.frame.minY - viewport.frame.maxY)
+        if #available(iOS 26.0, *) {
+            XCTAssertGreaterThan(
+                viewport.frame.maxY, tabs.frame.minY + 8,
+                "On iOS 26 the menu must draw under the transparent tab bar.")
+            XCTAssertLessThanOrEqual(
+                viewport.frame.maxY, app.frame.maxY + 1,
+                "The menu must not extend past the screen.")
+        } else {
+            XCTAssertGreaterThanOrEqual(
+                space, -1, "The menu must stay above the solid tab bar.")
+            XCTAssertLessThanOrEqual(
+                space, 24, "The menu must not reserve a margin above the solid tab bar.")
+        }
+    }
+
+    func testMenuBottomContentScrollsAboveTabBar() {
+        let app = launch(tab: "stats", stage: "medium", sample: "train-store")
+        let tabs = app.tabBars.firstMatch
+        let viewport = element("workspaceMenuViewport", in: app)
+        XCTAssertTrue(tabs.waitForExistence(timeout: 8))
+        XCTAssertTrue(viewport.waitForExistence(timeout: 8))
+        let note = element("passportShareNote", in: app)
+        for _ in 0..<12 {
+            if note.exists && note.isHittable,
+               note.frame.maxY <= tabs.frame.minY { break }
+            viewport.swipeUp()
+        }
+        XCTAssertTrue(note.exists)
+        XCTAssertTrue(note.isHittable)
+        XCTAssertGreaterThanOrEqual(note.frame.minY, viewport.frame.minY)
+        XCTAssertLessThanOrEqual(
+            note.frame.maxY, tabs.frame.minY,
+            "The final menu content must scroll fully clear of the tab bar.")
+        attach(app, named: "menu-bottom-content-visible")
+    }
+
+    func testCompactSelectedJourneyPresentsOriginalCard() throws {
+        try XCTSkipUnless(UIDevice.current.userInterfaceIdiom == .phone)
+        let app = launch(tab: "all", stage: "compact",
+                         selectedJourney: "20260703_01_haruka", sample: "train-store",
+                         hiddenLayers: "terminals", mapGestures: true)
+        let title = app.descendants(matching: .any).matching(NSPredicate(
+            format: "identifier BEGINSWITH %@", "selectedJourney-")).firstMatch
+        XCTAssertTrue(title.waitForExistence(timeout: 12))
+        let close = element("journeyBackToList", in: app)
+        XCTAssertTrue(close.isHittable)
+        let map = element("railMapGestureTarget", in: app)
+        XCTAssertTrue(map.waitForExistence(timeout: 8))
+        map.pinch(withScale: 0.65, velocity: -1)
+        XCTAssertTrue(close.exists)
+        attach(app, named: "selected-endpoints-terminals-off-after-zoom-out")
+        map.pinch(withScale: 1.54, velocity: 1)
+        XCTAssertTrue(close.exists)
+        attach(app, named: "selected-endpoints-terminals-off-after-zoom-in")
+        close.tap()
+        XCTAssertTrue(close.waitForNonExistence(timeout: 8))
         XCTAssertTrue(element("panelHeader", in: app).waitForExistence(timeout: 8))
-        XCTAssertTrue(
-            element("mapNetworkToggle", in: app).waitForExistence(timeout: 8),
-            """
-                The map rail must still be reachable. Asserted on a real control \
-                rather than on the rail's container: a container identifier \
-                propagates onto every button inside it and hides their own, so \
-                `MapControlBar` no longer sets one.
-                """)
     }
 
     func testCompactHeaderDragRevealsTheDestinationContent() throws {
@@ -40,7 +178,8 @@ final class RailMapUITests: XCTestCase {
         let app = launch(tab: "search", stage: "compact")
         let header = element("panelHeader", in: app)
         XCTAssertTrue(header.waitForExistence(timeout: 8))
-        XCTAssertFalse(element("journeySearchField", in: app).exists)
+        XCTAssertFalse(element("journeySearchField", in: app).isHittable,
+                       "Compact menus must keep Search clear of the tab bar.")
         attach(app, named: "iphone-menu-retracted")
 
         let start = header.coordinate(
@@ -71,7 +210,7 @@ final class RailMapUITests: XCTestCase {
         try assertRepeatedHeaderDrags(isDocked: false)
     }
 
-    func testIPadMenuHeaderDragsInBothDirectionsRepeatedly() throws {
+    func testIPadMenuToggleKeepsOrdinaryTitleStable() throws {
         try XCTSkipUnless(UIDevice.current.userInterfaceIdiom == .pad)
         XCUIDevice.shared.orientation = .landscapeLeft
         defer { XCUIDevice.shared.orientation = .portrait }
@@ -79,40 +218,38 @@ final class RailMapUITests: XCTestCase {
     }
 
     #if targetEnvironment(macCatalyst)
-    func testMacMenuHeaderDragsInBothDirectionsRepeatedly() throws {
+    func testMacMenuToggleKeepsOrdinaryTitleStable() throws {
         try assertRepeatedHeaderDrags(isDocked: true)
     }
     #endif
 
-    func testIPadMenuHeaderPaddingDragExpands() throws {
+    func testIPadMenuHeaderDoesNotOwnAResizeGesture() throws {
         try XCTSkipUnless(UIDevice.current.userInterfaceIdiom == .pad)
         XCUIDevice.shared.orientation = .landscapeLeft
         defer { XCUIDevice.shared.orientation = .portrait }
         let app = launch(tab: "search", stage: "compact")
         let header = element("panelHeader", in: app)
-        let search = element("journeySearchField", in: app)
+        let toggle = element("dockPanelToggle", in: app)
         XCTAssertTrue(header.waitForExistence(timeout: 8))
-        XCTAssertFalse(search.exists)
-        let compactTop = header.frame.minY
-        // Four points above the title is visible, noninteractive header
-        // padding inside the card, and should be a natural drag target.
-        let start = header.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0))
-            .withOffset(CGVector(dx: 0, dy: -4))
-        start.press(forDuration: 0.1, thenDragTo: start.withOffset(CGVector(dx: 0, dy: -360)))
-        XCTAssertTrue(search.waitForExistence(timeout: 8), "Dragging empty header padding must expand the menu.")
-        XCTAssertLessThan(header.frame.minY, compactTop - 80)
-        attach(app, named: "ipad-padding-drag-open")
+        dragHeader(header, by: -360)
+        XCTAssertEqual(toggle.value as? String, "compact")
+        XCTAssertFalse(element("journeySearchField", in: app).isHittable,
+                       "Compact menus must keep Search clear of the tab bar.")
+        toggle.tap()
+        XCTAssertTrue(element("journeySearchField", in: app).waitForExistence(timeout: 8))
     }
 
-    /// Every height change in the two-cycle loop comes from a title drag.
-    /// The separate tab check allows destination changes to open content.
+    /// System sheets resize natively; docked menus resize through their toggle.
+    /// Neither path changes the title's text or font geometry.
     private func assertRepeatedHeaderDrags(isDocked: Bool) throws {
         let app = launch(tab: "search", stage: "compact")
         let header = element("panelHeader", in: app)
         let search = element("journeySearchField", in: app)
         XCTAssertTrue(header.waitForExistence(timeout: 8))
-        XCTAssertFalse(search.exists)
+        XCTAssertFalse(search.isHittable, "The compact menu must keep Search clear of the tab bar.")
         let compactTop = header.frame.minY
+        let originalLabel = header.label
+        let originalHeight = header.frame.height
         let stage = element("dockPanelToggle", in: app)
         #if targetEnvironment(macCatalyst)
         let device = "mac"
@@ -121,8 +258,10 @@ final class RailMapUITests: XCTestCase {
         #endif
 
         for cycle in 1...2 {
-            dragHeader(header, by: -360)
-            XCTAssertTrue(search.waitForExistence(timeout: 8), "Upward header drag must reveal Search.")
+            if isDocked { stage.tap() } else { dragHeader(header, by: -360) }
+            XCTAssertTrue(search.waitForExistence(timeout: 8), "Expanding the panel must reveal Search.")
+            XCTAssertEqual(header.label, originalLabel)
+            XCTAssertEqual(header.frame.height, originalHeight, accuracy: 1)
             let openTop = header.frame.minY
             XCTAssertLessThan(openTop, compactTop - 80, "The menu must physically expand after an upward drag.")
             if isDocked { XCTAssertNotEqual(stage.value as? String, "compact") }
@@ -134,11 +273,15 @@ final class RailMapUITests: XCTestCase {
                 compactTop - headerFrame.minY + 70,
                 screen.maxY - headerFrame.midY - 24)
             XCTAssertGreaterThan(downwardDistance, 100)
-            dragHeader(header, by: downwardDistance)
-            expectation(for: NSPredicate(format: "exists == NO"), evaluatedWith: search)
+            if isDocked { stage.tap() } else { dragHeader(header, by: downwardDistance) }
+            expectation(for: NSPredicate { _, _ in
+                abs(header.frame.minY - compactTop) <= 28
+            }, evaluatedWith: header)
             waitForExpectations(timeout: 8)
+            XCTAssertFalse(search.isHittable, "Collapsed Search must not overlap the tab bar.")
             XCTAssertGreaterThan(header.frame.minY, openTop + 80)
             XCTAssertEqual(header.frame.minY, compactTop, accuracy: 28)
+            XCTAssertEqual(header.frame.height, originalHeight, accuracy: 1)
             if isDocked { XCTAssertEqual(stage.value as? String, "compact") }
             attach(app, named: "\(device)-drag-closed-\(cycle)")
         }
@@ -196,9 +339,50 @@ final class RailMapUITests: XCTestCase {
                 """)
     }
 
-    /// Exercises the path the previous smoke tests skipped entirely: real
-    /// rows from the bundled store, row selection, the matching resident
-    /// detail card, and returning to the still-mounted list.
+    func testPhoneMapRailStaysAboveMenu() throws {
+        try XCTSkipUnless(UIDevice.current.userInterfaceIdiom == .phone)
+        XCUIDevice.shared.orientation = .portrait
+
+        for stage in ["compact", "medium"] {
+            let app = launch(tab: "all", stage: stage)
+            let header = element("panelHeader", in: app)
+            XCTAssertTrue(header.waitForExistence(timeout: 8))
+            assertMapRailAboveMenu(in: app, header: header)
+            attach(app, named: "map-rail-\(stage)")
+
+            let originalTop = header.frame.minY
+            dragHeader(header, by: stage == "compact" ? -220 : 320)
+            let moved = XCTNSPredicateExpectation(
+                predicate: NSPredicate { _, _ in
+                    abs(header.frame.minY - originalTop) > 80
+                }, object: header)
+            XCTAssertEqual(XCTWaiter.wait(for: [moved], timeout: 8), .completed)
+            assertMapRailAboveMenu(in: app, header: header)
+            attach(app, named: "map-rail-\(stage)-after-drag")
+            app.terminate()
+        }
+    }
+
+    private func assertMapRailAboveMenu(in app: XCUIApplication, header: XCUIElement) {
+        for identifier in [
+            "mapNetworkToggle", "mapRoutesToggle", "mapLayersButton",
+            "mapInfoButton", "mapLocateToggle",
+        ] {
+            let control = element(identifier, in: app)
+            let clearOfMenu = XCTNSPredicateExpectation(
+                predicate: NSPredicate { _, _ in
+                    control.exists && control.isHittable
+                        && !control.frame.isEmpty
+                        && app.frame.insetBy(dx: -1, dy: -1).contains(control.frame)
+                        // The menu surface starts above its inset title text.
+                        && control.frame.maxY <= header.frame.minY - 24
+                }, object: control)
+            XCTAssertEqual(XCTWaiter.wait(for: [clearOfMenu], timeout: 8), .completed,
+                           "\(identifier) \(control.frame) must stay above menu header \(header.frame).")
+        }
+    }
+
+    /// A row opens its matching separate menu and returns to the same list.
     func testAllJourneyRowsOpenTheirMatchingJourney() {
         let app = launch(
             tab: "all", stage: "expanded", sample: "train-store")
@@ -211,6 +395,14 @@ final class RailMapUITests: XCTestCase {
             XCTAssertTrue(
                 row.waitForExistence(timeout: 20),
                 "The bundled journey \(id) never appeared in All Journeys.")
+            XCTAssertFalse(row.label.contains("stops"), "The list card should contain ticket information only.")
+            if id == "20260703_01_haruka" {
+                XCTAssertTrue(row.label.contains("16:14"))
+                XCTAssertTrue(row.label.contains("17:06"))
+                XCTAssertFalse(row.label.contains("阪和線"))
+                XCTAssertFalse(row.label.contains("Hanwa"))
+                attach(app, named: "journey-ticket-summary")
+            }
             row.tap()
 
             XCTAssertTrue(
@@ -219,16 +411,171 @@ final class RailMapUITests: XCTestCase {
 
             let back = element("journeyBackToList", in: app)
             XCTAssertTrue(back.waitForExistence(timeout: 8))
+            let title = element("selectedJourney-\(id)", in: app)
+            XCTAssertLessThan(title.frame.minY, back.frame.maxY,
+                              "The vehicle title must stay on the logo's header row.")
+            attach(app, named: "journey-logo-side-title-\(id)")
             back.tap()
             XCTAssertTrue(row.waitForExistence(timeout: 8))
         }
     }
 
-    /// Runs only when this target is explicitly sent to an iPad simulator.
-    /// The default phone destination skips it; the iPad matrix verifies that a
-    /// full-width landscape window docks the phone's own menu as a card over
-    /// a full-window map, rather than trading it for a native three-column
-    /// sidebar with iPadOS's own top tab capsule.
+    func testJourneyFocusLowersMenuAndFitsAboveItsLowestEdge() throws {
+        try XCTSkipUnless(UIDevice.current.userInterfaceIdiom == .phone)
+        XCUIDevice.shared.orientation = .portrait
+        let app = launch(tab: "all", stage: "expanded", sample: "train-store")
+        let id = "20260703_01_haruka"
+        let row = element("journeyRow-\(id)", in: app)
+        XCTAssertTrue(row.waitForExistence(timeout: 20))
+        row.tap()
+        let title = element("selectedJourney-\(id)", in: app)
+        XCTAssertTrue(title.waitForExistence(timeout: 8))
+        let lowestTop = title.frame.minY
+
+        // Editing can temporarily remove the presented menu from view.
+        element("journeyMenuEdit", in: app).tap()
+        XCTAssertTrue(element("rideEditorForm", in: app).waitForExistence(timeout: 8))
+        element("rideEditorCancel", in: app).tap()
+        XCTAssertTrue(title.waitForExistence(timeout: 8))
+
+        let start = title.coordinate(withNormalizedOffset: CGVector(dx: 0.3, dy: 0.5))
+        start.press(forDuration: 0.1, thenDragTo: start.withOffset(CGVector(dx: 0, dy: -330)))
+        let raised = expectation(
+            for: NSPredicate { _, _ in title.exists && title.frame.minY < lowestTop - 80 },
+            evaluatedWith: app)
+        wait(for: [raised], timeout: 8)
+        let status = element("railMapRenderStatus", in: app)
+        func metric(_ name: String) -> Double {
+            let prefix = name + ":"
+            guard let field = status.label.split(separator: ";").first(where: { $0.hasPrefix(prefix) }),
+                  let value = Double(field.dropFirst(prefix.count)) else { return -1 }
+            return value
+        }
+        element("journeyPrimaryAction", in: app).tap()
+        let lowered = expectation(
+            for: NSPredicate { _, _ in title.exists && title.frame.minY >= lowestTop - 3 },
+            evaluatedWith: app)
+        wait(for: [lowered], timeout: 8)
+        XCTAssertTrue(element("journeyBackToList", in: app).exists)
+        attach(app, named: "journey-focus-lowest-menu")
+
+        element("journeyBackToList", in: app).tap()
+        let header = element("panelHeader", in: app)
+        XCTAssertTrue(header.waitForExistence(timeout: 8))
+        XCTAssertGreaterThan(header.frame.minY, app.frame.height * 0.65,
+                             "Focus must also lower the resident panel behind the menu.")
+        XCTAssertTrue(status.waitForExistence(timeout: 8))
+        let focused = expectation(for: NSPredicate { _, _ in
+            metric("focusRevision") >= 1
+                && metric("focusBottom") >= 280 && metric("focusBottom") < 350
+        }, evaluatedWith: app)
+        wait(for: [focused], timeout: 15)
+
+    }
+
+    func testExpandedMenuSlidesAwayWhenJourneyCardOpens() throws {
+        try XCTSkipUnless(UIDevice.current.userInterfaceIdiom == .phone)
+        XCUIDevice.shared.orientation = .portrait
+        let app = launch(tab: "all", stage: "expanded", sample: "train-store", mapGestures: true)
+        let header = element("panelHeader", in: app)
+        let row = element("journeyRow-20260703_01_haruka", in: app)
+        XCTAssertTrue(row.waitForExistence(timeout: 20))
+        let originalTop = header.frame.minY
+        XCTAssertLessThan(originalTop, app.frame.height * 0.25)
+
+        for _ in 0..<2 {
+            row.tap()
+            let close = element("journeyBackToList", in: app)
+            let title = element("selectedJourney-20260703_01_haruka", in: app)
+            XCTAssertTrue(close.waitForExistence(timeout: 8))
+            XCTAssertTrue(close.isHittable)
+            XCTAssertGreaterThan(title.frame.minY, app.frame.height * 0.5,
+                                 "The journey card must open at its own compact height.")
+            XCTAssertFalse(header.isHittable)
+            XCTAssertFalse(app.tabBars.firstMatch.isHittable)
+            let map = element("railMapGestureTarget", in: app)
+            XCTAssertTrue(map.waitForExistence(timeout: 8))
+            let mapPoint = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.3))
+            mapPoint.press(forDuration: 0.1, thenDragTo: mapPoint.withOffset(CGVector(dx: 30, dy: 20)))
+            XCTAssertTrue(close.isHittable)
+            attach(app, named: "expanded-menu-hidden-behind-journey")
+
+            close.tap()
+            let restored = expectation(for: NSPredicate { _, _ in
+                header.isHittable && abs(header.frame.minY - originalTop) < 3
+            }, evaluatedWith: app)
+            wait(for: [restored], timeout: 8)
+            XCTAssertTrue(row.isHittable)
+        }
+    }
+
+    func testJourneyMenuHasNoTabBarAndRestoresOriginalList() throws {
+        try XCTSkipUnless(UIDevice.current.userInterfaceIdiom == .phone)
+        let app = launch(tab: "all", stage: "medium", sample: "train-store")
+        let header = element("panelHeader", in: app)
+        XCTAssertTrue(header.waitForExistence(timeout: 8))
+        let title = header.label
+        let height = header.frame.height
+        for id in ["20260703_01_haruka", "20260703_02_tokaido_shinkansen_hikari_kodama"] {
+            let row = element("journeyRow-\(id)", in: app)
+            XCTAssertTrue(row.waitForExistence(timeout: 20))
+            row.tap()
+            XCTAssertTrue(element("selectedJourney-\(id)", in: app).waitForExistence(timeout: 8))
+            XCTAssertFalse(app.tabBars.firstMatch.isHittable)
+            XCTAssertTrue(element("journeyMenuEdit", in: app).isHittable)
+            attach(app, named: "independent-menu-\(id)")
+            element("journeyMenuEdit", in: app).tap()
+            XCTAssertTrue(element("rideEditorForm", in: app).waitForExistence(timeout: 8))
+            element("rideEditorCancel", in: app).tap()
+            XCTAssertTrue(element("journeyBackToList", in: app).waitForExistence(timeout: 8))
+            element("journeyBackToList", in: app).tap()
+            XCTAssertTrue(row.waitForExistence(timeout: 8))
+            XCTAssertEqual(header.label, title)
+            XCTAssertEqual(header.frame.height, height, accuracy: 1)
+            XCTAssertTrue(app.tabBars.firstMatch.isHittable)
+        }
+    }
+
+    func testJourneyCardResizesAndOnlyClosesWithX() throws {
+        try XCTSkipUnless(UIDevice.current.userInterfaceIdiom == .phone)
+        XCUIDevice.shared.orientation = .portrait
+        let app = launch(tab: "all", stage: "medium", sample: "train-store")
+        let id = "20260703_01_haruka"
+        let row = element("journeyRow-\(id)", in: app)
+        XCTAssertTrue(row.waitForExistence(timeout: 20))
+        row.tap()
+        let title = element("selectedJourney-\(id)", in: app)
+        let close = element("journeyBackToList", in: app)
+        XCTAssertTrue(title.waitForExistence(timeout: 8))
+        XCTAssertTrue(close.isHittable)
+        let compactTop = title.frame.minY
+        attach(app, named: "journey-original-card-compact")
+
+        let start = title.coordinate(withNormalizedOffset: CGVector(dx: 0.3, dy: 0.5))
+        start.press(forDuration: 0.1, thenDragTo: start.withOffset(CGVector(dx: 0, dy: -330)))
+        let expanded = expectation(
+            for: NSPredicate { _, _ in title.exists && title.frame.minY < compactTop - 80 },
+            evaluatedWith: app)
+        wait(for: [expanded], timeout: 8)
+        attach(app, named: "journey-original-card-expanded")
+
+        for _ in 0..<2 {
+            let top = title.coordinate(withNormalizedOffset: CGVector(dx: 0.3, dy: 0.5))
+            top.press(forDuration: 0.1, thenDragTo: app.coordinate(
+                withNormalizedOffset: CGVector(dx: 0.3, dy: 0.94)))
+            XCTAssertTrue(close.waitForExistence(timeout: 5),
+                          "Dragging down must resize the card without dismissing it.")
+        }
+        let outside = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.15))
+        outside.tap()
+        XCTAssertTrue(close.exists, "Tapping the map must keep the journey card open.")
+        attach(app, named: "journey-original-card-after-downward-drags")
+        close.tap()
+        XCTAssertTrue(close.waitForNonExistence(timeout: 8))
+        XCTAssertTrue(row.waitForExistence(timeout: 8))
+        XCTAssertTrue(row.isHittable)
+    }
+
     func testWideIPadDocksThePhoneMenu() throws {
         try XCTSkipUnless(
             UIDevice.current.userInterfaceIdiom == .pad,
@@ -272,7 +619,8 @@ final class RailMapUITests: XCTestCase {
         let compact = NSPredicate(format: "value == %@", "compact")
         expectation(for: compact, evaluatedWith: toggle)
         waitForExpectations(timeout: 8)
-        XCTAssertFalse(element("journeySearchField", in: app).exists)
+        XCTAssertFalse(element("journeySearchField", in: app).isHittable,
+                       "Compact menus must keep Search clear of the tab bar.")
         assertNetworkToggleResponds(in: app)
         attach(app, named: "ipad-menu-retracted")
 
@@ -336,6 +684,8 @@ final class RailMapUITests: XCTestCase {
         selectedJourney: String? = nil,
         sample: String? = nil,
         camera: String? = nil,
+        hiddenLayers: String? = nil,
+        mapGestures: Bool = false,
         reportsReduceMotion: Bool = false,
         launchArguments: [String] = []
     ) -> XCUIApplication {
@@ -352,6 +702,8 @@ final class RailMapUITests: XCTestCase {
         if let camera {
             app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = camera
         }
+        if let hiddenLayers { app.launchEnvironment["RAILMAP_UI_TEST_LAYERS"] = hiddenLayers }
+        if mapGestures { app.launchEnvironment["RAILMAP_UI_TEST_GESTURE_TARGET"] = "1" }
         if reportsReduceMotion {
             app.launchEnvironment["RAILMAP_UI_TEST_REPORT_REDUCE_MOTION"] = "1"
         }

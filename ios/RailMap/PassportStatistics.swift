@@ -118,12 +118,26 @@ struct PassportStatistics: Sendable {
 
     var isEmpty: Bool { journeys == 0 }
 
-    func months(in year: Int) -> [Column] {
-        monthsByYear[year] ?? Self.filled([:], over: 1...12)
+    func months(in year: Int?) -> [Column] {
+        distribution(monthsByYear, year: year, range: 1...12)
     }
 
-    func weekdays(in year: Int) -> [Column] {
-        weekdaysByYear[year] ?? Self.filled([:], over: 1...7)
+    func weekdays(in year: Int?) -> [Column] {
+        distribution(weekdaysByYear, year: year, range: 1...7)
+    }
+
+    private func distribution(
+        _ buckets: [Int: [Column]], year: Int?, range: ClosedRange<Int>
+    ) -> [Column] {
+        if let year { return buckets[year] ?? Self.filled([:], over: range) }
+        var totals: [Int: (count: Int, km: Double)] = [:]
+        for year in buckets.keys.sorted() {
+            for column in buckets[year] ?? [] {
+                totals[column.id, default: (0, 0)].count += column.count
+                totals[column.id, default: (0, 0)].km += column.km
+            }
+        }
+        return Self.filled(totals, over: range)
     }
 
     // MARK: - building it

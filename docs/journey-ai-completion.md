@@ -1,5 +1,10 @@
 # Screenshot import and AI completion
 
+The behavior and verification below describe the September 30 tested snapshot
+recorded in the native validation evidence. Later routing, playback and
+station-catalog changes are outside that test result; this document does not
+certify the current evolving working tree.
+
 The screenshot importer reads Yahoo! 乗換案内 and JR東日本アプリ locally using
 Vision, then builds a preview against the Japanese station package. Select
 screenshots in journey order. Photos selection now displays selection order;
@@ -175,46 +180,53 @@ The focused new-journey UI test passed on an isolated iOS 27 simulator,
 including insufficient-information gating, opening completion, rejecting an
 invalid reply, and keeping Apply disabled for an empty/no-op reply.
 
-The native continuation's first focused simulator run on 2026-09-30 passed
-2 of 5 checks: advancing without a train number and cross-day stop editing.
-The invalid-reply/no-op completion, source-symbol display and sharing checks
-failed in that run. The sharing retry then passed all four light/dark map and
-statistics previews with Japan and 2026-07-03 retained after dismissal; saved
-map previews were also visually inspected. The earlier UI pass above does not
-certify this run. That six-method retry finished **1/6 passed** (sharing);
-ordered review, endpoint collision, local lookup and source-symbol checks
-failed at screen reachability or accessibility selectors, while the no-op
-completion check exposed the app defect below. The UI owner corrected those
-test interactions and started an isolated five-method retry. Those five
-behaviors are tracked separately. The ordered intermediate-stop test passed
-in 725.040 seconds: the complete proposed sequence appeared in travel order,
-explicit Apply returned to the journey draft, and reopening an inserted stop
-preserved its editable name. This fixture verifies preview/apply behavior, not
-the truth of a researched timetable or a saved journey. The invalid/empty
-reply test then passed in 340.065 seconds, and endpoint-label frame separation
-passed in 31.093 seconds. Source-symbol accessible rows passed in 252.349
-seconds, checking Hokuto's pass role and Huis Ten Bosch's not-via role. The five-method
-bundle finished **4/5 passed**. Automatic lookup produced the expected match,
-but editing the clipped date field failed before the result-clearing checks.
-The test helper was corrected and the isolated case passed in 299.285 seconds:
-initial lookup ran without a search tap, rapid date changes cleared old matches,
-a valid date restored them, and an invalid service name cleared them until
-the supported name was restored.
+The completed native validation records **eight distinct focused UI cases
+passed across multiple runs**, on an isolated iPhone 17 Pro / iOS 27 simulator.
+This was a focused selection, not the entire UI suite.
 
-Follow-up screenshot inspection found that Huis Ten Bosch's not-via row was
-outside the captured viewport and the expanded search sheet covered the map.
-The accessible-row and frame checks remain valid; visible symbol and endpoint
-screenshots are being checked with stricter viewport and camera setup. These
-stronger visual checks remain pending; automatic result clearing is verified
-by the isolated test above.
+| Tested behavior | Latest passing run | Seconds |
+|---|---|---:|
+| Map/statistics sharing in both appearances; Japan and 2026-07-03 retained | Retry | 105.428 |
+| Invalid JSON rejected; empty AI reply keeps Apply disabled | Final | 340.065 |
+| New journey advances without a train number | Focused | 61.492 |
+| Shared journey date and next-day stop time | Focused | 90.090 |
+| Visible Hokuto `レ` and Huis Ten Bosch `||` rows | VisibleEvidence | 327.551 |
+| Ordered intermediate-stop preview, explicit Apply, reopening inserted stop | Final | 725.040 |
+| Visible, separate selected-journey endpoint labels | VisibleEvidence | 16.741 |
+| Automatic matching and date/service result invalidation and restoration | QuickMatch | 299.285 |
 
-The invalid-reply retry rejected malformed JSON but found that an empty
-`{"trains":[]}` reply enabled Apply: resolving unique station names added IDs
-even when the merge made no additions. The native continuation now resolves
-identities only for journeys changed by the merge, preserving unchanged input
-for a no-op response. Its isolated simulator retry passed: malformed JSON
-was rejected and the empty reply kept Apply disabled. The core merge test
-pass alone did not catch the preview-layer defect.
+Automatic matching ran without a search tap. Rapid date changes cleared stale
+matches, a valid date restored them, and an invalid service name cleared them
+until the supported name was restored. The ordered-stop fixture checks
+preview/apply-to-draft behavior, not timetable source truth or a persistent
+save. Sharing includes four actual PNG exports; the ticket retains its
+explicit all-time Totalled summary. The strengthened endpoint-label check
+uses a compact sheet with route lines disabled by test flags; the full route
+overview was inspected separately. Source symbols remain separate from
+passenger stop import.
+
+The first runs finished 2/5, 1/6 and 4/5 passed, with screen reachability,
+scrolling and accessibility-selector failures and a real empty-reply defect.
+An empty `{"trains":[]}` response caused unique station-name resolution to add
+IDs and enable Apply even though the merge added nothing. The tested app fix
+resolves identities only for journeys changed by the merge. The successful
+isolated test verified that an empty reply stays a no-op. QuickMatch and the
+stronger VisibleEvidence run then completed with exit code 0; all eight cases
+have a passing recorded outcome, rather than one combined eight-case run.
+
+The [native validation manifest](native-ui-integration-validation-2026-09-30.json)
+records test outcomes, source hashes, the tested timetable database hash
+`af8568aa8b5ecadee80ec335891d9d0a7f7b0edb918b421bd7436088d07996f4`
+and source fingerprint
+`9b67f9950604dc43eee861bbc48d0661ebb58033fac963f4775dda71b7a5a5d0`.
+The final documentation review verified all **14 retained summaries and PNGs**
+against their recorded SHA-256 hashes and inspected the visible not-via and
+endpoint-label screenshots. The five temporary logs, five `.xcresult` bundles
+and built app database are no longer available, so those originals cannot be
+re-inspected. Five of the seven recorded native source hashes and the current
+canonical database differed at review time. Passing results therefore apply
+to the recorded snapshot, not the newer source files, routing/playback work or
+station-English changes. No UI tests were rerun for this documentation update.
 
 Subscription protocol tests run with:
 

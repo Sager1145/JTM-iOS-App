@@ -300,7 +300,7 @@ private struct StatisticsPosterPage: View {
         }
         .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color(.systemBackground))
+        .background(Color.railElevated(.systemBackground))
     }
 
     /// The title row, and the app's mark in the space to its right.

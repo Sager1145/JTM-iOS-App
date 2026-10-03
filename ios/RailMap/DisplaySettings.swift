@@ -25,9 +25,9 @@ import SwiftUI
 /// corridor curve fitter, which is not wired into this renderer; a slider with
 /// nothing behind it is a control that lies. `showFitCurves` and
 /// `showHoverRegions` are desktop debug overlays for a pointer this app does
-/// not have. `mapOpacity` lives on `RailMapController.basemapOpacity`, which
-/// already owned it before this file existed, and `uiMode` has no meaning where
-/// the layout is chosen from the window's shape.
+/// not have. `mapOpacity` is omitted because the basemap is drawn without a
+/// dimming overlay, and `uiMode` has no meaning where the layout is chosen
+/// from the window's shape.
 @MainActor
 @Observable
 final class DisplaySettings {
@@ -73,6 +73,8 @@ final class DisplaySettings {
     var nameReadingRomaji: Bool = Defaults.nameReadingRomaji
     var nameReadingZh: Bool = Defaults.nameReadingZh
     var nameReadingsCustomized: Bool = Defaults.nameReadingsCustomized
+    /// Applies to journey cards independently of the interface language.
+    var showJourneyTranslations: Bool = Defaults.showJourneyTranslations
 
     // MARK: - defaults
 
@@ -103,6 +105,7 @@ final class DisplaySettings {
         static let nameReadingRomaji = false
         static let nameReadingZh = false
         static let nameReadingsCustomized = false
+        static let showJourneyTranslations = false
     }
 
     // MARK: - persistence
@@ -141,6 +144,7 @@ final class DisplaySettings {
         nameReadingRomaji = Defaults.nameReadingRomaji
         nameReadingZh = Defaults.nameReadingZh
         nameReadingsCustomized = Defaults.nameReadingsCustomized
+        showJourneyTranslations = Defaults.showJourneyTranslations
         persist()
     }
 
@@ -165,6 +169,7 @@ final class DisplaySettings {
                 "nameReadingRomaji": nameReadingRomaji,
                 "nameReadingZh": nameReadingZh,
                 "nameReadingsCustomized": nameReadingsCustomized,
+                "showJourneyTranslations": showJourneyTranslations,
             ] as [String: Any],
             forKey: Self.storageKey
         )
@@ -197,6 +202,7 @@ final class DisplaySettings {
         nameReadingRomaji = flag("nameReadingRomaji", Defaults.nameReadingRomaji)
         nameReadingZh = flag("nameReadingZh", Defaults.nameReadingZh)
         nameReadingsCustomized = flag("nameReadingsCustomized", Defaults.nameReadingsCustomized)
+        showJourneyTranslations = flag("showJourneyTranslations", Defaults.showJourneyTranslations)
         let savedMarkerStyleVersion = (saved["markerStyleVersion"] as? NSNumber)?.intValue ?? 1
         if savedMarkerStyleVersion < Self.markerStyleVersion {
             // Preserve a reader's deliberate tuning. Only values equal to the

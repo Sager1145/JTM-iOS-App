@@ -41,11 +41,12 @@ struct SettingsView: View {
     /// the workspace root with the whole app in between.
     @AppStorage("launch-map-scope") private var launchScope = LaunchMapScope.auto.rawValue
     @AppStorage("launch-map-region") private var launchScopeRegion = Region.jp.rawValue
-    @AppStorage(Region.northAmericaDefaultsKey) private var northAmericaEnabled = false
+    @AppStorage(Region.northAmericaDefaultsKey) private var northAmericaEnabled = true
 
     var body: some View {
         Form {
             languageSection
+            journeyNameSection
             stationNameSection
             appearanceSection
             launchScopeSection
@@ -96,6 +97,23 @@ struct SettingsView: View {
     }
 
     // MARK: - 1b. Station name readings
+
+    private var journeyNameSection: some View {
+        Section(localization.journeyText("ios.journey.cardNames")) {
+            VStack(alignment: .leading, spacing: 4) {
+                Toggle(
+                    localization.journeyText("ios.journey.showTranslations"),
+                    isOn: Binding(
+                        get: { display.showJourneyTranslations },
+                        set: { display.showJourneyTranslations = $0; display.persist() }))
+                .accessibilityIdentifier("showJourneyTranslations")
+                Text(localization.journeyText("ios.journey.showTranslationsNote"))
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            }
+            .padding(.vertical, 2)
+        }
+    }
 
     /// The three independent reading toggles.
     ///
@@ -277,15 +295,6 @@ struct SettingsView: View {
                 .font(.footnote)
                 .foregroundStyle(.secondary)
             }
-            DisplaySliderRow(
-                title: localization.countryText("disp.mapOpacity", fallback: "Basemap opacity"),
-                note: localization.text(
-                    "ios.note.basemapOpacity", fallback: "Affects the basemap only."),
-                value: $controller.basemapOpacity,
-                range: 0...1,
-                step: 0.05,
-                format: { displayDecimal($0, places: 2) }
-            )
             LabeledContent(localization.text("ios.renderer", fallback: "Renderer")) {
                 Text(verbatim: "Apple Maps")
             }
@@ -451,7 +460,6 @@ struct SettingsView: View {
                 // `nil` is how the engine spells that.
                 localization.setNameReadings(nil)
                 display.syncNameReadingDefaults(to: localization.language)
-                controller.basemapOpacity = RailMapController.defaultBasemapOpacity
             }
         } footer: {
             Text(

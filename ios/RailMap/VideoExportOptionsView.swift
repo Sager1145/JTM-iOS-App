@@ -108,6 +108,7 @@ struct VideoExportOptionsView: View {
                         onStart()
                     }
                     .disabled(seconds <= 0)
+                    .accessibilityIdentifier("videoExportStart")
                 }
             }
         }

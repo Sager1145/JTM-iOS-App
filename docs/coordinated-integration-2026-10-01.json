@@ -1,0 +1,1361 @@
+{
+  "schema": "coordinated-integration/1",
+  "date": "2026-10-01",
+  "repository": "JTM-iOS-App",
+  "baseCommit": "419212f4b0ae3b71fee15a3c990a520915c4ada2",
+  "integrationBranch": "codex/integrate-chats-2026-10-01",
+  "status": "transparent_tabbar_menu_and_show_all_201_loading_native_repairs_in_progress",
+  "northAmerica": {
+    "status": "paused",
+    "additionalPublication": "none",
+    "snapshotFilesChecked": 43,
+    "databaseQueriesChecked": 27,
+    "databaseRowsChecked": 502535,
+    "snapshotChanges": 0,
+    "englishCatalogChanges": 0,
+    "resourceAndNorthAmericaPinsChecked": 1935,
+    "resourceAndNorthAmericaPinChanges": 0,
+    "lastIndependentSnapshotUtc": "2026-10-01T17:14:45.911950+00:00",
+    "newUSCANamesFiles": 0,
+    "stationNameRowsUnchanged": 27054,
+    "lineStationNameRowsUnchanged": 19236,
+    "resourceAndNorthAmericaPinScope": "Historical combined resource pins; contains Japan files now legitimately changed. NA-only 43 file and 27 DB query pins are the active freeze contract.",
+    "resourceAndNorthAmericaPinVerificationStatus": "previous_snapshot_before_latest_japan_repairs",
+    "sharedLaneFieldsChecked": 13,
+    "sharedLaneFieldsChanged": false,
+    "latestGuard": {
+      "measuredAt": "2026-10-01T19:09:53.397068+00:00",
+      "filePins": 43,
+      "changedFiles": [],
+      "databasePins": 27,
+      "rows": 502535,
+      "changedDatabasePartitions": [],
+      "changedEnglishCountries": [],
+      "newNorthAmericaNameResources": [],
+      "sharedNorthAmericaLaneFields": 13,
+      "sharedNorthAmericaLanesChanged": false
+    },
+    "latestReadonlyGuard": "/private/tmp/jtm-na-freeze-latest-readonly.json"
+  },
+  "verification": {
+    "coreAndPresentation": {
+      "status": "passed_final_production_and_corrected_test_contract",
+      "actualExitCode": 0,
+      "tests": 1098,
+      "targets": [
+        {
+          "tests": 343,
+          "suites": 32
+        },
+        {
+          "tests": 755,
+          "suites": 90
+        }
+      ],
+      "sourceBoundary": "2025.5.2 JP, station-interval-v1 solver, final22 product source; explicit unknown-direction traversal contract retained",
+      "gate": "/private/tmp/jtm-final-full-core-v3-contract-fixed-gate.log",
+      "swiftLog": "/private/tmp/jtm-final-full-core-v3-swift.log",
+      "warnings": 0,
+      "editorPersistenceAndSubscriptionHarnesses": "passed"
+    },
+    "node": {
+      "status": "passed",
+      "tests": 201,
+      "actualExitCode": 0,
+      "baselineTestsBeforeStationNameIntegration": 159,
+      "latestScope": "Final2025.5.2 JP source, all256 current precompute, all29 regenerated goldens",
+      "scopeNote": "Actual201/201, exit0; latest complete suite recorded below."
+    },
+    "lint": {
+      "status": "passed",
+      "assets": 63,
+      "classicScripts": 56,
+      "actualExitCode": 0,
+      "latestScope": "2025.5.2 final Japan source"
+    },
+    "stationTables": {
+      "status": "passed",
+      "regions": [
+        "jp",
+        "tw",
+        "hk",
+        "mo"
+      ]
+    },
+    "stationEnglishCatalog": {
+      "status": "passed_latest_2025_5_2_source",
+      "inputFiles": 38,
+      "indexedInputHashesExact": true,
+      "nonJapanCountryProjectionsUnchanged": true
+    },
+    "northAmericaTileCompletionSyntheticTests": {
+      "status": "passed",
+      "tests": 7,
+      "productionDataWrites": false
+    },
+    "portFixtures": {
+      "status": "passed_final_2025_5_2_all29",
+      "fullCheckRerun": true,
+      "swiftParityPassed": true,
+      "laterEnglishPublicationDoesNotFeedFixtureGenerator": true,
+      "swiftParityPassedOnPreviousSnapshot": true,
+      "latestJapanInputParityVerified": true,
+      "scopeNote": "Full JS generation/check all29 exact; finalSwift1098 includes fixture parity; no remaining freshness issue.",
+      "actualExitCode": 0,
+      "files": 29
+    },
+    "normalAppGate": {
+      "status": "historical_snapshot_superseded_by_crash22NormalApp",
+      "inputFiles": 2049,
+      "inputChangesDuringGate": 0,
+      "normalResourceCopyPhase": true,
+      "appWarnings": 0,
+      "contracts": "passed",
+      "editorSha256": "f00b87876cf6505518087a69ffcf6bd41f3b8f87ed301fc644d9b71306fd3ed5",
+      "finalProductHashes": {
+        "ios/RailMap/BottomChrome.swift": "a01bdd69ce9ac21d761f6b43972c861ead98fc22ca5c8d8ba19f4b5cb643f460",
+        "ios/RailMap/ContentView.swift": "8c870f5040ce995776aae0946a33d22463dcde9417b66898e6e324abff8156df",
+        "ios/RailMap/PlaybackTransportBar.swift": "e44b3b31cb4dec17e66e1b34976d7155c0a4dd496bf464f9dbfc981ad54f6969",
+        "ios/RailMap/RailMapView.swift": "710219dbf17f6c795b4be4551f3ef3de9b00967edb6aeea548fb9909b1e6aabc",
+        "ios/RailMap/ResidentMapChrome.swift": "7edc73a2832f4e395d1198e13a8124293bd3157436550d781ab9d4a651a42809",
+        "ios/RailMap/RailMapController.swift": "6ef2e56b9762cc379ad453660b9e1964e52851aac20b3aeaee2845b913858738",
+        "ios/RailKit/Sources/RailPresentation/MapCameraPolicy.swift": "c8a894c1903a979499f809e14eadc68d5cea6dbc4d0d5334572e7fbc27c38a8d"
+      },
+      "actualExitCode": 0
+    },
+    "nativeAcceptance": {
+      "status": "final22_acceptance_in_progress_with_actual_failures",
+      "ownerThread": "01a0e46e-de45-7f52-854f-717580366bbc",
+      "historicalFailuresRetained": true,
+      "completedCurrentEditorChecks": [
+        "ordinary stop deletion, undo and region change",
+        "AI interval insertion, adjacent service fields and complete notes after save and relaunch",
+        "date, official English name, custom name, original Japanese name and save/reopen",
+        "translation switch choice persists after relaunch",
+        "physical route preview cancellation, repeat deletion, replacement, undo, protected station retention, explicit approval and save/relaunch",
+        "service type suggestion Rap to Rapid and exact custom vehicle type E235"
+      ],
+      "remainingCurrentEditorChecks": [],
+      "remainingOtherChecks": [
+        "final22 strict original UI failure diagnosis and actual retest",
+        "final22 iPhone All last-card and startup/pan stress acceptance"
+      ],
+      "longJourneyDetails": {
+        "status": "passed",
+        "checks": 4,
+        "scope": [
+          "open and scroll details",
+          "expand many intervals",
+          "preserve journey ID after station-name edit"
+        ]
+      },
+      "calendar": {
+        "status": "passed",
+        "scope": [
+          "date ranges",
+          "deselect dates",
+          "All Time clears date filtering",
+          "mutually exclusive classification"
+        ]
+      },
+      "mapLayers": {
+        "status": "passed",
+        "earlierAffectedPassWithdrawn": true,
+        "scope": [
+          "railway layers",
+          "density selection",
+          "marker master switch",
+          "re-enable markers"
+        ],
+        "staleSelectionIdentifierRetested": 2
+      },
+      "mapZoomPerformance": {
+        "japanAndDenseTokyo": "passed_original_thresholds",
+        "northAmericaFrozenData": "passed_in_completed_phone_map_batch",
+        "productionDataWrites": false
+      },
+      "phoneMapBatch": {
+        "validPassed": 21,
+        "pendingReruns": 0,
+        "pendingReasons": [],
+        "staleIdentifiersCorrectedAndRetested": true,
+        "orangeColdStartPassedAllZoomAndGraphicsThresholds": true,
+        "earlierViewportSetupFailureRetained": true,
+        "earlierViewportSetupFailureCause": "not established"
+      },
+      "extractedTestsCompile": "passed",
+      "extractedDateAndIntervalTests": "passed_after_diagnostic_cleanup",
+      "editorStatus": "passed",
+      "playbackLayout": {
+        "status": "phone_all_four_layouts_passed",
+        "previousFailures": [
+          "phone portrait AX5 Stop unreachable",
+          "phone landscape controls escape screen",
+          "phone landscape AX5 controls escape screen"
+        ],
+        "thresholdsWeakened": false,
+        "phoneCases": 4,
+        "nativeAX5StopReachability": "passed",
+        "originalContainmentAndNoOverlapAssertions": true,
+        "iPad": "unresolved_invalid_hit_point_after_restart_and_foreground_activation"
+      },
+      "videoCancelExport": {
+        "status": "passed",
+        "actualMP4RetainedByOwner": true
+      },
+      "saveAndRelaunchDetails": {
+        "status": "passed",
+        "exactValues": [
+          "Tokyo",
+          "Shinagawa",
+          "E235"
+        ]
+      },
+      "cameraResize": {
+        "status": "passed",
+        "scope": [
+          "rotation",
+          "close journey card",
+          "switch statistics page"
+        ],
+        "originalCenterToleranceDegrees": 0.001,
+        "explicitIntentRevisionGuard": "passed_targeted_policy_and_phone_rotation_and_selection_regressions"
+      },
+      "accessibilityList": {
+        "status": "passed_light_and_dark",
+        "headingsAndDatesReadable": true,
+        "playAndEditLabelsUntruncated": true,
+        "playEditAndMoreNativeReachability": "passed",
+        "editCancelCloseAndOriginalListRestore": "passed",
+        "originalRowAndSearchPreserved": true,
+        "originalLocationTolerancePoints": 2,
+        "previousFailureCause": "test scroll started on Locate route and activated the real locate action",
+        "temporaryDetentDiagnosticsRemoved": true,
+        "productPatch": "ios/RailMap/JourneyComponents.swift",
+        "productSha256": "3db11aeb6d2a940499c5706b016b08ca5290ab0fdf8d6868a9d0cf3f554e9f5e"
+      },
+      "phoneDetailFocusAndPartialVideo": {
+        "status": "passed",
+        "checks": [
+          "WorkspaceEditingTests/testDetailEditsSurviveVisibilityChange",
+          "MapCameraIntentTests/testUserSelectionFocusesWithAutoFocusDisabled",
+          "PlaybackVideoExportTests/testCancelledRecordingOffersThePartialVideo",
+          "PlaybackVideoExportTests/testStoppingPlaybackKeepsThePartialVideoReachable"
+        ],
+        "cases": 4,
+        "skipped": 0,
+        "actualVideosFullyDecoded": true,
+        "sampledFramesBlackMapTiles": false
+      },
+      "naturalCompleteVideo": {
+        "uiStatus": "passed",
+        "completeShareLabelVerified": true,
+        "partialVideoLabelRejected": true,
+        "fullMP4Decode": "passed",
+        "decodedFrames": 149,
+        "durationSeconds": 14.916667,
+        "pixelSize": [
+          282,
+          540
+        ],
+        "sampledFrames": [
+          "start",
+          "middle",
+          "last"
+        ],
+        "sampledFramesBlackMapTiles": false,
+        "frameByFrameVisualInspection": false,
+        "formalTestSynced": true
+      },
+      "iPadEnvironment": {
+        "xcodeVersion": "27.0",
+        "xcodeBuild": "27A266",
+        "runtimeVersion": "27.0",
+        "runtimeBuild": "24A434",
+        "alternativeInstalledIOSRuntime": false,
+        "systemNativeControlContrast": {
+          "status": "portrait_and_matching_landscape_collected",
+          "settingsVisibleNativeControlsHittable": true,
+          "portraitWindowPoints": [
+            1032,
+            1376
+          ],
+          "matchingLandscapeWindowPoints": [
+            1376,
+            1032
+          ],
+          "matchingLandscapeVisibleNativeControls": 12,
+          "comparisonMatchesFailedLandscapeWindow": true,
+          "generalSimulatorClickFailureEstablished": false
+        },
+        "platformBugEstablished": false,
+        "installedAppReplacement": {
+          "observed": true,
+          "affectedDiagnosticDiscarded": true,
+          "originalFrozenAppRebinding": "passed_for_corrected_map_selection_checks",
+          "newSourceAcceptance": false,
+          "ownerThread": "01a0f7ea-0250-78d0-82e5-a893ba06535f",
+          "reportedWindowTimezone": "America/Toronto",
+          "reportedTestStart": "2026-10-01 10:56:52.858",
+          "reportedTestEnd": "2026-10-01 10:57:44.545",
+          "xcodeCompletion": "2026-10-01 11:00:44.858",
+          "collidingExecutableSha256": "168b04067190748e8364e9f482ad84020f82cfe9bd74c1399fdd0ea8b9d4f3f2",
+          "affectedCaseProvenanceAudit": "pending_owner"
+        }
+      },
+      "iPadSupplementalCoordinatePlayback": {
+        "status": "passed",
+        "pausePercent": 53,
+        "holdSeconds": 3.06,
+        "resumedPercent": 69,
+        "resumeSeconds": 1.78,
+        "mapControlsAfterStop": 5,
+        "originalNativeHittabilityFailuresReplaced": false
+      },
+      "iPadFunctionalQueue": {
+        "selected": 31,
+        "completed": 31,
+        "passed": 16,
+        "failed": 13,
+        "skipped": 2,
+        "status": "original_queue_completed_with_failures",
+        "unexecuted": 0,
+        "skippedScope": "two phone-only scenarios",
+        "failedOriginalCases": [
+          "JourneyTranslationUITests/testOfficialNameCanBeAppliedAndEditedWithoutChangingOriginal",
+          "JourneyGroupUITests/testDraftGroupNameRemainsEditableWhenReselectedAndAfterConfirmation",
+          "JourneySaveUITests/testNewJourneyGroupNameCanBeEditedAfterReturningFromConfirmation",
+          "ConsolidatedDetailGroupUITests/testTokyoGroupedStationContainsEveryNameLineAndOperator",
+          "ConsolidatedDetailGroupUITests/testSavedTwelveCharacterGroupShowsCrossRegionHistoryTicket",
+          "ThroughServiceUITests/testSectionServiceApplyPreservesDraftNotes",
+          "ThroughServiceUITests/testStandaloneChatGPTQueryRequiresDateAndSignedInAccount",
+          "ConsolidatedSectionPersistenceUITests/testTwoDifferentPhysicalSectionServicesAndNotesSurviveSaveAndRelaunch",
+          "ConsolidatedSectionPersistenceUITests/testAIInsertionPreservesNeighborServiceAndNotesAfterSaveAndRelaunch",
+          "OrdinaryPhysicalRouteUITests/testGuidedCorrectionPreviewsBeforeApplyingAndCanUndo",
+          "MapCameraIntentTests/testSelectedJourneyDoesNotReframeAfterLayoutReplacementOrStatistics",
+          "WorkspaceEditingTests/testReviewedImportKeepsRegionAfterCancelAndReopen",
+          "WorkspaceEditingTests/testStopDeleteUndoRestoresEndpointRolesAndRegionClearsUndo"
+        ]
+      },
+      "iPadCameraDistance": {
+        "status": "failed_original_assertion",
+        "before": 140354.7,
+        "after": 105266.1,
+        "cause": "not established",
+        "centerToleranceDegrees": 0.001,
+        "distanceThresholdUnchanged": true,
+        "supplementalTimeline": {
+          "status": "passed_once",
+          "distance": 140354.7,
+          "observationSecondsAfterLandscape": 2,
+          "centerAndIntentRevisionStable": true,
+          "originalFailureExplained": false,
+          "originalFailureReplaced": false
+        }
+      },
+      "realOSReduceMotion": {
+        "systemPath": "passed",
+        "actualSystemSettingVerified": true,
+        "fullNormalMotionFlow": "failed_after_returning_to_original_list",
+        "fullReducedMotionFlow": "failed_after_returning_to_original_list",
+        "failure": "original native isHittable assertion"
+      },
+      "adoptedUITestSourceIndex": {
+        "scenarios": 13,
+        "uniqueCanonicalFiles": 10,
+        "canonicalHashesMatchEvidence": true,
+        "gitIndexHashesMatchEvidence": true,
+        "aggregateRun": false,
+        "phoneOnlyVideoSkipsNotCountedAsIPadPass": true,
+        "scope": "v4 baseline before later adopted iPad query and selection corrections",
+        "finalIndexRefreshRequired": true
+      },
+      "iPadMapQueue": {
+        "selected": 21,
+        "completed": 21,
+        "passed": 18,
+        "failed": 3,
+        "skipped": 0,
+        "status": "original_queue_completed_with_failures",
+        "unexecuted": 0,
+        "failedOriginalCases": [
+          "MapLayerToggleTests/testACategoryHiddenRideIsNotSelectable",
+          "MapLayerToggleTests/testAHiddenRideIsNotSelectable",
+          "MapZoomPerformanceTests/testTwoFingerMapRotationThenZoomDefersGeometryBuilds"
+        ]
+      },
+      "iPadOriginalAgreedQueues": {
+        "status": "completed_with_failures_pending_corrections",
+        "functional": {
+          "selected": 31,
+          "passed": 16,
+          "failed": 13,
+          "skipped": 2
+        },
+        "motion": {
+          "selected": 3,
+          "passed": 1,
+          "failed": 2,
+          "skipped": 0
+        },
+        "map": {
+          "selected": 21,
+          "passed": 18,
+          "failed": 3,
+          "skipped": 0
+        },
+        "unexecuted": 0,
+        "failureThresholdsWeakened": false
+      },
+      "newMenuHeight": {
+        "status": "source_frozen_awaiting_integrated_build_and_native_acceptance",
+        "requestedPoints": 40,
+        "files": [
+          "ios/RailMap/ControlSizing.swift",
+          "ios/RailMap/JourneyComponents.swift",
+          "ios/RailMap/RideCard.swift",
+          "ios/RailMap/RideDetailView.swift"
+        ],
+        "ownerBuildExitCode": 65,
+        "ownerBuildNotSuccessful": true,
+        "earlierAccessibilityLabelsProofIsHistorical": true
+      },
+      "iPadCorrectedSelectionTests": {
+        "status": "passed_on_previous_frozen_app",
+        "checks": 2,
+        "visibleRoutePositiveSelectionRetained": true,
+        "hiddenRouteNegativeSelectionRetained": true,
+        "actualInstalledAppHashesChecked": true,
+        "cause": "window center did not match geographic target projection with leading dock inset",
+        "canonicalTestsSynced": true,
+        "latestProductSourceRevalidation": "pending"
+      },
+      "iPadCorrectedQueryForm": {
+        "status": "passed_on_previous_frozen_app",
+        "durationSeconds": 53.779,
+        "scope": [
+          "query",
+          "required date hint",
+          "date input",
+          "notes",
+          "signed-out account gate"
+        ],
+        "originalAssertionsRetained": true,
+        "canonicalTestSynced": true,
+        "latestProductSourceRevalidation": "pending"
+      },
+      "iPadCrossRegionGroup": {
+        "status": "failed_original_native_hittability_assertion_after_saved_group_checks",
+        "savedAndPersistedAfterRelaunch": true,
+        "exactGroupLabelPassed": true,
+        "allTimeSelectedStatePassed": true,
+        "currentTicketUsesSeparateGroupAndTimeLabels": true,
+        "fullOriginalWorkflowPassed": false
+      },
+      "historicalEvidenceScope": "Earlier snapshot checks below remain historical; current22-binary acceptance is recorded separately.",
+      "final22IPadFocusedBatch": {
+        "status": "completed_with_failures",
+        "selected": 9,
+        "passed": 3,
+        "failed": 6,
+        "actualFailureGate": 65,
+        "passedSelectors": [
+          "WorkspaceEditingTests/testReviewedImportKeepsRegionAfterCancelAndReopen",
+          "MapLayerToggleTests/testAHiddenRideIsNotSelectable",
+          "MapLayerToggleTests/testACategoryHiddenRideIsNotSelectable"
+        ],
+        "footerFailure": "passportShareNote.exists false; native-hit assertion not reached",
+        "remainingFailureDiagnosis": "owned by Native; no cause or current-phone crash conclusion yet",
+        "evidence": "/private/tmp/jtm-consolidated-20260930/final22-ipad-footer-and-original8-isolated-run.json",
+        "binarySHA256": "13a4156e6b845b8c97dad08b0c407cc6f84774ad4db9330370da5d24a100ea17",
+        "debugDylibSHA256": "095eb80561b40eff5b1ec290f0d2f304c0be41cf2df01e7f88cb5e34ba3c02b6",
+        "sourceHashAdoptionProof": "/private/tmp/jtm-consolidated-20260930/final22-native-snapshot-proof.json",
+        "installedBinaryHashChanges": [],
+        "allCasesActuallyInstalledExpectedBinary": true,
+        "testSourceBoundary": "Original assertions executed in private runner with added All last-card regression; RailMapUITests.swift privatef7e719… versus canonicaldbf28e…; final minimal regression adoption pending."
+      },
+      "final22PhoneAllLastCard": {
+        "status": "passed",
+        "detents": [
+          "medium",
+          "expanded"
+        ],
+        "completeCardAboveTabBar": true,
+        "nativeHittability": true,
+        "newRegressionCanonicalAdoption": {
+          "status": "minimal_patch_applied_and_staged",
+          "canonicalFileSHA256": "0d2628cd1a3b5d19718b351af44683b34815c759a04eb32ec7e9316133afcfac",
+          "originalNativeHitAndFullCardContainmentRetained": true,
+          "strictMethodEqualsPreviouslyPassedRunnerWithoutTwoReadOnlyMetricsCalls": true,
+          "minimalCanonicalMethodRerun": "passed_actual_exit0",
+          "proof": "/private/tmp/jtm-final-All-regression-canonical-adoption.json"
+        },
+        "log": "/private/tmp/jtm-consolidated-20260930/final22-phone-all-final-card-1.log",
+        "actualExitCode": 0,
+        "canonicalMinimalTestRerun": "passed",
+        "canonicalFileSHA256": "0d2628cd1a3b5d19718b351af44683b34815c759a04eb32ec7e9316133afcfac",
+        "durationSeconds": 27.128,
+        "actualInstalledAppHashVerified": true,
+        "formalLog": "/private/tmp/jtm-consolidated-20260930/final22-phone-canonical-All-final-card-1.log",
+        "formalProof": "/private/tmp/jtm-consolidated-20260930/final22-All-final-card-canonical-final-PASS-proof.json"
+      },
+      "final22IPadFooterVisualContrast": {
+        "footerLookupAssertion": "failed",
+        "fullFooterVisuallyAboveTabBarAtEnd": true,
+        "actualScrollingVisible": true,
+        "cause": "AX lookup mismatch not yet explained; no product cause established",
+        "ownerEvidence": "/tmp/jtm-tabbar-final22-visual-verification.json",
+        "lastFrame": "/tmp/jtm-footer-video-frames/frame-120.png",
+        "productSourceUnchanged": true,
+        "testFailureWithdrawn": false
+      },
+      "final22SettingsHitContrast": {
+        "visibleControls": 25,
+        "nativeHittability": "all passed",
+        "device": "same iPad simulator as six current failures",
+        "orientation": "portrait",
+        "generalDeviceHitFailureEstablished": false,
+        "specificAppCause": "still unconfirmed"
+      },
+      "final22FormalResourceConsistency": {
+        "files": 1271,
+        "formalExecutionBundleDifferences": 0,
+        "RootReferenceBundleDifferences": 0,
+        "currentActualIPhoneInstalledBundleDifferences": 0,
+        "scope": "Formal execution bundle and actual current iPhone after canonicalAll are exact. Earlier iPad installed resource bytes were not retroactively sampled; each original case sampled installed main/dylib. Diagnostic initial mismatch confined to distinct camera-trace-derived copy.",
+        "executionProof": "/private/tmp/jtm-consolidated-20260930/final22-formal-App-full-resource-consistency-proof.json",
+        "currentPhoneInstalledProof": "/private/tmp/jtm-consolidated-20260930/final22-phone-canonical-All-actual-installed-full-bundle-proof.json",
+        "RootReferenceManifest": "/private/tmp/jtm-final-crash22-normal-app-bundle-file-hashes.json"
+      },
+      "final22CameraDiagnostic": {
+        "status": "original_selector_passed_without_reproducing_original_failure",
+        "actualExitCode": 0,
+        "privateBuildWithLogging": true,
+        "productFixEstablished": false,
+        "originalFailureWithdrawn": false,
+        "proof": "/private/tmp/jtm-consolidated-20260930/final22-camera-boundary-stream-proof.json"
+      },
+      "final22PrivatePublicHitContrast": {
+        "scope": "Supplementary private process diagnostic, not final22 strict original-case acceptance",
+        "UIKitPaths": "Journey-center to corresponding collection cell; tab-center to native tab button",
+        "sameStateNativeAX": "Nine sampled controls still nativeHit false before/after",
+        "productOrSDKCauseEstablished": false,
+        "actualSamples": 3,
+        "conclusion": "/private/tmp/jtm-consolidated-20260930/final22-public-hit-process-actual-conclusion.json",
+        "uiFlagsChanged": false
+      },
+      "final22StartupPanPartial": {
+        "status": "in_progress",
+        "loadedJourneys": 201,
+        "firstInLoadingPanPerformance": "passed",
+        "secondPanActualVideoMotion": true,
+        "secondPanDebugCameraAndFrameValues": "stale",
+        "identifiedObservabilityIssue": "Debug status published only when geometry rebuilds; patch and actual strict retest pending.",
+        "fullStressAcceptanceComplete": false,
+        "physicalCrashEliminationEstablished": false
+      }
+    },
+    "japanPackagePreflightBaseline": {
+      "status": "complete_inputs_snapshot_checked",
+      "scope": "Git index snapshot before latest Tokyo source updates; package structural baseline only",
+      "packageSha256": "57594bb68b7fc7099f6be30078b2bddc1b063824c3bd016a68f19abdf903bbf0",
+      "lineCount": 655,
+      "stationMembershipRows": 10227,
+      "intervals": 9576,
+      "vertices": 385502,
+      "extraSegments": 0,
+      "errors": 0,
+      "warnings": 20,
+      "warningTriageForChangedScope": "pending final comparison",
+      "iOSContractsInTemporarySnapshot": "not checked; WEB_ONLY_CHECKOUT",
+      "firstRunMissingTemporaryDependencies": "discarded; corrected snapshot includes exact index stations/sections/readings/store"
+    },
+    "latestNameFreshness": {
+      "stationTableValidator": "passed_jp_tw_hk_mo",
+      "runtimeStationNames": "passed",
+      "jpEnglish": "passed",
+      "allEnglishRequireEnglish": "passed",
+      "latestSourceVersion": "2025.5.2",
+      "northAmerica": "read_only_checks_no_regeneration"
+    },
+    "latestCompleteNodeSuite": {
+      "actualExitCode": 0,
+      "tests": 201,
+      "passed": 201,
+      "failed": 0,
+      "durationSeconds": 80.316306041,
+      "sourceBoundary": "After final2025.5.2JP all256precompute and complete29goldens",
+      "log": "/private/tmp/jtm-final-node-complete-fixtures-v2.log"
+    },
+    "portFixturesFinalV2Generation": {
+      "actualExitCode": 0,
+      "files": 29,
+      "changedFiles": 12,
+      "freshnessCheck": "passed",
+      "log": "/private/tmp/jtm-final-regenerate-fixtures-v2.log",
+      "freshnessCheckActualExitCode": 0,
+      "freshnessCheckMatchedFiles": 29,
+      "freshnessCheckLog": "/private/tmp/jtm-final-full-fixtures-v2-check.log"
+    },
+    "completeFixtureNormalApp": {
+      "actualExitCode": 0,
+      "gateLog": "/private/tmp/jtm-final-normal-app-complete-fixtures-gate.log",
+      "beforeInputCount": 7457,
+      "afterInputCount": 7458,
+      "changedInputs": [
+        "ios/RailMap/MapNetworkRendering.swift",
+        "ios/RailMap/RailMapView.swift",
+        "ios/tools/verify-map-worker-lifecycle.py",
+        "ios/tools/verify-route-caches.py"
+      ],
+      "sourceFrozen": false,
+      "finalAcceptance": false,
+      "executableSHA256": "5e2703d3792df05db9b1c9fd7600d3a1e859d4a56df847ae170bc92c107ec13c",
+      "debugDylibSHA256": "aeda3e48abb3fe846680f997f5ead034e22ef11597cf6e7fa4694469b5e0a0da"
+    },
+    "crash22NormalApp": {
+      "actualExitCode": 0,
+      "warnings": 0,
+      "inputCount": 7458,
+      "changedInputs": 0,
+      "crash22HashDrift": 0,
+      "proof": {
+        "inputs": 7458,
+        "changedInputs": [],
+        "crash22ManifestDrift": [],
+        "binaryHashes": {
+          "RailMap": "13a4156e6b845b8c97dad08b0c407cc6f84774ad4db9330370da5d24a100ea17",
+          "RailMap.debug.dylib": "095eb80561b40eff5b1ec290f0d2f304c0be41cf2df01e7f88cb5e34ba3c02b6"
+        }
+      },
+      "gate": "/private/tmp/jtm-final-crash22-normal-app-gate.log",
+      "sourceBoundary": "Historical before validatedDEBUG status freshness patch; resource/data source unchanged."
+    },
+    "fullCoreV2CurrentIssues": {
+      "issues": 2,
+      "test": "DirectionalAlignmentSelectionTests.unassignedDirections",
+      "actualUnknownPhysicalPairs": 7,
+      "legacyTestExpected": 6,
+      "newPair": "jp-東日本旅客鉄道-大崎支線-p1",
+      "newPairPermittedTraversal": "reverse",
+      "linkedProductionDiagnosticAssertions": 21,
+      "diagnosticPassed": 21,
+      "productionDataChangeNeeded": false,
+      "proposedTestOnlyPatch": "/private/tmp/jtm-unassigned-direction-contract.patch",
+      "fullRun": {
+        "actualExitCode": 1,
+        "coreTests": 755,
+        "presentationTests": 343,
+        "issues": 2,
+        "coreDurationSeconds": 1931.253,
+        "failureGate": "/private/tmp/jtm-final-full-core-v2-gate.log"
+      }
+    },
+    "fullCoreV3": {
+      "status": "passed",
+      "testContractCorrection": "Seven unassigned physical directions; six bidirectional and one Osaki explicitly reverse. Allseven still tested bothorders; no production/data changes or skips.",
+      "gate": "/private/tmp/jtm-final-full-core-v3-contract-fixed-gate.log",
+      "actualExitCode": 0,
+      "tests": 1098,
+      "coreTests": 755,
+      "presentationTests": 343,
+      "coreDurationSeconds": 1082.634,
+      "productionHarnesses": "passed",
+      "warnings": 0
+    },
+    "stagedDatabaseLFS": {
+      "sha256": "556781dc5511aef2b9214d22dde8a5f672f6ebac52eef5eee5c764ba1bd59681",
+      "bytes": 200429568,
+      "status": "staged_current_verified_version"
+    },
+    "finalWhitespaceOnlyChecks": {
+      "actualExitCodes": [
+        0,
+        0
+      ],
+      "scripts": [
+        "verify-map-detail-fades.py",
+        "verify-route-resolution-cancellation.py"
+      ],
+      "changes": "Only one trailing space on Python raw string delimiter removed per script; no product/data change",
+      "mapFadeChecks": "passed",
+      "cancellationChecks": 5,
+      "cancellationPassed": 5,
+      "evidence": "/private/tmp/jtm-final-whitespace-only-fixes.json",
+      "oldCrash22HashBoundary": "Historical original script hash retained; final manifest will record current whitespace-only change separately."
+    },
+    "stagedDiffWhitespaceCheck": {
+      "actualExitCode": 0,
+      "scope": "765 canonical paths staged; excludes preserved"
+    }
+  },
+  "database": {
+    "storage": "Git LFS",
+    "oversizeNormalGitBlobs": 0,
+    "previousVerifiedSha256": "27de1fed0a2388d9375dc345e7283116ba012f89782d491dcaab0a5f0d6b77b5",
+    "previousVerifiedSize": 147107840,
+    "status": "passed_2025_5_2_mirror_final_index_update_pending",
+    "sha256": "556781dc5511aef2b9214d22dde8a5f672f6ebac52eef5eee5c764ba1bd59681",
+    "size": 200429568,
+    "stagedLFSPointerMatchesOwnerFrozenSnapshot": false,
+    "stagedPointerHistoricalSHA256": "ed7f617a0d1a1df4c08ed78059a8517c94ad7347e52fa61c0bbd7e286007c225"
+  },
+  "publicationReport": "docs/jp-kr-official-english-publication-2026-10-01.json",
+  "excludedLocalArtifacts": [
+    "numeric sync-conflict copies",
+    "ios/sync-conflicts/",
+    "app/data/raw/",
+    "app/data/station-english-sources/",
+    "app/data/station-english-verification-candidates/",
+    "app/data/station-english-verification-review/"
+  ],
+  "excludedFilesPreservedLocally": true,
+  "additionalActiveChats": [
+    {
+      "threadId": "01a0f7ee-3e39-78d2-b270-0e49849efdcc",
+      "title": "统一行程菜单按钮高度"
+    },
+    {
+      "threadId": "01a0f7ec-af32-7e73-b7d6-29cdcff92271",
+      "title": "为显示等级切换添加渐变动画"
+    },
+    {
+      "threadId": "01a0f7eb-26d3-75d0-b0e1-c0956e11913b",
+      "title": "完善车站翻译和假名"
+    },
+    {
+      "threadId": "01a0f7ea-0250-78d0-82e5-a893ba06535f",
+      "title": "修复未选中路线的站点图层"
+    },
+    {
+      "threadId": "01a0f7e7-8758-7aa2-80f2-ccd2c3c3e139",
+      "title": "优化分区间线路选择界面"
+    },
+    {
+      "threadId": "01a0f7f7-1311-7f53-9729-0edf95271496",
+      "title": "修复线路走向识别与轨道贴合"
+    },
+    {
+      "threadId": "01a0f80c-87f9-76f3-85b1-747d1ef95cc4",
+      "title": "修复押上站东武支线连接"
+    },
+    {
+      "threadId": "01a0f816-d7f1-73e1-9e39-e74c91ee7a74",
+      "title": "修复总武本线支线连接"
+    }
+  ],
+  "newOwnerChangesValidated": false,
+  "publicationReportScope": "earlier_verified_JP_KR_publication_snapshot_retained",
+  "stationNameIntegration": {
+    "report": "docs/station-name-integration-2026-10-01.json",
+    "scope": "Owner 30-file handoff and scoped tests were before latest JP source. Root subsequently rebuilt JP catalog/name dependencies and database mirror; non-JP projections and NA partitions remain exact.",
+    "handoffFiles": 30,
+    "handoffHashesMatched": true,
+    "regressionTests": 21,
+    "japaneseMemberships": 10227,
+    "withKana": 5369,
+    "missingReliableKana": 4858,
+    "englishAvailabilityDoesNotAssertOfficialVerification": true,
+    "legacyReadingsAndI18NUnchanged": true,
+    "oldFixtureInputsUnchanged": true,
+    "newSourceNativeValidation": "pending",
+    "staticBuildBlockedByPreExistingMissingServerDatasets": true,
+    "independentReadOnlyAudit": "passed: USCA legacy loaders, canonical kana snapshot without required raw archives, exact membership/platform aliases, 26 frozen/legacy hashes",
+    "latestJapanPackageRefreshRequired": true,
+    "finalJapanCoverage": {
+      "groups": 9041,
+      "memberships": 10231,
+      "withEnglish": 10231,
+      "withKana": 5373,
+      "withTraditionalChinese": 9277,
+      "withSimplifiedChinese": 9277
+    },
+    "remainingReliableKanaGaps": 4858
+  },
+  "newTokyoGeometry": {
+    "status": "owner_frozen_other_japan_source_owners_pending",
+    "nativeDisplayRepair": "client_frozen",
+    "statisticsSourceCoordinatesPreservedByOwner": true,
+    "finalUniqueJapanDataWriter": "Root after all active Japanese source writers freeze",
+    "derivedSourcesStaleReported": true,
+    "sourceHashesMustBeComputedNotRestamped": true,
+    "northAmericaPrecomputeForbidden": true,
+    "ownerFrozenPackageSha256": "64d81583f3b690e2b3a13685ebfaf59aa52ea646f9f2e1a80e6c5062b921a27a",
+    "ownerFrozenDisplayLanesSha256": "20800986effcf11ea63784a3da910538fa20ee57aeab746ef7cfdcd778e7a562",
+    "ownerFrozenRailSectionsSha256": "88bb7fa1fb4c90c5618bce0349fa97cb54a3eba7f2a641108f24d064adde659b",
+    "ownerFrozenStationsSha256": "ed699b044ad53327c080d862a40c256a84256e104a5dd8274a209ff575b75dd5"
+  },
+  "finalJapanDatabasePublication": {
+    "mode": "JP-only mapped incremental release",
+    "sourceVersion": "2025.5.2",
+    "sourcePackageSHA256": "03632f69aa742c0096685ec80d125191975986459aa2a36d221af065648e5325",
+    "originalSHA256": "2e54ba5064a68b7392f74e2be17a69d542beb2e5b3abdeb3ae67c55a5655d114",
+    "candidateSHA256": "0595059cf8e66509cb27046273385ad3c2b0b91434fe9b4d06da2a441d5169a5",
+    "publishedSHA256": "556781dc5511aef2b9214d22dde8a5f672f6ebac52eef5eee5c764ba1bd59681",
+    "publishedBytes": 200429568,
+    "allProtectedPartitionsExact": true,
+    "northAmericaSnapshotQueries": 27,
+    "quickCheck": "ok",
+    "foreignKeyViolations": 0,
+    "report": "/private/tmp/jtm-final-jp-db-merge-report-v2.json"
+  },
+  "finalJapanStructuralPreflight": {
+    "actualExitCode": 0,
+    "counts": {
+      "ERROR": 0,
+      "WARNING": 20,
+      "INFO": 6
+    },
+    "package": {
+      "version": "2025.5.1",
+      "generatedAt": "2026-08-18T00:00:00.000Z",
+      "lines": 657,
+      "stationRows": 10231,
+      "segments": 9578,
+      "vertices": 385694,
+      "extraSegments": 0,
+      "straightChords": 0,
+      "reversalCandidates": 8,
+      "detours": 1,
+      "selfOverlap": 1,
+      "lengthMismatches": 0,
+      "geometrySources": {
+        "<unspecified>": 655,
+        "tokyo-southern-branches:OSM-2026-08-18": 2
+      }
+    },
+    "warningFindingsUnchangedFromIndexedBaseline": true,
+    "scope": "JP-only structural check; 20 baseline review warnings retained, no comprehensive railway/visual correctness claim",
+    "finalV2": {
+      "actualExitCode": 0,
+      "version": "2025.5.2",
+      "errors": 0,
+      "warnings": 20,
+      "warningRecordsExactlyEqualToBaseline": true,
+      "vertices": 385694,
+      "log": "/private/tmp/jtm-final-jp-preflight-v2.log",
+      "limitations": "Structural preflight; does not prove inventory completeness or Native rendered correctness."
+    }
+  },
+  "finalJapanTimetableSnapshot": {
+    "status": "passed_2025_5_2_source_and_canonical_copy_fingerprint",
+    "actualBuildExitCode": 0,
+    "actualVerifyExitCode": 0,
+    "databaseSHA256": "636c8c47cd2f3bb53d6fd26b699a2af469f7dab0034c460973d3f010694aa3c9",
+    "previousLocalCopyFingerprintDatabaseSHA256": "6d178c4776eb286fe9b86f2ecd6248e2f4cd260c60ba248b916b672cd1bf0d9b",
+    "sourceFingerprint": "6dc492213c85787a361cff7bd0e066096f0843317480575dba4d2a2c16375553",
+    "copyFingerprintRegressionTests": 11,
+    "canonicalTestLog": "/private/tmp/jtm-canonical-timetable-copy-tests.log",
+    "alignmentProof": "/private/tmp/jtm-canonical-timetable-copy-artifact-proof.json",
+    "logicalDifference": "Only metadata.source_hash and metadata.build_id; all business rows identical",
+    "sourcePatch": "Exact numbered copies have the same exclusion in load_dataset and fingerprint. Differing copies remain hashed, loaded and validated; no local files removed."
+  },
+  "latestNativeUIAdoption": {
+    "index": "/private/tmp/jtm-consolidated-20260930/verified-canonical-ui-adoption-final-index-v6.json",
+    "scenarios": 16,
+    "files": 10,
+    "currentFileHashesExact": true,
+    "latestImport": "PASS60.773s on prior frozen App; exact foreground Form/native hit and persistence gates retained",
+    "aggregateAcceptance": false,
+    "newProductNativeAcceptanceRequired": true,
+    "scopeNote": "V6 historical16 scenario ledger; final22 formalAll additional regression adopted separately. Final unique path/hash ledger pending final product acceptance."
+  },
+  "nativeReadonlyHandoff": {
+    "report": "/private/tmp/jtm-consolidated-20260930/native-final-readonly-handoff-20261001.json",
+    "original55": "35 passed,18 failed,2 skipped; original matrix preserved",
+    "collisionProvenanceAudit": "completed with historical installed-SHA limitations; wrong-package manual snapshot excluded",
+    "mapAXComparison": "Incomplete restored UI stage; original public flag restored and process cleaned; no confirmed root cause/product patch"
+  },
+  "finalJapanSourceOwnersFrozen": true,
+  "segmentLineEntryProposal": {
+    "scope": "User requested proposal/Pro review and demonstration, no product implementation",
+    "repositoryPlan": "docs/journey-segment-line-entry-plan.md",
+    "interactiveDemo": "/Users/sager/.codex/visualizations/2026/10/01/01a0f7e7-8758-7aa2-80f2-ccd2c3c3e139/journey-segment-lines.html",
+    "manualSelectionPreservation": "Demonstration checked per-section selection, preset-AI preservation, unmatched gaps and narrow-screen fit"
+  },
+  "finalJapanPrecompute": {
+    "regular": {
+      "status": "passed_previous_source_snapshot_latest_Osaki_refresh_required_if_inputs_change",
+      "trains": 201,
+      "solved": 201,
+      "unsolvable": 0,
+      "actualExitCode": 0,
+      "durationSeconds": 470,
+      "sourceHashes": {
+        "jp-2025.json": "64d81583f3b690e2b3a13685ebfaf59aa52ea646f9f2e1a80e6c5062b921a27a",
+        "matched-routes.json": "e53bfa63157c64aedfbd2a1e78c553d212d6753b3d6e16cbd0b9dda65b057226",
+        "matched-stops.json": "8468a0e34e19e22822a7933ec376505ecc2e933b1529af67eddb7e1a306f36c7",
+        "rail-history.json": "c6feed755ece7a664434592e0b910386493611e62b4d82b5e5aede98c3e99cb3",
+        "rail-sections.json": "88bb7fa1fb4c90c5618bce0349fa97cb54a3eba7f2a641108f24d064adde659b",
+        "stations.json": "ed699b044ad53327c080d862a40c256a84256e104a5dd8274a209ff575b75dd5"
+      }
+    },
+    "newYear": {
+      "status": "passed_previous_source_snapshot",
+      "trains": 39,
+      "solved": 39,
+      "unsolvable": 0,
+      "actualExitCode": 0,
+      "durationSeconds": 201,
+      "sourceHashes": {
+        "jp-2025.json": "64d81583f3b690e2b3a13685ebfaf59aa52ea646f9f2e1a80e6c5062b921a27a",
+        "matched-routes.json": "e53bfa63157c64aedfbd2a1e78c553d212d6753b3d6e16cbd0b9dda65b057226",
+        "matched-stops.json": "8468a0e34e19e22822a7933ec376505ecc2e933b1529af67eddb7e1a306f36c7",
+        "rail-history.json": "c6feed755ece7a664434592e0b910386493611e62b4d82b5e5aede98c3e99cb3",
+        "rail-sections.json": "88bb7fa1fb4c90c5618bce0349fa97cb54a3eba7f2a641108f24d064adde659b",
+        "stations.json": "ed699b044ad53327c080d862a40c256a84256e104a5dd8274a209ff575b75dd5"
+      },
+      "latestOsakiSourceRefreshRequiredIfInputsChange": true
+    },
+    "tokyo": "passed_final_2025_5_2_source_snapshot",
+    "northAmerica": "frozen_not_regenerated",
+    "regularV2": {
+      "status": "passed",
+      "sourceVersion": "2025.5.2",
+      "trains": 201,
+      "solved": 201,
+      "unsolvable": 0,
+      "actualExitCode": 0,
+      "durationSeconds": 482,
+      "sourceHashes": {
+        "jp-2025.json": "03632f69aa742c0096685ec80d125191975986459aa2a36d221af065648e5325",
+        "matched-routes.json": "e53bfa63157c64aedfbd2a1e78c553d212d6753b3d6e16cbd0b9dda65b057226",
+        "matched-stops.json": "8468a0e34e19e22822a7933ec376505ecc2e933b1529af67eddb7e1a306f36c7",
+        "rail-history.json": "c6feed755ece7a664434592e0b910386493611e62b4d82b5e5aede98c3e99cb3",
+        "rail-sections.json": "88bb7fa1fb4c90c5618bce0349fa97cb54a3eba7f2a641108f24d064adde659b",
+        "stations.json": "42ee2b75cde8449a881bfe699768d01da9fe5a12388556736d78c032e179a97f"
+      }
+    },
+    "newYearV2": {
+      "status": "passed",
+      "trains": 39,
+      "solved": 39,
+      "unsolvable": 0,
+      "actualExitCode": 0,
+      "durationSeconds": 159,
+      "sourceHashes": {
+        "jp-2025.json": "03632f69aa742c0096685ec80d125191975986459aa2a36d221af065648e5325",
+        "matched-routes.json": "e53bfa63157c64aedfbd2a1e78c553d212d6753b3d6e16cbd0b9dda65b057226",
+        "matched-stops.json": "8468a0e34e19e22822a7933ec376505ecc2e933b1529af67eddb7e1a306f36c7",
+        "rail-history.json": "c6feed755ece7a664434592e0b910386493611e62b4d82b5e5aede98c3e99cb3",
+        "rail-sections.json": "88bb7fa1fb4c90c5618bce0349fa97cb54a3eba7f2a641108f24d064adde659b",
+        "stations.json": "42ee2b75cde8449a881bfe699768d01da9fe5a12388556736d78c032e179a97f"
+      }
+    },
+    "tokyoV2": {
+      "status": "passed",
+      "trains": 16,
+      "solved": 16,
+      "unsolvable": 0,
+      "actualExitCode": 0,
+      "durationSeconds": 80,
+      "sourceHashes": {
+        "jp-2025.json": "03632f69aa742c0096685ec80d125191975986459aa2a36d221af065648e5325",
+        "matched-routes.json": "e53bfa63157c64aedfbd2a1e78c553d212d6753b3d6e16cbd0b9dda65b057226",
+        "matched-stops.json": "8468a0e34e19e22822a7933ec376505ecc2e933b1529af67eddb7e1a306f36c7",
+        "rail-history.json": "c6feed755ece7a664434592e0b910386493611e62b4d82b5e5aede98c3e99cb3",
+        "rail-sections.json": "88bb7fa1fb4c90c5618bce0349fa97cb54a3eba7f2a641108f24d064adde659b",
+        "stations.json": "42ee2b75cde8449a881bfe699768d01da9fe5a12388556736d78c032e179a97f"
+      },
+      "log": "/private/tmp/jtm-final-jp-precompute-tokyo-v2.log"
+    },
+    "finalJapanTotal": {
+      "trains": 256,
+      "solved": 256,
+      "unsolvable": 0,
+      "allThreeActualExitCodes": 0
+    }
+  },
+  "newHumanRepairChats": [
+    {
+      "threadId": "01a0f854-1713-7703-bd4a-10ae0eb0b9a1",
+      "title": "修复线路重建高 CPU 慢速问题"
+    },
+    {
+      "threadId": "01a0f851-bd68-7073-a7b7-6e7c1bb12cd9",
+      "title": "修复大崎附近线路错乱"
+    },
+    {
+      "threadId": "01a0f84f-a875-7640-86fa-b860ebd065d8",
+      "title": "修复底栏遮挡菜单内容"
+    },
+    {
+      "threadId": "01a0f84f-470e-7b60-9cd0-5a3adc4a116e",
+      "title": "修复侧边栏与菜单重叠"
+    }
+  ],
+  "previousFinalJapanSourceDrift": [],
+  "stagingInventorySnapshot": {
+    "utc": "2026-10-01T19:17:02.028272Z",
+    "include": 765,
+    "excludedPreserved": 9656,
+    "canonicalUntrackedIncluded": 39,
+    "excludedAlreadyStaged": 0,
+    "normalBlobsOver100MiB": 0,
+    "notFinalFreeze": true,
+    "plan": "/private/tmp/jtm-final-stage-plan-crash22.json",
+    "latestStagedDatabaseSHA256": "556781dc5511aef2b9214d22dde8a5f672f6ebac52eef5eee5c764ba1bd59681",
+    "subsequentIntentionalChanges": [
+      "Two Python test-script delimiter whitespace cleanups",
+      "Actual-passed All last-card canonical UI regression",
+      "Integration verification report updates"
+    ]
+  },
+  "newUILayoutIntegration": {
+    "sidebar": {
+      "sourceSHA256": "094cac29d9c820c493b57640da4f5b6b753e9278e98d6fa87751ce7e782b2e89",
+      "scope": "Fallback requested detent + bottom inset before first measurement",
+      "sourceFrozen": true,
+      "nativeFinalAcceptance": "pending; prior steady-state baseline pass is historical"
+    },
+    "bottomTab": {
+      "sourceSHA256": "6535b9d1c0f839c6fd0d76372020bd213305333dcabae66d86b1624dc9f0612e",
+      "scope": "Clip the shared viewport at max(0, page height - page bottom safe inset - 12 pt). Keep content mounted. Contain accessibility children under a distinct viewport identifier.",
+      "sourceFrozen": true,
+      "frozenFilesExact": true,
+      "sharedUITestSHA256": "45fd9b0edc535722ddecdd2b8171c5f4eda50d1d65ed0065657f2c95582cfe13",
+      "nativeFinalAcceptance": "pending; prior runtime clip test did not resolve Search container; original drag compact-exists failed, corrected nonhittable + reopen gates not rerun yet"
+    }
+  },
+  "newCPURepair": {
+    "sourceFrozen": true,
+    "frozenFiles": {
+      "ios/RailMap/RiddenRouteStore.swift": "4cf146f0c7c8f77e160117d9013eb82be04ab58f42892a830030a29e66eef2a8",
+      "ios/RailKit/Sources/RailCore/RouteSolver.swift": "df6ad13effc62544c832472edf5ee1312e598851708abd37ab120ae581a9d905",
+      "ios/RailKit/Sources/RailCore/PhysicalRouteMatcher.swift": "f13f3550733ff8d04a23ad44a0b6b9cefde2cb93519ceef2782c9d2353312f4d",
+      "ios/tools/verify-route-resolution-cancellation.py": "16f6a66dae8aa5cd103f3af09affa4cbbb745a8009fdb6c7dc5fc8947eba920e",
+      "ios/tools/verify-route-projection-performance.py": "19d6fbe3443e5f5b48ed13c823f25aa932e4cb545ca2693428b7695f6d4bccf7"
+    },
+    "actualExtractedLifecycleTests": 3,
+    "exactDoubleBitPatternProjectionCases": 9008,
+    "actualExitCodes": [
+      0,
+      0
+    ],
+    "cacheInputOrVersionChanges": false,
+    "projectionMicrobenchSpeedup": 8.72,
+    "realIntervalMicrobenchSpeedup": 3.35,
+    "appWideDeviceCPUClaim": false,
+    "finalCoreAppAndDeviceAcceptance": "pending"
+  },
+  "finalJapanDisplayRegionPublication": {
+    "nonJapanTableAndGlobalMetadataChanges": [],
+    "allSixOtherRegionsPreserved": true,
+    "latestJPSourceSHA256": "03632f69aa742c0096685ec80d125191975986459aa2a36d221af065648e5325",
+    "latestLaneSHA256": "4d1d0e52fc7ef13674561e79b53681645e285c769b990cc4f2c25af0aa4c79c3",
+    "method": "Actual --refresh-region jp from frozen latest source",
+    "actualExitCode": 0
+  },
+  "latestOsakiSource": {
+    "version": "2025.5.2",
+    "packageSHA256": "03632f69aa742c0096685ec80d125191975986459aa2a36d221af065648e5325",
+    "stationsSHA256": "42ee2b75cde8449a881bfe699768d01da9fe5a12388556736d78c032e179a97f",
+    "handoff10FilesMatched": true,
+    "originalPhysicalRowsAndKilometresPreserved": true,
+    "actualTargetedTests": 21,
+    "stationTableValidation": "passed",
+    "sourceReport": "docs/tokyo-osaki-legacy-repair-2026-10-01.md",
+    "requiresFinalParityAndVisualAcceptance": true
+  },
+  "sourceTypeCompilation": {
+    "status": "passed",
+    "actualExitCode": 0,
+    "durationSeconds": 8.15,
+    "toolchain": "system Xcode.app",
+    "scope": "Swift production targets only; full tests and normal App remain pending",
+    "discardedInitialAttempt": "Missing explicitly selected Xcode-beta path; no source compiler failure"
+  },
+  "phaseScriptIntegration": {
+    "sourceFrozen": true,
+    "method": "--refresh-region jp",
+    "actualOwnerTests": 79,
+    "ownerGenericBuild": "passed prior final integrated resource refresh",
+    "finalNormalAppGate": "pending",
+    "allOtherRegionTablesAndGlobalMetadataPreserved": true
+  },
+  "previousJapanDatabasePublication": {
+    "mode": "JP-only mapped incremental publication",
+    "originalSHA256": "ed7f617a0d1a1df4c08ed78059a8517c94ad7347e52fa61c0bbd7e286007c225",
+    "candidateSHA256": "5ed2af79555c9cc6507e090b48ab30228c4e8129e00c63f1f4d8fa730601b5d4",
+    "publishedSHA256": "2e54ba5064a68b7392f74e2be17a69d542beb2e5b3abdeb3ae67c55a5655d114",
+    "publishedBytes": 200409088,
+    "allProtectedPartitionsExact": true,
+    "northAmericaSnapshotQueries": 27,
+    "sourcePointStationsVerified": 4,
+    "report": "/private/tmp/jtm-final-jp-db-merge-report.json",
+    "durableReport": "docs/japan-database-integration-2026-10-01.json"
+  },
+  "finalJapanDataSourcesFrozen": true,
+  "finalProductSourcesFrozen": true,
+  "newProductScopesPending": [
+    {
+      "threadId": "01a0e46e-de45-7f52-854f-717580366bbc",
+      "title": "Review remaining validation failures",
+      "scope": "User iPhone portrait show-all crash and map pan runtime validation, then remaining original UI failures."
+    }
+  ],
+  "newMenuCutoffRepair": {
+    "finalSourceHashes": {
+      "ios/RailMap/WorkspacePanelPage.swift": "95aadb06b2e252d18a41a9478b5328974bbb51f2c371680ac3bab3632615d21e",
+      "ios/RailMap/PassportWorkspaceView.swift": "93206329cca6ead1ae0a8e2d6cea7fbf3237ed98ba27f130366907c05c323098",
+      "ios/RailMapUITests/RailMapUITests.swift": "dbf28ee5a85568717254ff6aa0aff52d641eab852d3b5a697167f18cc89aeed8"
+    },
+    "finalSourceFrozen": true,
+    "scope": "Preserves existing clipped viewport bounds and containment; adds safeAreaPadding(.bottom,12) to inset scrolling content. Adds passportShareNote identifier and testMenuBottomContentScrollsAboveTabBar. Original viewport-above-tab assertion restored.",
+    "previousCompiledVariantThreeUIPassed": true,
+    "latestExactVariantUIAcceptance": "pending; final safeAreaPadding variant changed after successful previous compile"
+  },
+  "fixtureGenerationCacheDependency": "Generators read canonical packages/station/section/train stores and solve independently; no sample-data cache dependency. Full fixture generation may run alongside disjoint JP precompute output.",
+  "finalJapanSourceOwnersFrozenScope": "Japan data owners only; force route solver product source remains active.",
+  "newNativeStationRoute": {
+    "sourceFrozen": true,
+    "currentFiles": {
+      "ios/RailMap/RiddenRouteStore.swift": "d4cb29f00ed6e8a3b28f6fd7c22fbf454f61eae907bccfe14161ba0a011700e3",
+      "ios/RailMap/TraversedLineDetector.swift": "ec8bbc8afb44ab05e1cb98fd70110e5938492f4f3135ff40673a0fe565cc868e",
+      "ios/RailKit/Sources/RailCore/RouteSolveLimiter.swift": "bce67f50ead1e989d02220ba663c17221c25add4b9ff5c28a87c58c3e6886a66",
+      "ios/RailKit/Sources/RailCore/CompactPackage.swift": "02d9070898697c31d757a45cf1467ffdd2acf7af6589e749623480871d381193",
+      "ios/RailKit/Sources/RailCore/StationIntervalResolver.swift": "fe88f840eaa95d2ac26edf6a4b778293dddf1490b9d7a40d04d87253d16b6b62",
+      "ios/RailKit/Sources/RailCore/StationRouteEligibility.swift": "bde0a907f281c7e808b905c1b079582caa801767fc618a052c584d5e9ded3e93",
+      "ios/RailKit/Sources/RailCore/ResolvedRailRoute.swift": "d46cd36d52f02ae4889a76e77d9fa9d81135eb7467257f126a675bce9b08100f",
+      "ios/RailKit/Sources/RailCore/PrecomputedRouteDisplay.swift": "1936f457344f5edff67e54140e1f3ed97f13f5c6022ca7d9893ab665a437073a",
+      "ios/RailKit/Sources/RailCore/Statistics.swift": "de5d519b0214c0adf619f8cc257dada009b570baa0716d2638e222d152ef9e45",
+      "ios/RailKit/Sources/RailPresentation/JourneyRouteIdentity.swift": "7adfa02b88ac327e5cda1fe629868ace9984b1427a1de173742d530fb6a54bd4",
+      "ios/RailKit/Tests/RailCoreTests/RouteSolveLimiterTests.swift": "a8fdaed76d9b06d6e55b5b854f8eb01a5667aadc2918be02c9eef13c3562ade8",
+      "ios/RailKit/Tests/RailCoreTests/StationIntervalResolverTests.swift": "98e5ec0d288f80af42d0233569fa19ec7a1cf4cf8c21a25fa2fc286f7a21749e",
+      "ios/RailKit/Tests/RailCoreTests/StationRouteEligibilityTests.swift": "c72821261ac96819b291bc75613252946fd7d882f813d9898a9423aad344a5d9",
+      "ios/RailKit/Tests/RailCoreTests/ResolvedRailRouteTests.swift": "0a3b53ec13a937c809329cda586546537d75081f5f513599a1570e5e5466d330",
+      "ios/RailKit/Tests/RailCoreTests/PrecomputedRouteDisplayTests.swift": "1f4c99794b939552abece7fb5a9afb7268431537e0e664329f60638b8acf39fe",
+      "ios/RailKit/Tests/RailPresentationTests/JourneyRouteIdentityTests.swift": "73de30d54483beb1a4693665d4479fee5b55e06bdd29a52445108620dd3b8400",
+      "ios/tools/verify-route-progress.py": "ac75455cc4bc31ae2a3a646f4ec4a371129fa936b5e8e45a96e42df56ed90047",
+      "ios/tools/verify-route-resolution-cancellation.py": "32c9a56125c3fa28f852b3e943bf08a9f1091b8c08ea9964f70c64420e53deee"
+    },
+    "semantics": "station-interval-v1",
+    "jsSolverCacheVersion": 25,
+    "jsDrawnCacheVersion": 26,
+    "sharedDatasetVersionsRestamped": false,
+    "sourceDataChanged": false,
+    "runtimeCache": "Requires Native semantic marker plus existing digest, resource revision and dated historical attestation; old Native cache re-solves. Fresh attested JS precomputes remain legacy fallback and do not override resolved compact hints or preserved ambiguity.",
+    "boundedConcurrency": 2,
+    "sampleChecks": {
+      "normalizedSections": 2299,
+      "materializedCompactLegs": 1619,
+      "ambiguousPreserved": 3,
+      "unsupportedLegacyFallback": 675,
+      "explicitChoicesSkipped": 2,
+      "manualSampleEquivalentContrasts": 3
+    },
+    "ownerHostDebugMeasurement": {
+      "totalSeconds": 14.035,
+      "coldSetupSeconds": 11.48,
+      "inferenceMaterializationAndThreeReplaysSeconds": 2.552,
+      "wholeDeviceAppClaim": false
+    },
+    "independentReadOnlyReview": "Passed before minimal root compile fix; no actionable semantic issues or source drift.",
+    "rootProductionTargetCompile": {
+      "actualExitCode": 0,
+      "durationSeconds": 4.05
+    },
+    "normalAppInitialCompile": {
+      "actualExitCode": 1,
+      "error": "Fallback solveMissing trailing closure bound to default rejectPrecomputed String rather than publish DrawnRide array",
+      "correction": "Explicit publish parameter label; no algorithm/data changes",
+      "actualFailureLog": "/private/tmp/jtm-final-normal-app-2025-5-2-initial-compile-failure.log",
+      "rerun": {
+        "actualExitCode": 0,
+        "proof": "/private/tmp/jtm-final-normal-app-v2-input-proof.json",
+        "expandedInputCount": 7457,
+        "changedInputs": 0,
+        "warnings": 0,
+        "sourceBoundary": "18:18 UTC; before human-reopened menu correction"
+      }
+    },
+    "fullCoreAndNativeAcceptance": "pending",
+    "rootProgressHarness": {
+      "cases": 5,
+      "actualExitCode": 0
+    },
+    "rootCancellationHarness": {
+      "cases": 3,
+      "actualExitCode": 0
+    }
+  },
+  "newNativeCrashFollowup": {
+    "sourceFrozen": true,
+    "files": {
+      "ios/RailMap/RiddenRouteStore.swift": "19d3eb5ad5e1a4469dce45ea417d01c4c7e4af4ce9fa8c068c6a35e7a2e54733",
+      "ios/RailMap/TraversedLineDetector.swift": "ec8bbc8afb44ab05e1cb98fd70110e5938492f4f3135ff40673a0fe565cc868e",
+      "ios/RailKit/Sources/RailCore/RouteSolveLimiter.swift": "bce67f50ead1e989d02220ba663c17221c25add4b9ff5c28a87c58c3e6886a66",
+      "ios/RailKit/Sources/RailCore/CompactPackage.swift": "02d9070898697c31d757a45cf1467ffdd2acf7af6589e749623480871d381193",
+      "ios/RailKit/Sources/RailCore/StationIntervalResolver.swift": "fe88f840eaa95d2ac26edf6a4b778293dddf1490b9d7a40d04d87253d16b6b62",
+      "ios/RailKit/Sources/RailCore/StationRouteEligibility.swift": "bde0a907f281c7e808b905c1b079582caa801767fc618a052c584d5e9ded3e93",
+      "ios/RailKit/Sources/RailCore/ResolvedRailRoute.swift": "d46cd36d52f02ae4889a76e77d9fa9d81135eb7467257f126a675bce9b08100f",
+      "ios/RailKit/Sources/RailCore/PrecomputedRouteDisplay.swift": "1936f457344f5edff67e54140e1f3ed97f13f5c6022ca7d9893ab665a437073a",
+      "ios/RailKit/Sources/RailCore/Statistics.swift": "de5d519b0214c0adf619f8cc257dada009b570baa0716d2638e222d152ef9e45",
+      "ios/RailKit/Sources/RailPresentation/JourneyRouteIdentity.swift": "7adfa02b88ac327e5cda1fe629868ace9984b1427a1de173742d530fb6a54bd4",
+      "ios/RailKit/Tests/RailCoreTests/RouteSolveLimiterTests.swift": "a8fdaed76d9b06d6e55b5b854f8eb01a5667aadc2918be02c9eef13c3562ade8",
+      "ios/RailKit/Tests/RailCoreTests/StationIntervalResolverTests.swift": "98e5ec0d288f80af42d0233569fa19ec7a1cf4cf8c21a25fa2fc286f7a21749e",
+      "ios/RailKit/Tests/RailCoreTests/StationRouteEligibilityTests.swift": "c72821261ac96819b291bc75613252946fd7d882f813d9898a9423aad344a5d9",
+      "ios/RailKit/Tests/RailCoreTests/ResolvedRailRouteTests.swift": "0a3b53ec13a937c809329cda586546537d75081f5f513599a1570e5e5466d330",
+      "ios/RailKit/Tests/RailCoreTests/PrecomputedRouteDisplayTests.swift": "1f4c99794b939552abece7fb5a9afb7268431537e0e664329f60638b8acf39fe",
+      "ios/RailKit/Tests/RailPresentationTests/JourneyRouteIdentityTests.swift": "73de30d54483beb1a4693665d4479fee5b55e06bdd29a52445108620dd3b8400",
+      "ios/tools/verify-route-progress.py": "ac75455cc4bc31ae2a3a646f4ec4a371129fa936b5e8e45a96e42df56ed90047",
+      "ios/tools/verify-route-resolution-cancellation.py": "c5577d9693c0d469647cab936f37378c807a80a80022bcfe5b559753480c58ef",
+      "ios/RailMap/RailMapView.swift": "e3dc39455012d8f6dec3a7ead81c1fa565088688d5df09e79bb2d1d4db8288b3",
+      "ios/RailMap/MapNetworkRendering.swift": "9c81696f686e9d8dddeb1c3dcaee0d91482cc2f07a6e7a776d2e45be9e150165",
+      "ios/tools/verify-map-worker-lifecycle.py": "a6baa56873a7dcc516ddf2f1ed96f4d6661531f8ccaa72066d4a3439180ab9eb",
+      "ios/tools/verify-route-caches.py": "cdd9aa76412d95f31cbb5bc2eb3e6bc2e1432a1f880038e85d005ba4b4208684"
+    },
+    "focusedOwnerChecks": {
+      "workerGroups": 5,
+      "cancellationCases": 5,
+      "cacheCases": 4,
+      "progressCases": 5,
+      "resourceRevisionCases": 8,
+      "mapPanGeometry": "passed"
+    },
+    "solverConcurrency": 2,
+    "renderHeavyConcurrency": 1,
+    "physicalCurrentCrashCause": "Unconfirmed; current physical .ips unavailable. Prior Simulator bounds trap grounds local installer fix; compilation and focused checks do not establish physical nonreproduction.",
+    "freshNativeAcceptance": "pending",
+    "hashBoundaryNote": "Original22 normalApp source boundary retained in crash22 proof. Current script hash differs only by a tested raw-string delimiter trailing-space cleanup; product compiled sources unchanged."
+  },
+  "newNativeSourceCandidates": {
+    "status": "private_playback_validation_pending_not_canonical",
+    "candidates": [
+      "One-time UI-test playback launch marker consumed before successful start"
+    ],
+    "previousFinal22FormalBuild": "still current compiled source; no new candidate adopted",
+    "dataSourcesChanged": false,
+    "requiredNextGate": "If adopted, final normal App/input freeze and affected strict UI/stress retest"
+  },
+  "nativeDebugStatusIntegration": {
+    "status": "adopted_exact_private_candidate_hash_formal_App_gate_pending",
+    "file": "ios/RailMap/RailMapView.swift",
+    "sha256": "8d84f57cf6041a5b0319a953d52799b4344e39b3b7f9c554685cf5029925f433",
+    "scope": "DEBUG diagnostics only at settled region/final gesture callbacks; no release-source change",
+    "releaseSourceProjectionSHA256": "39ecb0e20cc911d16ea06399cb59d47d3a62d0ccb8a4f07d93ce3553bfba980a",
+    "privateStartup201TwoPanActualExitCode": 0,
+    "privateCaseSeconds": 58.952,
+    "privateFirst201ObservedSeconds": 44.54972025001189,
+    "privatePanMaxDeliveredFrameGapMilliseconds": 99,
+    "originalThresholdMilliseconds": 150,
+    "privateGestureBuilds": 0,
+    "privateCoverage": 1,
+    "privateCameraOriginalCase": "failed_exact75percent; original allowance unchanged",
+    "noPlaybackCandidateAdopted": true,
+    "sourceFreeze": "/private/tmp/jtm-final-debug-status-source-freeze.json",
+    "sourceChangesFromHistorical22": [
+      "ios/tools/verify-route-resolution-cancellation.py",
+      "ios/RailMap/RailMapView.swift"
+    ],
+    "sourceProof": "/private/tmp/jtm-consolidated-20260930/final22-render-status-freshness-proof.json",
+    "nativePASSProof": "/private/tmp/jtm-consolidated-20260930/final22-render-status-candidate-phone-startup-201-pan-PASS-proof.json"
+  },
+  "latestUserReportedFailures": {
+    "reportedAt": "2026-10-01T21:18:23.412244+00:00",
+    "deviceLayout": "iPhone portrait",
+    "mapMovement": "Still fails; completely blocked versus stuttering not yet specified",
+    "menuBottom": "Duplicate native tab-area deduction removed, exact candidate accepted and canonical adopted; medium91.219→11.522pt, expanded95→12pt in owned phone simulator.",
+    "showAllLines": "Still crashes",
+    "nativeAcceptance": "Menu candidate three-case causal acceptance passed. Real-button show-all, repeated toggle, long residence and map pan comparison pending.",
+    "menuBaselineMeasurements": {
+      "mediumViewportToTabBarGapPoints": 91.21890547263673,
+      "mediumTabBarHeightPoints": 79.69651741293535,
+      "expandedViewportToTabBarGapPoints": 95,
+      "expandedTabBarHeightPoints": 83
+    },
+    "candidateScope": "One-line menu viewport correction adopted in canonical source; private loader V2 remains unadopted pending runtime comparison.",
+    "publication": "Commit, merge and main push held until required repairs/acceptance complete",
+    "menuPrivateCandidate": {
+      "sourceSHA256": "b8922dcee494680e018b1044f5e27c8adbba26f754075fec9fec2410a8a4eabe",
+      "normalAppBuildExitCode": 0,
+      "canonicalProductAdoption": true,
+      "nativeAcceptance": "PASS actual exits0,0,0; medium11.522pt/expanded12pt, unchanged originalAll nativeHit/fullbounds/12pt clearance retained",
+      "candidateApp": "/private/tmp/jtm-menu-final24-derived/Build/Products/Debug-iphonesimulator/RailMap.app",
+      "sourceInputDrift": 0,
+      "changedProductSourceFiles": 1,
+      "preservedAssertions": "Existing native hit, full final-row bounds and at least12pt clearance; additional viewport-gap 0...24pt in medium and expanded.",
+      "adoptionProof": "/private/tmp/jtm-menu-final24-canonical-adoption-proof.json",
+      "canonicalMainUITestSourceSHA256": "7b2c5a74890aaebd42761c8efceffb8132b3b41561c9737706679fc72ee880e9",
+      "claimLimit": "Actual iPhone17Pro Simulator27 portrait proof; user physical-device confirmation not yet obtained; map drag and show-all crash unresolved",
+      "nativeCausalHandoff": "/private/tmp/jtm-consolidated-20260930/final24-menu-A-validated-causal-handoff.json"
+    },
+    "canonicalBaselineReproduction": {
+      "normalApp": "final24 1206files 06e769/9cf558",
+      "nativeRunner": "/private/tmp/jtm-consolidated-20260930/final24-phone-baseline-menu-gap-and-original-All-isolated-run.json",
+      "actualCaseExitCodes": [
+        65,
+        65,
+        0
+      ],
+      "menuGapTests": "FAIL expected baseline: medium91.2189pt and expanded95pt >24pt",
+      "unchangedAllFinalCard": "PASS actual0; this proves prior clearance check did not detect excess empty margin",
+      "candidateAcceptance": "Exact menuA comparison passed all three cases; original All assertions retained."
+    },
+    "loaderPrivateCandidate": {
+      "adopted": false,
+      "sourceSHA256": "f2aa8e6a81b0ebd9c15c8021bf09aa978fcd0835862ee68de3091ce8060d6a89",
+      "patchSHA256": "b786e30355f0dde4313b1d3f81fef57f97ffba97b939942dc870a812eb027957",
+      "scope": "Dedicated global display decode limiter2 and dependency-closed progressive batches16; original line selection/precision/eventual requested content retained. Oversized first dependency group remains indivisible.",
+      "semanticReview": "V1 first-failure persistent exclusions rejected; V2 preserves original attemptLimit3 opportunities and allfailed/no self-spin behavior. Padded closure computed lazily.",
+      "actualPrivateChecks": "Swift6 extracted actual helper and unchanged production limiter runtime PASS;1244 historical rows/80publications/peak16, global decodepeak2 including cancelledprefetch drain",
+      "AppTypecheck": "PASS normal --app actual exit0, noRailMapwarnings, allAppcontracts",
+      "crashCause": "Not established; source resource peak risk only; physical exit evidence still unavailable",
+      "normalAppProof": "/private/tmp/jtm-loader-final25-app-proof.json",
+      "normalAppGateLog": "/private/tmp/jtm-loader-final25-app-gate.log",
+      "normalAppSourceDrift": 0,
+      "normalAppFiles": 1206,
+      "normalAppBinarySHA256": "5d854177ddcfba7b48b608c4752a24a1732cb8e856cfa87f8cee40ff5b3fe37c",
+      "normalAppDylibSHA256": "2b1bf4068247330297493918814f6e549096c50775057184b8cb6ea82d48a224",
+      "SPMAndMainTimetableSourceFingerprintAligned": true,
+      "next": "Native same real-button/toggle/75s residence/pan comparison at Japan national or large viewport; finish already running Tokyo case as supplemental only."
+    },
+    "showAllLinesTimingReply": "User answered \"1 or 2 and 3\"; cover immediate enable, dragging after appearance and continued loading; do not assign a single timing.",
+    "mapRegionAndScale": "User confirmed Japan nationwide or large area; Tokyo-only result cannot accept this report.",
+    "reportedInstalledBuild": "User confirmed previously installed physical iPhone App; not rebuilt from current workspace.",
+    "validationScopeCorrection": "Empty journey store nationwide tests are supplemental. Need current-App Japan-wide medium Show All with same201sample/route resolution and early drag/toggle overlap; historical201 pan PASS had a different App pin.",
+    "publicationAcceptance": "Validate current canonical sources with necessary regression gates; physical reinstallation confirmation is not an added prerequisite to authorized Git publish."
+  },
+  "canonicalAppResourceProvenance": {
+    "scope": "Fresh normal App from clean staged export passed; final mixed menu/loader source App still required.",
+    "exportProof": "/private/tmp/jtm-canonical-final24-export-proof.json",
+    "exportedFiles": 7639,
+    "numericArchiveCopies": 0,
+    "railDatabaseSHA256": "556781dc5511aef2b9214d22dde8a5f672f6ebac52eef5eee5c764ba1bd59681",
+    "railDatabaseBytes": 200429568,
+    "gateLog": "/private/tmp/jtm-canonical-final24-app-gate.log",
+    "normalAppGate": "PASS actual exit 0; no RailMap warnings; all App contracts pass",
+    "proof": "/private/tmp/jtm-canonical-final24-app-resource-proof.json",
+    "bundleFiles": 1206,
+    "removedArchiveResources": 65,
+    "canonicalSourceDrift": "Two timetable artifacts regenerated because exact local numbered fact copies were included only in fingerprint; all business rows identical, metadata build_id/source_hash differ",
+    "logicalTimetableDiff": "/private/tmp/jtm-final24-timetable-logical-diff.json",
+    "next": "Fingerprint source fix and pre-aligned timetable artifacts adopted/staged; next final clean App gate must show zero source input drift and matching SPM/main business snapshots.",
+    "claimLimit": "Normal build passed; previous 1271-resource proof is historical and final24 is not a zero-source-drift acceptance proof"
+  },
+  "resumedCoordination": {
+    "handoffDateToronto": "2026-10-02",
+    "soleGitPublisher": "01a0ff49-a004-7150-8044-1e4bc238cfdd",
+    "menuSourceOwner": "01a0ff48-a181-7c63-87c1-aaabe834062a",
+    "nativeAndCrashOwner": "01a0ff49-1848-7453-acf9-4f7e941478ce",
+    "oldIntegrationStopped": true,
+    "handoff": "/private/tmp/jtm-resume-handoff-20261002.md",
+    "registry": "/private/tmp/jtm-resume-handoff-20261002.registry.json",
+    "publicationAuthorizedAfterNecessaryAcceptance": true,
+    "publicationCompleted": false,
+    "northAmericaDataFrozen": true,
+    "latestMenuUserChoice": "Content scrolls beneath transparent tab bar; full last-card/footer readability and native hit assertions retained",
+    "pending": [
+      "Final transparent-tabbar source and native acceptance",
+      "Real Load Sample / Show All 201-journey loading, early pan and quick toggle evidence and necessary repair",
+      "Remaining six strict iPad acceptance failures",
+      "Latest clean staged export normal App with zero source drift, 1206 resources and matching timetable source fingerprints",
+      "Final freeze, Git integration commit, main merge commit, nonforce push and exact remote SHA confirmation"
+    ],
+    "evidenceReuse": "Existing valid Core 1098, Node 201, 29 goldens, JP 256 precompute and data/name checks retained at their recorded source scope",
+    "physicalCrashScope": "User reports previous installed physical iPhone App; current simulator evidence must not claim that physical crash was reproduced or confirmed fixed",
+    "loaderV2": "Private candidate not adopted; national empty-store passes and sampled RSS do not establish crash or memory improvement",
+    "latestHumanInstruction": "Commit all current canonical changes first as a checkpoint, then use Pro and multiple chats to analyze and repair route parsing and all related features",
+    "checkpointAcceptance": "Native acceptance still pending; checkpoint does not claim completion or release readiness"
+  }
+}

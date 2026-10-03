@@ -33,6 +33,11 @@ Journey data stays on the device. Import, export, routing against bundled data, 
 
 Open `ios/RailMap.xcodeproj`, select the `RailMap` scheme, choose an iOS Simulator or signed device, and run the app.
 
+The derived network database `app/data/rail.db` is stored with Git LFS. Install
+Git LFS and run `git lfs install` before cloning, or `git lfs pull` in an existing
+checkout to retrieve it. The app reads the bundled network JSON packages; this
+database is used for querying and cross-checking those packages.
+
 To run the repository verification gate from Terminal:
 
 ```bash

@@ -1,0 +1,506 @@
+{
+  "format": 1,
+  "reviewed_at": "2026-10-01",
+  "reviews": [
+    {
+      "train_id": "20260708_02_shirasagi2",
+      "date": "2026-07-08",
+      "url": "https://timetable.jr-odekake.net/train-timetable/259871?date=20260708",
+      "issue": "2026年07月号",
+      "operating_number": "6M",
+      "stop_updates": {
+        "長浜": {
+          "arrival": "11:37"
+        }
+      },
+      "verified_station_count": 12,
+      "verified_passenger_call_count": 3,
+      "status": "ridden_timetable_verified",
+      "source_sha256": "b7e67c510dcc07f732f13fc2310d4394cd426d54b730bbb769e948c0c5d25f7b",
+      "publisher": "西日本旅客鉄道株式会社 / 株式会社交通新聞社",
+      "accessed_at": "2026-10-01",
+      "calendar_locator": "2026-07-08 month-specific cell drivingday-01; do not treat ymd on alternate-variant links as calendar validity",
+      "source_scope": "Full official train table reviewed; updates retain only the recorded ride interval.",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "verified_passenger_calls": [
+        {
+          "name": "敦賀",
+          "arrival": null,
+          "departure": "11:10",
+          "stop_type": "origin"
+        },
+        {
+          "name": "長浜",
+          "arrival": "11:37",
+          "departure": "11:38",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "米原",
+          "arrival": "11:44",
+          "departure": null,
+          "stop_type": "destination"
+        }
+      ]
+    },
+    {
+      "train_id": "20260723_02_shiokaze5",
+      "date": "2026-07-23",
+      "url": "https://timetable.jr-odekake.net/train-timetable/291?date=20260723",
+      "issue": "2026年08月号",
+      "operating_number": "5M",
+      "stop_updates": {
+        "児島": {
+          "arrival": "09:46"
+        }
+      },
+      "verified_station_count": 13,
+      "verified_passenger_call_count": 3,
+      "status": "ridden_timetable_verified",
+      "source_sha256": "4075e80c80eee1d2536aa8ab2b863933749b182370aa2d24e2a4af67a8a01687",
+      "publisher": "西日本旅客鉄道株式会社 / 株式会社交通新聞社",
+      "accessed_at": "2026-10-01",
+      "calendar_locator": "2026-07-23 month-specific cell drivingday-01; do not treat ymd on alternate-variant links as calendar validity",
+      "source_scope": "Full official train table reviewed; updates retain only the recorded ride interval.",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "verified_passenger_calls": [
+        {
+          "name": "岡山",
+          "arrival": null,
+          "departure": "09:25",
+          "stop_type": "origin"
+        },
+        {
+          "name": "児島",
+          "arrival": "09:46",
+          "departure": "09:47",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "宇多津",
+          "arrival": "10:00",
+          "departure": null,
+          "stop_type": "destination"
+        }
+      ]
+    },
+    {
+      "train_id": "20260724_02_nanpu9",
+      "date": "2026-07-24",
+      "url": "https://timetable.jr-odekake.net/train-timetable/59471?date=20260724",
+      "issue": "2026年08月号",
+      "operating_number": "39D",
+      "number_replacement": [
+        "（9D）",
+        "（39D）"
+      ],
+      "stop_updates": {
+        "丸亀": {
+          "arrival": "12:42",
+          "departure": "12:42"
+        },
+        "多度津": {
+          "arrival": "12:46",
+          "departure": "12:47"
+        },
+        "善通寺": {
+          "arrival": "12:52",
+          "departure": "12:53"
+        },
+        "琴平": {
+          "arrival": "12:58",
+          "departure": "12:59"
+        }
+      },
+      "verified_station_count": 14,
+      "verified_passenger_call_count": 6,
+      "status": "ridden_timetable_verified",
+      "source_sha256": "0daa1e39252b289c4460385635ebaf7fbaf72e3f117b671eb6815cd461888675",
+      "publisher": "西日本旅客鉄道株式会社 / 株式会社交通新聞社",
+      "accessed_at": "2026-10-01",
+      "calendar_locator": "2026-07-24 month-specific cell drivingday-01; do not treat ymd on alternate-variant links as calendar validity",
+      "source_scope": "Full official train table reviewed; updates retain only the recorded ride interval.",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "verified_passenger_calls": [
+        {
+          "name": "宇多津",
+          "arrival": null,
+          "departure": "12:39",
+          "stop_type": "origin"
+        },
+        {
+          "name": "丸亀",
+          "arrival": "12:42",
+          "departure": "12:42",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "多度津",
+          "arrival": "12:46",
+          "departure": "12:47",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "善通寺",
+          "arrival": "12:52",
+          "departure": "12:53",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "琴平",
+          "arrival": "12:58",
+          "departure": "12:59",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "阿波池田",
+          "arrival": "13:22",
+          "departure": null,
+          "stop_type": "destination"
+        }
+      ]
+    },
+    {
+      "train_id": "20260724_05_nanpu17",
+      "date": "2026-07-24",
+      "url": "https://timetable.jr-odekake.net/train-timetable/104441?date=20260724",
+      "issue": "2026年08月号",
+      "operating_number": "47D",
+      "number_replacement": [
+        "（17D）",
+        "（47D）"
+      ],
+      "stop_updates": {
+        "大歩危": {
+          "arrival": "17:41",
+          "departure": "17:42"
+        },
+        "大杉": {
+          "arrival": "18:04",
+          "departure": "18:05",
+          "stop_type": "passenger_stop"
+        },
+        "土佐山田": {
+          "arrival": "18:24",
+          "departure": "18:26"
+        },
+        "後免": {
+          "arrival": "18:30",
+          "departure": "18:31"
+        }
+      },
+      "verified_station_count": 24,
+      "verified_passenger_call_count": 6,
+      "status": "ridden_timetable_verified",
+      "source_sha256": "ab06a3add4194628922f59e4251e3bbf7a634e43ceaa3269f7551defcbfdf9d7",
+      "publisher": "西日本旅客鉄道株式会社 / 株式会社交通新聞社",
+      "accessed_at": "2026-10-01",
+      "calendar_locator": "2026-07-24 month-specific cell drivingday-01; do not treat ymd on alternate-variant links as calendar validity",
+      "source_scope": "Full official train table reviewed; updates retain only the recorded ride interval.",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "verified_passenger_calls": [
+        {
+          "name": "阿波池田",
+          "arrival": null,
+          "departure": "17:24",
+          "stop_type": "origin"
+        },
+        {
+          "name": "大歩危",
+          "arrival": "17:41",
+          "departure": "17:42",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "大杉",
+          "arrival": "18:04",
+          "departure": "18:05",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "土佐山田",
+          "arrival": "18:24",
+          "departure": "18:26",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "後免",
+          "arrival": "18:30",
+          "departure": "18:31",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "高知",
+          "arrival": "18:44",
+          "departure": null,
+          "stop_type": "destination"
+        }
+      ]
+    },
+    {
+      "train_id": "20260724_06_nanpu28",
+      "date": "2026-07-24",
+      "url": "https://timetable.jr-odekake.net/train-timetable/104481?date=20260724",
+      "issue": "2026年08月号",
+      "operating_number": "58D",
+      "number_replacement": [
+        "（28D）",
+        "（58D）"
+      ],
+      "stop_updates": {
+        "後免": {
+          "arrival": "19:41",
+          "departure": "19:42"
+        },
+        "土佐山田": {
+          "arrival": "19:46",
+          "departure": "19:46"
+        },
+        "大杉": {
+          "arrival": "20:05",
+          "departure": "20:06",
+          "stop_type": "passenger_stop"
+        },
+        "大歩危": {
+          "arrival": "20:23",
+          "departure": "20:23"
+        },
+        "阿波池田": {
+          "arrival": "20:41",
+          "departure": "20:42"
+        },
+        "琴平": {
+          "arrival": "21:04",
+          "departure": "21:05"
+        },
+        "善通寺": {
+          "arrival": "21:09",
+          "departure": "21:09"
+        },
+        "多度津": {
+          "arrival": "21:14",
+          "departure": "21:15"
+        },
+        "丸亀": {
+          "arrival": "21:19",
+          "departure": "21:19"
+        },
+        "宇多津": {
+          "arrival": "21:22",
+          "departure": "21:23"
+        },
+        "児島": {
+          "arrival": "21:36",
+          "departure": "21:38"
+        }
+      },
+      "verified_station_count": 49,
+      "verified_passenger_call_count": 13,
+      "status": "ridden_timetable_verified",
+      "source_sha256": "4d8f61fa9b161f2b863cc3a742d08f04a64a66759ec5286bde4e192bf4b8489e",
+      "publisher": "西日本旅客鉄道株式会社 / 株式会社交通新聞社",
+      "accessed_at": "2026-10-01",
+      "calendar_locator": "2026-07-24 month-specific cell drivingday-01; do not treat ymd on alternate-variant links as calendar validity",
+      "source_scope": "Full official train table reviewed; updates retain only the recorded ride interval.",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "verified_passenger_calls": [
+        {
+          "name": "高知",
+          "arrival": null,
+          "departure": "19:31",
+          "stop_type": "origin"
+        },
+        {
+          "name": "後免",
+          "arrival": "19:41",
+          "departure": "19:42",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "土佐山田",
+          "arrival": "19:46",
+          "departure": "19:46",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "大杉",
+          "arrival": "20:05",
+          "departure": "20:06",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "大歩危",
+          "arrival": "20:23",
+          "departure": "20:23",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "阿波池田",
+          "arrival": "20:41",
+          "departure": "20:42",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "琴平",
+          "arrival": "21:04",
+          "departure": "21:05",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "善通寺",
+          "arrival": "21:09",
+          "departure": "21:09",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "多度津",
+          "arrival": "21:14",
+          "departure": "21:15",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "丸亀",
+          "arrival": "21:19",
+          "departure": "21:19",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "宇多津",
+          "arrival": "21:22",
+          "departure": "21:23",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "児島",
+          "arrival": "21:36",
+          "departure": "21:38",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "岡山",
+          "arrival": "21:57",
+          "departure": null,
+          "stop_type": "destination"
+        }
+      ]
+    },
+    {
+      "train_id": "20260729_05_sunrise_izumo",
+      "date": "2026-07-29",
+      "url": "https://timetable.jr-odekake.net/train-timetable/38481?date=20260729",
+      "issue": "2026年08月号",
+      "section_number_boundary": {
+        "station": "岡山",
+        "before": "5031M",
+        "after": "4031M"
+      },
+      "stop_updates": {},
+      "verified_station_count": 217,
+      "verified_passenger_call_count": 14,
+      "status": "passenger_timetable_verified_route_gap",
+      "notes": "岡山まで5031M、岡山から4031M。東京—岡山間はサンライズ瀬戸に併結。",
+      "remaining_gaps": [
+        "Official physical-station rows omit 垂井; the N02 sample passes through 垂井 instead of the downhill 新垂井 branch.",
+        "Official row 手柄山平和公園 between 姫路 and 英賀保 is absent from N02-25 sample geometry."
+      ],
+      "source_sha256": "6558a69a614a26608de41d8e99aebee663dd0f33e45eb8e1a36f9af59475c926",
+      "publisher": "西日本旅客鉄道株式会社 / 株式会社交通新聞社",
+      "accessed_at": "2026-10-01",
+      "calendar_locator": "2026-07-29 month-specific cell drivingday-01; do not treat ymd on alternate-variant links as calendar validity",
+      "source_scope": "Full official train table reviewed; updates retain only the recorded ride interval.",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "verified_passenger_calls": [
+        {
+          "name": "沼津",
+          "arrival": null,
+          "departure": "23:16",
+          "stop_type": "origin"
+        },
+        {
+          "name": "富士",
+          "arrival": "23:31",
+          "departure": "23:32",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "静岡",
+          "arrival": "23:57",
+          "departure": "23:59",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "浜松",
+          "arrival": "24:53",
+          "departure": "24:54",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "姫路",
+          "arrival": "29:25",
+          "departure": "29:26",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "岡山",
+          "arrival": "30:27",
+          "departure": "30:34",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "倉敷",
+          "arrival": "30:46",
+          "departure": "30:47",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "備中高梁",
+          "arrival": "31:14",
+          "departure": "31:14",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "新見",
+          "arrival": "31:43",
+          "departure": "31:44",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "米子",
+          "arrival": "33:05",
+          "departure": "33:08",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "安来",
+          "arrival": "33:16",
+          "departure": "33:17",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "松江",
+          "arrival": "33:33",
+          "departure": "33:34",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "宍道",
+          "arrival": "33:47",
+          "departure": "33:48",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "name": "出雲市",
+          "arrival": "34:00",
+          "departure": null,
+          "stop_type": "destination"
+        }
+      ]
+    }
+  ]
+}

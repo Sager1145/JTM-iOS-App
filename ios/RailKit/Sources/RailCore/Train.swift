@@ -111,7 +111,7 @@ public struct Train: Codable, Equatable, Sendable {
     /// Which regional package this itinerary belongs to — `"jp"`, `"tw"`,
     /// `"hk"`, `"mo"` or `"kr"`.
     ///
-    /// **Not in the web app, and deliberately not in jsonspec.** The web app
+    /// Also preserved by the web import/export path. The web app
     /// keeps one store per region and answers this question by asking which
     /// region is switched on; this app draws every region at once, so the
     /// question has to be answered per itinerary instead — the solver, the
@@ -126,6 +126,10 @@ public struct Train: Codable, Equatable, Sendable {
     /// unchanged — and ``RegionCatalog`` can re-derive it from the stops when
     /// it is missing.
     public var region: String?
+    /// User remarks or sourced service notes, carried through import and export.
+    public var notes: String?
+    /// Optional user grouping, shared across regions and preserved in archives.
+    public var journeyGroup: JourneyGroup?
 
     public init(
         id: String,
@@ -143,7 +147,9 @@ public struct Train: Codable, Equatable, Sendable {
         routePolicy: RoutePolicy? = nil,
         routeSections: [RouteSection]? = nil,
         stops: [Stop],
-        region: String? = nil
+        region: String? = nil,
+        notes: String? = nil,
+        journeyGroup: JourneyGroup? = nil
     ) {
         self.id = id
         self.date = date
@@ -161,6 +167,8 @@ public struct Train: Codable, Equatable, Sendable {
         self.routeSections = routeSections
         self.stops = stops
         self.region = region
+        self.notes = notes
+        self.journeyGroup = journeyGroup
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -171,7 +179,8 @@ public struct Train: Codable, Equatable, Sendable {
         case company
         case routePolicy = "route_policy"
         case routeSections = "route_sections"
-        case region
+        case region, notes
+        case journeyGroup = "journey_group"
     }
 
     // Written out only when present, so that a store which omits a field
@@ -201,6 +210,8 @@ public struct Train: Codable, Equatable, Sendable {
         try container.encodeIfPresent(routeSections, forKey: .routeSections)
         try container.encode(stops, forKey: .stops)
         try container.encodeIfPresent(region, forKey: .region)
+        try container.encodeIfPresent(notes, forKey: .notes)
+        try container.encodeIfPresent(journeyGroup, forKey: .journeyGroup)
     }
 }
 
@@ -221,6 +232,24 @@ public struct Train: Codable, Equatable, Sendable {
 /// asymmetry is deliberate: decoding is for canonical data, importing is for
 /// everything else.
 public struct Stop: Codable, Equatable, Sendable {
+    /// Identity of this visit, independent of the physical station. Absent
+    /// metadata denotes an authored legacy visit.
+    public struct RouteEditingMetadata: Codable, Equatable, Sendable {
+        public var visitID: UUID
+        public var generatedBy: String?
+
+        public init(visitID: UUID = UUID(), generatedBy: String? = nil) {
+            self.visitID = visitID
+            self.generatedBy = generatedBy
+        }
+
+        private enum CodingKeys: String, CodingKey {
+            case visitID = "visit_id"
+            case generatedBy = "generated_by"
+        }
+    }
+
+    public var routeEditing: RouteEditingMetadata?
     public var name: String
     /// The official station code of the current country's rail data source —
     /// a six-digit Japanese `N02_005c`, a TDX-style `StationUID`, or nil.
@@ -260,7 +289,8 @@ public struct Stop: Codable, Equatable, Sendable {
         departure: String? = nil,
         actualDeparture: String? = nil,
         stopType: String = "passenger_stop",
-        rideSegment: Bool = false
+        rideSegment: Bool = false,
+        routeEditing: RouteEditingMetadata? = nil
     ) {
         self.name = name
         self.n02StationCode = n02StationCode
@@ -272,6 +302,7 @@ public struct Stop: Codable, Equatable, Sendable {
         self.actualDeparture = actualDeparture
         self.stopType = stopType
         self.rideSegment = rideSegment
+        self.routeEditing = routeEditing
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -281,6 +312,7 @@ public struct Stop: Codable, Equatable, Sendable {
         case n02StationCode = "n02_station_code"
         case stopType = "stop_type"
         case rideSegment = "ride_segment"
+        case routeEditing = "route_editing"
     }
 
     public init(from decoder: Decoder) throws {
@@ -297,6 +329,7 @@ public struct Stop: Codable, Equatable, Sendable {
         actualDeparture = try container.decodeIfPresent(String.self, forKey: .actualDeparture)
         stopType = try container.decode(String.self, forKey: .stopType)
         rideSegment = try container.decode(Bool.self, forKey: .rideSegment)
+        routeEditing = try container.decodeIfPresent(RouteEditingMetadata.self, forKey: .routeEditing)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -312,6 +345,7 @@ public struct Stop: Codable, Equatable, Sendable {
         try container.encodeIfPresent(actualDeparture, forKey: .actualDeparture)
         try container.encode(stopType, forKey: .stopType)
         try container.encode(rideSegment, forKey: .rideSegment)
+        try container.encodeIfPresent(routeEditing, forKey: .routeEditing)
     }
 
     public static func == (lhs: Stop, rhs: Stop) -> Bool {
@@ -324,6 +358,7 @@ public struct Stop: Codable, Equatable, Sendable {
             && lhs.actualDeparture == rhs.actualDeparture
             && lhs.stopType == rhs.stopType
             && lhs.rideSegment == rhs.rideSegment
+            && lhs.routeEditing == rhs.routeEditing
     }
 }
 
@@ -336,7 +371,7 @@ public struct Stop: Codable, Equatable, Sendable {
 /// from the codes (§13.4), and the line/operator hints and the branch
 /// number/name are dropped when empty. 1 861 of the 2 303 sections in the
 /// committed Japanese store carry no `from`/`to` at all.
-public struct RouteSection: Codable, Equatable, Sendable {
+public struct RouteSection: Codable, Hashable, Sendable {
     public var from: String?
     public var to: String?
     public var fromN02StationCode: String?
@@ -346,6 +381,9 @@ public struct RouteSection: Codable, Equatable, Sendable {
     /// junction rather than a neutral default.
     public var lineNames: [String]?
     public var operatorNames: [String]?
+    /// Stable package line identities and ordered physical interval identities.
+    public var lineIDs: [String]?
+    public var sectionCodes: [String]?
     /// A branch portion run under a different 号 — はやぶさ↔こまち (§6.1b).
     public var number: String?
     public var name: String?
@@ -357,6 +395,8 @@ public struct RouteSection: Codable, Equatable, Sendable {
         toN02StationCode: String? = nil,
         lineNames: [String]? = nil,
         operatorNames: [String]? = nil,
+        lineIDs: [String]? = nil,
+        sectionCodes: [String]? = nil,
         number: String? = nil,
         name: String? = nil
     ) {
@@ -366,6 +406,8 @@ public struct RouteSection: Codable, Equatable, Sendable {
         self.toN02StationCode = toN02StationCode
         self.lineNames = lineNames
         self.operatorNames = operatorNames
+        self.lineIDs = lineIDs
+        self.sectionCodes = sectionCodes
         self.number = number
         self.name = name
     }
@@ -376,6 +418,8 @@ public struct RouteSection: Codable, Equatable, Sendable {
         case toN02StationCode = "to_n02_station_code"
         case lineNames = "line_names"
         case operatorNames = "operator_names"
+        case lineIDs = "line_ids"
+        case sectionCodes = "section_codes"
     }
 
     /// Station codes are canonicalised on decode (ADR 0010), so a stored
@@ -392,6 +436,8 @@ public struct RouteSection: Codable, Equatable, Sendable {
         ).map(StationCodeAliases.canonical)
         lineNames = try container.decodeIfPresent([String].self, forKey: .lineNames)
         operatorNames = try container.decodeIfPresent([String].self, forKey: .operatorNames)
+        lineIDs = try container.decodeIfPresent([String].self, forKey: .lineIDs)
+        sectionCodes = try container.decodeIfPresent([String].self, forKey: .sectionCodes)
         number = try container.decodeIfPresent(String.self, forKey: .number)
         name = try container.decodeIfPresent(String.self, forKey: .name)
     }
@@ -404,6 +450,8 @@ public struct RouteSection: Codable, Equatable, Sendable {
         try container.encode(toN02StationCode, forKey: .toN02StationCode)
         try container.encodeIfPresent(lineNames, forKey: .lineNames)
         try container.encodeIfPresent(operatorNames, forKey: .operatorNames)
+        try container.encodeIfPresent(lineIDs, forKey: .lineIDs)
+        try container.encodeIfPresent(sectionCodes, forKey: .sectionCodes)
         try container.encodeIfPresent(number, forKey: .number)
         try container.encodeIfPresent(name, forKey: .name)
     }
@@ -804,7 +852,7 @@ public enum TrainValidation {
         }
         // Optional metadata: service class / rolling-stock type / operating
         // company ("/"-separated = 直通) / the service's Latin name.
-        for key in ["train_type", "vehicle_type", "company", "number_en"] {
+        for key in ["train_type", "vehicle_type", "company", "number_en", "notes"] {
             // `undefined` is the only value that skips this. An explicit null
             // IS a value, and `typeof null !== "string"`, so null is rejected —
             // unlike `arrival`/`departure` below, which test for null first.
@@ -1049,7 +1097,7 @@ public enum TrainValidation {
             [
                 "name", "n02_station_code", "platform_number", "arrival", "actual_arrival",
                 "departure", "actual_departure",
-                "stop_type", "ride_segment",
+                "stop_type", "ride_segment", "route_editing",
             ],
             "Stop")
         // ACCEPTS: the guard is key PRESENCE, not a usable value, so
@@ -1058,6 +1106,16 @@ public enum TrainValidation {
         guard stop.hasOwnKey("name") else { throw fail("Each stop must contain name.") }
         guard isValidPlatformNumber(stop["platform_number"]) else {
             throw fail("platform_number must be a non-negative integer or null.")
+        }
+        if let metadata = stop["route_editing"], metadata != .null {
+            guard let id = metadata["visit_id"]?.stringOrNilIfNotString,
+                  UUID(uuidString: id) != nil else {
+                throw fail("route_editing must contain a valid visit_id.")
+            }
+            if let generatedBy = metadata["generated_by"], generatedBy != .null,
+               generatedBy.stringOrNilIfNotString == nil {
+                throw fail("route_editing generated_by must be a string or null.")
+            }
         }
         return canonicalStopShape(stop)
     }
@@ -1077,7 +1135,7 @@ public enum TrainValidation {
             section,
             [
                 "from", "to", "from_n02_station_code", "to_n02_station_code",
-                "line_names", "operator_names", "number", "name",
+                "line_names", "operator_names", "line_ids", "section_codes", "number", "name",
             ],
             "Route section")
 
@@ -1096,7 +1154,9 @@ public enum TrainValidation {
             // with no hints says "unconstrained" explicitly; leaving the key
             // out would be the export path's shape, not this one's.
             lineNames: mapStringFilterBoolean(section["line_names"]) ?? [],
-            operatorNames: mapStringFilterBoolean(section["operator_names"]) ?? [])
+            operatorNames: mapStringFilterBoolean(section["operator_names"]) ?? [],
+            lineIDs: mapStringFilterBoolean(section["line_ids"]),
+            sectionCodes: mapStringFilterBoolean(section["section_codes"]))
         // Optional per-section branch train number / name: some limited
         // expresses run a branch portion under a DIFFERENT 号 (はやぶさ↔こまち,
         // しおかぜ↔いしづち).
@@ -1123,12 +1183,10 @@ public enum TrainValidation {
         guard train.isTruthy, case .object = train else {
             throw fail("Each train must be an object.")
         }
-        // The JavaScript's fourteen keys, plus this app's `vehicle_type` and
-        // `region` metadata.
+        // The JavaScript's fourteen keys, plus this app's own train metadata.
         //
-        // `region` is this port's own field and has no JavaScript counterpart,
-        // so it is absent from every fixture and cannot change a parity
-        // answer. It has to be here all the same, because
+        // `region` is shared with the web import/export path. It has to be
+        // accepted here because
         // `normalizeExportTrain` deliberately CARRIES it (see the note there)
         // and `StoreOperations.json(_:)` writes it — so without this line the
         // app rejected its own export on the way back in, one error per
@@ -1138,7 +1196,7 @@ public enum TrainValidation {
             [
                 "id", "date", "number", "number_en", "train_type", "vehicle_type", "company", "origin",
                 "destination", "direction", "visible", "style", "route_policy",
-                "route_sections", "stops", "region",
+                "route_sections", "stops", "region", "notes", "journey_group",
             ],
             "Train")
 
@@ -1195,7 +1253,18 @@ public enum TrainValidation {
             // says which region it is in must not have to be re-derived, and
             // `Region.resolved` would otherwise answer "Japan" for a Taiwanese
             // store on the launch that loaded it.
-            region: (train["region"] ?? .null).stringOrNilIfFalsy)
+            region: (train["region"] ?? .null).stringOrNilIfFalsy,
+            notes: (train["notes"] ?? .null).stringOrNilIfNotString.map(jsTrim),
+            journeyGroup: try normalizeImportedJourneyGroup(train["journey_group"]))
+    }
+
+    private static func normalizeImportedJourneyGroup(_ value: JSON?) throws -> JourneyGroup? {
+        guard let value, value != .null else { return nil }
+        guard case .object = value,
+              let id = value["id"]?.stringOrNilIfNotString, !id.isEmpty,
+              let name = value["name"]?.stringOrNilIfNotString
+        else { throw fail("Journey group must contain a nonempty string id and a string name.") }
+        return JourneyGroup(id: id, name: name)
     }
 
     /// `normalizeTrainCompany` — trim, then canonicalise for Taiwan only.
@@ -1225,7 +1294,13 @@ public enum TrainValidation {
             departure: normalizeNullableTime(stop["departure"]),
             actualDeparture: normalizeNullableTime(stop["actual_departure"]),
             stopType: (stop["stop_type"] ?? .null).stringOrNilIfFalsy ?? "passenger_stop",
-            rideSegment: (stop["ride_segment"] ?? .null).isTruthy)
+            rideSegment: (stop["ride_segment"] ?? .null).isTruthy,
+            routeEditing: stop["route_editing"].flatMap { metadata in
+                guard let text = metadata["visit_id"]?.stringOrNilIfNotString,
+                      let id = UUID(uuidString: text) else { return nil }
+                return Stop.RouteEditingMetadata(
+                    visitID: id, generatedBy: metadata["generated_by"]?.stringOrNilIfNotString)
+            })
     }
 
     /// `canonicalStopShape` for a stop that is already typed — the export
@@ -1246,7 +1321,8 @@ public enum TrainValidation {
             departure: normalizeNullableTime(stop.departure.map(JSON.string)),
             actualDeparture: normalizeNullableTime(stop.actualDeparture.map(JSON.string)),
             stopType: stop.stopType.isEmpty ? "passenger_stop" : stop.stopType,
-            rideSegment: stop.rideSegment)
+            rideSegment: stop.rideSegment,
+            routeEditing: stop.routeEditing)
     }
 
     private static func platformNumber(_ value: JSON?) -> Int? {
@@ -1394,7 +1470,9 @@ public enum TrainValidation {
             // `Train.region`) and the export is the only path to disk, so
             // dropping it here would lose the answer on every save and make
             // every load re-derive it.
-            region: train.region)
+            region: train.region,
+            notes: train.notes,
+            journeyGroup: train.journeyGroup)
     }
 
     /// Restore the endpoint names that the browser import path resolves from
@@ -1434,11 +1512,14 @@ public enum TrainValidation {
     static func rideRouteSections(for train: Train, stations: StationTable) -> [RouteSection] {
         let stops = train.stops
         let sections = train.routeSections ?? []
+        var fallbackIndex: RouteSectionPairIndex?
         var calculated: [RouteSection] = []
         for index in 0..<max(stops.count - 1, 0) {
             let fromStop = stops[index]
             let toStop = stops[index + 1]
-            if let existing = findRouteSection(sections, fromStop, toStop, preferring: index) {
+            if let existing = findRouteSection(
+                sections, fromStop, toStop, preferring: index, fallbackIndex: &fallbackIndex
+            ) {
                 calculated.append(normalizeExportRouteSection(existing))
                 continue
             }
@@ -1461,12 +1542,66 @@ public enum TrainValidation {
     /// `findRouteSectionForStopPair` — the section at the same index if it
     /// matches, otherwise the first one anywhere that does.
     private static func findRouteSection(
-        _ sections: [RouteSection], _ fromStop: Stop, _ toStop: Stop, preferring index: Int
+        _ sections: [RouteSection], _ fromStop: Stop, _ toStop: Stop, preferring index: Int,
+        fallbackIndex: inout RouteSectionPairIndex?
     ) -> RouteSection? {
         if index < sections.count, matches(sections[index], fromStop, toStop) {
             return sections[index]
         }
-        return sections.first { matches($0, fromStop, toStop) }
+        guard !sections.isEmpty else { return nil }
+        // Aligned records need no index. Build it on the first missed pair so
+        // stop insertion or reordered sections still take one linear pass.
+        if fallbackIndex == nil { fallbackIndex = RouteSectionPairIndex(sections) }
+        guard let match = fallbackIndex?.firstMatch(fromStop, toStop) else { return nil }
+        return sections[match]
+    }
+
+    /// Swift String equality folds canonical Unicode equivalents; the reuse
+    /// rule compares JavaScript strings, so keys retain their UTF-16 units.
+    private struct RouteSectionPairKey: Hashable {
+        let from: [UInt16]
+        let to: [UInt16]
+
+        init(_ from: String, _ to: String) {
+            self.from = Array(from.utf16)
+            self.to = Array(to.utf16)
+        }
+
+        static func codes(_ from: String?, _ to: String?) -> Self? {
+            guard let from, !from.isEmpty, let to, !to.isEmpty else { return nil }
+            return Self(StationCodeAliases.canonical(from), StationCodeAliases.canonical(to))
+        }
+    }
+
+    private struct RouteSectionPairIndex {
+        var codes: [RouteSectionPairKey: Int] = [:]
+        var names: [RouteSectionPairKey: Int] = [:]
+
+        init(_ sections: [RouteSection]) {
+            for (index, section) in sections.enumerated() {
+                if let key = RouteSectionPairKey.codes(
+                    section.fromN02StationCode, section.toN02StationCode
+                ), codes[key] == nil {
+                    codes[key] = index
+                }
+                if let from = section.from, !from.isEmpty,
+                   let to = section.to, !to.isEmpty {
+                    let key = RouteSectionPairKey(from, to)
+                    if names[key] == nil { names[key] = index }
+                }
+            }
+        }
+
+        func firstMatch(_ from: Stop, _ to: Stop) -> Int? {
+            let codeMatch = RouteSectionPairKey.codes(from.n02StationCode, to.n02StationCode)
+                .flatMap { codes[$0] }
+            let nameMatch = !from.name.isEmpty && !to.name.isEmpty
+                ? names[RouteSectionPairKey(from.name, to.name)] : nil
+            // The original search accepts code OR name, so whichever matching
+            // section appeared first wins, rather than preferring a code hit.
+            if let codeMatch, let nameMatch { return min(codeMatch, nameMatch) }
+            return codeMatch ?? nameMatch
+        }
     }
 
     /// `routeSectionMatchesStopPair`.
@@ -1508,6 +1643,8 @@ public enum TrainValidation {
         if let operators = section.operatorNames, !operators.isEmpty {
             normalized.operatorNames = operators
         }
+        if let ids = section.lineIDs, !ids.isEmpty { normalized.lineIDs = ids }
+        if let codes = section.sectionCodes, !codes.isEmpty { normalized.sectionCodes = codes }
         if let number = section.number, !number.isEmpty { normalized.number = number }
         if let name = section.name, !name.isEmpty { normalized.name = name }
         return normalized
@@ -1542,6 +1679,8 @@ public enum TrainValidation {
         }
         if let lines = section.lineNames, !lines.isEmpty { out.lineNames = lines }
         if let operators = section.operatorNames, !operators.isEmpty { out.operatorNames = operators }
+        if let ids = section.lineIDs, !ids.isEmpty { out.lineIDs = ids }
+        if let codes = section.sectionCodes, !codes.isEmpty { out.sectionCodes = codes }
         if let number = section.number, !number.isEmpty { out.number = number }
         if let name = section.name, !name.isEmpty { out.name = name }
         return out

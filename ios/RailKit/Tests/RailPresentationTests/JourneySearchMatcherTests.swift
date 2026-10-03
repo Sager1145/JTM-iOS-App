@@ -334,7 +334,7 @@ struct JourneySearchMatcherLocalizedNameTests {
     /// thing that could fail.
     static func taiwanNaming(_ language: Localization.Language) throws -> Localization {
         let raw = try JSONDecoder().decode(
-            RawTable.self, from: Data(contentsOf: repoFile("app/data/station-readings-tw.json")))
+            RawTable.self, from: Data(contentsOf: repoFile("app/data/station-names-tw.json")))
         let catalog = try Localization.Catalog(
             data: Data(#"{"sourceLanguage":"en","version":"1.0","strings":{}}"#.utf8))
         return Localization(

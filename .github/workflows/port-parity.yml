@@ -33,7 +33,9 @@ jobs:
     # version is pinned below, and the CPU architecture is pinned here: x64 and
     # ARM can disagree in the last bit after long floating-point pipelines.
     runs-on: xcode-27
-    timeout-minutes: 15
+    # Historical-route fixtures compare browser and precompute results in
+    # isolated batches, rebuilding the national indexes for each dated case.
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v7
 

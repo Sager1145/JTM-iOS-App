@@ -49,5 +49,26 @@ class TimetableArtifactAlignmentTests(unittest.TestCase):
         self.assertIn('runtime_database', [r['field'] for r in report['errors']])
 
 
+    def test_exact_copy_presence_and_removal_keep_artifact_aligned(self):
+        source = self.canonical / "normalized/operators-test.jsonl"
+        duplicate = source.with_name("operators-test 2.jsonl")
+        duplicate.write_bytes(source.read_bytes())
+        self.assertTrue(self.verify()['snapshotAligned'])
+        duplicate.unlink()
+        self.assertTrue(self.verify()['snapshotAligned'])
+
+    def test_differing_copy_is_fingerprinted_and_still_validated(self):
+        source = self.canonical / "normalized/operators-test.jsonl"
+        duplicate = source.with_name("operators-test 2.jsonl")
+        row = timetable.json.loads(source.read_text())
+        row['display_name'] = 'Different retained fact'
+        duplicate.write_text(timetable.canonical_json(row) + '\n')
+        self.assertIn('source_hash', [r['field'] for r in self.verify()['errors']])
+        manifest = timetable.load_manifest(self.canonical)
+        data, origins = timetable.load_dataset(self.canonical, manifest)
+        errors = timetable.validate_dataset(data, origins, manifest)
+        self.assertTrue(any('duplicate canonical key' in error for error in errors), errors)
+
+
 if __name__ == '__main__':
     unittest.main()

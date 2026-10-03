@@ -366,3 +366,27 @@ CREATE INDEX idx_line_segments_history_identity ON trip_line_segments(rail_histo
     WHERE rail_history_id IS NOT NULL;
 CREATE INDEX idx_fact_sources_entity ON fact_sources(entity_type, entity_id, field_name);
 CREATE INDEX idx_coverage_operator_year ON coverage_declarations(operator_scope, year, status);
+
+-- Derived physical identities, separate from the published timetable facts.
+CREATE TABLE rail_intervals (
+    section_code TEXT PRIMARY KEY,
+    line_id TEXT NOT NULL,
+    from_station_code TEXT NOT NULL,
+    to_station_code TEXT NOT NULL,
+    segment_index INTEGER NOT NULL
+);
+CREATE TABLE trip_line_interval_codes (
+    trip_id TEXT NOT NULL,
+    segment_sequence INTEGER NOT NULL,
+    position INTEGER NOT NULL,
+    section_code TEXT NOT NULL REFERENCES rail_intervals(section_code),
+    PRIMARY KEY (trip_id, segment_sequence, position),
+    FOREIGN KEY (trip_id, segment_sequence) REFERENCES trip_line_segments(trip_id, sequence)
+);
+CREATE TABLE trip_physical_route_sections (
+    trip_id TEXT NOT NULL REFERENCES trips(trip_id),
+    sequence INTEGER NOT NULL,
+    route_section_json TEXT NOT NULL,
+    source_url TEXT NOT NULL,
+    PRIMARY KEY (trip_id, sequence)
+);

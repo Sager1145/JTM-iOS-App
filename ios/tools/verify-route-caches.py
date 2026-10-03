@@ -16,7 +16,7 @@ map_source = (root / 'ios/RailMap/RailMapView.swift').read_text()
 def section(text, start, end):
     return text[text.index(start):text.index(end, text.index(start))]
 load = section(route, '    func load(trains:', '    /// Read the last-viewed route only.')
-clear = section(route, '    func clear()', '    /// Solve one journey\'s route again')
+clear = section(route, '    func clear()', '    /// The railways every current ride')
 refresh = section(map_source, '            private func refreshLineInputs()', '            private func prepareStrokeReferences()')
 reference = section(map_source, '            func strokeRef(', '            /// The coordinates one ride segment')
 harness = r'''
@@ -30,7 +30,7 @@ import RailCore
     func clear() {}
 }
 @MainActor final class RiddenRouteStore {
-    struct DrawnSegment: Sendable { let segmentIndex: Int }
+    struct DrawnSegment: Sendable { let segmentIndex: Int; var partIndex = 0 }
     struct DrawnRide: Sendable {
         let id: String
         let visible: Bool
@@ -43,6 +43,8 @@ import RailCore
     var visibleRides: [DrawnRide] = []
     private var loadTask: Task<Void, Never>?
     private var loadRevision = 0
+    private var loadingInputs: [String: Train]?
+    private var requestedOrder: [String] = []
     private var completedInputs: [String: Train] = [:]
     private var resolutionTickets: [String: UUID] = [:]
     static var decoded: [[String]] = []
@@ -60,8 +62,15 @@ import RailCore
     static func statusEntries(for rides: [DrawnRide], wanted: [String]) -> [String: Int] { [:] }
     static func sweepRouteCacheOnce() {}
     func wait() async { await loadTask?.value }
+    func detectTraversedLines() {}
+    private func cancelResolutions() { resolutionTickets.removeAll() }
 __LOAD__
 __CLEAR__
+}
+@MainActor struct TraversedLineDetector {
+    static let shared = Self()
+    func publishSelected(rides: [RiddenRouteStore.DrawnRide]) {}
+    func reset() {}
 }
 enum Region: String { case jp }
 enum RailNetworkStore {
@@ -95,7 +104,13 @@ struct StrokeRef { let chainID: String }
     var ridePolylineCache: [String: Int] = [:]
     var cachedTapIndex: Int?
     var linesGeneration = 1
-    var strokeRefCache: [String: (geometryKey: String, linesGeneration: Int, refs: [Int: StrokeRef])] = [:]
+    var strokeRefCache: [String: (geometryKey: String, linesGeneration: Int, refs: [String: StrokeRef])] = [:]
+    var networkGeometry: Coordinator { self }
+    func retainLineBuilds(withIDs ids: Set<String>) {
+        strokeBuildCache = strokeBuildCache.filter { ids.contains($0.key) }
+        lineBuildCache = lineBuildCache.filter { ids.contains($0.key) }
+        ridePolylineCache.removeAll()
+    }
     func refresh() { refreshLineInputs() }
 __REFRESH__
 __REFERENCE__
@@ -139,7 +154,7 @@ __REFERENCE__
         map.lineBuildCache = map.strokeBuildCache
         let ride = RiddenRouteStore.DrawnRide(id: "r", visible: true, geometryDigest: 3)
         let segment = RiddenRouteStore.DrawnSegment(segmentIndex: 0)
-        map.strokeRefCache[ride.id] = ("r:3", 1, [0: StrokeRef(chainID: line.id)])
+        map.strokeRefCache[ride.id] = ("r:3", 1, ["0.0": StrokeRef(chainID: line.id)])
         map.lines.append(.init(id: "jp|C#0")); map.linesGeneration += 1; map.refresh()
         precondition(map.strokeBuildCache.count == 2 && map.lineBuildCache.count == 2)
         precondition(map.strokeRef(for: segment, of: ride) != nil)
@@ -171,6 +186,7 @@ with tempfile.TemporaryDirectory(prefix='jtm-route-caches-') as temporary:
     executable = folder / 'checks'
     sdk = subprocess.check_output(['xcrun', '--sdk', 'macosx', '--show-sdk-path'], text=True).strip()
     subprocess.run(['xcrun', 'swiftc', '-swift-version', '6', '-parse-as-library',
-                    '-sdk', sdk, '-I', str(products), str(checks), str(libs[0]),
+                    '-sdk', sdk, '-module-cache-path', str(folder / 'modules'),
+                    '-I', str(products), str(checks), str(libs[0]),
                     '-o', str(executable)], check=True)
     subprocess.run([str(executable)], check=True, timeout=30)

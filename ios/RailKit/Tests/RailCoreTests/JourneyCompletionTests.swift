@@ -274,7 +274,7 @@ struct JourneyCompletionTests {
         #expect(try JourneyCompletion.prompt(trains: [original]).contains("Existing Line"))
     }
 
-    @Test("a complete journey with section line names does not need line completion")
+    @Test("section lines alone still allow completion of operator and interval number")
     func routeSectionLinesAreNotMissing() {
         var complete = Self.train(company: "Example Rail")
         complete.numberEn = "Limited Seven"
@@ -285,6 +285,9 @@ struct JourneyCompletionTests {
         complete.stops[0].platformNumber = 1
         complete.stops[1].arrival = "10:00"
         complete.stops[1].platformNumber = 2
+        #expect(JourneyCompletion.isEligible(complete))
+        complete.routeSections?[0].operatorNames = ["Example Rail"]
+        complete.routeSections?[0].number = "7M"
         #expect(JourneyCompletion.isEligible(complete) == false)
     }
 
@@ -744,6 +747,25 @@ struct JourneyCompletionTests {
                 catalog: catalog) })
         #expect(prompt.contains("N700S"))
         #expect(prompt.contains("Limited express service name: example"))
+    }
+
+    @Test("selected ordinary train type and physical corridor are AI input hints")
+    func ordinaryRouteChoiceInformsCompletion() throws {
+        var train = Self.train(number: "Local")
+        train.trainType = "普通"
+        train.vehicleType = "E235"
+        train.routeSections = [RouteSection(
+            from: "Alpha", to: "Omega",
+            fromN02StationCode: "A001", toN02StationCode: "B001",
+            lineNames: ["総武線"], operatorNames: ["東日本旅客鉄道"],
+            lineIDs: ["jp-東日本旅客鉄道-総武線-3"],
+            sectionCodes: ["jp-東日本旅客鉄道-総武線-3@A001:B001"])]
+        let prompt = try JourneyCompletion.prompt(trains: [train])
+        #expect(prompt.contains(#""train_type" : "普通""#))
+        #expect(prompt.contains(#""vehicle_type" : "E235""#))
+        #expect(prompt.contains(#""line_ids""#))
+        #expect(prompt.contains("jp-東日本旅客鉄道-総武線-3@A001:B001"))
+        #expect(prompt.contains("read-only input hints"))
     }
 
     private static func catalog() -> EditorCatalog {

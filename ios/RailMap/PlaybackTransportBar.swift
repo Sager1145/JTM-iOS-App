@@ -35,15 +35,14 @@ struct PlaybackTransportBar: View {
 
     @Environment(AppLocalization.self) private var localization
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
-        VStack(spacing: 9) {
-            if dynamicTypeSize.isAccessibilitySize {
-                accessibilityLayout
-            } else {
-                standardLayout
-            }
+        ViewThatFits(in: .vertical) {
+            layout.fixedSize(horizontal: false, vertical: true)
+            ScrollView { layout }
+                .scrollBounceBehavior(.basedOnSize)
         }
         .buttonStyle(RailPressStyle(dims: false))
         .padding(12)
@@ -65,6 +64,92 @@ struct PlaybackTransportBar: View {
         .shadow(color: .black.opacity(0.12), radius: 10, y: 4)
         .frame(maxWidth: 540)
         .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("playbackTransportSurface")
+    }
+
+    @ViewBuilder
+    private var layout: some View {
+        if playback.phase == .idle {
+            exportResultLayout
+        } else {
+            VStack(alignment: .leading, spacing: 8) {
+                if case .failed(let message) = videoExporter.state {
+                    Text(message)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .accessibilityIdentifier("playbackVideoError")
+                }
+                activeLayout
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var activeLayout: some View {
+        if dynamicTypeSize.isAccessibilitySize {
+            accessibilityLayout
+        } else {
+            ViewThatFits(in: .horizontal) {
+                standardLayout.fixedSize(horizontal: true, vertical: false)
+                compactLayout
+            }
+        }
+    }
+
+    private var exportResultLayout: some View {
+        HStack(spacing: 12) {
+            Group {
+                switch videoExporter.state {
+                case .finishing:
+                    Text(localization.journeyText("video.finishing", fallback: "Finishing video"))
+                case .finished:
+                    Text(localization.countryText("video.export", fallback: "Playback video"))
+                case .failed(let message):
+                    Text(message)
+                case .idle, .recording:
+                    EmptyView()
+                }
+            }
+            .font(.caption)
+            .fixedSize(horizontal: false, vertical: true)
+            Spacer(minLength: 0)
+            if case .failed = videoExporter.state {
+                // The error message is already visible; closing returns to the map.
+            } else {
+                videoControl
+            }
+            Button { onStop() } label: {
+                Image(systemName: "xmark.circle.fill")
+                    .frame(width: 44, height: 44)
+                    .contentShape(.rect)
+            }
+            .disabled(videoExporter.state == .finishing)
+            .accessibilityLabel(localization.countryText("common.close", fallback: "Close"))
+            .accessibilityIdentifier("playbackExportDismiss")
+        }
+    }
+
+    private var compactLayout: some View {
+        VStack(alignment: .leading, spacing: 9) {
+            identity(titleLines: 2, stationLines: 1)
+            HStack(spacing: 8) {
+                transportControls
+                Spacer(minLength: 0)
+                stopButton
+            }
+            progressBar
+            HStack(spacing: 8) {
+                queueLabel
+                focusToggle
+                Spacer(minLength: 0)
+                videoControl
+            }
+            HStack(spacing: 10) {
+                speedSlider
+                speedReadout.fixedSize(horizontal: true, vertical: false)
+            }
+        }
     }
 
     /// The compact transport used at ordinary text sizes.
@@ -98,6 +183,7 @@ struct PlaybackTransportBar: View {
     private var accessibilityLayout: some View {
         VStack(alignment: .leading, spacing: 10) {
             identity(titleLines: 3, stationLines: 2)
+                .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
 
             HStack(spacing: 8) {
                 transportControls
@@ -123,23 +209,17 @@ struct PlaybackTransportBar: View {
             }
             .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
         }
-        // In map layouts the vertical control rail shares this overlay. Keep
-        // accessibility-sized text and controls out of its resting footprint;
-        // the glass surfaces may overlap visually, but their hit targets must
-        // never overlap.
-        .padding(
-            .trailing,
-            MapControlBar.side + (2 * MapControlBar.interactionBleed) + 12)
     }
 
     private var transportControls: some View {
-        HStack(spacing: 10) {
+        HStack(spacing: 8) {
             Button { playback.previous() } label: {
                 Image(systemName: "backward.end.fill")
                     .frame(width: 44, height: 44)
                     .contentShape(.rect)
             }
             .disabled(!playback.canGoPrevious)
+            .accessibilityIdentifier("playbackPrevious")
             .accessibilityLabel(
                 Text(localization.journeyText("play.prev", fallback: "Previous train")))
 
@@ -172,6 +252,7 @@ struct PlaybackTransportBar: View {
                     .contentShape(.rect)
             }
             .disabled(!playback.canGoNext)
+            .accessibilityIdentifier("playbackNext")
             .accessibilityLabel(
                 Text(localization.journeyText("play.next", fallback: "Next train")))
         }
@@ -258,6 +339,8 @@ struct PlaybackTransportBar: View {
         }
         .labelsHidden()
         .toggleStyle(.button)
+        .frame(minWidth: 44, minHeight: 44)
+        .accessibilityIdentifier("playbackFollow")
         .accessibilityLabel(
             localization.countryText("play.follow", fallback: "Follow the train"))
     }
@@ -269,6 +352,8 @@ struct PlaybackTransportBar: View {
             step: Playback.Tuning.speedStep
         )
         .accessibilityLabel(localization.countryText("play.speed", fallback: "Playback speed"))
+        .frame(minHeight: 44)
+        .accessibilityIdentifier("playbackSpeedSlider")
     }
 
     private var speedReadout: some View {
@@ -289,6 +374,7 @@ struct PlaybackTransportBar: View {
     /// thumb. HIG `buttons.md`: a button needs a hit region of at least 44×44.
     private var videoControl: some View {
         videoControlContent
+            .accessibilityIdentifier("playbackVideoButton")
             // The four states are four different view types, so SwiftUI treats
             // a change of state as one leaving and another arriving — which,
             // inside an animated transaction, is the default opacity
@@ -302,7 +388,7 @@ struct PlaybackTransportBar: View {
     private var videoControlContent: some View {
         switch videoExporter.state {
         case .recording:
-            Button { videoExporter.cancel() } label: {
+            Button { videoExporter.cancel(clearPlayback: false) } label: {
                 Image(systemName: "record.circle.fill")
                     .foregroundStyle(.red)
                     .frame(width: 44, height: 44)

@@ -50,6 +50,14 @@ Coordinates remain WGS84 throughout `RailCore`. Any datum correction required by
 
 These are value types. Mutating user data normally happens through `StoreOperations` or the app's stores so ID, ordering, validation, persistence, and route reload behavior stay coordinated.
 
+`Train.notes` is optional user or sourced service text. It is omitted when absent and retained by native canonical import and export. `RouteSection.lineNames`, `operatorNames`, `number` and `name` identify an interval's specific line, company, operating number and service name; a journey-level company list does not establish their pairing.
+
+`RouteSectionServiceEditing.applying(_:to:fromStopIndex:toStopIndex:)` applies `RouteSectionServiceInfo` to a selected range of adjacent stop pairs. Number/name-only edits preserve physical route identities; changing line/operator names releases the previous `line_ids` and `section_codes` constraints. `JourneyServiceSections.legs(of:)` groups consecutive identical section details for presentation, preserving gaps and operator/number boundaries.
+
+`JourneyCompletion.prompt(trains:context:eligible:)` supplies dated research context. `merge(response:into:)` validates source-backed, fill-only suggestions atomically. Response `route_sections` rows use adjacent original stop indices and exact names; `expanded_route_sections` uses adjacent indices after `intermediate_stops` insertion so a newly added operator boundary can receive distinct numbers. Both reject conflicts with recorded metadata. An insertion into an interval with explicit physical `section_codes` requires a reviewed route split and is rejected instead of duplicating its entire corridor onto both legs. `addingRemarks(_:to:)` explicitly appends user-authored remarks to notes.
+
+`ChatGPTSubscriptionProtocol.requestBody(prompt:model:purpose:)` defaults to `.completion` for JSON merging; `.research` requests a readable source-linked answer. Both retain the same `store: false` streaming request and web-search tool contract.
+
 ## RailCore top-level catalog
 
 ### Data, identity, and compatibility

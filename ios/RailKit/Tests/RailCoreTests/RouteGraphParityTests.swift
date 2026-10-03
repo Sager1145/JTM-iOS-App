@@ -154,6 +154,8 @@ struct RouteGraphParityTests {
             let to_n02_station_code: String?
             let line_names: [String]?
             let operator_names: [String]?
+            let line_ids: [String]?
+            let section_codes: [String]?
         }
         struct CacheKeyCase: Decodable {
             let country: String
@@ -529,7 +531,8 @@ struct RouteGraphParityTests {
                     fromStationCode: $0.from_n02_station_code,
                     toStationCode: $0.to_n02_station_code,
                     lineNames: $0.line_names ?? [],
-                    operatorNames: $0.operator_names ?? [])
+                    operatorNames: $0.operator_names ?? [],
+                    lineIDs: $0.line_ids ?? [], sectionCodes: $0.section_codes ?? [])
             }
             let where_ = "\(item.country)/\(item.train.id)"
 

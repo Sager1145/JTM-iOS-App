@@ -16,7 +16,7 @@ import SwiftUI
 //      Compact Bottom Bar
 //
 //  The bar is therefore not hand drawn. At the smallest detent the tab bar is
-//  remains visible with a reduced title row; at Medium and Large its selected
+//  remains visible with the ordinary title bar; at Medium and Large its selected
 //  page grows above it.
 
 /// §2.2 (revised) — three primary destinations and semantic Search.
@@ -40,6 +40,14 @@ enum PrimaryTab: String, CaseIterable, Identifiable {
     case search
 
     var id: String { rawValue }
+
+    var headerActionCount: Int {
+        switch self {
+        case .upcoming: 3
+        case .stats, .all: 4
+        case .search: 2
+        }
+    }
 
     /// The short name shown by the system tab bar.
     ///
@@ -111,10 +119,10 @@ struct BottomChromeMetrics: Equatable {
     /// It changes the SET of stops rather than the content: see ``detents``.
     var isAccessibilitySize = false
 
-    /// The system tab bar, a reduced title row and their breathing room, at
+    /// The system tab bar, the fixed title bar and their breathing room, at
     /// the standard text sizes. The Sheet adds the device's bottom safe area
     /// to a height detent itself.
-    static let compactFallback: CGFloat = 136
+    static let compactFallback: CGFloat = 168
     /// How much of ``compactFallback`` is the tab bar's own band — the part
     /// that does not scale with text. The rest is the title row.
     static let compactTabBand: CGFloat = 88
@@ -133,27 +141,14 @@ struct BottomChromeMetrics: Equatable {
     /// standard size and a constant that says 16 clips its descenders. It is
     /// HERE rather than there because two things now need the same number: the
     /// header reserving the slot, and the compact detent that has to be tall
-    /// enough to hold it when the subtitle stays for the whole drag (see
-    /// ``PanelHeader/pinsSubtitle``).
+    /// enough to hold the ordinary title bar's visible subtitle rows.
     static var subtitleRow: CGFloat {
         UIFont.preferredFont(forTextStyle: .footnote).lineHeight
     }
 
-    /// How far the panel header's type may be shrunk before something else
-    /// has to give — the floor under the title and both subtitle rows.
-    ///
-    /// Half, and it is a floor rather than a target: the strings the header
-    /// carries fit at full size in every language the app ships, and the only
-    /// things that reach for it are an accessibility text size and a station
-    /// pair long enough to be its own sentence. What it buys is the rule that
-    /// nothing in this header ends in an ellipsis — a cut station name is not
-    /// a shorter answer to "which journey is this", it is a wrong one.
+    /// The legibility floor for the shared title fit and subtitle labels.
+    /// Titles use one fit for every tab; subtitles fit their own summary text.
     static let smallestLegibleScale: CGFloat = 0.5
-
-    /// The gap between a pinned subtitle and the title above it. Two points,
-    /// where the open header's is one: the collapsed title is smaller and its
-    /// line box is tighter, so the same nothing reads as a collision.
-    static let pinnedSubtitleGap: CGFloat = 2
 
     /// Whether the panel header draws a subtitle at all in this window.
     ///
@@ -333,479 +328,118 @@ struct RailControlHeightKey: PreferenceKey {
 
 // MARK: - the panel header
 
-/// §9.5.6's "左上大标题，右上功能按钮" at every sheet stop.
-///
-/// This is one persistent header, not compact and expanded branches. Its
-/// progress comes from the sheet's live height, so type, spacing and the
-/// subtitle remain attached to the drag instead of teleporting when the
-/// nearest-detent calculation crosses its midpoint.
+/// A fixed-height title bar. A visible subtitle selects the smaller title;
+/// otherwise the large title occupies the shared text area on its own.
 struct PanelHeader<Actions: View>: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.verticalSizeClass) private var verticalSizeClass
-    @Environment(PanelMorph.self) private var morph: PanelMorph?
-    @ScaledMetric(relativeTo: .title3) private var compactTitleSize: CGFloat = 20
-    @ScaledMetric(relativeTo: .largeTitle) private var expandedTitleSize: CGFloat = 34
-    /// One subtitle line, at the reader's text size — asked of the font rather
-    /// than written down.
-    ///
-    /// It used to be a `@ScaledMetric` of 16, and a footnote line is 18. Those
-    /// two points are what the reveal below was clipping: the reserved height
-    /// topped out short of the glyphs it was reserving for, so the subtitle's
-    /// descenders were cut for the whole of the morph and the missing strip
-    /// arrived in a single frame at the Half stop. Measured from the style the
-    /// text is actually drawn in, the ramp's top IS the natural height, so
-    /// there is nothing left to snap. `@Environment(\.dynamicTypeSize)` above
-    /// is what re-reads this when the reader changes their text size.
-    private var subtitleLineHeight: CGFloat { BottomChromeMetrics.subtitleRow }
+    @ScaledMetric(relativeTo: .title2) private var titleSize = WorkspaceMenuMetrics.titleSize
+    @ScaledMetric(relativeTo: .largeTitle) private var largeTitleSize = WorkspaceMenuMetrics.largeTitleSize
+    @ScaledMetric(relativeTo: .title2) private var titleRow = WorkspaceMenuMetrics.titleRowHeight
 
-    /// How far below the collapsed card's top edge the reduced title row sits.
-    ///
-    /// It is a padding now because the row used to be positioned by an
-    /// accident instead. `RailWorkspaceView.tabPage` gives the panel header a
-    /// `VStack` whose only other child is the destination's content, and that
-    /// content is absent below the Half stop (§9.5.6's Docked shows the title
-    /// row alone) — so for the whole of the lower half of the drag the stack
-    /// held ONE view and SwiftUI centred it in the page. The header's distance
-    /// from the card's top edge was therefore half of whatever space the tab
-    /// bar had not claimed, which grows as the sheet does: measured on an
-    /// iPhone 17 Pro it ran 36.7 pt at Docked, 53 at 208, 61.7 at 228 and 90
-    /// at 294 — the title drifting DOWN while the panel it heads travelled up
-    /// — and then snapped back to 13.7 pt in one frame at the stop where the
-    /// content mounted and took the slack. A 76-point jump, in the middle of a
-    /// gesture, on §9.5.6's "one persistent header".
-    ///
-    /// The header is anchored to the top of the page now (see `tabPage`), and
-    /// this is what keeps the collapsed row looking as it did: 25 points puts
-    /// the collapsed title's glyphs back on the line the old centring happened
-    /// to produce at Docked (36.7 pt below the card's top edge, measured), so
-    /// the two rest states are unchanged and only the path between them is.
-    ///
-    /// Not at an accessibility text size. There the collapsed stop is already
-    /// full — the row is a large title plus its own 44-point row of controls
-    /// (see ``stacksActions``) — and there is no slack to reproduce, so the
-    /// inset would be 25 points of the title clipped instead.
-    private var collapsedTopInset: CGFloat {
-        dynamicTypeSize.isAccessibilitySize ? 10 : 25
-    }
-
-    /// The semantic title at the two open stops.
     var title: String
-    /// A different label needed only while the panel is docked.
-    ///
-    /// Both labels stay mounted and share the same geometry below. Swapping
-    /// this string from a `stage` branch made the title change in one frame at
-    /// the nearest-detent midpoint, even though its size and position were
-    /// otherwise following the finger continuously.
-    var compactTitle: String? = nil
+    var tabHeadings: [WorkspacePanelHeading]
     var subtitle: String?
-    /// A second subtitle row, drawn under the first.
-    ///
-    /// One caller and one reason: a selected journey says where it ran and
-    /// when, and those are two facts rather than one sentence. Joined on one
-    /// line they were long enough to need shrinking on a phone; stacked they
-    /// are not. Absent for every destination whose subtitle is a summary,
-    /// which is what keeps the ordinary header exactly as tall as it was.
-    var subtitleDetail: String? = nil
-    /// Whether the subtitle stays at the collapsed stop instead of being
-    /// scaled away with the rest of the morph.
-    ///
-    /// Off for a destination's own subtitle, which is a summary of a list that
-    /// is not on screen when the panel is docked — "231 journeys" over a map
-    /// is a fact about something the reader cannot see, and the collapsed stop
-    /// exists to give them the map.
-    ///
-    /// On when the header is naming ONE journey. There the subtitle is that
-    /// journey's stations and times, and those are the same order of fact as
-    /// the name above them: docked, this header is the only thing on screen
-    /// that says which line is drawn on the map and when it ran. It is also
-    /// the only place left to say it — the ride card, which states the pair
-    /// properly in `RouteTimingView`, is part of the content the collapsed
-    /// stop does not mount.
-    ///
-    /// The stop grows by ``BottomChromeMetrics/subtitleRow`` to hold it; the
-    /// workspace measures that, so this flag and `chromeMetrics` have to be
-    /// decided from the same condition.
-    var pinsSubtitle = false
-    /// Whether the header is over a selected journey rather than the list.
-    ///
-    /// Read only by the action strip's animation. The controls in that strip
-    /// are chosen by the workspace from two facts — the stage, and whether a
-    /// journey is selected — and the strip animates the membership change on
-    /// both, or the set replaces itself in one frame on the axis it was not
-    /// told about. See `actionStrip`.
-    var journeySelected = false
-    /// Whether the selected journey has a primary action at the moment.
-    ///
-    /// The third fact the strip's membership turns on, and the only one that
-    /// moves while the reader holds still: at the collapsed stop the strip
-    /// carries the journey's primary action, and a run gives the journey one
-    /// (pause, resume) that a route still solving does not have. Read only by
-    /// the action strip's animation, like `journeySelected`.
-    var journeyHasPrimaryAction = false
-    private var stage: SheetStage { morph?.stage ?? .expanded }
-    private var expansionProgress: CGFloat { morph?.expansion ?? 1 }
     @ViewBuilder var actions: Actions
 
-    private var progress: CGFloat {
-        let live = min(max(expansionProgress, 0), 1)
-        // Reduce Motion removes the finger-tracking morph. The modifier below
-        // turns this named-state replacement into RailMotion's short fade-like
-        // in-place transition instead of a spring.
-        return reduceMotion ? (stage == .compact ? 0 : 1) : live
+    private var stacksActions: Bool {
+        dynamicTypeSize.isAccessibilitySize && verticalSizeClass != .compact
     }
 
-    /// Opacity is the Reduce Motion-safe form of this semantic replacement,
-    /// so it may keep following the live height even when the larger spatial
-    /// typography morph is reduced to its named end states.
-    private var titleHandoffProgress: CGFloat {
-        min(max(expansionProgress, 0), 1)
-    }
-
-    private func interpolated(_ compact: CGFloat, _ expanded: CGFloat) -> CGFloat {
-        compact + (expanded - compact) * progress
-    }
-
-    /// Where in the ramp the subtitle's line is fully reserved — and, because
-    /// it is the same number, where its text begins to arrive.
-    ///
-    /// The slot fills over the LOWER part of the drag and the type fades in
-    /// over the upper part, so the line is only ever drawn into a slot that
-    /// already holds it whole. That split is what replaced fitting the type to
-    /// the slot: a box that grows from nothing scales the text inside it from
-    /// nothing too, and `scale(0)` is not a reveal — the line does not settle
-    /// into place, it appears from having never existed. Squaring the opacity
-    /// was the previous answer to that, and it was treating the symptom: it
-    /// made the illegible phase dark rather than removing it.
-    ///
-    /// Splitting the two costs one kink in the header's height curve at this
-    /// value and nothing else: the reserved height is still continuous, still
-    /// monotonic and still attached to the finger at every point.
-    ///
-    /// Computed rather than stored: `PanelHeader` is generic over its actions,
-    /// and a generic type may not hold a static stored property.
-    private static var subtitleSlotFilled: CGFloat { 0.6 }
-
-    /// How much of the subtitle's line the header currently reserves.
-    private var subtitleSlot: CGFloat {
-        min(progress / Self.subtitleSlotFilled, 1)
-    }
-
-    /// How far into its arrival the subtitle's text is.
-    ///
-    /// Driven by the LIVE height, like ``titleHandoffProgress`` and for the
-    /// same reason: what is left of this reveal is an opacity cross-fade,
-    /// which is the Reduce Motion-safe form of a replacement, so it may keep
-    /// following the finger where the spatial typography morph is reduced to
-    /// its two named ends.
-    private var subtitleReveal: CGFloat {
-        let live = min(max(expansionProgress, 0), 1)
-        let start = Self.subtitleSlotFilled
-        guard live > start else { return 0 }
-        return (live - start) / (1 - start)
-    }
-
-    private var hasDistinctCompactTitle: Bool {
-        compactTitle.map { $0 != title } ?? false
-    }
-
-    /// How many lines the subtitle is allowed, and therefore how much height
-    /// the header reserves for it.
-    private var subtitleLines: Int { dynamicTypeSize.isAccessibilitySize ? 2 : 1 }
-
-    /// How many ROWS the subtitle slot holds — one for a destination's
-    /// summary, two for a journey's stations and its times.
-    ///
-    /// A count rather than a longer string, because the two rows are two
-    /// facts. `RailWorkspaceView.compactHeaderRows` reserves the same number
-    /// at the collapsed stop, where they are pinned.
-    private var subtitleRows: CGFloat {
-        (subtitleDetail?.isEmpty == false) ? 2 : 1
-    }
-
-    /// The title's size at the two open stops.
-    ///
-    /// ``expandedTitleSize`` is a large-title token and it assumes a tall
-    /// panel. A landscape phone is 402 points tall, and at an accessibility
-    /// text size that token resolves to something near 88 points — a title
-    /// that takes a quarter of the window and STILL does not fit its own line,
-    /// which is how 「現在の行程」 came out as 「現在の…」.
-    ///
-    /// In a short window the header therefore uses its compact size at both
-    /// stops. This is not the Dynamic Type clamp that was removed from the app
-    /// root: ``compactTitleSize`` is itself a `@ScaledMetric`, so it still
-    /// follows the reader's setting exactly — it is the choice of a smaller
-    /// type STYLE for a smaller container, which is what leaves room for the
-    /// content this header introduces.
-    private var openTitleSize: CGFloat {
-        // Both conditions, not just the short window. A landscape phone at a
-        // STANDARD text size has always drawn the large title here and reads
-        // correctly doing it; shrinking that too would have been an unasked-for
-        // change to a state that was already right. What does not fit is the
-        // large-title token multiplied by an accessibility ramp.
-        verticalSizeClass == .compact && dynamicTypeSize.isAccessibilitySize
-            ? compactTitleSize
-            : expandedTitleSize
-    }
-
-    /// One line ordinarily, two at an accessibility size.
-    ///
-    /// §16's first wayfinding question is "where am I", and a name cut down to
-    /// 「現在の…」 is not an answer to it. `minimumScaleFactor` alone cannot
-    /// help here — it is already allowed to shrink to 60 %, and past that the
-    /// only thing left to give is a line.
-    private var titleLines: Int {
-        // Two lines only where there is room for two. In a short window the
-        // title is already drawn at the compact size (see ``openTitleSize``),
-        // and at that size `minimumScaleFactor` can fit it on ONE line — which
-        // is worth taking, because a second line of a 52-point title costs 65
-        // points of a 402-point window and this header is the fixed part of
-        // it. SwiftUI prefers wrapping to scaling whenever more than one line
-        // is allowed, so the allowance itself is what has to go.
-        dynamicTypeSize.isAccessibilitySize && verticalSizeClass != .compact ? 2 : 1
-    }
-
-    /// Whether the subtitle is drawn at all — see
-    /// ``BottomChromeMetrics/drawsSubtitle(isAccessibilitySize:verticalSizeClass:)``,
-    /// which the compact detent is measured against as well.
-    private var showsSubtitle: Bool {
+    private var drawsSubtitle: Bool {
         BottomChromeMetrics.drawsSubtitle(
             isAccessibilitySize: dynamicTypeSize.isAccessibilitySize,
             verticalSizeClass: verticalSizeClass)
     }
 
-    /// Large accessibility text needs the full panel width for both the title
-    /// and the controls. Keeping them in one horizontal row makes SwiftUI
-    /// compress the controls' *values* first — exactly the wrong trade for the
-    /// statistics date and region menus, whose current scope is their label.
-    private var stacksActions: Bool {
-        dynamicTypeSize.isAccessibilitySize && verticalSizeClass != .compact
+    private var visibleSubtitle: String? {
+        guard drawsSubtitle, let subtitle,
+              !subtitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return nil }
+        return subtitle
     }
 
     var body: some View {
-        Group {
+        GeometryReader { geometry in
+            let sharedTitleSize = fittedTitleSize(in: geometry.size.width)
             if stacksActions {
-                VStack(alignment: .leading, spacing: 6) {
-                    titleBlock
-                    HStack(spacing: 2) {
+                VStack(alignment: .leading, spacing: WorkspaceMenuMetrics.stackedActionSpacing) {
+                    titleBlock(size: sharedTitleSize)
+                    HStack {
                         Spacer(minLength: 0)
                         actionStrip
                     }
                 }
             } else {
-                // Centred on the actions, not sat on their baseline.
-                HStack(alignment: .center, spacing: 12) {
-                    titleBlock
+                HStack(alignment: .center, spacing: WorkspaceMenuMetrics.titleActionSpacing) {
+                    titleBlock(size: sharedTitleSize)
                     Spacer(minLength: 0)
                     actionStrip
                 }
             }
         }
-        // Leading and trailing are no longer the same number. The trailing
-        // edge is measured to a BUTTON, whose glass capsule already carries
-        // its own optical inset; the leading edge is measured to a large-title
-        // glyph, which carries none. Setting both to 16 therefore put the
-        // title visibly nearer the edge than the buttons were, so the text
-        // side gets the wider margin that makes the two read as equal.
-        .padding(.leading, interpolated(16, 24))
-        .padding(.trailing, 16)
-        .padding(.top, interpolated(collapsedTopInset, 10))
-        .padding(.bottom, interpolated(2, 6))
-        // Include the title's surrounding padding as a grab area. Buttons
-        // still receive taps; a deliberate drag resizes the resident panel.
-        .contentShape(Rectangle())
-        .railPanelHeaderDrag()
-        // Normal motion is driven directly by the live sheet height and must
-        // not lag behind it. Under Reduce Motion the named-state typography
-        // change is deliberately immediate: applying a 160 ms curve here would
-        // still animate font size, padding, offset and reserved height. Opacity
-        // feedback remains scoped to the content that actually cross-fades.
-        .transaction { transaction in
-            if reduceMotion {
-                transaction.animation = nil
-                transaction.disablesAnimations = true
-            }
-        }
+        .frame(height: WorkspaceMenuMetrics.headerContentHeight(
+            titleRow: titleRow, stacked: stacksActions, drawsSubtitle: drawsSubtitle))
+        .padding(.horizontal, WorkspaceMenuMetrics.horizontalInset)
+        .padding(.top, WorkspaceMenuMetrics.topInset)
+        .padding(.bottom, WorkspaceMenuMetrics.bottomInset)
     }
 
-    private var titleBlock: some View {
-        VStack(
-            alignment: .leading,
-            spacing: interpolated(pinsSubtitle ? BottomChromeMetrics.pinnedSubtitleGap : 0, 1)
-        ) {
-            ZStack(alignment: .topLeading) {
-                titleLabel(compactTitle ?? title)
-                    .opacity(hasDistinctCompactTitle ? 1 - titleHandoffProgress : 1)
-                if let compactTitle, compactTitle != title {
-                    titleLabel(title)
-                        .opacity(titleHandoffProgress)
-                }
+    /// Each display mode shares one font fit, using each tab's actual action width.
+    private func fittedTitleSize(in width: CGFloat) -> CGFloat {
+        let hasSubtitle = visibleSubtitle != nil
+        let size = hasSubtitle ? titleSize : largeTitleSize
+        guard !stacksActions else { return size }
+        let font = UIFont.systemFont(ofSize: size, weight: .bold)
+        let scale = tabHeadings.filter { (drawsSubtitle && $0.hasSubtitle) == hasSubtitle }
+            .reduce(CGFloat(1)) { scale, heading in
+                let actions = CGFloat(heading.actionCount) * WorkspaceMenuMetrics.touchSide
+                    + CGFloat(max(0, heading.actionCount - 1)) * WorkspaceMenuMetrics.actionSpacing
+                let available = max(0, width - actions - WorkspaceMenuMetrics.titleActionSpacing)
+                let textWidth = (heading.title as NSString).size(withAttributes: [.font: font]).width
+                return textWidth > 0 ? min(scale, available / textWidth) : scale
             }
-                // The two labels occupy the same layout slot. Nothing is
-                // masked or clipped: the ZStack reserves the larger label's
-                // natural bounds while opacity performs the semantic handoff.
-                // This keeps a reversal continuous as well — progress simply
-                // runs backward from the pixels already on screen.
-                .accessibilityElement(children: .ignore)
-                .accessibilityLabel(
-                    Text(titleHandoffProgress < 0.5 ? (compactTitle ?? title) : title))
-                // Keep one stable, non-interactive header element for
-                // VoiceOver and UI automation. Putting this identifier on the
-                // outer layout propagates it into the action buttons.
+        return size * max(BottomChromeMetrics.smallestLegibleScale, scale)
+    }
+
+    private func titleBlock(size: CGFloat) -> some View {
+        VStack(alignment: .leading, spacing: WorkspaceMenuMetrics.subtitleSpacing) {
+            Text(title)
+                .font(.system(size: size, weight: .bold))
+                .lineLimit(stacksActions ? 2 : 1)
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(height: visibleSubtitle == nil
+                    ? WorkspaceMenuMetrics.headerTextHeight(
+                        titleRow: titleRow, stacked: stacksActions, drawsSubtitle: drawsSubtitle)
+                    : titleRow * (stacksActions ? 2 : 1),
+                    alignment: visibleSubtitle == nil ? .leading : .topLeading)
                 .accessibilityIdentifier("panelHeader")
                 .accessibilityAddTraits(.isHeader)
                 .railSheetStageActions()
                 .modifier(ReduceMotionUITestProbe(enabled: reduceMotion))
-            if showsSubtitle {
-                // One shared slot for every destination, grown rather than
-                // sliced.
-                //
-                // This slot must exist even when a destination has no current
-                // subtitle. Stats deliberately has none; Search has one only
-                // after a query; Upcoming may still be loading. Removing the
-                // view in those states made the header take its natural,
-                // shorter height and caused its vertical centre to differ
-                // from the other tabs. The empty ZStack below keeps the same
-                // title-bar height and centre line everywhere without drawing
-                // placeholder text.
-                //
-                // When text exists it is drawn at its own size throughout —
-                // the slot is finished growing before the first frame the
-                // type is visible in — so there is no overflow, no cutoff and
-                // no frame where descenders suddenly appear.
-                let line = subtitleLineHeight * CGFloat(subtitleLines)
-                // How much of that slot is open, and how far the text inside
-                // it has arrived. Two ramps rather than one: the slot leads,
-                // the type follows, and the second never starts before the
-                // first has finished (see ``subtitleSlotFilled``).
-                //
-                // Pinned, the subtitle is not part of the morph at all — it is
-                // drawn at its own size from the collapsed stop upward,
-                // because at that stop it is the only statement of the
-                // journey's stations and times on screen, and the stop was
-                // measured to include the row it takes. The ramps are what the
-                // OTHER destinations' subtitles ride.
-                let slot = pinsSubtitle ? 1 : subtitleSlot
-                let arrived = pinsSubtitle ? 1 : subtitleReveal
-                ZStack(alignment: .topLeading) {
-                    VStack(alignment: .leading, spacing: 0) {
-                        if let subtitle, !subtitle.isEmpty {
-                            subtitleLabel(subtitle)
-                        }
-                        if let subtitleDetail, !subtitleDetail.isEmpty {
-                            subtitleLabel(subtitleDetail)
-                        }
-                    }
-                    // Drawn at its own size from the first frame it is drawn
-                    // at all, so there is no phase where this is type too small
-                    // to carry a reading: the slot has already reserved its
-                    // rows by the time the arrival leaves zero, which is what
-                    // lets the reveal be opacity instead of a fit. Nothing is
-                    // clipped and nothing overflows, which is what the old
-                    // scale was buying at the price of starting from nothing.
-                    //
-                    // The three per cent of scale left is the one the rest of
-                    // the app's arrivals use
-                    // (``RailMotion/anchoredTransition``), and it is dropped
-                    // under Reduce Motion rather than merely shortened — §9.4
-                    // asks for less scaling, not for faster scaling.
-                    .scaleEffect(
-                        reduceMotion
-                            ? 1
-                            : RailMotion.arrivalScale
-                                + (1 - RailMotion.arrivalScale) * arrived,
-                        anchor: .topLeading)
-                    .opacity(arrived)
-                    .accessibilityHidden(arrived < 0.5)
-                }
-                .frame(height: line * subtitleRows * slot, alignment: .topLeading)
+            if let visibleSubtitle {
+                subtitleLabel(visibleSubtitle)
+                    .frame(height: BottomChromeMetrics.subtitleRow * (stacksActions ? 2 : 1),
+                           alignment: .topLeading)
             }
         }
     }
 
-    /// One row of the subtitle.
-    ///
-    /// **No ellipsis, at any size.** A cut station name is not a shorter
-    /// answer to "which journey is this", it is a wrong one — 「北小金 → 我孫
-    /// 子」 truncated to 「北小金 → 我…」 names one end of a journey and hints
-    /// at the other. So the row shrinks instead, all the way to half size if
-    /// the reader's text size and the panel's width ask for it, and the header
-    /// reserves its height from the FONT rather than from the drawn glyphs, so
-    /// a shrunk row still sits on the line the stop was measured for.
     private func subtitleLabel(_ value: String) -> some View {
         Text(value)
             .font(.footnote)
             .foregroundStyle(.secondary)
-            .lineLimit(subtitleLines)
-            .minimumScaleFactor(BottomChromeMetrics.smallestLegibleScale)
-            .fixedSize(horizontal: false, vertical: true)
-            .frame(maxWidth: .infinity, alignment: .leading)
-    }
-
-    private func titleLabel(_ value: String) -> some View {
-        Text(value)
-            // Interpolated rather than swapped between two `Font`s: see
-            // ``RailInterpolatedFont``. The size is a function of the live
-            // sheet height at every frame of a drag AND of the settle spring
-            // `ResidentBottomSheetModifier` puts on the release.
-            .railInterpolatedFont(
-                size: interpolated(compactTitleSize, openTitleSize),
-                weight: .bold)
-            // The glyphs are already redrawn at every interpolated size. Do
-            // not let SwiftUI add a second implicit content cross-fade.
-            .contentTransition(.identity)
-            .lineLimit(titleLines)
-            // Down to half rather than to 72 %: nothing in this header may
-            // end in an ellipsis (see ``subtitleLabel(_:)``), and the title is
-            // the one row that can be handed a name long enough to need the
-            // room — a 特急's own name and its number, at an accessibility
-            // text size, on a phone.
+            .lineLimit(stacksActions ? 2 : 1)
             .minimumScaleFactor(BottomChromeMetrics.smallestLegibleScale)
             .fixedSize(horizontal: false, vertical: true)
     }
 
     private var actionStrip: some View {
-        HStack(spacing: 2) { actions }
-            // This ceiling applies to chrome glyphs and compact scope labels,
-            // not to the content introduced by the header.
+        HStack(spacing: WorkspaceMenuMetrics.actionSpacing) { actions }
+            .buttonStyle(RailPressStyle())
             .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
             .fixedSize(horizontal: true, vertical: false)
-            // The SET of controls changes at Docked — over a selected journey
-            // this row is that journey's controls, and above Docked the card
-            // below owns them (see `RailWorkspaceView.panelActions(for:stage:)`).
-            // That is a membership change rather than a morph, so it takes
-            // §9.4's short replacement; without it two glass capsules appeared
-            // and vanished between two frames beside a title that was still
-            // growing.
-            //
-            // The set changes on selection too: the list's transport and
-            // filters leave when a journey is chosen and return when it is
-            // closed. And it changes with the journey: at the collapsed stop
-            // the journey's primary action is one of these controls, and it
-            // comes and goes with the journey's phase. Keyed on the stage
-            // alone, each of those was the same two-frame appearance this
-            // comment describes, one axis over. Not keyed on WHICH journey —
-            // a run hands the selection from journey to journey and the
-            // strip must not replace itself at every hand-off.
-            .animation(
-                RailMotion.animation(RailMotion.replace, reduceMotion: reduceMotion),
-                value: ActionMembership(
-                    stage: stage, journeySelected: journeySelected,
-                    // Only where the strip carries the action: at other
-                    // stops the card below owns it, and a route finishing
-                    // its solve must not open a transaction over a strip
-                    // whose membership did not move.
-                    journeyHasPrimaryAction: stage == .compact && journeyHasPrimaryAction))
     }
-
-    /// The facts the action strip's membership is decided from, and so the
-    /// ones it animates on.
-    private struct ActionMembership: Equatable {
-        var stage: SheetStage
-        var journeySelected: Bool
-        var journeyHasPrimaryAction: Bool
-    }
-
 }
 
 /// A debug-only observation point for the UI test that is run after the
@@ -900,83 +534,6 @@ extension EnvironmentValues {
     }
 }
 
-/// How a docked card follows a drag on its header. Nil under the phone sheet,
-/// where the system presentation owns that drag (`ResidentBottomSheetModifier`
-/// already resizes on a drag that starts on the title — see its own note on
-/// `.presentationContentInteraction`).
-///
-/// A drag on `PanelHeader`'s title block, split into the two halves a
-/// `DragGesture` actually reports: `changed` is the finger moving, fired every
-/// frame so the card can track it with no animation of its own; `ended` is the
-/// release, carrying both the raw translation and the system's own projected
-/// resting point so the caller can settle toward wherever the finger was
-/// actually headed rather than where it happened to be at the last frame.
-/// Boxed for the same reason ``RailSheetStageAction`` is: a bare closure pair
-/// is not `Sendable`, and an `EnvironmentKey`'s `defaultValue` has to be.
-struct RailPanelHeaderDrag: Sendable, Equatable {
-    /// Identity, for the same reason as ``RailSheetStageAction``: the docked
-    /// card re-applies this value on every drag frame, and only an equal
-    /// value leaves the pages' environment alone.
-    private let id = UUID()
-    let changed: @MainActor @Sendable (_ translation: CGSize) -> Void
-    let ended: @MainActor @Sendable (_ translation: CGSize, _ predictedEnd: CGSize) -> Void
-    let cancelled: @MainActor @Sendable () -> Void
-
-    static func == (lhs: Self, rhs: Self) -> Bool { lhs.id == rhs.id }
-}
-
-struct RailPanelHeaderDragKey: EnvironmentKey {
-    static let defaultValue: RailPanelHeaderDrag? = nil
-}
-
-extension EnvironmentValues {
-    var railPanelHeaderDrag: RailPanelHeaderDrag? {
-        get { self[RailPanelHeaderDragKey.self] }
-        set { self[RailPanelHeaderDragKey.self] = newValue }
-    }
-}
-
-/// Attaches ``RailPanelHeaderDrag`` to the padded header, when something
-/// is listening for it.
-///
-/// A pure passthrough when nothing is — the same shape as
-/// ``SheetStageActions`` and for the same reason: the phone sheet never sets
-/// this environment value, so its header stays exactly as undraggable as it
-/// was before this existed.
-private struct PanelHeaderDrag: ViewModifier {
-    @Environment(\.railPanelHeaderDrag) private var drag
-    @GestureState private var isDragging = false
-
-    @ViewBuilder
-    func body(content: Content) -> some View {
-        if let drag {
-            content.gesture(
-                // The header moves as the panel changes height. Measure in
-                // the window's stable space so that movement cannot feed back
-                // into the mouse/finger translation on the next frame.
-                DragGesture(minimumDistance: 6, coordinateSpace: .global)
-                    .updating($isDragging) { _, active, _ in active = true }
-                    .onChanged { drag.changed($0.translation) }
-                    .onEnded { drag.ended($0.translation, $0.predictedEndTranslation) })
-                .onChange(of: isDragging) { _, active in
-                    // GestureState also resets when the system cancels a drag.
-                    // This clears only transient translation, never the stop.
-                    if !active { drag.cancelled() }
-                }
-                .onDisappear { drag.cancelled() }
-        } else {
-            content
-        }
-    }
-}
-
-extension View {
-    /// Follows a drag on the docked card's header. See ``RailPanelHeaderDrag``.
-    func railPanelHeaderDrag() -> some View {
-        modifier(PanelHeaderDrag())
-    }
-}
-
 /// The three stops, as named accessibility actions on whichever header is on
 /// screen.
 ///
@@ -1040,6 +597,7 @@ extension View {
 
 private struct ResidentBottomSheetModifier<SheetContent: View>: ViewModifier {
     var metrics: BottomChromeMetrics
+    var isSuspended: Bool
     @Binding var detent: PresentationDetent
     @Binding var liveHeight: CGFloat
     @ViewBuilder var sheetContent: () -> SheetContent
@@ -1062,14 +620,30 @@ private struct ResidentBottomSheetModifier<SheetContent: View>: ViewModifier {
     /// the two real lifecycle edges below.
     @State private var isPresented = false
 
+    // Keep the presenter and its list alive while a journey card takes over.
+    // A positive height is a valid system detent. Its safe-area band sits
+    // beneath the journey sheet while the menu content stays hidden.
+    private var suspendedDetent: PresentationDetent { .height(1) }
+    private var visibleDetent: Binding<PresentationDetent> {
+        Binding(
+            get: { isSuspended ? suspendedDetent : detent },
+            set: { if !isSuspended && $0 != suspendedDetent { detent = $0 } })
+    }
+
     func body(content: Content) -> some View {
         content
             .sheet(isPresented: $isPresented, onDismiss: restoreIfNeeded) {
                 sheetContent()
-                .presentationDetents(metrics.detents, selection: $detent)
-                // Keep the content surface opaque and identical at every stop.
-                // SwiftUI still draws the tab bar's own glass above it.
-                .presentationBackground(Color.railMenuBackground)
+                .opacity(isSuspended ? 0 : 1)
+                .allowsHitTesting(!isSuspended)
+                .accessibilityHidden(isSuspended)
+                .railAnimation(RailMotion.spring, value: isSuspended, reduceMotion: reduceMotion)
+                .presentationDetents(
+                    isSuspended ? metrics.detents.union([suspendedDetent]) : metrics.detents,
+                    selection: visibleDetent)
+                // The system owns the sheet's Liquid Glass and detent changes.
+                .railMenuPresentationBackground()
+                .railMenuPresentationCornerRadius()
                 // §9.5.6: no Pull Bar.
                 //
                 // `.scrolls` rather than `.resizes`, which is what decides who
@@ -1091,7 +665,8 @@ private struct ResidentBottomSheetModifier<SheetContent: View>: ViewModifier {
                 // still visible. §4.2: the map is the app's spatial context,
                 // not a picture behind a modal.
                 .presentationBackgroundInteraction(
-                    .enabled(upThrough: metrics.mediumDetent))
+                    .enabled(upThrough: metrics.isAccessibilitySize
+                        ? metrics.compactDetent : metrics.mediumDetent))
                 .interactiveDismissDisabled()
                 .environment(
                     \.railSheetStageAction,
@@ -1105,6 +680,7 @@ private struct ResidentBottomSheetModifier<SheetContent: View>: ViewModifier {
                         },
                         stages: metrics.stages))
                 .onPreferenceChange(SheetLiveHeightKey.self) { height in
+                    guard !isSuspended else { return }
                     settle(reporting: height.rounded())
                 }
         }
@@ -1139,7 +715,7 @@ private struct ResidentBottomSheetModifier<SheetContent: View>: ViewModifier {
     /// happens to drag through moves a few points per sample and is left alone;
     /// only the system arrives at one from far away.
     private func settle(reporting height: CGFloat) {
-        let travelled = abs(height - liveHeight)
+        let settledStage = metrics.settledStage(at: height)
         // Below the smallest stop is not a height the panel is AT.
         //
         // The sheet cannot rest under Docked, so a shorter measurement means
@@ -1150,8 +726,15 @@ private struct ResidentBottomSheetModifier<SheetContent: View>: ViewModifier {
         // the destination's content unmount and remount — taking the text
         // field that had just been tapped with it, so the keyboard never
         // appeared and the tap did nothing.
-        guard height >= metrics.compact, travelled > 0.5 else { return }
-        guard metrics.settledStage(at: height) != nil else {
+        // The measured stop has been rounded, while a journey's
+        // subtitle makes the compact detent fractional. Accept the same
+        // rounding allowance as settledStage, then use the exact stop so the
+        // header reaches its fully collapsed form.
+        guard height >= metrics.compact || settledStage == .compact else { return }
+        let height = settledStage == .compact ? metrics.compact : height
+        let travelled = abs(height - liveHeight)
+        guard travelled > 0.5 else { return }
+        guard settledStage != nil else {
             // The finger. 1:1, unanimated, and it ends the window below: a
             // height that is not a stop means the sheet is being moved again,
             // so the stop it left is no longer something to be suspicious of.
@@ -1229,12 +812,14 @@ extension View {
     /// from "please present now" while another system surface is visible.
     func residentBottomSheet<SheetContent: View>(
         metrics: BottomChromeMetrics,
+        isSuspended: Bool = false,
         detent: Binding<PresentationDetent>,
         liveHeight: Binding<CGFloat>,
         @ViewBuilder sheet: @escaping () -> SheetContent
     ) -> some View {
         modifier(ResidentBottomSheetModifier(
             metrics: metrics,
+            isSuspended: isSuspended,
             detent: detent,
             liveHeight: liveHeight,
             sheetContent: sheet))

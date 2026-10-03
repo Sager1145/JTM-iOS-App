@@ -1,0 +1,52 @@
+{
+  "format": 1,
+  "schema_version": "1.3",
+  "total": 4,
+  "solved": 4,
+  "unsolvable": 0,
+  "no_route": 0,
+  "solver_context": {
+    "solver_version": "25",
+    "history_revisions": {
+      "ca": "none",
+      "us": "none"
+    }
+  },
+  "source_hashes": {
+    "ca-2025.json": "86069a810674f019f79331bbdd639a734f53b6a42ffeb734c7a4aff04e6a62cb",
+    "matched-routes.json": "e53bfa63157c64aedfbd2a1e78c553d212d6753b3d6e16cbd0b9dda65b057226",
+    "matched-stops.json": "8468a0e34e19e22822a7933ec376505ecc2e933b1529af67eddb7e1a306f36c7",
+    "rail-sections-ca.json": "2b8efaa1be051df0e63b8e2b2cdad1c6922a91e7ce944aa0738fb326a9ce244d",
+    "rail-sections-us.json": "a7622be7ba78664763eb46a6db52ed1095f2350580e63893487019d82151276a",
+    "stations-ca.json": "07a1f45e29a6df77b40f98e1b0a4bbe2d2f1d62faa6dd3c63516f6630bf8fff6",
+    "stations-us.json": "fea81734f77e80498481e6d0723302e721de72f02438bef4a210b1aca93e5e42",
+    "us-2025.json": "ea5199ef9e6d542d8b2c4d38dbb9b74ab7b69e42939ef17adf7f8d703ab4c7da"
+  },
+  "parts": [
+    "part-000",
+    "part-001",
+    "part-002",
+    "part-003"
+  ],
+  "part_train_ids": {
+    "part-000": "US-SAMPLE-ACELA",
+    "part-001": "US-SAMPLE-EMPIRE-BUILDER",
+    "part-002": "US-SAMPLE-ADIRONDACK",
+    "part-003": "US-SAMPLE-CASCADES"
+  },
+  "full": "sample-full",
+  "dates": {
+    "2026-08-14": [
+      "part-000"
+    ],
+    "2026-08-16": [
+      "part-001"
+    ],
+    "2026-08-19": [
+      "part-002"
+    ],
+    "2026-09-30": [
+      "part-003"
+    ]
+  }
+}

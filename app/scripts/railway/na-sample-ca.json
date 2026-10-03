@@ -8,12 +8,17 @@
    {
     "id": "amtrak-maple-leaf-ca",
     "from": "Toronto",
-    "to": "Niagara Falls Station"
+    "to": "ca-official-niagara-falls"
+   },
+   {
+    "id": "amtrak-maple-leaf-border1",
+    "from": "ca-official-niagara-falls",
+    "to": "us-official-niagara-falls"
    },
    {
     "id": "amtrak-maple-leaf-us",
-    "from": "Niagara Falls Amtrak Station",
-    "to": "Penn Station"
+    "from": "us-official-niagara-falls",
+    "to": "us-official-ny-moynihan-train-hall-at-penn"
    }
   ]
  },
@@ -40,6 +45,20 @@
     "id": "via-qu-bec-montr-al",
     "from": "Montréal",
     "to": "Québec"
+   }
+  ]
+ },
+ {
+  "id": "CA-SAMPLE-OTTAWA-MONTREAL-DEMO",
+  "date": "undated",
+  "number": "VIA Rail Ottawa–Montréal route example",
+  "trainType": "Route example",
+  "notes": "Illustrative current-package route only; no verified train number, timetable or vehicle assignment. Date intentionally unspecified.",
+  "lines": [
+   {
+    "id": "via-ottawa-montr-al",
+    "from": "ca-official-ottawa",
+    "to": "ca-official-montr-al"
    }
   ]
  }

@@ -3,6 +3,7 @@ import SwiftUI
 
 /// Source clocks remain visible even when route evidence is incomplete.
 private struct TimetableTripDetailView: View {
+    @Environment(AppLocalization.self) private var localization
     @Environment(\.dismiss) private var dismiss
     @State private var sources: [TrainTimetableDatabase.SourceDocument] = []
     @State private var sourceQueryFailed = false
@@ -16,6 +17,8 @@ private struct TimetableTripDetailView: View {
             List {
                 Section {
                     Text("運転日: \(trip.serviceDate) · 日本時間")
+                    LabeledContent(localization.text("ios.ai.researchTrainNumber", fallback: "Operating train number"),
+                                   value: trip.trainNumber)
                     Text("\(trip.origin?.station.name ?? "?") → \(trip.destination?.station.name ?? "?")")
                     if let englishName = trip.service.englishName {
                         Text(englishName).foregroundStyle(.secondary)
@@ -39,37 +42,77 @@ private struct TimetableTripDetailView: View {
                         Text("掲載駅だけを取り込みます。未掲載の停車駅と経路は編集画面で確認してください。")
                             .font(.caption).foregroundStyle(.secondary)
                     }
-                    Button("AIで公表時刻を照合") { showsAICheck = true }
+                    Button(localization.text("ios.ai.researchCheck", fallback: "Check with ChatGPT")) { showsAICheck = true }
                         .accessibilityIdentifier("timetableAICheck-\(trip.id)")
                 }
                 Section("停車駅・公表時刻") {
                     ForEach(trip.stops) { stop in
-                        VStack(alignment: .leading, spacing: 5) {
+                        HStack(alignment: .top, spacing: 12) {
                             Text(stop.station.name).font(.headline)
-                            if stop.callType == "pass" {
-                                Text("レ · 通過").foregroundStyle(.secondary)
-                            } else {
-                                Text("着 \(clock(stop.arrivalTime, seconds: stop.arrivalSeconds))")
-                                Text("発 \(clock(stop.departureTime, seconds: stop.departureSeconds))")
+                                .fixedSize(horizontal: false, vertical: true)
+                            Spacer(minLength: 8)
+                            VStack(alignment: .trailing, spacing: 5) {
+                                if stop.callType == "pass" {
+                                    Text("レ")
+                                        .font(.body.monospaced())
+                                        .frame(width: 52)
+                                        .foregroundStyle(.secondary)
+                                        .accessibilityLabel("通過")
+                                } else {
+                                    Text("着 \(clock(stop.arrivalTime, seconds: stop.arrivalSeconds))")
+                                    Text("発 \(clock(stop.departureTime, seconds: stop.departureSeconds))")
+                                }
+                                if !stop.isPassengerCall && stop.callType != "pass" {
+                                    Text("旅客停車ではありません").font(.caption).foregroundStyle(.secondary)
+                                }
                             }
-                            if !stop.isPassengerCall && stop.callType != "pass" {
-                                Text("旅客停車ではありません").font(.caption).foregroundStyle(.secondary)
-                            }
+                            .frame(minWidth: 52, alignment: .trailing)
+                            .fixedSize(horizontal: true, vertical: false)
                         }
                         .monospacedDigit()
                         .accessibilityElement(children: .combine)
                         .accessibilityIdentifier("timetableStop-\(stop.sequence)")
                         ForEach(trip.timetableSymbols.filter { $0.afterStopSequence == stop.sequence }) { row in
-                            HStack {
+                            HStack(alignment: .top, spacing: 12) {
                                 Text(row.stationName).font(.headline)
-                                Spacer()
+                                    .fixedSize(horizontal: false, vertical: true)
+                                Spacer(minLength: 8)
                                 Text(row.symbol)
                                     .font(.body.monospaced())
+                                    .frame(width: 52)
                                     .accessibilityLabel(row.symbol == "レ" ? "通過" : "この列車は経由しません")
                             }
                             .foregroundStyle(.secondary)
                             .accessibilityElement(children: .combine)
                             .accessibilityIdentifier("timetableSymbol-\(row.id)")
+                        }
+                    }
+                }
+                if !trip.lineSegments.isEmpty {
+                    Section(localization.text("ios.ai.lines", fallback: "Lines")) {
+                        ForEach(trip.lineSegments) { segment in
+                            VStack(alignment: .leading, spacing: 5) {
+                                Text(segment.lineName)
+                                if let from = trip.stops.first(where: { $0.station.id == segment.fromStationID }),
+                                   let to = trip.stops.first(where: { $0.station.id == segment.toStationID }) {
+                                    Text("\(from.station.name) → \(to.station.name)")
+                                        .font(.caption).foregroundStyle(.secondary)
+                                }
+                            }
+                        }
+                    }
+                }
+                if !trip.operatorSegments.isEmpty {
+                    Section(localization.text("ios.ai.company", fallback: "Operator")) {
+                        ForEach(trip.operatorSegments) { segment in
+                            VStack(alignment: .leading, spacing: 5) {
+                                Text(segment.displayName)
+                                if let from = trip.stops.first(where: { $0.sequence == segment.fromSequence }),
+                                   let to = trip.stops.first(where: { $0.sequence == segment.toSequence }) {
+                                    Text("\(from.station.name) → \(to.station.name)")
+                                        .font(.caption).foregroundStyle(.secondary)
+                                }
+                            }
                         }
                     }
                 }
@@ -115,7 +158,9 @@ private struct TimetableTripDetailView: View {
                 }
             }
             .sheet(isPresented: $showsAICheck) {
-                TimetableAICheckView(trip: trip, sources: sources)
+                TrainResearchView(region: "jp",
+                                  query: "\(trip.displayName) \(trip.publicNumber ?? trip.trainNumber)",
+                                  rideDate: trip.serviceDate, trip: trip, sources: sources)
             }
         }
     }
@@ -146,110 +191,252 @@ private struct TimetableTripDetailView: View {
     }
 }
 
-/// Read-only research result. The published timetable stays intact until the
-/// reader explicitly changes the journey draft in the editor.
-private struct TimetableAICheckView: View {
+/// Research answers remain separate from the published timetable and journey draft.
+private struct TrainResearchView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
-    let trip: TrainTimetableDatabase.Trip
+    @Environment(AppLocalization.self) private var localization
+    let region: String
+    let trip: TrainTimetableDatabase.Trip?
     let sources: [TrainTimetableDatabase.SourceDocument]
+    @State private var query: String
+    @State private var rideDate: String?
+    @State private var remarks = ""
     @State private var auth = ChatGPTSubscriptionAuth.shared
     @State private var service: ChatGPTSubscriptionService?
     @State private var models: [ChatGPTSubscriptionProtocol.Model] = []
     @State private var selectedModel = ""
     @State private var answer = ""
+    @State private var answeredPrompt = ""
     @State private var failure: String?
     @State private var isWorking = false
     @State private var activeTask: Task<Void, Never>?
     @State private var ownsLogin = false
 
+    init(region: String, query: String, rideDate: String?,
+         trip: TrainTimetableDatabase.Trip? = nil,
+         sources: [TrainTimetableDatabase.SourceDocument] = []) {
+        self.region = region
+        self.trip = trip
+        self.sources = sources
+        _query = State(initialValue: query)
+        _rideDate = State(initialValue: rideDate)
+    }
+
+    private func text(_ key: String, fallback: String? = nil) -> String {
+        localization.text("ios.ai." + key, fallback: fallback ?? key)
+    }
+
+    private var hasQuery: Bool {
+        !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            && Dates.isValidDateString(rideDate)
+    }
+
     private var prompt: String {
-        let calls = trip.stops.map { stop in
-            "\(stop.station.name): 着 \(stop.arrivalTime ?? "未掲載") / 発 \(stop.departureTime ?? "未掲載")"
-        }.joined(separator: "\n")
-        let citations = sources.map { "\($0.publisher): \($0.urlOrLocator)" }.joined(separator: "\n")
+        let context: String
+        if let trip {
+            let calls = trip.stops.map { stop in
+                "\(stop.station.name) [\(stop.callType)]: arrival \(stop.arrivalTime ?? "unpublished") / departure \(stop.departureTime ?? "unpublished")"
+            }.joined(separator: "\n")
+            let lines = trip.lineSegments.map { segment in
+                let from = trip.stops.first { $0.station.id == segment.fromStationID }?.station.name
+                let to = trip.stops.first { $0.station.id == segment.toStationID }?.station.name
+                return "\(from ?? segment.fromStationID) → \(to ?? segment.toStationID): \(segment.lineName)"
+            }.joined(separator: "\n")
+            let operators = trip.operatorSegments.map { segment in
+                let from = trip.stops.first { $0.sequence == segment.fromSequence }?.station.name
+                let to = trip.stops.first { $0.sequence == segment.toSequence }?.station.name
+                return "\(from ?? "unpublished") → \(to ?? "unpublished"): \(segment.displayName)"
+            }.joined(separator: "\n")
+            let citations = sources.map { "\($0.publisher): \($0.urlOrLocator)" }.joined(separator: "\n")
+            context = """
+            Compare the following published timetable stored in the app against official information.
+            Report confirmed differences, additional stops, operating dates and timetable editions with source URLs. Check company boundaries and operating-number changes separately for each interval; do not confuse the public service number with an operating train number.
+            Service: \(trip.displayName)
+            Public service number: \(trip.publicNumber ?? "unpublished")
+            Operating train number: \(trip.trainNumber)
+            Timetable edition: \(trip.timetableEditionName) (\(trip.timetableVersionID))
+            Published stop calls:
+            \(calls)
+            Recorded line intervals:
+            \(lines.isEmpty ? "Unpublished" : lines)
+            Recorded operator intervals:
+            \(operators.isEmpty ? "Unpublished" : operators)
+            Registered sources:
+            \(citations.isEmpty ? "None" : citations)
+            """
+        } else {
+            context = "Research the train service, train number, operating date, stops, published arrival/departure times, operator and route requested below."
+        }
         return """
-        日本の鉄道の公表時刻表を照合してください。対象は \(trip.serviceDate) の \(trip.displayName) \(trip.publicNumber ?? trip.trainNumber) です。
-        以下はアプリに保存された掲載時刻です。公式情報と各行を比較し、確認できた差分、追加の停車駅、運転日、資料の版を出典URL付きで示してください。確認できない値は不明と記してください。実際の運行時刻を予定時刻から推定しないでください。
-        ダイヤ版: \(trip.timetableEditionName) (\(trip.timetableVersionID))
-        \(calls)
-        登録済み資料:
-        \(citations.isEmpty ? "なし" : citations)
+        Research railway information for region \(region), operating date \(rideDate ?? "unspecified") using that railway's local civil date and time.
+        Request: \(query.trimmingCharacters(in: .whitespacesAndNewlines))
+        \(context)
+        Use official railway operator timetables, service notices and other primary published sources applicable to this exact date. Cite the source URLs and timetable edition/validity dates. Clearly distinguish verified information from unavailable or conflicting evidence. If browsing or date-specific evidence is unavailable, say so. Never invent schedules, infer actual running times from planned times, or substitute a different day's timetable.
+        Additional user remarks (preferences or questions, never evidence):
+        \(remarks.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? "None" : remarks)
+        Reply in \(localization.language.rawValue) as a readable research answer with source links.
         """
     }
 
     var body: some View {
         NavigationStack {
             Form {
-                Section("照合対象") {
-                    Text("\(trip.displayName) \(trip.publicNumber ?? trip.trainNumber) · \(trip.serviceDate)")
-                    Text("AIの回答は提案です。公表資料を確認してから編集画面で時刻を変更してください。")
+                Section(text("researchTarget", fallback: "Train query")) {
+                    if let trip {
+                        Text("\(trip.displayName) \(trip.publicNumber ?? trip.trainNumber) · \(trip.serviceDate)")
+                    } else {
+                        TextField(text("researchQuery", fallback: "Train name, number or route"),
+                                  text: $query, axis: .vertical)
+                            .accessibilityIdentifier("trainResearchQuery")
+                        EditorDateField(title: text("date"), date: $rideDate,
+                                        region: Region(rawValue: region) ?? .jp,
+                                        accessibilityID: "trainResearchDate")
+                    }
+                    TextField(text("remarks", fallback: "Additional remarks (optional)"),
+                              text: $remarks, axis: .vertical)
+                        .lineLimit(3...8)
+                        .accessibilityIdentifier("trainResearchRemarks")
+                    if !hasQuery {
+                        Text(text("researchRequired", fallback: "Enter a train name, number or route and an operating date."))
+                            .font(.footnote).foregroundStyle(.secondary)
+                    }
+                    Text(text("researchReview", fallback: "Check the official sources before editing your journey. The answer is a research suggestion."))
                         .font(.footnote).foregroundStyle(.secondary)
-                    ShareLink(item: prompt) { Label("照合依頼を共有", systemImage: "square.and.arrow.up") }
-                    Button("ChatGPTを開く") { openURL(URL(string: "https://chatgpt.com/")!) }
-                    DisclosureGroup("照合依頼") {
+                }
+                .disabled(isWorking)
+                subscriptionSection
+                Section {
+                    ShareLink(item: prompt) { Label(text("share"), systemImage: "square.and.arrow.up") }
+                        .disabled(!hasQuery)
+                    Button(text("open")) { openURL(URL(string: "https://chatgpt.com/")!) }
+                    DisclosureGroup(text("prompt")) {
                         Text(prompt).font(.caption.monospaced()).textSelection(.enabled)
                     }
                 }
-                Section("AI照合") {
-                    if auth.isSignedIn {
-                        if !models.isEmpty {
-                            Picker("モデル", selection: $selectedModel) {
-                                ForEach(models) { model in Text(model.displayName).tag(model.id) }
-                            }
-                        }
-                        Button("照合を実行") { activeTask = Task { await check() } }
-                            .disabled(isWorking || selectedModel.isEmpty)
-                    } else {
-                        Button("ChatGPTにサインイン") { activeTask = Task { await signIn() } }
-                            .disabled(isWorking)
-                        if let code = auth.userCode, auth.isSigningIn {
-                            Text(code).font(.title2.monospaced()).textSelection(.enabled)
-                            Button("認証ページを開く") { openURL(auth.loginURL) }
+                if let failure {
+                    Section { Text(failure).foregroundStyle(.red) }
+                }
+                if !answer.isEmpty {
+                    Section(text("sources")) {
+                        Text(LocalizedStringKey(answer)).textSelection(.enabled)
+                            .accessibilityIdentifier("trainResearchAnswer")
+                        DisclosureGroup(text("researchAnsweredPrompt", fallback: "Request for this answer")) {
+                            Text(answeredPrompt).font(.caption.monospaced()).textSelection(.enabled)
                         }
                     }
-                    if isWorking { ProgressView() }
-                    if let failure { Text(failure).foregroundStyle(.red) }
-                    if !answer.isEmpty { Text(answer).textSelection(.enabled) }
                 }
             }
-            .navigationTitle("時刻表のAI照合")
+            .navigationTitle(text(trip == nil ? "researchTitle" : "researchCheckTitle",
+                                  fallback: trip == nil ? "Ask ChatGPT about a train" : "Check published timetable"))
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar { ToolbarItem(placement: .confirmationAction) {
-                Button("閉じる") { dismiss() }
-            } }
-            .task { if auth.isSignedIn { await loadModels() } }
-            .onDisappear {
-                activeTask?.cancel()
-                if ownsLogin { auth.cancelLogin() }
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(text("researchClose", fallback: "Close")) { dismiss() }
+                }
+            }
+            .task { if auth.isSignedIn { run { try await loadModels() } } }
+            .onDisappear { cancel() }
+            .onChange(of: auth.isSignedIn) { _, signedIn in
+                if !signedIn { models = []; selectedModel = "" }
             }
         }
     }
 
-    @MainActor private func loadModels() async {
-        do {
-            if service == nil { service = ChatGPTSubscriptionService(auth: .shared) }
-            models = try await service!.models()
-            selectedModel = models.first?.id ?? ""
-        } catch { failure = error.localizedDescription }
+    private var subscriptionSection: some View {
+        Section(text("subscription")) {
+            Text(text("researchSubscriptionInfo", fallback: "Uses the experimental Codex subscription interface; authorization displays Codex. Models and limits depend on your account. Querying sends the displayed request and remarks to OpenAI."))
+                .font(.footnote).foregroundStyle(.secondary)
+            if auth.isSignedIn {
+                LabeledContent(text("account"), value: auth.accountLabel ?? "ChatGPT")
+                if let plan = auth.planLabel { LabeledContent(text("plan"), value: plan) }
+                if !models.isEmpty {
+                    Picker(text("model"), selection: $selectedModel) {
+                        ForEach(models) { model in Text(model.displayName).tag(model.id) }
+                    }.disabled(isWorking)
+                } else if !isWorking {
+                    Text(text("noModels")).font(.footnote).foregroundStyle(.secondary)
+                }
+                Button(text("refreshModels")) { run { try await loadModels() } }
+                    .disabled(isWorking)
+                Button {
+                    let requestPrompt = prompt
+                    run {
+                        let result = try await currentService().complete(
+                            prompt: requestPrompt, model: selectedModel, purpose: .research)
+                        try Task.checkCancellation()
+                        answer = result
+                        answeredPrompt = requestPrompt
+                    }
+                } label: {
+                    Label(text(trip == nil ? "researchRun" : "researchCheck",
+                               fallback: trip == nil ? "Query with ChatGPT" : "Check with ChatGPT"),
+                          systemImage: "sparkles")
+                }
+                .disabled(isWorking || !hasQuery || !models.contains { $0.id == selectedModel })
+                .accessibilityIdentifier("trainResearchRun")
+                Button(text("signOut"), role: .destructive) {
+                    do { try auth.signOut(); models = []; selectedModel = "" }
+                    catch { failure = error.localizedDescription }
+                }.disabled(isWorking)
+            } else {
+                Button(text("signIn")) {
+                    run {
+                        ownsLogin = true
+                        defer { ownsLogin = false }
+                        try await auth.login()
+                        try Task.checkCancellation()
+                        try await loadModels()
+                    }
+                }.disabled(isWorking || auth.isSigningIn)
+                .accessibilityIdentifier("trainResearchSignIn")
+            }
+            if let code = auth.userCode, auth.isSigningIn {
+                Text(code).font(.title2.monospaced()).textSelection(.enabled)
+                Text(text("deviceInstructions")).font(.footnote)
+                Button(text("authorize")) { openURL(auth.loginURL) }
+            }
+            if isWorking {
+                HStack {
+                    ProgressView()
+                    Text(text(auth.isSigningIn ? "waitingLogin" : "working"))
+                }
+                Button(text("cancelRequest")) { cancel() }
+            }
+        }
     }
 
-    @MainActor private func signIn() async {
-        isWorking = true
-        defer { isWorking = false }
-        ownsLogin = true
-        defer { ownsLogin = false }
-        do { try await auth.login(); await loadModels() }
-        catch { failure = error.localizedDescription }
+    private func currentService() -> ChatGPTSubscriptionService {
+        if let service { return service }
+        let created = ChatGPTSubscriptionService(auth: auth)
+        service = created
+        return created
     }
 
-    @MainActor private func check() async {
-        guard let service else { return }
+    private func run(_ action: @escaping @MainActor () async throws -> Void) {
+        guard !isWorking else { return }
         isWorking = true
         failure = nil
-        defer { isWorking = false }
-        do { answer = try await service.complete(prompt: prompt, model: selectedModel) }
-        catch { failure = error.localizedDescription }
+        activeTask = Task { @MainActor in
+            defer { isWorking = false; activeTask = nil }
+            do { try await action() }
+            catch is CancellationError { }
+            catch { if !Task.isCancelled { failure = error.localizedDescription } }
+        }
+    }
+
+    private func cancel() {
+        activeTask?.cancel()
+        if ownsLogin { auth.cancelLogin() }
+    }
+
+    private func loadModels() async throws {
+        let available = try await currentService().models()
+        try Task.checkCancellation()
+        models = available
+        if !available.contains(where: { $0.id == selectedModel }) {
+            selectedModel = available.first?.id ?? ""
+        }
     }
 }
 
@@ -283,8 +470,13 @@ struct ServicePatternPickerView: View {
     @State private var incompleteTimetableTripCount = 0
     @State private var timetableQueryFailed = false
     @State private var inspectedTrip: TrainTimetableDatabase.Trip?
+    @State private var showsTrainResearch = false
 
-    private static let timetableDatabase = TrainTimetableDatabase.bundled()
+    private static let japaneseTimetableDatabase = TrainTimetableDatabase.bundled()
+    private var timetableDatabase: TrainTimetableDatabase? {
+        guard TrainTimetableDatabase.supports(country: region) else { return nil }
+        return Self.japaneseTimetableDatabase
+    }
     private static let jrAndNationalOperatorNames: Set<String> = [
         "北海道旅客鉄道", "東日本旅客鉄道", "東海旅客鉄道",
         "西日本旅客鉄道", "四国旅客鉄道", "九州旅客鉄道",
@@ -354,14 +546,14 @@ struct ServicePatternPickerView: View {
     }
 
     private var knownMatches: [TrainServicePatterns.Pattern] {
-        guard rideDate != nil else { return legacyMatches }
+        guard region == "jp", rideDate != nil else { return legacyMatches }
         if !timetablePatterns.isEmpty { return exactMatches }
         if timetableCoverage == .verified && timetableTripCount == 0 { return [] }
         return []
     }
 
     private var unknownMatches: [TrainServicePatterns.Pattern] {
-        guard rideDate != nil else { return [] }
+        guard region == "jp", rideDate != nil else { return [] }
         return legacyMatches.filter { pattern in
             guard let rideDate else { return false }
             return pattern.applicability(on: rideDate) != .notApplicable
@@ -443,7 +635,7 @@ struct ServicePatternPickerView: View {
                             .foregroundStyle(.secondary)
                     }
 
-                    if let rideDate {
+                    if region == "jp", let rideDate {
                         timetableStatus(date: rideDate)
                     }
 
@@ -456,6 +648,7 @@ struct ServicePatternPickerView: View {
                         } label: {
                             Label(companyFilter ?? "すべての会社", systemImage: "building.2")
                         }
+                        .railMenuButtonStyle()
                         .accessibilityIdentifier("servicePatternCompanyFilter")
 
                         Spacer()
@@ -468,8 +661,16 @@ struct ServicePatternPickerView: View {
                         } label: {
                             Label(lineFilter ?? "すべての路線", systemImage: "arrow.triangle.swap")
                         }
+                        .railMenuButtonStyle()
                         .accessibilityIdentifier("servicePatternLineFilter")
                     }
+                }
+                Section {
+                    Button { showsTrainResearch = true } label: {
+                        Label(localization.text("ios.ai.researchTitle", fallback: "Ask ChatGPT about a train"),
+                              systemImage: "sparkles")
+                    }
+                    .accessibilityIdentifier("servicePatternChatGPTQuery")
                 }
                 ForEach(groups, id: \.name) { group in
                     Section(header: Text("\(group.name) · \(group.companyLabel)")) {
@@ -519,6 +720,9 @@ struct ServicePatternPickerView: View {
                 }
             }
             .task(id: "\(region):\(rideDate ?? "")") { await loadTimetable() }
+            .sheet(isPresented: $showsTrainResearch) {
+                TrainResearchView(region: region, query: query, rideDate: rideDate)
+            }
             .sheet(item: $inspectedTrip) { trip in
                 TimetableTripDetailView(trip: trip, onUseDraft: onSelectDraft == nil ? nil : { chosen in
                     onSelectDate?(chosen.serviceDate)
@@ -686,7 +890,7 @@ struct ServicePatternPickerView: View {
     }
 
     @ViewBuilder private func timetableStatus(date: String) -> some View {
-        if timetableQueryFailed || Self.timetableDatabase == nil {
+        if timetableQueryFailed || timetableDatabase == nil {
             Text("当日ダイヤDBを利用できないため、互換パターンを表示しています")
                 .font(.caption).foregroundStyle(.orange)
         } else if timetableCoverage == .conflict {
@@ -725,7 +929,7 @@ struct ServicePatternPickerView: View {
         timetableTripCount = 0
         incompleteTimetableTripCount = 0
         timetableQueryFailed = false
-        guard region == "jp", let rideDate, let database = Self.timetableDatabase else { return }
+        guard region == "jp", let rideDate, let database = timetableDatabase else { return }
 
         do {
             let loaded = try await Task.detached(priority: .userInitiated) {

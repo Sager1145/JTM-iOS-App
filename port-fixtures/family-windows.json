@@ -576,6 +576,25 @@
       ]
     },
     {
+      "label": "総武線 御茶ノ水支線 — retain continuous ink where the trunk lane cannot replace it",
+      "lineId": "jp-東日本旅客鉄道-総武線-2",
+      "partIndex": 0,
+      "totalMetres": 4513.6,
+      "familyWindows": [],
+      "tenantWindows": [],
+      "hasFamilyFeature": false,
+      "baseColor": "#b28500",
+      "familyColor": null,
+      "emittedPieces": [
+        {
+          "feature": "base",
+          "from": 0,
+          "to": 4513.6,
+          "colorKey": "#b28500"
+        }
+      ]
+    },
+    {
       "label": "九州旅客鉄道 長崎線 — base line landlord window over its own -2 branch-service split (2 stretches)",
       "lineId": "jp-九州旅客鉄道-長崎線",
       "partIndex": 0,
@@ -583,11 +602,11 @@
       "familyWindows": [
         {
           "from": 107091.3,
-          "to": 107550,
+          "to": 107260.3,
           "groupId": "九州旅客鉄道:長崎線"
         },
         {
-          "from": 121475,
+          "from": 121775.3,
           "to": 123829.8,
           "groupId": "九州旅客鉄道:長崎線"
         }
@@ -606,19 +625,19 @@
         {
           "feature": "family",
           "from": 107091.3,
-          "to": 107550,
+          "to": 107260.3,
           "colorKey": "#be8004",
           "groupId": "九州旅客鉄道:長崎線"
         },
         {
           "feature": "base",
-          "from": 107550,
-          "to": 121475,
+          "from": 107260.3,
+          "to": 121775.3,
           "colorKey": "#be8004"
         },
         {
           "feature": "family",
-          "from": 121475,
+          "from": 121775.3,
           "to": 123829.8,
           "colorKey": "#be8004",
           "groupId": "九州旅客鉄道:長崎線"
@@ -640,11 +659,11 @@
       "tenantWindows": [
         {
           "from": 0,
-          "to": 475,
+          "to": 175,
           "groupId": "九州旅客鉄道:長崎線"
         },
         {
-          "from": 21050,
+          "from": 21350,
           "to": 23402.5,
           "groupId": "九州旅客鉄道:長崎線"
         }
@@ -655,8 +674,8 @@
       "emittedPieces": [
         {
           "feature": "base",
-          "from": 475,
-          "to": 21050,
+          "from": 175,
+          "to": 21350,
           "colorKey": "#be8004"
         }
       ]

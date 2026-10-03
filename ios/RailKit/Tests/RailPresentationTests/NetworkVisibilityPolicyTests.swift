@@ -131,8 +131,8 @@ struct NetworkVisibilityPolicyTests {
             #expect(previous == Set(package.lines.map(\.id)))
         }
         // jp: nine Shinkansen; tw: THSR; kr: three 고속선; us: Acela, Brightline
-        // and Amtrak's 36 rank-1 corridors; ca: VIA Rail's four and Amtrak's one.
-        #expect(backboneCounts == ["jp": 9, "tw": 1, "kr": 3, "us": 38, "hk": 0, "mo": 0, "ca": 5])
+        // and Amtrak's current corridors; ca: VIA Rail and Amtrak corridors.
+        #expect(backboneCounts == ["jp": 9, "tw": 1, "kr": 3, "us": 41, "hk": 0, "mo": 0, "ca": 7])
     }
 
     @Test("Intercity operators stay in the overview regardless of rank; other rank-1 lines do not")

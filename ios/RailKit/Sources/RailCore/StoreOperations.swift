@@ -761,12 +761,17 @@ extension StoreOperations {
             pairs.append(("route_sections", .array(sections.map(json))))
         }
         pairs.append(("stops", .array(train.stops.map(json))))
-        // LAST, and only when set. `region` is this app's own field — the web
-        // app has a region switch and needs no such thing — so it is written
-        // after every key the JavaScript writes. A store that never had one
+        // Optional metadata follows the same order as the web exporter.
+        // A store that never had one
         // therefore round-trips byte for byte, which is what keeps the
         // export fixture a check on the ported shape rather than on ours.
         if let region = train.region { pairs.append(("region", .string(region))) }
+        if let notes = train.notes { pairs.append(("notes", .string(notes))) }
+        if let group = train.journeyGroup {
+            pairs.append(("journey_group", .object(TrainValidation.JSON.Object([
+                ("id", .string(group.id)), ("name", .string(group.name)),
+            ]))))
+        }
         return .object(TrainValidation.JSON.Object(pairs))
     }
 
@@ -796,6 +801,15 @@ extension StoreOperations {
             ("stop_type", .string(stop.stopType)),
             ("ride_segment", .bool(stop.rideSegment)),
         ])
+        if let metadata = stop.routeEditing {
+            var fields: [(String, TrainValidation.JSON)] = [
+                ("visit_id", .string(metadata.visitID.uuidString)),
+            ]
+            if let generatedBy = metadata.generatedBy {
+                fields.append(("generated_by", .string(generatedBy)))
+            }
+            pairs.append(("route_editing", .object(TrainValidation.JSON.Object(fields))))
+        }
         return .object(TrainValidation.JSON.Object(pairs))
     }
 
@@ -819,6 +833,12 @@ extension StoreOperations {
         }
         if let operators = section.operatorNames {
             pairs.append(("operator_names", .array(operators.map(TrainValidation.JSON.string))))
+        }
+        if let ids = section.lineIDs {
+            pairs.append(("line_ids", .array(ids.map(TrainValidation.JSON.string))))
+        }
+        if let codes = section.sectionCodes {
+            pairs.append(("section_codes", .array(codes.map(TrainValidation.JSON.string))))
         }
         if let number = section.number { pairs.append(("number", .string(number))) }
         if let name = section.name { pairs.append(("name", .string(name))) }

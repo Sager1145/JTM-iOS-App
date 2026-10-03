@@ -2193,7 +2193,7 @@
           "stop_type": "pass_through"
         },
         {
-          "arrival": null,
+          "arrival": "11:37",
           "departure": "11:38",
           "stop_type": "passenger_stop"
         },
@@ -10090,7 +10090,7 @@
           "stop_type": "pass_through"
         },
         {
-          "arrival": null,
+          "arrival": "09:46",
           "departure": "09:47",
           "stop_type": "passenger_stop"
         },
@@ -10285,8 +10285,8 @@
           "stop_type": "origin"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "12:42",
+          "departure": "12:42",
           "stop_type": "passenger_stop"
         },
         {
@@ -10295,8 +10295,8 @@
           "stop_type": "pass_through"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "12:46",
+          "departure": "12:47",
           "stop_type": "passenger_stop"
         },
         {
@@ -10305,13 +10305,13 @@
           "stop_type": "pass_through"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "12:52",
+          "departure": "12:53",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "12:58",
+          "departure": "12:59",
           "stop_type": "passenger_stop"
         },
         {
@@ -10474,8 +10474,8 @@
           "stop_type": "pass_through"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "17:41",
+          "departure": "17:42",
           "stop_type": "passenger_stop"
         },
         {
@@ -10499,33 +10499,8 @@
           "stop_type": "pass_through"
         },
         {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": null,
+          "arrival": "18:04",
+          "departure": "18:05",
           "stop_type": "passenger_stop"
         },
         {
@@ -10541,6 +10516,31 @@
         {
           "arrival": null,
           "departure": null,
+          "stop_type": "pass_through"
+        },
+        {
+          "arrival": null,
+          "departure": null,
+          "stop_type": "pass_through"
+        },
+        {
+          "arrival": "18:24",
+          "departure": "18:26",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "arrival": null,
+          "departure": null,
+          "stop_type": "pass_through"
+        },
+        {
+          "arrival": null,
+          "departure": null,
+          "stop_type": "pass_through"
+        },
+        {
+          "arrival": "18:30",
+          "departure": "18:31",
           "stop_type": "passenger_stop"
         },
         {
@@ -10602,8 +10602,8 @@
           "stop_type": "pass_through"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "19:41",
+          "departure": "19:42",
           "stop_type": "passenger_stop"
         },
         {
@@ -10617,58 +10617,8 @@
           "stop_type": "pass_through"
         },
         {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": null,
+          "arrival": "19:46",
+          "departure": "19:46",
           "stop_type": "passenger_stop"
         },
         {
@@ -10692,8 +10642,58 @@
           "stop_type": "pass_through"
         },
         {
+          "arrival": "20:05",
+          "departure": "20:06",
+          "stop_type": "passenger_stop"
+        },
+        {
           "arrival": null,
           "departure": null,
+          "stop_type": "pass_through"
+        },
+        {
+          "arrival": null,
+          "departure": null,
+          "stop_type": "pass_through"
+        },
+        {
+          "arrival": null,
+          "departure": null,
+          "stop_type": "pass_through"
+        },
+        {
+          "arrival": null,
+          "departure": null,
+          "stop_type": "pass_through"
+        },
+        {
+          "arrival": "20:23",
+          "departure": "20:23",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "arrival": null,
+          "departure": null,
+          "stop_type": "pass_through"
+        },
+        {
+          "arrival": null,
+          "departure": null,
+          "stop_type": "pass_through"
+        },
+        {
+          "arrival": null,
+          "departure": null,
+          "stop_type": "pass_through"
+        },
+        {
+          "arrival": null,
+          "departure": null,
+          "stop_type": "pass_through"
+        },
+        {
+          "arrival": "20:41",
+          "departure": "20:42",
           "stop_type": "passenger_stop"
         },
         {
@@ -10727,23 +10727,13 @@
           "stop_type": "pass_through"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "21:04",
+          "departure": "21:05",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": null,
+          "arrival": "21:09",
+          "departure": "21:09",
           "stop_type": "passenger_stop"
         },
         {
@@ -10752,18 +10742,28 @@
           "stop_type": "pass_through"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "21:14",
+          "departure": "21:15",
           "stop_type": "passenger_stop"
         },
         {
           "arrival": null,
           "departure": null,
+          "stop_type": "pass_through"
+        },
+        {
+          "arrival": "21:19",
+          "departure": "21:19",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "21:22",
+          "departure": "21:23",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "arrival": "21:36",
+          "departure": "21:38",
           "stop_type": "passenger_stop"
         },
         {
@@ -11756,26 +11756,6 @@
           "arrival": null,
           "departure": "15:16",
           "stop_type": "origin"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
         },
         {
           "arrival": null,

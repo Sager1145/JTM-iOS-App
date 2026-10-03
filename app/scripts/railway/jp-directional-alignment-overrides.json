@@ -1,0 +1,308 @@
+{
+  "schema": "jp-directional-alignment-overrides-v1",
+  "scope": "Station-order direction is independent of the permitted physical track direction. Order sources below are primary; physical alignment directions are retained from the package and its existing secondary alignmentSource, unless a separate primary source is supplied. No coordinates, station memberships or unknown directions are inferred.",
+  "families": [
+    {
+      "baseLineID": "jp-九州旅客鉄道-日豊線",
+      "stationOrderDirection": "down",
+      "baseFirstStationCode": "008684",
+      "baseLastStationCode": "010031",
+      "orderSource": {
+        "url": "https://www.jrkyushu-timetable.jp/cgi-bin/sp/sp-tt_list.cgi/28805",
+        "publisher": "JR九州",
+        "retrieved": "2026-09-30",
+        "evidence": "Official 別府 station timetable labels 小倉 direction up and 大分・佐伯 direction down. The base order 小倉→鹿児島 and pair 西屋敷→立石 run toward 大分."
+      },
+      "pairs": [
+        {
+          "lineID": "jp-九州旅客鉄道-日豊線-p1",
+          "stationCodes": [
+            "009241",
+            "009262"
+          ],
+          "alignmentDirection": "up",
+          "alignmentSource": "https://ja.wikipedia.org/wiki/立石トンネル",
+          "mainAlignmentDirection": "down"
+        }
+      ]
+    },
+    {
+      "baseLineID": "jp-九州旅客鉄道-鹿児島線",
+      "stationOrderDirection": "up",
+      "baseFirstStationCode": "009872",
+      "baseLastStationCode": "008637",
+      "orderSource": {
+        "url": "https://www.jrkyushu-timetable.jp/cgi-bin/sp/sp-tt_list.cgi/28673",
+        "publisher": "JR九州",
+        "retrieved": "2026-09-30",
+        "evidence": "田原坂 timetable labels 大牟田・久留米・博多 up and 熊本・新八代・八代 down. Base 八代→門司港 and pair 植木→田原坂 therefore run up."
+      },
+      "pairs": [
+        {
+          "lineID": "jp-九州旅客鉄道-鹿児島線-p1",
+          "stationCodes": [
+            "009670",
+            "009664"
+          ],
+          "alignmentDirection": "down",
+          "alignmentSource": "https://ja.wikipedia.org/wiki/鹿児島本線",
+          "mainAlignmentDirection": "up"
+        }
+      ]
+    },
+    {
+      "baseLineID": "jp-北海道旅客鉄道-函館線",
+      "stationOrderDirection": "down",
+      "baseFirstStationCode": "000455",
+      "baseLastStationCode": "000095",
+      "orderSource": {
+        "url": "https://jrhokkaidonorikae.com/linelist/linelist.php",
+        "publisher": "JR北海道",
+        "retrieved": "2026-09-30",
+        "evidence": "Official route timetable lists 函館―新函館北斗―長万部―東室蘭 down. Base 函館→旭川 and 七飯→大沼 pair run down. Nanae municipal official access page independently describes 藤城線 trains as 下りのみ."
+      },
+      "pairs": [
+        {
+          "lineID": "jp-北海道旅客鉄道-函館線-p1",
+          "stationCodes": [
+            "000431",
+            "000427"
+          ],
+          "alignmentDirection": "down",
+          "alignmentSource": "https://ja.wikipedia.org/wiki/七飯駅",
+          "mainAlignmentDirection": "unassigned",
+          "primaryAlignmentSource": {
+            "url": "https://www.town.nanae.hokkaido.jp/hotnews/detail/00003943.html",
+            "publisher": "北海道七飯町",
+            "retrieved": "2026-09-30",
+            "evidence": "Municipal 新函館北斗 access page states 藤城線経由 trains are 下りのみ and bypass 新函館北斗."
+          }
+        }
+      ]
+    },
+    {
+      "baseLineID": "jp-東日本旅客鉄道-上越線",
+      "stationOrderDirection": "down",
+      "baseFirstStationCode": "002389",
+      "baseLastStationCode": "001496",
+      "orderSource": {
+        "url": "https://timetables.jreast.co.jp/2610/timetable-v/296d1.html",
+        "publisher": "JR東日本",
+        "retrieved": "2026-09-30",
+        "evidence": "Official October 2026 down timetable orders 水上→湯檜曽→土合→土樽→越後中里→宮内. Both pair rows follow that order even though their physical track is up."
+      },
+      "pairs": [
+        {
+          "lineID": "jp-東日本旅客鉄道-上越線-p1",
+          "stationCodes": [
+            "001739",
+            "001728"
+          ],
+          "alignmentDirection": "up",
+          "alignmentSource": "https://ja.wikipedia.org/wiki/ループ線",
+          "mainAlignmentDirection": "down"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-上越線-p2",
+          "stationCodes": [
+            "001813",
+            "001794",
+            "001775",
+            "001739"
+          ],
+          "alignmentDirection": "up",
+          "alignmentSource": "https://ja.wikipedia.org/wiki/湯檜曽駅",
+          "mainAlignmentDirection": "down"
+        }
+      ]
+    },
+    {
+      "baseLineID": "jp-東日本旅客鉄道-奥羽線",
+      "stationOrderDirection": "up",
+      "baseFirstStationCode": "000527",
+      "baseLastStationCode": "001373",
+      "orderSource": {
+        "url": "https://timetables.jreast.co.jp/2610/timetable-v/258u2.html",
+        "publisher": "JR東日本",
+        "retrieved": "2026-09-30",
+        "evidence": "Official October 2026 up timetable orders 陣場→白沢→大館. Base 青森→福島 and pair 陣場→白沢 run up."
+      },
+      "pairs": [
+        {
+          "lineID": "jp-東日本旅客鉄道-奥羽線-p1",
+          "stationCodes": [
+            "000644",
+            "000654"
+          ],
+          "alignmentDirection": "up",
+          "alignmentSource": "https://ja.wikipedia.org/wiki/矢立峠",
+          "mainAlignmentDirection": "down"
+        }
+      ]
+    },
+    {
+      "baseLineID": "jp-東日本旅客鉄道-東北線",
+      "stationOrderDirection": "down",
+      "baseFirstStationCode": "003155",
+      "baseLastStationCode": "000792",
+      "orderSource": {
+        "url": "https://timetables.jreast.co.jp/timetable/list0464.html",
+        "publisher": "JR東日本",
+        "retrieved": "2026-09-30",
+        "evidence": "金谷川 timetable labels 福島・仙台 down and 郡山・黒磯 up. Base 赤羽→盛岡 and pair 金谷川→南福島 run down; official 20170113.pdf also explicitly orders 金谷川→南福島 under down."
+      },
+      "pairs": [
+        {
+          "lineID": "jp-東日本旅客鉄道-東北線-p2",
+          "stationCodes": [
+            "001397",
+            "001382"
+          ],
+          "alignmentDirection": "up",
+          "alignmentSource": "https://ja.wikipedia.org/wiki/金谷川駅",
+          "mainAlignmentDirection": "down"
+        }
+      ]
+    },
+    {
+      "baseLineID": "jp-東海旅客鉄道-東海道線-2",
+      "stationOrderDirection": "down",
+      "baseFirstStationCode": "004923",
+      "baseLastStationCode": "005075",
+      "orderSource": {
+        "url": "https://jr-central.co.jp/news/release/_pdf/000011741.pdf",
+        "publisher": "JR東海",
+        "retrieved": "2026-09-30",
+        "evidence": "Official 大垣→米原 direction timetable labels 下り and orders 大垣→垂井→関ヶ原→米原. Pair 大垣→関ヶ原 follows the same down direction."
+      },
+      "pairs": [
+        {
+          "lineID": "jp-東海旅客鉄道-東海道線-2-p1",
+          "stationCodes": [
+            "004923",
+            "004934"
+          ],
+          "alignmentDirection": "down",
+          "alignmentSource": "https://ja.wikipedia.org/wiki/新垂井駅",
+          "mainAlignmentDirection": "unassigned"
+        }
+      ]
+    },
+    {
+      "baseLineID": "jp-西日本旅客鉄道-北陸線",
+      "stationOrderDirection": "up",
+      "baseFirstStationCode": "010186",
+      "baseLastStationCode": "005075",
+      "orderSource": {
+        "url": "https://timetable.jr-odekake.net/line-timetable/2834?year=2026&month=9&day=22",
+        "publisher": "JR西日本",
+        "retrieved": "2026-09-30",
+        "evidence": "Official down timetable orders 新疋田→敦賀. Base 敦賀→米原 and pair 敦賀→新疋田 therefore run up."
+      },
+      "pairs": [
+        {
+          "lineID": "jp-西日本旅客鉄道-北陸線-p1",
+          "stationCodes": [
+            "010186",
+            "004256"
+          ],
+          "alignmentDirection": "down",
+          "alignmentSource": "https://ja.wikipedia.org/wiki/北陸本線",
+          "mainAlignmentDirection": "up"
+        }
+      ]
+    }
+  ],
+  "unassignedPairs": [
+    {
+      "lineID": "jp-えちごトキめき鉄道-日本海ひすいライン-p1",
+      "baseLineID": "jp-えちごトキめき鉄道-日本海ひすいライン",
+      "stationCodes": [
+        "001678",
+        "001685"
+      ],
+      "alignmentDirection": "unassigned",
+      "source": "https://ja.wikipedia.org/wiki/北陸本線",
+      "status": "No automatic up/down restriction; physical direction not established by package evidence."
+    },
+    {
+      "lineID": "jp-九州旅客鉄道-鹿児島線-2-p1",
+      "baseLineID": "jp-九州旅客鉄道-鹿児島線-2",
+      "stationCodes": [
+        "010038",
+        "010058"
+      ],
+      "alignmentDirection": "unassigned",
+      "source": "https://ja.wikipedia.org/wiki/鹿児島本線",
+      "status": "No automatic up/down restriction; physical direction not established by package evidence."
+    },
+    {
+      "lineID": "jp-東日本旅客鉄道-中央線-p1",
+      "baseLineID": "jp-東日本旅客鉄道-中央線",
+      "stationCodes": [
+        "004192",
+        "004213"
+      ],
+      "alignmentDirection": "unassigned",
+      "source": "https://plaza.rakuten.co.jp/wasabikuma322/diary/201506010000/",
+      "status": "No automatic up/down restriction; physical direction not established by package evidence."
+    },
+    {
+      "lineID": "jp-東日本旅客鉄道-東北線-p1",
+      "baseLineID": "jp-東日本旅客鉄道-東北線",
+      "stationCodes": [
+        "001405",
+        "001397"
+      ],
+      "alignmentDirection": "unassigned",
+      "source": "https://ja.wikipedia.org/wiki/金谷川駅",
+      "status": "No automatic up/down restriction; physical direction not established by package evidence."
+    },
+    {
+      "lineID": "jp-東日本旅客鉄道-羽越線-p1",
+      "baseLineID": "jp-東日本旅客鉄道-羽越線",
+      "stationCodes": [
+        "001203",
+        "001164"
+      ],
+      "alignmentDirection": "unassigned",
+      "source": "https://ja.wikipedia.org/wiki/羽越本線",
+      "status": "No automatic up/down restriction; physical direction not established by package evidence."
+    },
+    {
+      "lineID": "jp-東日本旅客鉄道-羽越線-p2",
+      "baseLineID": "jp-東日本旅客鉄道-羽越線",
+      "stationCodes": [
+        "001031",
+        "001030"
+      ],
+      "alignmentDirection": "unassigned",
+      "source": "https://ameblo.jp/aru-king/entry-12626902052.html",
+      "status": "No automatic up/down restriction; physical direction not established by package evidence."
+    }
+  ],
+  "lineOverrides": [
+    {
+      "lineID": "jp-神戸新交通-ポートアイランド線-2",
+      "stationCodes": [
+        "007340",
+        "007343",
+        "007288",
+        "007271",
+        "007276"
+      ],
+      "permittedTraversal": "forward",
+      "source": {
+        "url": "https://www.knt-liner.co.jp/en/station/",
+        "publisher": "神戸新交通",
+        "retrieved": "2026-09-30",
+        "evidence": "Operator route map explicitly gives Shimin Hiroba→Via Kita Futo→Sannomiya. Station pages identify Minami Koen next Naka Futo and Naka Futo next Kita Futo; Kita Futo timetable has only For Sannomiya and says to change at Naka Koen for Kobe Airport. Stored branch order is 市民広場→南公園→中埠頭→北埠頭→中公園.",
+        "supportingURLs": [
+          "https://www.knt-liner.co.jp/en/station/809/",
+          "https://www.knt-liner.co.jp/en/station/pl08/",
+          "https://www.knt-liner.co.jp/en/stationpl09/"
+        ]
+      }
+    }
+  ]
+}

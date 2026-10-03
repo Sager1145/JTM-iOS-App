@@ -49,11 +49,11 @@ struct JourneyListRow: View {
     let confirmDelete: @MainActor @Sendable () -> Void
 
     @Environment(AppLocalization.self) private var localization
+    @State private var showsGroupAssignment = false
 
     var body: some View {
-        // A Button rather than a `NavigationLink`: selecting a journey changes
-        // which resident layer is on top, and §8.1 wants that reflected in the
-        // list AND on the map at once rather than pushing a screen over both.
+        // The workspace highlights the route and presents a separate journey
+        // menu. The source list retains its filters and scroll position.
         Button {
             select()
         } label: {
@@ -75,6 +75,12 @@ struct JourneyListRow: View {
         .listRowInsets(EdgeInsets(top: 5, leading: 12, bottom: 5, trailing: 12))
         // §5.1: the row does not expose every verb. Swipe and context menu do.
         .contextMenu { contextMenuItems }
+        .sheet(isPresented: $showsGroupAssignment) {
+            JourneyGroupAssignmentView(
+                train: train,
+                groups: JourneyGroupCatalog.groups(in: editing.itineraries.store?.trains ?? []),
+                editing: editing)
+        }
         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
             Button(role: .destructive, action: confirmDelete) {
                 Label(
@@ -115,6 +121,11 @@ struct JourneyListRow: View {
 
     @ViewBuilder
     private var contextMenuItems: some View {
+        Button {
+            PresentationHost.afterTeardown { showsGroupAssignment = true }
+        } label: {
+            Label(localization.groupText("title"), systemImage: "folder")
+        }
         Button(action: play) {
             Label(
                 localization.countryText("btn.play", fallback: "Play journey"),

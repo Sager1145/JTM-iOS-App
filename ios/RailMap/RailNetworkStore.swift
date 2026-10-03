@@ -1229,7 +1229,7 @@ final class RailNetworkStore {
                         company: OperatorBranding.companyFor(
                             operator: station.operator, lineName: station.lineName),
                         label: station.lineName, color: color, logo: nil,
-                        logoNeedsDarkMatte: false),
+                        logoNeedsDarkMatte: false, operatorName: station.operator),
                 ])
             return DrawnStation(
                 id: "hist|\(station.historyId)",

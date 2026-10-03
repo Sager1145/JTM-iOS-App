@@ -1,0 +1,1808 @@
+{
+  "format": 1,
+  "reviewed_at": "2026-10-01",
+  "scope": "Complete inventory of loaded samples; historical timetable verification only for six reviewed ridden intervals.",
+  "counts": {
+    "inventory_audited": 256,
+    "services_updated": 6,
+    "full_passenger_timetable_verified": 6,
+    "full_station_sequence_verified": 5,
+    "passenger_calls_verified": 45,
+    "services_with_route_gaps": 1,
+    "historical_timetable_unverified": 250
+  },
+  "inventory": [
+    {
+      "dataset": "japan",
+      "train_id": "20260703_01_haruka",
+      "date": "2026-07-03",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260703_02_tokaido_shinkansen_hikari_kodama",
+      "date": "2026-07-03",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260703_03_tokaido_main_local",
+      "date": "2026-07-03",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260704_01_local",
+      "date": "2026-07-04",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260704_02_kodama918",
+      "date": "2026-07-04",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260704_03_keikyu_asakusa_line",
+      "date": "2026-07-04",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260704_04_oedo_line",
+      "date": "2026-07-04",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260704_05_mita_line",
+      "date": "2026-07-04",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260704_06_marunouchi_line",
+      "date": "2026-07-04",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260704_07_saikyo_line",
+      "date": "2026-07-04",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260704_08_shonan_shinjuku_line",
+      "date": "2026-07-04",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260704_09_negishi_line",
+      "date": "2026-07-04",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260704_10_minatomirai_line",
+      "date": "2026-07-04",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260704_11_keihin_tohoku_line",
+      "date": "2026-07-04",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260704_12_yokohama_line",
+      "date": "2026-07-04",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260704_13_kodama915",
+      "date": "2026-07-04",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260704_14_local",
+      "date": "2026-07-04",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260705_01_local",
+      "date": "2026-07-05",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260705_02_kodama802",
+      "date": "2026-07-05",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260705_03_chuo_line",
+      "date": "2026-07-05",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260705_04_chuo_sobu_line",
+      "date": "2026-07-05",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260705_05_yurakucho_line",
+      "date": "2026-07-05",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260705_06_yurakucho_line",
+      "date": "2026-07-05",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260705_07_yamanote_line",
+      "date": "2026-07-05",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260705_08_hayabusa59",
+      "date": "2026-07-05",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260706_01_hayabusa11",
+      "date": "2026-07-06",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260706_02_super_tsugaru2",
+      "date": "2026-07-06",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260706_03_inaho14",
+      "date": "2026-07-06",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260707_01_toki308",
+      "date": "2026-07-07",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260707_02_hakutaka555",
+      "date": "2026-07-07",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260707_03_local",
+      "date": "2026-07-07",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260707_04_local",
+      "date": "2026-07-07",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260707_05_local",
+      "date": "2026-07-07",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260707_06_a_ltdexp",
+      "date": "2026-07-07",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260707_07_hakutaka565",
+      "date": "2026-07-07",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260708_01_tsurugi17",
+      "date": "2026-07-08",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260708_02_shirasagi2",
+      "date": "2026-07-08",
+      "status": "ridden_timetable_verified",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/259871?date=20260708"
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260708_03_hikari648",
+      "date": "2026-07-08",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260708_04_hikari706",
+      "date": "2026-07-08",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260708_05_local",
+      "date": "2026-07-08",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260709_01_local",
+      "date": "2026-07-09",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260709_02_hikari713",
+      "date": "2026-07-09",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260709_03_miyakoji_rapid",
+      "date": "2026-07-09",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260709_04_d_section_rapid",
+      "date": "2026-07-09",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260710_01_nozomi252",
+      "date": "2026-07-10",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260710_02_kodama824",
+      "date": "2026-07-10",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260710_03_local",
+      "date": "2026-07-10",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260710_04_local",
+      "date": "2026-07-10",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260710_05_hikari718",
+      "date": "2026-07-10",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260710_06_yamabiko221",
+      "date": "2026-07-10",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260710_07_keihin_tohoku_local",
+      "date": "2026-07-10",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260711_01_keihin_tohoku_negishi_local",
+      "date": "2026-07-11",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260711_02_kagayaki501",
+      "date": "2026-07-11",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260711_03_hakutaka560",
+      "date": "2026-07-11",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260711_04_saikyo_local",
+      "date": "2026-07-11",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260711_05_seibu_ikebukuro_semiexp",
+      "date": "2026-07-11",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260711_06_seibu_sayama_local",
+      "date": "2026-07-11",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260712_01_musashino_local",
+      "date": "2026-07-12",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260712_02_seibu_ikebukuro_semiexp",
+      "date": "2026-07-12",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260712_03_seibu_sayama_local",
+      "date": "2026-07-12",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260712_04_seibu_sayama_ikebukuro_local",
+      "date": "2026-07-12",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260712_05_musashino_local",
+      "date": "2026-07-12",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260713_01_keihin_tohoku_negishi_local",
+      "date": "2026-07-13",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260713_02_kodama801",
+      "date": "2026-07-13",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260713_03_tokaido_main_local",
+      "date": "2026-07-13",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260713_04_tokaido_main_local",
+      "date": "2026-07-13",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260713_05_kodama816",
+      "date": "2026-07-13",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260713_06_hayabusa27",
+      "date": "2026-07-13",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260713_07_hokuto21",
+      "date": "2026-07-13",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260714_01_ozora3",
+      "date": "2026-07-14",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260714_02_nemuro_main_local",
+      "date": "2026-07-14",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260714_03_nemuro_main_local",
+      "date": "2026-07-14",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260714_04_ozora12",
+      "date": "2026-07-14",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260715_01_soya",
+      "date": "2026-07-15",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260715_02_soya",
+      "date": "2026-07-15",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260716_01_sapporo_subway_namboku_sapporo_susukino",
+      "date": "2026-07-16",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260716_02_sapporo_subway_namboku_odori_nakajimakoen",
+      "date": "2026-07-16",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260716_03_sapporo_streetcar_nakajimakoendori_susukino",
+      "date": "2026-07-16",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260716_04_sapporo_streetcar_susukino_chuokuyakushomae",
+      "date": "2026-07-16",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260716_05_sapporo_subway_tozai_nishi11_odori",
+      "date": "2026-07-16",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260716_06_sapporo_subway_namboku_odori_sapporo",
+      "date": "2026-07-16",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260716_07_hokuto20",
+      "date": "2026-07-16",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260717_01_hakodate_tram",
+      "date": "2026-07-17",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260717_02_hakodate_tram",
+      "date": "2026-07-17",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260718_01_hakodate_liner",
+      "date": "2026-07-18",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260718_02_hayabusa10",
+      "date": "2026-07-18",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260718_03_hayabusa95",
+      "date": "2026-07-18",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260718_04_ou_main_local",
+      "date": "2026-07-18",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260718_05_ou_main_local",
+      "date": "2026-07-18",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260718_06_hayabusa",
+      "date": "2026-07-18",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260718_07_yamabiko",
+      "date": "2026-07-18",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260718_08_kodama839",
+      "date": "2026-07-18",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260718_09_tokaido_main_local",
+      "date": "2026-07-18",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260718_10_tokaido_main_local",
+      "date": "2026-07-18",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260718_11_hikari659",
+      "date": "2026-07-18",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260719_01_hikari703",
+      "date": "2026-07-19",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260719_02_yakumo11",
+      "date": "2026-07-19",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260719_03_super_oki5",
+      "date": "2026-07-19",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260719_04_sakura770",
+      "date": "2026-07-19",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260720_41_hiroden1_hiroshimaeki_fukuromachi",
+      "date": "2026-07-20",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260720_42_astram_hondori_johoku",
+      "date": "2026-07-20",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260720_43_hiroden2_kamiyachonishi_shokocenter",
+      "date": "2026-07-20",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260720_44_sanyo_local_shininokuchi_hiroshima",
+      "date": "2026-07-20",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260720_45_sakura753_hiroshima_hakata",
+      "date": "2026-07-20",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260720_46_tsubame325_hakata_shintosu",
+      "date": "2026-07-20",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260720_47_midori35_shintosu_arita",
+      "date": "2026-07-20",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260720_48_mr627d_arita_imari",
+      "date": "2026-07-20",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260720_49_mr369d_imari_tabirahiradoguchi",
+      "date": "2026-07-20",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260720_50_mr_tabirahiradoguchi_sasebo",
+      "date": "2026-07-20",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260720_51_seasideliner3233d_sasebo_nagasaki",
+      "date": "2026-07-20",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260721_01_nagasaki_tram3_nagasakieki_heiwakoen",
+      "date": "2026-07-21",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260721_02_nagasaki_tram3_urakamieki_nagasakieki",
+      "date": "2026-07-21",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260721_03_nagasaki_tram1_nagasakieki_dejima",
+      "date": "2026-07-21",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260721_04_nagasaki_tram1_dejima_nagasakieki",
+      "date": "2026-07-21",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260721_05_kamome22",
+      "date": "2026-07-21",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260721_06_relay_kamome22",
+      "date": "2026-07-21",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260721_07_sakura749",
+      "date": "2026-07-21",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260721_08_asoboy3",
+      "date": "2026-07-21",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260721_09_asoboy4",
+      "date": "2026-07-21",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260721_10_kumamoto_tram_a_kumamotoeki_karashimacho",
+      "date": "2026-07-21",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260721_11_kumamoto_tram_karashimacho_suidocho",
+      "date": "2026-07-21",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260721_12_hohi_local1493m_shinsuizenji_musashizuka",
+      "date": "2026-07-21",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260721_13_hohi_local1498m_musashizuka_kumamoto",
+      "date": "2026-07-21",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260721_14_sakura767",
+      "date": "2026-07-21",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260722_01_ibusuki_1321d_kagoshima_yamakawa",
+      "date": "2026-07-22",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260722_02_ibusuki_5321d_yamakawa_nishioyama",
+      "date": "2026-07-22",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260722_03_ibusuki_1326d_nishioyama_minamikagoshima",
+      "date": "2026-07-22",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260722_03a_kagoshima_tram_kagoshimachuoeki_miyakodori",
+      "date": "2026-07-22",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260722_03b_nanohana3328d_minamikagoshima_kagoshima",
+      "date": "2026-07-22",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260722_04_kirishima8",
+      "date": "2026-07-22",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260722_05_nichirin10",
+      "date": "2026-07-22",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260722_06_sonic44",
+      "date": "2026-07-22",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260722_07_kirameki6",
+      "date": "2026-07-22",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260722_08_sonic54_kokura_kurosaki",
+      "date": "2026-07-22",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260722_09_chikuho_electric_kurosaki_nogata",
+      "date": "2026-07-22",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260722_10_heichiku_ita_nogata_tagawaita",
+      "date": "2026-07-22",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260722_11_hitahikosan_986d_tagawaita_kokura",
+      "date": "2026-07-22",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260722_12_monorail_kokura_kikugaoka",
+      "date": "2026-07-22",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260722_13_monorail_kikugaoka_kokura",
+      "date": "2026-07-22",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260723_01_sakura740",
+      "date": "2026-07-23",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260723_02_shiokaze5",
+      "date": "2026-07-23",
+      "status": "ridden_timetable_verified",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/291?date=20260723"
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260723_03_ishizuchi10",
+      "date": "2026-07-23",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260723_04_kotoku_local_takamatsu_ritsurin",
+      "date": "2026-07-23",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260723_05_uzushio10",
+      "date": "2026-07-23",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260724_01_ishizuchi9",
+      "date": "2026-07-24",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260724_02_nanpu9",
+      "date": "2026-07-24",
+      "status": "ridden_timetable_verified",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/59471?date=20260724"
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260724_03_tsurugisan6",
+      "date": "2026-07-24",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260724_04_tokushima_local_463d",
+      "date": "2026-07-24",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260724_05_nanpu17",
+      "date": "2026-07-24",
+      "status": "ridden_timetable_verified",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/104441?date=20260724"
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260724_06_nanpu28",
+      "date": "2026-07-24",
+      "status": "ridden_timetable_verified",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/104481?date=20260724"
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260724_07_kodama970",
+      "date": "2026-07-24",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260724_08_tosaden_south",
+      "date": "2026-07-24",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260724_09_tosaden_north",
+      "date": "2026-07-24",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260725_05_hikari706",
+      "date": "2026-07-25",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260725_06_local",
+      "date": "2026-07-25",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260726_01_local_numazu",
+      "date": "2026-07-26",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260726_02_local_mishima",
+      "date": "2026-07-26",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260726_03_hikari706",
+      "date": "2026-07-26",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260726_04_chuo_rapid_shinjuku",
+      "date": "2026-07-26",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260726_05_chuo_rapid_tokyo",
+      "date": "2026-07-26",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260726_06_kodama_atami",
+      "date": "2026-07-26",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260726_07_odoriko",
+      "date": "2026-07-26",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260726_08_chuo_rapid_shinjuku2",
+      "date": "2026-07-26",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260726_09_shonan_shinjuku_yokohama",
+      "date": "2026-07-26",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260727_01_tokaido_through_numazu",
+      "date": "2026-07-27",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260727_02_local_mishima",
+      "date": "2026-07-27",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260727_03_hikari702",
+      "date": "2026-07-27",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260727_04_nasuno259",
+      "date": "2026-07-27",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260727_05_komachi",
+      "date": "2026-07-27",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260727_06_local_akihabara",
+      "date": "2026-07-27",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260727_07_local_tokyo",
+      "date": "2026-07-27",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260727_08_narita_express",
+      "date": "2026-07-27",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260727_09_kodama837",
+      "date": "2026-07-27",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260727_10_local_numazu",
+      "date": "2026-07-27",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260728_01_local_mishima",
+      "date": "2026-07-28",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260728_02_kodama829",
+      "date": "2026-07-28",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260728_03_entetsu_sukenobu",
+      "date": "2026-07-28",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260728_04_entetsu_return",
+      "date": "2026-07-28",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260728_05_kodama834",
+      "date": "2026-07-28",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260728_06_local_numazu",
+      "date": "2026-07-28",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260729_01_local_mishima",
+      "date": "2026-07-29",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260729_02_kodama840",
+      "date": "2026-07-29",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260729_03_kodama911",
+      "date": "2026-07-29",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260729_04_local_numazu",
+      "date": "2026-07-29",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260729_05_sunrise_izumo",
+      "date": "2026-07-29",
+      "status": "passenger_timetable_verified_route_gap",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/38481?date=20260729"
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260730_01_ichibata_taisha",
+      "date": "2026-07-30",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260730_02_ichibata_kitamatsue",
+      "date": "2026-07-30",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260730_03_yakumo22",
+      "date": "2026-07-30",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260730_04_sakura762",
+      "date": "2026-07-30",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260730_05_shinkaisoku_osaka",
+      "date": "2026-07-30",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260730_06_osaka_loop",
+      "date": "2026-07-30",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260730_07_nankai_sakai",
+      "date": "2026-07-30",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260731_01_nankai_shinimamiya",
+      "date": "2026-07-31",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260731_02_rapit_alpha3",
+      "date": "2026-07-31",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260731_03_yui_naha_akamine",
+      "date": "2026-07-31",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260731_04_yui_akamine_naha",
+      "date": "2026-07-31",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260731_05_yui_tedako_shuri",
+      "date": "2026-07-31",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260731_06_yui_shuri_miebashi",
+      "date": "2026-07-31",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260731_07_yui_miebashi_naha",
+      "date": "2026-07-31",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260731_08_yui_naha_miebashi",
+      "date": "2026-07-31",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "japan",
+      "train_id": "20260801_01_yui_miebashi_naha",
+      "date": "2026-08-01",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20251231_01",
+      "date": "2025-12-31",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20251231_02",
+      "date": "2025-12-31",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20251231_03",
+      "date": "2025-12-31",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20251231_04",
+      "date": "2025-12-31",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20251231_05",
+      "date": "2025-12-31",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20251231_06",
+      "date": "2025-12-31",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20251231_07",
+      "date": "2025-12-31",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20251231_08",
+      "date": "2025-12-31",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20251231_09",
+      "date": "2025-12-31",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20251231_10",
+      "date": "2025-12-31",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20251231_11",
+      "date": "2025-12-31",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20251231_12",
+      "date": "2025-12-31",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20251231_13",
+      "date": "2025-12-31",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20251231_14",
+      "date": "2025-12-31",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20251231_15",
+      "date": "2025-12-31",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20251231_16",
+      "date": "2025-12-31",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20251231_17",
+      "date": "2025-12-31",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20251231_18",
+      "date": "2025-12-31",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20251231_19",
+      "date": "2025-12-31",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20251231_20",
+      "date": "2025-12-31",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20251231_21",
+      "date": "2025-12-31",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20251231_22",
+      "date": "2025-12-31",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20260101_23",
+      "date": "2026-01-01",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20260101_24",
+      "date": "2026-01-01",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20260101_25",
+      "date": "2026-01-01",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20260101_26",
+      "date": "2026-01-01",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20260101_27",
+      "date": "2026-01-01",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20260101_28",
+      "date": "2026-01-01",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20260101_29",
+      "date": "2026-01-01",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20260101_30",
+      "date": "2026-01-01",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20260101_31",
+      "date": "2026-01-01",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20260101_32",
+      "date": "2026-01-01",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20260101_33",
+      "date": "2026-01-01",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20260101_34",
+      "date": "2026-01-01",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20260101_35",
+      "date": "2026-01-01",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20260101_36",
+      "date": "2026-01-01",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20260101_37",
+      "date": "2026-01-01",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20260101_38",
+      "date": "2026-01-01",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "new_year",
+      "train_id": "new_year_grand_loop_20260101_39",
+      "date": "2026-01-01",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "tokyo",
+      "train_id": "tokyo_limited_express_loop_20260529_01",
+      "date": "2026-05-29",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "tokyo",
+      "train_id": "tokyo_limited_express_loop_20260529_02",
+      "date": "2026-05-29",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "tokyo",
+      "train_id": "tokyo_limited_express_loop_20260529_03",
+      "date": "2026-05-29",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "tokyo",
+      "train_id": "tokyo_limited_express_loop_20260529_04",
+      "date": "2026-05-29",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "tokyo",
+      "train_id": "tokyo_limited_express_loop_20260529_05",
+      "date": "2026-05-29",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "tokyo",
+      "train_id": "tokyo_limited_express_loop_20260529_06",
+      "date": "2026-05-29",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "tokyo",
+      "train_id": "tokyo_limited_express_loop_20260529_07",
+      "date": "2026-05-29",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "tokyo",
+      "train_id": "tokyo_limited_express_loop_20260529_08",
+      "date": "2026-05-29",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "tokyo",
+      "train_id": "tokyo_limited_express_loop_20260529_09",
+      "date": "2026-05-29",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "tokyo",
+      "train_id": "tokyo_limited_express_loop_20260529_10",
+      "date": "2026-05-29",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "tokyo",
+      "train_id": "tokyo_limited_express_loop_20260529_11",
+      "date": "2026-05-29",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "tokyo",
+      "train_id": "tokyo_limited_express_loop_20260529_12",
+      "date": "2026-05-29",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "tokyo",
+      "train_id": "tokyo_limited_express_loop_20260529_13",
+      "date": "2026-05-29",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "tokyo",
+      "train_id": "tokyo_limited_express_loop_20260529_14",
+      "date": "2026-05-29",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "tokyo",
+      "train_id": "tokyo_limited_express_loop_20260529_15",
+      "date": "2026-05-29",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    },
+    {
+      "dataset": "tokyo",
+      "train_id": "tokyo_limited_express_loop_20260529_16",
+      "date": "2026-05-29",
+      "status": "historical_timetable_unverified",
+      "source_url": null
+    }
+  ]
+}

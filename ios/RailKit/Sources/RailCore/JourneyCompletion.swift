@@ -6,6 +6,18 @@ import Foundation
 /// browser, API, or another tool, then return the model's response to ``merge(response:into:)``.
 /// Neither operation performs networking or knows which transport produced the response.
 public enum JourneyCompletion {
+    /// Remarks are user-authored context; keeping them does not require an AI suggestion.
+    public static func addingRemarks(_ remarks: String, to train: Train) -> Train {
+        guard let remarks = nonempty(remarks) else { return train }
+        var result = train
+        if let existing = nonempty(train.notes) {
+            if existing != remarks { result.notes = existing + "\n\n" + remarks }
+        } else {
+            result.notes = remarks
+        }
+        return result
+    }
+
     public enum Error: Swift.Error, Equatable, Sendable, LocalizedError {
         case noEligibleTrains
         case duplicateInputTrainID(String)
@@ -171,8 +183,9 @@ public enum JourneyCompletion {
     }
 
     /// Returns a ready-to-copy research prompt containing only eligible journeys and only the
-    /// fields needed to identify them. Styling, visibility, station codes, stop type, ride state,
-    /// and route-solving constraints are intentionally excluded.
+    /// fields needed to identify them, including each operator's service details. Styling,
+    /// visibility, stop identity, stop type and ride state are excluded.
+    /// Selected physical interval identities are read-only routing context.
     public static func prompt(
         trains: [Train],
         context: String = "",
@@ -209,6 +222,9 @@ public enum JourneyCompletion {
         Rules:
         - Use authoritative operator, timetable, or rolling-stock sources where possible.
         - Do not guess schedules, platforms, rolling stock, service names, operators, directions, or lines.
+        - Use a timetable edition valid on the journey date. Never substitute today's schedule for a historical journey. Research the complete published passenger-stop timetable, including intermediate calls.
+        - For through services, research the specific operator, line and train number on each interval. Do not assign every company's lines to every interval or assume the train number stays the same across an operator boundary.
+        - Use the selected train_type, vehicle_type, line_names, line_ids and section_codes as journey context. Selected physical lines and interval codes identify the reader's chosen path, including parallel corridors with the same endpoints. Keep that path when completing schedules and service details; do not substitute a nearby line. line_ids and section_codes are read-only input hints; never invent or return these codes.
         - A journey date and times may use hours past 24 (for example, 25:10 means 01:10 the next day).
         - Times may be H:MM or HH:MM with an optional +N day suffix, such as 00:10+1. Hours past 24 are also valid.
         - Do not supply an arrival for the first/origin stop or a departure for the last/destination stop.
@@ -220,6 +236,9 @@ public enum JourneyCompletion {
         - Intermediate stop names must be the timetable's station names. Leave station identity resolution to the app's station picker; do not supply station codes.
         - Every returned journey with a suggestion must include at least one real http(s) source URL and a short explanation of what that source supports. For intermediate_stops, the explanation must identify the timetable evidence for those calls and times.
         - platform_number must be a whole number or null, never a string.
+        - route_sections refers to adjacent ORIGINAL input stops using from_index, to_index and exact from/to names. Fill only missing line_names, operator_names, number or name for that interval. Never supply station codes. Omit intervals with no new facts. Added intermediate calls inherit metadata only when it applies to the entire original interval.
+        - When intermediate_stops adds an operator or train-number boundary, leave the original interval metadata null and use expanded_route_sections instead. It uses the same fields as route_sections, but indices refer to adjacent stops in the final expanded sequence after all inserted calls. Supply exact station names and only missing facts for each new interval.
+        - notes is an optional sourced service note, such as an operating-day restriction or a through-service number change. Do not invent personal remarks or overwrite an existing note.
         - Return JSON only. A single ```json fenced block is also accepted.
 
         Return exactly this shape; use null for unknown scalar values and omit unchanged stop rows:
@@ -237,6 +256,20 @@ public enum JourneyCompletion {
               "company": null,
               "direction": null,
               "line_names": null,
+              "notes": null,
+              "route_sections": [
+                {
+                  "from_index": 0,
+                  "to_index": 1,
+                  "from": "exact input stop name",
+                  "to": "exact next input stop name",
+                  "line_names": null,
+                  "operator_names": null,
+                  "number": null,
+                  "name": null
+                }
+              ],
+              "expanded_route_sections": [],
               "stops": [
                 {
                   "index": 0,
@@ -311,7 +344,9 @@ public enum JourneyCompletion {
             try fill(&train.vehicleType, with: suggestion.vehicleType, path: path(suggestion.id, "vehicle_type"))
             try fill(&train.company, with: suggestion.company, path: path(suggestion.id, "company"))
             try fill(&train.direction, with: suggestion.direction, path: path(suggestion.id, "direction"))
+            try fill(&train.notes, with: suggestion.notes, path: path(suggestion.id, "notes"))
             try fillLineNames(suggestion.lineNames, into: &train, trainID: suggestion.id)
+            try fillRouteSections(suggestion.routeSections, into: &train, trainID: suggestion.id)
 
             var seenStopIndexes: Set<Int> = []
             var suggestedTimeEvents: Set<String> = []
@@ -386,6 +421,7 @@ public enum JourneyCompletion {
                     path: "\(stopPath).platform_number")
             }
             let originalStopCount = train.stops.count
+            let originalStops = train.stops
             var insertedAfterOriginalIndex = Array(repeating: 0, count: originalStopCount)
             var insertedTimeEvents: [(afterIndex: Int, ordinal: Int, field: String)] = []
             for (suggestionIndex, intermediate) in suggestion.intermediateStops.enumerated() {
@@ -417,6 +453,9 @@ public enum JourneyCompletion {
                 }
             }
             if insertedAfterOriginalIndex.contains(where: { $0 > 0 }) {
+                train.routeSections = try expandedRouteSections(
+                    train.routeSections, originalStops: originalStops, expandedStops: train.stops,
+                    insertedAfterOriginalIndex: insertedAfterOriginalIndex, trainID: suggestion.id)
                 let originalSuggestedEvents = suggestedTimeEvents
                 suggestedTimeEvents = Set((0..<originalStopCount).flatMap { originalIndex in
                     let shiftedIndex = originalIndex
@@ -434,6 +473,7 @@ public enum JourneyCompletion {
             }
             try validateTimeline(
                 train, trainID: suggestion.id, suggestedEvents: suggestedTimeEvents)
+            try fillRouteSections(suggestion.expandedRouteSections, into: &train, trainID: suggestion.id)
             completed[trainIndex] = train
         }
         return completed
@@ -458,6 +498,8 @@ private extension JourneyCompletion {
         let direction: String?
         let region: String?
         let lineNames: [String]?
+        let notes: String?
+        let routeSections: [PromptRouteSection]
         let stops: [PromptStop]
 
         init(_ train: Train) {
@@ -472,17 +514,66 @@ private extension JourneyCompletion {
             destination = train.destination
             direction = train.direction
             region = train.region
+            notes = train.notes
+            routeSections = train.stops.indices.dropLast().map { index in
+                PromptRouteSection(train: train, fromIndex: index)
+            }
             let lines = JourneyCompletion.knownLineNames(train)
             lineNames = lines.isEmpty ? nil : lines
             stops = train.stops.enumerated().map { PromptStop(index: $0.offset, stop: $0.element) }
         }
 
         enum CodingKeys: String, CodingKey {
-            case id, date, number, company, origin, destination, direction, region, stops
+            case id, date, number, company, origin, destination, direction, region, stops, notes
             case numberEn = "number_en"
             case trainType = "train_type"
             case vehicleType = "vehicle_type"
             case lineNames = "line_names"
+            case routeSections = "route_sections"
+        }
+    }
+
+    struct PromptRouteSection: Encodable {
+        let fromIndex: Int
+        let toIndex: Int
+        let from: String
+        let to: String
+        let lineNames: [String]?
+        let operatorNames: [String]?
+        let lineIDs: [String]?
+        let sectionCodes: [String]?
+        let number: String?
+        let name: String?
+
+        init(train: Train, fromIndex: Int) {
+            self.fromIndex = fromIndex
+            let nextIndex = fromIndex + 1
+            toIndex = nextIndex
+            from = train.stops[fromIndex].name
+            to = train.stops[nextIndex].name
+            let sections = (train.routeSections ?? []).filter {
+                sectionMatches($0, from: train.stops[fromIndex], to: train.stops[nextIndex])
+            }
+            lineNames = sections.flatMap { $0.lineNames ?? [] }.isEmpty ? nil
+                : sections.flatMap { $0.lineNames ?? [] }
+            operatorNames = sections.flatMap { $0.operatorNames ?? [] }.isEmpty ? nil
+                : sections.flatMap { $0.operatorNames ?? [] }
+            let ids = sections.flatMap { $0.lineIDs ?? [] }
+            lineIDs = ids.isEmpty ? nil : Array(Set(ids)).sorted()
+            let codes = sections.flatMap { $0.sectionCodes ?? [] }
+            sectionCodes = codes.isEmpty ? nil : codes
+            number = sections.compactMap(\.number).first
+            name = sections.compactMap(\.name).first
+        }
+
+        enum CodingKeys: String, CodingKey {
+            case from, to, number, name
+            case fromIndex = "from_index"
+            case toIndex = "to_index"
+            case lineNames = "line_names"
+            case operatorNames = "operator_names"
+            case lineIDs = "line_ids"
+            case sectionCodes = "section_codes"
         }
     }
 
@@ -523,22 +614,29 @@ private extension JourneyCompletion {
         let company: String?
         let direction: String?
         let lineNames: [String]?
+        let notes: String?
+        let routeSections: [RouteSectionSuggestion]
+        let expandedRouteSections: [RouteSectionSuggestion]
         let stops: [StopSuggestion]
         let intermediateStops: [IntermediateStopSuggestion]
 
         var hasSuggestedValue: Bool {
             number != nil || numberEn != nil || trainType != nil || vehicleType != nil
-                || company != nil || direction != nil || lineNames != nil
+                || company != nil || direction != nil || lineNames != nil || notes != nil
+                || routeSections.contains(where: \.hasSuggestedValue)
+                || expandedRouteSections.contains(where: \.hasSuggestedValue)
                 || stops.contains(where: \.hasSuggestedValue) || intermediateStops.isEmpty == false
         }
 
         enum CodingKeys: String, CodingKey {
-            case id, sources, number, company, direction, stops
+            case id, sources, number, company, direction, stops, notes
             case intermediateStops = "intermediate_stops"
             case numberEn = "number_en"
             case trainType = "train_type"
             case vehicleType = "vehicle_type"
             case lineNames = "line_names"
+            case routeSections = "route_sections"
+            case expandedRouteSections = "expanded_route_sections"
         }
 
         init(from decoder: Decoder) throws {
@@ -552,6 +650,9 @@ private extension JourneyCompletion {
             company = try values.decodeIfPresent(String.self, forKey: .company)
             direction = try values.decodeIfPresent(String.self, forKey: .direction)
             lineNames = try values.decodeIfPresent([String].self, forKey: .lineNames)
+            notes = try values.decodeIfPresent(String.self, forKey: .notes)
+            routeSections = try values.decodeIfPresent([RouteSectionSuggestion].self, forKey: .routeSections) ?? []
+            expandedRouteSections = try values.decodeIfPresent([RouteSectionSuggestion].self, forKey: .expandedRouteSections) ?? []
             stops = try values.decodeIfPresent([StopSuggestion].self, forKey: .stops) ?? []
             intermediateStops = try values.decodeIfPresent(
                 [IntermediateStopSuggestion].self, forKey: .intermediateStops) ?? []
@@ -561,6 +662,29 @@ private extension JourneyCompletion {
     struct Source: Decodable {
         let url: String
         let explanation: String
+    }
+
+    struct RouteSectionSuggestion: Decodable {
+        let fromIndex: Int
+        let toIndex: Int
+        let from: String
+        let to: String
+        let lineNames: [String]?
+        let operatorNames: [String]?
+        let number: String?
+        let name: String?
+
+        var hasSuggestedValue: Bool {
+            lineNames != nil || operatorNames != nil || number != nil || name != nil
+        }
+
+        enum CodingKeys: String, CodingKey {
+            case from, to, number, name
+            case fromIndex = "from_index"
+            case toIndex = "to_index"
+            case lineNames = "line_names"
+            case operatorNames = "operator_names"
+        }
     }
 
     struct StopSuggestion: Decodable {
@@ -606,6 +730,11 @@ private extension JourneyCompletion {
             || nonempty(train.company) == nil
             || nonempty(train.direction) == nil
             || knownLineNames(train).isEmpty
+            || (train.routeSections ?? []).contains {
+                ($0.lineNames ?? []).compactMap(nonempty).isEmpty
+                    || ($0.operatorNames ?? []).compactMap(nonempty).isEmpty
+                    || nonempty($0.number) == nil
+            }
             || train.stops.indices.contains {
                 let stop = train.stops[$0]
                 let missingArrival = nonempty(stop.arrival) == nil && $0 != train.stops.startIndex
@@ -674,9 +803,25 @@ private extension JourneyCompletion {
             }
             try requireKeys(
                 train,
-                allowed: ["id", "sources", "number", "number_en", "train_type", "vehicle_type", "company", "direction", "line_names", "stops", "intermediate_stops"],
+                allowed: ["id", "sources", "number", "number_en", "train_type", "vehicle_type", "company", "direction", "line_names", "notes", "route_sections", "expanded_route_sections", "stops", "intermediate_stops"],
                 required: ["id", "sources"],
                 path: "response.trains[\(trainIndex)]")
+            for field in ["route_sections", "expanded_route_sections"] {
+                guard let rawSections = train[field] else { continue }
+                guard let sections = rawSections as? [Any] else {
+                    throw Error.malformedResponse("\(field) must be an array")
+                }
+                for (sectionIndex, rawSection) in sections.enumerated() {
+                    guard let section = rawSection as? [String: Any] else {
+                        throw Error.malformedResponse("route section \(sectionIndex) must be an object")
+                    }
+                    try requireKeys(
+                        section,
+                        allowed: ["from_index", "to_index", "from", "to", "line_names", "operator_names", "number", "name"],
+                        required: ["from_index", "to_index", "from", "to"],
+                        path: "response.trains[\(trainIndex)].\(field)[\(sectionIndex)]")
+                }
+            }
             if let rawSources = train["sources"] {
                 guard let sources = rawSources as? [Any] else {
                     throw Error.malformedResponse("response.trains[\(trainIndex)].sources must be an array")
@@ -747,6 +892,7 @@ private extension JourneyCompletion {
             ("vehicle_type", suggestion.vehicleType),
             ("company", suggestion.company),
             ("direction", suggestion.direction),
+            ("notes", suggestion.notes),
         ]
         for (field, value) in strings where value != nil && nonempty(value) == nil {
             throw Error.invalidValue(path: path(suggestion.id, field), reason: "empty strings are not suggestions")
@@ -924,6 +1070,116 @@ private extension JourneyCompletion {
             var policy = TrainValidation.canonicalRoutePolicy(nil)
             policy.preferredLineNames = proposed
             train.routePolicy = policy
+        }
+    }
+
+    static func sectionMatches(_ section: RouteSection, from: Stop, to: Stop) -> Bool {
+        let codeMatches = nonempty(section.fromN02StationCode) != nil
+            && nonempty(section.toN02StationCode) != nil
+            && section.fromN02StationCode == from.n02StationCode
+            && section.toN02StationCode == to.n02StationCode
+        // A through-running boundary can use the adjoining company's station code.
+        let nameMatches = nonempty(section.from) != nil && nonempty(section.to) != nil
+            && section.from == from.name && section.to == to.name
+        return codeMatches || nameMatches
+    }
+
+    static func fillNames(_ existing: inout [String]?, with suggestion: [String]?, path: String) throws {
+        guard let suggestion else { return }
+        let proposed = suggestion.compactMap(nonempty)
+        guard !proposed.isEmpty, proposed.count == suggestion.count,
+              Set(proposed).count == proposed.count else {
+            throw Error.invalidValue(path: path, reason: "expected unique non-empty names")
+        }
+        let recorded = (existing ?? []).compactMap(nonempty)
+        guard recorded.isEmpty || recorded == proposed else {
+            throw Error.conflictingValue(
+                path: path, existing: recorded.joined(separator: ", "),
+                suggested: proposed.joined(separator: ", "))
+        }
+        if recorded.isEmpty { existing = proposed }
+    }
+
+    static func fillRouteSections(
+        _ suggestions: [RouteSectionSuggestion], into train: inout Train, trainID: String
+    ) throws {
+        var sections = train.routeSections ?? []
+        var seen: Set<Int> = []
+        for suggestion in suggestions {
+            let sectionPath = path(trainID, "route_sections[\(suggestion.fromIndex)]")
+            guard seen.insert(suggestion.fromIndex).inserted else {
+                throw Error.invalidValue(path: sectionPath, reason: "duplicate interval suggestion")
+            }
+            guard train.stops.indices.contains(suggestion.fromIndex),
+                  train.stops.indices.contains(suggestion.toIndex),
+                  suggestion.toIndex == suggestion.fromIndex + 1,
+                  suggestion.from == train.stops[suggestion.fromIndex].name,
+                  suggestion.to == train.stops[suggestion.toIndex].name else {
+                throw Error.invalidValue(path: sectionPath, reason: "expected exact adjacent original stop references")
+            }
+            guard suggestion.hasSuggestedValue else { continue }
+            for (field, value) in [("number", suggestion.number), ("name", suggestion.name)] {
+                if value != nil && nonempty(value) == nil {
+                    throw Error.invalidValue(path: sectionPath + "." + field, reason: "empty strings are not suggestions")
+                }
+            }
+            let from = train.stops[suggestion.fromIndex]
+            let to = train.stops[suggestion.toIndex]
+            var section = RouteSection(
+                from: from.name, to: to.name,
+                fromN02StationCode: from.n02StationCode, toN02StationCode: to.n02StationCode)
+            let repeatedIntervals = train.stops.indices.dropLast().filter {
+                sectionMatches(section, from: train.stops[$0], to: train.stops[$0 + 1])
+            }
+            guard repeatedIntervals.count == 1 else {
+                throw Error.invalidValue(path: sectionPath, reason: "the interval cannot be uniquely persisted in this journey")
+            }
+            let matches = sections.indices.filter { sectionMatches(sections[$0], from: from, to: to) }
+            guard matches.count <= 1 else {
+                throw Error.invalidValue(path: sectionPath, reason: "multiple existing sections match this interval")
+            }
+            if let index = matches.first { section = sections[index] }
+            try fillNames(&section.lineNames, with: suggestion.lineNames, path: sectionPath + ".line_names")
+            try fillNames(&section.operatorNames, with: suggestion.operatorNames, path: sectionPath + ".operator_names")
+            try fill(&section.number, with: suggestion.number, path: sectionPath + ".number")
+            try fill(&section.name, with: suggestion.name, path: sectionPath + ".name")
+            if let index = matches.first { sections[index] = section }
+            else { sections.append(section) }
+        }
+        if !suggestions.isEmpty, !sections.isEmpty { train.routeSections = sections }
+    }
+
+    /// Keep sourced metadata attached to each new adjacent leg when the timetable adds calls.
+    static func expandedRouteSections(
+        _ sections: [RouteSection]?, originalStops: [Stop], expandedStops: [Stop],
+        insertedAfterOriginalIndex: [Int], trainID: String
+    ) throws -> [RouteSection]? {
+        guard let sections else { return nil }
+        return try sections.flatMap { section -> [RouteSection] in
+            let matches = originalStops.indices.dropLast().filter {
+                sectionMatches(section, from: originalStops[$0], to: originalStops[$0 + 1])
+            }
+            guard matches.contains(where: { insertedAfterOriginalIndex[$0] > 0 }) else { return [section] }
+            guard matches.count == 1, let index = matches.first else {
+                throw Error.invalidValue(
+                    path: path(trainID, "route_sections"), reason: "an expanded interval has ambiguous existing metadata")
+            }
+            guard section.sectionCodes?.isEmpty != false else {
+                throw Error.invalidValue(
+                    path: path(trainID, "route_sections"),
+                    reason: "inserting a stop requires a reviewed split of the existing physical section identities")
+            }
+            let first = index + insertedAfterOriginalIndex[..<index].reduce(0, +)
+            return (first...first + insertedAfterOriginalIndex[index]).map { leg in
+                var split = section
+                split.from = expandedStops[leg].name
+                split.to = expandedStops[leg + 1].name
+                split.fromN02StationCode = leg == first
+                    ? section.fromN02StationCode : expandedStops[leg].n02StationCode
+                split.toN02StationCode = leg == first + insertedAfterOriginalIndex[index]
+                    ? section.toN02StationCode : expandedStops[leg + 1].n02StationCode
+                return split
+            }
         }
     }
 }

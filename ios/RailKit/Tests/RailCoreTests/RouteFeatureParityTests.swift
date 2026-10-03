@@ -28,6 +28,7 @@ struct RouteFeatureParityTests {
                 let isLoop: Bool
                 let alignmentDirection: String?
                 let parts: [String]
+                let compactLine: CompactPackage.Line?
             }
             let key: String
             let country: String
@@ -43,6 +44,10 @@ struct RouteFeatureParityTests {
             let requiredOperatorNames: [String?]
             let preferredOperatorNames: [String?]
             let usedOperatorNames: [String]
+            let requiredLineIds: [String]?
+            let sectionCodes: [String]?
+            let fromStationCode: String?
+            let toStationCode: String?
         }
         struct Feature: Decodable {
             let geometryType: String?
@@ -104,7 +109,9 @@ struct RouteFeatureParityTests {
                     operator: line.operator,
                     isLoop: line.isLoop,
                     alignmentDirection: line.alignmentDirection,
-                    parts: try line.parts.map(path)
+                    parts: try line.parts.map(path),
+                    intervals: line.compactLine.map(RailIntervalCodes.intervals(for:)) ?? [],
+                    compactLine: line.compactLine
                 )
             })
     }
@@ -125,7 +132,9 @@ struct RouteFeatureParityTests {
                 usedLineNames: row.hints.usedLineNames,
                 requiredOperatorNames: row.hints.requiredOperatorNames,
                 preferredOperatorNames: row.hints.preferredOperatorNames,
-                usedOperatorNames: row.hints.usedOperatorNames
+                usedOperatorNames: row.hints.usedOperatorNames,
+                requiredLineIDs: row.hints.requiredLineIds ?? [], sectionCodes: row.hints.sectionCodes ?? [],
+                fromStationCode: row.hints.fromStationCode, toStationCode: row.hints.toStationCode
             ))
     }
 

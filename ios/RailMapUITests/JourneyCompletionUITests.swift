@@ -28,8 +28,12 @@ final class JourneyCompletionUITests: XCTestCase {
         XCTAssertTrue(app.otherElements["rideEditorNumber"].waitForExistence(timeout: 8))
         next.tap()
         XCTAssertTrue(app.switches["Include a date"].waitForExistence(timeout: 8))
-        XCTAssertTrue(app.buttons["rideEditorTimetableMatch"].exists)
-        XCTAssertFalse(app.buttons["rideEditorTimetableMatch"].isEnabled)
+        let timetable = app.buttons["rideEditorTimetableMatch"]
+        let form = app.descendants(matching: .any)["rideEditorForm"].firstMatch
+        XCTAssertTrue(form.waitForExistence(timeout: 8))
+        XCTAssertTrue(reveal(timetable, in: form, app: app, scrolling: .up))
+        XCTAssertTrue(timetable.exists)
+        XCTAssertFalse(timetable.isEnabled)
     }
 
     func testInvalidReplyCannotApplyAndEmptyReplyIsANoOp() {
@@ -130,7 +134,7 @@ final class JourneyCompletionUITests: XCTestCase {
         let info = app.buttons["Journey information"]
         XCTAssertTrue(info.waitForExistence(timeout: 8))
         info.tap()
-        let edit = app.buttons["rideDetailEdit"]
+        let edit = app.buttons["journeyMenuEdit"]
         XCTAssertTrue(edit.waitForExistence(timeout: 10))
         edit.tap()
         let editor = app.descendants(matching: .any)["rideEditorForm"].firstMatch

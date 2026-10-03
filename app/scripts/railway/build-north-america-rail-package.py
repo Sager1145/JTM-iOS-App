@@ -438,11 +438,59 @@ ROUTE_KEYED_MAPS = (
     'excludeStopIdsByRouteId', 'excludeStopEvidenceByRouteId',
     'excludeTripsByRouteId', 'excludeTripsEvidenceByRouteId',
     'loopLeadInEvidenceByRouteId',
+    'operatorByCountryByRouteId', 'operatorByCountryEvidenceByRouteId',
 )
 ROUTE_KEYED_LISTS = ('includeRouteIds', 'excludeRoutes',
                      'preferOperatorShapeByRouteId',
                      'forbidOfficialNetworkFallbackByRouteId',
                      'primaryRouteIds', 'loopLeadInRouteIds')
+
+
+def reviewed_country_operators(entry, route_id):
+    """An evidenced route can change operator at the international boundary.
+
+    A consolidated GTFS route's agency is not an authority for ownership on
+    both sides of the border. This narrow registry override names each
+    country's operator explicitly and reuses only its already approved logo.
+    """
+    mapping = (entry.get('operatorByCountryByRouteId') or {}).get(route_id)
+    if mapping is None:
+        return {}
+    evidence = (entry.get('operatorByCountryEvidenceByRouteId') or {}).get(route_id)
+    records = [evidence] if isinstance(evidence, str) else evidence
+    if (not isinstance(records, (list, tuple)) or not records
+            or not all(isinstance(record, str) and record.strip() for record in records)):
+        raise ValueError(f'operatorByCountryByRouteId[{route_id}] requires evidence')
+    if (not isinstance(mapping, dict) or not mapping
+            or any(country not in ('us', 'ca') or not isinstance(operator, str)
+                   or not operator.strip() for country, operator in mapping.items())):
+        raise ValueError(f'operatorByCountryByRouteId[{route_id}] needs named us/ca operators')
+    approved_logos = entry.get('operatorLogos') or {}
+    missing = [operator for operator in mapping.values() if not approved_logos.get(operator)]
+    if missing:
+        raise ValueError(f'operatorByCountryByRouteId[{route_id}] lacks approved '
+                         f'operatorLogos for {", ".join(missing)}')
+    return {
+        'operatorByCountry': dict(mapping),
+        'operatorLogoByCountry': {country: approved_logos[operator]
+                                  for country, operator in mapping.items()},
+        'operatorByCountryEvidence': list(records),
+    }
+
+
+def apply_country_operator(line, country):
+    """Select audited local branding without changing stations or geometry."""
+    selected = (line.get('operatorByCountry') or {}).get(country)
+    if selected is None:
+        return
+    line['operator'] = selected
+    line['operatorLogo'] = line['operatorLogoByCountry'][country]
+    line['operatorShort'] = None
+    line['brandStatus'] = 'audited-logo'
+    line['operatorCountryEvidence'] = {
+        'country': country, 'operator': selected,
+        'evidence': line['operatorByCountryEvidence'],
+    }
 
 
 def resolve_route_keys(entry, routes):
@@ -1261,6 +1309,7 @@ class FeedBuild:
     def build_line(self, route, rid, suffix, station_ids, pattern, loop, stops,
                    shapes, agency, agency_name, kind, route_name, route_slug,
                    route_patterns=()):
+        country_operators = reviewed_country_operators(self.entry, rid)
         published_colour, colour_source = published_route_colour(
             self.entry, route, rid)
         if parse_hex(published_colour) is None or not colour_source:
@@ -1423,6 +1472,7 @@ class FeedBuild:
         colour, colour_dark, reference = display_colours(published_colour)
         line_id = f'{self.slug}-{route_slug}{suffix}'
         return {
+            **country_operators,
             'lineId': line_id,
             # Internal provenance used by the de-duplication passes before
             # compact-v1 is encoded.  It is intentionally not serialized.
@@ -3460,26 +3510,25 @@ def split_line_by_country(line, countries, fallback):
     """One display line per country the railway runs through.
 
     Returns ``[(region, first_index, last_index), …]`` over the station list.
-    Each station belongs only to its own country. The former one-station
-    overlap put Canada's Niagara Falls in the US package and the US Niagara
-    Falls in Canada's; it also duplicated Saint-Lambert under unrelated
-    country-prefixed ids. Cross-border journeys join the two regional route
-    sections explicitly and do not require either package to claim a foreign
-    station.
+    Station ownership and interval ownership are separate: a crossing
+    interval is retained by ``assemble`` as an explicit border connector.
+    No station is absorbed into its neighbours' country, including a single
+    foreign terminus or a one-stop run between two crossings.
     """
     codes = [countries.code_for(p[0], p[1], fallback) or fallback
              for p in line['anchors']]
-    runs = split_runs(codes)
-    if len(runs) <= 1:
-        return [(codes[0] if codes else fallback, 0, len(line['anchors']) - 1)]
-    out = []
-    for code, first, last in runs:
-        out.append((code, first, last))
-    return out
+    runs = []
+    first = 0
+    for index in range(1, len(codes) + 1):
+        if index == len(codes) or codes[index] != codes[first]:
+            runs.append((codes[first], first, index - 1))
+            first = index
+    return runs or [(fallback, 0, -1)]
 
 
 def slice_line(line, first, last, region, suffix):
     piece = dict(line)
+    apply_country_operator(piece, region)
     piece['lineId'] = f"{line['lineId']}{suffix}"
     if line.get('branchOf'):
         piece['branchOf'] = f"{line['branchOf']}{suffix}"
@@ -3493,17 +3542,42 @@ def slice_line(line, first, last, region, suffix):
     piece['isLoop'] = line['isLoop'] and first == 0 and last == len(line['anchors']) - 1
     piece['lengthKm'] = round(
         sum(geo.line_length(p) for p in piece['intervals']) / 1000.0, 3)
-    # A country slice can move the line into a different station-spacing band.
-    # Recompute the compact geometry profile before serialization instead of
-    # retaining the whole international service's profile.
-    piece['needsRegroom'] = True
+    # These are already accepted surveyed intervals. Re-grooming each side
+    # independently can move a shared endpoint or remove surveyed vertices.
+    # Update the spacing band without transforming the source geometry.
+    piece.pop('needsRegroom', None)
+    piece.pop('_alignmentCheck', None)
+    if piece['intervals']:
+        piece['profile'] = build.profile_for_line(piece['intervals'])[0].name
+    if line.get('straightSurvey'):
+        survey = copy.deepcopy(line['straightSurvey'])
+        survey['intervals'] = [i - first for i in survey.get('intervals', ())
+                               if first <= i < last]
+        survey['records'] = [dict(row, interval=row['interval'] - first)
+                             for row in survey.get('records', ())
+                             if first <= row['interval'] < last]
+        if survey['intervals'] or survey['records']:
+            piece['straightSurvey'] = survey
+        else:
+            piece.pop('straightSurvey', None)
+    if line.get('extraSegments'):
+        stations = set(piece['stationIds'])
+        piece['extraSegments'] = [row for row in line['extraSegments']
+                                 if row['fromStationId'] in stations
+                                 and row['toStationId'] in stations]
     return piece
 
 
 # ------------------------------------------------------------------- assembly
 
 def assemble(built, countries, options):
-    """Split every line at the border, group the stations, and index the zones."""
+    """Partition station ownership while retaining every surveyed interval.
+
+    A crossing interval belongs once to its departure country's package. Its
+    connector references both countries' canonical stations; it does not
+    assign the foreign station a new local identity or invent a border stop.
+    One-station domestic runs are identity inputs, not zero-length railways.
+    """
     per_region = {'us': [], 'ca': []}
     for line in built:
         fallback = line.get('region') or 'us'
@@ -3511,17 +3585,84 @@ def assemble(built, countries, options):
         if len(runs) == 1:
             code = runs[0][0]
             line['region'] = code
+            apply_country_operator(line, code)
             per_region.setdefault(code, []).append(line)
             continue
         seen = Counter()
         for code, first, last in runs:
-            if last - first < 1:
-                continue
             seen[code] += 1
             suffix = f'-{code}' if seen[code] == 1 else f'-{code}{seen[code]}'
-            per_region.setdefault(code, []).append(
-                slice_line(line, first, last, code, suffix))
+            piece = slice_line(line, first, last, code, suffix)
+            if first == last:
+                piece['_stationOnly'] = True
+            per_region.setdefault(code, []).append(piece)
+        for index, (left, right) in enumerate(zip(runs, runs[1:]), 1):
+            owner, _, first = left
+            destination, last, _ = right
+            connector = slice_line(line, first, last, owner, f'-border{index}')
+            connector.pop('branchOf', None)
+            connector.pop('extraSegments', None)
+            connector['borderConnector'] = {
+                'sourceLineId': line['lineId'],
+                'sourceInterval': first,
+                'stationCountries': [owner, destination],
+                'evidence': ('Original accepted station-to-station surveyed '
+                             f'interval {first} from {line["lineId"]}; '
+                             'country ownership from the station country classifier'),
+            }
+            per_region.setdefault(owner, []).append(connector)
     return per_region
+
+
+def build_regions(per_region, options, reference):
+    """Resolve owned station identities before encoding international edges.
+
+    The ordinary country grouping remains the authority for station codes,
+    names, transfer complexes and aliases. Connectors reuse those results;
+    grouping foreign endpoints in the departure country would create a second
+    identity for the same station. No client format extension is needed.
+    """
+    results = {}
+    identities = {}
+    for region, candidates in per_region.items():
+        owned = [line for line in candidates if not line.get('borderConnector')]
+        result = build_region(region, owned, options, reference)
+        results[region] = result
+        for (feed, identity), resolved in result.get('stationIdentities', {}).items():
+            identities[(region, feed, identity)] = resolved
+    for region, candidates in per_region.items():
+        for line in candidates:
+            border = line.get('borderConnector')
+            if not border:
+                continue
+            resolved = []
+            for owner, sid in zip(border['stationCountries'], line['stationIds']):
+                identity = (line.get('stationComplexByStop') or {}).get(sid, sid)
+                resolved.append(identities.get((owner, line['feed'], identity)))
+            if not all(resolved):
+                options.geometry_blockers.append({
+                    'line': line['lineId'], 'feed': line.get('feed'),
+                    'why': 'border connector endpoint has no accepted owned station identity',
+                })
+                continue
+            line['_borderStationIdentities'] = resolved
+            connector = build_region(region, [line], options, reference)
+            result = results[region]
+            zone_map = []
+            for zone in connector['zones']:
+                if zone not in result['zones']:
+                    result['zones'].append(zone)
+                zone_map.append(result['zones'].index(zone))
+            for row in connector['lines']:
+                for station in row['stations']:
+                    station[6] = zone_map[station[6]]
+            result['lines'].extend(connector['lines'])
+            result['sections'].extend(connector['sections'])
+            result['stationFeatures'].extend(connector['stationFeatures'])
+            result['checks'].update(connector['checks'])
+            # One solver feature per compact row. Foreign rows keep their
+            # canonical owner prefix, including a one-station foreign terminus.
+    return results
 
 
 def line_path(line):
@@ -4474,8 +4615,8 @@ def published_feed_references(per_region, options, reference):
     preview_options = copy.copy(options)
     preview_options.geometry_blockers = []
     published = []
-    for region, candidates in per_region.items():
-        result = build_region(region, copy.deepcopy(candidates), preview_options, reference)
+    for region, result in build_regions(
+            copy.deepcopy(per_region), preview_options, reference).items():
         for line in result['lines']:
             intervals = []
             previous = None
@@ -4551,6 +4692,17 @@ def build_region(region, region_lines, options, reference):
                            for code, name in record['stations'])),
               file=sys.stderr)
 
+    for line in region_lines:
+        for index, identity in enumerate(line.get('_borderStationIdentities') or ()):
+            codes[(id(line), index)], names[(id(line), index)] = identity
+
+    station_identities = {
+        (member['line']['feed'], member['identity']):
+        (codes[(id(member['line']), member['index'])],
+         names[(id(member['line']), member['index'])])
+        for member in entries
+    }
+
     zones = []
     zone_index = {}
 
@@ -4566,6 +4718,8 @@ def build_region(region, region_lines, options, reference):
     station_features = []
     checks = {}
     for line in region_lines:
+        if line.get('_stationOnly'):
+            continue
         n = len(line['stationIds'])
         station_codes = [codes[(id(line), i)] for i in range(n)]
         station_names = [names[(id(line), i)] for i in range(n)]
@@ -4639,7 +4793,8 @@ def build_region(region, region_lines, options, reference):
                          station_names[i], 3,
                          zone_of(localise_zone(
                              line['stationZones'][i] or line['agencyTimezone'],
-                             region))])
+                             (line['borderConnector']['stationCountries'][i]
+                              if line.get('borderConnector') else region)))])
         entry = {
             'id': line['lineId'],
             'name': line['name'],
@@ -4663,6 +4818,10 @@ def build_region(region, region_lines, options, reference):
             'colorSource': line['colorSource'],
             'colorDark': line['colorDark'],
         }
+        if line.get('borderConnector'):
+            entry['borderConnector'] = line['borderConnector']
+        if line.get('operatorCountryEvidence'):
+            entry['operatorCountryEvidence'] = line['operatorCountryEvidence']
         # Keep compact-v1 sparse: an absent audited mark is different from an
         # empty path, and optional display metadata should cost no bytes when
         # it is unavailable.
@@ -4755,6 +4914,8 @@ def build_region(region, region_lines, options, reference):
             })
         for i in range(n):
             anchor = line['anchors'][i]
+            station_region = (line['borderConnector']['stationCountries'][i]
+                              if line.get('borderConnector') else region)
             # A station's own geometry is the metre or two of track it stands
             # on, which is what Japan's N02 supplies for every station and what
             # the solver's station index measures against. Taken from the
@@ -4781,18 +4942,16 @@ def build_region(region, region_lines, options, reference):
                     # region prefix is what lets `Region.fromStationCode` place
                     # a journey without opening a dataset.
                     'n02_station_code':
-                        f"{region.upper()}-{line['feed'].upper()}"
+                        f"{station_region.upper()}-{line['feed'].upper()}"
                         f"-{slugify(line['operator']).upper()}"
                         f"-{line['stationIds'][i]}-{station_codes[i].upper()}",
                     'n02_group_code': station_codes[i],
                     'display_point': [round(anchor[0], 6), round(anchor[1], 6)],
                     'time_zone': localise_zone(
-                        line['stationZones'][i] or line['agencyTimezone'], region),
+                        line['stationZones'][i] or line['agencyTimezone'], station_region),
                 },
                 'geometry': {'type': 'LineString',
-                             'coordinates': [[round(anchor[0], 6), round(anchor[1], 6)],
-                                             [round(neighbour[0], 6),
-                                              round(neighbour[1], 6)]]},
+                             'coordinates': station_track_stub(anchor, neighbour)},
             })
     return {
         'lines': package_lines,
@@ -4801,7 +4960,21 @@ def build_region(region, region_lines, options, reference):
         'stationFeatures': station_features,
         'groups': group_meta,
         'checks': checks,
+        'stationIdentities': station_identities,
     }
+
+
+def station_track_stub(anchor, neighbour):
+    """One metre of the surveyed approach, not a whole sparse terminal edge.
+
+    The station resolver measures this LineString as the platform. Long-haul
+    simplification may leave the preceding vertex hundreds of metres away;
+    publishing that whole edge as a station makes the solver stop mid-track.
+    """
+    distance = geo.haversine(anchor, neighbour)
+    fraction = min(1, 1 / distance) if distance else 0
+    point = [anchor[i] + fraction * (neighbour[i] - anchor[i]) for i in (0, 1)]
+    return [[round(x, 6) for x in anchor], [round(x, 6) for x in point]]
 
 
 def readings_for(station_features, region):
@@ -5844,6 +6017,12 @@ def build_packages(options, ap):
     for entry in feeds:
         requested_official.update(
             official_keys_for_entry(entry.get('officialNetworkByRouteId')))
+        for key, metres in (entry.get('officialNetworkEndpointJoinMetersByKey') or {}).items():
+            if key not in official_keys_for_entry(entry.get('officialNetworkByRouteId')):
+                raise ValueError(f'{key}: endpoint join does not belong to this feed')
+            if not (entry.get('officialNetworkEndpointJoinEvidenceByKey') or {}).get(key):
+                raise ValueError(f'{key}: endpoint join lacks reviewed evidence')
+            official_endpoint_join_m[key] = max(official_endpoint_join_m.get(key, 0), float(metres))
         join_m = float(entry.get('officialNetworkEndpointJoinMeters') or 0.0)
         if join_m:
             keys = official_keys_for_entry(entry.get('officialNetworkByRouteId'))
@@ -5892,6 +6071,20 @@ def build_packages(options, ap):
             continue
         options.official_networks[key] = network_for_route
         options.verified_official_sources[key] = verified[key]
+        for entry in feeds:
+            seam = (entry.get('officialNetworkEndpointJoinEvidenceByKey') or {}).get(key)
+            if seam and (verified[key]['sha256'] != seam.get('normalizedSha256')
+                         or len(network_for_route.joined_endpoints) != 1
+                         or {tuple(network_for_route.joined_endpoints[0]['from']),
+                             tuple(network_for_route.joined_endpoints[0]['to'])}
+                         != {tuple(seam['from']), tuple(seam['to'])}):
+                raise ValueError(f'{key}: reviewed endpoint join changed; candidate not published')
+        if network_for_route.joined_endpoints:
+            options.verified_official_sources[key]['endpointJoins'] = network_for_route.joined_endpoints
+            options.verified_official_sources[key]['endpointJoinEvidence'] = [
+                entry['officialNetworkEndpointJoinEvidenceByKey'][key]
+                for entry in feeds
+                if key in (entry.get('officialNetworkEndpointJoinEvidenceByKey') or {})]
         print(f'{key}: {len(network_for_route.points)} official vertices '
               f'({len(network_for_route.joined_endpoints)} endpoint joins, '
               f'{time.time() - t:.1f}s)', file=sys.stderr)
@@ -5961,6 +6154,7 @@ def build_packages(options, ap):
 
     for line in built:
         metadata = feed_metadata.get(line.get('feed')) or {}
+        line.update(reviewed_country_operators(metadata, line.get('sourceRouteId')))
         per_operator = metadata.get('operatorLogos') or {}
         logo = per_operator.get(line.get('operator'))
         # A feed-wide mark is safe only when the registry identifies one
@@ -6028,11 +6222,12 @@ def build_packages(options, ap):
 
     options.geometry_blockers = []
     summary = {'generatedAt': generated_at, 'feeds': reports, 'regions': {}}
+    regional_results = build_regions(per_region, options, reference)
     for region in ('us', 'ca'):
         region_lines = per_region.get(region) or []
         if not region_lines:
             continue
-        result = build_region(region, region_lines, options, reference)
+        result = regional_results[region]
         worst = max((v['maxDeviationMeters'] for v in result['checks'].values()),
                     default=0.0)
         package = {

@@ -16,6 +16,9 @@ public struct MapCameraPolicy: Sendable {
     private var revision: UInt64 = 0
     private var pendingFocus: FocusRequest?
 
+    /// Passive viewport restoration must not overwrite a newer camera intent.
+    public var intentRevision: UInt64 { revision }
+
     public var pendingFocusRequest: FocusRequest? { pendingFocus }
 
     public init() {}
@@ -36,6 +39,7 @@ public struct MapCameraPolicy: Sendable {
     public mutating func openAtLaunch() -> Bool {
         guard !hasOpened, !readerOwnsCamera else { return false }
         hasOpened = true
+        revision &+= 1
         return true
     }
 
@@ -52,8 +56,8 @@ public struct MapCameraPolicy: Sendable {
         return request
     }
 
-    /// Consume on the next render update, even if geometry is unavailable.
-    /// A later route solve must not become a delayed navigation command.
+    /// Consume when framing commits. A direct journey pick can wait for route
+    /// geometry; newer camera intent cancels it while that geometry loads.
     public mutating func takeFocusRequest() -> FocusRequest? {
         defer { pendingFocus = nil }
         return pendingFocus

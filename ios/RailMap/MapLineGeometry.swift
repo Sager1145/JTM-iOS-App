@@ -51,9 +51,12 @@ struct LineBuild: LODBuild {
 /// segment. Split only AFTER simplification and offsets, so chunk boundaries
 /// cannot kink lanes. These value-only chunks are safe to prepare off-main.
 func mapCoordinateChunks(
-    _ points: [CLLocationCoordinate2D]
+    _ points: [CLLocationCoordinate2D], preservingPattern: Bool = false
 ) -> [[CLLocationCoordinate2D]] {
     guard points.count >= 2 else { return [] }
+    // MapKit restarts a dash pattern at the start of each MKPolyline.
+    // Keep a patterned run whole so viewport culling never changes its phase.
+    if preservingPattern { return [points] }
     return stride(from: 0, to: points.count - 1, by: 128).map { start in
         Array(points[start..<min(start + 129, points.count)])
     }
@@ -522,7 +525,7 @@ enum MapLineGeometry {
             let epsilon = line.continuous ? 0 : MKMetersPerMapPointAtLatitude(latitude)
                 * mapScale * RailStyle.simplifyTolerance
             func coordinateChunks(
-                _ runs: [[Coordinate]]
+                _ runs: [[Coordinate]], preservingPattern: Bool = false
             ) throws -> [[CLLocationCoordinate2D]] {
                 var result: [[CLLocationCoordinate2D]] = []
                 for interval in runs where interval.count >= 2 {
@@ -534,7 +537,7 @@ enum MapLineGeometry {
                             .map { interval[$0].clLocation }
                     let points = parallelLaneCoordinates(
                         coordinates, lane: line.lane, mapPointsPerScreenPoint: mapScale, scale: scale)
-                    result.append(contentsOf: mapCoordinateChunks(points))
+                    result.append(contentsOf: mapCoordinateChunks(points, preservingPattern: preservingPattern))
                 }
                 return result
             }
@@ -586,7 +589,7 @@ enum MapLineGeometry {
             }
             result.lines[line.id] = PreparedLineBuild(
                 line: line, coordinateChunks: try coordinateChunks(solidRuns),
-                historicalCoordinateChunks: try coordinateChunks(historicalRuns),
+                historicalCoordinateChunks: try coordinateChunks(historicalRuns, preservingPattern: true),
                 familyCoordinateChunks: families)
         }
         try Task.checkCancellation()

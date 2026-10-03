@@ -1,0 +1,3842 @@
+{
+  "schema": "station-english-evidence/1",
+  "countries": [
+    "jp"
+  ],
+  "note": "Official bilingual station IDs and NK numbers plus four bounded, native-only reviewed alias and physical-versus-service membership proofs. Existing package English or romanization supplies no identity evidence.",
+  "retrievedAt": "2026-10-01T02:22:32.916793+00:00",
+  "sources": [
+    {
+      "id": "ja-nankai_line",
+      "source": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+      "resolvedSource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+      "rawFile": "ja-nankai_line.html.gz",
+      "compression": "gzip",
+      "sha256Of": "decompressed-original-response",
+      "sha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+      "retrievedAt": "2026-10-01T01:42:28.239950+00:00",
+      "bytes": 574529
+    },
+    {
+      "id": "ja-airport_line",
+      "source": "https://www.nankai.co.jp/traffic/railway.html?line=airport_line",
+      "resolvedSource": "https://www.nankai.co.jp/traffic/railway.html?line=airport_line",
+      "rawFile": "ja-airport_line.html.gz",
+      "compression": "gzip",
+      "sha256Of": "decompressed-original-response",
+      "sha256": "34d52f9e2dc31924e15379cb96762cdd4dec1037940a827091e3a0f9a105c801",
+      "retrievedAt": "2026-10-01T01:42:28.279735+00:00",
+      "bytes": 433044
+    },
+    {
+      "id": "ja-takashinohama_line",
+      "source": "https://www.nankai.co.jp/traffic/railway.html?line=takashinohama_line",
+      "resolvedSource": "https://www.nankai.co.jp/traffic/railway.html?line=takashinohama_line",
+      "rawFile": "ja-takashinohama_line.html.gz",
+      "compression": "gzip",
+      "sha256Of": "decompressed-original-response",
+      "sha256": "0b5cac988c4c023026d9d78dd9891aabcdb985b70b1cf9d915a991a001fcd054",
+      "retrievedAt": "2026-10-01T01:42:27.827080+00:00",
+      "bytes": 431599
+    },
+    {
+      "id": "ja-tanagawa_line",
+      "source": "https://www.nankai.co.jp/traffic/railway.html?line=tanagawa_line",
+      "resolvedSource": "https://www.nankai.co.jp/traffic/railway.html?line=tanagawa_line",
+      "rawFile": "ja-tanagawa_line.html.gz",
+      "compression": "gzip",
+      "sha256Of": "decompressed-original-response",
+      "sha256": "1aa36414337c27e000b73b669ce64daff6bf2437d250d4f71754371fac7f83e3",
+      "retrievedAt": "2026-10-01T01:42:28.056743+00:00",
+      "bytes": 434672
+    },
+    {
+      "id": "ja-kada_line",
+      "source": "https://www.nankai.co.jp/traffic/railway.html?line=kada_line",
+      "resolvedSource": "https://www.nankai.co.jp/traffic/railway.html?line=kada_line",
+      "rawFile": "ja-kada_line.html.gz",
+      "compression": "gzip",
+      "sha256Of": "decompressed-original-response",
+      "sha256": "be8d8fe38654bd8f77b62edc8962dbd9dcba428e70ecf9944098c61e0b6ac054",
+      "retrievedAt": "2026-10-01T01:42:28.270479+00:00",
+      "bytes": 453241
+    },
+    {
+      "id": "ja-wakayamako_line",
+      "source": "https://www.nankai.co.jp/traffic/railway.html?line=wakayamako_line",
+      "resolvedSource": "https://www.nankai.co.jp/traffic/railway.html?line=wakayamako_line",
+      "rawFile": "ja-wakayamako_line.html.gz",
+      "compression": "gzip",
+      "sha256Of": "decompressed-original-response",
+      "sha256": "5303efa2e02e97f72ca156994e6aff6d56b94b479077a7345572bb531ad2587e",
+      "retrievedAt": "2026-10-01T01:42:28.981123+00:00",
+      "bytes": 429123
+    },
+    {
+      "id": "ja-koya_line",
+      "source": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+      "resolvedSource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+      "rawFile": "ja-koya_line.html.gz",
+      "compression": "gzip",
+      "sha256Of": "decompressed-original-response",
+      "sha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+      "retrievedAt": "2026-10-01T01:42:28.641493+00:00",
+      "bytes": 577168
+    },
+    {
+      "id": "ja-semboku_line",
+      "source": "https://www.nankai.co.jp/traffic/railway.html?line=semboku_line",
+      "resolvedSource": "https://www.nankai.co.jp/traffic/railway.html?line=semboku_line",
+      "rawFile": "ja-semboku_line.html.gz",
+      "compression": "gzip",
+      "sha256Of": "decompressed-original-response",
+      "sha256": "ea8c8186a524e729ec1a6df4b9fe0715e0b1518ff338cdce5f7ecf4ed2d8ae10",
+      "retrievedAt": "2026-10-01T01:42:28.776854+00:00",
+      "bytes": 442861
+    },
+    {
+      "id": "ja-kousaku_line",
+      "source": "https://www.nankai.co.jp/traffic/railway.html?line=kousaku_line",
+      "resolvedSource": "https://www.nankai.co.jp/traffic/railway.html?line=kousaku_line",
+      "rawFile": "ja-kousaku_line.html.gz",
+      "compression": "gzip",
+      "sha256Of": "decompressed-original-response",
+      "sha256": "b6de072e48715ee68cb1635c3cd590ca4eaa9624c4a9c0f97f9cf63aa912c163",
+      "retrievedAt": "2026-10-01T01:42:28.667842+00:00",
+      "bytes": 428248
+    },
+    {
+      "id": "ja-shiomibashi_line",
+      "source": "https://www.nankai.co.jp/traffic/railway.html?line=shiomibashi_line",
+      "resolvedSource": "https://www.nankai.co.jp/traffic/railway.html?line=shiomibashi_line",
+      "rawFile": "ja-shiomibashi_line.html.gz",
+      "compression": "gzip",
+      "sha256Of": "decompressed-original-response",
+      "sha256": "552850b5cbff0289a074e9c484835b3931937a0a37e50bfddc96378321a1d8e8",
+      "retrievedAt": "2026-10-01T01:42:29.445852+00:00",
+      "bytes": 442338
+    },
+    {
+      "id": "en-nankai_line",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "resolvedSource": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "rawFile": "en-nankai_line.html.gz",
+      "compression": "gzip",
+      "sha256Of": "decompressed-original-response",
+      "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+      "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+      "bytes": 209226
+    },
+    {
+      "id": "en-airport_line",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=airport_line",
+      "resolvedSource": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=airport_line",
+      "rawFile": "en-airport_line.html.gz",
+      "compression": "gzip",
+      "sha256Of": "decompressed-original-response",
+      "sha256": "8939cf4a2cdb196b6496ff697f105a06af785d0d621c868f9c296dad3856bd65",
+      "retrievedAt": "2026-10-01T01:42:29.518045+00:00",
+      "bytes": 81688
+    },
+    {
+      "id": "en-takashinohama_line",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=takashinohama_line",
+      "resolvedSource": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=takashinohama_line",
+      "rawFile": "en-takashinohama_line.html.gz",
+      "compression": "gzip",
+      "sha256Of": "decompressed-original-response",
+      "sha256": "09d20c485b521b81b9532d4a5575ca4c7f986527d6416e84c708b6cb3e9e6ecd",
+      "retrievedAt": "2026-10-01T01:42:29.877977+00:00",
+      "bytes": 80287
+    },
+    {
+      "id": "en-tanagawa_line",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=tanagawa_line",
+      "resolvedSource": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=tanagawa_line",
+      "rawFile": "en-tanagawa_line.html.gz",
+      "compression": "gzip",
+      "sha256Of": "decompressed-original-response",
+      "sha256": "261331182b0ebd127cb5a2b9cfc29ce019d46d935494c55e799f49952c50dedb",
+      "retrievedAt": "2026-10-01T01:42:29.569173+00:00",
+      "bytes": 82951
+    },
+    {
+      "id": "en-kada_line",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=kada_line",
+      "resolvedSource": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=kada_line",
+      "rawFile": "en-kada_line.html.gz",
+      "compression": "gzip",
+      "sha256Of": "decompressed-original-response",
+      "sha256": "b9c5dab2ef3e6336a80dec50afaf93c3ca1ab1246eafa0a40c85d6113e6c0495",
+      "retrievedAt": "2026-10-01T01:42:29.701137+00:00",
+      "bytes": 99555
+    },
+    {
+      "id": "en-wakayamako_line",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=wakayamako_line",
+      "resolvedSource": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=wakayamako_line",
+      "rawFile": "en-wakayamako_line.html.gz",
+      "compression": "gzip",
+      "sha256Of": "decompressed-original-response",
+      "sha256": "3887fb9b0a8aa5b2a27351f29929cce30c3259a2e3c59a95c8c654751193c4e6",
+      "retrievedAt": "2026-10-01T01:42:29.751126+00:00",
+      "bytes": 78190
+    },
+    {
+      "id": "en-koya_line",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "resolvedSource": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "rawFile": "en-koya_line.html.gz",
+      "compression": "gzip",
+      "sha256Of": "decompressed-original-response",
+      "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+      "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+      "bytes": 211397
+    },
+    {
+      "id": "en-semboku_line",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=semboku_line",
+      "resolvedSource": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=semboku_line",
+      "rawFile": "en-semboku_line.html.gz",
+      "compression": "gzip",
+      "sha256Of": "decompressed-original-response",
+      "sha256": "2dead4e2aced76511bc02de9ece01d72692b506bc862dd9aecac69edecff0f84",
+      "retrievedAt": "2026-10-01T01:42:30.763944+00:00",
+      "bytes": 90618
+    },
+    {
+      "id": "en-kousaku_line",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=kousaku_line",
+      "resolvedSource": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=kousaku_line",
+      "rawFile": "en-kousaku_line.html.gz",
+      "compression": "gzip",
+      "sha256Of": "decompressed-original-response",
+      "sha256": "58b3200f4f4cfbb06b8c54787c0f68738517386cc3cd2c20bbe153887a189081",
+      "retrievedAt": "2026-10-01T01:42:30.007375+00:00",
+      "bytes": 77268
+    },
+    {
+      "id": "en-shiomibashi_line",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=shiomibashi_line",
+      "resolvedSource": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=shiomibashi_line",
+      "rawFile": "en-shiomibashi_line.html.gz",
+      "compression": "gzip",
+      "sha256Of": "decompressed-original-response",
+      "sha256": "73c3c6e9599225375ac2edf60bd642d72a40fcf0bf23927ec01b74fc6f337e9d",
+      "retrievedAt": "2026-10-01T01:42:30.058909+00:00",
+      "bytes": 89890
+    },
+    {
+      "id": "operator-home",
+      "source": "https://www.nankai.co.jp/",
+      "resolvedSource": "https://www.nankai.co.jp/",
+      "rawFile": "operator-home.html.gz",
+      "compression": "gzip",
+      "sha256Of": "decompressed-original-response",
+      "sha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+      "retrievedAt": "2026-10-01T01:42:31.438543+00:00",
+      "bytes": 571352
+    }
+  ],
+  "byLineStation": {
+    "jp-南海電気鉄道-加太線:008295": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-加太線",
+      "stationCode": "008295",
+      "operator": "南海電気鉄道",
+      "name": "加太",
+      "en": "KADA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=kada_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "kada",
+          "stationNumber": "NK44-7",
+          "ja": "加太",
+          "en": "KADA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=kada_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=kada_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/kada.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/kada.html",
+          "sha256": "b9c5dab2ef3e6336a80dec50afaf93c3ca1ab1246eafa0a40c85d6113e6c0495",
+          "identitySha256": "be8d8fe38654bd8f77b62edc8962dbd9dcba428e70ecf9944098c61e0b6ac054",
+          "retrievedAt": "2026-10-01T01:42:29.701137+00:00",
+          "officialRouteId": "kada_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-加太線:008318": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-加太線",
+      "stationCode": "008318",
+      "operator": "南海電気鉄道",
+      "name": "磯ノ浦",
+      "en": "ISONOURA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=kada_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "isonoura",
+          "stationNumber": "NK44-6",
+          "ja": "磯ノ浦",
+          "en": "ISONOURA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=kada_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=kada_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/isonoura.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/isonoura.html",
+          "sha256": "b9c5dab2ef3e6336a80dec50afaf93c3ca1ab1246eafa0a40c85d6113e6c0495",
+          "identitySha256": "be8d8fe38654bd8f77b62edc8962dbd9dcba428e70ecf9944098c61e0b6ac054",
+          "retrievedAt": "2026-10-01T01:42:29.701137+00:00",
+          "officialRouteId": "kada_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-加太線:008322": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-加太線",
+      "stationCode": "008322",
+      "operator": "南海電気鉄道",
+      "name": "二里ヶ浜",
+      "en": "NIRIGAHAMA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=kada_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "nirigahama",
+          "stationNumber": "NK44-5",
+          "ja": "二里ヶ浜",
+          "en": "NIRIGAHAMA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=kada_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=kada_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/nirigahama.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/nirigahama.html",
+          "sha256": "b9c5dab2ef3e6336a80dec50afaf93c3ca1ab1246eafa0a40c85d6113e6c0495",
+          "identitySha256": "be8d8fe38654bd8f77b62edc8962dbd9dcba428e70ecf9944098c61e0b6ac054",
+          "retrievedAt": "2026-10-01T01:42:29.701137+00:00",
+          "officialRouteId": "kada_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-加太線:008325": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-加太線",
+      "stationCode": "008325",
+      "operator": "南海電気鉄道",
+      "name": "西ノ庄",
+      "en": "NISHINOSHŌ",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=kada_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "nishinosho",
+          "stationNumber": "NK44-4",
+          "ja": "西ノ庄",
+          "en": "NISHINOSHŌ",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=kada_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=kada_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/nishinosho.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/nishinosho.html",
+          "sha256": "b9c5dab2ef3e6336a80dec50afaf93c3ca1ab1246eafa0a40c85d6113e6c0495",
+          "identitySha256": "be8d8fe38654bd8f77b62edc8962dbd9dcba428e70ecf9944098c61e0b6ac054",
+          "retrievedAt": "2026-10-01T01:42:29.701137+00:00",
+          "officialRouteId": "kada_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-加太線:008328": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-加太線",
+      "stationCode": "008328",
+      "operator": "南海電気鉄道",
+      "name": "紀ノ川",
+      "en": "KINOKAWA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=kada_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "kinokawa",
+          "stationNumber": "NK44",
+          "ja": "紀ノ川",
+          "en": "KINOKAWA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=kada_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=kada_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/kinokawa.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/kinokawa.html",
+          "sha256": "b9c5dab2ef3e6336a80dec50afaf93c3ca1ab1246eafa0a40c85d6113e6c0495",
+          "identitySha256": "be8d8fe38654bd8f77b62edc8962dbd9dcba428e70ecf9944098c61e0b6ac054",
+          "retrievedAt": "2026-10-01T01:42:29.701137+00:00",
+          "officialRouteId": "kada_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-加太線:008333": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-加太線",
+      "stationCode": "008333",
+      "operator": "南海電気鉄道",
+      "name": "八幡前",
+      "en": "HACHIMAMMAE",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=kada_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "hachimanmae",
+          "stationNumber": "NK44-3",
+          "ja": "八幡前",
+          "en": "HACHIMAMMAE",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=kada_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=kada_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/hachimanmae.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/hachimanmae.html",
+          "sha256": "b9c5dab2ef3e6336a80dec50afaf93c3ca1ab1246eafa0a40c85d6113e6c0495",
+          "identitySha256": "be8d8fe38654bd8f77b62edc8962dbd9dcba428e70ecf9944098c61e0b6ac054",
+          "retrievedAt": "2026-10-01T01:42:29.701137+00:00",
+          "officialRouteId": "kada_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-加太線:008339": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-加太線",
+      "stationCode": "008339",
+      "operator": "南海電気鉄道",
+      "name": "中松江",
+      "en": "NAKA-MATSUE",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=kada_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "nakamatsue",
+          "stationNumber": "NK44-2",
+          "ja": "中松江",
+          "en": "NAKA-MATSUE",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=kada_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=kada_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/nakamatsue.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/nakamatsue.html",
+          "sha256": "b9c5dab2ef3e6336a80dec50afaf93c3ca1ab1246eafa0a40c85d6113e6c0495",
+          "identitySha256": "be8d8fe38654bd8f77b62edc8962dbd9dcba428e70ecf9944098c61e0b6ac054",
+          "retrievedAt": "2026-10-01T01:42:29.701137+00:00",
+          "officialRouteId": "kada_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-加太線:008343": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-加太線",
+      "stationCode": "008343",
+      "operator": "南海電気鉄道",
+      "name": "東松江",
+      "en": "HIGASHI-MATSUE",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=kada_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "higashimatsue",
+          "stationNumber": "NK44-1",
+          "ja": "東松江",
+          "en": "HIGASHI-MATSUE",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=kada_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=kada_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/higashimatsue.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/higashimatsue.html",
+          "sha256": "b9c5dab2ef3e6336a80dec50afaf93c3ca1ab1246eafa0a40c85d6113e6c0495",
+          "identitySha256": "be8d8fe38654bd8f77b62edc8962dbd9dcba428e70ecf9944098c61e0b6ac054",
+          "retrievedAt": "2026-10-01T01:42:29.701137+00:00",
+          "officialRouteId": "kada_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:007356": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "007356",
+      "operator": "南海電気鉄道",
+      "name": "難波",
+      "en": "NAMBA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "namba",
+          "stationNumber": "NK01",
+          "ja": "なんば",
+          "en": "NAMBA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/namba.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/namba.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity + bounded reviewed native identity rule reviewed-native-alias",
+          "reviewedPackageIdentity": {
+            "packageNative": "難波",
+            "packageStationCode": "007356",
+            "packageRoute": "nankai_line",
+            "officialNative": "なんば",
+            "officialStationId": "namba",
+            "stationNumber": "NK01",
+            "kind": "reviewed-native-alias"
+          },
+          "reviewedNativeIdentityEvidence": [
+            {
+              "sourceId": "handbook-2023",
+              "pdfPage": 35,
+              "printedPages": "60–61",
+              "statement": "南海本線 駅概要 table: 難波 / NK01 / 大阪市中央区難波五丁目1番60号",
+              "id": "handbook-2023",
+              "source": "https://www.nankai.co.jp/lib/company/handbook/pdf/handbook2023.pdf",
+              "retrievedAt": "2026-10-01T02:22:32.916793+00:00",
+              "finalSource": "https://www.nankai.co.jp/lib/company/handbook/pdf/handbook2023.pdf",
+              "sha256": "d8d468d7578fa87ddc4b6e96295ff66af6942834f0c9ac88f69cc19c50411a04",
+              "rawFile": "handbook-2023.pdf.gz",
+              "bytes": 11422288
+            },
+            {
+              "sourceId": "station-namba",
+              "statement": "Operator station-page slug namba, NK01, heading なんば; same page includes current station-specific 難波駅 news",
+              "id": "station-namba",
+              "source": "https://www.nankai.co.jp/traffic/station/namba.html",
+              "retrievedAt": "2026-10-01T02:22:32.241930+00:00",
+              "finalSource": "https://www.nankai.co.jp/traffic/station/namba.html",
+              "sha256": "5ec5c52226ba19f01968953494241cf68992595b85297a7b1f5d40f42b3b517d",
+              "rawFile": "station-namba.html.gz",
+              "bytes": 472550
+            },
+            {
+              "sourceId": "news-namba-260324",
+              "statement": "南海電鉄難波駅1階 大階段横 at なんばCITY本館1階ガレリア / 大阪市中央区難波5-1-60",
+              "id": "news-namba-260324",
+              "source": "https://www.nankai.co.jp/news/260324_1.html",
+              "retrievedAt": "2026-10-01T02:22:32.591803+00:00",
+              "finalSource": "https://www.nankai.co.jp/news/260324_1.html",
+              "sha256": "534574c7fa8e08084cd85be9a4917fd8a6ec3eb1672be15c551c858d4250a44a",
+              "rawFile": "news-namba-260324.html.gz",
+              "bytes": 100642
+            }
+          ]
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:007402": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "007402",
+      "operator": "南海電気鉄道",
+      "name": "今宮戎",
+      "en": "IMAMIYAEBISU",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "imamiyaebisu",
+          "stationNumber": "NK02",
+          "ja": "今宮戎",
+          "en": "IMAMIYAEBISU",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/imamiyaebisu.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/imamiyaebisu.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity + bounded reviewed native identity rule reviewed-physical-line-service-index-difference",
+          "reviewedPackageIdentity": {
+            "packageNative": "今宮戎",
+            "packageStationCode": "007402",
+            "packageRoute": "nankai_line",
+            "officialNative": "今宮戎",
+            "officialStationId": "imamiyaebisu",
+            "stationNumber": "NK02",
+            "kind": "reviewed-physical-line-service-index-difference",
+            "evidenceRoute": "koya_line"
+          },
+          "reviewedNativeIdentityEvidence": [
+            {
+              "sourceId": "handbook-2023",
+              "pdfPage": 35,
+              "printedPages": "60–61",
+              "statement": "駅概要 table explicitly lists 今宮戎 / NK02 under 南海本線",
+              "id": "handbook-2023",
+              "source": "https://www.nankai.co.jp/lib/company/handbook/pdf/handbook2023.pdf",
+              "retrievedAt": "2026-10-01T02:22:32.916793+00:00",
+              "finalSource": "https://www.nankai.co.jp/lib/company/handbook/pdf/handbook2023.pdf",
+              "sha256": "d8d468d7578fa87ddc4b6e96295ff66af6942834f0c9ac88f69cc19c50411a04",
+              "rawFile": "handbook-2023.pdf.gz",
+              "bytes": 11422288
+            },
+            {
+              "sourceId": "securities-109th",
+              "pdfPage": 32,
+              "statement": "Current physical 南海本線 難波～和歌山市 station count 43. Current Nankai service index has 41; 今宮戎 NK02 is on current Koya service index.",
+              "id": "securities-109th",
+              "source": "https://www.nankai.co.jp/lib/company/ir/library/securities/pdf/109th.pdf",
+              "retrievedAt": "2026-10-01T02:22:32.236037+00:00",
+              "finalSource": "https://www.nankai.co.jp/lib/company/ir/library/securities/pdf/109th.pdf",
+              "sha256": "ae826253cd13e04bb202fc948c4ab79bda9aa29f8d71785f351335bac90ece17",
+              "rawFile": "securities-109th.pdf.gz",
+              "bytes": 1135940
+            }
+          ]
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:007423": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "007423",
+      "operator": "南海電気鉄道",
+      "name": "新今宮",
+      "en": "SHIN-IMAMIYA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "shinimamiya",
+          "stationNumber": "NK03",
+          "ja": "新今宮",
+          "en": "SHIN-IMAMIYA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/shinimamiya.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/shinimamiya.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:007452": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "007452",
+      "operator": "南海電気鉄道",
+      "name": "萩ノ茶屋",
+      "en": "HAGINOCHAYA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "haginochaya",
+          "stationNumber": "NK04",
+          "ja": "萩ノ茶屋",
+          "en": "HAGINOCHAYA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/haginochaya.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/haginochaya.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity + bounded reviewed native identity rule reviewed-physical-line-service-index-difference",
+          "reviewedPackageIdentity": {
+            "packageNative": "萩ノ茶屋",
+            "packageStationCode": "007452",
+            "packageRoute": "nankai_line",
+            "officialNative": "萩ノ茶屋",
+            "officialStationId": "haginochaya",
+            "stationNumber": "NK04",
+            "kind": "reviewed-physical-line-service-index-difference",
+            "evidenceRoute": "koya_line"
+          },
+          "reviewedNativeIdentityEvidence": [
+            {
+              "sourceId": "handbook-2023",
+              "pdfPage": 35,
+              "printedPages": "60–61",
+              "statement": "駅概要 table explicitly lists 萩ノ茶屋 / NK04 under 南海本線",
+              "id": "handbook-2023",
+              "source": "https://www.nankai.co.jp/lib/company/handbook/pdf/handbook2023.pdf",
+              "retrievedAt": "2026-10-01T02:22:32.916793+00:00",
+              "finalSource": "https://www.nankai.co.jp/lib/company/handbook/pdf/handbook2023.pdf",
+              "sha256": "d8d468d7578fa87ddc4b6e96295ff66af6942834f0c9ac88f69cc19c50411a04",
+              "rawFile": "handbook-2023.pdf.gz",
+              "bytes": 11422288
+            },
+            {
+              "sourceId": "securities-109th",
+              "pdfPage": 32,
+              "statement": "Current physical 南海本線 難波～和歌山市 station count 43. Current Nankai service index has 41; 萩ノ茶屋 NK04 is on current Koya service index.",
+              "id": "securities-109th",
+              "source": "https://www.nankai.co.jp/lib/company/ir/library/securities/pdf/109th.pdf",
+              "retrievedAt": "2026-10-01T02:22:32.236037+00:00",
+              "finalSource": "https://www.nankai.co.jp/lib/company/ir/library/securities/pdf/109th.pdf",
+              "sha256": "ae826253cd13e04bb202fc948c4ab79bda9aa29f8d71785f351335bac90ece17",
+              "rawFile": "securities-109th.pdf.gz",
+              "bytes": 1135940
+            }
+          ]
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:007483": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "007483",
+      "operator": "南海電気鉄道",
+      "name": "天下茶屋",
+      "en": "TENGACHAYA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "tengachaya",
+          "stationNumber": "NK05",
+          "ja": "天下茶屋",
+          "en": "TENGACHAYA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/tengachaya.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/tengachaya.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:007517": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "007517",
+      "operator": "南海電気鉄道",
+      "name": "岸里玉出",
+      "en": "KISHINOSATO-TAMADE",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "kishinosatotamade",
+          "stationNumber": "NK06",
+          "ja": "岸里玉出",
+          "en": "KISHINOSATO-TAMADE",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/kishinosatotamade.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/kishinosatotamade.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:007554": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "007554",
+      "operator": "南海電気鉄道",
+      "name": "粉浜",
+      "en": "KOHAMA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "kohama",
+          "stationNumber": "NK07",
+          "ja": "粉浜",
+          "en": "KOHAMA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/kohama.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/kohama.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:007573": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "007573",
+      "operator": "南海電気鉄道",
+      "name": "住吉大社",
+      "en": "SUMIYOSHITAISHA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "sumiyoshitaisha",
+          "stationNumber": "NK08",
+          "ja": "住吉大社",
+          "en": "SUMIYOSHITAISHA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/sumiyoshitaisha.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/sumiyoshitaisha.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:007593": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "007593",
+      "operator": "南海電気鉄道",
+      "name": "住ノ江",
+      "en": "SUMINOE",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "suminoe",
+          "stationNumber": "NK09",
+          "ja": "住ノ江",
+          "en": "SUMINOE",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/suminoe.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/suminoe.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:007626": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "007626",
+      "operator": "南海電気鉄道",
+      "name": "七道",
+      "en": "SHICHIDŌ",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "shichido",
+          "stationNumber": "NK10",
+          "ja": "七道",
+          "en": "SHICHIDŌ",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/shichido.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/shichido.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:007649": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "007649",
+      "operator": "南海電気鉄道",
+      "name": "堺",
+      "en": "SAKAI",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "sakai",
+          "stationNumber": "NK11",
+          "ja": "堺",
+          "en": "SAKAI",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/sakai.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/sakai.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:007683": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "007683",
+      "operator": "南海電気鉄道",
+      "name": "湊",
+      "en": "MINATO",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "minato",
+          "stationNumber": "NK12",
+          "ja": "湊",
+          "en": "MINATO",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/minato.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/minato.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:007707": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "007707",
+      "operator": "南海電気鉄道",
+      "name": "石津川",
+      "en": "ISHIZUGAWA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "ishizugawa",
+          "stationNumber": "NK13",
+          "ja": "石津川",
+          "en": "ISHIZUGAWA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/ishizugawa.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/ishizugawa.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:007729": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "007729",
+      "operator": "南海電気鉄道",
+      "name": "諏訪ノ森",
+      "en": "SUWANOMORI",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "suwanomori",
+          "stationNumber": "NK14",
+          "ja": "諏訪ノ森",
+          "en": "SUWANOMORI",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/suwanomori.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/suwanomori.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:007751": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "007751",
+      "operator": "南海電気鉄道",
+      "name": "浜寺公園",
+      "en": "HAMADERAKŌEN",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "hamaderakoen",
+          "stationNumber": "NK15",
+          "ja": "浜寺公園",
+          "en": "HAMADERAKŌEN",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/hamaderakoen.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/hamaderakoen.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:007764": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "007764",
+      "operator": "南海電気鉄道",
+      "name": "羽衣",
+      "en": "HAGOROMO",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "hagoromo",
+          "stationNumber": "NK16",
+          "ja": "羽衣",
+          "en": "HAGOROMO",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/hagoromo.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/hagoromo.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:007794": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "007794",
+      "operator": "南海電気鉄道",
+      "name": "高石",
+      "en": "TAKAISHI",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "takaishi",
+          "stationNumber": "NK17",
+          "ja": "高石",
+          "en": "TAKAISHI",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/takaishi.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/takaishi.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:007808": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "007808",
+      "operator": "南海電気鉄道",
+      "name": "北助松",
+      "en": "KITA-SUKEMATSU",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "kitasukematsu",
+          "stationNumber": "NK18",
+          "ja": "北助松",
+          "en": "KITA-SUKEMATSU",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/kitasukematsu.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/kitasukematsu.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:007824": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "007824",
+      "operator": "南海電気鉄道",
+      "name": "松ノ浜",
+      "en": "MATSUNOHAMA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "matsunohama",
+          "stationNumber": "NK19",
+          "ja": "松ノ浜",
+          "en": "MATSUNOHAMA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/matsunohama.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/matsunohama.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:007834": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "007834",
+      "operator": "南海電気鉄道",
+      "name": "泉大津",
+      "en": "IZUMIŌTSU",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "izumiotsu",
+          "stationNumber": "NK20",
+          "ja": "泉大津",
+          "en": "IZUMIŌTSU",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/izumiotsu.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/izumiotsu.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:007867": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "007867",
+      "operator": "南海電気鉄道",
+      "name": "忠岡",
+      "en": "TADAOKA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "tadaoka",
+          "stationNumber": "NK21",
+          "ja": "忠岡",
+          "en": "TADAOKA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/tadaoka.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/tadaoka.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:007890": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "007890",
+      "operator": "南海電気鉄道",
+      "name": "春木",
+      "en": "HARUKI",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "haruki",
+          "stationNumber": "NK22",
+          "ja": "春木",
+          "en": "HARUKI",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/haruki.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/haruki.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:007910": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "007910",
+      "operator": "南海電気鉄道",
+      "name": "和泉大宮",
+      "en": "IZUMI-ŌMIYA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "izumiomiya",
+          "stationNumber": "NK23",
+          "ja": "和泉大宮",
+          "en": "IZUMI-ŌMIYA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/izumiomiya.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/izumiomiya.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:007925": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "007925",
+      "operator": "南海電気鉄道",
+      "name": "岸和田",
+      "en": "KISHIWADA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "kishiwada",
+          "stationNumber": "NK24",
+          "ja": "岸和田",
+          "en": "KISHIWADA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/kishiwada.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/kishiwada.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:007930": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "007930",
+      "operator": "南海電気鉄道",
+      "name": "蛸地蔵",
+      "en": "TAKOJIZŌ",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "takojizo",
+          "stationNumber": "NK25",
+          "ja": "蛸地蔵",
+          "en": "TAKOJIZŌ",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/takojizo.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/takojizo.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:007942": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "007942",
+      "operator": "南海電気鉄道",
+      "name": "貝塚",
+      "en": "KAIZUKA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "kaizuka",
+          "stationNumber": "NK26",
+          "ja": "貝塚",
+          "en": "KAIZUKA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/kaizuka.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/kaizuka.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:007964": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "007964",
+      "operator": "南海電気鉄道",
+      "name": "二色浜",
+      "en": "NISHIKINOHAMA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "nishikinohama",
+          "stationNumber": "NK27",
+          "ja": "二色浜",
+          "en": "NISHIKINOHAMA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/nishikinohama.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/nishikinohama.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:007975": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "007975",
+      "operator": "南海電気鉄道",
+      "name": "鶴原",
+      "en": "TSURUHARA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "tsuruhara",
+          "stationNumber": "NK28",
+          "ja": "鶴原",
+          "en": "TSURUHARA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/tsuruhara.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/tsuruhara.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:007985": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "007985",
+      "operator": "南海電気鉄道",
+      "name": "井原里",
+      "en": "IHARANOSATO",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "iharanosato",
+          "stationNumber": "NK29",
+          "ja": "井原里",
+          "en": "IHARANOSATO",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/iharanosato.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/iharanosato.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:007992": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "007992",
+      "operator": "南海電気鉄道",
+      "name": "泉佐野",
+      "en": "IZUMISANO",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "izumisano",
+          "stationNumber": "NK30",
+          "ja": "泉佐野",
+          "en": "IZUMISANO",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/izumisano.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/izumisano.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:008022": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "008022",
+      "operator": "南海電気鉄道",
+      "name": "羽倉崎",
+      "en": "HAGURAZAKI",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "hagurazaki",
+          "stationNumber": "NK33",
+          "ja": "羽倉崎",
+          "en": "HAGURAZAKI",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/hagurazaki.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/hagurazaki.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:008069": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "008069",
+      "operator": "南海電気鉄道",
+      "name": "吉見ノ里",
+      "en": "YOSHIMINOSATO",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "yoshiminosato",
+          "stationNumber": "NK34",
+          "ja": "吉見ノ里",
+          "en": "YOSHIMINOSATO",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/yoshiminosato.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/yoshiminosato.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:008091": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "008091",
+      "operator": "南海電気鉄道",
+      "name": "岡田浦",
+      "en": "OKADAURA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "okadaura",
+          "stationNumber": "NK35",
+          "ja": "岡田浦",
+          "en": "OKADAURA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/okadaura.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/okadaura.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:008118": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "008118",
+      "operator": "南海電気鉄道",
+      "name": "樽井",
+      "en": "TARUI",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "tarui",
+          "stationNumber": "NK36",
+          "ja": "樽井",
+          "en": "TARUI",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/tarui.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/tarui.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:008141": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "008141",
+      "operator": "南海電気鉄道",
+      "name": "尾崎",
+      "en": "OZAKI",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "ozaki",
+          "stationNumber": "NK37",
+          "ja": "尾崎",
+          "en": "OZAKI",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/ozaki.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/ozaki.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:008161": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "008161",
+      "operator": "南海電気鉄道",
+      "name": "鳥取ノ荘",
+      "en": "TOTTORINOSHŌ",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "tottorinosho",
+          "stationNumber": "NK38",
+          "ja": "鳥取ノ荘",
+          "en": "TOTTORINOSHŌ",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/tottorinosho.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/tottorinosho.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:008179": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "008179",
+      "operator": "南海電気鉄道",
+      "name": "箱作",
+      "en": "HAKOTSUKURI",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "hakotsukuri",
+          "stationNumber": "NK39",
+          "ja": "箱作",
+          "en": "HAKOTSUKURI",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/hakotsukuri.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/hakotsukuri.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:008210": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "008210",
+      "operator": "南海電気鉄道",
+      "name": "淡輪",
+      "en": "TANNOWA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "tannowa",
+          "stationNumber": "NK40",
+          "ja": "淡輪",
+          "en": "TANNOWA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/tannowa.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/tannowa.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:008219": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "008219",
+      "operator": "南海電気鉄道",
+      "name": "みさき公園",
+      "en": "MISAKIKŌEN",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "misakikoen",
+          "stationNumber": "NK41",
+          "ja": "みさき公園",
+          "en": "MISAKIKŌEN",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/misakikoen.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/misakikoen.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:008274": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "008274",
+      "operator": "南海電気鉄道",
+      "name": "孝子",
+      "en": "KYŌSHI",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "kyoshi",
+          "stationNumber": "NK42",
+          "ja": "孝子",
+          "en": "KYŌSHI",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/kyoshi.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/kyoshi.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:008294": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "008294",
+      "operator": "南海電気鉄道",
+      "name": "和歌山大学前",
+      "en": "WAKAYAMADAIGAKUMAE",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "wadaimae",
+          "stationNumber": "NK43",
+          "ja": "和歌山大学前(ふじと台)",
+          "en": "WAKAYAMADAIGAKUMAE",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/wadaimae.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/wadaimae.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity + bounded reviewed native identity rule reviewed-native-substation-name",
+          "reviewedPackageIdentity": {
+            "packageNative": "和歌山大学前",
+            "packageStationCode": "008294",
+            "packageRoute": "nankai_line",
+            "officialNative": "和歌山大学前(ふじと台)",
+            "officialStationId": "wadaimae",
+            "stationNumber": "NK43",
+            "kind": "reviewed-native-substation-name"
+          },
+          "reviewedNativeIdentityEvidence": [
+            {
+              "sourceId": "community-wadaimae",
+              "statement": "Station naming paragraph explicitly chooses 和歌山大学前 and identifies ふじと台 as 副駅名; 駅情報を見る points to /traffic/station/wadaimae.html",
+              "id": "community-wadaimae",
+              "source": "https://www.nankai.co.jp/community/station/wadaimae.html",
+              "retrievedAt": "2026-10-01T02:22:32.242913+00:00",
+              "finalSource": "https://www.nankai.co.jp/community/station/wadaimae.html",
+              "sha256": "6c80c12dfb32cf31f2a3fbc0417848ead5a0d3badfcb654a338660dfa1e05396",
+              "rawFile": "community-wadaimae.html.gz",
+              "bytes": 417503
+            }
+          ]
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:008328": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "008328",
+      "operator": "南海電気鉄道",
+      "name": "紀ノ川",
+      "en": "KINOKAWA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "kinokawa",
+          "stationNumber": "NK44",
+          "ja": "紀ノ川",
+          "en": "KINOKAWA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/kinokawa.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/kinokawa.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-南海本線:008358": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-南海本線",
+      "stationCode": "008358",
+      "operator": "南海電気鉄道",
+      "name": "和歌山市",
+      "en": "WAKAYAMASHI",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "wakayamashi",
+          "stationNumber": "NK45",
+          "ja": "和歌山市",
+          "en": "WAKAYAMASHI",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=nankai_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=nankai_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/wakayamashi.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/wakayamashi.html",
+          "sha256": "9978c1bc21b04747a47539bd225167d18435d8dac021c159549983d0ce842e5f",
+          "identitySha256": "4b395796c4d3cd749ed3905e247eeeff8c651d8a121e4991b58c2ca50163f920",
+          "retrievedAt": "2026-10-01T01:42:28.946993+00:00",
+          "officialRouteId": "nankai_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-和歌山港線:008358": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-和歌山港線",
+      "stationCode": "008358",
+      "operator": "南海電気鉄道",
+      "name": "和歌山市",
+      "en": "WAKAYAMASHI",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=wakayamako_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "wakayamashi",
+          "stationNumber": "NK45",
+          "ja": "和歌山市",
+          "en": "WAKAYAMASHI",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=wakayamako_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=wakayamako_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/wakayamashi.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/wakayamashi.html",
+          "sha256": "3887fb9b0a8aa5b2a27351f29929cce30c3259a2e3c59a95c8c654751193c4e6",
+          "identitySha256": "5303efa2e02e97f72ca156994e6aff6d56b94b479077a7345572bb531ad2587e",
+          "retrievedAt": "2026-10-01T01:42:29.751126+00:00",
+          "officialRouteId": "wakayamako_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-和歌山港線:008382": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-和歌山港線",
+      "stationCode": "008382",
+      "operator": "南海電気鉄道",
+      "name": "和歌山港",
+      "en": "WAKAYAMAKŌ",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=wakayamako_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "wakayamako",
+          "stationNumber": "NK45-1",
+          "ja": "和歌山港",
+          "en": "WAKAYAMAKŌ",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=wakayamako_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=wakayamako_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/wakayamako.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/wakayamako.html",
+          "sha256": "3887fb9b0a8aa5b2a27351f29929cce30c3259a2e3c59a95c8c654751193c4e6",
+          "identitySha256": "5303efa2e02e97f72ca156994e6aff6d56b94b479077a7345572bb531ad2587e",
+          "retrievedAt": "2026-10-01T01:42:29.751126+00:00",
+          "officialRouteId": "wakayamako_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-多奈川線:008219": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-多奈川線",
+      "stationCode": "008219",
+      "operator": "南海電気鉄道",
+      "name": "みさき公園",
+      "en": "MISAKIKŌEN",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=tanagawa_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "misakikoen",
+          "stationNumber": "NK41",
+          "ja": "みさき公園",
+          "en": "MISAKIKŌEN",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=tanagawa_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=tanagawa_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/misakikoen.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/misakikoen.html",
+          "sha256": "261331182b0ebd127cb5a2b9cfc29ce019d46d935494c55e799f49952c50dedb",
+          "identitySha256": "1aa36414337c27e000b73b669ce64daff6bf2437d250d4f71754371fac7f83e3",
+          "retrievedAt": "2026-10-01T01:42:29.569173+00:00",
+          "officialRouteId": "tanagawa_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-多奈川線:008233": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-多奈川線",
+      "stationCode": "008233",
+      "operator": "南海電気鉄道",
+      "name": "深日町",
+      "en": "FUKECHŌ",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=tanagawa_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "fukecho",
+          "stationNumber": "NK41-1",
+          "ja": "深日町",
+          "en": "FUKECHŌ",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=tanagawa_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=tanagawa_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/fukecho.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/fukecho.html",
+          "sha256": "261331182b0ebd127cb5a2b9cfc29ce019d46d935494c55e799f49952c50dedb",
+          "identitySha256": "1aa36414337c27e000b73b669ce64daff6bf2437d250d4f71754371fac7f83e3",
+          "retrievedAt": "2026-10-01T01:42:29.569173+00:00",
+          "officialRouteId": "tanagawa_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-多奈川線:008236": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-多奈川線",
+      "stationCode": "008236",
+      "operator": "南海電気鉄道",
+      "name": "深日港",
+      "en": "FUKEKŌ",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=tanagawa_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "fukeko",
+          "stationNumber": "NK41-2",
+          "ja": "深日港",
+          "en": "FUKEKŌ",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=tanagawa_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=tanagawa_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/fukeko.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/fukeko.html",
+          "sha256": "261331182b0ebd127cb5a2b9cfc29ce019d46d935494c55e799f49952c50dedb",
+          "identitySha256": "1aa36414337c27e000b73b669ce64daff6bf2437d250d4f71754371fac7f83e3",
+          "retrievedAt": "2026-10-01T01:42:29.569173+00:00",
+          "officialRouteId": "tanagawa_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-多奈川線:008237": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-多奈川線",
+      "stationCode": "008237",
+      "operator": "南海電気鉄道",
+      "name": "多奈川",
+      "en": "TANAGAWA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=tanagawa_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "tanagawa",
+          "stationNumber": "NK41-3",
+          "ja": "多奈川",
+          "en": "TANAGAWA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=tanagawa_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=tanagawa_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/tanagawa.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/tanagawa.html",
+          "sha256": "261331182b0ebd127cb5a2b9cfc29ce019d46d935494c55e799f49952c50dedb",
+          "identitySha256": "1aa36414337c27e000b73b669ce64daff6bf2437d250d4f71754371fac7f83e3",
+          "retrievedAt": "2026-10-01T01:42:29.569173+00:00",
+          "officialRouteId": "tanagawa_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-泉北線:007711": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-泉北線",
+      "stationCode": "007711",
+      "operator": "南海電気鉄道",
+      "name": "中百舌鳥",
+      "en": "NAKAMOZU",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=semboku_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "nakamozu",
+          "stationNumber": "NK59",
+          "ja": "中百舌鳥",
+          "en": "NAKAMOZU",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=semboku_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=semboku_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/nakamozu.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/nakamozu.html",
+          "sha256": "2dead4e2aced76511bc02de9ece01d72692b506bc862dd9aecac69edecff0f84",
+          "identitySha256": "ea8c8186a524e729ec1a6df4b9fe0715e0b1518ff338cdce5f7ecf4ed2d8ae10",
+          "retrievedAt": "2026-10-01T01:42:30.763944+00:00",
+          "officialRouteId": "semboku_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-泉北線:007776": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-泉北線",
+      "stationCode": "007776",
+      "operator": "南海電気鉄道",
+      "name": "深井",
+      "en": "FUKAI",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=semboku_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "fukai",
+          "stationNumber": "NK88",
+          "ja": "深井",
+          "en": "FUKAI",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=semboku_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=semboku_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/fukai.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/fukai.html",
+          "sha256": "2dead4e2aced76511bc02de9ece01d72692b506bc862dd9aecac69edecff0f84",
+          "identitySha256": "ea8c8186a524e729ec1a6df4b9fe0715e0b1518ff338cdce5f7ecf4ed2d8ae10",
+          "retrievedAt": "2026-10-01T01:42:30.763944+00:00",
+          "officialRouteId": "semboku_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-泉北線:007846": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-泉北線",
+      "stationCode": "007846",
+      "operator": "南海電気鉄道",
+      "name": "泉ケ丘",
+      "en": "IZUMIGAOKA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=semboku_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "izumigaoka",
+          "stationNumber": "NK89",
+          "ja": "泉ケ丘",
+          "en": "IZUMIGAOKA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=semboku_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=semboku_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/izumigaoka.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/izumigaoka.html",
+          "sha256": "2dead4e2aced76511bc02de9ece01d72692b506bc862dd9aecac69edecff0f84",
+          "identitySha256": "ea8c8186a524e729ec1a6df4b9fe0715e0b1518ff338cdce5f7ecf4ed2d8ae10",
+          "retrievedAt": "2026-10-01T01:42:30.763944+00:00",
+          "officialRouteId": "semboku_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-泉北線:007877": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-泉北線",
+      "stationCode": "007877",
+      "operator": "南海電気鉄道",
+      "name": "栂・美木多",
+      "en": "TOGA-MIKITA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=semboku_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "toga_mikita",
+          "stationNumber": "NK90",
+          "ja": "栂・美木多",
+          "en": "TOGA-MIKITA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=semboku_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=semboku_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/toga_mikita.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/toga_mikita.html",
+          "sha256": "2dead4e2aced76511bc02de9ece01d72692b506bc862dd9aecac69edecff0f84",
+          "identitySha256": "ea8c8186a524e729ec1a6df4b9fe0715e0b1518ff338cdce5f7ecf4ed2d8ae10",
+          "retrievedAt": "2026-10-01T01:42:30.763944+00:00",
+          "officialRouteId": "semboku_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-泉北線:007898": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-泉北線",
+      "stationCode": "007898",
+      "operator": "南海電気鉄道",
+      "name": "光明池",
+      "en": "KOMYOIKE",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=semboku_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "komyoike",
+          "stationNumber": "NK91",
+          "ja": "光明池",
+          "en": "KOMYOIKE",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=semboku_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=semboku_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/komyoike.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/komyoike.html",
+          "sha256": "2dead4e2aced76511bc02de9ece01d72692b506bc862dd9aecac69edecff0f84",
+          "identitySha256": "ea8c8186a524e729ec1a6df4b9fe0715e0b1518ff338cdce5f7ecf4ed2d8ae10",
+          "retrievedAt": "2026-10-01T01:42:30.763944+00:00",
+          "officialRouteId": "semboku_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-泉北線:007922": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-泉北線",
+      "stationCode": "007922",
+      "operator": "南海電気鉄道",
+      "name": "和泉中央",
+      "en": "IZUMI-CHUO",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=semboku_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "izumichuo",
+          "stationNumber": "NK92",
+          "ja": "和泉中央",
+          "en": "IZUMI-CHUO",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=semboku_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=semboku_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/izumichuo.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/izumichuo.html",
+          "sha256": "2dead4e2aced76511bc02de9ece01d72692b506bc862dd9aecac69edecff0f84",
+          "identitySha256": "ea8c8186a524e729ec1a6df4b9fe0715e0b1518ff338cdce5f7ecf4ed2d8ae10",
+          "retrievedAt": "2026-10-01T01:42:30.763944+00:00",
+          "officialRouteId": "semboku_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-空港線:007958": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-空港線",
+      "stationCode": "007958",
+      "operator": "南海電気鉄道",
+      "name": "関西空港",
+      "en": "KANSAI-AIRPORT",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=airport_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "kansaiairport",
+          "stationNumber": "NK32",
+          "ja": "関西空港",
+          "en": "KANSAI-AIRPORT",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=airport_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=airport_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/kansaiairport.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/kansaiairport.html",
+          "sha256": "8939cf4a2cdb196b6496ff697f105a06af785d0d621c868f9c296dad3856bd65",
+          "identitySha256": "34d52f9e2dc31924e15379cb96762cdd4dec1037940a827091e3a0f9a105c801",
+          "retrievedAt": "2026-10-01T01:42:29.518045+00:00",
+          "officialRouteId": "airport_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-空港線:007992": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-空港線",
+      "stationCode": "007992",
+      "operator": "南海電気鉄道",
+      "name": "泉佐野",
+      "en": "IZUMISANO",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=airport_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "izumisano",
+          "stationNumber": "NK30",
+          "ja": "泉佐野",
+          "en": "IZUMISANO",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=airport_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=airport_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/izumisano.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/izumisano.html",
+          "sha256": "8939cf4a2cdb196b6496ff697f105a06af785d0d621c868f9c296dad3856bd65",
+          "identitySha256": "34d52f9e2dc31924e15379cb96762cdd4dec1037940a827091e3a0f9a105c801",
+          "retrievedAt": "2026-10-01T01:42:29.518045+00:00",
+          "officialRouteId": "airport_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-空港線:007996": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-空港線",
+      "stationCode": "007996",
+      "operator": "南海電気鉄道",
+      "name": "りんくうタウン",
+      "en": "RINKŪ-TOWN",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=airport_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "rinkutown",
+          "stationNumber": "NK31",
+          "ja": "りんくうタウン",
+          "en": "RINKŪ-TOWN",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=airport_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=airport_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/rinkutown.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/rinkutown.html",
+          "sha256": "8939cf4a2cdb196b6496ff697f105a06af785d0d621c868f9c296dad3856bd65",
+          "identitySha256": "34d52f9e2dc31924e15379cb96762cdd4dec1037940a827091e3a0f9a105c801",
+          "retrievedAt": "2026-10-01T01:42:29.518045+00:00",
+          "officialRouteId": "airport_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-鋼索線:008362": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-鋼索線",
+      "stationCode": "008362",
+      "operator": "南海電気鉄道",
+      "name": "極楽橋",
+      "en": "GOKURAKUBASHI",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=kousaku_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "gokurakubashi",
+          "stationNumber": "NK86",
+          "ja": "極楽橋",
+          "en": "GOKURAKUBASHI",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=kousaku_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=kousaku_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/gokurakubashi.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/gokurakubashi.html",
+          "sha256": "58b3200f4f4cfbb06b8c54787c0f68738517386cc3cd2c20bbe153887a189081",
+          "identitySha256": "b6de072e48715ee68cb1635c3cd590ca4eaa9624c4a9c0f97f9cf63aa912c163",
+          "retrievedAt": "2026-10-01T01:42:30.007375+00:00",
+          "officialRouteId": "kousaku_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-鋼索線:008373": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-鋼索線",
+      "stationCode": "008373",
+      "operator": "南海電気鉄道",
+      "name": "高野山",
+      "en": "KŌYASAN",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=kousaku_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "koyasan",
+          "stationNumber": "NK87",
+          "ja": "高野山",
+          "en": "KŌYASAN",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=kousaku_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=kousaku_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/koyasan.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/koyasan.html",
+          "sha256": "58b3200f4f4cfbb06b8c54787c0f68738517386cc3cd2c20bbe153887a189081",
+          "identitySha256": "b6de072e48715ee68cb1635c3cd590ca4eaa9624c4a9c0f97f9cf63aa912c163",
+          "retrievedAt": "2026-10-01T01:42:30.007375+00:00",
+          "officialRouteId": "kousaku_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高師浜線:007764": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高師浜線",
+      "stationCode": "007764",
+      "operator": "南海電気鉄道",
+      "name": "羽衣",
+      "en": "HAGOROMO",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=takashinohama_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "hagoromo",
+          "stationNumber": "NK16",
+          "ja": "羽衣",
+          "en": "HAGOROMO",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=takashinohama_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=takashinohama_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/hagoromo.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/hagoromo.html",
+          "sha256": "09d20c485b521b81b9532d4a5575ca4c7f986527d6416e84c708b6cb3e9e6ecd",
+          "identitySha256": "0b5cac988c4c023026d9d78dd9891aabcdb985b70b1cf9d915a991a001fcd054",
+          "retrievedAt": "2026-10-01T01:42:29.877977+00:00",
+          "officialRouteId": "takashinohama_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高師浜線:007779": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高師浜線",
+      "stationCode": "007779",
+      "operator": "南海電気鉄道",
+      "name": "伽羅橋",
+      "en": "KYARABASHI",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=takashinohama_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "kyarabashi",
+          "stationNumber": "NK16-1",
+          "ja": "伽羅橋",
+          "en": "KYARABASHI",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=takashinohama_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=takashinohama_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/kyarabashi.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/kyarabashi.html",
+          "sha256": "09d20c485b521b81b9532d4a5575ca4c7f986527d6416e84c708b6cb3e9e6ecd",
+          "identitySha256": "0b5cac988c4c023026d9d78dd9891aabcdb985b70b1cf9d915a991a001fcd054",
+          "retrievedAt": "2026-10-01T01:42:29.877977+00:00",
+          "officialRouteId": "takashinohama_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高師浜線:007781": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高師浜線",
+      "stationCode": "007781",
+      "operator": "南海電気鉄道",
+      "name": "高師浜",
+      "en": "TAKASHINOHAMA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=takashinohama_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "takashinohama",
+          "stationNumber": "NK16-2",
+          "ja": "高師浜",
+          "en": "TAKASHINOHAMA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=takashinohama_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=takashinohama_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/takashinohama.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/takashinohama.html",
+          "sha256": "09d20c485b521b81b9532d4a5575ca4c7f986527d6416e84c708b6cb3e9e6ecd",
+          "identitySha256": "0b5cac988c4c023026d9d78dd9891aabcdb985b70b1cf9d915a991a001fcd054",
+          "retrievedAt": "2026-10-01T01:42:29.877977+00:00",
+          "officialRouteId": "takashinohama_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線-2:007303": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線-2",
+      "stationCode": "007303",
+      "operator": "南海電気鉄道",
+      "name": "汐見橋",
+      "en": "SHIOMIBASHI",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=shiomibashi_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "shiomibashi",
+          "stationNumber": "NK06-5",
+          "ja": "汐見橋",
+          "en": "SHIOMIBASHI",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=shiomibashi_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=shiomibashi_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/shiomibashi.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/shiomibashi.html",
+          "sha256": "73c3c6e9599225375ac2edf60bd642d72a40fcf0bf23927ec01b74fc6f337e9d",
+          "identitySha256": "552850b5cbff0289a074e9c484835b3931937a0a37e50bfddc96378321a1d8e8",
+          "retrievedAt": "2026-10-01T01:42:30.058909+00:00",
+          "officialRouteId": "shiomibashi_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線-2:007371": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線-2",
+      "stationCode": "007371",
+      "operator": "南海電気鉄道",
+      "name": "芦原町",
+      "en": "ASHIHARACHŌ",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=shiomibashi_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "ashiharacho",
+          "stationNumber": "NK06-4",
+          "ja": "芦原町",
+          "en": "ASHIHARACHŌ",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=shiomibashi_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=shiomibashi_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/ashiharacho.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/ashiharacho.html",
+          "sha256": "73c3c6e9599225375ac2edf60bd642d72a40fcf0bf23927ec01b74fc6f337e9d",
+          "identitySha256": "552850b5cbff0289a074e9c484835b3931937a0a37e50bfddc96378321a1d8e8",
+          "retrievedAt": "2026-10-01T01:42:30.058909+00:00",
+          "officialRouteId": "shiomibashi_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線-2:007406": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線-2",
+      "stationCode": "007406",
+      "operator": "南海電気鉄道",
+      "name": "木津川",
+      "en": "KIZUGAWA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=shiomibashi_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "kizugawa",
+          "stationNumber": "NK06-3",
+          "ja": "木津川",
+          "en": "KIZUGAWA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=shiomibashi_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=shiomibashi_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/kizugawa.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/kizugawa.html",
+          "sha256": "73c3c6e9599225375ac2edf60bd642d72a40fcf0bf23927ec01b74fc6f337e9d",
+          "identitySha256": "552850b5cbff0289a074e9c484835b3931937a0a37e50bfddc96378321a1d8e8",
+          "retrievedAt": "2026-10-01T01:42:30.058909+00:00",
+          "officialRouteId": "shiomibashi_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線-2:007442": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線-2",
+      "stationCode": "007442",
+      "operator": "南海電気鉄道",
+      "name": "津守",
+      "en": "TSUMORI",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=shiomibashi_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "tsumori",
+          "stationNumber": "NK06-2",
+          "ja": "津守",
+          "en": "TSUMORI",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=shiomibashi_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=shiomibashi_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/tsumori.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/tsumori.html",
+          "sha256": "73c3c6e9599225375ac2edf60bd642d72a40fcf0bf23927ec01b74fc6f337e9d",
+          "identitySha256": "552850b5cbff0289a074e9c484835b3931937a0a37e50bfddc96378321a1d8e8",
+          "retrievedAt": "2026-10-01T01:42:30.058909+00:00",
+          "officialRouteId": "shiomibashi_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線-2:007476": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線-2",
+      "stationCode": "007476",
+      "operator": "南海電気鉄道",
+      "name": "西天下茶屋",
+      "en": "NISHI-TENGACHAYA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=shiomibashi_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "nishitengachaya",
+          "stationNumber": "NK06-1",
+          "ja": "西天下茶屋",
+          "en": "NISHI-TENGACHAYA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=shiomibashi_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=shiomibashi_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/nishitengachaya.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/nishitengachaya.html",
+          "sha256": "73c3c6e9599225375ac2edf60bd642d72a40fcf0bf23927ec01b74fc6f337e9d",
+          "identitySha256": "552850b5cbff0289a074e9c484835b3931937a0a37e50bfddc96378321a1d8e8",
+          "retrievedAt": "2026-10-01T01:42:30.058909+00:00",
+          "officialRouteId": "shiomibashi_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線-2:007517": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線-2",
+      "stationCode": "007517",
+      "operator": "南海電気鉄道",
+      "name": "岸里玉出",
+      "en": "KISHINOSATO-TAMADE",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=shiomibashi_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "kishinosatotamade",
+          "stationNumber": "NK06",
+          "ja": "岸里玉出",
+          "en": "KISHINOSATO-TAMADE",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=shiomibashi_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=shiomibashi_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/kishinosatotamade.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/kishinosatotamade.html",
+          "sha256": "73c3c6e9599225375ac2edf60bd642d72a40fcf0bf23927ec01b74fc6f337e9d",
+          "identitySha256": "552850b5cbff0289a074e9c484835b3931937a0a37e50bfddc96378321a1d8e8",
+          "retrievedAt": "2026-10-01T01:42:30.058909+00:00",
+          "officialRouteId": "shiomibashi_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:007517": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "007517",
+      "operator": "南海電気鉄道",
+      "name": "岸里玉出",
+      "en": "KISHINOSATO-TAMADE",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "kishinosatotamade",
+          "stationNumber": "NK06",
+          "ja": "岸里玉出",
+          "en": "KISHINOSATO-TAMADE",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/kishinosatotamade.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/kishinosatotamade.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:007538": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "007538",
+      "operator": "南海電気鉄道",
+      "name": "帝塚山",
+      "en": "TEZUKAYAMA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "tezukayama",
+          "stationNumber": "NK51",
+          "ja": "帝塚山",
+          "en": "TEZUKAYAMA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/tezukayama.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/tezukayama.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:007572": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "007572",
+      "operator": "南海電気鉄道",
+      "name": "住吉東",
+      "en": "SUMIYOSHIHIGASHI",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "sumiyoshihigashi",
+          "stationNumber": "NK52",
+          "ja": "住吉東",
+          "en": "SUMIYOSHIHIGASHI",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/sumiyoshihigashi.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/sumiyoshihigashi.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:007587": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "007587",
+      "operator": "南海電気鉄道",
+      "name": "沢ノ町",
+      "en": "SAWANOCHŌ",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "sawanocho",
+          "stationNumber": "NK53",
+          "ja": "沢ノ町",
+          "en": "SAWANOCHŌ",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/sawanocho.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/sawanocho.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:007609": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "007609",
+      "operator": "南海電気鉄道",
+      "name": "我孫子前",
+      "en": "ABIKOMAE",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "abikomae",
+          "stationNumber": "NK54",
+          "ja": "我孫子前",
+          "en": "ABIKOMAE",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/abikomae.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/abikomae.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:007630": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "007630",
+      "operator": "南海電気鉄道",
+      "name": "浅香山",
+      "en": "ASAKAYAMA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "asakayama",
+          "stationNumber": "NK55",
+          "ja": "浅香山",
+          "en": "ASAKAYAMA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/asakayama.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/asakayama.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:007667": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "007667",
+      "operator": "南海電気鉄道",
+      "name": "堺東",
+      "en": "SAKAIHIGASHI",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "sakaihigashi",
+          "stationNumber": "NK56",
+          "ja": "堺東",
+          "en": "SAKAIHIGASHI",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/sakaihigashi.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/sakaihigashi.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:007693": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "007693",
+      "operator": "南海電気鉄道",
+      "name": "三国ヶ丘",
+      "en": "MIKUNIGAOKA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "mikunigaoka",
+          "stationNumber": "NK57",
+          "ja": "三国ヶ丘",
+          "en": "MIKUNIGAOKA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/mikunigaoka.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/mikunigaoka.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:007704": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "007704",
+      "operator": "南海電気鉄道",
+      "name": "百舌鳥八幡",
+      "en": "MOZUHACHIMAN",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "mozuhachiman",
+          "stationNumber": "NK58",
+          "ja": "百舌鳥八幡",
+          "en": "MOZUHACHIMAN",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/mozuhachiman.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/mozuhachiman.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:007711": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "007711",
+      "operator": "南海電気鉄道",
+      "name": "中百舌鳥",
+      "en": "NAKAMOZU",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "nakamozu",
+          "stationNumber": "NK59",
+          "ja": "中百舌鳥",
+          "en": "NAKAMOZU",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/nakamozu.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/nakamozu.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:007733": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "007733",
+      "operator": "南海電気鉄道",
+      "name": "白鷺",
+      "en": "SHIRASAGI",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "shirasagi",
+          "stationNumber": "NK60",
+          "ja": "白鷺",
+          "en": "SHIRASAGI",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/shirasagi.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/shirasagi.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:007747": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "007747",
+      "operator": "南海電気鉄道",
+      "name": "初芝",
+      "en": "HATSUSHIBA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "hatsushiba",
+          "stationNumber": "NK61",
+          "ja": "初芝",
+          "en": "HATSUSHIBA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/hatsushiba.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/hatsushiba.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:007760": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "007760",
+      "operator": "南海電気鉄道",
+      "name": "萩原天神",
+      "en": "HAGIHARATENJIN",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "hagiharatenjin",
+          "stationNumber": "NK62",
+          "ja": "萩原天神",
+          "en": "HAGIHARATENJIN",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/hagiharatenjin.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/hagiharatenjin.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:007788": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "007788",
+      "operator": "南海電気鉄道",
+      "name": "北野田",
+      "en": "KITANODA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "kitanoda",
+          "stationNumber": "NK63",
+          "ja": "北野田",
+          "en": "KITANODA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/kitanoda.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/kitanoda.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:007800": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "007800",
+      "operator": "南海電気鉄道",
+      "name": "狭山",
+      "en": "SAYAMA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "sayama",
+          "stationNumber": "NK64",
+          "ja": "狭山",
+          "en": "SAYAMA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/sayama.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/sayama.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:007831": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "007831",
+      "operator": "南海電気鉄道",
+      "name": "大阪狭山市",
+      "en": "ŌSAKASAYAMASHI",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "osakasayamashi",
+          "stationNumber": "NK65",
+          "ja": "大阪狭山市",
+          "en": "ŌSAKASAYAMASHI",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/osakasayamashi.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/osakasayamashi.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:007851": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "007851",
+      "operator": "南海電気鉄道",
+      "name": "金剛",
+      "en": "KONGŌ",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "kongo",
+          "stationNumber": "NK66",
+          "ja": "金剛",
+          "en": "KONGŌ",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/kongo.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/kongo.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:007887": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "007887",
+      "operator": "南海電気鉄道",
+      "name": "滝谷",
+      "en": "TAKIDANI",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "takidani",
+          "stationNumber": "NK67",
+          "ja": "滝谷",
+          "en": "TAKIDANI",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/takidani.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/takidani.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:007909": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "007909",
+      "operator": "南海電気鉄道",
+      "name": "千代田",
+      "en": "CHIYODA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "chiyoda",
+          "stationNumber": "NK68",
+          "ja": "千代田",
+          "en": "CHIYODA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/chiyoda.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/chiyoda.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:007934": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "007934",
+      "operator": "南海電気鉄道",
+      "name": "河内長野",
+      "en": "KAWACHINAGANO",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "kawachinagano",
+          "stationNumber": "NK69",
+          "ja": "河内長野",
+          "en": "KAWACHINAGANO",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/kawachinagano.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/kawachinagano.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:007957": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "007957",
+      "operator": "南海電気鉄道",
+      "name": "三日市町",
+      "en": "MIKKAICHICHŌ",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "mikkaichicho",
+          "stationNumber": "NK70",
+          "ja": "三日市町",
+          "en": "MIKKAICHICHŌ",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/mikkaichicho.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/mikkaichicho.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:007977": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "007977",
+      "operator": "南海電気鉄道",
+      "name": "美加の台",
+      "en": "MIKANODAI",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "mikanodai",
+          "stationNumber": "NK71",
+          "ja": "美加の台",
+          "en": "MIKANODAI",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/mikanodai.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/mikanodai.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:007991": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "007991",
+      "operator": "南海電気鉄道",
+      "name": "千早口",
+      "en": "CHIHAYAGUCHI",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "chihayaguchi",
+          "stationNumber": "NK72",
+          "ja": "千早口",
+          "en": "CHIHAYAGUCHI",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/chihayaguchi.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/chihayaguchi.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:008028": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "008028",
+      "operator": "南海電気鉄道",
+      "name": "天見",
+      "en": "AMAMI",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "amami",
+          "stationNumber": "NK73",
+          "ja": "天見",
+          "en": "AMAMI",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/amami.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/amami.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:008135": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "008135",
+      "operator": "南海電気鉄道",
+      "name": "紀見峠",
+      "en": "KIMITŌGE",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "kimitoge",
+          "stationNumber": "NK74",
+          "ja": "紀見峠",
+          "en": "KIMITŌGE",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/kimitoge.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/kimitoge.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:008152": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "008152",
+      "operator": "南海電気鉄道",
+      "name": "林間田園都市",
+      "en": "RINKANDEN-ENTOSHI",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "rinkandenentoshi",
+          "stationNumber": "NK75",
+          "ja": "林間田園都市",
+          "en": "RINKANDEN-ENTOSHI",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/rinkandenentoshi.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/rinkandenentoshi.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:008194": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "008194",
+      "operator": "南海電気鉄道",
+      "name": "御幸辻",
+      "en": "MIYUKITSUJI",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "miyukitsuji",
+          "stationNumber": "NK76",
+          "ja": "御幸辻",
+          "en": "MIYUKITSUJI",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/miyukitsuji.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/miyukitsuji.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:008232": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "008232",
+      "operator": "南海電気鉄道",
+      "name": "橋本",
+      "en": "HASHIMOTO",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "hashimoto",
+          "stationNumber": "NK77",
+          "ja": "橋本",
+          "en": "HASHIMOTO",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/hashimoto.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/hashimoto.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:008250": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "008250",
+      "operator": "南海電気鉄道",
+      "name": "紀伊清水",
+      "en": "KII-SHIMIZU",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "kiishimizu",
+          "stationNumber": "NK78",
+          "ja": "紀伊清水",
+          "en": "KII-SHIMIZU",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/kiishimizu.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/kiishimizu.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:008268": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "008268",
+      "operator": "南海電気鉄道",
+      "name": "学文路",
+      "en": "KAMURO",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "kamuro",
+          "stationNumber": "NK79",
+          "ja": "学文路",
+          "en": "KAMURO",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/kamuro.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/kamuro.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:008277": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "008277",
+      "operator": "南海電気鉄道",
+      "name": "九度山",
+      "en": "KUDOYAMA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "kudoyama",
+          "stationNumber": "NK80",
+          "ja": "九度山",
+          "en": "KUDOYAMA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/kudoyama.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/kudoyama.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:008299": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "008299",
+      "operator": "南海電気鉄道",
+      "name": "高野下",
+      "en": "KŌYASHITA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "koyashita",
+          "stationNumber": "NK81",
+          "ja": "高野下",
+          "en": "KŌYASHITA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/koyashita.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/koyashita.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:008311": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "008311",
+      "operator": "南海電気鉄道",
+      "name": "下古沢",
+      "en": "SHIMOKOSAWA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "shimokosawa",
+          "stationNumber": "NK82",
+          "ja": "下古沢",
+          "en": "SHIMOKOSAWA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/shimokosawa.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/shimokosawa.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:008324": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "008324",
+      "operator": "南海電気鉄道",
+      "name": "上古沢",
+      "en": "KAMIKOSAWA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "kamikosawa",
+          "stationNumber": "NK83",
+          "ja": "上古沢",
+          "en": "KAMIKOSAWA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/kamikosawa.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/kamikosawa.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:008349": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "008349",
+      "operator": "南海電気鉄道",
+      "name": "紀伊神谷",
+      "en": "KII-KAMIYA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "kiikamiya",
+          "stationNumber": "NK85",
+          "ja": "紀伊神谷",
+          "en": "KII-KAMIYA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/kiikamiya.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/kiikamiya.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:008360": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "008360",
+      "operator": "南海電気鉄道",
+      "name": "紀伊細川",
+      "en": "KII-HOSOKAWA",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "kiihosokawa",
+          "stationNumber": "NK84",
+          "ja": "紀伊細川",
+          "en": "KII-HOSOKAWA",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/kiihosokawa.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/kiihosokawa.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    },
+    "jp-南海電気鉄道-高野線:008362": {
+      "country": "jp",
+      "lineId": "jp-南海電気鉄道-高野線",
+      "stationCode": "008362",
+      "operator": "南海電気鉄道",
+      "name": "極楽橋",
+      "en": "GOKURAKUBASHI",
+      "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+      "identityEvidence": [
+        {
+          "operator": "南海電気鉄道",
+          "officialStationId": "gokurakubashi",
+          "stationNumber": "NK86",
+          "ja": "極楽橋",
+          "en": "GOKURAKUBASHI",
+          "source": "https://www.nankai.co.jp/en_railway/traffic/railway.html?line=koya_line",
+          "identitySource": "https://www.nankai.co.jp/traffic/railway.html?line=koya_line",
+          "stationSource": "https://www.nankai.co.jp/en_railway/traffic/station/gokurakubashi.html",
+          "japaneseStationSource": "https://www.nankai.co.jp/traffic/station/gokurakubashi.html",
+          "sha256": "5fdc350518e1243bb04b1f15483013659c4b78b6ac3d05028619cdaa95883836",
+          "identitySha256": "2b7117495e8d2452e2f22eb70a3d7199a44e777d4df52210c72ec94042876abe",
+          "retrievedAt": "2026-10-01T01:42:29.912275+00:00",
+          "officialRouteId": "koya_line",
+          "ownershipSource": "https://www.nankai.co.jp/",
+          "ownershipSha256": "4d4796fc7b8e002cf771f1b00c0340a9b2b8dbbe38b5ae2bc15f5de2f20473f2",
+          "matchMethod": "same station page ID and NK station number in official Japanese/English line indices + exact operator/native identity"
+        }
+      ]
+    }
+  },
+  "unresolved": [],
+  "coverage": {
+    "verifiedLineStations": 114,
+    "verifiedStationGroups": 105,
+    "unresolvedLineStations": 0,
+    "unresolvedStationGroups": 0
+  },
+  "reviewedIdentityRules": [
+    {
+      "packageNative": "難波",
+      "packageStationCode": "007356",
+      "packageRoute": "nankai_line",
+      "officialNative": "なんば",
+      "officialStationId": "namba",
+      "stationNumber": "NK01",
+      "kind": "reviewed-native-alias",
+      "proof": [
+        {
+          "sourceId": "handbook-2023",
+          "pdfPage": 35,
+          "printedPages": "60–61",
+          "statement": "南海本線 駅概要 table: 難波 / NK01 / 大阪市中央区難波五丁目1番60号"
+        },
+        {
+          "sourceId": "station-namba",
+          "statement": "Operator station-page slug namba, NK01, heading なんば; same page includes current station-specific 難波駅 news"
+        },
+        {
+          "sourceId": "news-namba-260324",
+          "statement": "南海電鉄難波駅1階 大階段横 at なんばCITY本館1階ガレリア / 大阪市中央区難波5-1-60"
+        }
+      ]
+    },
+    {
+      "packageNative": "和歌山大学前",
+      "packageStationCode": "008294",
+      "packageRoute": "nankai_line",
+      "officialNative": "和歌山大学前(ふじと台)",
+      "officialStationId": "wadaimae",
+      "stationNumber": "NK43",
+      "kind": "reviewed-native-substation-name",
+      "proof": [
+        {
+          "sourceId": "community-wadaimae",
+          "statement": "Station naming paragraph explicitly chooses 和歌山大学前 and identifies ふじと台 as 副駅名; 駅情報を見る points to /traffic/station/wadaimae.html"
+        }
+      ]
+    },
+    {
+      "packageNative": "今宮戎",
+      "packageStationCode": "007402",
+      "packageRoute": "nankai_line",
+      "officialNative": "今宮戎",
+      "officialStationId": "imamiyaebisu",
+      "stationNumber": "NK02",
+      "kind": "reviewed-physical-line-service-index-difference",
+      "evidenceRoute": "koya_line",
+      "proof": [
+        {
+          "sourceId": "handbook-2023",
+          "pdfPage": 35,
+          "printedPages": "60–61",
+          "statement": "駅概要 table explicitly lists 今宮戎 / NK02 under 南海本線"
+        },
+        {
+          "sourceId": "securities-109th",
+          "pdfPage": 32,
+          "statement": "Current physical 南海本線 難波～和歌山市 station count 43. Current Nankai service index has 41; 今宮戎 NK02 is on current Koya service index."
+        }
+      ]
+    },
+    {
+      "packageNative": "萩ノ茶屋",
+      "packageStationCode": "007452",
+      "packageRoute": "nankai_line",
+      "officialNative": "萩ノ茶屋",
+      "officialStationId": "haginochaya",
+      "stationNumber": "NK04",
+      "kind": "reviewed-physical-line-service-index-difference",
+      "evidenceRoute": "koya_line",
+      "proof": [
+        {
+          "sourceId": "handbook-2023",
+          "pdfPage": 35,
+          "printedPages": "60–61",
+          "statement": "駅概要 table explicitly lists 萩ノ茶屋 / NK04 under 南海本線"
+        },
+        {
+          "sourceId": "securities-109th",
+          "pdfPage": 32,
+          "statement": "Current physical 南海本線 難波～和歌山市 station count 43. Current Nankai service index has 41; 萩ノ茶屋 NK04 is on current Koya service index."
+        }
+      ]
+    }
+  ],
+  "additionalPrimarySources": [
+    {
+      "id": "station-namba",
+      "source": "https://www.nankai.co.jp/traffic/station/namba.html",
+      "retrievedAt": "2026-10-01T02:22:32.241930+00:00",
+      "finalSource": "https://www.nankai.co.jp/traffic/station/namba.html",
+      "sha256": "5ec5c52226ba19f01968953494241cf68992595b85297a7b1f5d40f42b3b517d",
+      "rawFile": "station-namba.html.gz",
+      "bytes": 472550
+    },
+    {
+      "id": "community-wadaimae",
+      "source": "https://www.nankai.co.jp/community/station/wadaimae.html",
+      "retrievedAt": "2026-10-01T02:22:32.242913+00:00",
+      "finalSource": "https://www.nankai.co.jp/community/station/wadaimae.html",
+      "sha256": "6c80c12dfb32cf31f2a3fbc0417848ead5a0d3badfcb654a338660dfa1e05396",
+      "rawFile": "community-wadaimae.html.gz",
+      "bytes": 417503
+    },
+    {
+      "id": "news-namba-260324",
+      "source": "https://www.nankai.co.jp/news/260324_1.html",
+      "retrievedAt": "2026-10-01T02:22:32.591803+00:00",
+      "finalSource": "https://www.nankai.co.jp/news/260324_1.html",
+      "sha256": "534574c7fa8e08084cd85be9a4917fd8a6ec3eb1672be15c551c858d4250a44a",
+      "rawFile": "news-namba-260324.html.gz",
+      "bytes": 100642
+    },
+    {
+      "id": "company-securities",
+      "source": "https://www.nankai.co.jp/ir/library/securities",
+      "retrievedAt": "2026-10-01T02:22:31.815177+00:00",
+      "finalSource": "https://www.nankai.co.jp/ir/library/securities",
+      "sha256": "fe2a0e5933c150c306ad580b52697b3d69758398cd5bba30a2e4f7f88b29ca79",
+      "rawFile": "company-securities.html.gz",
+      "bytes": 137881
+    },
+    {
+      "id": "securities-109th",
+      "source": "https://www.nankai.co.jp/lib/company/ir/library/securities/pdf/109th.pdf",
+      "retrievedAt": "2026-10-01T02:22:32.236037+00:00",
+      "finalSource": "https://www.nankai.co.jp/lib/company/ir/library/securities/pdf/109th.pdf",
+      "sha256": "ae826253cd13e04bb202fc948c4ab79bda9aa29f8d71785f351335bac90ece17",
+      "rawFile": "securities-109th.pdf.gz",
+      "bytes": 1135940
+    },
+    {
+      "id": "handbook-2023",
+      "source": "https://www.nankai.co.jp/lib/company/handbook/pdf/handbook2023.pdf",
+      "retrievedAt": "2026-10-01T02:22:32.916793+00:00",
+      "finalSource": "https://www.nankai.co.jp/lib/company/handbook/pdf/handbook2023.pdf",
+      "sha256": "d8d468d7578fa87ddc4b6e96295ff66af6942834f0c9ac88f69cc19c50411a04",
+      "rawFile": "handbook-2023.pdf.gz",
+      "bytes": 11422288
+    }
+  ]
+}

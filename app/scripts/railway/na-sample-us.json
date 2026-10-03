@@ -33,13 +33,36 @@
   "lines": [
    {
     "id": "amtrak-adirondack-us",
-    "from": "Penn Station",
+    "from": "us-official-ny-moynihan-train-hall-at-penn",
     "to": "Rouses Point Amtrak"
    },
    {
+    "id": "amtrak-adirondack-border1",
+    "from": "us-official-rouses-point",
+    "to": "ca-official-saint-lambert"
+   },
+   {
     "id": "amtrak-adirondack-ca",
-    "from": "Rouses Point Amtrak",
-    "to": "Montréal"
+    "from": "ca-official-saint-lambert",
+    "to": "ca-official-montr-al"
+   }
+  ]
+ },
+ {
+  "id": "US-SAMPLE-CASCADES",
+  "date": "2026-09-30",
+  "number": "Amtrak Cascades",
+  "trainType": "Cascades",
+  "lines": [
+   {
+    "id": "amtrak-amtrak-cascades-us",
+    "from": "us-official-eugene",
+    "to": "us-official-bellingham"
+   },
+   {
+    "id": "amtrak-amtrak-cascades-border1",
+    "from": "us-official-bellingham",
+    "to": "ca-official-vancouver"
    }
   ]
  }

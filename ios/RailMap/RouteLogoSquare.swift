@@ -294,6 +294,12 @@ enum JourneyBranding {
 /// entire class of "the mark is right on one screen and wrong on the next".
 struct RouteBadgeIndex: Sendable {
     private var pathByKey: [String: String] = [:]
+    private struct LineColors: Sendable {
+        let light: String
+        let dark: String
+    }
+    private var colorsByKey: [String: LineColors] = [:]
+    private var nameByLineID: [String: String] = [:]
     /// The passenger name for a railway whose N02 name is administrative
     /// rather than the one riders know it by — 33 of jp-2025.json's 655
     /// lines, most of them subways, where `nameNorm` (銀座線) and `name`
@@ -313,6 +319,22 @@ struct RouteBadgeIndex: Sendable {
     /// cheaper. `CompactPackage.headers` is the projection a caller that
     /// already holds a full package uses, so both reach this by one route.
     init(region: Region, headers: CompactPackage.Headers) {
+        for line in headers.lines {
+            nameByLineID[line.id] = line.nameNorm ?? line.name
+            guard let color = line.color else { continue }
+            let colors = LineColors(light: color, dark: line.colorDark ?? color)
+            colorsByKey[line.id] = colors
+            let operators = [line.operator, line.operatorShort, Self.operatorComponent(of: line.id)]
+                .compactMap { $0 }
+            for name in [line.name, line.nameNorm].compactMap({ $0 }) where !name.isEmpty {
+                for operatorName in operators where !operatorName.isEmpty {
+                    let key = Self.key(region: region.code, operatorName, name)
+                    if colorsByKey[key] == nil { colorsByKey[key] = colors }
+                }
+                let key = Self.key(region: region.code, "", name)
+                if colorsByKey[key] == nil { colorsByKey[key] = colors }
+            }
+        }
         // Two passes, and the order is the point: a railway with its own
         // published art claims a shared key before one that would only bring
         // its operator's company mark to it. 名城線 is in the package twice
@@ -369,6 +391,8 @@ struct RouteBadgeIndex: Sendable {
     mutating func merge(_ other: RouteBadgeIndex) {
         pathByKey.merge(other.pathByKey) { existing, _ in existing }
         passengerNameByKey.merge(other.passengerNameByKey) { existing, _ in existing }
+        colorsByKey.merge(other.colorsByKey) { existing, _ in existing }
+        nameByLineID.merge(other.nameByLineID) { existing, _ in existing }
     }
 
     func logo(region: String, operatorName: String, lineName: String) -> String? {
@@ -376,6 +400,17 @@ struct RouteBadgeIndex: Sendable {
     }
 
     func logo(lineID: String) -> String? { pathByKey[lineID] }
+
+    func color(lineID: String, dark: Bool) -> String? {
+        colorsByKey[lineID].map { dark ? $0.dark : $0.light }
+    }
+
+    func lineName(lineID: String) -> String? { nameByLineID[lineID] }
+
+    func color(region: String, operatorName: String?, lineName: String, dark: Bool) -> String? {
+        let colors = colorsByKey[Self.key(region: region, operatorName ?? "", lineName)]
+        return colors.map { dark ? $0.dark : $0.light }
+    }
 
     /// The passenger name for a detected line, where the N02 name is
     /// administrative — `nil` when the line's own name is already the one a

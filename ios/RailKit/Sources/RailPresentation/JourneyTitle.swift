@@ -47,6 +47,30 @@ import RailCore
 /// — `JourneyTitleTests` is the only thing that can hold it to them.
 public enum JourneyTitle {
 
+    public struct CardName: Equatable, Sendable {
+        public var primary: String
+        /// Present only when a distinct translation is shown as the primary name.
+        public var original: String?
+    }
+
+    /// Cards show the recorded language until the reader opts into translation.
+    /// Legacy glosses are kept out of the original name without editing the record.
+    public static func cardName(_ train: Train, showsTranslation: Bool = false) -> CardName {
+        let original = compact(train)
+        let caption = ServiceCaption.split(train.number)
+        // Older Japanese archives also use full-width parentheses. Normalize
+        // only the lookup copy so the original keeps its recorded typography.
+        let legacyTranslation = caption.latinName ?? ServiceCaption.split(
+            train.number.precomposedStringWithCompatibilityMapping).latinName
+        let translation = [train.numberEn, legacyTranslation]
+            .compactMap { $0?.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .first { !$0.isEmpty }
+        guard showsTranslation, let translation, translation != original else {
+            return CardName(primary: original, original: nil)
+        }
+        return CardName(primary: translation, original: original)
+    }
+
     /// The journey's name, cut to what identifies it.
     ///
     /// The 種別 leads unless the name already carries it, which most of them

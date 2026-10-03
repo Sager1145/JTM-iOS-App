@@ -12,10 +12,8 @@ import SwiftUI
 /// size — and the bubble's tail moved the map under it every time one opened
 /// near an edge.
 ///
-/// So the same model is presented as a card in a sheet instead. Nothing about
-/// what a station SAYS has changed: `StationDisplay.buildPopupModel` is still
-/// the ported reference that decides which railways are listed, how they are
-/// deduped and which badge each one wears.
+/// The sheet adds the complete names and station metadata to the railways
+/// supplied by `StationDisplay.buildPopupModel`.
 ///
 /// What the card carries is the ANSWER rather than the network row it usually
 /// comes out of. The dots a recorded ride puts on its own stops open this same
@@ -41,9 +39,7 @@ struct StationCard: Identifiable {
     /// using the app in English must still ask Apple Maps for 東京 rather than
     /// for Tokyo.
     var rawName: String
-    /// Which package the station came out of. `StationPlaceLink` needs it for
-    /// the word it appends to a failed query, and nothing else on the card
-    /// does.
+    /// Which regional package the station came out of.
     var region: Region
     /// One line per enabled reading. `nil` is "no localisation at all", `[]`
     /// is "every reading toggle off", and the two are different answers.
@@ -56,6 +52,12 @@ struct StationCard: Identifiable {
     /// real answer: a stop that resolved to no platform lists no line rather
     /// than guessing at one.
     var lines: [StationDisplay.PopupRow]
+    /// Keep the source identity separate from the presentation id, including
+    /// for a journey stop that could not be resolved to a network platform.
+    var stationCode: String? = nil
+    var validFrom: String? = nil
+    var validTo: String? = nil
+    var temporalKind: RouteGraph.TemporalKind = .current
 }
 
 extension StationCard {
@@ -73,7 +75,11 @@ extension StationCard {
             region: station.region,
             readings: readings,
             nameRoma: station.popup.nameRoma,
-            lines: station.popup.lines)
+            lines: station.popup.lines,
+            stationCode: station.stationCode,
+            validFrom: station.validFrom,
+            validTo: station.validTo,
+            temporalKind: station.temporalKind)
     }
 
     /// Every spelling of this station worth asking Apple Maps about, the
@@ -103,11 +109,11 @@ struct StationCardView: View {
     /// state here, because the answer to both is the same link.
     @State private var place: StationPlaceStore.Place?
 
-    /// The web app's three-state reading rule, unchanged by the move: `nil`
-    /// keeps the single `nameRoma` subline, an empty list means no subline at
-    /// all, and a list is itself.
-    private var sublines: [String] {
-        card.readings ?? (card.nameRoma.isEmpty ? [] : [card.nameRoma])
+    /// Recomputed as readings tables arrive. Detail content is independent
+    /// of the switches that choose the map's annotation sublines.
+    private var names: [Localization.StationNameField] {
+        localization.stationNameFields(
+            card.rawName, code: card.id, alternateCode: card.stationCode, region: card.region)
     }
 
     /// The link this card sends.
@@ -144,11 +150,6 @@ struct StationCardView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(card.displayName)
                             .font(.title2.weight(.semibold))
-                        ForEach(Array(sublines.enumerated()), id: \.offset) { _, subline in
-                            Text(subline)
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
-                        }
                     }
                     .padding(.vertical, 2)
                     .accessibilityElement(children: .combine)
@@ -166,6 +167,19 @@ struct StationCardView: View {
                     .accessibilityIdentifier("stationOpenInMaps")
                 }
 
+                Section {
+                    detailRow("original", value: card.rawName)
+                    ForEach(names) { field in
+                        detailRow("name.\(field.kind.rawValue)", value: field.text)
+                    }
+                    if !card.nameRoma.isEmpty, card.nameRoma != card.rawName,
+                        !names.contains(where: { $0.text == card.nameRoma }) {
+                        detailRow("alternateName", value: card.nameRoma)
+                    }
+                } header: {
+                    Text(localization.text("ios.station.names"))
+                }
+
                 if !card.lines.isEmpty {
                     Section {
                         ForEach(card.lines, id: \.lineID) { row in
@@ -181,6 +195,37 @@ struct StationCardView: View {
                         // keep true.
                         Text(localization.countryText("popup.line", fallback: "Line"))
                     }
+                }
+
+                Section {
+                    detailRow(
+                        "region",
+                        value: localization.text(
+                            card.region.localizationKey, fallback: card.region.fallbackName))
+                    if let code = card.stationCode, !code.isEmpty {
+                        detailRow("code", value: code)
+                    }
+                    detailRow(
+                        "latitude",
+                        value: String(format: "%.6f", locale: Locale(identifier: "en_US_POSIX"),
+                                      card.coordinate.lat))
+                    detailRow(
+                        "longitude",
+                        value: String(format: "%.6f", locale: Locale(identifier: "en_US_POSIX"),
+                                      card.coordinate.lon))
+                    if card.temporalKind != .current {
+                        detailRow(
+                            "recordType",
+                            value: localization.text("ios.station.\(card.temporalKind.rawValue)"))
+                    }
+                    if let date = card.validFrom, !date.isEmpty {
+                        detailRow("validFrom", value: date)
+                    }
+                    if let date = card.validTo, !date.isEmpty {
+                        detailRow("validTo", value: date)
+                    }
+                } header: {
+                    Text(localization.text("ios.station.info"))
                 }
             }
             // Deliberately no title: the card's own header carries the
@@ -210,11 +255,6 @@ struct StationCardView: View {
                 }
             }
         }
-        // A station card is a short answer — a name, its readings and the
-        // railways through it — so it opens at the height that answer needs
-        // and leaves the map visible above it, the way a place card does.
-        // `.large` stays reachable because a major interchange lists a dozen
-        // railways and the medium detent would scroll for all of them.
         // Keyed on the station rather than run once, because one sheet is
         // reused for the next station the reader taps: the card is a value the
         // presentation swaps, and a `task` with no id would hold the first
@@ -222,8 +262,7 @@ struct StationCardView: View {
         .task(id: card.id) {
             place = await StationPlaceStore.shared.place(
                 for: card,
-                aliases: localization.stationNameAliases(
-                    card.rawName, code: card.id, region: card.region))
+                aliases: names.map(\.text))
         }
         .railHalfSheetDetents()
         // §9.5.6's no-Pull-Bar rule is the app's, not the resident sheet's —
@@ -233,6 +272,21 @@ struct StationCardView: View {
         // list inside it cannot be dragged between its stops at all.
         .presentationDragIndicator(.hidden)
         .presentationContentInteraction(.resizes)
+    }
+
+    private func detailRow(_ key: String, value: String) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(localization.text("ios.station.\(key)"))
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            Text(value)
+                .font(.body)
+                .textSelection(.enabled)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(.vertical, 2)
+        .accessibilityElement(children: .combine)
+        .accessibilityIdentifier("stationDetail.\(key)")
     }
 }
 
@@ -256,10 +310,23 @@ private struct StationCardLineRow: View {
     var body: some View {
         HStack(spacing: 8) {
             badge
-            Text([row.company, row.label].filter { !$0.isEmpty }.joined(separator: "  "))
-                .font(.callout)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(row.label)
+                    .font(.callout)
+                    .fixedSize(horizontal: false, vertical: true)
+                if let operatorName = row.operatorName, !operatorName.isEmpty {
+                    Text(operatorName)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                } else if !row.company.isEmpty {
+                    Text(row.company)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            }
         }
         .accessibilityElement(children: .combine)
+        .accessibilityIdentifier("stationLine.\(row.lineID)")
     }
 
     /// No glyph in the fallback: the line's own name is spelled out directly

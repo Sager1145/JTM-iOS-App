@@ -873,7 +873,22 @@ def chains_from_parts_rows(
     for row in rows:
         part_index = int(row[1])
         first_interval, last_interval = int(row[2]), int(row[3])
-        if first_interval < 0:
+        # The reviewed native-only 512 schematic replaces its two station
+        # loop intervals before this step. A freshly groomed web row embeds
+        # the original loop, so reconstruct this one full-line part from the
+        # already transformed intervals, as the former plain row did.
+        native_st_clair = (
+            region == "ca" and line_id == "ttc-512" and len(rows) == 1
+            and part_index == 0 and len(row) > 6
+            and row[6] == "station-approach/groomed"
+            and len(stations) > 9
+            and stations[8][0] == "ca-official-st-clair-west"
+            and len(intervals[7]) == len(intervals[8]) == 2
+            and intervals[7][-1] == intervals[8][0] == stations[8][2:4]
+        )
+        if native_st_clair:
+            chain = chain_from_interval_range(intervals, 0, len(intervals) - 1, withheld)
+        elif first_interval < 0:
             if len(row) < 8 or not row[7]:
                 raise RuntimeError(
                     f"{region}|{line_id}: partsByRegion part {part_index} "
@@ -2897,6 +2912,17 @@ def build(
             line_id: [_copy_display_interval(interval) for interval in intervals]
             for line_id, intervals in source_intervals_by_line.items()
         }
+        # An explicit requested schematic is applied AFTER preserving source
+        # intervals. It must never leak into mileage or routing provenance.
+        for line in package["lines"]:
+            intervals = intervals_by_line[line["id"]]
+            for raw_index, points in (line.get("displayIntervalCoordinates") or {}).items():
+                index = int(raw_index)
+                if index < 0 or index >= len(intervals) or len(points) < 2:
+                    raise RuntimeError(f"{line['id']}: invalid display interval {raw_index}")
+                intervals[index] = _retain_source_interval(intervals[index], [list(p) for p in points])
+            for code, point in (line.get("displayStationCoordinates") or {}).items():
+                set_station_point(line, intervals, code, point)
         released_intervals: set[tuple[str, int]] = set()
         corridor_counts = apply_shared_corridors(
             region, package, intervals_by_line, corridors, released_intervals)
@@ -3286,6 +3312,17 @@ def build(
                             f"within 1 m (closest is {best_gap:.1f} m) — a "
                             "continuous-stroke station must always resolve "
                             "to a slot")
+                # The package names the physical platform's circle owner;
+                # aliases still contributed line_keys_by_station above.
+                circle_owner = (line.get("stationCircleOwnerByCode") or {}).get(row[0])
+                if circle_owner and circle_owner != line["id"]:
+                    owner = next((candidate for candidate in package["lines"]
+                                  if candidate["id"] == circle_owner), None)
+                    if owner is None or not any(station[0] == row[0]
+                                                for station in owner.get("stations") or []):
+                        raise RuntimeError(
+                            f"{line['id']}: circle owner {circle_owner!r} does not serve {row[0]!r}")
+                    continue
                 region_stations.append(station_record)
 
         winners = label_winners(region_stations)

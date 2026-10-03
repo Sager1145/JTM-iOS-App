@@ -1,0 +1,320 @@
+{
+  "catalogKeys": 498,
+  "nativeTables": {
+    "ClockStrings": 17,
+    "DataStrings": 86,
+    "EditorStrings": 219,
+    "JourneyCompletionStrings": 54,
+    "JourneyStrings": 72,
+    "ShellStrings": 122,
+    "StatisticsStrings": 88,
+    "TransferGuideStrings": 62
+  },
+  "nativeKeys": 720,
+  "totalKeys": 1218,
+  "localizations": 4872,
+  "placeholderIssues": [],
+  "nativeLiteralReferences": 853,
+  "date": "2026-09-30",
+  "timezone": "America/Toronto",
+  "languages": [
+    "en",
+    "ja",
+    "zh-Hans",
+    "zh-Hant"
+  ],
+  "emptyValuesIntentional": [
+    {
+      "kind": "empty-or-missing",
+      "key": "ios.ticket.unit.operators",
+      "language": "en"
+    },
+    {
+      "kind": "empty-or-missing",
+      "key": "ios.ticket.unit.rides",
+      "language": "en"
+    },
+    {
+      "kind": "empty-or-missing",
+      "key": "ios.ticket.unit.stops",
+      "language": "en"
+    }
+  ],
+  "coverageIssues": [],
+  "missingNativeReferencedKeys": [
+    {
+      "file": "ios/RailMap/SettingsView.swift",
+      "line": 293,
+      "key": "ios.networkEra"
+    },
+    {
+      "file": "ios/RailMap/SettingsView.swift",
+      "line": 299,
+      "key": "ios.networkEra.current"
+    },
+    {
+      "file": "ios/RailMap/SettingsView.swift",
+      "line": 301,
+      "key": "ios.networkEra.rideDate"
+    },
+    {
+      "file": "ios/RailMap/SettingsView.swift",
+      "line": 303,
+      "key": "ios.networkEra.overlay"
+    },
+    {
+      "file": "ios/RailMap/PlaybackTransportBar.swift",
+      "line": 256,
+      "key": "play.follow"
+    },
+    {
+      "file": "ios/RailMap/PlaybackTransportBar.swift",
+      "line": 262,
+      "key": "play.follow"
+    },
+    {
+      "file": "ios/RailMap/MapInfoView.swift",
+      "line": 169,
+      "key": "ios.info.usRailTitle"
+    },
+    {
+      "file": "ios/RailMap/MapInfoView.swift",
+      "line": 170,
+      "key": "ios.info.usRailBody"
+    },
+    {
+      "file": "ios/RailMap/MapInfoView.swift",
+      "line": 185,
+      "key": "ios.info.caRailTitle"
+    },
+    {
+      "file": "ios/RailMap/MapInfoView.swift",
+      "line": 186,
+      "key": "ios.info.caRailBody"
+    }
+  ],
+  "missingNativeDistinctKeyCount": 9,
+  "nativeLiteralReferencesNote": "Candidate scan count; wrapper-prefixed JourneyCompletion keys manually resolved. Missing key inventory includes dynamically consumed MapInfo descriptors.",
+  "web": {
+    "catalogKeys": 498,
+    "staticAttributeReferences": 137,
+    "missingStaticAttributeKeys": 0,
+    "duplicateCatalogKeys": 0,
+    "emptyCatalogValues": 0,
+    "placeholderMismatches": 0,
+    "topLevelJavaScriptFilesReviewed": 57,
+    "unlocalizedNewErrorSites": {
+      "app/public/app-validation.js": 31,
+      "app/public/app-store-ops.js": 14
+    },
+    "missingConditionalKey": "modal.dialog"
+  },
+  "checks": {
+    "sharedCatalogSynchronizedWithWeb": true,
+    "serializedRuntimeFixtureMatches": true,
+    "nativeTablesEvaluatedBySwift": true,
+    "catalogStates": [
+      "translated"
+    ],
+    "webValidationMessagesReproducedInVM": true,
+    "browserScreenshots": false,
+    "voiceOver": false,
+    "fullAppBuild": false
+  },
+  "stationCoverageMetric": "Line station occurrences, not distinct physical stations; missing translations may be intentional official-name fallbacks.",
+  "stationCoverage": [
+    {
+      "region": "jp",
+      "slots": 10227,
+      "missingRows": 8899,
+      "missingFields": {
+        "kana": 8901,
+        "romaji": 8899,
+        "zh_Hant": 8899,
+        "zh_Hans": 8899
+      }
+    },
+    {
+      "region": "tw",
+      "slots": 586,
+      "missingRows": 0,
+      "missingFields": {
+        "zh_Hant": 0,
+        "zh_Hans": 0,
+        "ja": 372,
+        "en": 23
+      }
+    },
+    {
+      "region": "hk",
+      "slots": 453,
+      "missingRows": 0,
+      "missingFields": {
+        "zh_Hant": 0,
+        "zh_Hans": 0,
+        "ja": 453,
+        "en": 0
+      }
+    },
+    {
+      "region": "mo",
+      "slots": 17,
+      "missingRows": 0,
+      "missingFields": {
+        "zh_Hant": 0,
+        "zh_Hans": 0,
+        "ja": 17,
+        "en": 0
+      }
+    },
+    {
+      "region": "kr",
+      "slots": 1412,
+      "missingRows": 0,
+      "missingFields": {
+        "zh_Hant": 534,
+        "zh_Hans": 534,
+        "ja": 1412,
+        "en": 0
+      }
+    },
+    {
+      "region": "us",
+      "slots": 5521,
+      "missingRows": 0,
+      "missingFields": {
+        "zh_Hant": 5521,
+        "zh_Hans": 5521,
+        "ja": 5521,
+        "en": 0
+      },
+      "sampleStopMatches": 54,
+      "sampleStops": 55
+    },
+    {
+      "region": "ca",
+      "slots": 865,
+      "missingRows": 0,
+      "missingFields": {
+        "zh_Hant": 865,
+        "zh_Hans": 865,
+        "ja": 865,
+        "en": 0
+      },
+      "sampleStopMatches": 1,
+      "sampleStops": 73
+    }
+  ],
+  "hansConversionScan": {
+    "checkedNonEmptyValues": {
+      "app/data/station-readings-hk.json": 991,
+      "app/data/station-readings-kr.json": 2397,
+      "app/data/station-readings-mo.json": 47,
+      "app/data/station-readings-tw.json": 1640,
+      "app/data/station-readings.json": 1615,
+      "ClockStrings": 17,
+      "DataStrings": 86,
+      "EditorStrings": 219,
+      "JourneyCompletionStrings": 54,
+      "JourneyStrings": 72,
+      "ShellStrings": 122,
+      "StatisticsStrings": 88,
+      "TransferGuideStrings": 62
+    },
+    "rawCandidateCount": 27,
+    "confirmedStationValues": [
+      {
+        "file": "app/data/station-readings-tw.json",
+        "key": "byCode/tw-ntmetro-lb:tw-official-ntmc-lb06",
+        "simplified": "三峡",
+        "value": "三峽"
+      },
+      {
+        "file": "app/data/station-readings-tw.json",
+        "key": "byCode/tw-ntmetro-lb:tw-official-ntmc-lb02",
+        "simplified": "妈祖田",
+        "value": "媽祖田"
+      },
+      {
+        "file": "app/data/station-readings-tw.json",
+        "key": "byCode/NTMC-LB02",
+        "simplified": "妈祖田",
+        "value": "媽祖田"
+      },
+      {
+        "file": "app/data/station-readings-tw.json",
+        "key": "byCode/NTMC-LB06",
+        "simplified": "三峡",
+        "value": "三峽"
+      },
+      {
+        "file": "app/data/station-readings-tw.json",
+        "key": "byName/媽祖田",
+        "simplified": "妈祖田",
+        "value": "媽祖田"
+      },
+      {
+        "file": "app/data/station-readings-tw.json",
+        "key": "byName/三峽",
+        "simplified": "三峡",
+        "value": "三峽"
+      },
+      {
+        "file": "app/data/station-readings-mo.json",
+        "key": "byCode/MLM-STADIUM",
+        "simplified": "运动场",
+        "value": "运動场"
+      },
+      {
+        "file": "app/data/station-readings-mo.json",
+        "key": "byCode/mo-mlm-taipa:mo-official-mlm-stadium",
+        "simplified": "运动场",
+        "value": "运動场"
+      },
+      {
+        "file": "app/data/station-readings-mo.json",
+        "key": "byName/運動場",
+        "simplified": "运动场",
+        "value": "运動场"
+      }
+    ],
+    "excludedExamples": [
+      "大阪 → 大坂",
+      "氹 → 凼",
+      "Japanese application names",
+      "Original Japanese station names in search examples"
+    ]
+  },
+  "sharedHansResiduals": [
+    {
+      "key": "field.numberEn",
+      "actual": "英文名稱",
+      "expected": "英文名称"
+    },
+    {
+      "key": "stats.historicalKm",
+      "actual": "歷史区间已乘里程",
+      "expected": "历史区间已乘里程"
+    }
+  ],
+  "sourceSha256": {
+    "ios/Resources/Localizable.xcstrings": "b086bf2aa8aa3db5735ea19ae0e650f0644165b3dc511ef2085f8462cdd264db",
+    "app/public/i18n-strings.js": "c9d47f836c09dfba82739806757475fae733248bc1bbbed071dcfe8c05951b14",
+    "app/public/i18n.js": "610f63760892987f21d343f02c3c51fb6945cf1fafd11e7f56563017fc71190d",
+    "ios/RailMap/JourneyCompletionStrings.swift": "f2b9226f1843e51b7116f41856b5a635e3f871e06ea58b3bafcc7fb4140b14bb",
+    "ios/RailMap/DataStrings.swift": "fb3117818130f4b8cd4e561e1e66743cbbb0b611bcf17ba436e326394c5dc3ec",
+    "ios/RailMap/EditorStrings.swift": "0cc66d30c1077b7f1c4ea1d2359cfa537a9d25f94795410b33d49c215b09cf83",
+    "ios/RailMap/JourneyStrings.swift": "b6be672b6201c0d845d85d9bae33e3f8dbd61e732dfd26fa78c5702342353b05",
+    "ios/RailMap/ClockStrings.swift": "59cacd80de9b4fce5a802738ae293df4d15b35a58d3d04ee7344edff41c1a689",
+    "ios/RailMap/TransferGuideStrings.swift": "04fc31b3531d6571b4d50f975227b0f0399f1c3d60e337014faf6b5812fe1834",
+    "ios/RailMap/ShellStrings.swift": "47c905005814e3f162c84be4619b671cb70a340d4fdd2a480d2f81366917f441",
+    "ios/RailMap/StatisticsFormatting.swift": "9ab2a152826760932304a8e3e48f4c4c73ae930e308e5ea7278435f58808229a",
+    "app/data/station-readings-hk.json": "420d4d0f46c5ab4677cde2de9a69857f64cb3bda17f6f956dfebd2c70c19d1f6",
+    "app/data/station-readings-us.json": "8ca7d63f74ff598e031e3693ecd63628f4e6340082fef7844b0499551ab6eea6",
+    "app/data/station-readings-kr.json": "a56f31bd800cbaf94f717e3de809e8d6b9bfb8bc8b08cde52189f41cc78cc493",
+    "app/data/station-readings-tw.json": "2035fb44138db39502eb581ec941f4ae757bafab7a0cea3a56090280f2e6b203",
+    "app/data/station-readings-ca.json": "71d0861a46f5aa2022c1479015de90f71b57c9290b574b84af01365cdf5a5ea0",
+    "app/data/station-readings-mo.json": "cab2cd2627caad4548ea2b60dca3baa2416191d6fc485a96920ae67e09fd6e9d",
+    "app/data/station-readings.json": "e66a609f177dd926e6a48bf1bae309e00d66f52eaef848459726c674e9129abe"
+  }
+}

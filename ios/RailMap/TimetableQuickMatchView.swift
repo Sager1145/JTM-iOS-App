@@ -17,6 +17,7 @@ struct TimetableQuickMatchView: View {
 
     private var isReady: Bool {
         Region.resolved(train) == .jp
+            && TrainTimetableDatabase.accepts(train)
             && train.date?.isEmpty == false
             && train.stops.first?.n02StationCode?.isEmpty == false
             && train.stops.last?.n02StationCode?.isEmpty == false
@@ -116,13 +117,17 @@ struct TimetableQuickMatchView: View {
         matches = []
         sourcesByTripID = [:]
         failure = nil
-        let input = train
+        let input: Train = {
+            var value = train
+            value.region = Region.resolved(train).code
+            return value
+        }()
         let requestedName = serviceName
         searchTask = Task {
             let result = await Task.detached(priority: .userInitiated) {
                 () -> Result<([TrainTimetableDatabase.Trip], [String: [TrainTimetableDatabase.SourceDocument]]), Error> in
                 do {
-                    guard let database = TrainTimetableDatabase.bundled() else {
+                    guard let database = TrainTimetableDatabase.bundled(country: input.region ?? "jp") else {
                         return .failure(TrainTimetableDatabase.DatabaseError.cannotOpen("Bundled timetable unavailable"))
                     }
                     let trips = TimetableTripMatch.candidates(

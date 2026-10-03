@@ -526,7 +526,8 @@ public enum RouteSolver {
     /// is what prevents a hard-filtered JR route from hopping onto a nearby
     /// subway/private platform.
     public static func addStationTransferConnectorEdges(
-        graph: RouteGraph.Graph, stations: [Stations.Feature]
+        graph: RouteGraph.Graph, stations: [Stations.Feature],
+        permitsNode: ((Stations.Feature, Coordinate) -> Bool)? = nil
     ) {
         struct PlatformMembership {
             let featureID: String
@@ -574,6 +575,7 @@ public enum RouteSolver {
         }
 
         for feature in stations {
+            if Task.isCancelled { return }
             let groupKey = key(for: feature)
             if groups[groupKey] == nil {
                 groups[groupKey] = [:]
@@ -584,6 +586,8 @@ public enum RouteSolver {
                 for nearest in RouteGraph.nearbyNodes(
                     source, in: graph, radiusDeg: 0.0035, limit: 30)
                 where nearest.distance <= 520 {
+                    if let permitsNode, let point = graph.nodes[nearest.key],
+                       !permitsNode(feature, point) { continue }
                     let nextOrder = groups[groupKey]!.count
                     let info = Info(
                         key: nearest.key, distance: nearest.distance, order: nextOrder,
@@ -624,7 +628,36 @@ public enum RouteSolver {
             let validTo: String?
         }
         var edgeKeys = Set<ConnectorKey>()
+        var railReachability: [String: Set<String>] = [:]
+        func alreadyJoined(_ a: Info, _ b: Info, coordinate: Coordinate) -> Bool {
+            guard !a.membership.lineName.isEmpty,
+                  a.membership.lineName == b.membership.lineName,
+                  a.membership.operatorName == b.membership.operatorName,
+                  a.membership.validFrom == nil, a.membership.validTo == nil,
+                  b.membership.validFrom == nil, b.membership.validTo == nil else { return false }
+            let cacheKey = a.key + "|" + a.membership.lineName + "|" + a.membership.operatorName
+            if let reachable = railReachability[cacheKey] { return reachable.contains(b.key) }
+            var reachable: Set<String> = [a.key]
+            var pending = [a.key]
+            while let node = pending.popLast() {
+                for edge in graph.adjacency[node] ?? [] {
+                    guard edge.connector == nil, edge.validFrom == nil, edge.validTo == nil,
+                          edge.lineName == a.membership.lineName,
+                          edge.operator == a.membership.operatorName,
+                          let point = graph.nodes[edge.to],
+                          Geometry.distanceMeters(coordinate, point) <= 900,
+                          reachable.insert(edge.to).inserted else { continue }
+                    pending.append(edge.to)
+                }
+            }
+            railReachability[cacheKey] = reachable
+            return reachable.contains(b.key)
+        }
         for groupKey in groupOrder {
+            if Task.isCancelled { return }
+            // This reachability is local to one station; retaining every
+            // platform's neighborhood would grow with the whole country.
+            railReachability.removeAll(keepingCapacity: true)
             let nodes = (groups[groupKey]?.values ?? Dictionary<String, [Info]>().values)
                 .sorted {
                     let a = $0[0], b = $1[0]
@@ -642,6 +675,9 @@ public enum RouteSolver {
                                   let bCoordinate = graph.nodes[b.key] else { continue }
                             let gap = Geometry.distanceMeters(aCoordinate, bCoordinate)
                             if gap > 900 { continue }
+                            // Preserve the surveyed junction path when these
+                            // same-line nodes already meet in the station area.
+                            if alreadyJoined(a, b, coordinate: aCoordinate) { continue }
                             var codes: [String] = []
                             for code in [a.membership.institutionTypeCode, b.membership.institutionTypeCode]
                             where !code.isEmpty && !codes.contains(code) { codes.append(code) }
@@ -1334,6 +1370,7 @@ public enum RouteSolver {
         stations: Stations.Index,
         continuityAnchor: Coordinate? = nil
     ) -> SolvedSection? {
+        guard !Task.isCancelled else { return nil }
         guard let bbox = sectionEndpointBBox(
             section, train: train, country: country, stations: stations)
         else {
@@ -1346,6 +1383,7 @@ public enum RouteSolver {
         let margins = [max(30_000, straight * 0.6), max(90_000, straight * 1.5)]
         var lastResult: SolvedSection?
         for margin in margins {
+            guard !Task.isCancelled else { return nil }
             let graph = graphStore.regionalGraph(
                 for: RouteGraph.padBBoxMeters(bbox, meters: margin),
                 routeSolveInProgress: true)
@@ -1370,6 +1408,7 @@ public enum RouteSolver {
                 }
             }
         }
+        guard !Task.isCancelled else { return nil }
         return solveSection(
             section, segmentIndex: segmentIndex, train: train, country: country,
             graph: graphStore.fullGraph(), stations: stations,
@@ -1532,10 +1571,13 @@ public enum RouteSolver {
         var visited = Set<DijkstraState>()
         var remaining = targetKeys
         var settled: [(targetState: DijkstraState, settledCost: Double)] = []
+        var iterations = 0
 
         // ADR 0011: shape-check the ride date once, not per edge.
         let rideDate: String? = train.rideDate.flatMap { RouteGraph.isPlainISODay($0) ? $0 : nil }
         while !heap.isEmpty && !remaining.isEmpty {
+            if iterations & 255 == 0, Task.isCancelled { return [] }
+            iterations += 1
             guard let current = heap.pop() else { break }
             guard visited.insert(current.state).inserted else { continue }
             if current.state.usedRequiredRail,

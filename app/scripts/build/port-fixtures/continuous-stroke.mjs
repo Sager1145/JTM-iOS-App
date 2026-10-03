@@ -35,6 +35,9 @@ const require = createRequire(import.meta.url);
 // half-lane, a streetcar with station-spaced corners, and a line with no
 // lane rows at all (the fillet-only path).
 const REAL_CASES = [
+  // The Ochanomizu branch must retain the exact Kinshicho junction after
+  // follow substitution, at both regional and close inspection scales.
+  { country: "jp", lineId: "jp-東日本旅客鉄道-総武線-2", zooms: [12, 16, 19] },
   // Follow-inserted samples must not erase surveyed station approaches.
   { country: "us", lineId: "metrolink-vc-line", zooms: [13, 16] },
   { country: "us", lineId: "amtrak-amtrak-hartford-line", zooms: [13, 16] },

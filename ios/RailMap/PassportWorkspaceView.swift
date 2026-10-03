@@ -22,15 +22,11 @@ import SwiftUI
 /// now carries the same date and region scopes this screen does; what is left
 /// here is the answer rather than the working.
 ///
-/// ## Where the scope is chosen (§5.1)
-///
-/// Neither of the two is chosen on this view. Both are round buttons in the
-/// panel header above it — a calendar and a globe, the same pair Upcoming and
-/// All Journeys carry — so the scope is visible and reachable at every sheet
-/// stop rather than a scroll down into the page it scopes. The date arrives
-/// through `MileageStatisticsStore.selectedDate` and the region as a
-/// `Binding`; one control, one value, one owner each.
+/// The header owns the day and region controls. The year bar below it owns
+/// the overall time range through `MileageStatisticsStore.selectedYear`.
+/// All cards, map coverage, replay and sharing use that same year scope.
 struct PassportWorkspaceView: View {
+    @Environment(AppLocalization.self) private var localization
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @Bindable var itineraries: ItineraryStore
@@ -63,6 +59,14 @@ struct PassportWorkspaceView: View {
     var body: some View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 16) {
+                StatisticsYearBar(
+                    allTimeLabel: localization.statsText("ios.stats.allTime"),
+                    years: availableYears,
+                    selectedYear: statistics.selectedYear,
+                    accessibilityPrefix: "statisticsYear",
+                    select: statistics.selectYear)
+                    .accessibilityIdentifier("statisticsYearBar")
+
                 // §5.3.2's coverage map is the ROOT map, and there is no card
                 // here that says so.
                 //
@@ -92,17 +96,37 @@ struct PassportWorkspaceView: View {
                     onExport: openData)
             }
             .padding(.horizontal, 16)
-            .padding(.top, 8)
-            // Ordinary tab content: SwiftUI already insets a ScrollView
-            // inside a NavigationStack for the tab bar, so §4.3's clearance
-            // is the system's here and adding it again would double it. The
-            // journeys panel needs it applied by hand only because that panel
-            // deliberately ignores the safe area.
+            .padding(.top, 16)
+            // The shared menu viewport provides the tab bar's safe-area inset.
             .padding(.bottom, 8)
+        }
+        .onChange(of: availableJourneyGroups.map(\.id), initial: true) { _, groupIDs in
+            guard let selectedID = statistics.selectedJourneyGroupID,
+                  !groupIDs.contains(selectedID) else { return }
+            statistics.selectJourneyGroup(nil)
         }
         // No navigation title and no toolbar: §9.5.6 put both in the bottom
         // chrome's own header, which is the same row on every destination.
         // A NavigationStack in here would have added a second one.
+    }
+
+    private var availableJourneyGroups: [JourneyGroup] {
+        let trains = itineraries.store?.trains ?? itineraries.loaded?.trains ?? []
+        var seen = Set<String>()
+        return trains.compactMap(\.journeyGroup).filter { seen.insert($0.id).inserted }
+            .sorted { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
+    }
+
+    private var availableYears: [Int] {
+        let trains = itineraries.loaded?.trains ?? []
+        var years = Set(trains.compactMap { train -> Int? in
+            if let region, Region.resolved(train) != region { return nil }
+            guard RideLedger.hasBeenRidden(train), statistics.includesJourneyGroup(train) else { return nil }
+            return MileageStatisticsStore.year(of: train)
+        })
+        years.insert(Calendar(identifier: .gregorian).component(.year, from: Date()))
+        if let year = statistics.selectedYear { years.insert(year) }
+        return years.sorted(by: >)
     }
 
     // MARK: - what is in scope
@@ -152,6 +176,7 @@ private struct PassportShareCard: View {
                 .font(.footnote)
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
+                .accessibilityIdentifier("passportShareNote")
         }
         .statisticsCard()
     }

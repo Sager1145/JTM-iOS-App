@@ -26,7 +26,15 @@ struct TimetableAppFlowTests {
             #expect(draft.id == base.id)
             #expect(draft.stops.count == trip.passengerStops.count)
             #expect(draft.stops.allSatisfy { $0.rideSegment == false })
-            #expect(draft.routeSections == nil)
+            if trip.physicalRouteSections.isEmpty {
+                #expect(draft.routeSections == nil)
+            } else {
+                #expect(draft.routeSections == trip.physicalRouteSections)
+                #expect(draft.routeSections?.count == draft.stops.count - 1)
+                #expect(draft.routeSections?.allSatisfy {
+                    $0.sectionCodes?.isEmpty == false && $0.lineIDs?.isEmpty == false
+                } == true)
+            }
             #expect(draft.routePolicy == nil)
             #expect(draft.origin == trip.origin?.station.name)
             #expect(draft.destination == trip.destination?.station.name)

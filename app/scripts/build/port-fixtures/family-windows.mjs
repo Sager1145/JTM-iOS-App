@@ -132,6 +132,12 @@ const REAL_CASES = [
 const JP_REAL_CASES = [
   {
     country: "jp",
+    lineId: "jp-東日本旅客鉄道-総武線-2",
+    partIndex: 0,
+    label: "総武線 御茶ノ水支線 — retain continuous ink where the trunk lane cannot replace it",
+  },
+  {
+    country: "jp",
     lineId: "jp-九州旅客鉄道-長崎線",
     partIndex: 0,
     label: "九州旅客鉄道 長崎線 — base line landlord window over its own -2 branch-service split (2 stretches)",

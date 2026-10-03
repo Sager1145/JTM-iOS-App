@@ -1,0 +1,338 @@
+{
+  "schema": "station-name-integration/1",
+  "date": "2026-10-01",
+  "scope": [
+    "JP",
+    "TW",
+    "HK",
+    "MO",
+    "KR"
+  ],
+  "changedFiles": {
+    "app/data/rail.db": "ed7f617a0d1a1df4c08ed78059a8517c94ad7347e52fa61c0bbd7e286007c225",
+    "app/data/station-name-sources/jp-kana-evidence.json": "493ea19a817485f1c2516955b3e0f066273ce825125450bf6ea833dad32975bb",
+    "app/data/station-name-sources/opencc/LICENSE.txt": "a6cba85bc92e0cff7a450b1d873c0eaa2e9fc96bf472df0247a26bec77bf3ff9",
+    "app/data/station-name-sources/opencc/NOTICE.txt": "e038431f3f64fea7c6102f1a5c77224817e6d89f5dd450f4b9bf5651789c3b47",
+    "app/data/station-name-sources/opencc/script-variants.json": "ec248ba605b3601eb9df91c69263c515a349bb45209d71b990e1172ae9a03926",
+    "app/data/station-names-coverage.json": "56fe7f0f7a3fa8082fbb06a7e2bb680711fbaf07dac735707255395c5f11f000",
+    "app/data/station-names-hk.json": "69b38952dd4155446310562642b09b3facde24f1bc618bf54283fd888a2290fb",
+    "app/data/station-names-kr.json": "61da4f574766bc655a9490a56c0add2c4a6afe643dc03c68e7cefc189b39aa58",
+    "app/data/station-names-mo.json": "ece8fb476a1d9977e30f32889d6c55e787a5323fa4140ddbf2cc12cff88c6cf8",
+    "app/data/station-names-tw.json": "2d32795defd504d0a31fd0b93c9ff3cdc5e3c99739ccf2d8aaa60709b5044eba",
+    "app/data/station-names.json": "a12a4e3dac4190733312683dd46e8a8eac9e236680901327fcba3cd789c991d3",
+    "app/package.json": "34a403986445f1acd2c6dee454ad7817ee66180e6340fd3cbed482cfb6ce031a",
+    "app/public/app-config.js": "ef317b007cfa5996ade7fd18f5a16c9bac2ce7a3de3a2d510ec15e0de13838f9",
+    "app/scripts/build/build-rail-database.mjs": "ae7c24e7a7809f5b01c27167933a15383d4b150f7e64981e89544e64bd867404",
+    "app/scripts/build/build-static-site.mjs": "3a4dcea2dba5cf1768800ac5932d78071f2bbd845770b9357abceecaa4bd7b17",
+    "app/scripts/build/rail-database/load.mjs": "eecbecbd1a6b5c78448c5f1fbcbcb7bac8cd46e2dd138b0c89d6d750af02997a",
+    "app/scripts/build/rail-database/schema.sql": "889d2e0ca196a2129c7b2cec789fe24884121fe999db6c8ab4d3452e9d02585e",
+    "app/scripts/railway/build-station-names.py": "e737e52712aae02af272bc1a4d84113b3b2d61705128972399f7548ab028dda1",
+    "app/scripts/railway/lib/jp_station_kana.py": "1663a2d844567378cc46b55307d8eb217af5dc26bb5112e1c4b34555ef9c2e56",
+    "app/scripts/railway/sync-station-names-db.py": "c7099bc71b4b4ee96f9e39cf91a1d07159b509f3d153149e2bf5d000203d3199",
+    "app/scripts/railway/tests/test_jp_station_kana.py": "1652bc075155a68d4dbe647d7fdbbbc90fd81d15d583341d976015a4c9aa2f31",
+    "app/scripts/railway/tests/test_station_names.py": "eefcbb46ec6ba30952f6fad0a120332b0e2330c8322dc9fdff005523bfe4e3f4",
+    "app/scripts/railway/tests/test_station_names_db.py": "1143ac9ddabab2a9b90eb57680912994123f12024d31b128ea60eb0afa7b666f",
+    "app/tests/station-name-resources.test.mjs": "0fac62fd818f741a6161f183b9dcfdf372920edcf0951fdbfe7128c65890bec5",
+    "docs/JAPAN_STATION_ENGLISH.md": "071369f110a0c887fe28fe506180ce999d081476fb4ba49afe2bbb0a4c1a75bd",
+    "ios/RailKit/Tests/RailPresentationTests/JourneySearchMatcherTests.swift": "b50ac2f88db62e39d5732701589ade40bd95ba0640a069e9e526304de101ab5c",
+    "ios/RailMap/StationReadingsStore.swift": "78f0cea6c25c1bad56c58de659fa6b3365b5e7e82e133f6380884ab5427c42ad",
+    "ios/copy-rail-packages.sh": "8af8f7960cbb76bb242a13379731b1fba2e1b22c71ded8d653a14b285e2622e7",
+    "ios/tools/audit-station-readings.mjs": "2e362a64b0bf9461d2d1ea3c21572ea53cc21c1aa690a20fd2bed8291fa2b84f",
+    "ios/verify.sh": "00193cdfc2762caf76c3e565dfc0294efc42fd9bd26153ab8f643c6f5129dbf8"
+  },
+  "rowSchema": [
+    "name",
+    "zh_Hant",
+    "zh_Hans",
+    "en",
+    "ja",
+    "kana",
+    "katakana",
+    "romaji"
+  ],
+  "identity": "JP bare keys remain platform codes; all map records have exact lineId:group keys; field-wise common aliases and no name-only aliases for homonym groups. English and romaji remain distinct.",
+  "coverage": {
+    "jp": {
+      "groups": 9041,
+      "memberships": 10227,
+      "withEnglish": 10227,
+      "withKana": 5369,
+      "withTraditionalChinese": 9273,
+      "withSimplifiedChinese": 9273
+    },
+    "tw": {
+      "groups": 505,
+      "memberships": 586,
+      "withEnglish": 586,
+      "withKana": 0,
+      "withTraditionalChinese": 586,
+      "withSimplifiedChinese": 586
+    },
+    "hk": {
+      "groups": 282,
+      "memberships": 453,
+      "withEnglish": 453,
+      "withKana": 0,
+      "withTraditionalChinese": 453,
+      "withSimplifiedChinese": 453
+    },
+    "mo": {
+      "groups": 15,
+      "memberships": 17,
+      "withEnglish": 17,
+      "withKana": 0,
+      "withTraditionalChinese": 17,
+      "withSimplifiedChinese": 17
+    },
+    "kr": {
+      "groups": 1097,
+      "memberships": 1412,
+      "withEnglish": 1412,
+      "withKana": 0,
+      "withTraditionalChinese": 878,
+      "withSimplifiedChinese": 878
+    }
+  },
+  "japanDatabaseFieldsBefore": {
+    "en": 0,
+    "kana": 1326,
+    "romaji": 10135,
+    "zh_Hant": 1328,
+    "zh_Hans": 1328
+  },
+  "japanDatabaseFieldsAfter": {
+    "en": 10227,
+    "kana": 5369,
+    "romaji": 10227,
+    "zh_Hant": 9273,
+    "zh_Hans": 9273
+  },
+  "kanaEvidenceCoverage": {
+    "verifiedMemberships": 4987,
+    "verifiedStationGroups": 4545,
+    "byOperator": {
+      "京阪電気鉄道": 93,
+      "北海道旅客鉄道": 335,
+      "名古屋鉄道": 295,
+      "四国旅客鉄道": 269,
+      "東急電鉄": 109,
+      "東日本旅客鉄道": 1805,
+      "東海旅客鉄道": 419,
+      "西日本旅客鉄道": 1255,
+      "近畿日本鉄道": 308,
+      "阪急電鉄": 99
+    },
+    "unresolvedMemberships": 347
+  },
+  "englishEvidence": "Existing station-english membership translations and review statuses are preserved, including pending/unverified entries. Full English availability does not assert official verification.",
+  "chineseEvidence": "Existing station-specific translations win; missing pure-kanji fields use explicit OpenCC character rendering. Kana/mixed-script and ambiguous shinjitai names are not guessed.",
+  "frozenFilesUnchanged": {
+    "app/data/station-english.json": "949a48c4171f2dd334a9a031d2e4e42485174fb2a7310a340995832084028c51",
+    "app/data/station-english-coverage.json": "2c0ced0f12b32a5ef63098a2c93d9fe531c98884a5970765ac3c7ac49de4e08e",
+    "app/data/station-english-jp.json": "a1a516081fe65b95f7a142cf468a8a57dca07017f9e4e5e4a2d5b22aa566bebe",
+    "app/data/station-readings-us.json": "900922014650de19c78b9e72ffb5dd9987736c162d05a45871223d8164bdfda7",
+    "app/data/train-store-ca.json": "f3b1857c03d8cf63110e2856fbb248f8bd8c196ee7fec4bbd44726629aad092a",
+    "app/data/stations-ca.json": "07a1f45e29a6df77b40f98e1b0a4bbe2d2f1d62faa6dd3c63516f6630bf8fff6",
+    "app/data/rail-sections-us.json": "a7622be7ba78664763eb46a6db52ed1095f2350580e63893487019d82151276a",
+    "app/data/train-store-us.json": "af73ef9e9b04aedc6936a2fe0cad0c0997cdc221cee6a157896bc410accac24c",
+    "app/data/stations-us.json": "fea81734f77e80498481e6d0723302e721de72f02438bef4a210b1aca93e5e42",
+    "app/data/rail-sections-ca.json": "2b8efaa1be051df0e63b8e2b2cdad1c6922a91e7ce944aa0738fb326a9ce244d",
+    "app/data/station-readings-ca.json": "317ad3f567c2041b3bdb4f06576dee83727e5c747760afddc0b02e746306fc6a",
+    "app/public/rail/ca-2025.audit.json": "b338569b8eb82f196866d093c44c51b4fd7ed1557aa968323ddf8cf66a120e8f",
+    "app/public/rail/us-2025.json": "ea5199ef9e6d542d8b2c4d38dbb9b74ab7b69e42939ef17adf7f8d703ab4c7da",
+    "app/public/rail/ca-2025.sources.md": "41f56a819830be0d007da6fc92af6ca22b8bc9e287fb83a43fe563df2a7bce21",
+    "app/public/rail/ca-2025.audit.md": "617febb835a23292cc615369815484352524baeb8bf047f7b27d30421db8d6a8",
+    "app/public/rail/ca-2025.json": "86069a810674f019f79331bbdd639a734f53b6a42ffeb734c7a4aff04e6a62cb",
+    "app/public/rail/us-2025.sources.md": "6910c58673a3f16e28524458cb2934479da954dccb9f0d554679343954e78636",
+    "app/public/rail/us-2025.audit.json": "14027f4f6e3e9aaa6bb536376913669a7a9de1efb358519f5d4de245d97489bc",
+    "app/public/rail/us-2025.audit.md": "cde9b8ad736f5550285e38ec68b64ff3acd8cc8fa0be058af78f2db648a8d00a"
+  },
+  "allLegacyReadingsUnchanged": {
+    "data/station-readings.json": "e66a609f177dd926e6a48bf1bae309e00d66f52eaef848459726c674e9129abe",
+    "data/station-readings-tw.json": "77771573a4f6ceac61f910388f39fde0a3469f756446582a4acc0e6a7d4417b0",
+    "data/station-readings-hk.json": "420d4d0f46c5ab4677cde2de9a69857f64cb3bda17f6f956dfebd2c70c19d1f6",
+    "data/station-readings-mo.json": "cab2cd2627caad4548ea2b60dca3baa2416191d6fc485a96920ae67e09fd6e9d",
+    "data/station-readings-kr.json": "a56f31bd800cbaf94f717e3de809e8d6b9bfb8bc8b08cde52189f41cc78cc493",
+    "data/station-readings-us.json": "900922014650de19c78b9e72ffb5dd9987736c162d05a45871223d8164bdfda7",
+    "data/station-readings-ca.json": "317ad3f567c2041b3bdb4f06576dee83727e5c747760afddc0b02e746306fc6a"
+  },
+  "databaseUnchangedTablesAndFrozenNARows": {
+    "country": {
+      "sha256": "37b766c6154fdf34782e778ccfd9b18799ea6cd9a462540b32a23d68a3e64819",
+      "rows": 2
+    },
+    "country_language": {
+      "sha256": "164f4a7c6d5a7bfa1619413b0f03b2b768304dc2439794c980b82db9b4e1d06c",
+      "rows": 24
+    },
+    "data_source": {
+      "sha256": "5c7d63e59a3db8e63f165b749601e0b93a116bc9e9b5fb72bfa1a0bc9477f392",
+      "rows": 108
+    },
+    "institution_type": {
+      "sha256": "752f33d06618a1114d3a0fc9bfb6996193d860b7d7f66a19ae555729fc83e118",
+      "rows": 5
+    },
+    "railway_class": {
+      "sha256": "0da42d6a9d4e75ee8070e2f650ea2410e6c09aee1d58c9c1d9cb7eadc6bfa63f",
+      "rows": 14
+    },
+    "roma_source": {
+      "sha256": "84f8c64935b903d6fe99108a8e50134a2565e0d23a69dedfad05146c794c7395",
+      "rows": 3
+    },
+    "structure_kind": {
+      "sha256": "8e0c2b6f6f815ba009533ae27862aeb045d1aab1f167c8762c2e4165173408ac",
+      "rows": 2
+    },
+    "service_status": {
+      "sha256": "60a7f7421fa9ec4478a4c8fa985ab880e209dcb78db32be724d36f3b6ba94876",
+      "rows": 4
+    },
+    "name_field": {
+      "sha256": "39d2d76fb512f22c87d46d3889e1b5ac96c2cbe2176470196e9eb882397ca821",
+      "rows": 8
+    },
+    "operator": {
+      "sha256": "ec81ba9c4f07c6bbb51de5ffec5533816396a06df20eae4024f823123b652d32",
+      "rows": 270
+    },
+    "operator_alias": {
+      "sha256": "291d26f235e09eb4ba3f4b051e091761c1063e4b0994589e41553e6890b3a9db",
+      "rows": 85
+    },
+    "line": {
+      "sha256": "f1714efbfdba6a6afd9e36587e924566c7ad67b3dda340a0d1f15a9cd534ae42",
+      "rows": 1242
+    },
+    "line_alignment": {
+      "sha256": "07ac59e0f74dd2d759960447422432ef984d8b0c0a9c163fc9391f5db6b97dc5",
+      "rows": 15
+    },
+    "line_alignment_pair": {
+      "sha256": "96ca2a616ca3a0374486838a4d907b9fedec7e402b630bfc69cacfe6261b8930",
+      "rows": 21
+    },
+    "line_service_span": {
+      "sha256": "c5d84b73a5705bf7d8678b4150bc15f97952470ce536ebedd972b8e0a0a33aea",
+      "rows": 19
+    },
+    "line_extra_segment": {
+      "sha256": "0c16ae5b44ce60a8027b309de03bbb53fc5ce02f495067d6486e1ce7d6969755",
+      "rows": 8
+    },
+    "line_reversal_tail": {
+      "sha256": "9c75c2873625c15e4dc3d33af10d41487ddffcba5bbc9f89ff47ac1567e3f002",
+      "rows": 3
+    },
+    "line_structure": {
+      "sha256": "96774b07bf59acc254f3c3863d9bf491b0faf372db82595535faaf137470c995",
+      "rows": 18180
+    },
+    "lane": {
+      "sha256": "774442107b9d7397b88606aa66fd14c9710698ffaebe404b3642f6d9efe24c18",
+      "rows": 275
+    },
+    "station": {
+      "sha256": "010867097dd3c3dfa3abecea469523935516c405bd201f5b407dcd0d16f0ac5b",
+      "rows": 15404
+    },
+    "station_english": {
+      "sha256": "685edac849f05303a6188bd9d5c918a947f455cdf557cbcfff206004fab5de85",
+      "rows": 15404
+    },
+    "station_english_jp": {
+      "sha256": "8bec3c44763efa2a979eda3904215c7f4a5d89ca0ce95b34750b620c64b40fdb",
+      "rows": 9041
+    },
+    "line_station": {
+      "sha256": "c6879aaf40d5eae40e39604c92a7d795143f8daaa4a4d2cad5a0f029eaa5daee",
+      "rows": 19107
+    },
+    "line_station_english": {
+      "sha256": "2aae9bce381620790d3095ae84b5d71c4d87f297e8c5b49cde00c5f393ca36b9",
+      "rows": 19107
+    },
+    "interval": {
+      "sha256": "6173622845496c5aa20bc73defffdc092b701102752d0cb2aaa8ded8ca5c32b2",
+      "rows": 17876
+    },
+    "interval_vertex": {
+      "sha256": "2766c052f5284c773e0cf50e7dbd088f235954565f3350648b9eae2c0d028334",
+      "rows": 633972
+    },
+    "station_name": {
+      "sha256": "f72c3fde859e27e5945191f8c060380d9504991e77f86b01c6f9fc899494971a",
+      "rows": 27054
+    },
+    "line_station_name": {
+      "sha256": "15f03a48a146989ade268cdd29b0358ad27238b211c8ab5c06d7ce4b434bca31",
+      "rows": 19236
+    },
+    "source_section": {
+      "sha256": "59e7c1a1b6c6a650589a9d3adfdcacf911413b39c1c84adf28134ab4eb721cc3",
+      "rows": 30233
+    },
+    "source_section_vertex": {
+      "sha256": "c217b21afedf7266dd5e85d6973e038e022dfc0eaf6bcbc97776d1dae715ab96",
+      "rows": 658662
+    },
+    "source_station": {
+      "sha256": "e1ba2b8cdf5af00a63c2f74cb8dbf66b451151e2770a0fd99e33408e696711d7",
+      "rows": 19113
+    },
+    "source_station_vertex": {
+      "sha256": "72088a53c078ac2b69da006bddb9d767dcbd5db046270f90a654e8a2478545ce",
+      "rows": 44838
+    },
+    "logo_asset": {
+      "sha256": "ef6607dd27364e71ddf1efe790cc8616b78019e548863ec8eb0c9edc0d31f146",
+      "rows": 553
+    },
+    "logo_credit": {
+      "sha256": "77d094a2b6d5a351003e3ffc89571cad83778a4c739fc86846294cf20bdbad99",
+      "rows": 350
+    },
+    "operator_logo_manifest": {
+      "sha256": "b77384a8179f0e4fa9c2da770ae78ca7aecd6ae7f6da0f96606da5b7bb3dc325",
+      "rows": 216
+    }
+  },
+  "databaseUpdateScope": "Only non-NA station_name/line_station_name rows and their country/meta resource references updated. No full database rebuild. Station/line/English/timetable/geometry tables unchanged.",
+  "fixtureInputs": "station-readings*.json and i18n.js unchanged; no fixtures regenerated. Existing TW Swift integration reads new station-names-tw.",
+  "validation": {
+    "pythonRegressionTests": 9,
+    "webRegressionTests": 12,
+    "rawKanaReproduction": "passed --check --check-kana-sources with all retained local archives",
+    "projectionFreshness": "passed --check",
+    "englishCatalogFreshness": "passed --check --require-english",
+    "originalTableContract": "passed validate-station-tables.py",
+    "runtimeCoverageAudit": "passed audit-station-readings.mjs --check jp tw hk mo kr",
+    "databaseFreshness": "passed sync-station-names-db.py --check",
+    "sqliteQuickCheck": "ok",
+    "foreignKeyViolations": 0
+  },
+  "pending": [
+    "Native app build/device validation reserved for coordinated Native owner; no independent app build or Simulator used.",
+    "Static build cannot run in this reduced checkout because pre-existing app/server/datasets.js is absent.",
+    "4858 JP memberships still lack retained reliable kana; missingKana ledger is in station-names-coverage.json.",
+    "Curated snapshot generation is offline; full raw-source reproduction requires locally retained archives."
+  ],
+  "git": "No staging, commit, merge, push or branch change performed.",
+  "integrationTextNormalization": {
+    "files": [
+      {
+        "file": "app/data/station-name-sources/opencc/LICENSE.txt",
+        "originalHandoffSha256": "18f3fedf9eac72e6054260489c764c1e54f63cf2b16055523f561ffeec7bc908",
+        "gitNormalizedSha256": "a6cba85bc92e0cff7a450b1d873c0eaa2e9fc96bf472df0247a26bec77bf3ff9"
+      },
+      {
+        "file": "app/data/station-name-sources/opencc/NOTICE.txt",
+        "originalHandoffSha256": "afcbc6ee2d4fa9c2e9d5944b53ca05d3cc06bab6d082817c689bdfa33c38fcb0",
+        "gitNormalizedSha256": "e038431f3f64fea7c6102f1a5c77224817e6d89f5dd450f4b9bf5651789c3b47"
+      }
+    ],
+    "change": "CRLF normalized to LF per repository .gitattributes and whitespace-only blank EOF removed; license text unchanged",
+    "stationNameInputHashesAffected": false
+  }
+}

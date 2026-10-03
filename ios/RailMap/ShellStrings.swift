@@ -343,12 +343,6 @@ enum ShellStrings {
             .zhHans: "把地图范围调整到当前已加载的铁路网。",
             .zhHant: "把地圖範圍調整到目前已載入的鐵路網。",
         ],
-        "ios.note.basemapOpacity": [
-            .en: "Affects the basemap only — railways and rides keep their own opacity.",
-            .ja: "背景地図のみに効きます。鉄道と乗車の描画は変わりません。",
-            .zhHans: "只影响底图；铁路与行程维持原样。",
-            .zhHant: "只影響底圖；鐵路與行程維持原樣。",
-        ],
         "ios.note.theme": [
             .en: "Line colors automatically use each operator's light or dark palette.",
             .ja: "路線色は事業者ごとのライト／ダークの配色を自動で使い分けます。",

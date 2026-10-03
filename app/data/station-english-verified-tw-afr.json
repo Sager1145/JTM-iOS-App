@@ -1,0 +1,48 @@
+{
+  "schema": "station-english-evidence/1",
+  "countries": [
+    "tw"
+  ],
+  "sources": {
+    "en": {
+      "url": "https://afrch.forest.gov.tw/En/0000081",
+      "filename": "chiayi-en.html",
+      "sha256": "62e42ce62bab5e155bee035fe072b740cd6c3e7f7dc5821bd87c1bd9109bb12c",
+      "retrievedAt": "2026-10-01T01:21:44.455492+00:00"
+    },
+    "zh": {
+      "url": "https://afrch.forest.gov.tw/0000081",
+      "filename": "chiayi-zh.html",
+      "sha256": "45aa4bdd610f05020bec11337f07215af79a859ef3ecdcdaf38a9c1c41244dab",
+      "retrievedAt": "2026-10-01T01:21:44.456492+00:00"
+    }
+  },
+  "byLineStation": {
+    "tw-alsr-alishan:tw-official-tra-4080": {
+      "country": "tw",
+      "lineId": "tw-alsr-alishan",
+      "stationCode": "tw-official-tra-4080",
+      "operator": "阿里山林業鐵路及文化資產管理處",
+      "name": "嘉義",
+      "en": "Chiayi",
+      "source": "https://afrch.forest.gov.tw/En/0000081",
+      "identityEvidence": [
+        {
+          "operator": "阿里山林業鐵路及文化資產管理處",
+          "officialStationId": "0000081",
+          "name": "嘉義車站",
+          "en": "Chiayi Station",
+          "source": "https://afrch.forest.gov.tw/En/0000081",
+          "identitySource": "https://afrch.forest.gov.tw/0000081",
+          "sha256": "62e42ce62bab5e155bee035fe072b740cd6c3e7f7dc5821bd87c1bd9109bb12c",
+          "identitySha256": "45aa4bdd610f05020bec11337f07215af79a859ef3ecdcdaf38a9c1c41244dab",
+          "retrievedAt": "2026-10-01T01:21:44.455492+00:00",
+          "matchMethod": "same bilingual operator station page ID; explicit AFR line/group/native identity",
+          "transformation": "Remove generic Station/車站 suffix; preserve proper name",
+          "mappingNote": "Operator page explicitly describes its north first-platform boarding site in the shared TRA station"
+        }
+      ]
+    }
+  },
+  "unresolved": []
+}

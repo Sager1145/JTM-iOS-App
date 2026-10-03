@@ -241,7 +241,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_02",
@@ -363,7 +364,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_03",
@@ -826,7 +828,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_04",
@@ -988,7 +991,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_05",
@@ -1270,7 +1274,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_06",
@@ -1372,7 +1377,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_07",
@@ -1754,7 +1760,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_08",
@@ -1876,7 +1883,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_09",
@@ -1978,7 +1986,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_10",
@@ -2060,7 +2069,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_11",
@@ -2242,7 +2252,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_12",
@@ -2384,7 +2395,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_13",
@@ -2506,7 +2518,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_14",
@@ -2790,7 +2803,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_15",
@@ -3233,7 +3247,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_16",
@@ -3415,7 +3430,8 @@
           "stop_type": "destination",
           "ride_segment": true
         }
-      ]
+      ],
+      "region": "jp"
     }
   ]
 }

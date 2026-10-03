@@ -35,11 +35,16 @@ final class JourneySaveUITests: XCTestCase {
         save.tap()
         XCTAssertTrue(save.waitForNonExistence(timeout: 8))
 
-        let selected = app.descendants(matching: .any).matching(NSPredicate(
-            format: "identifier BEGINSWITH %@ AND label == %@",
-            "selectedJourney-", number)).firstMatch
-        XCTAssertTrue(selected.waitForExistence(timeout: 15),
-                      "Saving must select the newly inserted journey.")
+        app.tabBars.firstMatch.buttons.element(boundBy: 3).tap()
+        let savedSearch = app.textFields["journeySearchField"]
+        XCTAssertTrue(savedSearch.waitForExistence(timeout: 8))
+        savedSearch.tap()
+        savedSearch.typeText(number)
+        let inserted = app.descendants(matching: .any).matching(NSPredicate(
+            format: "identifier BEGINSWITH %@ AND label CONTAINS %@",
+            "journeyRow-", number)).firstMatch
+        XCTAssertTrue(inserted.waitForExistence(timeout: 15),
+                      "Saving must return to a list containing the inserted journey.")
 
         // The store write is asynchronous. Waiting here tests the same
         // completion window a reader naturally spends looking at the saved
@@ -60,8 +65,13 @@ final class JourneySaveUITests: XCTestCase {
         let information = app.buttons["Journey information"]
         XCTAssertTrue(information.waitForExistence(timeout: 5))
         information.tap()
-        XCTAssertTrue(app.buttons["rideDetailEdit"].waitForExistence(timeout: 8))
-        let detailScroll = app.scrollViews["rideDetailScrollView"]
+        XCTAssertTrue(app.buttons["journeyMenuEdit"].waitForExistence(timeout: 8))
+        guard let detailScroll = app.scrollViews.allElementsBoundByIndex.first(where: {
+            $0.descendants(matching: .any)["rideDetailStops"].exists
+        }) else {
+            XCTFail("The opened journey must contain its native detail scroll view.")
+            return
+        }
         XCTAssertTrue(detailScroll.waitForExistence(timeout: 5))
         for value in ["Tokyo", "Shinagawa", "E235"] {
             let persistedValue = detailScroll.descendants(matching: .any).matching(
@@ -70,6 +80,43 @@ final class JourneySaveUITests: XCTestCase {
             XCTAssertTrue(persistedValue.waitForExistence(timeout: 5),
                           "The saved detail must retain \(value) after relaunch.")
         }
+    }
+
+    func testNewJourneyGroupNameCanBeEditedAfterReturningFromConfirmation() {
+        let app = launchNewJourney()
+        advanceToRoute(in: app)
+        fillRequiredStops(in: app)
+        app.buttons["rideEditorNext"].tap()
+        let number = app.otherElements["rideEditorNumber"].textFields.firstMatch
+        XCTAssertTrue(number.waitForExistence(timeout: 8))
+        number.tap()
+        number.typeText("Group test\n")
+        app.buttons["rideEditorNext"].tap()
+        let create = app.buttons["createJourneyGroup"]
+        for _ in 0..<5 where !create.isHittable { app.swipeUp() }
+        XCTAssertTrue(create.waitForExistence(timeout: 8))
+        create.tap()
+        let name = app.textFields["journeyGroupName"]
+        XCTAssertFalse(app.buttons["rideEditorNext"].isEnabled,
+                       "Creating the empty group must select its unfinished draft.")
+        XCTAssertTrue(revealNewGroupName(name, in: app))
+        XCTAssertTrue(name.waitForExistence(timeout: 5))
+        name.tap()
+        name.typeText("Rail holiday\n")
+        app.buttons["rideEditorNext"].tap()
+        XCTAssertTrue(app.buttons["rideEditorSave"].waitForExistence(timeout: 8))
+        app.buttons["rideEditorPrevious"].tap()
+        for _ in 0..<5 where !name.isHittable { app.swipeUp() }
+        XCTAssertTrue(name.waitForExistence(timeout: 5))
+        XCTAssertEqual(name.value as? String, "Rail holiday")
+        name.tap()
+        name.typeText(XCUIKeyboardKey.delete.rawValue + "s\n")
+        XCTAssertEqual(name.value as? String, "Rail holidas")
+        app.buttons["rideEditorNext"].tap()
+        let save = app.buttons["rideEditorSave"]
+        XCTAssertTrue(save.waitForExistence(timeout: 8))
+        save.tap()
+        XCTAssertTrue(save.waitForNonExistence(timeout: 15))
     }
 
     func testDirtyCancelCanKeepEditingThenDiscardDraft() {
@@ -160,4 +207,30 @@ final class JourneySaveUITests: XCTestCase {
         app.launch()
         return app
     }
+    private func revealNewGroupName(_ name: XCUIElement, in app: XCUIApplication) -> Bool {
+        let form = app.descendants(matching: .any)["rideEditorForm"].firstMatch
+        guard form.waitForExistence(timeout: 5) else { return false }
+        for _ in 0..<8 {
+            var bounds = form.frame.intersection(app.frame)
+            let next = app.buttons["rideEditorNext"]
+            if next.exists && next.frame.intersects(bounds) {
+                bounds.size.height = max(0, next.frame.minY - bounds.minY)
+            }
+            let keyboard = app.keyboards.firstMatch
+            if keyboard.exists && keyboard.frame.intersects(bounds) {
+                bounds.size.height = max(0, keyboard.frame.minY - bounds.minY)
+            }
+            bounds = bounds.insetBy(dx: 8, dy: 8)
+            guard bounds.height > 40 else { return false }
+            if name.exists && name.isHittable && bounds.contains(name.frame) { return true }
+            let origin = app.coordinate(withNormalizedOffset: .zero)
+            origin.withOffset(CGVector(dx: bounds.midX - app.frame.minX,
+                dy: bounds.minY + bounds.height * 0.65 - app.frame.minY))
+                .press(forDuration: 0.05, thenDragTo: origin.withOffset(CGVector(
+                    dx: bounds.midX - app.frame.minX,
+                    dy: bounds.minY + bounds.height * 0.35 - app.frame.minY)))
+        }
+        return false
+    }
+
 }

@@ -53,6 +53,8 @@ public enum StationDisplay {
     /// rule about what ARTWORK a build shipped, which a test has to be able to
     /// state without a bundle underneath it.
     public struct Network: Sendable {
+        /// Logical stations whose circle and label belong to another line.
+        public let circleAliasStationIDs: Set<String>
 
         /// One entry of `lineById`.
         public struct Line: Sendable, Equatable {
@@ -187,7 +189,7 @@ public enum StationDisplay {
                             name: station.name,
                             nameRoma: station.nameRoma,
                             lineIndex: lineIndex,
-                            coordinate: station.coordinate,
+                            coordinate: packageLine.displayCoordinate(for: station),
                             isTerminal: isTerminal,
                             minZoom: isTerminal ? lineZoom : stationZoom))
                     stationIndexByID[CodeUnits(stationID)] = position
@@ -197,6 +199,19 @@ public enum StationDisplay {
                 }
             }
 
+            let packageByID = package.lines.reduce(into: [String: CompactPackage.Line]()) {
+                $0[$1.id] = $1
+            }
+            self.circleAliasStationIDs = Set(package.lines.flatMap { line in
+                line.stations.compactMap { station -> String? in
+                    guard let ownerID = line.stationCircleOwnerByCode[station.id], ownerID != line.id,
+                          let owner = packageByID[ownerID],
+                          let ownerStation = owner.stations.first(where: { $0.id == station.id }),
+                          line.displayCoordinate(for: station) == owner.displayCoordinate(for: ownerStation)
+                    else { return nil }
+                    return "\(line.id):\(station.id)"
+                }
+            })
             self.lines = lines
             self.stations = stations
             self.lineIndexByID = lineIndexByID
@@ -309,10 +324,12 @@ public enum StationDisplay {
         public let color: String
         public let logo: String?
         public let logoNeedsDarkMatte: Bool
+        /// The full operator name, retained for the station's detail card.
+        public let operatorName: String?
 
         public init(
             lineID: String, company: String, label: String, color: String,
-            logo: String?, logoNeedsDarkMatte: Bool
+            logo: String?, logoNeedsDarkMatte: Bool, operatorName: String? = nil
         ) {
             self.lineID = lineID
             self.company = company
@@ -320,6 +337,7 @@ public enum StationDisplay {
             self.color = color
             self.logo = logo
             self.logoNeedsDarkMatte = logoNeedsDarkMatte
+            self.operatorName = operatorName
         }
     }
 
@@ -401,7 +419,8 @@ public enum StationDisplay {
                     // A package-provided per-line badge first, then the
                     // operator's mark when the line has no identity of its own.
                     logo: logo,
-                    logoNeedsDarkMatte: OperatorBranding.logoNeedsDarkMatte(logo)))
+                    logoNeedsDarkMatte: OperatorBranding.logoNeedsDarkMatte(logo),
+                    operatorName: line.operator))
         }
 
         for member in members { add(lineIndex: network.stations[member].lineIndex) }
@@ -501,7 +520,7 @@ public enum StationDisplay {
     /// group; the second drops an elected name that READS the same as one
     /// already accepted within 600 m.
     public static func stationLabelWinners(_ network: Network) -> [Int] {
-        stationLabelWinners(network.stations)
+        stationLabelWinners(network.stations, excluding: network.circleAliasStationIDs)
     }
 
     /// The same election, decided on the thresholds the caller supplies rather
@@ -521,10 +540,12 @@ public enum StationDisplay {
     public static func stationLabelWinners(
         _ network: Network, minZoom: (Network.Station) -> Int
     ) -> [Int] {
-        stationLabelWinners(network.stations.map { $0.with(minZoom: minZoom($0)) })
+        stationLabelWinners(
+            network.stations.map { $0.with(minZoom: minZoom($0)) },
+            excluding: network.circleAliasStationIDs)
     }
 
-    static func stationLabelWinners(_ stations: [Network.Station]) -> [Int] {
+    static func stationLabelWinners(_ stations: [Network.Station], excluding aliases: Set<String> = []) -> [Int] {
         // ── one platform per group ──
         //
         // Lowest minz wins, then the lowest station id, so the choice is
@@ -535,6 +556,7 @@ public enum StationDisplay {
         // same relation.
         var pickByGroup: [CodeUnits: Int] = [:]
         for (index, station) in stations.enumerated() {
+            if aliases.contains(station.stationID) { continue }
             let key = CodeUnits(
                 Network.groupKey(
                     groupID: station.stationGroupID, stationID: station.stationID))

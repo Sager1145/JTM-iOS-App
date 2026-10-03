@@ -9,11 +9,19 @@ struct RideEditorView: View {
     @Environment(RailNetworkStore.self) private var network
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    private enum OfficialEnglishName {
+        case loading
+        case available(String)
+        case unavailable
+
+        var value: String? {
+            if case .available(let name) = self { return name }
+            return nil
+        }
+    }
+    @State private var officialEnglishName: OfficialEnglishName = .loading
     @State private var draft: Train
-    /// Editor-session identity for stops. `Stop` is a canonical value without
-    /// an id, but these rows can be inserted, deleted and moved; tying SwiftUI
-    /// identity to their array offsets moves navigation/focus state to a
-    /// different stop whenever the order changes.
+    /// Preserve persisted visit identity across route changes and reopening.
     @State private var stopIDs: [UUID]
     private enum WizardStep: Int, CaseIterable {
         case region, route, service, date, confirm
@@ -64,6 +72,31 @@ struct RideEditorView: View {
     /// The document schema stores line/operator names, so these ids are mapped
     /// back only when committing the picker.
     @State private var selectedCatalogLineIDs: Set<String> = []
+    @State private var selectedRouteChoice: RailwayRouteChoices.Choice?
+    @State private var generatedStopIDs: Set<UUID> = []
+    @State private var routeChoicesLoaded = false
+    @State private var routeChoiceLoadError: String?
+    @State private var routePackage: CompactPackage?
+    @State private var routeGuideRequest: RouteGuideRequest?
+    @State private var pendingRouteCommit: RouteCommit?
+    @State private var routeEditUndo: RailwayRouteEditing.Undo?
+    @State private var routeEditSummary: String?
+    @State private var routeGuideError = false
+    @State private var routeCommitAfterDismiss: RouteCommit?
+    @State private var routeUndoCatalogLineIDs: Set<String> = []
+
+    private struct RouteCommit {
+        let plan: RailwayRouteEditing.Plan
+        let choice: RailwayRouteChoices.Choice
+    }
+
+    private struct RouteGuideRequest: Identifiable {
+        let id = UUID()
+        var train: Train
+        var package: CompactPackage
+        var excludedCodes: Set<String> = []
+    }
+
     /// Cross-border journeys can carry station codes from more than one
     /// package. Keep those small, cached catalogs available for draft pins.
     @State private var editorCatalogs: [String: EditorCatalog] = [:]
@@ -109,8 +142,13 @@ struct RideEditorView: View {
         self.isNew = isNew
         self.existingIDs = existingIDs
         self.suggestionTrains = suggestionTrains
-        _draft = State(initialValue: train)
-        _stopIDs = State(initialValue: train.stops.map { _ in UUID() })
+        var initialDraft = train
+        if isNew && (initialDraft.trainType?.isEmpty != false) { initialDraft.trainType = "local" }
+        _draft = State(initialValue: initialDraft)
+        _stopIDs = State(initialValue: train.stops.map { $0.routeEditing?.visitID ?? UUID() })
+        _generatedStopIDs = State(initialValue: Set(train.stops.compactMap {
+            $0.routeEditing?.generatedBy == nil ? nil : $0.routeEditing?.visitID
+        }))
         self.onSave = onSave
         self.onCancel = onCancel
         self.onDraftMap = onDraftMap
@@ -126,13 +164,14 @@ struct RideEditorView: View {
                         wizardHeader
                         switch step {
                         case .region:
-                            Section { regionPicker }
+                            Section { regionPicker; trainTypePicker }
                         case .route:
+                            routeSelectionSection
                             stopsSection
-                            Section { lineSelectionRow }
                         case .service:
                             Section { numberFields }
                             searchableDetailsSection
+                            serviceSectionsSection
                             Section {
                                 DisclosureGroup(localization.editorText("ios.editor.optionalDetails"),
                                                 isExpanded: $showsOptionalDetails) { serviceDetails }
@@ -143,6 +182,7 @@ struct RideEditorView: View {
                                 if Region.resolved(draft) == .jp { timetableBrowseButton }
                             }
                             journeyStatusSection
+                            journeyGroupSection
                             if Region.resolved(draft) == .jp {
                                 TimetableQuickMatchView(
                                     train: JourneyCompletion.resolvingUniqueStationNames(
@@ -161,9 +201,12 @@ struct RideEditorView: View {
                         if !blocking.isEmpty { problemSummary(proxy) }
                         basicsSection
                         stationsSection
+                        routeSelectionSection
                         stopsSection
                         searchableDetailsSection
+                        serviceSectionsSection
                         journeyStatusSection
+                        journeyGroupSection
                         routingSection
                         styleSection
                         recordSection
@@ -191,10 +234,11 @@ struct RideEditorView: View {
                 .task(id: Region.resolved(draft)) { network.ensure(Region.resolved(draft)) }
                 .navigationDestination(item: $addedStopID) { stopID in
                     if let index = stopIDs.firstIndex(of: stopID) {
-                        StopEditorView(stop: $draft.stops[index], journeyDate: $draft.date,
+                        StopEditorView(stop: editableStop(stopID), journeyDate: $draft.date,
                                        index: index, isNew: isNew,
                                        region: Region.resolved(draft), allowsEndpointRoles: !isNew,
-                                       selectedLineIDs: selectedCatalogLineIDs,
+                                       selectedLineIDs: isNew && (index == 0 || index == draft.stops.count - 1)
+                                        ? [] : selectedCatalogLineIDs,
                                        onRiddenChange: { riddenIsTheReaders = true })
                     }
                 }
@@ -214,6 +258,23 @@ struct RideEditorView: View {
                     addedStopID = id
                     highlightedStopID.wrappedValue = nil
                 }
+                .task(id: officialNameQuery) {
+                    officialEnglishName = .loading
+                    let train: Train = {
+                        var value = draft
+                        value.region = Region.resolved(draft).code
+                        return value
+                    }()
+                    let result = await Task.detached(priority: .userInitiated) {
+                        guard TrainTimetableDatabase.accepts(train),
+                              let database = TrainTimetableDatabase.bundled(country: train.region ?? "jp") else { return String?.none }
+                        return try? JourneyEnglishName.official(for: train, database: database)
+                    }.value
+                    guard !Task.isCancelled else { return }
+                    officialEnglishName = result.map(OfficialEnglishName.available) ?? .unavailable
+                }
+                .task(id: routeChoiceTaskID) { await loadRouteChoices() }
+                .task(id: tokyoDefaultTaskID) { applyTokyoDefaultIfNeeded() }
                 .task(id: catalogTaskID) {
                     let region = Region.resolved(draft)
                     let loaded = try? await Task.detached(priority: .userInitiated) {
@@ -228,7 +289,7 @@ struct RideEditorView: View {
                             operatorNames: draft.routePolicy?.preferredOperatorNames ?? [],
                             regionCode: region.code,
                             catalog: loaded)
-                        selectedCatalogLineIDs = Set(matched.lineIDs)
+                        selectedCatalogLineIDs = selectedRouteChoice.map { Set($0.lineIDs) } ?? Set(matched.lineIDs)
                     } else {
                         selectedCatalogLineIDs = []
                     }
@@ -274,7 +335,7 @@ struct RideEditorView: View {
                     ToolbarItem(placement: .confirmationAction) {
                         // §5.4 uses the specific verb: 保存旅程, not 完成.
                         Button(localization.editorText("ios.editor.saveJourney")) {
-                            guard blocking.isEmpty else { return }
+                            guard blocking.isEmpty, draft.journeyGroup?.name.isEmpty != true else { return }
                             onSave(draft)
                         }
                         .accessibilityIdentifier("rideEditorSave")
@@ -285,7 +346,7 @@ struct RideEditorView: View {
                         // the two commits the reader's work — and the two sit
                         // a thumb's width apart.
                         .buttonStyle(.borderedProminent)
-                        .disabled(!blocking.isEmpty)
+                        .disabled(!blocking.isEmpty || draft.journeyGroup?.name.isEmpty == true)
                         // §10.3's ⌘S. On the button rather than on the form,
                         // so it is disabled by exactly the same condition —
                         // a shortcut that commits a draft the button refuses
@@ -326,12 +387,43 @@ struct RideEditorView: View {
                     limitedExpressName = ""
                     selectedPattern = nil
                     selectedTimetableDate = nil
+                    resetRouteChoiceState()
                     undoableDeletion = []
                     pendingRegion = nil
                     prefillRidden(forDate: draft.date)
                 }
                 Button(localization.editorText("ios.editor.keepEditing"), role: .cancel) { pendingRegion = nil }
             } message: { _ in Text(localization.editorText("ios.editor.changeRegionNote")) }
+        .sheet(item: $routeGuideRequest, onDismiss: finishRouteGuide) { request in
+            NavigationStack {
+                RailwayRouteCorrectionView(
+                    train: request.train, package: request.package,
+                    excludedStationCodes: request.excludedCodes
+                ) { choice, fromID, toID in
+                    proposeRouteChoice(choice, fromID: fromID, toID: toID)
+                }
+            }
+            .alert(localization.editorText("ios.routeGuide.routeUnavailable"), isPresented: $routeGuideError) {
+                Button(localization.text("ios.done"), role: .cancel) {}
+            }
+            .confirmationDialog(
+                localization.editorText("ios.routeGuide.removalTitle"),
+                isPresented: Binding(get: { pendingRouteCommit != nil }, set: {
+                    if !$0 { pendingRouteCommit = nil }
+                }), titleVisibility: .visible, presenting: pendingRouteCommit
+            ) { commit in
+                Button(localization.editorText("ios.routeGuide.removeAndApply"), role: .destructive) {
+                    commitRoutePlan(commit.plan, choice: commit.choice)
+                }
+                Button(localization.editorText("ios.editor.keepEditing"), role: .cancel) {
+                    pendingRouteCommit = nil
+                }
+            } message: { commit in
+                Text(localization.editorText("ios.routeGuide.removalDetail", [
+                    "stations": .string(commit.plan.conflictingStops.map(\.name).joined(separator: " · "))
+                ]))
+            }
+        }
         .sheet(isPresented: $showsAICompletion) {
             JourneyCompletionView(
                 trains: [draft],
@@ -392,26 +484,29 @@ struct RideEditorView: View {
             onSelectDraft: { applyTimetableTrip($0) }
         ) { pattern, reversed in
             let ridden = RideLedger.hasBeenRidden(draft)
+            resetRouteChoiceState()
             draft = TrainServicePatterns.apply(pattern, to: draft, reversed: reversed, ridden: ridden)
             selectedPattern = pattern
             selectedTimetableDate = nil
-            stopIDs = draft.stops.map { _ in UUID() }
+            synchronizeStopIdentity()
             undoableDeletion = []
             addedStopID = nil
         }
     }
 
     private func applyTimetableTrip(_ trip: TrainTimetableDatabase.Trip) {
+        guard Region.resolved(draft) == .jp else { return }
         let ridden = RideLedger.hasBeenRidden(draft)
         guard let applied = trip.canApplyToRouteEditor
             ? trip.applying(to: draft, ridden: ridden)
             : trip.publishedStopsDraft(to: draft, ridden: ridden)
         else { return }
+        resetRouteChoiceState()
         draft = applied
         selectedTimetableDate = trip.serviceDate
         limitedExpressName = trip.service.canonicalName
         selectedPattern = trip.canApplyToRouteEditor ? trip.compatibilityPattern() : nil
-        stopIDs = applied.stops.map { _ in UUID() }
+        synchronizeStopIdentity()
         undoableDeletion = []
         addedStopID = nil
     }
@@ -420,6 +515,8 @@ struct RideEditorView: View {
     /// ordered station visits. A raw import can replace the entire route even
     /// when the number of stops happens to stay the same.
     private func applyCompletedDraft(_ completed: Train) {
+        let previous = Dictionary(zip(stopIDs, draft.stops), uniquingKeysWith: { first, _ in first })
+        let existingIDs = stopIDs
         let sameVisits = stopIDs.count == draft.stops.count
             && draft.stops.count == completed.stops.count
             && zip(draft.stops, completed.stops).allSatisfy { pair in
@@ -449,7 +546,19 @@ struct RideEditorView: View {
                 selectedCatalogLineIDs = []
             }
         }
-        draft = completed
+        var updated = completed
+        for index in updated.stops.indices {
+            guard let id = updated.stops[index].routeEditing?.visitID,
+                  let oldStop = previous[id], updated.stops[index] != oldStop else { continue }
+            updated.stops[index].routeEditing?.generatedBy = nil
+        }
+        draft = updated
+        if sameVisits {
+            stopIDs = draft.stops.indices.map { draft.stops[$0].routeEditing?.visitID ?? existingIDs[$0] }
+        } else {
+            synchronizeStopIdentity()
+        }
+        resetRouteChoiceState()
     }
 
 #if DEBUG
@@ -559,6 +668,149 @@ struct RideEditorView: View {
         "\(Region.resolved(draft).code)|\(draftPinRegionCodes.joined(separator: "+"))"
     }
 
+    private var routeChoiceTaskID: String { Region.resolved(draft).code }
+
+    private var tokyoDefaultTaskID: String {
+        [String(routeChoicesLoaded), draft.trainType ?? "", draft.company ?? "",
+         draft.stops.map { $0.n02StationCode ?? $0.name }.joined(separator: ">"),
+         (draft.routeSections ?? []).flatMap { $0.sectionCodes ?? [] }.joined(separator: ">")]
+            .joined(separator: "|")
+    }
+
+    /// Apply the reader's corridor default once. A manually selected physical
+    /// route, authored surface visit, or conflicting replacement remains intact.
+    private func applyTokyoDefaultIfNeeded() {
+        guard routeGuideRequest == nil, selectedRouteChoice == nil,
+              let package = routePackage,
+              let choice = TokyoConventionalRouteInference.choice(in: routeEditingDraft, package: package),
+              let plan = RailwayRouteEditing.plan(train: routeEditingDraft, choice: choice,
+                fromVisitID: stopIDs.first, toVisitID: stopIDs.last),
+              !plan.requiresConfirmation else { return }
+        applyRoutePlan(plan, choice: choice)
+    }
+
+    private func loadRouteChoices() async {
+        let region = Region.resolved(draft)
+        routeChoicesLoaded = false
+        routeChoiceLoadError = nil
+        routePackage = nil
+        let worker = Task.detached(priority: .userInitiated) {
+            try Task.checkCancellation()
+            let package = try EditorRoutePackageCache.load(region: region)
+            try Task.checkCancellation()
+            return package
+        }
+        do {
+            let package = try await withTaskCancellationHandler {
+                try await worker.value
+            } onCancel: { worker.cancel() }
+            guard !Task.isCancelled else { return }
+            routePackage = package
+            routeChoicesLoaded = true
+        } catch is CancellationError {
+            return
+        } catch {
+            guard !Task.isCancelled else { return }
+            routeChoiceLoadError = error.localizedDescription
+            routeChoicesLoaded = true
+        }
+    }
+
+    /// Opening the guide does not mutate the draft, including legacy identity.
+    private var routeEditingDraft: Train {
+        var value = draft
+        for index in value.stops.indices where stopIDs.indices.contains(index) {
+            if value.stops[index].routeEditing == nil {
+                value.stops[index].routeEditing = Stop.RouteEditingMetadata(visitID: stopIDs[index])
+            }
+        }
+        return value
+    }
+
+    private func openRouteGuide(excluding codes: Set<String> = []) {
+        guard let package = routePackage else { return }
+        pendingRouteCommit = nil
+        routeGuideRequest = RouteGuideRequest(train: routeEditingDraft, package: package, excludedCodes: codes)
+    }
+
+    private func proposeRouteChoice(_ choice: RailwayRouteChoices.Choice, fromID: UUID, toID: UUID) {
+        guard let plan = RailwayRouteEditing.plan(
+            train: routeEditingDraft, choice: choice, fromVisitID: fromID, toVisitID: toID
+        ) else { routeGuideError = true; return }
+        if plan.requiresConfirmation {
+            pendingRouteCommit = RouteCommit(plan: plan, choice: choice)
+        } else {
+            commitRoutePlan(plan, choice: choice)
+        }
+    }
+
+    private func commitRoutePlan(_ plan: RailwayRouteEditing.Plan, choice: RailwayRouteChoices.Choice) {
+        // Let the guide leave first so the reader can see the list change.
+        routeCommitAfterDismiss = RouteCommit(plan: plan, choice: choice)
+        pendingRouteCommit = nil
+        routeGuideRequest = nil
+    }
+
+    private func finishRouteGuide() {
+        pendingRouteCommit = nil
+        guard let commit = routeCommitAfterDismiss else { return }
+        routeCommitAfterDismiss = nil
+        applyRoutePlan(commit.plan, choice: commit.choice)
+    }
+
+    private func applyRoutePlan(_ plan: RailwayRouteEditing.Plan, choice: RailwayRouteChoices.Choice) {
+        routeUndoCatalogLineIDs = selectedCatalogLineIDs
+        routeEditUndo = plan.undo
+        withAnimation(reduceMotion ? .easeOut(duration: 0.16)
+            : .timingCurve(0.77, 0, 0.175, 1, duration: 0.24)) {
+            draft = plan.updatedTrain
+            synchronizeStopIdentity()
+            selectedRouteChoice = choice
+            selectedCatalogLineIDs = Set(plan.updatedTrain.routeSections?.flatMap { $0.lineIDs ?? [] }
+                ?? choice.lineIDs)
+            undoableDeletion = []
+            routeEditSummary = localization.editorText("ios.routeGuide.updated", [
+                "added": .number(Double(plan.insertedStops.count)),
+                "removed": .number(Double(plan.removedStops.count + plan.conflictingStops.count))
+            ])
+        }
+    }
+
+    private func synchronizeStopIdentity() {
+        stopIDs = draft.stops.map { $0.routeEditing?.visitID ?? UUID() }
+        generatedStopIDs = Set(draft.stops.compactMap {
+            $0.routeEditing?.generatedBy == nil ? nil : $0.routeEditing?.visitID
+        })
+    }
+
+    /// Editing an automatic visit promotes it to an authored visit permanently.
+    private func editableStop(_ id: UUID) -> Binding<Stop> {
+        Binding(get: {
+            guard let index = stopIDs.firstIndex(of: id), draft.stops.indices.contains(index) else {
+                return Stop(name: "")
+            }
+            return draft.stops[index]
+        }, set: { value in
+            guard let index = stopIDs.firstIndex(of: id), draft.stops.indices.contains(index) else { return }
+            var updated = value
+            if updated != draft.stops[index] {
+                if updated.routeEditing == nil { updated.routeEditing = Stop.RouteEditingMetadata(visitID: id) }
+                updated.routeEditing?.generatedBy = nil
+                generatedStopIDs.remove(id)
+            }
+            draft.stops[index] = updated
+        })
+    }
+
+    private func resetRouteChoiceState() {
+        selectedRouteChoice = nil
+        generatedStopIDs = Set(draft.stops.compactMap {
+            $0.routeEditing?.generatedBy == nil ? nil : $0.routeEditing?.visitID
+        })
+        routeEditUndo = nil
+        routeEditSummary = nil
+    }
+
     private var wizardHeader: some View {
         Section {
             VStack(alignment: .leading, spacing: 10) {
@@ -615,9 +867,10 @@ struct RideEditorView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .accessibilityIdentifier("rideEditorNext")
+                .disabled(draft.journeyGroup?.name.isEmpty == true)
             } else {
                 Button {
-                    guard blocking.isEmpty else { return }
+                    guard blocking.isEmpty, draft.journeyGroup?.name.isEmpty != true else { return }
                     onSave(draft)
                 } label: {
                     Text(dynamicTypeSize.isAccessibilitySize
@@ -628,7 +881,7 @@ struct RideEditorView: View {
                 }
                 .accessibilityLabel(localization.editorText("ios.editor.saveJourney"))
                 .buttonStyle(.borderedProminent)
-                .disabled(!blocking.isEmpty)
+                .disabled(!blocking.isEmpty || draft.journeyGroup?.name.isEmpty == true)
                 .accessibilityIdentifier("rideEditorSave")
                 .keyboardShortcut("s", modifiers: .command)
             }
@@ -646,14 +899,19 @@ struct RideEditorView: View {
             LabeledContent(localization.countryText("country.label", fallback: "Region"),
                 value: localization.text(Region.resolved(draft).localizationKey,
                                          fallback: Region.resolved(draft).fallbackName))
-            ForEach(Array(draft.stops.enumerated()), id: \.offset) { index, stop in
-                LabeledContent("\(index + 1)", value: stop.name)
+            ForEach(stopIDs, id: \.self) { stopID in
+                if let index = stopIDs.firstIndex(of: stopID) {
+                    LabeledContent("\(index + 1)", value: draft.stops[index].name)
+                }
             }
             if let names = draft.routePolicy?.preferredLineNames, !names.isEmpty {
                 LabeledContent(localization.editorText("ios.editor.searchLines"), value: names.joined(separator: " · "))
             }
         }
         Section(localization.editorText("ios.editor.step.service")) {
+            if let group = draft.journeyGroup {
+                LabeledContent(localization.groupText("title"), value: group.name)
+            }
             LabeledContent(localization.countryText("field.number", fallback: "Train number"), value: draft.number)
             if let value = draft.trainType, !value.isEmpty {
                 LabeledContent(localization.countryText("field.trainType", fallback: "Train type"), value: value)
@@ -669,6 +927,16 @@ struct RideEditorView: View {
             }
             if let value = draft.direction, !value.isEmpty {
                 LabeledContent(localization.countryText("field.direction", fallback: "Direction"), value: value)
+            }
+            if let value = draft.notes, !value.isEmpty {
+                LabeledContent(localization.editorText("ios.ai.notes"), value: value)
+            }
+        }
+        if !JourneyServiceSections.legs(of: draft).isEmpty {
+            Section(localization.editorText("ios.editor.sectionServices")) {
+                ForEach(JourneyServiceSections.legs(of: draft)) { leg in
+                    ServiceSectionSummary(leg: leg, train: draft)
+                }
             }
         }
         Section(localization.editorText("ios.editor.step.date")) {
@@ -840,6 +1108,7 @@ struct RideEditorView: View {
             .accessibilityIdentifier("rideEditorNumber")
             .id(RideDraftIssue.Field.number)
             if !isNew || step == .confirm { fieldIssues(.number) }
+            englishNameFields
     }
 
     private var journeyStatusSection: some View {
@@ -869,15 +1138,42 @@ struct RideEditorView: View {
         }
     }
 
+    private struct OfficialNameQuery: Equatable {
+        var number: String
+        var date: String?
+        var region: String
+    }
+
+    private var officialNameQuery: OfficialNameQuery {
+        OfficialNameQuery(number: draft.number, date: draft.date, region: Region.resolved(draft).code)
+    }
+
+    @ViewBuilder private var englishNameFields: some View {
+        EditorTextField(
+            title: localization.countryText("field.numberEn", fallback: "English name"),
+            text: optionalText(\.numberEn))
+        .accessibilityIdentifier("rideEditorNumberEn")
+        Button {
+            guard let name = officialEnglishName.value else { return }
+            draft.numberEn = name
+        } label: {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(localization.editorText("ios.editor.useOfficialEnglishName"))
+                if let name = officialEnglishName.value {
+                    Text(verbatim: name).font(.caption).foregroundStyle(.secondary)
+                }
+            }
+        }
+        .disabled(officialEnglishName.value == nil)
+        .accessibilityIdentifier("rideEditorUseOfficialEnglishName")
+        if case .unavailable = officialEnglishName {
+            Text(localization.editorText("ios.editor.officialEnglishNameUnavailable"))
+                .font(.footnote).foregroundStyle(.secondary)
+        }
+    }
+
     private var serviceDetails: some View {
         Group {
-            // Optional, so it has no issue anchor and shares no focus identity
-            // with the required caption above it.
-            EditorTextField(
-                title: localization.countryText("field.numberEn", fallback: "English name"),
-                text: optionalText(\.numberEn))
-            .accessibilityIdentifier("rideEditorNumberEn")
-
             EditorTextField(
                 title: localization.countryText("field.direction", fallback: "Direction"),
                 text: optionalText(\.direction))
@@ -914,17 +1210,19 @@ struct RideEditorView: View {
                         .flatMap(\.names))
                     .accessibilityIdentifier("rideEditorLimitedExpressName")
             }
-            EditorSearchField(
-                title: localization.countryText("field.trainType", fallback: "Train type"),
-                text: optionalText(\.trainType),
-                suggestions: regionalHistory.compactMap(\.trainType) + defaultServiceTypes)
-                .accessibilityIdentifier("rideEditorTrainType")
+            if !isNew {
+                EditorSearchField(
+                    title: localization.countryText("field.trainType", fallback: "Train type"),
+                    text: optionalText(\.trainType),
+                    suggestions: regionalHistory.compactMap(\.trainType) + defaultServiceTypes)
+                    .accessibilityIdentifier("rideEditorTrainType")
+            }
             EditorSearchField(
                 title: localization.editorText("ios.editor.vehicleType"),
                 text: optionalText(\.vehicleType),
                 suggestions: regionalHistory.compactMap(\.vehicleType))
                 .accessibilityIdentifier("rideEditorVehicleType")
-            if !isNew { lineSelectionRow }
+            if !isNew { preferredLineSelectionRow }
             EditorSearchField(
                 title: localization.countryText("field.company", fallback: "Operator"),
                 text: optionalText(\.company),
@@ -936,37 +1234,117 @@ struct RideEditorView: View {
         }
     }
 
-    private var lineSelectionRow: some View {
+    private var journeyGroupSection: some View {
+        Section {
+            JourneyGroupChoiceFields(
+                selection: $draft.journeyGroup,
+                groups: JourneyGroupCatalog.groups(in: suggestionTrains))
+        } footer: {
+            Text(localization.groupText("crossRegion"))
+        }
+    }
+
+    private var serviceSectionsSection: some View {
+        Section {
+            ForEach(JourneyServiceSections.legs(of: draft)) { leg in
+                NavigationLink {
+                    ServiceRangeEditorView(train: $draft, leg: leg)
+                } label: {
+                    ServiceSectionSummary(leg: leg, train: draft)
+                }
+                .accessibilityIdentifier("rideEditorServiceLeg-\(leg.id)")
+            }
             NavigationLink {
-                EditorLineSearchView(
-                    region: Region.resolved(draft),
-                    lineNames: draft.routePolicy?.preferredLineNames ?? [],
-                    operatorNames: draft.routePolicy?.preferredOperatorNames ?? [],
-                    selectedLineIDs: selectedCatalogLineIDs,
-                    stationCodes: draft.stops.compactMap(\.n02StationCode),
-                    onCommit: { lineIDs, lineNames, operatorNames in
-                        selectedCatalogLineIDs = Set(lineIDs)
-                        var policy = routePolicy.wrappedValue
-                        policy.preferredLineNames = lineNames.isEmpty ? nil : lineNames
-                        policy.preferredOperatorNames = operatorNames.isEmpty ? nil : operatorNames
-                        draft.routePolicy = policy
-                    })
+                ServiceRangeEditorView(train: $draft, leg: nil)
             } label: {
-                VStack(alignment: .leading, spacing: 4) {
-                    Label(localization.editorText("ios.editor.searchLines"), systemImage: "magnifyingglass")
-                    if let names = draft.routePolicy?.preferredLineNames, !names.isEmpty {
-                        Text(names.joined(separator: " · "))
-                            .font(.subheadline).foregroundStyle(.secondary)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
-                    if let operators = draft.routePolicy?.preferredOperatorNames, !operators.isEmpty {
-                        Text(operators.joined(separator: " · "))
-                            .font(.caption).foregroundStyle(.secondary)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
+                Label(localization.editorText("ios.editor.addSectionService"), systemImage: "plus.circle")
+            }
+            .disabled(draft.stops.count < 2)
+            .accessibilityIdentifier("rideEditorAddServiceLeg")
+            TextField(localization.editorText("ios.ai.notes"), text: optionalText(\.notes), axis: .vertical)
+                .lineLimit(2...5)
+                .accessibilityIdentifier("rideEditorNotes")
+        } header: {
+            Text(localization.editorText("ios.editor.sectionServices"))
+        } footer: {
+            Text(localization.editorText("ios.editor.sectionServicesNote"))
+        }
+    }
+
+    /// Both editor modes expose the same physical-route workflow beside stops.
+    private var routeSelectionSection: some View {
+        Section { guidedLineSelectionRow }
+    }
+
+    private var preferredLineSelectionRow: some View {
+        NavigationLink {
+            EditorLineSearchView(
+                region: Region.resolved(draft),
+                lineNames: draft.routePolicy?.preferredLineNames ?? [],
+                operatorNames: draft.routePolicy?.preferredOperatorNames ?? [],
+                selectedLineIDs: selectedCatalogLineIDs,
+                stationCodes: draft.stops.compactMap(\.n02StationCode),
+                onCommit: { lineIDs, lineNames, operatorNames in
+                    selectedCatalogLineIDs = Set(lineIDs)
+                    var policy = routePolicy.wrappedValue
+                    policy.preferredLineNames = lineNames.isEmpty ? nil : lineNames
+                    policy.preferredOperatorNames = operatorNames.isEmpty ? nil : operatorNames
+                    draft.routePolicy = policy
+                })
+        } label: {
+            VStack(alignment: .leading, spacing: 4) {
+                Label(localization.editorText("ios.editor.searchLines"), systemImage: "magnifyingglass")
+                if let names = draft.routePolicy?.preferredLineNames, !names.isEmpty {
+                    Text(names.joined(separator: " · "))
+                        .font(.subheadline).foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                if let operators = draft.routePolicy?.preferredOperatorNames, !operators.isEmpty {
+                    Text(operators.joined(separator: " · "))
+                        .font(.caption).foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
-            .accessibilityIdentifier("rideEditorLines")
+        }
+        .accessibilityIdentifier("rideEditorPreferredLines")
+    }
+
+    private var trainTypePicker: some View {
+        Picker(localization.countryText("field.trainType", fallback: "Train type"),
+               selection: Binding(get: { draft.trainType ?? "local" }, set: { draft.trainType = $0 })) {
+            ForEach(["local", "rapid", "express", "limitedExpress", "highSpeed"], id: \.self) { type in
+                Text(localization.editorText("ios.editor.serviceType.\(type)")).tag(type)
+            }
+            if let type = draft.trainType,
+               !["local", "rapid", "express", "limitedExpress", "highSpeed"].contains(type) {
+                Text(type).tag(type)
+            }
+        }
+        .accessibilityIdentifier("rideEditorTrainType")
+    }
+
+    private var guidedLineSelectionRow: some View {
+        Button { openRouteGuide() } label: {
+            VStack(alignment: .leading, spacing: 4) {
+                Label(localization.editorText("ios.routeGuide.title"),
+                      systemImage: "point.topleft.down.curvedto.point.bottomright.up")
+                if let choice = selectedRouteChoice {
+                    Text(choice.lineNames.joined(separator: " · "))
+                        .font(.subheadline).foregroundStyle(.secondary)
+                }
+                if let error = routeChoiceLoadError {
+                    Text(error).font(.footnote).foregroundStyle(.secondary)
+                } else if !routeChoicesLoaded {
+                    ProgressView()
+                } else {
+                    Text(localization.editorText("ios.routeGuide.selectRange"))
+                        .font(.footnote).foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+        }
+        .disabled(routePackage == nil || draft.stops.compactMap(\.n02StationCode).count < 2)
+        .accessibilityIdentifier("rideEditorLines")
     }
 
     private var regionPicker: some View {
@@ -1012,30 +1390,92 @@ struct RideEditorView: View {
         Section {
             ForEach(stopIDs, id: \.self) { stopID in
                 if let index = stopIDs.firstIndex(of: stopID) {
-                    VStack(alignment: .leading, spacing: 4) {
-                        NavigationLink {
-                            StopEditorView(
-                                stop: $draft.stops[index], journeyDate: $draft.date,
-                                index: index, isNew: isNew,
-                                region: Region.resolved(draft), allowsEndpointRoles: !isNew,
-                                selectedLineIDs: selectedCatalogLineIDs,
-                                       onRiddenChange: { riddenIsTheReaders = true })
-                        } label: {
-                            StopEditorLabel(
-                                stop: draft.stops[index], journeyDate: draft.date, index: index + 1,
-                                emptyTitle: isNew ? localization.editorText(index == 0
-                                    ? "ios.editor.chooseOrigin" : index == stopIDs.count - 1
-                                    ? "ios.editor.chooseDestination" : "ios.editor.untitledStop") : nil)
+                    HStack(spacing: 8) {
+                        if stopEditMode.isEditing {
+                            Button {
+                                deleteStop(stopID)
+                            } label: {
+                                Label(localization.countryText("btn.delete", fallback: "Delete"),
+                                      systemImage: "minus.circle.fill")
+                                    .labelStyle(.iconOnly)
+                                    .foregroundStyle(.red)
+                                    .frame(minWidth: 44, minHeight: 44)
+                            }
+                            .buttonStyle(.borderless)
+                            .accessibilityIdentifier("rideEditorDeleteStop-\(index)")
                         }
-                        .accessibilityIdentifier("rideEditorStop-\(index)")
-                        fieldIssues(.stop(index))
+                        VStack(alignment: .leading, spacing: 4) {
+                            NavigationLink {
+                                StopEditorView(
+                                    stop: editableStop(stopID), journeyDate: $draft.date,
+                                    index: index, isNew: isNew,
+                                    region: Region.resolved(draft), allowsEndpointRoles: !isNew,
+                                    selectedLineIDs: isNew && (index == 0 || index == draft.stops.count - 1)
+                                            ? [] : selectedCatalogLineIDs,
+                                           onRiddenChange: { riddenIsTheReaders = true })
+                            } label: {
+                                StopEditorLabel(
+                                    stop: draft.stops[index], journeyDate: draft.date, index: index + 1,
+                                    emptyTitle: isNew ? localization.editorText(index == 0
+                                        ? "ios.editor.chooseOrigin" : index == stopIDs.count - 1
+                                        ? "ios.editor.chooseDestination" : "ios.editor.untitledStop") : nil)
+                            }
+                            .accessibilityIdentifier("rideEditorStop-\(index)")
+                            if generatedStopIDs.contains(stopID) {
+                                Text(localization.editorText("ios.editor.generatedStation"))
+                                    .font(.caption).foregroundStyle(.secondary)
+                            }
+                            fieldIssues(.stop(index))
+                        }
                     }
                     .id(stopID)
+                    .transition(.asymmetric(
+                        insertion: (reduceMotion ? AnyTransition.opacity
+                            : .opacity.combined(with: .offset(y: 8)))
+                            .animation(.easeOut(duration: 0.20)),
+                        removal: AnyTransition.opacity.animation(.easeOut(duration: 0.16))))
+                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                        // Route stops may open a preview instead of being removed.
+                        // A destructive role would optimistically animate deletion.
+                        Button {
+                            deleteStop(stopID)
+                        } label: {
+                            Label(localization.countryText("btn.delete", fallback: "Delete"),
+                                  systemImage: "trash")
+                        }
+                        .tint(.red)
+                        .accessibilityIdentifier("rideEditorSwipeDeleteStop-\(index)")
+                    }
                 }
             }
-            .onDelete(perform: deleteStops)
             .onMove(perform: moveStops)
 
+            if let summary = routeEditSummary {
+                HStack {
+                    Text(summary).font(.footnote)
+                    Spacer()
+                    if routeEditUndo != nil {
+                        Button(localization.editorText("ios.routeGuide.undo")) {
+                            guard let restored = routeEditUndo?.restore(in: draft) else {
+                                routeEditUndo = nil
+                                routeEditSummary = localization.editorText("ios.routeGuide.undoUnavailable")
+                                return
+                            }
+                            withAnimation(reduceMotion ? .easeOut(duration: 0.16)
+                                : .timingCurve(0.77, 0, 0.175, 1, duration: 0.24)) {
+                                draft = restored
+                                synchronizeStopIdentity()
+                                selectedRouteChoice = nil
+                                selectedCatalogLineIDs = routeUndoCatalogLineIDs
+                                routeEditUndo = nil
+                                routeEditSummary = nil
+                            }
+                        }
+                        .accessibilityIdentifier("rideEditorUndoRoute")
+                    }
+                }
+                .frame(minHeight: 44)
+            }
             if !undoableDeletion.isEmpty { undoBanner }
 
             if Region.resolved(draft).code == "jp" {
@@ -1114,7 +1554,25 @@ struct RideEditorView: View {
         .frame(minHeight: 44)
     }
 
+    /// Resolve the visit when invoked; moving a row must not change its target.
+    private func deleteStop(_ stopID: UUID) {
+        guard let index = stopIDs.firstIndex(of: stopID) else { return }
+        deleteStops(at: IndexSet(integer: index))
+    }
+
     private func deleteStops(at offsets: IndexSet) {
+        let mandatoryCodes = Set(offsets.compactMap { index -> String? in
+            guard index > 0, index < draft.stops.count - 1,
+                  (generatedStopIDs.contains(stopIDs[index])
+                   || selectedRouteChoice?.stations.contains(where: {
+                      $0.code == draft.stops[index].n02StationCode
+                   }) == true) else { return nil }
+            return draft.stops[index].n02StationCode
+        })
+        if !mandatoryCodes.isEmpty {
+            openRouteGuide(excluding: mandatoryCodes)
+            return
+        }
         undoableDeletion = offsets.sorted().map {
             Deletion(offset: $0, stop: draft.stops[$0], id: stopIDs[$0])
         }
@@ -1138,6 +1596,7 @@ struct RideEditorView: View {
     }
 
     private func moveStops(from offsets: IndexSet, to destination: Int) {
+        resetRouteChoiceState()
         undoableDeletion = []
         draft.stops.move(fromOffsets: offsets, toOffset: destination)
         stopIDs.move(fromOffsets: offsets, toOffset: destination)
@@ -1504,6 +1963,123 @@ struct RideEditorView: View {
     }
 }
 
+private struct ServiceRangeEditorView: View {
+    @Environment(\.dismiss) private var dismiss
+    @Environment(AppLocalization.self) private var localization
+    @Binding var train: Train
+    let leg: JourneyServiceSections.Leg?
+    @State private var fromIndex: Int
+    @State private var toIndex: Int
+    @State private var linesText: String
+    @State private var operatorsText: String
+    @State private var number: String
+    @State private var name: String
+
+    init(train: Binding<Train>, leg: JourneyServiceSections.Leg?) {
+        _train = train
+        self.leg = leg
+        let sections = StoreOperations.rideRouteSections(for: train.wrappedValue)
+        let firstUnfilled = sections.firstIndex { RouteSectionServiceInfo(section: $0).isEmpty }
+            ?? max(0, sections.count - 1)
+        _fromIndex = State(initialValue: leg?.fromStopIndex ?? firstUnfilled)
+        _toIndex = State(initialValue: leg?.toStopIndex ?? firstUnfilled + 1)
+        _linesText = State(initialValue: (leg?.info.lineNames ?? []).joined(separator: ", "))
+        _operatorsText = State(initialValue: (leg?.info.operatorNames ?? []).joined(separator: ", "))
+        _number = State(initialValue: leg?.info.number ?? "")
+        _name = State(initialValue: leg?.info.name ?? "")
+    }
+
+    private var stopChoices: [Int] { Array(train.stops.indices) }
+    private var lines: [String] { names(in: linesText) }
+    private var operators: [String] { names(in: operatorsText) }
+
+    var body: some View {
+        Form {
+            Section(localization.editorText("ios.editor.endpoints")) {
+                Picker(localization.editorText("ios.editor.fromStation"), selection: $fromIndex) {
+                    ForEach(stopChoices.dropLast(), id: \.self) { index in
+                        Text(station(at: index)).tag(index)
+                    }
+                }
+                .accessibilityIdentifier("rideEditorServiceFrom")
+                .onChange(of: fromIndex) { _, index in
+                    if toIndex <= index { toIndex = index + 1 }
+                }
+                Picker(localization.editorText("ios.editor.toStation"), selection: $toIndex) {
+                    ForEach(stopChoices.filter { $0 > fromIndex }, id: \.self) { index in
+                        Text(station(at: index)).tag(index)
+                    }
+                }
+                .accessibilityIdentifier("rideEditorServiceTo")
+            }
+            Section {
+                NavigationLink {
+                    EditorLineSearchView(
+                        region: Region.resolved(train), lineNames: lines, operatorNames: operators,
+                        selectedLineIDs: [],
+                        stationCodes: Array(train.stops[fromIndex...toIndex]).compactMap(\.n02StationCode)
+                    ) { _, names, operatorNames in
+                        linesText = names.joined(separator: ", ")
+                        operatorsText = operatorNames.joined(separator: ", ")
+                    }
+                } label: {
+                    LabeledContent(localization.editorText("ios.editor.searchLines"),
+                                   value: lines.joined(separator: " · "))
+                }
+                EditorTextField(title: localization.editorText("ios.editor.lineNames"),
+                                text: $linesText,
+                                prompt: localization.editorText("ios.editor.onePerComma"))
+                EditorTextField(title: localization.editorText("ios.editor.operatorNames"),
+                                text: $operatorsText,
+                                prompt: localization.editorText("ios.editor.onePerComma"))
+                EditorTextField(title: localization.countryText("field.number", fallback: "Train number"),
+                                text: $number,
+                                prompt: localization.editorText("ios.editor.sectionNumberUnknown"))
+                    .accessibilityIdentifier("rideEditorSectionNumber")
+                EditorTextField(title: localization.editorText("ios.editor.displayName"), text: $name)
+            } header: {
+                Text(localization.editorText("ios.editor.sectionService"))
+            } footer: {
+                Text(localization.editorText("ios.editor.sectionServicesNote"))
+            }
+            if leg != nil {
+                Section {
+                    Button(localization.editorText("ios.editor.clearSectionService"), role: .destructive) {
+                        train = RouteSectionServiceEditing.applying(
+                            RouteSectionServiceInfo(), to: train,
+                            fromStopIndex: fromIndex, toStopIndex: toIndex)
+                        dismiss()
+                    }
+                }
+            }
+        }
+        .navigationTitle(localization.editorText("ios.editor.sectionService"))
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button(localization.editorText("ios.editor.applySectionService")) {
+                    train = RouteSectionServiceEditing.applying(
+                        RouteSectionServiceInfo(lineNames: lines, operatorNames: operators,
+                                                number: number, name: name),
+                        to: train, fromStopIndex: fromIndex, toStopIndex: toIndex)
+                    dismiss()
+                }
+                .accessibilityIdentifier("rideEditorApplyServiceLeg")
+            }
+        }
+    }
+
+    private func station(at index: Int) -> String {
+        let stop = train.stops[index]
+        return "\(index + 1). \(localization.stationName(stop.name, in: train, code: stop.n02StationCode))"
+    }
+
+    private func names(in text: String) -> [String] {
+        text.components(separatedBy: CharacterSet(charactersIn: ",，、"))
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }.filter { !$0.isEmpty }
+    }
+}
+
 private struct RouteSectionLabel: View {
     let section: RouteSection?
     let index: Int
@@ -1673,7 +2249,7 @@ private struct RouteSectionEditorView: View {
                     prompt: localization.editorText("ios.editor.onePerComma"))
             }
 
-            Section(localization.editorText("ios.editor.branchService")) {
+            Section(localization.editorText("ios.editor.sectionService")) {
                 EditorTextField(
                     title: localization.countryText("field.number", fallback: "Train number"),
                     text: optionalText(\.number))
@@ -1782,6 +2358,30 @@ private enum RideEditorAI {
                 }
             },
             requestInFlight: requestInFlight)
+    }
+}
+
+/// Decoding geometry stays off the main actor and is reused across endpoint edits.
+private enum EditorRoutePackageCache {
+    final class Store: @unchecked Sendable {
+        static let shared = Store()
+        let lock = NSLock()
+        var packages: [String: CompactPackage] = [:]
+    }
+
+    nonisolated static func load(region: Region) throws -> CompactPackage {
+        let store = Store.shared
+        store.lock.lock()
+        let cached = store.packages[region.code]
+        store.lock.unlock()
+        if let cached { return cached }
+        guard let url = Bundle.main.url(forResource: region.packageResource, withExtension: "json")
+        else { throw EditorCatalogLoadError.missingResource(region.code) }
+        let package = try JSONDecoder().decode(CompactPackage.self, from: Data(contentsOf: url))
+        store.lock.lock()
+        store.packages[region.code] = package
+        store.lock.unlock()
+        return package
     }
 }
 
@@ -1913,6 +2513,7 @@ private struct StopEditorView: View {
                     text: platformText,
                     prompt: localization.editorText("ios.editor.platformOptional")
                 )
+                .accessibilityIdentifier("rideEditorStopPlatform")
                 .keyboardType(.numbersAndPunctuation)
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
@@ -2475,17 +3076,13 @@ private struct EditorSearchField: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             EditorField(title: title) {
-                TextField(title, text: $text, prompt: Text(prompt ?? title))
-                    .focused($hasFocus)
-                    .submitLabel(.done)
-                    .onSubmit { hasFocus = false }
-                    .autocorrectionDisabled()
+                textField
             }
-            if hasFocus {
+            if isFocused {
                 ForEach(matches, id: \.self) { value in
                     Button {
                         text = value
-                        hasFocus = false
+                        dismissFocus()
                     } label: {
                         Label(value, systemImage: "arrow.up.left")
                             .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
@@ -2495,13 +3092,35 @@ private struct EditorSearchField: View {
                 }
             }
         }
-        .onChange(of: hasFocus) { _, active in
-            guard let focus, let field else { return }
-            if active { focus.wrappedValue = field }
-            else if focus.wrappedValue == field { focus.wrappedValue = nil }
+    }
+
+    // Bind the native field to the same focus state as the editor's other fields.
+    // The private Boolean is only used by search fields without an editor binding.
+    @ViewBuilder private var textField: some View {
+        if let focus, let field {
+            baseTextField.focused(focus, equals: field)
+        } else {
+            baseTextField.focused($hasFocus)
         }
-        .onChange(of: focus?.wrappedValue) { _, value in
-            if let field { hasFocus = value == field }
+    }
+
+    private var baseTextField: some View {
+        TextField(title, text: $text, prompt: Text(prompt ?? title))
+            .submitLabel(.done)
+            .onSubmit { dismissFocus() }
+            .autocorrectionDisabled()
+    }
+
+    private var isFocused: Bool {
+        if let focus, let field { return focus.wrappedValue == field }
+        return hasFocus
+    }
+
+    private func dismissFocus() {
+        if let focus, let field {
+            if focus.wrappedValue == field { focus.wrappedValue = nil }
+        } else {
+            hasFocus = false
         }
     }
 }

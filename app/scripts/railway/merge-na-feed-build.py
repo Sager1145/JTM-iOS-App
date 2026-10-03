@@ -276,6 +276,10 @@ def scope_candidate_to_lines(candidate, feed_slug, line_ids, region=None,
 
     section_keys = feed_section_removal_keys(lines, feed_slug)
     prefix = station_feed_prefix(region or candidate['package']['country'].lower(), feed_slug)
+    prefixes = selected_station_prefixes(lines, region or candidate['package']['country'].lower(), feed_slug)
+    # A surveyed border connector legitimately carries its foreign endpoint
+    # identity. Exact membership matching below still excludes other feeds and
+    # other routes; changing its prefix would reassign the station's country.
     other_prefixes = {station_feed_prefix(region or candidate['package']['country'].lower(),
                                          line['sourceFeed'])
                       for line in candidate['package']['lines'] if line.get('sourceFeed')
@@ -287,7 +291,7 @@ def scope_candidate_to_lines(candidate, feed_slug, line_ids, region=None,
                 and (not restrict_station_lines or
                      (f['properties'].get('operator'), f['properties'].get('line_name'))
                      in section_keys)
-                and f.get('properties', {}).get('n02_station_code', '').startswith(prefix)
+                and f.get('properties', {}).get('n02_station_code', '').startswith(tuple(prefixes))
                 and not any(len(p) > len(prefix) and
                             f['properties']['n02_station_code'].startswith(p)
                             for p in other_prefixes)]
@@ -387,6 +391,18 @@ def station_feed_prefix(region, feed_slug):
     the one place a station feature carries its owning feed explicitly.
     """
     return '%s-%s-' % (region.upper(), feed_slug.upper())
+
+
+def selected_station_prefixes(lines, region, feed_slug):
+    """Foreign endpoint ownership is explicit, never a generic prefix bypass."""
+    prefixes = {station_feed_prefix(region, feed_slug)}
+    for line in lines:
+        border = line.get('borderConnector') or {}
+        countries = border.get('stationCountries') or []
+        if (len(line.get('stations') or []) == 2 and len(countries) == 2
+                and set(countries) == {'us', 'ca'} and border.get('evidence')):
+            prefixes.update(station_feed_prefix(c, feed_slug) for c in countries)
+    return prefixes
 
 
 def feed_station_removal_keys(shipped_lines, feed_slug, line_ids=None):
@@ -1078,7 +1094,9 @@ def build_plan(build_module, shipped, candidate, region, feed_slug,
     # (operator, group_code) pairing alone cannot -- see
     # `station_feed_prefix()`'s docstring (the Amtrak/Shore Line East case,
     # where two feeds share both the operator string and the group code).
-    feed_prefix = station_feed_prefix(region, feed_slug)
+    feed_prefix = tuple(sorted(selected_station_prefixes(
+        [line for line in shipped_lines if _owns(line, feed_slug, line_ids)],
+        region, feed_slug)))
 
     remove_station = station_removal_predicate(
         station_keys, operators, has_shipped_lines, feed_prefix=feed_prefix)

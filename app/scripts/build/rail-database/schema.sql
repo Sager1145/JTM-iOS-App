@@ -287,19 +287,36 @@ CREATE TABLE station (
 );
 CREATE INDEX station_name_norm ON station(country_code, name_norm);
 
+-- Every shipped region, with station-specific evidence and explicit review
+-- states. NULL en means missing English, never an invented translation.
+CREATE TABLE station_english (
+  station_id INTEGER PRIMARY KEY REFERENCES station(id),
+  en TEXT,
+  status TEXT NOT NULL,
+  translation_may_be_wrong INTEGER NOT NULL CHECK (translation_may_be_wrong IN (0, 1)),
+  source TEXT NOT NULL,
+  evidence_json TEXT NOT NULL,
+  CHECK (translation_may_be_wrong = (status NOT IN ('official_verified', 'multiple_official_names')))
+);
+
+CREATE VIEW station_detail AS
+  SELECT s.country_code, s.code AS station_code, s.name AS base_name,
+         e.en AS name_en, e.status AS en_status,
+         e.translation_may_be_wrong, e.source AS en_source,
+         s.lon, s.lat, s.line_count
+    FROM station s JOIN station_english e ON e.station_id = s.id;
+
 -- English candidates for every station group in the shipped Japan package.
--- Only official_verified rows are operator-verified translations. All other
--- rows carry an explicit warning because an OSM label or manual transcription
--- may be wrong. This key is the package GROUP code, not the reading table's
--- N02 platform code.
+-- Compatibility projection of the unified Japan verdict, including legitimate
+-- operator-specific official variants at shared stations. This key is the
+-- package GROUP code, not the pronunciation table's N02 platform code.
 CREATE TABLE station_english_jp (
   station_id                INTEGER PRIMARY KEY REFERENCES station(id),
   en                        TEXT NOT NULL,
-  status                    TEXT NOT NULL CHECK (status IN
-                               ('official_verified', 'official_spelling_candidate',
-                                'community_unverified', 'manual_unverified')),
+  status                    TEXT NOT NULL,
   translation_may_be_wrong  INTEGER NOT NULL CHECK (translation_may_be_wrong IN (0, 1)),
-  source                    TEXT NOT NULL
+  source                    TEXT NOT NULL,
+  CHECK (translation_may_be_wrong = (status NOT IN ('official_verified', 'multiple_official_names')))
 );
 
 CREATE VIEW jp_station_detail AS
@@ -328,6 +345,20 @@ CREATE TABLE line_station (
 );
 CREATE UNIQUE INDEX line_station_once ON line_station(line_id, station_id);
 CREATE INDEX line_station_station ON line_station(station_id);
+
+-- Separate platform/line names survive a physical-station group merge.
+CREATE TABLE line_station_english (
+  line_id TEXT NOT NULL,
+  seq INTEGER NOT NULL,
+  en TEXT,
+  status TEXT NOT NULL,
+  translation_may_be_wrong INTEGER NOT NULL CHECK (translation_may_be_wrong IN (0, 1)),
+  source TEXT NOT NULL,
+  evidence_json TEXT NOT NULL,
+  PRIMARY KEY (line_id, seq),
+  FOREIGN KEY (line_id, seq) REFERENCES line_station(line_id, seq),
+  CHECK (translation_may_be_wrong = (status <> 'official_verified'))
+);
 
 -- ────────────────────── intervals and their geometry ──────────────────────
 
@@ -360,10 +391,11 @@ CREATE TABLE interval_vertex (
 
 -- ──────────────────────── multilingual station names ────────────────────────
 
--- Raw mirror of data/station-readings*.json, one row per (key, field) pair.
+-- Mirror of runtime station-names*.json (US/CA retain station-readings),
+-- one row per (key, field) pair.
 -- Empty values are not stored — a missing row IS "no official translation".
---   key_type 'code'         Japan: keyed by the N02 station code
---   key_type 'line_station' TW/HK/KR/MO: keyed by "<lineId>:<stationCode>",
+--   key_type 'code'         keyed by the operator/platform station code
+--   key_type 'line_station' keyed by "<lineId>:<groupCode>",
 --                           because those tables localize per line-station
 --   key_type 'name'         the byName fallback, keyed by station name
 CREATE TABLE station_name (
@@ -380,7 +412,7 @@ CREATE INDEX station_name_lookup ON station_name(country_code, key_type, key);
 CREATE INDEX station_name_key_norm ON station_name(country_code, key_type, key_norm);
 
 -- The same table RESOLVED onto every line-station, applying the frontend's own
--- lookup order (i18n.js stationReading): exact code, then "<lineId>:<code>",
+-- lookup order: exact "<lineId>:<groupCode>", then platform code,
 -- then the normalized-name fallback. `source` records which one answered, and
 -- 'package' marks a romaji that came from the package station row rather than
 -- from a reading table.
@@ -533,7 +565,7 @@ CREATE VIEW station_name_wide AS
          MAX(CASE WHEN n.field = 'zh_Hant'  THEN n.value END) AS zh_hant,
          MAX(CASE WHEN n.field = 'zh_Hans'  THEN n.value END) AS zh_hans,
          MAX(CASE WHEN n.field = 'ja'       THEN n.value END) AS ja,
-         COALESCE(je.en, MAX(CASE WHEN n.field = 'en' THEN n.value END)) AS en,
+         je.en AS en,
          je.status AS en_status,
          je.translation_may_be_wrong AS en_translation_may_be_wrong,
          je.source AS en_source
@@ -541,7 +573,7 @@ CREATE VIEW station_name_wide AS
     JOIN station s ON s.id = ls.station_id
     LEFT JOIN line_station_name n
            ON n.line_id = ls.line_id AND n.seq = ls.seq
-    LEFT JOIN station_english_jp je ON je.station_id = s.id
+    LEFT JOIN line_station_english je ON je.line_id = ls.line_id AND je.seq = ls.seq
    GROUP BY ls.line_id, ls.seq;
 
 -- Every railway a station is served by, with the operator that runs it.

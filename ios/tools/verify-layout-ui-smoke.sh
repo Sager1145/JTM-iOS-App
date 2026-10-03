@@ -31,6 +31,7 @@ case "$mode" in
             -only-testing:RailMapUITests/JourneySaveUITests \
             -only-testing:RailMapUITests/RailMapUITests/testSearchDestinationAlwaysExposesAField \
             -only-testing:RailMapUITests/RailMapUITests/testAllJourneyRowsOpenTheirMatchingJourney \
+            -only-testing:RailMapUITests/RailMapUITests/testReselectingJourneyKeepsCollapsedHeaderAboveTabBar \
             -only-testing:RailMapUITests/RailMapUITests/testPhoneMenuHeaderDragsInBothDirectionsRepeatedly \
             -only-testing:RailMapUITests/RailMapUITests/testLandscapeUsesReachableSidebarChrome \
             -only-testing:RailMapUITests/MapLayerToggleTests \

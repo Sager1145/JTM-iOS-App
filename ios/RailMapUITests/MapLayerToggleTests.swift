@@ -442,39 +442,69 @@ final class MapLayerToggleTests: XCTestCase {
     private func tapSelectsARide(_ app: XCUIApplication, requiringTarget: Bool = false) -> Bool {
         let header = app.descendants(matching: .any)["panelHeader"].firstMatch
         XCTAssertTrue(header.waitForExistence(timeout: 8))
-        let collapseStart = header.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
-        let collapseDistance = min(320, app.frame.maxY - header.frame.midY - 30)
-        collapseStart.press(forDuration: 0.1, thenDragTo: collapseStart.withOffset(
-            CGVector(dx: 0, dy: collapseDistance)))
-        let tapY = app.frame.minY + app.frame.height * Self.riddenMetroLine.dy
-        XCTAssertTrue(waitFor(timeout: 8) { header.frame.minY > tapY + 60 },
-                      "The resident panel must leave the metro tap on uncovered map.")
-        app.coordinate(withNormalizedOffset: Self.riddenMetroLine).tap()
+        var tapCoordinate = app.coordinate(withNormalizedOffset: Self.riddenMetroLine)
+        let dockToggle = app.buttons["dockPanelToggle"]
+        if dockToggle.exists {
+            let appBounds = app.frame
+            let headerBounds = header.frame
+            let toggleBounds = dockToggle.frame
+            let originalAim = CGPoint(x: appBounds.minX + appBounds.width * Self.riddenMetroLine.dx,
+                                      y: appBounds.minY + appBounds.height * Self.riddenMetroLine.dy)
+            // Source layout: dock inset 16 minus adjacent HStack spacing 8.
+            // The actual toggle origin supplies the card width and safe-area offset.
+            let leadingObstruction = toggleBounds.minX - appBounds.minX + 8
+            let aim = CGPoint(x: (appBounds.minX + appBounds.maxX + leadingObstruction) / 2,
+                              y: originalAim.y)
+            func finiteNonempty(_ frame: CGRect) -> Bool {
+                !frame.isEmpty && !frame.isNull && !frame.isInfinite
+                    && frame.minX.isFinite && frame.minY.isFinite
+                    && frame.width.isFinite && frame.height.isFinite
+            }
+            let measurement = XCTAttachment(string:
+                "App=\(appBounds); header=\(headerBounds); toggle=\(toggleBounds); oldAim=\(originalAim); leadingObstruction=\(leadingObstruction); newAim=\(aim); "
+                + "headerLabel=\(header.label); toggleLabel=\(dockToggle.label); "
+                + "headerNativeIsHittable=\(header.isHittable); toggleNativeIsHittable=\(dockToggle.isHittable)\n"
+                + app.debugDescription)
+            measurement.name = "metro-aim-leading-dock-native-geometry"
+            measurement.lifetime = .keepAlways
+            add(measurement)
+            // The toggle follows the entire DockedCard in the leading HStack.
+            // Its right edge conservatively bounds that covered strip at every height.
+            // panelHeader is only title text; it is not a full-card measurement.
+            guard header.exists, finiteNonempty(appBounds), finiteNonempty(headerBounds),
+                  finiteNonempty(toggleBounds), leadingObstruction.isFinite,
+                  leadingObstruction >= 0, leadingObstruction < appBounds.width,
+                  appBounds.contains(headerBounds),
+                  appBounds.contains(toggleBounds), appBounds.contains(aim),
+                  aim.x > max(headerBounds.maxX, toggleBounds.maxX) + 60 else {
+                XCTFail("The measured leading dock and its adjacent toggle must leave the centered metro aim beyond the covered strip plus 60 points.")
+                return false
+            }
+            tapCoordinate = app.coordinate(withNormalizedOffset: .zero).withOffset(
+                CGVector(dx: aim.x - appBounds.minX, dy: aim.y - appBounds.minY))
+        } else {
+            let collapseStart = header.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+            let collapseDistance = min(320, app.frame.maxY - header.frame.midY - 30)
+            collapseStart.press(forDuration: 0.1, thenDragTo: collapseStart.withOffset(
+                CGVector(dx: 0, dy: collapseDistance)))
+            let tapY = app.frame.minY + app.frame.height * Self.riddenMetroLine.dy
+            XCTAssertTrue(waitFor(timeout: 8) { header.frame.minY > tapY + 60 },
+                          "The resident panel must leave the metro tap on uncovered map.")
+        }
+        tapCoordinate.tap()
         // Long enough for the card to arrive, and asserted on afterwards
         // rather than waited for: a `waitForExistence` here would answer the
         // negative case only by timing out, which is the case both callers
         // care about most.
         Thread.sleep(forTimeInterval: 4)
-        // Picking changes the selected record without changing the panel stop.
-        // Open its content before observing the same card assertions in both
-        // the visible control and the hidden-route cases.
-        let headerAfterTap = app.descendants(matching: .any)["panelHeader"].firstMatch
-        XCTAssertTrue(headerAfterTap.waitForExistence(timeout: 8),
-                      "The resident panel header must remain available after the map tap.")
-        let compactTop = headerAfterTap.frame.minY
-        let start = headerAfterTap.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
-        start.press(forDuration: 0.1, thenDragTo: start.withOffset(CGVector(dx: 0, dy: -320)))
-        XCTAssertTrue(waitFor(timeout: 8) {
-            let expandedHeader = app.descendants(matching: .any)["panelHeader"].firstMatch
-            return expandedHeader.exists && expandedHeader.frame.minY < compactTop - 80
-        },
-                      "The panel must expose its content before checking map selection.")
+        // A visible route presents a separate menu immediately. A hidden
+        // route must not become selectable through the base map.
         if requiringTarget {
-            return app.staticTexts["selectedJourney-20260704_06_marunouchi_line"]
+            return app.descendants(matching: .any)["selectedJourney-20260704_06_marunouchi_line"].firstMatch
                 .waitForExistence(timeout: 8)
         }
-        return app.staticTexts.matching(NSPredicate(
+        return app.descendants(matching: .any).matching(NSPredicate(
             format: "identifier BEGINSWITH %@", "selectedJourney-")).firstMatch.exists
-            || app.buttons["journeyPrimaryAction"].exists
+
     }
 }

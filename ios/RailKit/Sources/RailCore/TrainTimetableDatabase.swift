@@ -173,6 +173,7 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
         public let referenceKind: ReferenceKind?
         public let currentN02LineID: String?
         public let railHistoryID: String?
+        public var sectionCodes: [String] = []
         fileprivate let fromStation: StationIdentity
         fileprivate let toStation: StationIdentity
 
@@ -220,6 +221,8 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
         public let timetableSymbols: [TimetableSymbol]
         public let lineSegments: [LineSegment]
         public let operatorSegments: [OperatorSegment]
+        /// Reviewed physical corridor chains, derived from the canonical package.
+        public var physicalRouteSections: [RouteSection] = []
 
         public var origin: StopTime? { stops.first(where: \.isPassengerCall) }
         public var destination: StopTime? { stops.last(where: \.isPassengerCall) }
@@ -228,7 +231,7 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
 
         /// Copies published calls without inventing missing stops or route segments.
         public func publishedStopsDraft(to train: Train, ridden: Bool = true) -> Train? {
-            guard timetableCompleteness != .conflict else { return nil }
+            guard TrainTimetableDatabase.accepts(train), timetableCompleteness != .conflict else { return nil }
             let calls = passengerStops
             guard calls.count >= 2, let origin = calls.first, let destination = calls.last
             else { return nil }
@@ -242,7 +245,7 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
             result.origin = origin.station.name
             result.destination = destination.station.name
             result.direction = direction
-            result.routeSections = nil
+            result.routeSections = hasCompletePhysicalRoute ? physicalRouteSections : nil
             result.routePolicy = nil
             result.stops = calls.enumerated().map { index, stop in
                 Stop(name: stop.station.name,
@@ -280,7 +283,9 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
                 && hasCompleteLineCoverage
                 && hasCompleteOperatorCoverage
                 && editorProjection(ridden: false) != nil
-                && required.allSatisfy { factCompleteness[$0] == .verified }
+                && required.allSatisfy {
+                    factCompleteness[$0] == .verified || ($0 == "route_lines" && hasCompletePhysicalRoute)
+                }
         }
 
         private var hasValidChronology: Bool {
@@ -312,7 +317,19 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
             return coveredThrough >= last
         }
 
+        private var hasCompletePhysicalRoute: Bool {
+            let calls = passengerStops
+            guard calls.count >= 2, physicalRouteSections.count == calls.count - 1 else { return false }
+            return physicalRouteSections.enumerated().allSatisfy { index, section in
+                section.fromN02StationCode == calls[index].station.currentSourceCode
+                    && section.toN02StationCode == calls[index + 1].station.currentSourceCode
+                    && section.sectionCodes?.isEmpty == false
+                    && section.lineIDs?.isEmpty == false
+            }
+        }
+
         private var hasCompleteLineCoverage: Bool {
+            if hasCompletePhysicalRoute { return true }
             guard let originID = origin?.station.id, let destinationID = destination?.station.id,
                   let first = lineSegments.first, let last = lineSegments.last,
                   first.fromStationID == originID, last.toStationID == destinationID
@@ -339,6 +356,17 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
         /// A source-listed non-passenger call keeps its published clock facts.
         private func editorProjection(ridden: Bool) -> EditorProjection? {
             let calls = passengerStops
+            if hasCompletePhysicalRoute {
+                let projected = calls.enumerated().map { index, call in
+                    Stop(name: call.station.name, n02StationCode: call.station.currentSourceCode,
+                         platformNumber: Self.editorPlatformNumber(call.platform),
+                         arrival: Self.editorTime(seconds: call.arrivalSeconds, source: call.arrivalTime),
+                         departure: Self.editorTime(seconds: call.departureSeconds, source: call.departureTime),
+                         stopType: index == 0 ? "origin" : index == calls.count - 1 ? "destination" : "passenger_stop",
+                         rideSegment: ridden)
+                }
+                return EditorProjection(stops: projected, routeSections: physicalRouteSections)
+            }
             guard calls.count >= 2, !lineSegments.isEmpty else { return nil }
             let chainStations = [lineSegments[0].fromStation] + lineSegments.map(\.toStation)
             let chainStationIDs = chainStations.map(\.id)
@@ -387,7 +415,9 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
                 sections.append(RouteSection(
                     from: from.name, to: to.name,
                     fromN02StationCode: fromCode, toN02StationCode: toCode,
-                    lineNames: [segment.lineName], operatorNames: [operatorName]))
+                    lineNames: [segment.lineName], operatorNames: [operatorName],
+                    lineIDs: segment.currentN02LineID.map { [$0] },
+                    sectionCodes: segment.sectionCodes.isEmpty ? nil : segment.sectionCodes))
             }
 
             let callsByChainIndex = Dictionary(
@@ -473,7 +503,7 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
         /// published times and route facts. Callers must respect
         /// ``canApplyToRouteEditor``; incomplete research records fail closed.
         public func applying(to train: Train, ridden: Bool = true) -> Train? {
-            guard canApplyToRouteEditor, let origin, let destination,
+            guard TrainTimetableDatabase.accepts(train), canApplyToRouteEditor, let origin, let destination,
                   let projection = editorProjection(ridden: ridden)
             else { return nil }
             var result = train
@@ -574,6 +604,7 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
     }
 
     private let connection: OpaquePointer
+    private let supportsPhysicalRoutes: Bool
     private let supportsDatedOverrides: Bool
     private let lock = NSLock()
 
@@ -622,20 +653,45 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
             sqlite3_close(database)
             throw error
         }
+        supportsPhysicalRoutes = present.contains("trip_physical_route_sections")
+            && present.contains("trip_line_interval_codes")
         connection = database
         supportsDatedOverrides = schemaVersion == "1.2.0"
     }
 
     deinit { sqlite3_close(connection) }
 
-    /// Opens the generated package resource when present. A missing or
-    /// incompatible artifact returns `nil`, allowing the app to retain the
-    /// legacy pattern catalog while the historical database is being built.
-    public static func bundled() -> TrainTimetableDatabase? {
-        guard let url = Bundle.module.url(
-            forResource: "train-service-timetable", withExtension: "sqlite")
-        else { return nil }
+    /// The current timetable contains Japanese services only.
+    public static func supports(country: String) -> Bool { country == "jp" }
+
+    /// Legacy Japanese drafts may omit `region`. Foreign station identities
+    /// still prevent them from receiving a Japanese timetable occurrence.
+    public static func accepts(_ train: Train) -> Bool {
+        if let region = train.region, !supports(country: region) { return false }
+        let codes = train.stops.compactMap(\.n02StationCode)
+            + (train.routeSections ?? []).flatMap {
+                [$0.fromN02StationCode, $0.toN02StationCode].compactMap { $0 }
+            }
+        return codes.filter { !$0.isEmpty }.allSatisfy { code in
+            if ["tw", "hk", "mo", "kr", "us", "ca"].contains(where: { code.lowercased().hasPrefix($0 + "-") }) {
+                return false
+            }
+            return train.region == "jp" || code.hasPrefix("jp-official-")
+                || (code.utf8.count == 6 && code.utf8.allSatisfy { (48...57).contains($0) })
+        }
+    }
+
+    /// App builds copy the canonical database into the main bundle. Package
+    /// tests use the RailKit resource. If an app artifact is incompatible,
+    /// return nil instead of silently opening an older package copy.
+    public static func bundled(country: String = "jp", bundle: Bundle = .main) -> TrainTimetableDatabase? {
+        guard supports(country: country), let url = bundledURL(in: bundle) else { return nil }
         return try? TrainTimetableDatabase(url: url)
+    }
+
+    static func bundledURL(in bundle: Bundle) -> URL? {
+        bundle.url(forResource: "train-service-timetable", withExtension: "sqlite")
+            ?? Bundle.module.url(forResource: "train-service-timetable", withExtension: "sqlite")
     }
 
     public func trips(on serviceDate: String) throws -> [Trip] {
@@ -688,12 +744,20 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
                  AND snp.valid_from <= ?2
                  AND (snp.valid_until IS NULL OR ?2 < snp.valid_until)
                 """
+            let exactNameSlot = serviceDate == nil ? 2 : 3
+            let englishPeriod = serviceDate == nil ? "" : """
+                         AND en.valid_from <= ?2
+                         AND (en.valid_until IS NULL OR ?2 < en.valid_until)
+                """
             let sql = """
                 SELECT s.service_id, s.canonical_name, s.service_class,
                        s.historical_generation, s.first_verified_date,
-                       s.last_verified_date, s.jr_scope, MAX(snp.name),
+                       s.last_verified_date, s.jr_scope,
+                       COALESCE(MAX(CASE WHEN snp.name = ?\(exactNameSlot) COLLATE NOCASE
+                                         THEN snp.name END), MAX(snp.name)),
                        (SELECT en.name FROM service_name_periods en
                         WHERE en.service_id = s.service_id AND en.language = 'en'
+                        \(englishPeriod)
                         ORDER BY en.valid_from DESC LIMIT 1)
                 FROM services s
                 LEFT JOIN service_name_periods snp ON snp.service_id = s.service_id \(datedJoin)
@@ -708,6 +772,7 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
             if let serviceDate {
                 bindings.append(serviceDate)
             }
+            bindings.append(name)
             return try rows(sql, bindings: bindings).map(Self.decodeService)
         }
     }
@@ -883,6 +948,7 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
                 tripIDs: tripIDs, serviceDate: query.serviceDate)
             let operatorsByTrip = try loadOperatorSegments(
                 tripIDs: tripIDs, serviceDate: query.serviceDate)
+            let physicalByTrip = try loadPhysicalRoutes(tripIDs: tripIDs)
             let factsByTrip = try loadFactCompleteness(tripIDs: tripIDs)
 
             return baseRows.map { row in
@@ -905,7 +971,8 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
                     factCompleteness: factsByTrip[id] ?? [:],
                     stops: stopsByTrip[id] ?? [], timetableSymbols: symbolsByTrip[id] ?? [],
                     lineSegments: linesByTrip[id] ?? [],
-                    operatorSegments: operatorsByTrip[id] ?? [])
+                    operatorSegments: operatorsByTrip[id] ?? [],
+                    physicalRouteSections: physicalByTrip[id] ?? [])
             }
         }
     }
@@ -1046,6 +1113,7 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
         tripIDs: [String], serviceDate: String
     ) throws -> [String: [LineSegment]] {
         var result: [String: [LineSegment]] = [:]
+        let codes = try loadLineIntervalCodes(tripIDs: tripIDs)
         for batch in tripIDs.chunked(maximumCount: 400) {
             let placeholders = batch.indices.map { "?\($0 + 2)" }.joined(separator: ",")
             for row in try rows("""
@@ -1089,7 +1157,33 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
                     operatorID: row.optionalString(5), confidence: row.optionalString(6),
                     referenceKind: row.optionalString(7).flatMap(LineSegment.ReferenceKind.init),
                     currentN02LineID: row.optionalString(8), railHistoryID: row.optionalString(9),
+                    sectionCodes: codes["\(row.string(0)):\(row.int(1))"] ?? [],
                     fromStation: fromStation, toStation: toStation))
+            }
+        }
+        return result
+    }
+
+    private func loadPhysicalRoutes(tripIDs: [String]) throws -> [String: [RouteSection]] {
+        guard supportsPhysicalRoutes else { return [:] }
+        var result: [String: [RouteSection]] = [:]
+        for batch in tripIDs.chunked(maximumCount: 400) {
+            let placeholders = batch.map { _ in "?" }.joined(separator: ",")
+            for row in try rows("SELECT trip_id, route_section_json FROM trip_physical_route_sections WHERE trip_id IN (\(placeholders)) ORDER BY trip_id, sequence", bindings: batch) {
+                let section = try JSONDecoder().decode(RouteSection.self, from: Data(row.string(1).utf8))
+                result[row.string(0), default: []].append(section)
+            }
+        }
+        return result
+    }
+
+    private func loadLineIntervalCodes(tripIDs: [String]) throws -> [String: [String]] {
+        guard supportsPhysicalRoutes else { return [:] }
+        var result: [String: [String]] = [:]
+        for batch in tripIDs.chunked(maximumCount: 400) {
+            let placeholders = batch.map { _ in "?" }.joined(separator: ",")
+            for row in try rows("SELECT trip_id, segment_sequence, section_code FROM trip_line_interval_codes WHERE trip_id IN (\(placeholders)) ORDER BY trip_id, segment_sequence, position", bindings: batch) {
+                result["\(row.string(0)):\(row.int(1))", default: []].append(row.string(2))
             }
         }
         return result

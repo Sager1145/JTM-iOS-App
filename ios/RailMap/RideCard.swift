@@ -51,10 +51,12 @@ struct RideCard: View {
     var onSetRidden: ((Bool) -> Void)?
 
     @Environment(AppLocalization.self) private var localization
+    @Environment(DisplaySettings.self) private var display: DisplaySettings?
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(PanelMorph.self) private var morph: PanelMorph?
+    @State private var showsShare = false
 
     private var stage: SheetStage { morph?.stage ?? .expanded }
     /// Where the sheet is between its compact and half stops, 0…1.
@@ -67,11 +69,7 @@ struct RideCard: View {
     /// different clocks: the panel's title tracked the finger while the
     /// journey's did not.
     private var expansionProgress: CGFloat { morph?.expansion ?? 1 }
-    /// The train number's two sizes, as `.subheadline` and `.title2` measure
-    /// at the reader's text size. Named metrics rather than the two text
-    /// styles, because a size that is INTERPOLATED cannot be a style.
     @ScaledMetric(relativeTo: .subheadline) private var compactNumberSize: CGFloat = 15
-    @ScaledMetric(relativeTo: .title2) private var expandedNumberSize: CGFloat = 22
     /// The collapsed height of the two rows that belong to one stop only.
     @ScaledMetric(relativeTo: .subheadline) private var dateChipHeight: CGFloat = 27
     @ScaledMetric(relativeTo: .caption) private var identityLineHeight: CGFloat = 17
@@ -119,6 +117,13 @@ struct RideCard: View {
     /// §9.4's short in-place replacement. Identical to `PanelHeader`'s rule on
     /// purpose: two headers morphing on two clocks during one drag is worse
     /// than either rule applied consistently.
+    private var serviceTitle: Text {
+        let name = JourneyTitle.cardName(train, showsTranslation: display?.showJourneyTranslations == true)
+        let primary = Text(verbatim: name.primary)
+        guard let original = name.original else { return primary }
+        return primary + Text(verbatim: " (\(original))").font(.caption).fontWeight(.regular)
+    }
+
     private var progress: CGFloat {
         let live = min(max(expansionProgress, 0), 1)
         return reduceMotion ? (stage == .compact ? 0 : 1) : live
@@ -139,7 +144,7 @@ struct RideCard: View {
             Group {
                 if !isCompact {
                     ScrollView {
-                    VStack(alignment: .leading, spacing: 14) {
+                    LazyVStack(alignment: .leading, spacing: 14) {
                         if scrollsHeader {
                             // No bottom padding of its own here: the stack's
                             // own 14-point spacing is what separates it from
@@ -196,7 +201,8 @@ struct RideCard: View {
                             includesStationPair: false,
                             surface: AnyShapeStyle(Color.primary.opacity(0.05)),
                             scrolls: false,
-                            onSetRidden: onSetRidden
+                            onSetRidden: onSetRidden,
+                            actionButtonHeight: SheetIconButton<Image>.visualSide
                         )
                     }
                     .padding(.top, 4)
@@ -244,6 +250,9 @@ struct RideCard: View {
                 transaction.animation = nil
             }
         }
+        .sheet(isPresented: $showsShare) {
+            JourneyShareView(train: train)
+        }
     }
 
     // MARK: - the header, morphing
@@ -253,7 +262,7 @@ struct RideCard: View {
     /// Every number below is a function of ``progress``, so the train number
     /// GROWS from the collapsed line into the open card's title instead of
     /// cross-fading into a different view at a different place (§4.4, §9.1).
-    /// The two rows that belong to one stop only — the date chip above and the
+    /// The two rows that belong to one stop only — the date chip and the
     /// station pair below — fade and collapse their height on the same clock,
     /// the way `PanelHeader` handles its subtitle.
     ///
@@ -275,14 +284,10 @@ struct RideCard: View {
             // sheet settles.
             RouteLogoSquare(train: train, side: interpolated(36, 46))
 
-            // Expanded, the mark, filing date and dismissal form one quiet
-            // metadata row. The title then receives the card's full width
-            // below it instead of wrapping inside the narrow strip between
-            // the mark and the close button. Compact, this slot collapses and
-            // the same title moves back beside the mark.
+            // The filing date stays below the service title in the column
+            // beside the logo, matching the journey list's identity header.
             ZStack(alignment: .leading) {
-                // §3.2 puts the date above the number as an eyebrow; the
-                // resolver supplies it as metadata rather than a control.
+                // The resolver supplies the date as metadata rather than a control.
                 if let date = dateChipTitle {
                     dateChip(date)
                         .opacity(progress)
@@ -301,19 +306,10 @@ struct RideCard: View {
             }
 
             VStack(alignment: .leading, spacing: 0) {
-                Text(train.number)
+                serviceTitle
                     .accessibilityIdentifier("selectedJourney-\(train.id)")
-                    // Interpolated rather than swapped between two `Font`s, for
-                    // the reason ``RailInterpolatedFont`` gives and for the one
-                    // `expansionProgress` gives above: this number and the panel
-                    // title move on ONE clock, and a plain `.font()` follows the
-                    // drag but not the spring that settles it.
-                    .railInterpolatedFont(
-                        size: interpolated(compactNumberSize, expandedNumberSize),
-                        weight: .bold)
-                    // See `PanelHeader`'s title: the size is interpolated per
-                    // frame, so SwiftUI must not also cross-fade the glyphs
-                    // against themselves when the settle spring animates.
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(.secondary)
                     .contentTransition(.identity)
                     // §14.4: no key content truncated at an accessibility text
                     // size. Three lines is a sensible ceiling for a名前 like
@@ -375,6 +371,12 @@ struct RideCard: View {
             }
 
             HStack(spacing: 2) {
+                SheetIconButton(
+                    systemImage: "square.and.arrow.up",
+                    accessibilityLabel: Text(localization.journeyShareText("title")),
+                    action: { showsShare = true }
+                )
+                .accessibilityIdentifier("journeyShareButton")
                 // Compact offers the one action the resolver chose; open offers
                 // the whole group below. The close button is in the same place
                 // in both.
@@ -449,15 +451,8 @@ struct RideCard: View {
         chipContent
             .font(.subheadline.weight(.semibold))
             .foregroundStyle(.secondary)
-            // The same 34-point band the control row beside it occupies, so
-            // removing the button does not move the number underneath. AX
-            // keeps its intrinsic two-line height — forcing that content back
-            // into 34 points would clip the date.
-            .frame(
-                height: dynamicTypeSize.isAccessibilitySize
-                    ? nil
-                    : SheetIconButton<Image>.visualSide,
-                alignment: .leading)
+            // Use the text's own line height so the layout's 5 pt gap matches
+            // the list card's title/date stack.
             // The whole date, spoken, whichever way it is drawn — a reader
             // hearing this must not be given the wrapped halves as two
             // fragments.
@@ -529,10 +524,9 @@ struct RideCard: View {
 /// Positions the selected journey's identity as one continuously moving
 /// header rather than swapping compact and expanded variants.
 ///
-/// Compact keeps the logo, title and actions on one row. As the sheet opens,
-/// the date takes the middle of the metadata row while the title moves below
-/// it and grows into the full card width. The layout's progress is animatable,
-/// so the same views follow the drag instead of jumping at a detent boundary.
+/// The title stays beside the logo at every detent. The date unfolds below
+/// the title as the sheet opens. Progress animates the same views throughout
+/// the drag instead of swapping layouts at a detent boundary.
 private struct RideIdentityHeaderLayout: Layout {
     var progress: CGFloat
     var spacing: CGFloat
@@ -603,19 +597,16 @@ private struct RideIdentityHeaderLayout: Layout {
         let metadata = subviews[1].sizeThatFits(
             ProposedViewSize(width: metadataWidth, height: nil))
 
-        let compactLeading = logo.width + spacing
-        let compactTrailing = actions.width + spacing
-        let identityX = compactLeading * (1 - progress)
-        let identityWidth = max(
-            1,
-            width - (compactLeading + compactTrailing) * (1 - progress))
+        let identityX = metadataX
+        let identityWidth = metadataWidth
         let identity = subviews[2].sizeThatFits(
             ProposedViewSize(width: identityWidth, height: nil))
 
-        let topRowHeight = max(logo.height, metadata.height, actions.height)
-        let identityY = (topRowHeight + 8) * progress
-        let height = max(topRowHeight, identityY + identity.height)
-        let metadataY = max(0, (topRowHeight - metadata.height) / 2) * progress
+        let identityY: CGFloat = 0
+        let metadataY = identity.height + 5 * progress
+        let identityColumnHeight =
+            identity.height + (metadata.height > 0 ? 5 * progress + metadata.height : 0)
+        let height = max(logo.height, actions.height, identityColumnHeight)
 
         return Metrics(
             size: CGSize(width: width, height: height),

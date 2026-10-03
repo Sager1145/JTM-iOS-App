@@ -100,9 +100,10 @@ actor DisplayNetworkCache {
         return RouteNetwork(lines: loaded.package.lines.map { line in
             RouteNetwork.Line(
                 lineId: line.id, name: line.name, operator: line.operator,
-                isLoop: line.isLoop, alignmentDirection: nil,
+                isLoop: line.isLoop, alignmentDirection: line.alignmentDirection,
                 parts: DisplayParts.parts(
-                    for: line, topology: loaded.topologyByLineID[line.id] ?? .init()))
+                    for: line, topology: loaded.topologyByLineID[line.id] ?? .init()),
+                intervals: RailIntervalCodes.intervals(for: line), compactLine: line)
         })
     }
 

@@ -189,7 +189,7 @@
     "jp-東日本旅客鉄道-水郡線-2": "東日本旅客鉄道:水郡線",
     "jp-東日本旅客鉄道-総武線": "東日本旅客鉄道:総武線",
     "jp-東日本旅客鉄道-総武線-2": "東日本旅客鉄道:総武線",
-    "jp-東日本旅客鉄道-総武線-3": "東日本旅客鉄道:総武線",
+    "jp-東日本旅客鉄道-総武線-3": "東日本旅客鉄道:東海道線",
     "jp-東日本旅客鉄道-羽越線": "東日本旅客鉄道:羽越線",
     "jp-東日本旅客鉄道-羽越線-p1": "東日本旅客鉄道:羽越線",
     "jp-東日本旅客鉄道-羽越線-p2": "東日本旅客鉄道:羽越線",
@@ -379,6 +379,17 @@
       ],
       "why": "Every group here is one railway whose N02 geometry the package build split into several line rows (-2/-3/-4/-5 for branch services cut at surveyed junctions, -p1/-p2 for disjoint geometry pieces of one railway). Naming them is the ONLY use byLineId is put to in the Japan profile: identity itself comes from the profile key (operator + official line name), not from this table, so no cross-railway merge can hide in it. Verified before writing: all 40 groups agree on colour across their members, and all 40 already share one railwayIdentity in jp-2025.json.",
       "confidence": "A"
+    },
+    {
+      "renderGroupIds": [
+        "東日本旅客鉄道:東海道線"
+      ],
+      "lineIds": [
+        "jp-東日本旅客鉄道-総武線-3",
+        "jp-東日本旅客鉄道-東海道線"
+      ],
+      "why": "User-requested conventional display corridor 2026-10-01: joins south of Yurakucho, shares Shimbashi–Shinagawa surface drawing, diverges after Shinagawa. Physical identities, intervals and station membership remain distinct.",
+      "confidence": "user-directed-display"
     }
   ],
   "families": {

@@ -11,9 +11,11 @@ solver, the statistics screen and the passport are first exercised against on a
 device. Each is generated from the shipped package rather than typed, so a
 sample can never name a station the package does not have.
 
-**Two of them cross a border on purpose.** The United States store carries the
+**Three of them cross a border on purpose.** The United States store carries the
 *Adirondack* from New York to Montréal and the Canadian store carries the
-*Maple Leaf* from Toronto to New York, because a cross-border journey is the
+*Maple Leaf* from Toronto to New York; *Cascades* reaches Vancouver from
+Eugene. Each crossing names the package's explicit surveyed border connector,
+because a cross-border journey is the
 one case the seven-package app could not hold until now, and a feature with no
 sample is a feature nobody looks at.
 """
@@ -31,8 +33,8 @@ def load(package_paths, stations_paths):
     """Every package the samples may name, merged into one lookup.
 
     More than one, because a cross-border sample names a line in each: the
-    *Adirondack* is `amtrak-adirondack-us` as far as the border and
-    `amtrak-adirondack-ca` beyond it, and a generator holding one package could
+    *Adirondack* names its US and CA lines and ``amtrak-adirondack-border1``
+    between them, and a generator holding one package could
     only write the half of the journey that ends at Rouses Point. The merge is
     safe because the two packages share no line id — the build prefixes them
     with the region — and because a station group code carries its region too.
@@ -59,7 +61,14 @@ def line_by_id(package, line_id):
 
 
 def journey(package, codes, spec, region):
-    """One itinerary along one or two of the package's own lines."""
+    """One itinerary along contiguous, surveyed package intervals.
+
+    Adjacent parts must share a canonical station identity and anchor. A
+    missing border connector is a missing physical interval, so it cannot be
+    filled by proximity-based deduplication or a guessed station-to-station
+    section. A distinct country-owned station remains distinct even when it
+    is close to another platform.
+    """
     stops = []
     sections = []
     line_names = []
@@ -75,23 +84,36 @@ def journey(package, codes, spec, region):
         last = index_of(rows, part.get('to'))
         if first is None or last is None:
             return None
+        intervals = decoded_intervals(line)
+        if intervals is None:
+            return None
         step = 1 if last >= first else -1
-        chosen = [rows[i] for i in range(first, last + step, step)]
+        chosen = list(range(first, last + step, step))
         if line['name'] not in line_names:
             line_names.append(line['name'])
         if line['operator'] not in operators:
             operators.append(line['operator'])
-        for row in chosen:
+        for position, index in enumerate(chosen):
+            row = rows[index]
             code = table.get(row[0]) or row[0]
             point = (row[2], row[3])
-            # Border-split display lines deliberately overlap one physical
-            # station so their geometries meet. Each country gives that row a
-            # country-prefixed code, so code-only deduplication wrote the same
-            # stop twice and created a zero-length cross-border journey leg.
-            if (stops and (stops[-1]['n02_station_code'] == code
-                           or (last_point is not None
-                               and distance_metres(last_point, point) <= 20.0))):
-                continue
+            if position == 0 and stops:
+                if (stops[-1]['n02_station_code'] != code
+                        or last_point != point):
+                    return None
+                continue  # the exact same owned station joins the two parts
+            if position:
+                interval_index = min(chosen[position - 1], index)
+                if interval_index >= len(intervals):
+                    return None
+                piece = intervals[interval_index]
+                start, end = rows[interval_index], rows[interval_index + 1]
+                if (len(piece) < 2
+                        or piece[0] != [start[2], start[3]]
+                        or piece[-1] != [end[2], end[3]]):
+                    return None
+                if stops[-1]['n02_station_code'] == code:
+                    return None
             stops.append({
                 'name': row[1],
                 'n02_station_code': code,
@@ -116,6 +138,7 @@ def journey(package, codes, spec, region):
     return {
         'id': spec['id'],
         'date': spec['date'],
+        **({'notes': spec['notes']} if isinstance(spec.get('notes'), str) else {}),
         'number': spec['number'],
         'train_type': spec['trainType'],
         'company': operators[0],
@@ -137,6 +160,28 @@ def journey(package, codes, spec, region):
         'route_sections': sections,
         'stops': stops,
     }
+
+
+def decoded_intervals(line):
+    """Read compact-v1 without replacing absent geometry with a chord."""
+    segments = line.get('segments')
+    if not isinstance(segments, list):
+        return None
+    intervals = []
+    previous = None
+    for row in segments:
+        if (not isinstance(row, list) or len(row) < 3
+                or not isinstance(row[2], list)):
+            return None
+        _, continues, coordinates = row[:3]
+        if continues and previous is None:
+            return None
+        piece = ([previous] if continues else []) + coordinates
+        if len(piece) < 2:
+            return None
+        intervals.append(piece)
+        previous = piece[-1]
+    return intervals
 
 
 def distance_metres(a, b):
@@ -169,25 +214,50 @@ def main():
     ap.add_argument('--specs', required=True,
                     help='JSON list of itinerary specifications')
     ap.add_argument('--out', required=True)
+    ap.add_argument('--replace-id', action='append',
+                    help='Replace only these samples, preserving other existing output entries. Every requested sample must build.')
     options = ap.parse_args()
 
     package, codes = load(options.package, options.stations)
     with open(options.specs) as fh:
         specs = json.load(fh)
+    selected = set(options.replace_id or [])
+    if selected:
+        available = {spec['id'] for spec in specs}
+        if selected - available:
+            raise ValueError(f'Unknown sample ids: {selected - available}')
+        specs = [spec for spec in specs if spec['id'] in selected]
 
     trains = []
     for spec in specs:
         built = journey(package, codes, spec, options.region)
         if built is None:
+            if selected:
+                raise ValueError(f'Required sample {spec["id"]} has no continuous surveyed journey')
             sys.stderr.write(f"  skipped {spec['id']}: the package does not "
                              f"carry that line or those stations\n")
             continue
         trains.append(built)
     payload = {'schema_version': '1.3', 'trains': trains}
+    if selected and os.path.exists(options.out):
+        with open(options.out) as fh:
+            payload = json.load(fh)
+        payload['trains'] = replace_samples(payload['trains'], trains, selected)
     with open(options.out, 'w') as fh:
         json.dump(payload, fh, ensure_ascii=False)
     sys.stderr.write(f'{len(trains)} journeys -> {options.out} '
                      f'({os.path.getsize(options.out)} bytes)\n')
+
+
+def replace_samples(existing, replacements, selected):
+    """A scoped rail repair never regenerates unrelated historical samples."""
+    by_id = {train['id']: train for train in replacements}
+    if set(by_id) != set(selected) or len(by_id) != len(replacements):
+        raise ValueError('Required replacement samples are missing or duplicated')
+    result = [by_id[train['id']] if train['id'] in by_id else train for train in existing]
+    old_ids = {train['id'] for train in existing}
+    result.extend(train for train in replacements if train['id'] not in old_ids)
+    return result
 
 
 if __name__ == '__main__':

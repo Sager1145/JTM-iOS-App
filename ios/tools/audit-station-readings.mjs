@@ -5,7 +5,7 @@
 //
 //      node ios/tools/audit-station-readings.mjs [--check] [jp tw hk mo kr]
 //
-//  The table is `app/data/station-readings*.json`, one per region. Two kinds
+//  The runtime table is `app/data/station-names*.json`, one per region. Two kinds
 //  of table live under that one name and they fail differently, so they are
 //  measured differently:
 //
@@ -40,11 +40,11 @@ const require = createRequire(import.meta.url);
 const { normalizeStationName } = require(path.join(ROOT, "app", "shared", "app-core.js"));
 
 const REGIONS = [
-  { code: "jp", localizesNames: false, readings: "station-readings.json", store: "train-store.json" },
-  { code: "tw", localizesNames: true, readings: "station-readings-tw.json", store: "train-store-tw.json" },
-  { code: "hk", localizesNames: true, readings: "station-readings-hk.json", store: "train-store-hk.json" },
-  { code: "mo", localizesNames: true, readings: "station-readings-mo.json", store: "train-store-mo.json" },
-  { code: "kr", localizesNames: true, readings: "station-readings-kr.json", store: "train-store-kr.json" },
+  { code: "jp", localizesNames: false, readings: "station-names.json", store: "train-store.json" },
+  { code: "tw", localizesNames: true, readings: "station-names-tw.json", store: "train-store-tw.json" },
+  { code: "hk", localizesNames: true, readings: "station-names-hk.json", store: "train-store-hk.json" },
+  { code: "mo", localizesNames: true, readings: "station-names-mo.json", store: "train-store-mo.json" },
+  { code: "kr", localizesNames: true, readings: "station-names-kr.json", store: "train-store-kr.json" },
 ];
 
 // What `I18N.stationName` reads for a localized-name region, and what

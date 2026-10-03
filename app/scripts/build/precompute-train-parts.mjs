@@ -58,19 +58,20 @@ const OUT_DIR = process.env.PRECOMPUTE_OUT_DIR
   : path.join(DATA_DIR, "sample-data");
 // Which country's store is being precomputed. The solver datasets are
 // per-country and MUST match the store: feeding Taiwanese stops to the
-// Japanese network is precisely the cross-country solve the app refuses to do
-// at runtime, and offline it would silently bake wrong-country geometry into
-// the published parts. Japan stays the default so every existing invocation
-// is unchanged.
-const SUPPORTED_COUNTRIES = new Set(["jp", "tw", "hk", "mo", "kr"]);
+// Japanese network would bake wrong-country geometry into published parts.
+// US and CA intentionally share the browser's cross-border scope. Japan stays
+// the default so every existing invocation is unchanged.
+const SUPPORTED_COUNTRIES = new Set(["jp", "tw", "hk", "mo", "kr", "us", "ca"]);
 const requestedCountry = process.env.PRECOMPUTE_COUNTRY || "jp";
-const COUNTRY = SUPPORTED_COUNTRIES.has(requestedCountry)
-  ? requestedCountry
-  : "jp";
+if (!SUPPORTED_COUNTRIES.has(requestedCountry)) throw new Error(`Unsupported precompute country: ${requestedCountry}`);
+const COUNTRY = requestedCountry;
 const suffix = COUNTRY === "jp" ? "" : `-${COUNTRY}`;
 const RAIL_SECTIONS_FILE = `rail-sections${suffix}.json`;
 const STATIONS_FILE = `stations${suffix}.json`;
-const RAIL_HISTORY_FILE = `rail-history${suffix}.json`;
+export function precomputeScopeCountries(country) {
+  return country === "us" || country === "ca" ? ["us", "ca"] : [country];
+}
+const SCOPE_COUNTRIES = precomputeScopeCountries(COUNTRY);
 
 const readJson = (p) => JSON.parse(fs.readFileSync(p, "utf8"));
 
@@ -110,7 +111,13 @@ const CONTEXT_DRIVER_SOURCE = `
 globalThis.PrecomputeAdapter.solverContexts(__host)
 `;
 
-export function deriveManifestSolverContext(contexts) {
+export function deriveManifestSolverContext(contexts, scopeContext = null) {
+  // Individual trains can use a subset of the loaded regions. The manifest
+  // attests the whole input scope; shared regions must still agree exactly.
+  if (scopeContext) contexts = [
+    { ...scopeContext, route_cache_digest: "manifest-scope", ride_date: null },
+    ...contexts,
+  ];
   let manifestContext = null;
   for (let index = 0; index < contexts.length; index += 1) {
     const context = contexts[index];
@@ -178,10 +185,76 @@ export function deriveManifestSolverContext(contexts) {
         : {}),
     };
     if (!manifestContext) manifestContext = candidate;
-    else if (JSON.stringify(manifestContext) !== JSON.stringify(candidate))
-      throw new Error(`${label} disagrees with the manifest solver context`);
+    else {
+      if (manifestContext.solver_version !== candidate.solver_version)
+        throw new Error(`${label} disagrees with the manifest solver context`);
+      for (const [code, revision] of historyEntries) {
+        if (Object.hasOwn(manifestContext.history_revisions, code) &&
+            (manifestContext.history_revisions[code] !== revision ||
+             manifestContext.history_hashes?.[code] !== candidate.history_hashes?.[code]))
+          throw new Error(`${label} disagrees with the manifest solver context`);
+      }
+      const revisions = { ...manifestContext.history_revisions, ...candidate.history_revisions };
+      const hashes = { ...manifestContext.history_hashes, ...candidate.history_hashes };
+      manifestContext = {
+        solver_version: manifestContext.solver_version,
+        history_revisions: Object.fromEntries(Object.entries(revisions).sort()),
+        ...(Object.keys(hashes).length
+          ? { history_hashes: Object.fromEntries(Object.entries(hashes).sort()) } : {}),
+      };
+    }
   }
   return manifestContext;
+}
+
+// Hash the exact route inputs. Old geometry cannot acquire a fresh identity
+// through finalize/restamp; only a solve may attest changed source bytes.
+export function currentPrecomputeSourceHashes({country = COUNTRY, dataDir = DATA_DIR,
+  railDir = path.join(APP_DIR, "public", "rail")} = {}) {
+  const files = [[dataDir, "matched-routes.json"], [dataDir, "matched-stops.json"]];
+  for (const region of precomputeScopeCountries(country)) {
+    const suffix = region === "jp" ? "" : `-${region}`;
+    files.push([railDir, `${region}-2025.json`],
+      [dataDir, `rail-sections${suffix}.json`], [dataDir, `stations${suffix}.json`]);
+    const history = `rail-history${suffix}.json`;
+    if (fs.existsSync(path.join(dataDir, history))) files.push([dataDir, history]);
+  }
+  return Object.fromEntries(files.sort((a, b) => a[1].localeCompare(b[1])).map(([dir, name]) =>
+    [name, createHash("sha256").update(fs.readFileSync(path.join(dir, name))).digest("hex")]));
+}
+
+// The solver can return a positive cache entry after skipping unresolved
+// sections. Such a partial journey must not be published as a complete North
+// American sample. Keep its source train and publish an explicit negative hit.
+export function precomputedRouteCoversSections(sections, features) {
+  let featureIndex = 0;
+  for (const section of sections) {
+    const from = section.from_n02_station_code;
+    const to = section.to_n02_station_code;
+    if (!from || !to) return false;
+    let matched = false;
+    while (featureIndex < features.length) {
+      const props = features[featureIndex++].properties || {};
+      if (props.from_n02_station_code === from && props.to_n02_station_code === to) {
+        matched = true;
+        break;
+      }
+    }
+    if (!matched) return false;
+  }
+  return true;
+}
+
+export function assertPrecomputedTrainMatches(partTrain, currentTrain, label) {
+  if (JSON.stringify(partTrain) !== JSON.stringify(currentTrain)) {
+    throw new Error(`${label} train changed; full regeneration is required.`);
+  }
+}
+
+export function assertCurrentPrecomputeSourceHashes(actual, expected = currentPrecomputeSourceHashes()) {
+  if (!actual || JSON.stringify(Object.entries(actual).sort()) !== JSON.stringify(Object.entries(expected).sort())) {
+    throw new Error("Precomputed route inputs changed or lack content attestation; full regeneration is required.");
+  }
 }
 
 export function currentPrecomputeSolverContext({
@@ -195,26 +268,22 @@ export function currentPrecomputeSolverContext({
   );
   if (!versionMatch)
     throw new Error("Cannot read ROUTE_SOLVER_CACHE_VERSION from app-config.js");
-  const historySuffix = country === "jp" ? "" : `-${country}`;
-  const historyPath = path.join(dataDir, `rail-history${historySuffix}.json`);
-  const historyBytes = fs.existsSync(historyPath) ? fs.readFileSync(historyPath) : null;
-  const revision = historyBytes
-    ? JSON.parse(historyBytes.toString("utf8"))?.revision
-    : "none";
-  if (typeof revision !== "string" || !revision.trim())
-    throw new Error(`${path.basename(historyPath)} has no revision`);
+  const revisions = {};
+  const hashes = {};
+  for (const region of precomputeScopeCountries(country).sort()) {
+    const historySuffix = region === "jp" ? "" : `-${region}`;
+    const historyPath = path.join(dataDir, `rail-history${historySuffix}.json`);
+    const historyBytes = fs.existsSync(historyPath) ? fs.readFileSync(historyPath) : null;
+    const revision = historyBytes ? JSON.parse(historyBytes.toString("utf8"))?.revision : "none";
+    if (typeof revision !== "string" || !revision.trim())
+      throw new Error(`${path.basename(historyPath)} has no revision`);
+    revisions[region] = revision;
+    if (historyBytes) hashes[region] = createHash("sha256").update(historyBytes).digest("hex");
+  }
   return {
     solver_version: versionMatch[1],
-    history_revisions: { [country]: revision },
-    ...(historyBytes
-      ? {
-          history_hashes: {
-            [country]: createHash("sha256")
-              .update(historyBytes)
-              .digest("hex"),
-          },
-        }
-      : {}),
+    history_revisions: revisions,
+    ...(Object.keys(hashes).length ? { history_hashes: hashes } : {}),
   };
 }
 
@@ -241,6 +310,7 @@ function requirePartTrainID(train, name) {
 // runs; see PRECOMPUTE_RANGE below). Validates that every train in the store
 // has its part on disk, in order.
 function finalizeManifestFromParts() {
+  const sourceHashes = currentPrecomputeSourceHashes();
   const store = JSON.parse(
     fs.readFileSync(STORE_PATH, "utf8"),
   );
@@ -256,6 +326,8 @@ function finalizeManifestFromParts() {
     const part = JSON.parse(
       fs.readFileSync(path.join(OUT_DIR, `${name}.json`), "utf8"),
     );
+    assertCurrentPrecomputeSourceHashes(part.source_hashes, sourceHashes);
+    assertPrecomputedTrainMatches(part.train, store.trains[i], name);
     partNames.push(name);
     partTrainIDs[name] = requirePartTrainID(part.train, name);
     const dateKey =
@@ -271,7 +343,7 @@ function finalizeManifestFromParts() {
   }
   if (solvedCount === 0)
     throw new Error("No train solved — refusing to publish empty parts.");
-  const solverContext = deriveManifestSolverContext(routeSolverContexts);
+  const solverContext = deriveManifestSolverContext(routeSolverContexts, currentPrecomputeSolverContext());
   assertCurrentPrecomputeSolverContext(solverContext);
   const manifest = {
     format: 1,
@@ -281,6 +353,7 @@ function finalizeManifestFromParts() {
     unsolvable: unsolvableCount,
     no_route: noRouteCount,
     solver_context: solverContext,
+    source_hashes: sourceHashes,
     parts: partNames,
     part_train_ids: partTrainIDs,
     full: "sample-full",
@@ -320,6 +393,7 @@ async function restampPrecomputedOutput(context) {
   }
   const current = currentPrecomputeSolverContext();
   const manifest = readJson(path.join(OUT_DIR, "manifest.json"));
+  assertCurrentPrecomputeSourceHashes(manifest.source_hashes);
   const summary = await vm.runInContext(CONTEXT_DRIVER_SOURCE, context, {
     filename: "precompute-context-driver.js",
   });
@@ -359,7 +433,16 @@ async function restampPrecomputedOutput(context) {
             history_hashes: existing.history_hashes,
           }
         : null;
-      if (JSON.stringify(existingIdentity) !== JSON.stringify(current)) {
+      const regions = Object.keys(existingIdentity?.history_revisions || {});
+      const expectedPartIdentity = {
+        solver_version: current.solver_version,
+        history_revisions: Object.fromEntries(regions.sort().map((code) => [code, current.history_revisions[code]])),
+        ...(regions.some((code) => current.history_hashes?.[code]) ? {
+          history_hashes: Object.fromEntries(regions.filter((code) => current.history_hashes?.[code])
+            .map((code) => [code, current.history_hashes[code]])),
+        } : {}),
+      };
+      if (!regions.length || JSON.stringify(existingIdentity) !== JSON.stringify(expectedPartIdentity)) {
         throw new Error(
           `${name} was not solved from the current overlay; full regeneration is required.`,
         );
@@ -376,7 +459,7 @@ async function restampPrecomputedOutput(context) {
       path.join(stagingDir, `${name}.json`), JSON.stringify(part));
   }
 
-  const solverContext = deriveManifestSolverContext(routeSolverContexts);
+  const solverContext = deriveManifestSolverContext(routeSolverContexts, currentPrecomputeSolverContext());
   assertCurrentPrecomputeSolverContext(solverContext, current);
   const restampedManifest = { ...manifest, solver_context: solverContext };
   fs.writeFileSync(
@@ -406,19 +489,28 @@ async function main() {
   const started = performance.now();
   console.log("Loading datasets...");
   console.log(`Country: ${COUNTRY} (${RAIL_SECTIONS_FILE}, ${STATIONS_FILE}).`);
-  const railSections = readJson(path.join(DATA_DIR, RAIL_SECTIONS_FILE));
-  const stations = readJson(path.join(DATA_DIR, STATIONS_FILE));
-  const historyPath = path.join(DATA_DIR, RAIL_HISTORY_FILE);
-  const historyBytes = fs.existsSync(historyPath) ? fs.readFileSync(historyPath) : null;
-  const historyOverlays = historyBytes
-    ? { [COUNTRY]: readPrecomputeHistoryOverlay(historyBytes.toString("utf8")) }
-    : {};
-  // Hash the exact bytes handed to the overlay decoder. Native computes the
-  // same SHA-256 from its bundled resource and rejects precomputed geometry
-  // that cannot attest those bytes, even when a stale file reused a revision.
-  const historyHashes = historyBytes
-    ? { [COUNTRY]: createHash("sha256").update(historyBytes).digest("hex") }
-    : {};
+  const sourceHashes = currentPrecomputeSourceHashes();
+  // Match the browser's region scope. US and CA share infrastructure for
+  // cross-border journeys; all other countries keep their separate graph.
+  const mergeCollections = (name) => ({
+    type: "FeatureCollection",
+    features: SCOPE_COUNTRIES.flatMap((region) => {
+      const suffix = region === "jp" ? "" : `-${region}`;
+      return readJson(path.join(DATA_DIR, `${name}${suffix}.json`)).features;
+    }),
+  });
+  const railSections = mergeCollections("rail-sections");
+  const stations = mergeCollections("stations");
+  const historyOverlays = {};
+  const historyHashes = {};
+  for (const region of SCOPE_COUNTRIES) {
+    const suffix = region === "jp" ? "" : `-${region}`;
+    const historyPath = path.join(DATA_DIR, `rail-history${suffix}.json`);
+    if (!fs.existsSync(historyPath)) continue;
+    const historyBytes = fs.readFileSync(historyPath);
+    historyOverlays[region] = readPrecomputeHistoryOverlay(historyBytes.toString("utf8"));
+    historyHashes[region] = createHash("sha256").update(historyBytes).digest("hex");
+  }
   const matchedStops = readJson(path.join(DATA_DIR, "matched-stops.json"));
   // Curated per-train geometry — the offline fallback for trains the solver
   // cannot route (see the unsolvable branch in the driver).
@@ -461,6 +553,26 @@ async function main() {
     `Evaluating the app script family in sandbox (${appScripts.length} files)...`,
   );
   evaluateAppScripts(context, appScripts);
+
+  const physicalLineIDs = new Set(JSON.parse(trainStoreText).trains.flatMap((train) =>
+    (train.route_sections || []).flatMap((section) => [
+      ...(section.line_ids || []),
+      ...(section.section_codes || []).map((code) => code.split("@")[0]),
+    ])));
+  if (physicalLineIDs.size) {
+    const packageData = context.RailNetwork.mergeCompactPackages(SCOPE_COUNTRIES.map((region) =>
+      readJson(path.join(APP_DIR, "public", "rail", `${region}-2025.json`))));
+    for (const line of packageData.lines) {
+      if (physicalLineIDs.has(line.id)) {
+        for (const owner of Object.values(line.stationCircleOwnerByCode || {})) physicalLineIDs.add(owner);
+      }
+    }
+    const physicalNetwork = context.RailNetwork.buildNetworkFromCompactPackage({
+      ...packageData, lines: packageData.lines.filter((line) => physicalLineIDs.has(line.id)),
+    });
+    context.RailMap.sourceRouteGeometry = (properties) =>
+      context.RailNetwork.sourceGeometryForIntervals(physicalNetwork, properties);
+  }
 
   const baseHost = {
     country: COUNTRY,
@@ -505,6 +617,11 @@ async function main() {
   context.__host = {
     ...baseHost,
     onTrainSolved({ index, id, raw, route, featureCount, ms }) {
+      if ((COUNTRY === "us" || COUNTRY === "ca") && route && !route.unsolvable &&
+          !precomputedRouteCoversSections(raw.route_sections || [], route.features || [])) {
+        console.warn(`Incomplete route for ${id}; publishing an explicit unsolvable cache entry.`);
+        route = {cache_key: route.cache_key, solver_context: route.solver_context, unsolvable: true};
+      }
       const name = `part-${String(sliceStart + index).padStart(3, "0")}`;
       partNames.push(name);
       partTrainIDs[name] = requirePartTrainID(raw, name);
@@ -519,7 +636,7 @@ async function main() {
       }
       fs.writeFileSync(
         path.join(writeDir, `${name}.json`),
-        JSON.stringify({ format: 1, train: raw, route }),
+        JSON.stringify({ format: 1, source_hashes: sourceHashes, train: raw, route }),
       );
       console.log(
         `  [${index + 1}] ${id}: ${
@@ -540,7 +657,7 @@ async function main() {
     );
   }
 
-  const solverContext = deriveManifestSolverContext(routeSolverContexts);
+  const solverContext = deriveManifestSolverContext(routeSolverContexts, currentPrecomputeSolverContext());
   assertCurrentPrecomputeSolverContext(solverContext);
   if (JSON.stringify(solverContext) !== JSON.stringify(summary.solverContext)) {
     throw new Error(
@@ -557,6 +674,7 @@ async function main() {
       unsolvable: unsolvableCount,
       no_route: noRouteCount,
       solver_context: solverContext,
+      source_hashes: sourceHashes,
       parts: partNames,
       part_train_ids: partTrainIDs,
       full: "sample-full",
@@ -584,6 +702,7 @@ async function main() {
   if (solvedCount === 0) {
     throw new Error("No train solved — refusing to publish empty parts.");
   }
+  assertCurrentPrecomputeSourceHashes(sourceHashes);
   if (!rangeEnv) publishStagedOutput(stagingDir);
   console.log(
     `\nDone in ${Math.round((performance.now() - started) / 1000)} s: ${summary.total} trains ` +

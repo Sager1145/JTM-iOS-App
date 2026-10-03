@@ -281,6 +281,20 @@ final class ConsoleSweepTests: XCTestCase {
         } else {
             XCTFail("the journey card has no primary action")
         }
+        // A save action opens an editor over the menu; return through both
+        // presentations before the next destination uses the resident tabs.
+        let cancelEditor = element("rideEditorCancel", in: app)
+        if cancelEditor.exists, cancelEditor.isHittable {
+            cancelEditor.tap()
+            settle()
+        }
+        let closeMenu = element("journeyMenuClose", in: app)
+        XCTAssertTrue(closeMenu.waitForExistence(timeout: 8))
+        if closeMenu.exists, closeMenu.isHittable {
+            closeMenu.tap()
+            XCTAssertTrue(closeMenu.waitForNonExistence(timeout: 8))
+            settle()
+        }
         // Stop anything that started, so the sweep does not leave playback
         // running under every screen after this one.
         let stop = element("playbackStopButton", in: app)

@@ -41,7 +41,7 @@
       );
     return '<span class="rp-line-swatch" style="background:' + escHtml(row.color) + '"></span>';
   }
-  function buildPopupModel(network, stationId, lineIdFallback) {
+  function buildPopupModel(network, stationId, lineIdFallback, opts) {
     const st = network.stationById.get(stationId);
     const groupKey = st && st.stationGroupId ? st.stationGroupId : "solo:" + stationId;
     const members = network.groupMembers.get(groupKey) || [];
@@ -82,7 +82,7 @@
       global.I18N && typeof global.I18N.stationName === "function"
         ? global.I18N.stationName(rawName, st ? st.stationId : stationId)
         : rawName;
-    return {
+    const model = {
       name,
       nameRoma: st && st.nameRoma ? st.nameRoma : "",
       // Header readings from the curated station-readings reference (kana /
@@ -95,14 +95,29 @@
           : null,
       lines: rows,
     };
+    if (opts && opts.detailed) {
+      const line = st && network.lineById.get(st.lineId);
+      model.details = {
+        rawName, alternateName: st && st.nameRoma, code: st ? st.stationGroupId : stationId,
+        country: line && line.country,
+        lon: st && st.lon, lat: st && st.lat,
+        validFrom: st && st.validFrom, validTo: st && st.validTo,
+        names: global.I18N && typeof global.I18N.stationNames === "function"
+          ? global.I18N.stationNames(rawName, st ? st.stationId : stationId, st && st.stationGroupId) : [],
+      };
+      model.lines = rows.map((row) => ({ ...row,
+        operatorName: network.lineById.get(row.lineId).operator || "" }));
+    }
+    return model;
   }
   function stationPopupHtml(model, opts) {
     // readings === null -> standalone railmap (no app i18n): keep nameRoma.
     // readings === []   -> app context with every reading toggle off: no sublines.
     // Each reading renders as its OWN line under the name (.rp-popup-head is a
     // column flexbox), so the popup grows with however many are enabled.
+    const detailed = !!(opts && opts.detailed && model.details);
     const subs =
-      model.readings != null
+      detailed ? [] : model.readings != null
         ? model.readings
         : model.nameRoma
           ? [model.nameRoma]
@@ -125,17 +140,51 @@
           lineBadgeHtml(r) +
           '<span class="rp-line-name">' +
           escHtml(r.label) +
-          "</span></li>"
+          "</span>" + (detailed && r.operatorName && r.operatorName !== r.company
+            ? '<span class="rp-line-operator">' + escHtml(r.operatorName) + "</span>" : "") + "</li>"
         );
       })
       .join("");
+    const fallbackLabels = {
+      "popup.originalName": "Original name", "popup.alternateName": "Alternative name",
+      "popup.names": "Station names", "popup.stationInfo": "Station information",
+      "popup.stationCode": "Station code", "popup.region": "Region",
+      "popup.coordinates": "Coordinates", "popup.validFrom": "Valid from",
+      "popup.validTo": "Valid until", "popup.line": "Lines",
+    };
+    const t = (key) => global.I18N && typeof global.I18N.t === "function"
+      ? global.I18N.t(key) : fallbackLabels[key] || key.replace(/^country\./, "").toUpperCase();
+    const field = (label, value) => value == null || value === "" ? ""
+      : "<dt>" + escHtml(label) + "</dt><dd>" + escHtml(value) + "</dd>";
+    let details = "";
+    if (detailed) {
+      const d = model.details;
+      const labels = { zh_Hant: "繁體中文", zh_Hans: "简体中文", ja: "日本語",
+        en: "English", kana: "かな", katakana: "カタカナ", romaji: "Rōmaji" };
+      const alternate = d.alternateName && d.alternateName !== d.rawName &&
+        !d.names.some((n) => n.text === d.alternateName) ? d.alternateName : "";
+      const names = field(t("popup.originalName"), d.rawName) +
+        d.names.map((n) => field(labels[n.kind] || n.kind, n.text)).join("") +
+        field(t("popup.alternateName"), alternate);
+      const coordinates = Number.isFinite(d.lat) && Number.isFinite(d.lon)
+        ? d.lat.toFixed(6) + ", " + d.lon.toFixed(6) : "";
+      const info = field(t("popup.stationCode"), d.code) +
+        field(t("popup.region"), d.country ? t("country." + String(d.country).toLowerCase()) : "") +
+        field(t("popup.coordinates"), coordinates) +
+        field(t("popup.validFrom"), d.validFrom) + field(t("popup.validTo"), d.validTo);
+      details = '<section class="rp-station-details"><h3>' + escHtml(t("popup.names")) +
+        "</h3><dl>" + names + "</dl><h3>" + escHtml(t("popup.stationInfo")) +
+        "</h3><dl>" + info + "</dl></section>";
+    }
     const subhead = opts && opts.subhead ? opts.subhead : "";
     return (
-      '<div class="rp-popup"><div class="rp-popup-head">' +
+      '<div class="rp-popup' + (detailed ? ' rp-popup--details' : '') + '"><div class="rp-popup-head">' +
       header +
       "</div>" +
       subhead +
-      (rows ? '<ul class="rp-line-list">' + rows + "</ul>" : "") +
+      details +
+      (rows ? (detailed ? '<h3 class="rp-station-lines-heading">' + escHtml(t("popup.line")) + "</h3>" : "") +
+        '<ul class="rp-line-list">' + rows + "</ul>" : "") +
       "</div>"
     );
   }

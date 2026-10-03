@@ -50,9 +50,11 @@ final class VideoExportFlow {
     func plan(
         playback: PlaybackController,
         trains: [Train],
-        rides: [RiddenRouteStore.DrawnRide]
+        rides: [RiddenRouteStore.DrawnRide],
+        reducedMotion: Bool
     ) {
-        plannedSeconds = playback.estimate(trains: trains, rides: rides).seconds
+        plannedSeconds = playback.estimate(
+            trains: trains, rides: rides, reducedMotion: reducedMotion).seconds
     }
 
     /// Commit: persist the choices that produced this film, then record.

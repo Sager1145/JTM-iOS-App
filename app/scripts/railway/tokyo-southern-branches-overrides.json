@@ -1,0 +1,2598 @@
+{
+  "format": "jtm-tokyo-southern-branches-evidence-v1",
+  "reviewedAt": "2026-10-01",
+  "crs": "WGS84",
+  "status": "candidate; package integration and final client rendering are separate checks",
+  "scope": "Existing package misses 大崎支線 between 大崎 and the 品鶴線 junction north of 西大井. Raw geometry is retained separately for both non-mirrored physical running tracks; no new passenger station or station-code transfer implies a physical junction.",
+  "suggestedBaseLineID": "jp-東日本旅客鉄道-大崎支線",
+  "physicalName": "大崎支線",
+  "operator": "東日本旅客鉄道",
+  "stationCodes": [
+    "004135",
+    "004235"
+  ],
+  "stationReferenceCoordinates": {
+    "004135": [
+      139.728245,
+      35.619945
+    ],
+    "004235": [
+      139.721609,
+      35.601703
+    ]
+  },
+  "baseline": {
+    "packageVersion": "2025.5.1",
+    "lineRows": 655,
+    "intervalRows": 9576,
+    "finding": "No package line contains both 大崎004135 and 西大井004235; N02 rail-sections also lacks the 大崎支線 curved branch. Existing 山手線 品川→大崎 and 総武線-3 品川→西大井 do not substitute for it."
+  },
+  "primaryTopologyEvidence": [
+    {
+      "url": "https://www.jrtt.go.jp/construction/asset/constUtwr-2_03.pdf",
+      "publisher": "鉄道・運輸機構 (JRTT)",
+      "section": "第4章 大崎駅接続区間, 第1節 工事概要, 図3-4-1-1",
+      "retrieved": "2026-10-01",
+      "supports": "Distinguishes 山手貨物線 to 品川, 大崎支線 to 蛇窪, 山手電車線, and 臨海副都心線 inserted between the two 大崎支線 tracks. This is topology evidence, not the WGS84 coordinate source."
+    },
+    {
+      "url": "https://www.jreast.co.jp/press/2019/20190906_ho01.pdf",
+      "publisher": "JR東日本",
+      "published": "2019-09-06",
+      "page": 2,
+      "retrieved": "2026-10-01",
+      "supports": "Operator diagram and stop table show 武蔵小杉→西大井→大崎→恵比寿→渋谷→新宿, distinct from 品川."
+    },
+    {
+      "url": "https://timetables.jreast.co.jp/timetable/list0319.html",
+      "publisher": "JR東日本",
+      "retrieved": "2026-10-01",
+      "supports": "Current 大崎 service list explicitly distinguishes 湘南新宿ライン 南行/北行, 山手線, りんかい線, and 相鉄線直通."
+    },
+    {
+      "url": "https://www.jreast.co.jp/estation/station/info.aspx?StationCd=1149",
+      "publisher": "JR東日本",
+      "retrieved": "2026-10-01",
+      "supports": "Current 西大井 has JS16 湘南新宿ライン and JO16 横須賀線・総武線快速・成田線."
+    }
+  ],
+  "geometryEvidence": {
+    "publisher": "OpenStreetMap contributors",
+    "role": "secondary geometry source / physical-track cross-check; not official MLIT measured geometry",
+    "cacheRelativePath": "outputs/osm-basemap-cache/E139N35.json",
+    "cacheRepository": "Japan-Train-Map",
+    "fetchedAt": "2026-08-18T10:37:59.411Z",
+    "cacheSHA256": "6ab2be77d2c167969da6e1470abe57aa59504eb0e4624236875bb03e32c70b84",
+    "endpoint": "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
+    "licence": "ODbL 1.0",
+    "attribution": "© OpenStreetMap contributors",
+    "url": "https://www.openstreetmap.org/copyright",
+    "transform": "Copy exact [lon,lat] vertices, concatenate only exact shared coordinate keys, never blend the two directional surveys. Candidate station points are bounded projection onto the selected surveyed segment, and shared display endpoints remain an integration decision.",
+    "directionEvidence": "The branch way ordering follows their existing oneway=yes geometry; direction is stated as northbound/southbound rather than inferred legal railway up/down. No primary up/down assignment has been established."
+  },
+  "paths": {
+    "southbound": {
+      "branch": [
+        364965006,
+        1327449179,
+        835534700,
+        1327449178,
+        904353346,
+        217548320,
+        241577695,
+        751748418,
+        241577683,
+        241577705,
+        241577691
+      ],
+      "continuation": [
+        751748417,
+        258410613,
+        365183540,
+        365183525,
+        365183537,
+        365183532,
+        365183546,
+        365183517,
+        365183516,
+        365183534,
+        365183542
+      ],
+      "northAdjoining": [
+        667539035
+      ]
+    },
+    "northbound": {
+      "branch": [
+        241577696,
+        241577702,
+        210188131,
+        751605911,
+        74265108,
+        241577694,
+        904353347,
+        217548316,
+        835534698,
+        667539031
+      ],
+      "continuation": [
+        365183544,
+        365183538,
+        365183519,
+        365183539,
+        365183543,
+        365183533,
+        365183514,
+        365183527,
+        365183545,
+        751605912,
+        365183510
+      ],
+      "northAdjoining": [
+        364965008
+      ]
+    }
+  },
+  "ways": {
+    "74265108": {
+      "name": "大崎支線（蛇窪支線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "source": "NRPB of MLIT Japan",
+        "source:ja": "国土画像情報(オルソ化空中写真)国土計画局",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7303064,
+          35.6169759
+        ],
+        [
+          139.7302462,
+          35.6170446
+        ],
+        [
+          139.7301525,
+          35.6171541
+        ]
+      ]
+    },
+    "210188131": {
+      "name": "大崎支線（蛇窪支線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "source": "NRPB of MLIT Japan",
+        "source:ja": "国土画像情報(オルソ化空中写真)国土計画局",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7266628,
+          35.6099002
+        ],
+        [
+          139.7266929,
+          35.6099211
+        ],
+        [
+          139.7269286,
+          35.6100662
+        ],
+        [
+          139.727115,
+          35.6101668
+        ],
+        [
+          139.7273191,
+          35.6102656
+        ],
+        [
+          139.7274481,
+          35.6103213
+        ],
+        [
+          139.7277057,
+          35.6104161
+        ],
+        [
+          139.7279428,
+          35.610486
+        ],
+        [
+          139.728071,
+          35.6105217
+        ],
+        [
+          139.728218,
+          35.6105578
+        ],
+        [
+          139.7287177,
+          35.6106722
+        ],
+        [
+          139.7290171,
+          35.6107386
+        ],
+        [
+          139.72929,
+          35.6108094
+        ],
+        [
+          139.7295733,
+          35.6108969
+        ],
+        [
+          139.7298425,
+          35.6110038
+        ],
+        [
+          139.7300818,
+          35.6111148
+        ],
+        [
+          139.7302835,
+          35.6112201
+        ],
+        [
+          139.7304694,
+          35.6113326
+        ],
+        [
+          139.7306414,
+          35.6114516
+        ],
+        [
+          139.7308402,
+          35.6116099
+        ],
+        [
+          139.7310547,
+          35.6117964
+        ],
+        [
+          139.7312238,
+          35.6119709
+        ],
+        [
+          139.7313642,
+          35.6121542
+        ],
+        [
+          139.7314977,
+          35.6123471
+        ],
+        [
+          139.7316243,
+          35.6125456
+        ],
+        [
+          139.731741,
+          35.612778
+        ],
+        [
+          139.7318517,
+          35.6130336
+        ],
+        [
+          139.7319417,
+          35.61329
+        ],
+        [
+          139.732,
+          35.6135432
+        ],
+        [
+          139.7320351,
+          35.6137865
+        ],
+        [
+          139.7320363,
+          35.6140164
+        ],
+        [
+          139.7320261,
+          35.6142527
+        ],
+        [
+          139.7320009,
+          35.6144067
+        ],
+        [
+          139.7319698,
+          35.6145505
+        ],
+        [
+          139.7319389,
+          35.6146589
+        ],
+        [
+          139.7318927,
+          35.6148036
+        ],
+        [
+          139.7318336,
+          35.6149473
+        ],
+        [
+          139.731755,
+          35.615101
+        ],
+        [
+          139.7316407,
+          35.6153025
+        ],
+        [
+          139.7315235,
+          35.615465
+        ],
+        [
+          139.7313708,
+          35.6156689
+        ],
+        [
+          139.7313217,
+          35.6157293
+        ]
+      ]
+    },
+    "217548316": {
+      "name": "大崎支線（蛇窪支線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:track_ref": "8",
+        "railway:traffic_mode": "passenger",
+        "source": "NRPB of MLIT Japan",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7281603,
+          35.6192342
+        ],
+        [
+          139.727999,
+          35.6194454
+        ],
+        [
+          139.7278756,
+          35.6196094
+        ],
+        [
+          139.7277458,
+          35.6198097
+        ],
+        [
+          139.727548,
+          35.620169
+        ]
+      ]
+    },
+    "217548320": {
+      "name": "大崎支線（蛇窪支線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "NRPB of MLIT Japan",
+        "source:ja": "国土画像情報(オルソ化空中写真)国土計画局",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.728715,
+          35.6189119
+        ],
+        [
+          139.7287684,
+          35.6188404
+        ],
+        [
+          139.7290326,
+          35.6184839
+        ],
+        [
+          139.7291087,
+          35.6183921
+        ],
+        [
+          139.7292124,
+          35.6182724
+        ],
+        [
+          139.7293188,
+          35.6181559
+        ],
+        [
+          139.7294176,
+          35.6180532
+        ],
+        [
+          139.7295325,
+          35.6179462
+        ],
+        [
+          139.7296572,
+          35.6178393
+        ],
+        [
+          139.7297458,
+          35.6177586
+        ],
+        [
+          139.729849,
+          35.617666
+        ],
+        [
+          139.7299835,
+          35.6175431
+        ],
+        [
+          139.7300931,
+          35.6174261
+        ],
+        [
+          139.7303697,
+          35.6171113
+        ]
+      ]
+    },
+    "241577683": {
+      "name": "大崎支線（蛇窪支線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "source": "NRPB of MLIT Japan",
+        "source:ja": "国土画像情報(オルソ化空中写真)国土計画局",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7320039,
+          35.615043
+        ],
+        [
+          139.7320966,
+          35.6148256
+        ],
+        [
+          139.7321628,
+          35.6146071
+        ],
+        [
+          139.7322105,
+          35.614394
+        ],
+        [
+          139.7322343,
+          35.6141507
+        ],
+        [
+          139.7322343,
+          35.6139247
+        ],
+        [
+          139.7322144,
+          35.6137331
+        ],
+        [
+          139.7321696,
+          35.6135071
+        ],
+        [
+          139.7321349,
+          35.6133861
+        ],
+        [
+          139.7320913,
+          35.6132594
+        ],
+        [
+          139.7320413,
+          35.6131339
+        ],
+        [
+          139.7319685,
+          35.6129889
+        ],
+        [
+          139.7318605,
+          35.6127996
+        ],
+        [
+          139.7316986,
+          35.6125579
+        ],
+        [
+          139.731539,
+          35.6123256
+        ],
+        [
+          139.7314472,
+          35.6121965
+        ],
+        [
+          139.7313411,
+          35.6120558
+        ],
+        [
+          139.7312544,
+          35.611957
+        ],
+        [
+          139.7310856,
+          35.6117778
+        ],
+        [
+          139.7308751,
+          35.6115889
+        ],
+        [
+          139.7306698,
+          35.6114264
+        ],
+        [
+          139.7304967,
+          35.6113093
+        ],
+        [
+          139.7303095,
+          35.6111928
+        ],
+        [
+          139.7301063,
+          35.6110882
+        ],
+        [
+          139.7299277,
+          35.611001
+        ],
+        [
+          139.7297211,
+          35.6109134
+        ],
+        [
+          139.7294954,
+          35.6108347
+        ],
+        [
+          139.7293068,
+          35.6107799
+        ],
+        [
+          139.7290627,
+          35.6107155
+        ],
+        [
+          139.7282301,
+          35.6105217
+        ],
+        [
+          139.7281151,
+          35.6104918
+        ],
+        [
+          139.7278682,
+          35.6104228
+        ],
+        [
+          139.7275528,
+          35.6103183
+        ],
+        [
+          139.7272949,
+          35.6102114
+        ],
+        [
+          139.7270001,
+          35.6100667
+        ],
+        [
+          139.7267381,
+          35.6099051
+        ],
+        [
+          139.7266941,
+          35.6098738
+        ]
+      ]
+    },
+    "241577691": {
+      "name": "大崎支線（蛇窪支線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "source": "NRPB of MLIT Japan",
+        "source:ja": "国土画像情報(オルソ化空中写真)国土計画局",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7266523,
+          35.6098441
+        ],
+        [
+          139.7265324,
+          35.6097588
+        ],
+        [
+          139.7263267,
+          35.6095908
+        ],
+        [
+          139.7261408,
+          35.6094188
+        ],
+        [
+          139.7257617,
+          35.6090413
+        ],
+        [
+          139.7255211,
+          35.6087882
+        ]
+      ]
+    },
+    "241577694": {
+      "name": "大崎支線（蛇窪支線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "NRPB of MLIT Japan",
+        "source:ja": "国土画像情報(オルソ化空中写真)国土計画局",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7301525,
+          35.6171541
+        ],
+        [
+          139.7299828,
+          35.6173275
+        ],
+        [
+          139.729863,
+          35.6174493
+        ],
+        [
+          139.7297535,
+          35.6175465
+        ],
+        [
+          139.7296305,
+          35.6176584
+        ],
+        [
+          139.7295086,
+          35.6177566
+        ],
+        [
+          139.7292839,
+          35.6179453
+        ],
+        [
+          139.7290594,
+          35.6181403
+        ],
+        [
+          139.7289349,
+          35.6182657
+        ],
+        [
+          139.7288042,
+          35.6184035
+        ],
+        [
+          139.7285506,
+          35.6187076
+        ],
+        [
+          139.728484,
+          35.6188005
+        ]
+      ]
+    },
+    "241577695": {
+      "name": "大崎支線（蛇窪支線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "source": "NRPB of MLIT Japan",
+        "source:ja": "国土画像情報(オルソ化空中写真)国土計画局",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7303697,
+          35.6171113
+        ],
+        [
+          139.7305942,
+          35.6168443
+        ]
+      ]
+    },
+    "241577696": {
+      "name": "大崎支線（蛇窪支線）",
+      "tags": {
+        "operator": "東日本旅客鉄道 (East Japan Railway)",
+        "usage": "main",
+        "railway": "rail",
+        "source": "NRPB of MLIT Japan",
+        "source:ja": "国土画像情報(オルソ化空中写真)国土計画局",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7255384,
+          35.6088669
+        ],
+        [
+          139.725935,
+          35.6092781
+        ],
+        [
+          139.7262382,
+          35.6095746
+        ],
+        [
+          139.7264269,
+          35.6097259
+        ],
+        [
+          139.7266015,
+          35.6098577
+        ],
+        [
+          139.7266267,
+          35.6098752
+        ]
+      ]
+    },
+    "241577702": {
+      "name": "大崎支線（蛇窪支線）",
+      "tags": {
+        "operator": "東日本旅客鉄道 (East Japan Railway)",
+        "usage": "main",
+        "railway": "rail",
+        "source": "NRPB of MLIT Japan",
+        "source:ja": "国土画像情報(オルソ化空中写真)国土計画局",
+        "oneway": "yes",
+        "bridge": "yes",
+        "layer": "1"
+      },
+      "coordinates": [
+        [
+          139.7266267,
+          35.6098752
+        ],
+        [
+          139.7266628,
+          35.6099002
+        ]
+      ]
+    },
+    "241577705": {
+      "name": "大崎支線（蛇窪支線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "source": "NRPB of MLIT Japan",
+        "source:ja": "国土画像情報(オルソ化空中写真)国土計画局",
+        "oneway": "yes",
+        "bridge": "yes",
+        "layer": "1"
+      },
+      "coordinates": [
+        [
+          139.7266941,
+          35.6098738
+        ],
+        [
+          139.7266523,
+          35.6098441
+        ]
+      ]
+    },
+    "258410613": {
+      "name": "東海道本線（品鶴線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "GSI/KIBAN 2500;NARO",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7251421,
+          35.6083427
+        ],
+        [
+          139.7248867,
+          35.6080448
+        ],
+        [
+          139.7247607,
+          35.6078969
+        ],
+        [
+          139.7246429,
+          35.6077415
+        ],
+        [
+          139.7244759,
+          35.6074987
+        ],
+        [
+          139.7243424,
+          35.6072919
+        ],
+        [
+          139.7242708,
+          35.6071681
+        ],
+        [
+          139.7240744,
+          35.6068232
+        ],
+        [
+          139.7238715,
+          35.6064797
+        ],
+        [
+          139.7236784,
+          35.6061378
+        ],
+        [
+          139.7235114,
+          35.6058327
+        ],
+        [
+          139.7233546,
+          35.6055166
+        ],
+        [
+          139.7232484,
+          35.6052827
+        ]
+      ]
+    },
+    "364965006": {
+      "name": "大崎支線（蛇窪支線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "NRPB of MLIT Japan",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.727308,
+          35.6209449
+        ],
+        [
+          139.7274578,
+          35.6206814
+        ],
+        [
+          139.7275783,
+          35.6204815
+        ],
+        [
+          139.7276509,
+          35.6203697
+        ],
+        [
+          139.7277384,
+          35.620238
+        ]
+      ]
+    },
+    "364965008": {
+      "name": "山手貨物線",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "NRPB of MLIT Japan",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7266308,
+          35.6219452
+        ],
+        [
+          139.7264366,
+          35.6222539
+        ],
+        [
+          139.7262039,
+          35.6225831
+        ],
+        [
+          139.7257324,
+          35.6232097
+        ],
+        [
+          139.725596,
+          35.623391
+        ],
+        [
+          139.7250267,
+          35.6241519
+        ]
+      ]
+    },
+    "365183510": {
+      "name": "東海道本線（品鶴線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "GSI/KIBAN 2500;NARO",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7240369,
+          35.6068361
+        ],
+        [
+          139.7242394,
+          35.6071763
+        ],
+        [
+          139.7243144,
+          35.6073005
+        ],
+        [
+          139.724453,
+          35.6075124
+        ],
+        [
+          139.7246188,
+          35.6077593
+        ],
+        [
+          139.7247347,
+          35.6079157
+        ],
+        [
+          139.7248558,
+          35.6080677
+        ],
+        [
+          139.7251115,
+          35.6083651
+        ],
+        [
+          139.7251449,
+          35.6084039
+        ],
+        [
+          139.7255384,
+          35.6088669
+        ]
+      ]
+    },
+    "365183514": {
+      "name": "東海道本線（品鶴線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "GSI/KIBAN 2500;NARO"
+      },
+      "coordinates": [
+        [
+          139.7223593,
+          35.6034387
+        ],
+        [
+          139.7227503,
+          35.6042756
+        ]
+      ]
+    },
+    "365183516": {
+      "name": "東海道本線（品鶴線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "GSI/KIBAN 2500;NARO",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7220409,
+          35.6026315
+        ],
+        [
+          139.7218368,
+          35.6021798
+        ]
+      ]
+    },
+    "365183517": {
+      "name": "東海道本線（品鶴線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "GSI/KIBAN 2500;NARO",
+        "oneway": "yes",
+        "bridge": "yes",
+        "layer": "1"
+      },
+      "coordinates": [
+        [
+          139.7220636,
+          35.6026818
+        ],
+        [
+          139.7220409,
+          35.6026315
+        ]
+      ]
+    },
+    "365183519": {
+      "name": "東海道本線（品鶴線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "GSI/KIBAN 2500;NARO"
+      },
+      "coordinates": [
+        [
+          139.7217854,
+          35.6021729
+        ],
+        [
+          139.7220069,
+          35.6026605
+        ]
+      ]
+    },
+    "365183525": {
+      "name": "東海道本線（品鶴線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "GSI/KIBAN 2500;NARO",
+        "oneway": "yes",
+        "bridge": "yes",
+        "layer": "1"
+      },
+      "coordinates": [
+        [
+          139.7228285,
+          35.6043566
+        ],
+        [
+          139.7227993,
+          35.6042924
+        ]
+      ]
+    },
+    "365183527": {
+      "name": "東海道本線（品鶴線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "GSI/KIBAN 2500;NARO",
+        "bridge": "yes",
+        "layer": "1"
+      },
+      "coordinates": [
+        [
+          139.7227503,
+          35.6042756
+        ],
+        [
+          139.7227827,
+          35.6043449
+        ]
+      ]
+    },
+    "365183532": {
+      "name": "東海道本線（品鶴線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "GSI/KIBAN 2500;NARO",
+        "oneway": "yes",
+        "bridge": "yes",
+        "layer": "1"
+      },
+      "coordinates": [
+        [
+          139.7224226,
+          35.6034672
+        ],
+        [
+          139.7223822,
+          35.6033786
+        ]
+      ]
+    },
+    "365183533": {
+      "name": "東海道本線（品鶴線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "GSI/KIBAN 2500;NARO",
+        "bridge": "yes",
+        "layer": "1"
+      },
+      "coordinates": [
+        [
+          139.7223182,
+          35.6033507
+        ],
+        [
+          139.7223593,
+          35.6034387
+        ]
+      ]
+    },
+    "365183534": {
+      "name": "東海道本線（品鶴線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "GSI/KIBAN 2500;NARO",
+        "oneway": "yes",
+        "bridge": "yes",
+        "layer": "1"
+      },
+      "coordinates": [
+        [
+          139.7218368,
+          35.6021798
+        ],
+        [
+          139.7218035,
+          35.6021062
+        ]
+      ]
+    },
+    "365183537": {
+      "name": "東海道本線（品鶴線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "GSI/KIBAN 2500;NARO",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7227993,
+          35.6042924
+        ],
+        [
+          139.7224226,
+          35.6034672
+        ]
+      ]
+    },
+    "365183538": {
+      "name": "東海道本線（品鶴線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "GSI/KIBAN 2500;NARO",
+        "bridge": "yes",
+        "layer": "1"
+      },
+      "coordinates": [
+        [
+          139.7217534,
+          35.6021024
+        ],
+        [
+          139.7217854,
+          35.6021729
+        ]
+      ]
+    },
+    "365183539": {
+      "name": "東海道本線（品鶴線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "GSI/KIBAN 2500;NARO",
+        "bridge": "yes",
+        "layer": "1"
+      },
+      "coordinates": [
+        [
+          139.7220069,
+          35.6026605
+        ],
+        [
+          139.7220299,
+          35.6027112
+        ]
+      ]
+    },
+    "365183540": {
+      "name": "東海道本線（品鶴線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "GSI/KIBAN 2500;NARO",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7232484,
+          35.6052827
+        ],
+        [
+          139.7228285,
+          35.6043566
+        ]
+      ]
+    },
+    "365183542": {
+      "name": "東海道本線（品鶴線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "GSI/KIBAN 2500;NARO",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7218035,
+          35.6021062
+        ],
+        [
+          139.7216924,
+          35.6018602
+        ],
+        [
+          139.7214725,
+          35.6013806
+        ]
+      ]
+    },
+    "365183543": {
+      "name": "東海道本線（品鶴線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "GSI/KIBAN 2500;NARO"
+      },
+      "coordinates": [
+        [
+          139.7220299,
+          35.6027112
+        ],
+        [
+          139.7222419,
+          35.6031873
+        ],
+        [
+          139.7223182,
+          35.6033507
+        ]
+      ]
+    },
+    "365183544": {
+      "name": "東海道本線（品鶴線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "GSI/KIBAN 2500;NARO",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.721435,
+          35.6013909
+        ],
+        [
+          139.721647,
+          35.6018647
+        ],
+        [
+          139.7217534,
+          35.6021024
+        ]
+      ]
+    },
+    "365183545": {
+      "name": "東海道本線（品鶴線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "GSI/KIBAN 2500;NARO"
+      },
+      "coordinates": [
+        [
+          139.7227827,
+          35.6043449
+        ],
+        [
+          139.722808,
+          35.6043991
+        ],
+        [
+          139.7232151,
+          35.6052901
+        ]
+      ]
+    },
+    "365183546": {
+      "name": "東海道本線（品鶴線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "GSI/KIBAN 2500;NARO",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7223822,
+          35.6033786
+        ],
+        [
+          139.7222881,
+          35.6031725
+        ],
+        [
+          139.7220636,
+          35.6026818
+        ]
+      ]
+    },
+    "667539031": {
+      "name": "大崎支線（蛇窪支線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "NRPB of MLIT Japan",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.727112,
+          35.6210847
+        ],
+        [
+          139.7270114,
+          35.6212744
+        ],
+        [
+          139.7269068,
+          35.6214761
+        ],
+        [
+          139.7266308,
+          35.6219452
+        ]
+      ]
+    },
+    "667539035": {
+      "name": "山手貨物線",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "mixed",
+        "source": "NRPB of MLIT Japan",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7270514,
+          35.6213415
+        ],
+        [
+          139.727308,
+          35.6209449
+        ]
+      ]
+    },
+    "751605911": {
+      "name": "大崎支線（蛇窪支線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "source": "NRPB of MLIT Japan",
+        "source:ja": "国土画像情報(オルソ化空中写真)国土計画局",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7313217,
+          35.6157293
+        ],
+        [
+          139.7308996,
+          35.6162485
+        ],
+        [
+          139.7305461,
+          35.6166937
+        ],
+        [
+          139.7303064,
+          35.6169759
+        ]
+      ]
+    },
+    "751605912": {
+      "name": "東海道本線（品鶴線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "GSI/KIBAN 2500;NARO"
+      },
+      "coordinates": [
+        [
+          139.7232151,
+          35.6052901
+        ],
+        [
+          139.7233309,
+          35.605526
+        ],
+        [
+          139.7234858,
+          35.6058403
+        ],
+        [
+          139.7236442,
+          35.6061508
+        ],
+        [
+          139.7238363,
+          35.606495
+        ],
+        [
+          139.7240369,
+          35.6068361
+        ]
+      ]
+    },
+    "751748417": {
+      "name": "東海道本線（品鶴線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "GSI/KIBAN 2500;NARO",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7255211,
+          35.6087882
+        ],
+        [
+          139.7253753,
+          35.6086159
+        ],
+        [
+          139.725183,
+          35.6083919
+        ],
+        [
+          139.7251421,
+          35.6083427
+        ]
+      ]
+    },
+    "751748418": {
+      "name": "大崎支線（蛇窪支線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "source": "NRPB of MLIT Japan",
+        "source:ja": "国土画像情報(オルソ化空中写真)国土計画局",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7305942,
+          35.6168443
+        ],
+        [
+          139.7306718,
+          35.6167615
+        ],
+        [
+          139.7310252,
+          35.6163496
+        ],
+        [
+          139.7312542,
+          35.6160802
+        ],
+        [
+          139.7315141,
+          35.6157803
+        ],
+        [
+          139.7316063,
+          35.615669
+        ],
+        [
+          139.7316934,
+          35.6155557
+        ],
+        [
+          139.7318035,
+          35.6153998
+        ],
+        [
+          139.7318524,
+          35.6153198
+        ],
+        [
+          139.7319006,
+          35.6152408
+        ],
+        [
+          139.7320039,
+          35.615043
+        ]
+      ]
+    },
+    "835534698": {
+      "name": "大崎支線（蛇窪支線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "NRPB of MLIT Japan",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.727548,
+          35.620169
+        ],
+        [
+          139.72742,
+          35.6204443
+        ],
+        [
+          139.7273373,
+          35.6206301
+        ],
+        [
+          139.727112,
+          35.6210847
+        ]
+      ]
+    },
+    "835534700": {
+      "name": "大崎支線（蛇窪支線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:track_ref": "5",
+        "railway:traffic_mode": "passenger",
+        "source": "NRPB of MLIT Japan",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7278344,
+          35.620109
+        ],
+        [
+          139.7281176,
+          35.6197286
+        ]
+      ]
+    },
+    "904353346": {
+      "name": "大崎支線（蛇窪支線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:track_ref": "5",
+        "railway:traffic_mode": "passenger",
+        "source": "NRPB of MLIT Japan",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7283987,
+          35.6193482
+        ],
+        [
+          139.7285642,
+          35.6191257
+        ],
+        [
+          139.728715,
+          35.6189119
+        ]
+      ]
+    },
+    "904353347": {
+      "name": "大崎支線（蛇窪支線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:track_ref": "8",
+        "railway:traffic_mode": "passenger",
+        "source": "NRPB of MLIT Japan",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.728484,
+          35.6188005
+        ],
+        [
+          139.7283678,
+          35.6189626
+        ],
+        [
+          139.7281603,
+          35.6192342
+        ]
+      ]
+    },
+    "1327449178": {
+      "name": "大崎支線（蛇窪支線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:track_ref": "5",
+        "railway:traffic_mode": "passenger",
+        "source": "NRPB of MLIT Japan",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7281176,
+          35.6197286
+        ],
+        [
+          139.7283987,
+          35.6193482
+        ]
+      ]
+    },
+    "1327449179": {
+      "name": "大崎支線（蛇窪支線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:track_ref": "5",
+        "railway:traffic_mode": "passenger",
+        "source": "NRPB of MLIT Japan",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7277384,
+          35.620238
+        ],
+        [
+          139.7278344,
+          35.620109
+        ]
+      ]
+    },
+    "853189600": {
+      "name": "東海道本線（横須賀線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "KSJ2",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7402933,
+          35.6313495
+        ],
+        [
+          139.7401712,
+          35.6309772
+        ],
+        [
+          139.7401275,
+          35.6308505
+        ],
+        [
+          139.7400824,
+          35.6307105
+        ],
+        [
+          139.7399664,
+          35.6303856
+        ],
+        [
+          139.7399198,
+          35.6302144
+        ],
+        [
+          139.7398553,
+          35.629976
+        ],
+        [
+          139.7398166,
+          35.6298151
+        ],
+        [
+          139.7397801,
+          35.6295724
+        ],
+        [
+          139.7397549,
+          35.6293727
+        ],
+        [
+          139.7397508,
+          35.6291607
+        ],
+        [
+          139.7397318,
+          35.6286814
+        ]
+      ]
+    },
+    "853189598": {
+      "name": "東海道本線（品鶴線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "KSJ2",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7397318,
+          35.6286814
+        ],
+        [
+          139.7397127,
+          35.628231
+        ],
+        [
+          139.7396888,
+          35.6279897
+        ],
+        [
+          139.7396469,
+          35.6277697
+        ],
+        [
+          139.7395585,
+          35.6274064
+        ],
+        [
+          139.7394371,
+          35.6268724
+        ],
+        [
+          139.7393546,
+          35.6265153
+        ],
+        [
+          139.7392187,
+          35.626094
+        ]
+      ]
+    },
+    "210181293": {
+      "name": "東海道本線（品鶴線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "KSJ2",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7392187,
+          35.626094
+        ],
+        [
+          139.7391327,
+          35.6257249
+        ],
+        [
+          139.7391098,
+          35.6256262
+        ],
+        [
+          139.7390203,
+          35.6252409
+        ],
+        [
+          139.738931,
+          35.6248702
+        ],
+        [
+          139.7387808,
+          35.6242303
+        ],
+        [
+          139.7386341,
+          35.6235839
+        ],
+        [
+          139.7385107,
+          35.6230744
+        ],
+        [
+          139.7383101,
+          35.6223068
+        ],
+        [
+          139.7381077,
+          35.6215427
+        ],
+        [
+          139.7379845,
+          35.6211009
+        ],
+        [
+          139.7377559,
+          35.6202067
+        ],
+        [
+          139.7376526,
+          35.6198886
+        ],
+        [
+          139.7375954,
+          35.6197367
+        ],
+        [
+          139.7375258,
+          35.6195975
+        ]
+      ]
+    },
+    "211472312": {
+      "name": "東海道本線（品鶴線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "KSJ2",
+        "oneway": "yes",
+        "bridge": "yes",
+        "layer": "1"
+      },
+      "coordinates": [
+        [
+          139.7375258,
+          35.6195975
+        ],
+        [
+          139.7374394,
+          35.6194076
+        ],
+        [
+          139.7372969,
+          35.6191818
+        ],
+        [
+          139.7371263,
+          35.6189412
+        ]
+      ]
+    },
+    "211472444": {
+      "name": "東海道本線（品鶴線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "KSJ2",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7371263,
+          35.6189412
+        ],
+        [
+          139.7367751,
+          35.6184878
+        ],
+        [
+          139.7366024,
+          35.6182839
+        ],
+        [
+          139.7364407,
+          35.618121
+        ],
+        [
+          139.7362686,
+          35.6179531
+        ],
+        [
+          139.7360619,
+          35.6177778
+        ],
+        [
+          139.7359172,
+          35.6176579
+        ],
+        [
+          139.7356529,
+          35.6174682
+        ],
+        [
+          139.735536,
+          35.6173999
+        ],
+        [
+          139.7353832,
+          35.6173181
+        ],
+        [
+          139.7352264,
+          35.6172345
+        ]
+      ]
+    },
+    "210312685": {
+      "name": "東海道本線（品鶴線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "KSJ2",
+        "oneway": "yes",
+        "bridge": "yes",
+        "layer": "1"
+      },
+      "coordinates": [
+        [
+          139.7352264,
+          35.6172345
+        ],
+        [
+          139.734988,
+          35.6171318
+        ],
+        [
+          139.7347174,
+          35.6170291
+        ]
+      ]
+    },
+    "210312686": {
+      "name": "東海道本線（品鶴線）",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "KSJ2",
+        "oneway": "yes",
+        "layer": "1"
+      },
+      "coordinates": [
+        [
+          139.7347174,
+          35.6170291
+        ],
+        [
+          139.7346618,
+          35.6170088
+        ]
+      ]
+    },
+    "146060235": {
+      "name": "山手貨物線",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "freight",
+        "oneway": "yes",
+        "layer": "1"
+      },
+      "coordinates": [
+        [
+          139.7346618,
+          35.6170088
+        ],
+        [
+          139.7345496,
+          35.6169796
+        ],
+        [
+          139.7344317,
+          35.6169514
+        ],
+        [
+          139.734102,
+          35.616884
+        ],
+        [
+          139.7337559,
+          35.6168229
+        ],
+        [
+          139.7336635,
+          35.6168083
+        ]
+      ]
+    },
+    "211472463": {
+      "name": "山手貨物線",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "freight",
+        "oneway": "yes",
+        "bridge": "yes",
+        "layer": "1"
+      },
+      "coordinates": [
+        [
+          139.7336635,
+          35.6168083
+        ],
+        [
+          139.7335239,
+          35.6167861
+        ]
+      ]
+    },
+    "211472451": {
+      "name": "山手貨物線",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "freight",
+        "oneway": "yes",
+        "layer": "1"
+      },
+      "coordinates": [
+        [
+          139.7335239,
+          35.6167861
+        ],
+        [
+          139.7334575,
+          35.6167756
+        ],
+        [
+          139.7332057,
+          35.6167494
+        ],
+        [
+          139.733056,
+          35.6167399
+        ],
+        [
+          139.7328876,
+          35.6167355
+        ],
+        [
+          139.732737,
+          35.6167348
+        ],
+        [
+          139.7325712,
+          35.6167428
+        ],
+        [
+          139.7322289,
+          35.6167749
+        ]
+      ]
+    },
+    "211954372": {
+      "name": "山手貨物線",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "freight",
+        "oneway": "yes",
+        "bridge": "viaduct",
+        "layer": "1"
+      },
+      "coordinates": [
+        [
+          139.7322289,
+          35.6167749
+        ],
+        [
+          139.731901,
+          35.6168317
+        ],
+        [
+          139.7316232,
+          35.6168965
+        ],
+        [
+          139.7313445,
+          35.6169737
+        ],
+        [
+          139.7310918,
+          35.6170611
+        ],
+        [
+          139.7308301,
+          35.6171624
+        ],
+        [
+          139.7305819,
+          35.6172782
+        ]
+      ]
+    },
+    "146060250": {
+      "name": "山手貨物線",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "freight",
+        "oneway": "yes",
+        "bridge": "yes",
+        "layer": "1"
+      },
+      "coordinates": [
+        [
+          139.7305819,
+          35.6172782
+        ],
+        [
+          139.7303409,
+          35.6174057
+        ],
+        [
+          139.7301204,
+          35.6175434
+        ],
+        [
+          139.7299107,
+          35.6177007
+        ],
+        [
+          139.7296401,
+          35.6179295
+        ]
+      ]
+    },
+    "146060251": {
+      "name": "山手貨物線",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "freight",
+        "oneway": "yes",
+        "bridge": "viaduct",
+        "layer": "1"
+      },
+      "coordinates": [
+        [
+          139.7296401,
+          35.6179295
+        ],
+        [
+          139.7293834,
+          35.6181799
+        ],
+        [
+          139.7291569,
+          35.6184448
+        ],
+        [
+          139.7289389,
+          35.6187232
+        ],
+        [
+          139.7284116,
+          35.6194303
+        ],
+        [
+          139.7281716,
+          35.6197511
+        ]
+      ]
+    },
+    "1327449182": {
+      "name": "山手貨物線",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "freight",
+        "oneway": "yes",
+        "bridge": "viaduct",
+        "layer": "1"
+      },
+      "coordinates": [
+        [
+          139.7281716,
+          35.6197511
+        ],
+        [
+          139.727886,
+          35.6201329
+        ]
+      ]
+    },
+    "1327449180": {
+      "name": "山手貨物線",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "freight",
+        "oneway": "yes",
+        "bridge": "viaduct",
+        "layer": "1"
+      },
+      "coordinates": [
+        [
+          139.727886,
+          35.6201329
+        ],
+        [
+          139.7277627,
+          35.6202976
+        ],
+        [
+          139.7274848,
+          35.6206996
+        ]
+      ]
+    },
+    "211954441": {
+      "name": "山手貨物線",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "freight",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7274848,
+          35.6206996
+        ],
+        [
+          139.727308,
+          35.6209449
+        ]
+      ]
+    },
+    "364965007": {
+      "name": "山手貨物線",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "mixed",
+        "source": "NRPB of MLIT Japan",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7269104,
+          35.6215665
+        ],
+        [
+          139.7269535,
+          35.6214947
+        ],
+        [
+          139.7270514,
+          35.6213415
+        ]
+      ]
+    },
+    "211954318": {
+      "name": "山手貨物線",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "freight",
+        "source": "NRPB of MLIT Japan",
+        "source:ja": "国土画像情報(オルソ化空中写真)国土計画局",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7269104,
+          35.6215665
+        ],
+        [
+          139.7266308,
+          35.6219452
+        ]
+      ]
+    },
+    "211954229": {
+      "name": "山手貨物線",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "NRPB of MLIT Japan",
+        "oneway": "yes",
+        "bridge": "yes",
+        "layer": "1"
+      },
+      "coordinates": [
+        [
+          139.7250267,
+          35.6241519
+        ],
+        [
+          139.7247621,
+          35.6244992
+        ]
+      ]
+    },
+    "211954495": {
+      "name": "山手貨物線",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "NRPB of MLIT Japan",
+        "oneway": "yes"
+      },
+      "coordinates": [
+        [
+          139.7247621,
+          35.6244992
+        ],
+        [
+          139.7242826,
+          35.6251005
+        ],
+        [
+          139.7240073,
+          35.6254629
+        ]
+      ]
+    },
+    "211954368": {
+      "name": "山手貨物線",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "NRPB of MLIT Japan",
+        "oneway": "yes",
+        "bridge": "yes",
+        "layer": "1"
+      },
+      "coordinates": [
+        [
+          139.7240073,
+          35.6254629
+        ],
+        [
+          139.7238324,
+          35.6257038
+        ]
+      ]
+    },
+    "211954378": {
+      "name": "山手貨物線",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "NRPB of MLIT Japan",
+        "oneway": "yes",
+        "layer": "1"
+      },
+      "coordinates": [
+        [
+          139.7238324,
+          35.6257038
+        ],
+        [
+          139.723626,
+          35.6259902
+        ],
+        [
+          139.7233681,
+          35.6263247
+        ]
+      ]
+    },
+    "851349279": {
+      "name": "山手貨物線",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "NRPB of MLIT Japan",
+        "oneway": "yes",
+        "bridge": "yes",
+        "layer": "1"
+      },
+      "coordinates": [
+        [
+          139.7233681,
+          35.6263247
+        ],
+        [
+          139.7233366,
+          35.6263656
+        ]
+      ]
+    },
+    "211954474": {
+      "name": "山手貨物線",
+      "tags": {
+        "operator": "東日本旅客鉄道",
+        "usage": "main",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "oneway": "yes",
+        "bridge": "yes",
+        "layer": "1"
+      },
+      "coordinates": [
+        [
+          139.7233366,
+          35.6263656
+        ],
+        [
+          139.7232628,
+          35.6264613
+        ],
+        [
+          139.7231215,
+          35.6266277
+        ]
+      ]
+    }
+  },
+  "integrationConstraints": [
+    "Keep 品川→大崎 山手線 and 品川→西大井 総武線-3 as separate physical intervals; 大崎→西大井 is its own branch.",
+    "A north junction belongs to 山手貨物線, whose physical track is distinct from parallel 山手電車線. Display coincidence must be explicit, not a routing interchange inferred from proximity.",
+    "Each south junction is an exact common source vertex with 東海道本線（品鶴線） before 西大井. The representative display can share this downstream corridor while retaining both identities.",
+    "Do not add 五反田 as a stopping station on this branch to obtain the north lead-in. Keep north lead-in geometry separately if the interval station sequence starts at 大崎.",
+    "Do not weld the branch to 臨海副都心線 where their geometry crosses. JRTT records that the 臨海副都心線 enters between the branch tracks and has a separate 大崎 approach.",
+    "Do not add 大井町↔西大井 pseudo-adjacency, or synthesize a branch by concatenating through 品川.",
+    "The package owner must establish render groups, station-circle owner and current corridor endpoints before applying a candidate; this file changes no shared package or display metadata.",
+    "Both north branch forks lie exactly on freightMain source vertices. Include this source-backed station-free main part once, rather than leaving north lead-ins as dangling endpoints or fabricating a 品川→大崎 station interval on non-platform freight track."
+  ],
+  "freightMain": {
+    "sourceWayIDs": [
+      853189600,
+      853189598,
+      210181293,
+      211472312,
+      211472444,
+      210312685,
+      210312686,
+      146060235,
+      211472463,
+      211472451,
+      211954372,
+      146060250,
+      146060251,
+      1327449182,
+      1327449180,
+      211954441,
+      667539035,
+      364965007,
+      211954318,
+      364965008,
+      211954229,
+      211954495,
+      211954368,
+      211954378,
+      851349279,
+      211954474
+    ],
+    "reverseWayIDs": [
+      667539035,
+      364965007
+    ],
+    "displayOwnerLineID": "jp-東日本旅客鉄道-大崎支線",
+    "physicalName": "山手貨物線 (shared 品鶴線 approach at 品川)",
+    "role": "station-free supplemental source part; exact surveyed support for both 大崎 north forks; not a new 品川→大崎 passenger interval",
+    "directionPolicy": "Two short source ways are reversed only to concatenate the continuous display polyline. This supplemental geometry adds no routed interval and assigns no physical permittedTraversal from its digitization direction.",
+    "boundaryPolicy": "Retain complete source ways from the north 品川 approach to the 五反田 vicinity. Both endpoint surveys differ from the retained N02 conventional display strokes; the presentation owner may elect an explicit representative display junction, but must not turn that coordinate alias into a physical routing connection."
+  }
+}

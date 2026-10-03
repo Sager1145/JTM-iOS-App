@@ -30,6 +30,9 @@ public struct CompactPackage: Sendable {
         /// Normalised service class produced by the North American builder
         /// (`metro`, `commuter`, `intercity`, `streetcar`, …).
         public let kind: String?
+        /// Current service exceptions require the dated solver until their
+        /// interval-level validity is available to compact route inference.
+        public let serviceStatus: String?
         /// Drives the zoom at which the line first appears; lower is more
         /// important. The web app's `minZoomForRank` consumes it.
         public let rank: Int
@@ -75,8 +78,37 @@ public struct CompactPackage: Sendable {
         /// likely to name the short way, so this is what lets a recorded ride
         /// find the package line that owns the route symbol.
         public let nameNorm: String?
+        /// Sourced direction of a paired alignment in package station order:
+        /// `down` is forward, `up` is reverse; absent/unassigned permits both.
+        public let alignmentDirection: String?
+        public let alignmentOf: String?
+        public let stationOrderDirection: String?
+        public let permittedTraversal: String?
+        public let alignmentPairs: [AlignmentPair]
         public let stations: [Station]
         public let segments: [Segment]
+        /// A requested map schematic, separate from canonical physical track.
+        public let displayStationCoordinates: [String: Coordinate]
+        public let displayIntervalCoordinates: [Int: [Coordinate]]
+        /// Surveyed non-station lead-ins retained only in the displayed network.
+        public let displayBranchLeadIns: [[Coordinate]]
+        public let stationCircleOwnerByCode: [String: String]
+
+        public func displayCoordinate(for station: Station) -> Coordinate {
+            displayStationCoordinates[station.id] ?? station.coordinate
+        }
+
+        public var displayStations: [Station] {
+            stations.map { Station(id: $0.id, name: $0.name,
+                                   coordinate: displayCoordinate(for: $0), nameRoma: $0.nameRoma) }
+        }
+    }
+
+    public struct AlignmentPair: Decodable, Sendable {
+        public let with: String
+        public let from: String
+        public let to: String
+        public let direction: String
     }
 
     /// `[id, name, lon, lat, nameRoma, group]`.
@@ -108,9 +140,10 @@ extension CompactPackage: Decodable {
 
 extension CompactPackage.Line: Decodable {
     enum CodingKeys: String, CodingKey {
-        case id, name, nameRoma, `operator`, operatorShort, operatorLogo, kind
+        case id, name, nameRoma, `operator`, operatorShort, operatorLogo, kind, serviceStatus
         case rank, color, colorDark, logo, isLoop, lineCode
-        case nameNorm, stations, segments
+        case nameNorm, alignmentDirection, alignmentOf, stationOrderDirection, permittedTraversal, alignmentPairs
+        case stations, segments, displayStationCoordinates, displayIntervalCoordinates, displayBranchLeadIns, stationCircleOwnerByCode
     }
 
     /// JavaScript's truthiness, for the flags the packages store as `1`.
@@ -139,6 +172,7 @@ extension CompactPackage.Line: Decodable {
         operatorShort = try row.decodeIfPresent(String.self, forKey: .operatorShort)
         operatorLogo = try row.decodeIfPresent(String.self, forKey: .operatorLogo)
         kind = try row.decodeIfPresent(String.self, forKey: .kind)
+        serviceStatus = try row.decodeIfPresent(String.self, forKey: .serviceStatus)
         rank = try row.decode(Int.self, forKey: .rank)
         color = try row.decodeIfPresent(String.self, forKey: .color)
         colorDark = try row.decodeIfPresent(String.self, forKey: .colorDark)
@@ -146,8 +180,25 @@ extension CompactPackage.Line: Decodable {
         isLoop = try Self.truthy(row, .isLoop)
         lineCode = try row.decodeIfPresent(String.self, forKey: .lineCode)
         nameNorm = try row.decodeIfPresent(String.self, forKey: .nameNorm)
+        alignmentDirection = try row.decodeIfPresent(String.self, forKey: .alignmentDirection)
+        alignmentOf = try row.decodeIfPresent(String.self, forKey: .alignmentOf)
+        stationOrderDirection = try row.decodeIfPresent(String.self, forKey: .stationOrderDirection)
+        permittedTraversal = try row.decodeIfPresent(String.self, forKey: .permittedTraversal)
+        alignmentPairs = try row.decodeIfPresent([CompactPackage.AlignmentPair].self, forKey: .alignmentPairs) ?? []
         stations = try row.decode([CompactPackage.Station].self, forKey: .stations)
         segments = try row.decode([CompactPackage.Segment].self, forKey: .segments)
+        stationCircleOwnerByCode = try row.decodeIfPresent([String: String].self, forKey: .stationCircleOwnerByCode) ?? [:]
+        displayBranchLeadIns = (try row.decodeIfPresent([[[Double]]].self, forKey: .displayBranchLeadIns) ?? [])
+            .map { $0.compactMap(Coordinate.init(pair:)) }.filter { $0.count >= 2 }
+        displayStationCoordinates = (try row.decodeIfPresent([String: [Double]].self,
+            forKey: .displayStationCoordinates) ?? [:]).compactMapValues(Coordinate.init(pair:))
+        let displayIntervals = try row.decodeIfPresent([String: [[Double]]].self,
+            forKey: .displayIntervalCoordinates) ?? [:]
+        let segmentCount = segments.count
+        displayIntervalCoordinates = Dictionary(uniqueKeysWithValues: displayIntervals.compactMap { key, points in
+            guard let index = Int(key), index >= 0, index < segmentCount else { return nil }
+            return (index, points.compactMap(Coordinate.init(pair:)))
+        })
     }
 }
 
@@ -230,6 +281,19 @@ extension CompactPackage {
             intervals.append(decoded)
         }
 
+        return intervals
+    }
+
+    public static func decodeDisplayIntervals(_ line: Line) -> [[Coordinate]] {
+        var intervals = decodeIntervals(line)
+        for (index, points) in line.displayIntervalCoordinates {
+            intervals[index] = points
+        }
+        for index in intervals.indices where !intervals[index].isEmpty {
+            intervals[index][0] = line.displayCoordinate(for: line.stations[index % line.stations.count])
+            intervals[index][intervals[index].count - 1] = line.displayCoordinate(
+                for: line.stations[(index + 1) % line.stations.count])
+        }
         return intervals
     }
 

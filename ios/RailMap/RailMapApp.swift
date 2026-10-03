@@ -39,8 +39,17 @@ struct RailMapApp: App {
     // `RailMotion` are read by views that would still be looking at the real
     // setting, so half the interface would degrade and half would not — and a
     // review run on that is worse than no review run at all.
-    private var testableContent: some View {
+    @ViewBuilder private var testableContent: some View {
+#if DEBUG
+        if let mode = ProcessInfo.processInfo.environment["RAILMAP_UI_TEST_LONG_DETAIL"] {
+            LongJourneyDetailTestView(mode: mode)
+                .environment(localization)
+        } else {
+            ContentView(localization: localization)
+        }
+#else
         ContentView(localization: localization)
+#endif
     }
 
     private var preferredColorScheme: ColorScheme? {

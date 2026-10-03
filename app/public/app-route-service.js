@@ -56,6 +56,11 @@ function ensureSolverReady() {
     const generation = routeServiceGeneration;
     const ready = (async () => {
       await ensureRailSectionsLoaded();
+      if (typeof RailMap !== "undefined" && typeof RailMap.ensureNetwork === "function") {
+        const network = await RailMap.ensureNetwork(activeRailPackageUrl());
+        if (!network && generation === routeServiceGeneration)
+          throw new Error("Railway source network could not be loaded for station connector validation.");
+      }
       // A country switch can finish while the outgoing country's IndexedDB
       // request is still queued. Old callers must join the replacement gate,
       // rather than continue after an obsolete warm pass happens to settle.
@@ -108,6 +113,10 @@ async function warmRouteCacheForTrainStreaming(
   let prep = prepareTrainRouteSolve(train);
   if (prep.done) return prep.result;
   await ensureSolverReady();
+  if (train.route_sections?.some((section) => inferredTokyoConventionalSection(section, train).section_codes?.length)
+      && typeof RailMap.ensureNetwork === "function") {
+    await RailMap.ensureNetwork(activeRailPackageUrl());
+  }
   prep = prepareTrainRouteSolve(train);
   if (prep.done) return prep.result;
   return solveTrainRouteStreaming(train, { yieldIfNeeded });

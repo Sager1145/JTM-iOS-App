@@ -11,10 +11,9 @@ import SwiftUI
 /// section that brought its own scroll view would be a scroll view inside a
 /// scroll view.
 ///
-/// It carries no scope control at all. §5.3.1 puts Scope at the top of
-/// Passport and §5.1 forbids a second filter source for one value, so the
-/// region and the date are both chosen in the panel header and arrive here as
-/// inputs — the region as a `Binding`, the date through the statistics store.
+/// Scope controls live above the cards: day and region in the panel header,
+/// and All Time / year in `PassportWorkspaceView`. Their values arrive as
+/// inputs through the region binding and the statistics store.
 ///
 /// The cards answer one question in the order §5.7 asks it: how much have I
 /// ridden, over how many journeys and days, how much of the network is that,
@@ -502,10 +501,11 @@ struct StatisticsDashboardContent: View {
     /// (`StatisticsShareImage`) draws these cards with no panel header
     /// anywhere near them.
     private var ticketScope: String {
-        guard let region else {
-            return localization.text("ios.region.all", fallback: "All regions")
-        }
-        return regionName(region)
+        let groupName = (itineraries.store?.trains ?? itineraries.loaded?.trains ?? [])
+            .first { $0.journeyGroup?.id == statistics.selectedJourneyGroupID && $0.journeyGroup != nil }?
+            .journeyGroup?.name
+        return groupName ?? region.map(regionName)
+            ?? localization.text("ios.region.all", fallback: "All regions")
     }
 
     /// 最下行の左 — 「集計日　RAILMAP 発行」.
@@ -592,11 +592,7 @@ struct StatisticsDashboardContent: View {
         let stopsUnit = localization.statsText("ios.ticket.unit.stops")
         let operatorsUnit = localization.statsText("ios.ticket.unit.operators")
         return TicketFaceCard(
-            // 券種名. `Text(verbatim:)` inside the face and never localized,
-            // for the reason a 乗車券 does not translate its own name: this is
-            // what is PRINTED on the stock, in the same sense that a JR ticket
-            // says 乗車券 to a reader who has never read Japanese.
-            kind: "乗車記録",
+            kind: localization.statsText("ios.ticket.kind.history"),
             scope: ticketScope,
             displays: [
                 .figure(
@@ -1065,9 +1061,7 @@ struct StatisticsDashboardContent: View {
                 .pickerStyle(.segmented)
                 .accessibilityLabel(Text(localization.statsText("ios.stats.scaleLabel")))
             }
-            if rhythm != .year {
-                rhythmYearControl(passport)
-            }
+
             if let best, best.count > 0 {
                 PassportHighlight(
                     eyebrow: localization.statsText("ios.stats.mostJourneys"),
@@ -1115,7 +1109,7 @@ struct StatisticsDashboardContent: View {
                     spoken: journeyCount(column.count))
             }
         case .month:
-            return passport.months(in: rhythmYear).map { column in
+            return passport.months(in: statistics.selectedYear).map { column in
                 StatisticsColumnChart.Column(
                     id: column.id,
                     label: column.id.formatted(),
@@ -1124,7 +1118,7 @@ struct StatisticsDashboardContent: View {
                     spoken: journeyCount(column.count))
             }
         case .weekday:
-            return passport.weekdays(in: rhythmYear).map { column in
+            return passport.weekdays(in: statistics.selectedYear).map { column in
                 StatisticsColumnChart.Column(
                     id: column.id,
                     label: weekdayLabel(column.id, short: true),
@@ -1132,47 +1126,6 @@ struct StatisticsDashboardContent: View {
                     count: column.count,
                     spoken: journeyCount(column.count))
             }
-        }
-    }
-
-    private var rhythmYear: Int {
-        statistics.selectedRhythmYear ?? Self.currentGregorianYear
-    }
-
-    private static var currentGregorianYear: Int {
-        var calendar = Calendar(identifier: .gregorian)
-        calendar.timeZone = .current
-        return calendar.component(.year, from: Date())
-    }
-
-    @ViewBuilder
-    private func rhythmYearControl(_ passport: PassportStatistics) -> some View {
-        let year = rhythmYear
-        if isPoster {
-            Text(String(year))
-                .font(.subheadline.weight(.semibold))
-        } else {
-            Menu {
-                let years = Set(passport.byYear.map(\.id) + [Self.currentGregorianYear, year])
-                ForEach(years.sorted(by: >), id: \.self) { candidate in
-                    Button {
-                        statistics.selectRhythmYear(candidate == Self.currentGregorianYear
-                            ? nil : candidate
-                        )
-                    } label: {
-                        Label(
-                            String(candidate),
-                            systemImage: candidate == year ? "checkmark" : "calendar")
-                    }
-                    .accessibilityIdentifier("statisticsRhythmYear-\(candidate)")
-                }
-            } label: {
-                Label(String(year), systemImage: "calendar")
-                    .font(.subheadline.weight(.semibold))
-            }
-            .accessibilityLabel(
-                Text(localization.statsText("ios.stats.scale.year") + " " + String(year)))
-            .accessibilityIdentifier("statisticsRhythmYearMenu")
         }
     }
 
@@ -1706,13 +1659,16 @@ struct StatisticsDashboardContent: View {
         // evaluation, including the ones a sheet drag causes while nothing
         // about the scope changed.
         let slice = derived.passportScope(
-            trains: loaded.trains, days: loaded.days, region: region
+            trains: loaded.trains, days: loaded.days, region: region, year: statistics.selectedYear,
+            groupID: statistics.selectedJourneyGroupID, dates: statistics.dateSelection
         ) {
             var trains: [Train] = []
             var unconfirmed = 0
             trains.reserveCapacity(loaded.trains.count)
             for train in loaded.trains {
                 if let region, Region.resolved(train) != region { continue }
+                guard statistics.includesYear(train), statistics.includesJourneyGroup(train),
+                      statistics.includesDate(train) else { continue }
                 if RideLedger.hasBeenRidden(train) {
                     trains.append(train)
                 } else {

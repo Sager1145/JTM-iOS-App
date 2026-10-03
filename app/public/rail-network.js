@@ -858,6 +858,21 @@
   // station anchor. The weld is what anchorIntervalsToStations then turns into
   // a real approach; on its own it is only a promise that the interval chain
   // is seam-free.
+  function displayLineForCoordinates(line) {
+    if (!line.displayStationCoordinates && !line.displayIntervalCoordinates) return line;
+    return {
+      ...line,
+      stations: line.stations.map((row) => {
+        const point = line.displayStationCoordinates?.[row[0]];
+        return point ? [row[0], row[1], ...point, ...row.slice(4)] : row;
+      }),
+      segments: line.segments.map((row, index) => {
+        const points = line.displayIntervalCoordinates?.[index];
+        return points ? [row[0], 0, points] : row;
+      }),
+    };
+  }
+
   function decodeIntervals(compactLine) {
     const stationCount = compactLine.stations.length;
     const intervals = [];
@@ -1342,6 +1357,9 @@
     // requirement on this flag at every call site.
     bridgeBlockedIntervals = false,
   ) {
+    // Explicit schematic coordinates affect drawing only. Physical interval
+    // identities still decode the original compact stations and segments.
+    compactLine = displayLineForCoordinates(compactLine);
     const stationPoints = compactLine.stations.map((station) => [
       station[2],
       station[3],
@@ -1542,7 +1560,9 @@
         const spans = withheldSpansForPart(coordinates, keys);
         if (spans) coordinates.withheld = spans;
       });
-    return chain.concat(extraSegmentParts(compactLine, stationPoints, limits));
+    return chain.concat(extraSegmentParts(compactLine, stationPoints, limits),
+      (compactLine.displayBranchLeadIns || []).filter(points => Array.isArray(points) && points.length >= 2)
+        .map(points => points.map(point => point.slice())));
   }
 
   // Turns the vertices a part inherited from a bridged blocked interval (see
@@ -1852,7 +1872,7 @@
   // Searches only segment indices `fromIndex..toIndex` (defaulting to the
   // whole part) — see projectPointsMonotone below for why a per-vertex
   // sweep bounds this instead of always scanning every segment.
-  function projectPointToStrokePart(part, point, fromIndex, toIndex) {
+  function projectPointToStrokePart(part, point, fromIndex, toIndex, fromMeasure, toMeasure) {
     const coordinates = part.coordinates;
     const measures = part.measures;
     const lo = fromIndex == null ? 0 : Math.max(0, fromIndex);
@@ -1871,11 +1891,17 @@
       const dx = b[0] - a[0];
       const dy = b[1] - a[1];
       const lengthSquared = dx * dx + dy * dy;
+      const segmentLength = measures[index + 1] - measures[index];
+      const minimumRatio = fromMeasure == null || !segmentLength ? 0
+        : Math.max(0, (fromMeasure - measures[index]) / segmentLength);
+      const maximumRatio = toMeasure == null || !segmentLength ? 1
+        : Math.min(1, (toMeasure - measures[index]) / segmentLength);
+      if (minimumRatio > maximumRatio) continue;
       const ratio = lengthSquared
         ? Math.max(
-            0,
+            minimumRatio,
             Math.min(
-              1,
+              maximumRatio,
               ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / lengthSquared,
             ),
           )
@@ -1886,7 +1912,6 @@
       ];
       const distance = distanceMeters(point, projected);
       if (!best || distance < best.distance) {
-        const segmentLength = measures[index + 1] - measures[index];
         best = {
           measure: measures[index] + segmentLength * ratio,
           distance,
@@ -2315,6 +2340,343 @@
   // complete display line and returns an exact slice of that same LineString.
   // Consequently ridden and "all railway" layers cannot drift, disagree at a
   // station, or apply different micro-kink grooming.
+  function intervalDirections(network, interval) {
+    const line = network.lineById.get(interval.lineId);
+    if (line?.permittedTraversal === "forward") return { forward: true, reverse: false };
+    if (line?.permittedTraversal === "reverse") return { forward: false, reverse: true };
+    const order = line?.stationOrderDirection;
+    if (order !== "up" && order !== "down") return { forward: true, reverse: true };
+    let allowed = line?.alignmentDirection;
+    if (allowed !== "up" && allowed !== "down") {
+      allowed = null;
+      for (const pair of line?.alignmentPairs || []) {
+        if (pair.with === line.lineId) continue;
+        if (pair.direction !== "up" && pair.direction !== "down") continue;
+        const from = line.stationNames?.indexOf(pair.from) ?? -1;
+        const to = line.stationNames?.indexOf(pair.to) ?? -1;
+        if (from < 0 || to < 0) continue;
+        if (interval.intervalIndex >= Math.min(from, to) && interval.intervalIndex < Math.max(from, to))
+          allowed = pair.direction;
+      }
+    }
+    return { forward: !allowed || allowed === order, reverse: !allowed || allowed !== order };
+  }
+
+  // Connector candidates can land on a nearby branch that does not serve
+  // this station. Prefer the station's surveyed membership over proximity;
+  // unrelated railways and unknown compatibility aliases retain transfers.
+  const stationConnectorIndexes = new WeakMap();
+  function permitsStationConnectorNode(network, stationCode, point) {
+    if (!network?.sectionByCode || !stationCode || !point) return true;
+    let index = stationConnectorIndexes.get(network);
+    if (!index) {
+      index = { servingByCode: new Map(), familyByLine: new Map(), intervalsByFamily: new Map() };
+      for (const line of network.lineById.values()) {
+        const family = `${line.operator}\u0000${line.nameNorm || line.name}`;
+        index.familyByLine.set(line.lineId, family);
+        for (const id of line.stationOrder || []) {
+          const code = id.slice(line.lineId.length + 1);
+          if (!index.servingByCode.has(code)) index.servingByCode.set(code, new Set());
+          index.servingByCode.get(code).add(line.lineId);
+        }
+      }
+      for (const interval of network.sectionByCode.values()) {
+        const family = index.familyByLine.get(interval.lineId);
+        const coordinates = interval.coordinates;
+        if (!family || !coordinates?.length) continue;
+        const measures = [0], bounds = [Infinity, Infinity, -Infinity, -Infinity];
+        for (let vertex = 0; vertex < coordinates.length; vertex++) {
+          const point = coordinates[vertex];
+          bounds[0] = Math.min(bounds[0], point[0]); bounds[1] = Math.min(bounds[1], point[1]);
+          bounds[2] = Math.max(bounds[2], point[0]); bounds[3] = Math.max(bounds[3], point[1]);
+          if (vertex) measures.push(measures[vertex - 1] + distanceMeters(coordinates[vertex - 1], point));
+        }
+        if (!index.intervalsByFamily.has(family)) index.intervalsByFamily.set(family, []);
+        index.intervalsByFamily.get(family).push({ lineId: interval.lineId, coordinates, measures, bounds });
+      }
+      stationConnectorIndexes.set(network, index);
+    }
+    const serving = index.servingByCode.get(stationCode);
+    if (!serving?.size) return true;
+    const families = new Set([...serving].map((id) => index.familyByLine.get(id)));
+    let servingDistance = Infinity, siblingDistance = Infinity;
+    for (const family of families) for (const interval of index.intervalsByFamily.get(family) || []) {
+      // Only serving distances up to 30 m can change the decision against a
+      // sibling within 25 m and the 5 m exact-survey margin.
+      const limit = serving.has(interval.lineId) ? 30 : 25;
+      const bounds = interval.bounds;
+      const rectanglePoint = [Math.max(bounds[0], Math.min(bounds[2], point[0])),
+        Math.max(bounds[1], Math.min(bounds[3], point[1]))];
+      if (distanceMeters(point, rectanglePoint) > limit) continue;
+      const match = projectPointToStrokePart(interval, point);
+      if (!match) continue;
+      if (serving.has(interval.lineId)) servingDistance = Math.min(servingDistance, match.distance);
+      else siblingDistance = Math.min(siblingDistance, match.distance);
+      if (servingDistance <= 5) return true;
+    }
+    return !(siblingDistance <= 25 && siblingDistance + 5 < servingDistance);
+  }
+
+  function correctRouteIntervalDirections(network, codes, fromCode, toCode, substitute = true) {
+    const chain = [];
+    let current = fromCode;
+    for (const code of codes) {
+      const interval = network.sectionByCode.get(code);
+      if (!interval || (current !== interval.fromCode && current !== interval.toCode)) return null;
+      const forward = current === interval.fromCode;
+      const destination = forward ? interval.toCode : interval.fromCode;
+      const allowed = intervalDirections(network, interval);
+      chain.push({ code, interval, source: current, destination, permitted: forward ? allowed.forward : allowed.reverse });
+      current = destination;
+    }
+    if (current !== toCode || !chain.length) return null;
+    if (chain.every((edge) => edge.permitted)) return { sectionCodes: codes.slice(), corrected: false };
+    if (!substitute) return null;
+    const result = [];
+    for (let index = 0; index < chain.length;) {
+      if (chain[index].permitted) { result.push(chain[index].code); index++; continue; }
+      const start = index;
+      const firstLine = network.lineById.get(chain[start].interval.lineId);
+      while (index < chain.length && !chain[index].permitted) index++;
+      const end = index;
+      const source = chain[start].source, destination = chain[end - 1].destination;
+      const blocked = new Set();
+      for (let preserved = 0; preserved < chain.length; preserved++) {
+        if (preserved >= start && preserved < end) continue;
+        blocked.add(chain[preserved].source);
+        blocked.add(chain[preserved].destination);
+      }
+      blocked.delete(source); blocked.delete(destination);
+      const adjacency = new Map();
+      for (const [code, interval] of network.sectionByCode) {
+        const line = network.lineById.get(interval.lineId);
+        if (!line || (line.nameNorm || line.name) !== (firstLine.nameNorm || firstLine.name) ||
+            line.operator !== firstLine.operator) continue;
+        const allowed = intervalDirections(network, interval);
+        const add = (from, to) => {
+          if (blocked.has(from) || blocked.has(to)) return;
+          if (!adjacency.has(from)) adjacency.set(from, []);
+          adjacency.get(from).push({ code, to, length: pathLength(interval.coordinates) });
+        };
+        if (allowed.forward) add(interval.fromCode, interval.toCode);
+        if (allowed.reverse) add(interval.toCode, interval.fromCode);
+      }
+      const costs = new Map([[source, 0]]), pending = new Set([source]), previous = new Map();
+      while (pending.size) {
+        let station = null;
+        for (const code of pending)
+          if (station == null || costs.get(code) < costs.get(station)) station = code;
+        pending.delete(station);
+        if (station === destination) break;
+        for (const edge of adjacency.get(station) || []) {
+          const cost = costs.get(station) + edge.length;
+          if (cost >= (costs.get(edge.to) ?? Infinity)) continue;
+          costs.set(edge.to, cost);
+          previous.set(edge.to, { station, code: edge.code });
+          pending.add(edge.to);
+        }
+      }
+      if (!previous.has(destination)) return null;
+      const replacement = [];
+      for (let station = destination; station !== source;) {
+        const step = previous.get(station);
+        replacement.unshift(step.code); station = step.station;
+      }
+      result.push(...replacement);
+    }
+    const seen = new Set([fromCode]);
+    current = fromCode;
+    for (const code of result) {
+      const interval = network.sectionByCode.get(code);
+      if (current !== interval.fromCode && current !== interval.toCode) return null;
+      current = current === interval.fromCode ? interval.toCode : interval.fromCode;
+      if (seen.has(current)) return null;
+      seen.add(current);
+    }
+    return current === toCode ? { sectionCodes: result, corrected: true } : null;
+  }
+
+  function directedEndpointIntervals(network, feature) {
+    const raw = feature?.geometry?.coordinates;
+    if (feature?.geometry?.type !== "LineString" || !raw || raw.length > 2) return null;
+    const properties = feature.properties || {};
+    const fromCode = properties.from_n02_station_code || properties.from_station_code;
+    const toCode = properties.to_n02_station_code || properties.to_station_code;
+    if (!fromCode || !toCode || fromCode === toCode) return null;
+    const names = routeHintValues(properties, ["required_line_names", "preferred_line_names"], ["used_line_names"]);
+    const operators = routeHintValues(properties, ["required_operator_names", "preferred_operator_names"], ["used_operator_names"]);
+    for (const line of network.lineById.values()) {
+      if (line.alignmentOf || !line.alignmentPairs?.some((pair) => pair.direction === "up" || pair.direction === "down") ||
+          (names.size && !names.has(line.name)) || (operators.size && !operators.has(line.operator))) continue;
+      const from = line.stationOrder.indexOf(`${line.lineId}:${fromCode}`);
+      const to = line.stationOrder.indexOf(`${line.lineId}:${toCode}`);
+      if (from < 0 || to < 0 || from === to) continue;
+      const low = Math.min(from, to), high = Math.max(from, to);
+      const intervals = [...network.sectionByCode].filter(([, interval]) =>
+        interval.lineId === line.lineId && interval.intervalIndex >= low && interval.intervalIndex < high)
+        .sort((left, right) => left[1].intervalIndex - right[1].intervalIndex);
+      if (!intervals.some(([, interval]) => {
+        const allowed = intervalDirections(network, interval);
+        return !allowed.forward || !allowed.reverse;
+      })) continue;
+      const codes = intervals.map(([code]) => code);
+      if (from > to) codes.reverse();
+      const corrected = correctRouteIntervalDirections(network, codes, fromCode, toCode);
+      if (corrected) {
+        const lineIds = [...new Set(corrected.sectionCodes.map((code) => network.sectionByCode.get(code).lineId))];
+        const required = new Set(properties.required_line_ids || []);
+        if (required.size && lineIds.some((id) => !required.has(id))) continue;
+        return { ...corrected, lineIds };
+      }
+    }
+    return null;
+  }
+
+  // Infer physical interval identities from the ENTIRE solved path, rather
+  // than choosing a branch from its endpoints. Joins use station codes; the
+  // 520 m corridor admits surveyed platform approaches, never a new edge.
+  function matchRouteAcrossLineRows(network, feature) {
+    const properties = feature?.properties || {};
+    if (properties.section_codes?.length || feature?.geometry?.type !== "LineString") return null;
+    const raw = feature.geometry.coordinates;
+    if (!raw || new Set(raw.map((point) => coordinateKey(point))).size < 3) return null;
+    const fromCode = properties.from_n02_station_code || properties.from_station_code;
+    const toCode = properties.to_n02_station_code || properties.to_station_code;
+    if (!fromCode || !toCode || fromCode === toCode || !network?.sectionByCode) return null;
+    const maxLateral = 520;
+    const maxBacktrack = 600;
+    const measures = [0];
+    for (let index = 1; index < raw.length; index++)
+      measures.push(measures[index - 1] + distanceMeters(raw[index - 1], raw[index]));
+    const rawPart = { coordinates: raw, measures };
+    const projected = new Map();
+    const project = (point) => {
+      const key = coordinateKey(point);
+      if (!projected.has(key)) projected.set(key, projectPointToStrokePart(rawPart, point));
+      return projected.get(key);
+    };
+    const names = routeHintValues(properties,
+      ["required_line_names", "preferred_line_names"], ["used_line_names"]);
+    const operators = routeHintValues(properties,
+      ["required_operator_names", "preferred_operator_names"], ["used_operator_names"]);
+    const required = new Set(properties.required_line_ids || []);
+    const hintedFamilies = new Set();
+    for (const line of network.lineById.values())
+      if ((!names.size || names.has(line.name) || names.has(line.nameNorm)) &&
+          (!operators.size || operators.has(line.operator)))
+        hintedFamilies.add(`${line.operator}\u0000${line.nameNorm || line.name}`);
+    const families = new Map();
+    for (const [code, interval] of network.sectionByCode) {
+      const line = network.lineById.get(interval.lineId);
+      if (!line || !hintedFamilies.has(`${line.operator}\u0000${line.nameNorm || line.name}`) ||
+          (required.size && !required.has(interval.lineId))) continue;
+      const key = `${line.operator}\u0000${line.nameNorm || line.name}`;
+      if (!families.has(key)) families.set(key, []);
+      families.get(key).push({ code, ...interval });
+    }
+    let best = null;
+    for (const intervals of families.values()) {
+      if (new Set(intervals.map((interval) => interval.lineId)).size < 2) continue;
+      const anchors = new Map();
+      for (const interval of intervals) {
+        for (const [code, point] of [[interval.fromCode, interval.from], [interval.toCode, interval.to]]) {
+          if (!anchors.has(code)) anchors.set(code, []);
+          anchors.get(code).push(point);
+        }
+      }
+      if (!anchors.has(fromCode) || !anchors.has(toCode) ||
+          !anchors.get(fromCode).some((point) => distanceMeters(raw[0], point) <= maxLateral) ||
+          !anchors.get(toCode).some((point) => distanceMeters(raw.at(-1), point) <= maxLateral)) continue;
+      const adjacency = new Map();
+      for (const interval of intervals) {
+        const start = project(interval.from), end = project(interval.to);
+        if (!start || !end || start.distance > maxLateral || end.distance > maxLateral ||
+            Math.abs(end.measure - start.measure) < 0.01) continue;
+        const forward = start.measure < end.measure;
+        const coordinates = forward ? interval.coordinates : interval.coordinates.slice().reverse();
+        if (!coordinates || coordinates.length < 2) continue;
+        // Shared station approaches occur twice in the solved path. Restrict
+        // projection to this interval's station window so a nearest-point tie
+        // cannot select the previous passage through the same surveyed rail.
+        const lowMeasure = Math.min(start.measure, end.measure) - maxBacktrack;
+        const highMeasure = Math.max(start.measure, end.measure) + maxBacktrack;
+        let lowIndex = 0, highIndex = raw.length - 2;
+        while (lowIndex < highIndex && measures[lowIndex + 1] < lowMeasure) lowIndex++;
+        while (highIndex > lowIndex && measures[highIndex] > highMeasure) highIndex--;
+        let maximum = -Infinity, lateralSum = 0, accepted = true;
+        for (const point of coordinates) {
+          const match = projectPointToStrokePart(rawPart, point, lowIndex, highIndex, lowMeasure, highMeasure);
+          if (!match || match.distance > maxLateral || match.measure < maximum - maxBacktrack) {
+            accepted = false;
+            break;
+          }
+          maximum = Math.max(maximum, match.measure);
+          lateralSum += match.distance;
+        }
+        if (!accepted) continue;
+        const source = forward ? interval.fromCode : interval.toCode;
+        const destination = forward ? interval.toCode : interval.fromCode;
+        const weight = Math.max(1, Math.abs(pathLength(coordinates) - Math.abs(end.measure - start.measure)) +
+          2 * lateralSum / coordinates.length);
+        if (!adjacency.has(source)) adjacency.set(source, []);
+        adjacency.get(source).push({ destination, weight, interval, coordinates });
+      }
+      const costs = new Map([[fromCode, 0]]), previous = new Map(), pending = new Set([fromCode]);
+      while (pending.size) {
+        let current = null;
+        for (const code of pending)
+          if (current == null || costs.get(code) < costs.get(current)) current = code;
+        pending.delete(current);
+        if (current === toCode) break;
+        for (const edge of adjacency.get(current) || []) {
+          const cost = costs.get(current) + edge.weight;
+          if (cost >= (costs.get(edge.destination) ?? Infinity)) continue;
+          costs.set(edge.destination, cost);
+          previous.set(edge.destination, { source: current, edge });
+          pending.add(edge.destination);
+        }
+      }
+      if (!previous.has(toCode)) continue;
+      const chain = [];
+      for (let code = toCode; code !== fromCode;) {
+        const step = previous.get(code);
+        if (!step) break;
+        chain.unshift(step.edge);
+        code = step.source;
+      }
+      const lineIds = [...new Set(chain.map((edge) => edge.interval.lineId))];
+      const directedFamily = intervals.some((interval) => {
+        const allowed = intervalDirections(network, interval);
+        return !allowed.forward || !allowed.reverse;
+      });
+      if (lineIds.length < 2 && !directedFamily) continue;
+      const sourceParts = [];
+      for (const edge of chain) {
+        const previous = sourceParts.at(-1);
+        if (previous && sameCoordinate(previous.at(-1), edge.coordinates[0])) previous.push(...edge.coordinates.slice(1));
+        else sourceParts.push(edge.coordinates.slice());
+      }
+      const sourceMetrics = sourceParts.map((coordinates) => {
+        const measures = [0];
+        for (let index = 1; index < coordinates.length; index++)
+          measures.push(measures[index - 1] + distanceMeters(coordinates[index - 1], coordinates[index]));
+        return { coordinates, measures };
+      });
+      if (raw.some((point) => !sourceMetrics.some((part) =>
+        projectPointToStrokePart(part, point).distance <= maxLateral))) continue;
+      const score = costs.get(toCode);
+      if (!best || score < best.score) best = {
+        score, sectionCodes: chain.map((edge) => edge.interval.code), lineIds,
+      };
+    }
+    if (!best) return null;
+    const corrected = correctRouteIntervalDirections(network, best.sectionCodes, fromCode, toCode);
+    if (!corrected) return null;
+    const correctedIds = [...new Set(corrected.sectionCodes.map((code) => network.sectionByCode.get(code).lineId))];
+    if (required.size && correctedIds.some((id) => !required.has(id))) return null;
+    return { ...best, ...corrected, lineIds: correctedIds };
+  }
+
   function canonicalizeRouteFeature(network, feature, options) {
     // A junction station sits on TWO display parts (a trunk and its branch),
     // both a perfect match for a hop that starts or ends there. Picking by
@@ -2323,11 +2685,78 @@
     // previous hop's drawn endpoint — breaks that tie in favour of staying on
     // the rail the train is already on.
     const continueFrom = options && options.continueFrom;
-    const rawLines = routeGeometryLines(feature?.geometry).filter(
+    let rawLines = routeGeometryLines(feature?.geometry).filter(
       (coordinates) => coordinates.length >= 2,
     );
     if (!network || !rawLines.length) return null;
     const properties = feature.properties || {};
+    const sectionCodes = (properties.section_codes || []).filter(Boolean);
+    if (!sectionCodes.length) {
+      const matched = matchRouteAcrossLineRows(network, feature) || directedEndpointIntervals(network, feature);
+      if (matched) return canonicalizeRouteFeature(network, {
+        ...feature,
+        properties: {
+          ...properties,
+          section_codes: matched.sectionCodes,
+          required_line_ids: matched.lineIds,
+          display_route_match: "solved-path-physical-intervals",
+          ...(matched.corrected ? { display_route_direction_corrected: true } : {}),
+        },
+      }, options);
+    }
+    const exactSections = [];
+    if (sectionCodes.length) {
+      // A physical interval code outranks proximity and railway names. Two
+      // parallel tracks can share BOTH; they cannot share this identity.
+      const sections = sectionCodes.map((code) => network.sectionByCode?.get(code));
+      if (sections.some((section) => !section)) return null;
+      const rawStart = rawLines[0][0];
+      const first = sections[0];
+      const explicitFromCode = properties.from_n02_station_code || properties.from_station_code;
+      const explicitToCode = properties.to_n02_station_code || properties.to_station_code;
+      let fromCode = explicitFromCode || (distanceMeters(rawStart, first.from) <= distanceMeters(rawStart, first.to)
+        ? first.fromCode : first.toCode);
+      // For a multi-interval run, connectivity decides the first direction;
+      // raw graph coordinates may belong to a neighbouring platform family.
+      if (sections.length > 1 && !explicitFromCode) {
+        const next = sections[1];
+        const shared = [first.fromCode, first.toCode].filter(
+          (code) => code === next.fromCode || code === next.toCode,
+        );
+        if (shared.length !== 1) return null;
+        fromCode = shared[0] === first.fromCode ? first.toCode : first.fromCode;
+      }
+      for (const section of sections) {
+        if (fromCode !== section.fromCode && fromCode !== section.toCode) return null;
+        const forward = fromCode === section.fromCode;
+        const allowed = intervalDirections(network, section);
+        if (forward ? !allowed.forward : !allowed.reverse) return null;
+        exactSections.push({
+          lineId: section.lineId,
+          sourceCoordinates: forward ? [section.from, section.to] : [section.to, section.from],
+          coordinates: (() => {
+            const anchors = network.lineById.get(section.lineId)?.displayStationCoordinates || {};
+            const from = anchors[section.fromCode] || section.from;
+            const to = anchors[section.toCode] || section.to;
+            return forward ? [from, to] : [to, from];
+          })(),
+        });
+        fromCode = forward ? section.toCode : section.fromCode;
+      }
+      if (explicitToCode && fromCode !== explicitToCode) return null;
+      const rawEnd = rawLines[rawLines.length - 1].at(-1);
+      const chosenStart = exactSections[0].sourceCoordinates[0];
+      const oppositeStart = exactSections[0].sourceCoordinates[1];
+      const chosenEnd = exactSections.at(-1).sourceCoordinates[1];
+      const oppositeEnd = exactSections.at(-1).sourceCoordinates[0];
+      if (distanceMeters(rawStart, chosenStart) > distanceMeters(rawStart, oppositeStart) + 50 ||
+          distanceMeters(rawEnd, chosenEnd) > distanceMeters(rawEnd, oppositeEnd) + 50)
+        return null;
+      rawLines = exactSections.map((section) => section.coordinates);
+    }
+    const requiredLineIds = new Set((properties.required_line_ids || []).filter(Boolean));
+    if (requiredLineIds.size && [...requiredLineIds].some((id) => !network.lineById.has(id)))
+      return null;
     const lineNames = routeHintValues(
       properties,
       ["required_line_names", "preferred_line_names"],
@@ -2352,12 +2781,27 @@
       if (operatorMatched.length) candidates = operatorMatched;
     }
     if (!candidates.length) candidates = [...network.lineById.values()];
+    if (requiredLineIds.size)
+      candidates = [...network.lineById.values()].filter((line) => requiredLineIds.has(line.lineId));
 
     const canonicalLines = [];
     const usedLineIds = [];
+    const recognizedEndpoint = (code) => code && [...network.lineById.values()].some(
+      (line) => line.stationOrder?.includes(`${line.lineId}:${code}`));
+    const explicitFrom = properties.from_n02_station_code || properties.from_station_code;
+    const explicitTo = properties.to_n02_station_code || properties.to_station_code;
+    const knownFrom = recognizedEndpoint(explicitFrom);
+    const knownTo = recognizedEndpoint(explicitTo);
     const bestFitFor = (lines, rawStart, rawEnd) => {
       let best = null;
       for (const line of lines) {
+        // A branch may pass near a trunk station without serving it. If this
+        // legacy hop crosses package rows, no single-row slice can represent
+        // it; let the caller retain the solver's complete surveyed path.
+        if (!sectionCodes.length && line.stationOrder?.length) {
+          if ((knownFrom && !line.stationOrder.includes(`${line.lineId}:${explicitFrom}`)) ||
+              (knownTo && !line.stationOrder.includes(`${line.lineId}:${explicitTo}`))) continue;
+        }
         // Both endpoints must land on the SAME part. Parts are separate
         // railways (a trunk and its branch), so allowing one endpoint on each
         // is exactly the "train turns onto the wrong line" bug: the slice
@@ -2377,6 +2821,8 @@
             network.routeProjectionCache,
           );
           if (!start || !end) continue;
+          if ((line.permittedTraversal === "forward" && start.measure > end.measure) ||
+              (line.permittedTraversal === "reverse" && start.measure < end.measure)) continue;
           const fit = start.distance + end.distance;
           const seam = continueFrom
             ? distanceMeters(continueFrom, start.coordinate)
@@ -2393,7 +2839,9 @@
           const alignment = line.alignmentDirection;
           let bias = 0;
           if (alignment === "up" || alignment === "down") {
-            const rode = start.measure <= end.measure ? "down" : "up";
+            const order = line.stationOrderDirection || "down";
+            const rode = start.measure <= end.measure ? order : (order === "down" ? "up" : "down");
+            if (line.stationOrderDirection && alignment !== rode) continue;
             bias = alignment === rode ? -ALIGNMENT_MATCH_BONUS : ALIGNMENT_MATCH_BONUS;
           }
           const candidate = {
@@ -2412,10 +2860,12 @@
     const reach = (fit) =>
       fit ? Math.max(fit.start.distance, fit.end.distance) : Infinity;
 
-    for (const rawCoordinates of rawLines) {
+    for (const [rawIndex, rawCoordinates] of rawLines.entries()) {
       const rawStart = rawCoordinates[0];
       const rawEnd = rawCoordinates[rawCoordinates.length - 1];
-      let best = bestFitFor(candidates, rawStart, rawEnd);
+      const exactSection = exactSections[rawIndex];
+      let best = bestFitFor(exactSection
+        ? [network.lineById.get(exactSection.lineId)] : candidates, rawStart, rawEnd);
 
       // The hint names the RAILWAY the solver rode; it cannot make a line
       // reach a platform it does not serve. Where the package draws that
@@ -2430,7 +2880,7 @@
       // between is a disagreement about WHICH platform, which the hint is
       // still the better judge of, and which the route-approach audit reports
       // rather than papers over.
-      if (reach(best) > HINTED_LINE_MAX_REACH_METERS) {
+      if (!exactSection && !requiredLineIds.size && reach(best) > HINTED_LINE_MAX_REACH_METERS) {
         const anywhere = bestFitFor(network.lineById.values(), rawStart, rawEnd);
         if (reach(anywhere) <= REPLACEMENT_MAX_REACH_METERS) best = anywhere;
       }
@@ -2509,10 +2959,25 @@
       }
     }
 
+    // A coded hop can span several station intervals. Preserve all of them,
+    // joining only exact seams rather than drawing a bridge between platforms.
+    const outputLines = exactSections.length ? [] : canonicalLines;
+    for (const coordinates of exactSections.length ? canonicalLines : []) {
+      const previous = outputLines[outputLines.length - 1];
+      if (previous && sameCoordinate(previous[previous.length - 1], coordinates[0]))
+        previous.push(...coordinates.slice(1));
+      else outputLines.push(coordinates);
+    }
     return {
       ...feature,
       properties: {
         ...properties,
+        ...(sectionCodes.length ? {
+          physical_length_m: sectionCodes.reduce((total, code) =>
+            total + pathLength(network.sectionByCode.get(code).coordinates), 0),
+          raw_physical_length_m: sectionCodes.reduce((total, code) =>
+            total + pathLength(network.sectionByCode.get(code).coordinates), 0),
+        } : {}),
         display_geometry_source: "all-railways-complete-line",
         display_line_ids: [...new Set(usedLineIds)],
         ...(strokeRef
@@ -2520,9 +2985,9 @@
           : {}),
       },
       geometry:
-        feature.geometry.type === "MultiLineString"
-          ? { type: "MultiLineString", coordinates: canonicalLines }
-          : { type: "LineString", coordinates: canonicalLines[0] },
+        feature.geometry.type === "MultiLineString" || outputLines.length > 1
+          ? { type: "MultiLineString", coordinates: outputLines }
+          : { type: "LineString", coordinates: outputLines[0] },
     };
   }
 
@@ -3249,6 +3714,7 @@
       pkg.geometrySource?.officialGeometryComparison?.byLine || {};
     const lineById = new Map();
     const stationById = new Map();
+    const sectionByCode = new Map();
     const groupMembers = new Map();
     const linesByName = new Map();
     const linesByOperator = new Map();
@@ -3346,6 +3812,8 @@
         // the service's own.
         railwayId: railwayIdentityFor(lineId, compactLine, renderGroupByLine),
         name: compactLine.name,
+        nameNorm: compactLine.nameNorm || compactLine.name,
+        country: compactLine.country || pkg.country || "",
         operator: compactLine.operator,
         nameRoma: compactLine.nameRoma,
         isHSR: Boolean(compactLine.isHSR),
@@ -3355,6 +3823,10 @@
         alignmentOf: compactLine.alignmentOf || null,
         alignmentRole: compactLine.alignmentRole || null,
         alignmentDirection: compactLine.alignmentDirection || null,
+        stationOrderDirection: compactLine.stationOrderDirection || null,
+        permittedTraversal: compactLine.permittedTraversal || null,
+        alignmentPairs: compactLine.alignmentPairs || [],
+        stationNames: compactLine.stations.map((station) => station[1]),
         rank: compactLine.rank,
         color: featureColor,
         colorDark: featureColorDark,
@@ -3373,6 +3845,7 @@
           ? `/rail/logos/${lineId.replace(/(?:-p?\d+)+$/, "")}.png`
           : compactLine.operatorLogo || null,
         stationOrder: stationIds,
+        displayStationCoordinates: compactLine.displayStationCoordinates || {},
         km: totalKm,
         visibilityKm,
         minZoom: lineMinZoom,
@@ -3385,6 +3858,32 @@
       const lineGeometry = geometryForParts(lineParts);
       lineById.get(lineId).geometry = lineGeometry;
       lineById.get(lineId).parts = lineParts;
+      const surveyIntervals = decodeIntervals(compactLine);
+      const intervalBases = compactLine.segments.map((_, index) => {
+        const from = compactLine.stations[index];
+        const to = compactLine.stations[(index + 1) % compactLine.stations.length];
+        return from && to && from[0] !== to[0]
+          ? `${lineId}@${[from[0], to[0]].sort().join(":")}` : null;
+      });
+      const baseCounts = new Map();
+      for (const base of intervalBases)
+        if (base) baseCounts.set(base, (baseCounts.get(base) || 0) + 1);
+      const occurrences = new Map();
+      for (let index = 0; index < compactLine.segments.length; index += 1) {
+        const from = compactLine.stations[index];
+        const to = compactLine.stations[(index + 1) % compactLine.stations.length];
+        if (!from || !to || from[0] === to[0]) continue;
+        const base = intervalBases[index];
+        const occurrence = (occurrences.get(base) || 0) + 1;
+        occurrences.set(base, occurrence);
+        const code = baseCounts.get(base) > 1 ? `${base}~${occurrence}` : base;
+        sectionByCode.set(code, {
+          lineId, fromCode: from[0], toCode: to[0],
+          intervalIndex: index,
+          from: [from[2], from[3]], to: [to[2], to[3]],
+          coordinates: surveyIntervals[index],
+        });
+      }
       const displayOverride = displayOverrides.get(lineId);
       const blockedDisplayIntervals = new Set(
         comparisonByLine[lineId]?.displayBlockedIntervals || [],
@@ -3393,9 +3892,9 @@
         blockedDisplayIntervals.delete(released);
       for (const released of releasedByLine.get(lineId) || [])
         blockedDisplayIntervals.delete(released);
-      const displayCompactLine = displayOverride
+      const displayCompactLine = displayLineForCoordinates(displayOverride
         ? { ...compactLine, stations: displayOverride.stations }
-        : compactLine;
+        : compactLine);
       // Only the regions rail-stroke.js draws as one continuous polyline can
       // bridge a blocked interval instead of splitting on it (see
       // `bridgeBlockedIntervals` on displayPartsForLine) — the per-lane
@@ -3629,7 +4128,7 @@
       compactLine.stations.forEach((row, index) => {
         const displayRow = displayOverride
           ? displayOverride.stations[index]
-          : row;
+          : displayCompactLine.stations[index];
         const isTerminal =
           !compactLine.isLoop &&
           (index === 0 || index === stationCount - 1);
@@ -3638,8 +4137,8 @@
           name: row[1],
           lineId,
           seq: index,
-          lon: row[2],
-          lat: row[3],
+          lon: displayRow[2],
+          lat: displayRow[3],
           stationGroupId: row[0],
         };
         if (row.length > 4) {
@@ -3828,6 +4327,17 @@
               });
           }
         };
+
+        const circleOwner = compactLine.stationCircleOwnerByCode?.[row[0]];
+        if (circleOwner && circleOwner !== lineId) {
+          const owner = pkg.lines.find((line) => line.id === circleOwner);
+          const ownerStation = owner && displayLineForCoordinates(owner).stations.find((member) => member[0] === row[0]);
+          if (!ownerStation || distanceMeters([displayRow[2], displayRow[3]], ownerStation.slice(2, 4)) > 1)
+            throw new Error(`${lineId}: station circle owner ${circleOwner} does not share the platform`);
+          // stationById/groupMembers retain this platform alias for routes and
+          // popup membership; only the duplicate visual mark is omitted.
+          return;
+        }
 
         if (isTenantCandidate)
           tenantBeadCandidates.push({
@@ -4020,11 +4530,39 @@
       },
       lineById,
       stationById,
+      sectionByCode,
       groupMembers,
       linesByName,
       linesByOperator,
       routeProjectionCache: new Map(),
     };
+  }
+
+  function sourceGeometryForIntervals(network, properties) {
+    const codes = properties.section_codes || [];
+    const required = new Set(properties.required_line_ids || properties.line_ids || []);
+    let current = properties.from_n02_station_code || properties.from_station_code;
+    const destination = properties.to_n02_station_code || properties.to_station_code;
+    const parts = [];
+    for (const code of codes) {
+      const interval = network.sectionByCode?.get(code);
+      if (!interval || (required.size && !required.has(interval.lineId))) return null;
+      const forward = current === interval.fromCode;
+      if (!forward && current !== interval.toCode) return null;
+      const allowed = intervalDirections(network, interval);
+      if (forward ? !allowed.forward : !allowed.reverse) return null;
+      const path = forward ? interval.coordinates : interval.coordinates?.slice().reverse();
+      if (!path || path.length < 2) return null;
+      const previous = parts.at(-1);
+      const last = previous?.at(-1);
+      if (last && last[0] === path[0][0] && last[1] === path[0][1]) previous.push(...path.slice(1));
+      else parts.push(path.slice());
+      current = forward ? interval.toCode : interval.fromCode;
+    }
+    if (!parts.length || (destination && current !== destination)) return null;
+    return parts.length === 1
+      ? { type: "LineString", coordinates: parts[0] }
+      : { type: "MultiLineString", coordinates: parts };
   }
 
   return Object.freeze({
@@ -4051,6 +4589,11 @@
     continuousCoordinatesForLine,
     displayPartsForLine,
     canonicalizeRouteFeature,
+    sourceGeometryForIntervals,
+    matchRouteAcrossLineRows,
+    intervalDirections,
+    correctRouteIntervalDirections,
+    permitsStationConnectorNode,
     smoothMicroKinks,
     stationMinZoomForLine,
     strokeRefFor,

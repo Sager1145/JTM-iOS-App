@@ -5,6 +5,23 @@
   "solved": 39,
   "unsolvable": 0,
   "no_route": 0,
+  "solver_context": {
+    "solver_version": "25",
+    "history_revisions": {
+      "jp": "2026-09-28.3"
+    },
+    "history_hashes": {
+      "jp": "c6feed755ece7a664434592e0b910386493611e62b4d82b5e5aede98c3e99cb3"
+    }
+  },
+  "source_hashes": {
+    "jp-2025.json": "03632f69aa742c0096685ec80d125191975986459aa2a36d221af065648e5325",
+    "matched-routes.json": "e53bfa63157c64aedfbd2a1e78c553d212d6753b3d6e16cbd0b9dda65b057226",
+    "matched-stops.json": "8468a0e34e19e22822a7933ec376505ecc2e933b1529af67eddb7e1a306f36c7",
+    "rail-history.json": "c6feed755ece7a664434592e0b910386493611e62b4d82b5e5aede98c3e99cb3",
+    "rail-sections.json": "88bb7fa1fb4c90c5618bce0349fa97cb54a3eba7f2a641108f24d064adde659b",
+    "stations.json": "42ee2b75cde8449a881bfe699768d01da9fe5a12388556736d78c032e179a97f"
+  },
   "parts": [
     "part-000",
     "part-001",
@@ -46,6 +63,47 @@
     "part-037",
     "part-038"
   ],
+  "part_train_ids": {
+    "part-000": "new_year_grand_loop_20251231_01",
+    "part-001": "new_year_grand_loop_20251231_02",
+    "part-002": "new_year_grand_loop_20251231_03",
+    "part-003": "new_year_grand_loop_20251231_04",
+    "part-004": "new_year_grand_loop_20251231_05",
+    "part-005": "new_year_grand_loop_20251231_06",
+    "part-006": "new_year_grand_loop_20251231_07",
+    "part-007": "new_year_grand_loop_20251231_08",
+    "part-008": "new_year_grand_loop_20251231_09",
+    "part-009": "new_year_grand_loop_20251231_10",
+    "part-010": "new_year_grand_loop_20251231_11",
+    "part-011": "new_year_grand_loop_20251231_12",
+    "part-012": "new_year_grand_loop_20251231_13",
+    "part-013": "new_year_grand_loop_20251231_14",
+    "part-014": "new_year_grand_loop_20251231_15",
+    "part-015": "new_year_grand_loop_20251231_16",
+    "part-016": "new_year_grand_loop_20251231_17",
+    "part-017": "new_year_grand_loop_20251231_18",
+    "part-018": "new_year_grand_loop_20251231_19",
+    "part-019": "new_year_grand_loop_20251231_20",
+    "part-020": "new_year_grand_loop_20251231_21",
+    "part-021": "new_year_grand_loop_20251231_22",
+    "part-022": "new_year_grand_loop_20260101_23",
+    "part-023": "new_year_grand_loop_20260101_24",
+    "part-024": "new_year_grand_loop_20260101_25",
+    "part-025": "new_year_grand_loop_20260101_26",
+    "part-026": "new_year_grand_loop_20260101_27",
+    "part-027": "new_year_grand_loop_20260101_28",
+    "part-028": "new_year_grand_loop_20260101_29",
+    "part-029": "new_year_grand_loop_20260101_30",
+    "part-030": "new_year_grand_loop_20260101_31",
+    "part-031": "new_year_grand_loop_20260101_32",
+    "part-032": "new_year_grand_loop_20260101_33",
+    "part-033": "new_year_grand_loop_20260101_34",
+    "part-034": "new_year_grand_loop_20260101_35",
+    "part-035": "new_year_grand_loop_20260101_36",
+    "part-036": "new_year_grand_loop_20260101_37",
+    "part-037": "new_year_grand_loop_20260101_38",
+    "part-038": "new_year_grand_loop_20260101_39"
+  },
   "full": "sample-full",
   "dates": {
     "2025-12-31": [
@@ -91,46 +149,5 @@
       "part-037",
       "part-038"
     ]
-  },
-  "part_train_ids": {
-    "part-000": "new_year_grand_loop_20251231_01",
-    "part-001": "new_year_grand_loop_20251231_02",
-    "part-002": "new_year_grand_loop_20251231_03",
-    "part-003": "new_year_grand_loop_20251231_04",
-    "part-004": "new_year_grand_loop_20251231_05",
-    "part-005": "new_year_grand_loop_20251231_06",
-    "part-006": "new_year_grand_loop_20251231_07",
-    "part-007": "new_year_grand_loop_20251231_08",
-    "part-008": "new_year_grand_loop_20251231_09",
-    "part-009": "new_year_grand_loop_20251231_10",
-    "part-010": "new_year_grand_loop_20251231_11",
-    "part-011": "new_year_grand_loop_20251231_12",
-    "part-012": "new_year_grand_loop_20251231_13",
-    "part-013": "new_year_grand_loop_20251231_14",
-    "part-014": "new_year_grand_loop_20251231_15",
-    "part-015": "new_year_grand_loop_20251231_16",
-    "part-016": "new_year_grand_loop_20251231_17",
-    "part-017": "new_year_grand_loop_20251231_18",
-    "part-018": "new_year_grand_loop_20251231_19",
-    "part-019": "new_year_grand_loop_20251231_20",
-    "part-020": "new_year_grand_loop_20251231_21",
-    "part-021": "new_year_grand_loop_20251231_22",
-    "part-022": "new_year_grand_loop_20260101_23",
-    "part-023": "new_year_grand_loop_20260101_24",
-    "part-024": "new_year_grand_loop_20260101_25",
-    "part-025": "new_year_grand_loop_20260101_26",
-    "part-026": "new_year_grand_loop_20260101_27",
-    "part-027": "new_year_grand_loop_20260101_28",
-    "part-028": "new_year_grand_loop_20260101_29",
-    "part-029": "new_year_grand_loop_20260101_30",
-    "part-030": "new_year_grand_loop_20260101_31",
-    "part-031": "new_year_grand_loop_20260101_32",
-    "part-032": "new_year_grand_loop_20260101_33",
-    "part-033": "new_year_grand_loop_20260101_34",
-    "part-034": "new_year_grand_loop_20260101_35",
-    "part-035": "new_year_grand_loop_20260101_36",
-    "part-036": "new_year_grand_loop_20260101_37",
-    "part-037": "new_year_grand_loop_20260101_38",
-    "part-038": "new_year_grand_loop_20260101_39"
   }
 }

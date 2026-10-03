@@ -11,10 +11,14 @@ public enum JourneyRouteIdentity {
 
     public static func detectedApplies(_ train: Train, detected: [Statistics.TraversedLine]) -> Bool {
         !detected.isEmpty
-            && (TrainServiceBranding.usesDetectedLines(train) || recordedLineNames(of: train).isEmpty)
+            && (detected.contains { $0.selectedLineID != nil }
+                || TrainServiceBranding.usesDetectedLines(train) || recordedLineNames(of: train).isEmpty)
     }
 
     public static func lineNames(of train: Train, detected: [Statistics.TraversedLine]) -> [String] {
+        if detected.contains(where: { $0.selectedLineID != nil }) {
+            return unique(detected.map(\.name))
+        }
         let recorded = recordedLineNames(of: train)
         guard detectedApplies(train, detected: detected) else { return recorded }
         // Detection may cover only the loaded portion. Keep recorded legs
@@ -33,6 +37,9 @@ public enum JourneyRouteIdentity {
     }
 
     public static func operatorNames(of train: Train, detected: [Statistics.TraversedLine]) -> [String] {
+        if detected.contains(where: { $0.selectedLineID != nil }) {
+            return unique(detected.compactMap(\.operatorName))
+        }
         let sections = unique((train.routeSections ?? []).flatMap { $0.operatorNames ?? [] })
         let recorded = (sections.isEmpty ? train.routePolicy?.preferredOperatorNames ?? [] : sections)
             + [train.company].compactMap { $0 }

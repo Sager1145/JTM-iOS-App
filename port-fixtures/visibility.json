@@ -4671,7 +4671,7 @@
       "country": "jp",
       "lineId": "jp-東海旅客鉄道-東海道新幹線",
       "rank": 0,
-      "groupKm": 515.217,
+      "groupKm": 515.151,
       "minZoomForRank": 3,
       "minZoomForLength": 3
     },
@@ -6460,6 +6460,22 @@
       "minZoomForLength": 6
     },
     {
+      "country": "jp",
+      "lineId": "jp-東日本旅客鉄道-大崎支線",
+      "rank": 2,
+      "groupKm": 5.029999999999999,
+      "minZoomForRank": 5,
+      "minZoomForLength": 7
+    },
+    {
+      "country": "jp",
+      "lineId": "jp-東日本旅客鉄道-大崎支線-p1",
+      "rank": 2,
+      "groupKm": 5.029999999999999,
+      "minZoomForRank": 5,
+      "minZoomForLength": 7
+    },
+    {
       "country": "us",
       "lineId": "ace-ace",
       "rank": 2,
@@ -6575,7 +6591,31 @@
       "country": "us",
       "lineId": "amtrak-amtrak-cascades-us",
       "rank": 1,
-      "groupKm": 641.4319999999998,
+      "groupKm": 739.2929999999998,
+      "minZoomForRank": 4,
+      "minZoomForLength": 3
+    },
+    {
+      "country": "us",
+      "lineId": "amtrak-maple-leaf-us",
+      "rank": 1,
+      "groupKm": 747.1290000000001,
+      "minZoomForRank": 4,
+      "minZoomForLength": 3
+    },
+    {
+      "country": "us",
+      "lineId": "amtrak-amtrak-cascades-border1",
+      "rank": 1,
+      "groupKm": 739.2929999999998,
+      "minZoomForRank": 4,
+      "minZoomForLength": 3
+    },
+    {
+      "country": "us",
+      "lineId": "amtrak-maple-leaf-border1",
+      "rank": 1,
+      "groupKm": 747.1290000000001,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -8567,7 +8607,15 @@
       "country": "us",
       "lineId": "san-francisco-municipal-tran-ph",
       "rank": 4,
-      "groupKm": 4.345000000000001,
+      "groupKm": 5.183000000000001,
+      "minZoomForRank": 7,
+      "minZoomForLength": 7
+    },
+    {
+      "country": "us",
+      "lineId": "san-francisco-municipal-tran-ph-direction1",
+      "rank": 4,
+      "groupKm": 5.183000000000001,
       "minZoomForRank": 7,
       "minZoomForLength": 7
     },
@@ -8575,7 +8623,7 @@
       "country": "us",
       "lineId": "san-francisco-municipal-tran-ph-b1",
       "rank": 4,
-      "groupKm": 4.345000000000001,
+      "groupKm": 5.183000000000001,
       "minZoomForRank": 7,
       "minZoomForLength": 7
     },
@@ -8583,15 +8631,7 @@
       "country": "us",
       "lineId": "san-francisco-municipal-tran-pm",
       "rank": 4,
-      "groupKm": 3.332,
-      "minZoomForRank": 7,
-      "minZoomForLength": 7
-    },
-    {
-      "country": "us",
-      "lineId": "san-francisco-municipal-tran-pm-b1",
-      "rank": 4,
-      "groupKm": 3.332,
+      "groupKm": 3.162,
       "minZoomForRank": 7,
       "minZoomForLength": 7
     },
@@ -8599,7 +8639,7 @@
       "country": "us",
       "lineId": "san-francisco-municipal-tran-pm-b2",
       "rank": 4,
-      "groupKm": 3.332,
+      "groupKm": 3.162,
       "minZoomForRank": 7,
       "minZoomForLength": 7
     },
@@ -8607,7 +8647,7 @@
       "country": "us",
       "lineId": "san-francisco-municipal-tran-pm-b3",
       "rank": 4,
-      "groupKm": 3.332,
+      "groupKm": 3.162,
       "minZoomForRank": 7,
       "minZoomForLength": 7
     },
@@ -9023,15 +9063,7 @@
       "country": "us",
       "lineId": "utah-transit-authority-uta-703",
       "rank": 3,
-      "groupKm": 40.47900000000001,
-      "minZoomForRank": 6,
-      "minZoomForLength": 5
-    },
-    {
-      "country": "us",
-      "lineId": "utah-transit-authority-uta-703-b1",
-      "rank": 3,
-      "groupKm": 40.47900000000001,
+      "groupKm": 37.71500000000001,
       "minZoomForRank": 6,
       "minZoomForLength": 5
     },
@@ -9311,9 +9343,25 @@
       "country": "ca",
       "lineId": "amtrak-adirondack-ca",
       "rank": 1,
-      "groupKm": 6.12,
+      "groupKm": 78.215,
       "minZoomForRank": 4,
-      "minZoomForLength": 7
+      "minZoomForLength": 4
+    },
+    {
+      "country": "ca",
+      "lineId": "amtrak-maple-leaf-ca",
+      "rank": 1,
+      "groupKm": 132.324,
+      "minZoomForRank": 4,
+      "minZoomForLength": 4
+    },
+    {
+      "country": "ca",
+      "lineId": "amtrak-adirondack-border1",
+      "rank": 1,
+      "groupKm": 78.215,
+      "minZoomForRank": 4,
+      "minZoomForLength": 4
     },
     {
       "country": "ca",

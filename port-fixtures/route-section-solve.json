@@ -25,8 +25,8 @@
       },
       "graphNodeCount": 168,
       "connectors": {
-        "directedCount": 3422,
-        "digest": "1bh0jq914w9"
+        "directedCount": 468,
+        "digest": "t3h6s3scx7"
       },
       "solved": [
         {
@@ -67,6 +67,8 @@
               "required_line_names": [
                 "氹仔線"
               ],
+              "required_line_ids": [],
+              "section_codes": [],
               "required_operator_names": [
                 "澳門輕軌"
               ],
@@ -222,6 +224,8 @@
               "required_line_names": [
                 "氹仔線"
               ],
+              "required_line_ids": [],
+              "section_codes": [],
               "required_operator_names": [
                 "澳門輕軌"
               ],
@@ -353,6 +357,8 @@
               "required_line_names": [
                 "氹仔線"
               ],
+              "required_line_ids": [],
+              "section_codes": [],
               "required_operator_names": [
                 "澳門輕軌"
               ],
@@ -366,8 +372,8 @@
                 "4"
               ],
               "route_template_key": "dbrrvp09n2",
-              "path_coordinate_count": 4,
-              "raw_path_coordinate_count": 3,
+              "path_coordinate_count": 15,
+              "raw_path_coordinate_count": 14,
               "snap_distance_m": {
                 "from": 0,
                 "to": 0
@@ -376,9 +382,9 @@
                 "from": 95.78,
                 "to": 0.31
               },
-              "physical_length_m": 595.86,
-              "raw_physical_length_m": 500.05,
-              "cost": 680.05
+              "physical_length_m": 862.02,
+              "raw_physical_length_m": 766.22,
+              "cost": 766.22
             },
             "geometry": {
               "type": "LineString",
@@ -390,6 +396,50 @@
                 [
                   113.54817,
                   22.15711
+                ],
+                [
+                  113.54971,
+                  22.15706
+                ],
+                [
+                  113.55138,
+                  22.15695
+                ],
+                [
+                  113.55175,
+                  22.15686
+                ],
+                [
+                  113.55207,
+                  22.15674
+                ],
+                [
+                  113.55271,
+                  22.15647
+                ],
+                [
+                  113.55288,
+                  22.15636
+                ],
+                [
+                  113.55295,
+                  22.15627
+                ],
+                [
+                  113.55301,
+                  22.15613
+                ],
+                [
+                  113.553,
+                  22.15592
+                ],
+                [
+                  113.55288,
+                  22.15576
+                ],
+                [
+                  113.55233,
+                  22.15522
                 ],
                 [
                   113.55192,
@@ -444,6 +494,8 @@
               "required_line_names": [
                 "氹仔線"
               ],
+              "required_line_ids": [],
+              "section_codes": [],
               "required_operator_names": [
                 "澳門輕軌"
               ],
@@ -555,6 +607,8 @@
               "required_line_names": [
                 "氹仔線"
               ],
+              "required_line_ids": [],
+              "section_codes": [],
               "required_operator_names": [
                 "澳門輕軌"
               ],
@@ -674,6 +728,8 @@
               "required_line_names": [
                 "氹仔線"
               ],
+              "required_line_ids": [],
+              "section_codes": [],
               "required_operator_names": [
                 "澳門輕軌"
               ],
@@ -1595,8 +1651,8 @@
       },
       "graphNodeCount": 3410,
       "connectors": {
-        "directedCount": 74336,
-        "digest": "7eu1w54i5c"
+        "directedCount": 59136,
+        "digest": "2e5r6vtq8d5"
       },
       "solved": [
         {
@@ -1637,6 +1693,8 @@
               "required_line_names": [
                 "東鐵綫"
               ],
+              "required_line_ids": [],
+              "section_codes": [],
               "required_operator_names": [
                 "MTR"
               ],
@@ -1764,6 +1822,8 @@
               "required_line_names": [
                 "東鐵綫"
               ],
+              "required_line_ids": [],
+              "section_codes": [],
               "required_operator_names": [
                 "MTR"
               ],
@@ -1931,6 +1991,8 @@
               "required_line_names": [
                 "東鐵綫"
               ],
+              "required_line_ids": [],
+              "section_codes": [],
               "required_operator_names": [
                 "MTR"
               ],
@@ -2098,6 +2160,8 @@
               "required_line_names": [
                 "東鐵綫"
               ],
+              "required_line_ids": [],
+              "section_codes": [],
               "required_operator_names": [
                 "MTR"
               ],
@@ -2241,6 +2305,8 @@
               "required_line_names": [
                 "東鐵綫"
               ],
+              "required_line_ids": [],
+              "section_codes": [],
               "required_operator_names": [
                 "MTR"
               ],
@@ -2404,6 +2470,8 @@
               "required_line_names": [
                 "東鐵綫"
               ],
+              "required_line_ids": [],
+              "section_codes": [],
               "required_operator_names": [
                 "MTR"
               ],

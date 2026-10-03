@@ -1,0 +1,125 @@
+{
+  "sourceNote": "Original 20260704_04_oedo_line precompute (part-006), solver source coordinates retained for reproducible display regression; no source mileage replacement.",
+  "route": {
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "train_id": "__template__",
+          "route_id": "solved-250edl8nilh-primary",
+          "variant_rank": 0,
+          "is_primary": true,
+          "route_choice": "single_best_path",
+          "geometry_role": "single_primary_segment",
+          "source": "browser_dijkstra_on_embedded_n02_railroadsection_graph_python_equivalent",
+          "segment_index": 0,
+          "from": "大門",
+          "to": "赤羽橋",
+          "from_n02_station_code": "003939",
+          "to_n02_station_code": "003954",
+          "allowed_institution_type_codes": [
+            "3"
+          ],
+          "preferred_line_names": [
+            "12号線大江戸線"
+          ],
+          "required_line_names": [
+            "12号線大江戸線"
+          ],
+          "required_line_ids": [],
+          "section_codes": [],
+          "required_operator_names": [
+            "東京都"
+          ],
+          "preferred_operator_names": [
+            "東京都"
+          ],
+          "solve_mode": "explicit_section_route_required_home_institution",
+          "require_preferred_institution": true,
+          "used_institution_type_codes": [
+            "3"
+          ],
+          "route_template_key": "2dyau76unru",
+          "path_coordinate_count": 15,
+          "raw_path_coordinate_count": 13,
+          "snap_distance_m": {
+            "from": 0,
+            "to": 0
+          },
+          "endpoint_display_gap_m": {
+            "from": 67.44,
+            "to": 70.58
+          },
+          "physical_length_m": 1118.41,
+          "raw_physical_length_m": 980.38,
+          "cost": 1160.38
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              139.7557225,
+              35.6566775
+            ],
+            [
+              139.75498,
+              35.65674
+            ],
+            [
+              139.75468,
+              35.65678
+            ],
+            [
+              139.75412,
+              35.65683
+            ],
+            [
+              139.7537,
+              35.65687
+            ],
+            [
+              139.75366,
+              35.65687
+            ],
+            [
+              139.75283,
+              35.65694
+            ],
+            [
+              139.75174,
+              35.65706
+            ],
+            [
+              139.75107,
+              35.65697
+            ],
+            [
+              139.7507,
+              35.65686
+            ],
+            [
+              139.75051,
+              35.6568
+            ],
+            [
+              139.75021,
+              35.6566
+            ],
+            [
+              139.75014,
+              35.65619
+            ],
+            [
+              139.74497,
+              35.65489
+            ],
+            [
+              139.744195,
+              35.65497
+            ]
+          ]
+        }
+      }
+    ]
+  }
+}

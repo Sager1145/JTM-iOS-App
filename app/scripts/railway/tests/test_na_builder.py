@@ -1921,7 +1921,7 @@ class BorderSplitTests(unittest.TestCase):
 
         self.assertEqual(runs, [('us', 0, 1), ('ca', 2, 3)])
 
-    def test_country_slice_requests_profile_recalculation(self):
+    def test_country_slice_recalculates_profile_without_regrooming_survey(self):
         line = {
             'lineId': 'international', 'branchOf': None,
             'stationIds': ['a', 'b', 'c'],
@@ -1938,7 +1938,11 @@ class BorderSplitTests(unittest.TestCase):
 
         piece = builder.slice_line(line, 1, 2, 'ca', '-ca')
 
-        self.assertTrue(piece['needsRegroom'])
+        self.assertEqual(piece['profile'],
+                         builder.build.profile_for_line(piece['intervals'])[0].name)
+        self.assertEqual(piece['intervals'], line['intervals'][1:2])
+        self.assertEqual(piece['anchors'], line['anchors'][1:3])
+        self.assertNotIn('needsRegroom', piece)
 
 
 class SupplementalOfficialNetworkTests(unittest.TestCase):

@@ -190,9 +190,13 @@ enum MapRideMarkers {
     /// Whether one built dot draws at this zoom. Its floor has already folded
     /// in role, service tier and local station density, while a `nil` floor is
     /// the always-visible boundary case.
-    static func drawsDot(_ item: Drawn, atZoom zoom: Double) -> Bool {
-        guard let minimum = item.mapLibreMinZoom else { return true }
-        return zoom >= RailStyle.zoom(fromMapLibre: minimum)
+    static func drawsDot(
+        _ item: Drawn, atZoom zoom: Double, isSelected: Bool = false, selectedCallMinimum: Double? = nil
+    ) -> Bool {
+        RideMarkerVisibility.isVisible(
+            role: item.feature.role, isSelected: isSelected,
+            mapLibreZoom: RailStyle.mapLibreZoom(from: zoom),
+            minimumMapLibreZoom: item.mapLibreMinZoom, selectedCallMinimum: selectedCallMinimum)
     }
 
     // MARK: - the ride flags

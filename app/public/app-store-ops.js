@@ -108,9 +108,25 @@ function exportTrainStore() {
 
 // Canonical shape builders shared by both the export and import paths so the
 // serialized stop/style/route_policy schema has a single definition.
+function canonicalRouteEditingMetadata(metadata) {
+  if (metadata == null) return null;
+  if (
+    typeof metadata !== "object" || Array.isArray(metadata) ||
+    typeof metadata.visit_id !== "string" ||
+    !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(metadata.visit_id)
+  ) throw new Error("route_editing must contain a valid visit_id.");
+  if (metadata.generated_by != null && typeof metadata.generated_by !== "string")
+    throw new Error("route_editing generated_by must be a string or null.");
+  return {
+    visit_id: metadata.visit_id,
+    ...(metadata.generated_by == null ? {} : { generated_by: metadata.generated_by }),
+  };
+}
+
 function canonicalStopShape(stop) {
   const actualArrival = normalizeNullableTime(stop.actual_arrival);
   const actualDeparture = normalizeNullableTime(stop.actual_departure);
+  const routeEditing = canonicalRouteEditingMetadata(stop.route_editing);
   return {
     name: stop.name || "",
     n02_station_code: canonicalStationCode(stop.n02_station_code || null),
@@ -124,6 +140,7 @@ function canonicalStopShape(stop) {
       : { actual_departure: actualDeparture }),
     stop_type: stop.stop_type || "passenger_stop",
     ride_segment: Boolean(stop.ride_segment),
+    ...(routeEditing === null ? {} : { route_editing: routeEditing }),
   };
 }
 
@@ -172,6 +189,8 @@ function normalizeExportRouteSection(section) {
     normalized.line_names = [...section.line_names];
   if (Array.isArray(section.operator_names) && section.operator_names.length)
     normalized.operator_names = [...section.operator_names];
+  for (const field of ["line_ids", "section_codes"])
+    if (Array.isArray(section[field]) && section[field].length) normalized[field] = [...section[field]];
   // Branch-portion train number / name (optional; see normalizeImportedRouteSection).
   if (section.number) normalized.number = String(section.number);
   if (section.name) normalized.name = String(section.name);
@@ -283,6 +302,8 @@ function normalizeExportTrain(train) {
     stops: Array.isArray(train.stops)
       ? train.stops.map(canonicalStopShape)
       : [],
+    ...(typeof train.region === "string" ? { region: train.region } : {}),
+    ...(typeof train.notes === "string" ? { notes: train.notes } : {}),
   };
   // Route geometry is intentionally NOT persisted into the store anymore.
   // It is cached cross-session in IndexedDB (warmed into runtimeRouteCache on
@@ -320,6 +341,8 @@ function leanExportSection(section) {
     out.line_names = [...section.line_names];
   if (Array.isArray(section.operator_names) && section.operator_names.length)
     out.operator_names = [...section.operator_names];
+  for (const field of ["line_ids", "section_codes"])
+    if (Array.isArray(section[field]) && section[field].length) out[field] = [...section[field]];
   if (section.number) out.number = String(section.number);
   if (section.name) out.name = String(section.name);
   return out;
@@ -394,6 +417,7 @@ function normalizeImportedStop(stop) {
       "actual_departure",
       "stop_type",
       "ride_segment",
+      "route_editing",
     ],
     "Stop",
   );
@@ -429,6 +453,8 @@ function normalizeImportedRouteSection(section) {
       "to_n02_station_code",
       "line_names",
       "operator_names",
+      "line_ids",
+      "section_codes",
       "number",
       "name",
     ],
@@ -452,6 +478,8 @@ function normalizeImportedRouteSection(section) {
       ? section.operator_names.map(String).filter(Boolean)
       : [],
   };
+  for (const field of ["line_ids", "section_codes"])
+    if (Array.isArray(section[field])) normalized[field] = section[field].map(String).filter(Boolean);
   // Optional per-section branch train number / name: some limited expresses run
   // a branch portion under a DIFFERENT 号 (e.g. はやぶさ↔こまち, しおかぜ↔いしづち).
   // When present it is shown for that segment in the route popup.
@@ -543,6 +571,8 @@ function normalizeImportedTrain(train, { fallbackDate = null } = {}) {
       "number_en",
       "train_type",
       "vehicle_type",
+      "region",
+      "notes",
       "company",
       "origin",
       "destination",
@@ -594,6 +624,8 @@ function normalizeImportedTrain(train, { fallbackDate = null } = {}) {
     stops: train.stops.map(normalizeImportedStop),
   };
   if (service.latinName) normalized.number_en = service.latinName;
+  if (typeof train.notes === "string") normalized.notes = train.notes.trim();
+  if (typeof train.region === "string") normalized.region = train.region;
   return normalized;
 }
 

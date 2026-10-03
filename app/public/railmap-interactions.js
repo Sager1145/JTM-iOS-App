@@ -311,11 +311,16 @@
 
       // ── §5 click listener ──
       map.on("click", (e) => {
+        if (self._stationDetailsPopup) {
+          self._stationDetailsPopup.remove();
+          self._stationDetailsPopup = null;
+        }
         // Clicks resolve with the same sticky priority the hover shows: at a
         // crossing you select the line you are hovering, never the one
         // beneath it.
         const hit = queryAt(e.point, false, currentStickyTids());
         if (!hit) {
+          if (self._openStationDetails(e.point)) return;
           // Blank ground (no route lane, no station dot): let the app react —
           // it switches the date filter back to "全部" so every date's routes
           // show. MapLibre suppresses click after a drag, so panning is safe.
@@ -659,9 +664,31 @@
       }
     },
 
+    _openStationDetails(point) {
+      const map = this._map;
+      if (!this._network || !map.getLayer(STATIONS_LAYER) ||
+          map.getLayoutProperty(STATIONS_LAYER, "visibility") === "none") return false;
+      const features = map.queryRenderedFeatures(point, { layers: [STATIONS_LAYER] });
+      if (!features.length || !global.maplibregl) return false;
+      const feature = features[0];
+      const p = feature.properties;
+      const model = buildPopupModel(this._network, p.stationId, p.lineId, { detailed: true });
+      this._removeStationPopup();
+      if (this._stationDetailsPopup) this._stationDetailsPopup.remove();
+      this._stationDetailsPopup = new global.maplibregl.Popup({
+        closeButton: true, closeOnClick: false, offset: 10, maxWidth: "360px",
+      }).setLngLat(feature.geometry.coordinates)
+        .setHTML(stationPopupHtml(model, { detailed: true })).addTo(map);
+      return true;
+    },
+
     // C5 — bilingual hover popup on the NETWORK station dots (only when the
     // pointer isn't on a train route/marker, which take precedence).
     _maybeStationPopup(point) {
+      if (this._stationDetailsPopup && this._stationDetailsPopup.isOpen()) {
+        this._removeStationPopup();
+        return;
+      }
       const map = this._map;
       if (!point || !this._network || !map.getLayer(STATIONS_LAYER)) {
         this._removeStationPopup();

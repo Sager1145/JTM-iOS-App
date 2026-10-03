@@ -8,7 +8,7 @@ public enum TimetableTripMatch {
         serviceName: String = "",
         among trips: [TrainTimetableDatabase.Trip]
     ) -> [TrainTimetableDatabase.Trip] {
-        guard train.stops.count >= 2,
+        guard TrainTimetableDatabase.accepts(train), train.stops.count >= 2,
               let fromCode = train.stops.first?.n02StationCode,
               let toCode = train.stops.last?.n02StationCode,
               let departure = train.stops.first?.departure.flatMap(Dates.parseTimeToMinutes),

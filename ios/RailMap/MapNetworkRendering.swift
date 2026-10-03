@@ -54,7 +54,7 @@ struct MapNetworkBuildState {
     }
 
     /// Invalidates every zoom-sensitive decision while retaining the padded
-    /// rect and viewport metadata for diagnostics and basemap veil placement.
+    /// rect and viewport metadata for diagnostics.
     mutating func invalidateGeometry() {
         zoomBucket = nil
         laneZoom = nil
@@ -110,6 +110,17 @@ final class MapNetworkGeometryCache {
 
     func clearRidePolylines() {
         ridePolylines.removeAll(keepingCapacity: true)
+    }
+
+    static func ridePolylineKey(
+        rideID: String, geometryDigest: Int, segmentIndex: Int, partIndex: Int,
+        usesStroke: Bool
+    ) -> String {
+        "\(rideID)|\(geometryDigest)|\(segmentIndex).\(partIndex)|\(usesStroke)"
+    }
+
+    func retainRidePolylines(withKeys keys: Set<String>) {
+        ridePolylines = ridePolylines.filter { keys.contains($0.key) }
     }
 
     func retainLineBuilds(withIDs ids: Set<String>) {
@@ -193,15 +204,28 @@ struct MapOverlayReconciliation {
 @MainActor
 final class MapOverlayInstaller {
     private let styles: MapOverlayStyles
+    private struct RetiringBatch {
+        let originalKey: String
+        let overlay: MKMultiPolyline
+    }
+    private var retiring: [String: RetiringBatch] = [:]
 
     init(styles: MapOverlayStyles) {
         self.styles = styles
     }
 
     func reconciliation(on mapView: MKMapView) -> MapOverlayReconciliation {
-        MapOverlayReconciliation(overlays: mapView.overlays(in: .aboveLabels).filter {
-            !($0 is BasemapVeilOverlay)
+        let retiringIDs = Set(retiring.values.map { ObjectIdentifier($0.overlay) })
+        return MapOverlayReconciliation(overlays: mapView.overlays(in: .aboveLabels).filter {
+            !retiringIDs.contains(ObjectIdentifier($0))
         })
+    }
+
+    func removeRetiring(on mapView: MKMapView) {
+        let overlays = retiring.values.map(\.overlay)
+        styles.forget(overlays)
+        mapView.removeOverlays(overlays)
+        retiring.removeAll()
     }
 
     func networkOverlays(
@@ -210,6 +234,7 @@ final class MapOverlayInstaller {
         withheldByColor: [String: [MKPolyline]],
         colors: [String: UIColor],
         dark: Bool,
+        alphaScale: CGFloat = 1,
         reconciliation: MapOverlayReconciliation
     ) -> [MKMultiPolyline] {
         var overlays: [MKMultiPolyline] = []
@@ -222,7 +247,7 @@ final class MapOverlayInstaller {
             styles[styleKey] = .init(
                 color: colors[key] ?? .systemGray,
                 widthToken: RailStyle.railWidth,
-                alpha: RailStyle.networkOpacity
+                alpha: RailStyle.networkOpacity * alphaScale
             )
             overlays.append(multi)
         }
@@ -233,7 +258,7 @@ final class MapOverlayInstaller {
             styles[styleKey] = .init(
                 color: colors[key] ?? .systemGray,
                 widthToken: RailStyle.railWidth,
-                alpha: RailStyle.networkOpacity,
+                alpha: RailStyle.networkOpacity * alphaScale,
                 historical: true
             )
             overlays.append(multi)
@@ -245,7 +270,7 @@ final class MapOverlayInstaller {
             styles[styleKey] = .init(
                 color: colors[key] ?? .systemGray,
                 widthToken: RailStyle.railWidth,
-                alpha: RailStyle.withheldOpacity
+                alpha: RailStyle.withheldOpacity * alphaScale
             )
             overlays.append(multi)
         }
@@ -256,7 +281,7 @@ final class MapOverlayInstaller {
             styles[styleKey] = .init(
                 color: MapLabelStyle.halo(dark: dark),
                 widthToken: RailStyle.railWidth,
-                alpha: 1,
+                alpha: alphaScale,
                 dashed: true
             )
             overlays.append(multi)
@@ -268,30 +293,85 @@ final class MapOverlayInstaller {
         _ desiredOverlays: [MKOverlay],
         replacing reconciliation: MapOverlayReconciliation,
         scale: CGFloat,
-        on mapView: MKMapView
+        on mapView: MKMapView,
+        detailTransitionDuration: TimeInterval? = nil
     ) {
         let oldOverlays = reconciliation.oldOverlays
         let desiredIDs = Set(desiredOverlays.map { ObjectIdentifier($0) })
         let oldIDs = Set(oldOverlays.map { ObjectIdentifier($0) })
         let removed = oldOverlays.filter { !desiredIDs.contains(ObjectIdentifier($0)) }
+        let desiredKeys = Set(desiredOverlays.compactMap { $0.title ?? nil })
+        let oldKeys = Set(oldOverlays.compactMap { $0.title ?? nil })
+        var returningAlpha: [String: CGFloat] = [:]
+        // A reversal uses the opacity already on screen and cancels the old
+        // removal. Retiring batches never enter the next active reconciliation.
+        for (key, batch) in retiring where desiredKeys.contains(batch.originalKey) {
+            returningAlpha[batch.originalKey] = styles.presentedAlpha(forKey: key)
+            mapView.removeOverlay(batch.overlay)
+            styles.forget([batch.overlay])
+            retiring.removeValue(forKey: key)
+        }
+        var immediateRemovals: [MKOverlay] = []
         for overlay in removed {
-            guard let key = overlay.title ?? nil else { continue }
+            guard let key = overlay.title ?? nil else {
+                immediateRemovals.append(overlay)
+                continue
+            }
+            if let duration = detailTransitionDuration, duration > 0,
+               key.hasPrefix("network"), !desiredKeys.contains(key),
+               let multi = overlay as? MKMultiPolyline {
+                let exitKey = "retiring|\(UUID().uuidString)"
+                styles.rekey(from: key, to: exitKey)
+                multi.title = exitKey
+                retiring[exitKey] = RetiringBatch(originalKey: key, overlay: multi)
+                if var style = styles[exitKey] {
+                    style.alpha = 0
+                    styles[exitKey] = style
+                }
+                styles.animateOpacity(forKey: exitKey, duration: duration) { [weak self, weak mapView] in
+                    guard let self, let batch = self.retiring.removeValue(forKey: exitKey) else { return }
+                    mapView?.removeOverlay(batch.overlay)
+                    self.styles.forget([batch.overlay])
+                }
+                continue
+            }
+            immediateRemovals.append(overlay)
             styles.forgetRenderer(forKey: key)
-            if !desiredOverlays.contains(where: { ($0.title ?? nil) == key }) {
+            if !desiredKeys.contains(key) {
                 styles.forgetStyle(forKey: key)
             }
         }
-        mapView.removeOverlays(removed)
+        mapView.removeOverlays(immediateRemovals)
+        // Register before adding: MapKit may request the renderer immediately.
+        if let duration = detailTransitionDuration {
+            for overlay in desiredOverlays {
+                guard let key = overlay.title ?? nil, key.hasPrefix("network"),
+                      !oldKeys.contains(key) else { continue }
+                styles.animateOpacity(forKey: key, duration: duration,
+                    fromAlpha: returningAlpha[key] ?? 0)
+            }
+        }
         mapView.addOverlays(
             desiredOverlays.filter { !oldIDs.contains(ObjectIdentifier($0)) },
             level: .aboveLabels
         )
 
+        // Exiting network details stay beneath the ride and selection layers.
+        var stack = desiredOverlays
+        let networkEnd = stack.lastIndex { ($0.title ?? nil)?.hasPrefix("network") == true }
+            .map { $0 + 1 } ?? 0
+        stack.insert(contentsOf: retiring.keys.sorted().compactMap { retiring[$0]?.overlay }, at: networkEnd)
         // Selection changes stacking without changing geometry.
-        var installed = mapView.overlays(in: .aboveLabels).filter {
-            !($0 is BasemapVeilOverlay)
+        var installed = mapView.overlays(in: .aboveLabels)
+        let mountedIDs = Set(installed.map(ObjectIdentifier.init))
+        var orderedIDs: Set<ObjectIdentifier> = []
+        let residentStack = stack.filter { overlay in
+            let id = ObjectIdentifier(overlay)
+            return mountedIDs.contains(id) && orderedIDs.insert(id).inserted
         }
-        for (position, overlay) in desiredOverlays.enumerated() {
+        // MapKit can ignore an add or already hold a requested identity. Order
+        // only the unique mounted overlays, with contiguous resident positions.
+        for (position, overlay) in zip(installed.indices, residentStack) {
             guard installed[position] !== overlay,
                   let other = installed.firstIndex(where: { $0 === overlay })
             else { continue }

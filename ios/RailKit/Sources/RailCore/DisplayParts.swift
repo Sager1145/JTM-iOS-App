@@ -1043,7 +1043,7 @@ public enum DisplayParts {
         _ line: CompactPackage.Line, topology: LineTopology
     ) -> Set<String> {
         var keys = Set<String>()
-        for station in line.stations { keys.insert(Grooming.coordinateKey(station.coordinate)) }
+        for station in line.displayStations { keys.insert(Grooming.coordinateKey(station.coordinate)) }
         for point in topology.reversalTails { keys.insert(Grooming.coordinateKey(point)) }
         return keys
     }
@@ -1252,7 +1252,7 @@ public enum DisplayParts {
     public static func parts(
         for line: CompactPackage.Line, topology: LineTopology = LineTopology()
     ) -> [[Coordinate]] {
-        let stationPoints = line.stations.map(\.coordinate)
+        let stationPoints = line.displayStations.map(\.coordinate)
         // A line with no stations returns `[[undefined, undefined]]` in
         // JavaScript — the fallback below indexes an empty array — which is
         // not a value Swift can produce and not a value anything downstream
@@ -1275,8 +1275,8 @@ public enum DisplayParts {
         // the branch machinery below runs, so a branch lead-in copied off a
         // trunk copies the finished geometry and the two strokes stay
         // coincident to the vertex over the metres they share.
-        var intervals = CompactPackage.decodeIntervals(line)
-        anchorIntervalsToStations(&intervals, stations: line.stations)
+        var intervals = CompactPackage.decodeDisplayIntervals(line)
+        anchorIntervalsToStations(&intervals, stations: line.displayStations)
 
         for var decoded in intervals {
             // `dropStationRepeat` mutates BOTH sides, and the mutated interval
@@ -1411,6 +1411,7 @@ public enum DisplayParts {
             chain = groomed
         }
         return chain + extraSegmentParts(topology, stationPoints: stationPoints, limits: limits)
+            + line.displayBranchLeadIns
     }
 
     /// The historic single-stroke geometry, retained for callers that want it.

@@ -1,0 +1,490 @@
+{
+  "schema": "station-readings/1",
+  "country": "MO",
+  "languages": [
+    "zh-Hant",
+    "zh-Hans",
+    "ja",
+    "en"
+  ],
+  "officialRevision": "2026-08-10",
+  "packageVersion": "2025.2.0",
+  "sources": [
+    "澳門輕軌官方路線及車站資料"
+  ],
+  "note": "Derived UI names. Exact line:group keys precede platform/name aliases. English review status and kana evidence are retained in station-names-coverage.json. Missing readings remain blank.",
+  "byCode": {
+    "MLM-AIRPORT": {
+      "name": "機場",
+      "zh_Hant": "機場",
+      "zh_Hans": "机场",
+      "en": "Airport",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "MLM-BARRA": {
+      "name": "媽閣",
+      "zh_Hant": "媽閣",
+      "zh_Hans": "妈阁",
+      "en": "Barra",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "MLM-COTAIE": {
+      "name": "路氹東",
+      "zh_Hant": "路氹東",
+      "zh_Hans": "路氹东",
+      "en": "Cotai East",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "MLM-COTAIW": {
+      "name": "路氹西",
+      "zh_Hant": "路氹西",
+      "zh_Hans": "路氹西",
+      "en": "Cotai West",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "MLM-EAG": {
+      "name": "東亞運",
+      "zh_Hant": "東亞運",
+      "zh_Hans": "东亚运",
+      "en": "East Asian Games",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "MLM-FERRY": {
+      "name": "氹仔碼頭",
+      "zh_Hant": "氹仔碼頭",
+      "zh_Hans": "氹仔码头",
+      "en": "Taipa Ferry Terminal",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "MLM-HENGQIN": {
+      "name": "橫琴",
+      "zh_Hant": "橫琴",
+      "zh_Hans": "横琴",
+      "en": "Hengqin",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "MLM-HOSPITAL": {
+      "name": "協和醫院",
+      "zh_Hant": "協和醫院",
+      "zh_Hans": "协和医院",
+      "en": "Union Hospital",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "MLM-JOCKEY": {
+      "name": "馬會",
+      "zh_Hant": "馬會",
+      "zh_Hans": "马会",
+      "en": "Jockey Club",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "MLM-LOTUS": {
+      "name": "蓮花",
+      "zh_Hant": "蓮花",
+      "zh_Hans": "莲花",
+      "en": "Lotus",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "MLM-MUST": {
+      "name": "科大",
+      "zh_Hant": "科大",
+      "zh_Hans": "科大",
+      "en": "MUST",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "MLM-OCEAN": {
+      "name": "海洋",
+      "zh_Hant": "海洋",
+      "zh_Hans": "海洋",
+      "en": "Ocean",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "MLM-PAIKOK": {
+      "name": "排角",
+      "zh_Hant": "排角",
+      "zh_Hans": "排角",
+      "en": "Pai Kok",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "MLM-SEACPAIVAN": {
+      "name": "石排灣",
+      "zh_Hant": "石排灣",
+      "zh_Hans": "石排湾",
+      "en": "Seac Pai Van",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "MLM-STADIUM": {
+      "name": "運動場",
+      "zh_Hant": "運動場",
+      "zh_Hans": "运動场",
+      "en": "Stadium",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "mo-mlm-hengqin:mo-official-mlm-hengqin": {
+      "name": "橫琴",
+      "zh_Hant": "橫琴",
+      "zh_Hans": "横琴",
+      "en": "Hengqin",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "mo-mlm-hengqin:mo-official-mlm-lotus": {
+      "name": "蓮花",
+      "zh_Hant": "蓮花",
+      "zh_Hans": "莲花",
+      "en": "Lotus",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "mo-mlm-spv:mo-official-mlm-hospital": {
+      "name": "協和醫院",
+      "zh_Hant": "協和醫院",
+      "zh_Hans": "协和医院",
+      "en": "Union Hospital",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "mo-mlm-spv:mo-official-mlm-seacpaivan": {
+      "name": "石排灣",
+      "zh_Hant": "石排灣",
+      "zh_Hans": "石排湾",
+      "en": "Seac Pai Van",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "mo-mlm-taipa:mo-official-mlm-airport": {
+      "name": "機場",
+      "zh_Hant": "機場",
+      "zh_Hans": "机场",
+      "en": "Airport",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "mo-mlm-taipa:mo-official-mlm-barra": {
+      "name": "媽閣",
+      "zh_Hant": "媽閣",
+      "zh_Hans": "妈阁",
+      "en": "Barra",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "mo-mlm-taipa:mo-official-mlm-cotaie": {
+      "name": "路氹東",
+      "zh_Hant": "路氹東",
+      "zh_Hans": "路氹东",
+      "en": "Cotai East",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "mo-mlm-taipa:mo-official-mlm-cotaiw": {
+      "name": "路氹西",
+      "zh_Hant": "路氹西",
+      "zh_Hans": "路氹西",
+      "en": "Cotai West",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "mo-mlm-taipa:mo-official-mlm-eag": {
+      "name": "東亞運",
+      "zh_Hant": "東亞運",
+      "zh_Hans": "东亚运",
+      "en": "East Asian Games",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "mo-mlm-taipa:mo-official-mlm-ferry": {
+      "name": "氹仔碼頭",
+      "zh_Hant": "氹仔碼頭",
+      "zh_Hans": "氹仔码头",
+      "en": "Taipa Ferry Terminal",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "mo-mlm-taipa:mo-official-mlm-hospital": {
+      "name": "協和醫院",
+      "zh_Hant": "協和醫院",
+      "zh_Hans": "协和医院",
+      "en": "Union Hospital",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "mo-mlm-taipa:mo-official-mlm-jockey": {
+      "name": "馬會",
+      "zh_Hant": "馬會",
+      "zh_Hans": "马会",
+      "en": "Jockey Club",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "mo-mlm-taipa:mo-official-mlm-lotus": {
+      "name": "蓮花",
+      "zh_Hant": "蓮花",
+      "zh_Hans": "莲花",
+      "en": "Lotus",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "mo-mlm-taipa:mo-official-mlm-must": {
+      "name": "科大",
+      "zh_Hant": "科大",
+      "zh_Hans": "科大",
+      "en": "MUST",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "mo-mlm-taipa:mo-official-mlm-ocean": {
+      "name": "海洋",
+      "zh_Hant": "海洋",
+      "zh_Hans": "海洋",
+      "en": "Ocean",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "mo-mlm-taipa:mo-official-mlm-paikok": {
+      "name": "排角",
+      "zh_Hant": "排角",
+      "zh_Hans": "排角",
+      "en": "Pai Kok",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "mo-mlm-taipa:mo-official-mlm-stadium": {
+      "name": "運動場",
+      "zh_Hant": "運動場",
+      "zh_Hans": "运動场",
+      "en": "Stadium",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    }
+  },
+  "byName": {
+    "協和醫院": {
+      "name": "協和醫院",
+      "zh_Hant": "協和醫院",
+      "zh_Hans": "协和医院",
+      "en": "Union Hospital",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "媽閣": {
+      "name": "媽閣",
+      "zh_Hant": "媽閣",
+      "zh_Hans": "妈阁",
+      "en": "Barra",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "排角": {
+      "name": "排角",
+      "zh_Hant": "排角",
+      "zh_Hans": "排角",
+      "en": "Pai Kok",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "東亞運": {
+      "name": "東亞運",
+      "zh_Hant": "東亞運",
+      "zh_Hans": "东亚运",
+      "en": "East Asian Games",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "機場": {
+      "name": "機場",
+      "zh_Hant": "機場",
+      "zh_Hans": "机场",
+      "en": "Airport",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "橫琴": {
+      "name": "橫琴",
+      "zh_Hant": "橫琴",
+      "zh_Hans": "横琴",
+      "en": "Hengqin",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "氹仔碼頭": {
+      "name": "氹仔碼頭",
+      "zh_Hant": "氹仔碼頭",
+      "zh_Hans": "氹仔码头",
+      "en": "Taipa Ferry Terminal",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "海洋": {
+      "name": "海洋",
+      "zh_Hant": "海洋",
+      "zh_Hans": "海洋",
+      "en": "Ocean",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "石排灣": {
+      "name": "石排灣",
+      "zh_Hant": "石排灣",
+      "zh_Hans": "石排湾",
+      "en": "Seac Pai Van",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "科大": {
+      "name": "科大",
+      "zh_Hant": "科大",
+      "zh_Hans": "科大",
+      "en": "MUST",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "蓮花": {
+      "name": "蓮花",
+      "zh_Hant": "蓮花",
+      "zh_Hans": "莲花",
+      "en": "Lotus",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "路氹東": {
+      "name": "路氹東",
+      "zh_Hant": "路氹東",
+      "zh_Hans": "路氹东",
+      "en": "Cotai East",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "路氹西": {
+      "name": "路氹西",
+      "zh_Hant": "路氹西",
+      "zh_Hans": "路氹西",
+      "en": "Cotai West",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "運動場": {
+      "name": "運動場",
+      "zh_Hant": "運動場",
+      "zh_Hans": "运動场",
+      "en": "Stadium",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    },
+    "馬會": {
+      "name": "馬會",
+      "zh_Hant": "馬會",
+      "zh_Hans": "马会",
+      "en": "Jockey Club",
+      "ja": "",
+      "kana": "",
+      "katakana": "",
+      "romaji": ""
+    }
+  }
+}

@@ -4,20 +4,63 @@ import XCTest
 final class MapCameraIntentTests: XCTestCase {
     override func setUp() { continueAfterFailure = false }
 
+    func testSelectedJourneyKeepsWholeRouteWhilePanningAndZoomingAway() throws {
+        let app = launch(tab: "all", stage: "compact", selected: "20260703_01_haruka",
+                         autoFocus: false, layers: "")
+        let status = app.staticTexts["railMapRenderStatus"]
+        // The selected Japanese route must remain installed even while the
+        // camera starts in New York, far outside every route segment.
+        try waitFor(status) {
+            self.number("targetRideReady", $0) == 1
+                && self.number("targetRouteParts", $0) > 0
+                && self.number("installedTargetRouteParts", $0) == self.number("targetRouteParts", $0)
+        }
+        let expected = number("targetRouteParts", status.label)
+        let target = app.otherElements["railMapGestureTarget"]
+        XCTAssertTrue(target.waitForExistence(timeout: 8))
+        let before = status.label
+        target.swipeLeft()
+        try waitFor(status) {
+            abs(self.number("centerLon", $0) - self.number("centerLon", before)) > 0.001
+                && self.number("covered", $0) == 1
+        }
+        XCTAssertEqual(number("installedTargetRouteParts", status.label), expected)
+        let distance = number("distance", status.label)
+        target.pinch(withScale: 0.5, velocity: -1)
+        try waitFor(status) {
+            self.number("distance", $0) > distance * 1.2 && self.number("covered", $0) == 1
+        }
+        XCTAssertEqual(number("installedTargetRouteParts", status.label), expected)
+    }
+
     func testSelectedJourneyDoesNotReframeAfterLayoutReplacementOrStatistics() throws {
         XCUIDevice.shared.orientation = .portrait
         defer { XCUIDevice.shared.orientation = .portrait }
         let app = launch(tab: "all", stage: "compact", selected: "20260703_01_haruka")
         let status = app.staticTexts["railMapRenderStatus"]
         try waitFor(status) {
-            self.number("targetRideReady", $0) == 1 && abs(self.number("centerLon", $0) + 74.027) < 0.01
+            self.number("targetRideReady", $0) == 1
+                && self.number("focusRevision", $0) == 1
+                && (134...137).contains(self.number("centerLon", $0))
+                && (33...36).contains(self.number("centerLat", $0))
         }
+        // The launch selection uses the real journey-pick path. Preserve
+        // that explicit focus through passive layout and destination changes.
         let before = status.label
+        assertCameraStays(status, equalTo: before, for: 2)
         XCUIDevice.shared.orientation = .landscapeLeft
         try waitFor(status) {
             self.number("viewportWidth", $0) > self.number("viewportHeight", $0)
         }
         assertSameCamera(status.label, before)
+
+        XCTAssertEqual(number("focusRevision", status.label), number("focusRevision", before))
+        // Explicit picking now opens a separate journey menu. Close it before
+        // using the source destination tabs; dismissal must preserve the map.
+        let back = app.buttons["journeyBackToList"].firstMatch
+        XCTAssertTrue(back.waitForExistence(timeout: 10))
+        back.tap()
+        assertCameraStays(status, equalTo: before, for: 2)
 
         let tabs = app.tabBars.firstMatch
         XCTAssertTrue(tabs.waitForExistence(timeout: 8))
@@ -27,6 +70,7 @@ final class MapCameraIntentTests: XCTestCase {
         assertCameraStays(status, equalTo: before, for: 2)
         tabs.buttons.element(boundBy: 2).tap()
         assertCameraStays(status, equalTo: before, for: 2)
+        XCTAssertEqual(number("focusRevision", status.label), number("focusRevision", before))
     }
 
     func testUserSelectionFocusesWithAutoFocusDisabled() throws {
@@ -39,6 +83,30 @@ final class MapCameraIntentTests: XCTestCase {
         XCTAssertTrue(row.waitForExistence(timeout: 30))
         row.tap()
         try waitFor(status) { self.number("centerLon", $0) > 125 }
+        try waitFor(status) { self.number("basemapMuted", $0) == 1 }
+    }
+
+    func testUserSelectionZoomsFromNearbyOverviewAndKeepsStationNames() throws {
+        let app = launch(tab: "search", stage: "half", autoFocus: false,
+                         camera: "32.5,135.4,10")
+        let status = app.staticTexts["railMapRenderStatus"]
+        try waitFor(status) {
+            self.number("targetRideReady", $0) == 1 && abs(self.number("centerLat", $0) - 32.5) < 0.01
+        }
+        let before = number("distance", status.label)
+        let row = app.descendants(matching: .any)["journeyRow-20260703_01_haruka"].firstMatch
+        XCTAssertTrue(row.waitForExistence(timeout: 30))
+        row.tap()
+        try waitFor(status) { self.number("distance", $0) < before * 0.5 }
+        let origin = app.descendants(matching: .any).matching(NSPredicate(
+            format: "label BEGINSWITH %@ AND label CONTAINS %@", "Start ", "関西空港")).firstMatch
+        XCTAssertTrue(origin.waitForExistence(timeout: 15), app.debugDescription)
+        try waitFor(status) { self.number("basemapMuted", $0) == 1 }
+        // Close the independent menu to restore the source map selection.
+        let back = app.buttons["journeyMenuClose"].firstMatch
+        XCTAssertTrue(back.waitForExistence(timeout: 10))
+        back.tap()
+        try waitFor(status) { self.number("basemapMuted", $0) == 0 }
     }
 
     func testSelectedJourneyEndpointLabelsStaySeparate() throws {
@@ -61,20 +129,60 @@ final class MapCameraIntentTests: XCTestCase {
         add(shot)
     }
 
+    func testRegionSelectionFramesWholeCountryWithAutoFocusDisabled() throws {
+        let app = launch(tab: "all", stage: "compact", autoFocus: false, region: "all")
+        let status = app.staticTexts["railMapRenderStatus"]
+        try waitFor(status) {
+            self.number("targetRideReady", $0) == 1 && abs(self.number("centerLon", $0) + 74.027) < 0.01
+        }
+        selectJapan(in: app)
+        try waitFor(status) {
+            self.number("centerLon", $0) > 125 && self.number("distance", $0) > 2_000_000
+        }
+        XCTAssertEqual(app.buttons["regionScopeButton"].firstMatch.value as? String, "Japan")
+    }
+
+    func testReselectingRegionZoomsFromOverviewEvenWhenCountryIsVisible() throws {
+        let app = launch(tab: "all", stage: "compact", autoFocus: false,
+                         camera: "35,136,60", region: "jp")
+        let status = app.staticTexts["railMapRenderStatus"]
+        try waitFor(status) {
+            self.number("targetRideReady", $0) == 1 && abs(self.number("centerLat", $0) - 35) < 0.01
+        }
+        let before = number("distance", status.label)
+        selectJapan(in: app)
+        try waitFor(status) { self.number("distance", $0) < before * 0.8 }
+        XCTAssertGreaterThan(number("distance", status.label), 2_000_000)
+    }
+
+    private func selectJapan(in app: XCUIApplication) {
+        let region = app.buttons["regionScopeButton"].firstMatch
+        XCTAssertTrue(region.waitForExistence(timeout: 10))
+        region.tap()
+        let japan = app.buttons["Japan"].firstMatch
+        XCTAssertTrue(japan.waitForExistence(timeout: 5), app.debugDescription)
+        japan.tap()
+    }
+
     private func launch(tab: String, stage: String, selected: String? = nil,
                         autoFocus: Bool = true,
-                        camera: String = "40.735,-74.027,0.016") -> XCUIApplication {
+                        camera: String = "40.735,-74.027,0.016", region: String? = nil,
+                        layers: String = "routes,focus") -> XCUIApplication {
         let app = XCUIApplication()
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-auto-focus-zoom", autoFocus ? "YES" : "NO"]
+        if let region {
+            app.launchArguments += ["-region-scope", region, "-interface-language", "en"]
+        }
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = tab
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = stage
         app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
         app.launchEnvironment["RAILMAP_UI_TEST_QUERY"] = "haruka"
         app.launchEnvironment["RAILMAP_UI_TEST_READY_RIDE"] = "20260703_01_haruka"
-        app.launchEnvironment["RAILMAP_UI_TEST_LAYERS"] = "routes,focus"
+        app.launchEnvironment["RAILMAP_UI_TEST_LAYERS"] = layers
         app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = camera
         app.launchEnvironment["RAILMAP_UI_TEST_SELECT"] = selected
+        app.launchEnvironment["RAILMAP_UI_TEST_GESTURE_TARGET"] = "1"
         app.launch()
         return app
     }

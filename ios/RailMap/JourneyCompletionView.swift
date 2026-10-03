@@ -28,6 +28,8 @@ struct JourneyCompletionView: View {
     @State private var isWorking = false
     @State private var ownsLogin = false
     @State private var previewResponse = ""
+    @State private var remarks = ""
+    @State private var keepsRemarks = false
 
     @State private var rawText = ""
     @State private var rawDraft: JourneyCompletion.RawDraft?
@@ -67,7 +69,10 @@ struct JourneyCompletionView: View {
                 promptSection
                 responseSection
                 if let failure { Section { Text(failure).foregroundStyle(.red) } }
-                if proposed != nil || draftTrains != initialTrains { reviewSection }
+                if proposed != nil || draftTrains != initialTrains
+                    || (keepsRemarks && !remarks.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty) {
+                    reviewSection
+                }
             }
             .accessibilityIdentifier("aiCompletionForm")
             .navigationTitle(text("title"))
@@ -86,6 +91,13 @@ struct JourneyCompletionView: View {
                 rawDraft = nil
                 rawSelections = [:]
                 invalidateRawConfirmation()
+            }
+            .onChange(of: remarks) { _, _ in
+                inputRevision += 1
+                proposed = nil
+                response = ""
+                previewResponse = ""
+                refreshPrompt(reportFailure: false)
             }
             .onDisappear {
                 operation?.cancel()
@@ -220,6 +232,14 @@ struct JourneyCompletionView: View {
 
     private var promptSection: some View {
         Section {
+            TextField(text("remarks"), text: $remarks, axis: .vertical)
+                .lineLimit(3...8)
+                .disabled(isWorking)
+                .accessibilityIdentifier("aiCompletionRemarks")
+            Text(text("remarksInfo")).font(.footnote).foregroundStyle(.secondary)
+            Toggle(text("keepRemarks"), isOn: $keepsRemarks)
+                .disabled(isWorking || remarks.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                .accessibilityIdentifier("aiCompletionKeepRemarks")
             Text(text("instructions"))
             ShareLink(item: prompt) {
                 Label(text("share"), systemImage: "square.and.arrow.up")
@@ -246,7 +266,9 @@ struct JourneyCompletionView: View {
     }
 
     private var reviewSection: some View {
-        let reviewed = proposed ?? draftTrains
+        let reviewed = (proposed ?? draftTrains).map {
+            keepsRemarks ? JourneyCompletion.addingRemarks(remarks, to: $0) : $0
+        }
         return Section {
             Text(text("review"))
             ForEach(reviewed, id: \.id) { train in
@@ -403,7 +425,9 @@ struct JourneyCompletionView: View {
     private func makePrompt() throws -> String {
         try JourneyCompletion.prompt(
             trains: draftTrains,
-            context: rawWasConfirmed ? rawText : initialContext,
+            context: [rawWasConfirmed ? rawText : initialContext, remarks]
+                .filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+                .joined(separator: "\n\n"),
             eligible: eligible)
     }
 
@@ -450,10 +474,25 @@ struct JourneyCompletionView: View {
         add(text("vehicle"), old.vehicleType, new.vehicleType)
         add(text("company"), old.company, new.company)
         add(text("direction"), old.direction, new.direction)
+        add(text("notes"), old.notes, new.notes)
         add(text("origin"), old.origin, new.origin)
         add(text("destination"), old.destination, new.destination)
         add(text("lines"), old.routePolicy?.preferredLineNames?.joined(separator: " · "),
             new.routePolicy?.preferredLineNames?.joined(separator: " · "))
+        if old.routeSections != new.routeSections {
+            for (index, section) in (new.routeSections ?? []).enumerated() {
+                let from = section.from ?? new.stops.first(where: {
+                    $0.n02StationCode != nil && $0.n02StationCode == section.fromN02StationCode
+                })?.name ?? "?"
+                let to = section.to ?? new.stops.first(where: {
+                    $0.n02StationCode != nil && $0.n02StationCode == section.toN02StationCode
+                })?.name ?? "?"
+                let details = [section.operatorNames?.joined(separator: " · "),
+                               section.lineNames?.joined(separator: " · "), section.number, section.name]
+                    .compactMap { $0 }.filter { !$0.isEmpty }.joined(separator: " / ")
+                rows.append(Change(id: "section-\(index)", text: "\(from) → \(to): \(details)"))
+            }
+        }
         if old.stops.count != new.stops.count {
             // Inserting a scheduled call shifts later indices. Show the full
             // proposed sequence so an unchanged original stop is not reported

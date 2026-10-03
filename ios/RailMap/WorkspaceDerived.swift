@@ -148,6 +148,9 @@ final class WorkspaceDerived {
     // MARK: - the statistics scope
 
     private struct ScopeKey {
+        let dates: StatisticsDateSelection
+        let groupID: String?
+        let year: Int?
         let trains: [Train]
         let region: Region?
         let date: String
@@ -164,15 +167,17 @@ final class WorkspaceDerived {
     /// the records themselves, so `trains` moving is the only way it can
     /// change. See ``RailPresentation/RideLedger``.
     func statisticsScope(
-        trains: [Train], region: Region?, date: String, compute: () -> [Train]
+        trains: [Train], region: Region?, date: String, year: Int? = nil, groupID: String? = nil, dates: StatisticsDateSelection = StatisticsDateSelection(),
+        compute: () -> [Train]
     ) -> (trains: [Train], ids: Set<String>) {
-        if let scopeKey, scopeKey.region == region, scopeKey.date == date,
+        if let scopeKey, scopeKey.region == region, scopeKey.date == date, scopeKey.year == year,
+           scopeKey.groupID == groupID, scopeKey.dates == dates,
            ArrayGeneration.same(scopeKey.trains, trains) {
             return (scopeValue, scopeIDs)
         }
         scopeValue = compute()
         scopeIDs = Set(scopeValue.map(\.id))
-        scopeKey = ScopeKey(trains: trains, region: region, date: date)
+        scopeKey = ScopeKey(dates: dates, groupID: groupID, year: year, trains: trains, region: region, date: date)
         return (scopeValue, scopeIDs)
     }
 
@@ -296,6 +301,9 @@ final class WorkspaceDerived {
     // MARK: - the passport's region + ridden scope
 
     private struct PassportScopeKey {
+        let dates: StatisticsDateSelection
+        let groupID: String?
+        let year: Int?
         let trains: [Train]
         let days: [ItineraryStore.Loaded.Day]
         let region: Region?
@@ -304,29 +312,29 @@ final class WorkspaceDerived {
     private var passportScopeKey: PassportScopeKey?
     private var passportScopeValue: (trains: [Train], days: [ItineraryStore.Loaded.Day], unconfirmed: Int) = ([], [], 0)
 
-    /// `StatisticsDashboardContent.scoped(_:)`, memoised. No date in the key —
-    /// that function does not filter by one either, because the date-scoped
-    /// figures beside it come from `MileageStatisticsStore` and this slice
-    /// only has to agree with the calendar menu (``scopedDates``) about which
-    /// journeys count at all.
+    /// The dashboard's region, year and confirmed-ride slice. The exact-day
+    /// ticket is computed separately by `MileageStatisticsStore`.
     func passportScope(
-        trains: [Train], days: [ItineraryStore.Loaded.Day], region: Region?,
+        trains: [Train], days: [ItineraryStore.Loaded.Day], region: Region?, year: Int? = nil,
+        groupID: String? = nil, dates: StatisticsDateSelection = StatisticsDateSelection(),
         compute: () -> (trains: [Train], days: [ItineraryStore.Loaded.Day], unconfirmed: Int)
     ) -> (trains: [Train], days: [ItineraryStore.Loaded.Day], unconfirmed: Int) {
-        if let passportScopeKey, passportScopeKey.region == region,
+        if let passportScopeKey, passportScopeKey.region == region, passportScopeKey.year == year,
+           passportScopeKey.groupID == groupID, passportScopeKey.dates == dates,
            ArrayGeneration.same(passportScopeKey.trains, trains),
            ArrayGeneration.same(passportScopeKey.days, days) {
             return passportScopeValue
         }
         let value = compute()
         passportScopeValue = value
-        passportScopeKey = PassportScopeKey(trains: trains, days: days, region: region)
+        passportScopeKey = PassportScopeKey(dates: dates, groupID: groupID, year: year, trains: trains, days: days, region: region)
         return value
     }
 
     // MARK: - the days a region has records for
 
     private struct RegionDatesKey {
+        let year: Int?
         let trains: [Train]
         let days: [ItineraryStore.Loaded.Day]
         let region: Region?
@@ -337,18 +345,23 @@ final class WorkspaceDerived {
 
     /// `RailWorkspaceView.statisticsDates`, memoised — the calendar menu's own
     /// question, asked again on every body evaluation a sheet drag causes.
-    func scopedDates(trains: [Train], days: [ItineraryStore.Loaded.Day], region: Region?) -> [String] {
-        if let regionDatesKey, regionDatesKey.region == region,
+    func scopedDates(
+        trains: [Train], days: [ItineraryStore.Loaded.Day], region: Region?, year: Int? = nil
+    ) -> [String] {
+        if let regionDatesKey, regionDatesKey.region == region, regionDatesKey.year == year,
            ArrayGeneration.same(regionDatesKey.trains, trains),
            ArrayGeneration.same(regionDatesKey.days, days) {
             return regionDatesValue
         }
-        let scoped = region.map { r in trains.filter { Region.resolved($0) == r } } ?? trains
-        let ids = Set(scoped.map(\.id))
-        regionDatesValue = days.compactMap { day in
-            day.trains.contains { ids.contains($0.id) } ? day.date : nil
+        let scoped = trains.filter {
+            RideLedger.hasBeenRidden($0)
+                && (region == nil || Region.resolved($0) == region)
+                && (year == nil || MileageStatisticsStore.year(of: $0) == year)
         }
-        regionDatesKey = RegionDatesKey(trains: trains, days: days, region: region)
+        regionDatesValue = Set(scoped.map {
+            Dates.trainDate(Dates.Train(id: $0.id, date: $0.date, stops: []))
+        }).filter { $0 != Dates.undated }.sorted()
+        regionDatesKey = RegionDatesKey(year: year, trains: trains, days: days, region: region)
         return regionDatesValue
     }
 }

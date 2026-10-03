@@ -324,6 +324,17 @@
     if (currentLang === "en") return row.en || row.zh_Hant || name;
     return name;
   }
+  // Complete curated names for a station detail card, independent of display toggles.
+  function stationNames(name, code, alternateCode) {
+    // Composite package ids identify non-Japanese platforms; Japanese tables
+    // use their bare group code. Exhaust exact identities before name fallback.
+    const row = stationReading(code, null) || stationReading(alternateCode, null) ||
+      stationReading(null, name);
+    if (!row) return [];
+    return ["zh_Hant", "zh_Hans", "ja", "en", "kana", "katakana", "romaji"]
+      .filter((kind) => typeof row[kind] === "string" && row[kind].trim())
+      .map((kind) => ({ kind, text: row[kind] }));
+  }
   // Explicit reading toggles from the 顯示 panel ({kana, romaji, zh} booleans);
   // null = no explicit choice yet, follow the locale defaults.
   let nameReadingPrefs = null;
@@ -510,6 +521,7 @@
     nameReadingsList: nameReadingsList,
     nameReadingsTyped: nameReadingsTyped,
     stationName: stationName,
+    stationNames: stationNames,
     localeDefaultReadingPrefs: localeDefaultReadingPrefs,
     setNameReadings: setNameReadings,
     setStationReadings: setStationReadings,

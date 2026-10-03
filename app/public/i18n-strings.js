@@ -16,6 +16,15 @@
   // ---- UI strings ---------------------------------------------------------
   // Every value is { zh, en }. Use "{name}" style placeholders for params.
   const STRINGS = {
+    "popup.alternateName": { zh: "別名", en: "Alternative name" },
+    "popup.originalName": { zh: "原名", en: "Original name" },
+    "popup.names": { zh: "車站名稱", en: "Station names" },
+    "popup.stationInfo": { zh: "車站資訊", en: "Station information" },
+    "popup.stationCode": { zh: "車站代碼", en: "Station code" },
+    "popup.region": { zh: "地區", en: "Region" },
+    "popup.coordinates": { zh: "座標", en: "Coordinates" },
+    "popup.validFrom": { zh: "有效起始日期", en: "Valid from" },
+    "popup.validTo": { zh: "有效結束日期", en: "Valid until" },
     // language picker
     "lang.label": { zh: "語言", en: "Language" },
 
@@ -1058,6 +1067,16 @@
   // Complete Japanese UI copy. Keeping this as a locale overlay avoids
   // duplicating the large romanization/kana dictionaries below.
   const JA_STRINGS = {
+    "popup.alternateName": "別名",
+    "popup.originalName": "原名",
+    "popup.names": "駅名",
+    "popup.stationInfo": "駅の情報",
+    "popup.stationCode": "駅コード",
+    "popup.region": "地域",
+    "popup.coordinates": "座標",
+    "popup.validFrom": "有効開始日",
+    "popup.validTo": "有効終了日",
+
     "lang.label": "言語",
     "app.title": "N02 特急列車管理",
     "app.title.tw": "TDX 台湾列車管理",

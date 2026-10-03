@@ -25,6 +25,42 @@ struct JourneyTitleTests {
         JourneyTitle.compact(train(number: number, trainType: trainType))
     }
 
+    @Test func cardDefaultsToOriginalEvenWhenAnEnglishNameIsSaved() {
+        var ride = train(number: "はるか38号 (1038M)", trainType: "特急")
+        ride.numberEn = "My airport express"
+        let name = JourneyTitle.cardName(ride)
+        #expect(name.primary == "特急 はるか38号 (1038M)")
+        #expect(name.original == nil)
+        #expect(ride.numberEn == "My airport express")
+    }
+
+    @Test func translatedCardLeadsWithTheReadersEnglishName() {
+        var ride = train(number: "はるか38号 (1038M)", trainType: "特急")
+        ride.numberEn = "  My airport express  "
+        let name = JourneyTitle.cardName(ride, showsTranslation: true)
+        #expect(name.primary == "My airport express")
+        #expect(name.original == "特急 はるか38号 (1038M)")
+    }
+
+    @Test func legacyGlossDoesNotAppearWithoutOptingIntoTranslation() {
+        let ride = train(number: "はるか38号 (Haruka 38) (1038M)", trainType: "特急")
+        #expect(JourneyTitle.cardName(ride).primary == "特急 はるか38号 (1038M)")
+        #expect(JourneyTitle.cardName(ride).original == nil)
+        #expect(JourneyTitle.cardName(ride, showsTranslation: true).primary == "Haruka 38")
+        let fullWidth = train(number: "はるか38号（Haruka 38）（1038M）", trainType: "特急")
+        #expect(JourneyTitle.cardName(fullWidth).primary == "特急 はるか38号（1038M）")
+        #expect(JourneyTitle.cardName(fullWidth, showsTranslation: true).primary == "Haruka 38")
+    }
+
+    @Test func untranslatedAndIdenticalNamesAreNotDuplicated() {
+        var ride = train(number: "自強(3000) 137次", trainType: "自強(3000)")
+        ride.numberEn = "  "
+        #expect(JourneyTitle.cardName(ride, showsTranslation: true).primary == ride.number)
+        #expect(JourneyTitle.cardName(ride, showsTranslation: true).original == nil)
+        ride.numberEn = ride.number
+        #expect(JourneyTitle.cardName(ride, showsTranslation: true).original == nil)
+    }
+
     // MARK: - what the reader asked to stop seeing
 
     @Test

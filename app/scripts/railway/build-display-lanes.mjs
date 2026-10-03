@@ -69,10 +69,12 @@ import fs from "node:fs";
 import path from "node:path";
 import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
+import { repairLanes as repairOshiageLanes } from './repair-oshiage-display.mjs';
 
 const require = createRequire(import.meta.url);
 const APP_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..");
 const RailNetwork = require(path.join(APP_DIR, "public", "rail-network.js"));
+const RailStroke = require(path.join(APP_DIR, "public", "rail-stroke.js"));
 const RAIL_DIR = path.join(APP_DIR, "public", "rail");
 const OUTPUT = path.join(RAIL_DIR, "display-lanes.json");
 const SHARED_CORRIDORS = path.join(RAIL_DIR, "shared-corridors.json");
@@ -420,9 +422,11 @@ const ANCHOR_LENGTH_OVERAGE_METRES = 1;
 // is exactly one whose vertex chain runs, start to end with no vertices
 // spilling past either end, between two station anchors whose station
 // indices are found in strictly ascending order along the part — that shape
-// cannot arise any other way. The length check below is the second gate: it
+// is a candidate for raw reconstruction. The length check below is a second gate: it
 // catches a lead-in that touches two real, correctly-ordered anchors while
-// still smuggling in extra track copied from a neighbouring part.
+// still smuggling in extra track copied from a neighbouring part. A final
+// vertex-exact comparison requires the raw chain to equal the displayed
+// one; otherwise station approaches and grooming are embedded explicitly.
 //
 // `loopWinding` (present only for the continuous-stroke regions — see
 // `CONTINUOUS_STROKE_REGIONS` below) normalises the direction a closed line's
@@ -435,7 +439,7 @@ const ANCHOR_LENGTH_OVERAGE_METRES = 1;
 // source happened to be drawn — so the sign of the shoelace area is checked
 // here and the part reversed when it is negative, making anticlockwise (in
 // lon/lat, so "positive area") the canonical winding for every ring.
-function partRowsForLine(compactLine, partsForLine, displayOverride, loopWinding) {
+export function partRowsForLine(compactLine, partsForLine, displayOverride, loopWinding) {
   const lineId = compactLine.id;
   // A reviewed shared corridor (shared-corridors.json) can merge station
   // coordinates and replace interval geometry for the DISPLAY pass — the
@@ -585,6 +589,18 @@ function partRowsForLine(compactLine, partsForLine, displayOverride, loopWinding
     const slack = Math.max(ANCHOR_LENGTH_SLACK_METRES, rawSum * ANCHOR_LENGTH_SLACK_RATIO);
     if (totalMetres > rawSum + ANCHOR_LENGTH_OVERAGE_METRES || totalMetres < rawSum - slack) {
       fallback("complex");
+      return;
+    }
+    // Python reconstructs a plain row by keeping the first interval whole
+    // and dropping exactly one shared seam vertex on every later interval.
+    // Ordered anchors and similar lengths do not prove that grooming or
+    // station-approach rebuilding left that chain unchanged.
+    const rawChain = rawIntervals[firstIntervalIndex].map((point) => point.slice());
+    for (let index = firstIntervalIndex + 1; index <= lastIntervalIndex; index += 1)
+      rawChain.push(...rawIntervals[index].slice(1));
+    if (rawChain.length !== coordinates.length || rawChain.some((point, index) =>
+      point[0] !== coordinates[index][0] || point[1] !== coordinates[index][1])) {
+      fallback("station-approach/groomed");
       return;
     }
     // Slots 6 and 7 (`kind`, `coordinates`) are a fallback row's alone, and
@@ -1746,10 +1762,9 @@ function deriveRenderGroupByRegion(pkg, renderGroups) {
 // same render-group family (na-render-groups.json `byLineId`), the family
 // keeps its whole-railroad colour everywhere, but the corridor only needs
 // ONE drawn stroke over the stretch they actually share — same corridor +
-// same RenderKey is one lane (rules.md §2, §5, §9.5). A follow row already
-// says exactly which stretch that is: the follower's own window (drawn from
-// the leader's alignment, so it would coincide pixel-for-pixel with the
-// leader's own stroke there) becomes a TENANT window (role 1: this line's
+// same RenderKey is one lane (rules.md §2, §5, §9.5). In Japan that stretch
+// excludes the follow's transition blends and requires matching final lanes.
+// The follower's fully substituted window becomes a TENANT window (role 1: this line's
 // own stroke is not emitted here), and the corresponding stretch on the
 // leader's own part becomes a LANDLORD window (role 0: the leader draws the
 // family stroke here, in the family's colour).
@@ -1760,7 +1775,79 @@ function deriveRenderGroupByRegion(pkg, renderGroups) {
 // `metrics` is the `partKey -> {cumulative, samples, total}` map built at
 // the top of deriveNorthAmericanRows, reused here only to snap window edges
 // onto real station measures on each part's own ruler.
-function deriveFamilyWindows(parts, follows, renderGroups, metrics) {
+// Sampled follow rulers are approximate. At an exactly shared surveyed end,
+// use that vertex's actual measure so substitution cannot move the junction.
+export function snapSharedFollowEndpoints(parts, follows, metrics) {
+  const byKey = new Map(parts.map(part => [partKey(part), part]));
+  for (const row of follows) {
+    const follower = byKey.get(`${row[0]}#${row[1]}`);
+    const leader = byKey.get(`${row[4]}#${row[5]}`);
+    const own = metrics.get(`${row[0]}#${row[1]}`);
+    const canon = metrics.get(`${row[4]}#${row[5]}`);
+    if (!follower || !leader || !own || !canon) continue;
+    for (const [slot, targetSlot, measure, point] of [
+      [2, 6, 0, follower.coordinates[0]],
+      [3, 7, own.total, follower.coordinates.at(-1)],
+    ]) {
+      if (Math.abs(row[slot] - measure) > 0.1) continue;
+      let best = null;
+      leader.coordinates.forEach((candidate, index) => {
+        if (candidate[0] !== point[0] || candidate[1] !== point[1]) return;
+        const gap = Math.abs(canon.cumulative[index] - row[targetSlot]);
+        if (gap <= FAMILY_WINDOW_STATION_SNAP_METRES && (!best || gap < best.gap))
+          best = { gap, measure: canon.cumulative[index] };
+      });
+      if (best) {
+        row[slot] = measure;
+        row[targetSlot] = best.measure;
+      }
+    }
+  }
+  return follows;
+}
+
+// A tenant can disappear only after it has finished blending onto its leader.
+// Cutting at from/to hid it while the follow still had half its own geometry.
+export function familyFollowCoverage(row, total, jointStart = false, jointEnd = false) {
+  const blend = RailStroke.FOLLOW_BLEND_METRES;
+  const from = jointStart ? Math.max(row[2], blend) : row[2];
+  const to = jointEnd ? Math.min(row[3], total - blend) : row[3];
+  const low = from <= 0.1 && !jointStart ? 0 : from + blend;
+  const high = to >= total - 0.1 && !jointEnd ? total : to - blend;
+  return high > low ? [low, high] : null;
+}
+
+function markPartJoints(parts) {
+  const byKey = new Map(parts.map(part => [partKey(part), part]));
+  const touches = (a, b) => a && b && b.joinPrevious !== false &&
+    anchorKey(a.coordinates.at(-1)) === anchorKey(b.coordinates[0]);
+  for (const part of parts) {
+    part.jointStart = !!touches(byKey.get(`${part.lineId}#${part.partIndex - 1}`), part);
+    part.jointEnd = !!touches(part, byKey.get(`${part.lineId}#${part.partIndex + 1}`));
+  }
+}
+
+export function refreshJapanFamilyHandoffs(pkg, lanes, reviewed = null) {
+  const network = RailNetwork.buildNetworkFromCompactPackage(pkg, reviewed, lanes);
+  const parts = network.strokeModel.lines.flatMap(line => line.parts.map((part, partIndex) => ({
+    lineId: line.lineId, partIndex, coordinates: part.coordinates,
+    joinPrevious: part.joinPrevious,
+    stationPoints: network.lineById.get(line.lineId).stationOrder
+      .map(id => network.stationById.get(id)).map(station => [station.lon, station.lat]),
+  })));
+  markPartJoints(parts);
+  const metrics = new Map(parts.map(part => {
+    const cumulative = cumulativeMeasures(part.coordinates);
+    return [partKey(part), { cumulative, total: cumulative.at(-1) }];
+  }));
+  const follows = lanes.followsByRegion.jp;
+  snapSharedFollowEndpoints(parts, follows, metrics);
+  const groups = JSON.parse(fs.readFileSync(JP_RENDER_GROUPS, 'utf8'));
+  lanes.familyWindowsByRegion.jp = deriveFamilyWindows(parts, follows, groups, metrics, lanes.byRegion.jp);
+  return lanes;
+}
+
+export function deriveFamilyWindows(parts, follows, renderGroups, metrics, laneRows = []) {
   const groups = renderGroupFamilies(renderGroups);
   const byLineId = renderGroups.byLineId || {};
   const partByKey = new Map(parts.map((part) => [partKey(part), part]));
@@ -1823,10 +1910,42 @@ function deriveFamilyWindows(parts, follows, renderGroups, metrics) {
     const followerKey = `${followerId}#${followerPart}`;
     const leaderTotal = metrics.get(leaderKey)?.total;
     const followerTotal = metrics.get(followerKey)?.total;
+    if (followerId.startsWith('jp-')) {
+      // Reversed digitisations also reverse the screen-side lane sign. A
+      // tenant offset onto another lane cannot be replaced by the leader's
+      // ink. Keep its continuous stroke instead. Requiring equal constant
+      // profiles also covers low-zoom pixel ramps wider than the metre blend.
+      const constantLane = (id, part, total) => {
+        const rows = laneRows.filter(row => row[0] === id && row[1] === part)
+          .map(row => ({ from: row[2], to: row[3], lane: row[4] }));
+        const profile = RailStroke.laneProfile(rows, total);
+        const lanes = new Set(profile.map(plateau => plateau.lane));
+        return lanes.size === 1 ? profile[0].lane : null;
+      };
+      const ownLane = constantLane(followerId, followerPart, followerTotal);
+      const leaderLane = constantLane(leaderId, leaderPart, leaderTotal);
+      if (ownLane == null || leaderLane == null ||
+          ownLane !== leaderLane * Math.sign(canonTo - canonFrom)) continue;
+    }
+    // Japan's branch gaps are a display defect. Keep other region tables
+    // unchanged until their final rendering has been audited independently.
+    const safe = followerId.startsWith('jp-')
+      ? familyFollowCoverage(row, followerTotal,
+          partByKey.get(followerKey)?.jointStart,
+          partByKey.get(followerKey)?.jointEnd)
+      : [from, to];
+    if (!safe) continue;
+    const canonAt = measure => canonFrom + (measure - from) / (to - from) * (canonTo - canonFrom);
+    const safeCanonFrom = canonAt(safe[0]);
+    const safeCanonTo = canonAt(safe[1]);
     const clampTo = (measure, total) =>
       total == null ? measure : Math.max(0, Math.min(total, measure));
-    const snappedCanonFrom = clampTo(snapMeasure(leaderKey, canonFrom), leaderTotal);
-    const snappedCanonTo = clampTo(snapMeasure(leaderKey, canonTo), leaderTotal);
+    const snapInside = measure => followerId.startsWith('jp-')
+      ? Math.max(Math.min(safeCanonFrom, safeCanonTo),
+          Math.min(Math.max(safeCanonFrom, safeCanonTo), snapMeasure(leaderKey, measure)))
+      : snapMeasure(leaderKey, measure);
+    const snappedCanonFrom = clampTo(snapInside(safeCanonFrom), leaderTotal);
+    const snappedCanonTo = clampTo(snapInside(safeCanonTo), leaderTotal);
     const canonSpan = canonTo - canonFrom;
     const followerAt = (canonMeasure) =>
       canonSpan === 0 ? from : from + ((canonMeasure - canonFrom) / canonSpan) * (to - from);
@@ -2106,10 +2225,12 @@ function deriveDisplayRows(
         lineId: line.lineId,
         // Authoritative, not inferred: which line this one is a published
         // short-turn/branch variant of, straight from the compact package.
-        // Used only to let a branch follow the trunk it is a subset of over
-        // a run shorter than FOLLOW_MIN_RUN_METRES would otherwise allow —
+        // Used to nominate shorter candidate shared approaches than
+        // FOLLOW_MIN_RUN_METRES would otherwise allow —
         // see isKin below.
         branchOf: compactLine.branchOf || null,
+        joinPrevious: network.strokeModel.lines.find(stroke => stroke.lineId === line.lineId)
+          ?.parts[partIndex]?.joinPrevious,
         // A reviewed, hand-curated fact from the package build (Metra
         // Electric owns the physical track at Kensington; NICTD's South
         // Shore trains ride it under trackage rights) — see `isLandlordFor`
@@ -2863,7 +2984,10 @@ function deriveDisplayRows(
 
   // Family windows: derived from the fully re-pointed follow chain, same as
   // the collision pass just below — see deriveFamilyWindows above.
-  const familyWindows = deriveFamilyWindows(parts, follows, renderGroups, metrics);
+  if (region === 'jp') {
+    markPartJoints(parts);
+    snapSharedFollowEndpoints(parts, follows, metrics);
+  }
 
   // Canonical-frame collision pass: run against the fully re-pointed follow
   // chain (every follow now names its root canonical), before hubs get their
@@ -2879,6 +3003,7 @@ function deriveDisplayRows(
     for (const member of hub.members)
       member.previousLane = priorLaneFor(collisionResolvedRows, member.lineId, member.partIndex, member.from, member.to);
   const finalRows = applyHubOverrides(collisionResolvedRows, hubRowsByPart);
+  const familyWindows = deriveFamilyWindows(parts, follows, renderGroups, metrics, finalRows);
 
   return {
     rows: finalRows,
@@ -2890,6 +3015,79 @@ function deriveDisplayRows(
   };
 }
 
+// Package-reviewed station lane pins keep aliased platform approaches on
+// their owner's bead. The row measures are the final Web display geometry.
+export function applyStationLanePins(pkg, parts, rows, pinMetres = 300) {
+  const pins = [];
+  for (const line of pkg.lines) {
+    const byCode = line.stationLaneByCode || {};
+    const stations = line.stations || [];
+    const lineParts = parts.filter((row) => row[0] === line.id);
+    for (const [stationCode, lane] of Object.entries(byCode)) {
+      const index = stations.findIndex((row) => row[0] === stationCode);
+      if (index < 0) throw new Error(`${line.id}: unknown station lane pin ${stationCode}`);
+      let placed = false;
+      for (const part of lineParts) {
+        const atStart = index === 0 && part[1] === 0;
+        const atEnd = index === stations.length - 1 && part === lineParts.at(-1);
+        const total = part[5];
+        if (atStart || atEnd) {
+          pins.push([line.id, part[1], atStart ? 0 : Math.max(0, total - pinMetres), atStart ? Math.min(total, pinMetres) : total, lane]);
+          placed = true;
+          continue;
+        }
+        if (index === 0 || index === stations.length - 1) continue;
+        // Interior pins use the final stroke's anchor, including reviewed
+        // display station moves. Never project a pin onto nearby track.
+        let coordinates = part[7];
+        if (!coordinates && part[2] >= 0) {
+          const displayLine = {
+            ...line,
+            stations: stations.map((row) => {
+              const point = line.displayStationCoordinates?.[row[0]];
+              return point ? [row[0], row[1], ...point, ...row.slice(4)] : row;
+            }),
+            segments: line.segments.map((row, intervalIndex) => {
+              const points = line.displayIntervalCoordinates?.[intervalIndex];
+              return points ? [row[0], 0, points] : row;
+            }),
+          };
+          coordinates = RailNetwork.decodeIntervals(displayLine)
+            .slice(part[2], part[3] + 1)
+            .flatMap((interval, intervalIndex) => intervalIndex ? interval.slice(1) : interval);
+        }
+        if (!coordinates) continue;
+        const anchor = line.displayStationCoordinates?.[stationCode] || stations[index].slice(2, 4);
+        const measures = cumulativeMeasures(coordinates);
+        const matches = coordinates.flatMap((point, vertex) =>
+          distanceMeters(anchor, point) <= 1 ? [vertex] : []);
+        if (matches.length > 1)
+          throw new Error(`${line.id}: station lane pin ${stationCode} has ambiguous display anchors`);
+        matches.forEach((vertex) => {
+          const measure = measures[vertex];
+          pins.push([line.id, part[1], Number(Math.max(0, measure - pinMetres).toFixed(1)),
+            Number(Math.min(total, measure + pinMetres).toFixed(1)), lane]);
+          placed = true;
+        });
+      }
+      if (!placed) throw new Error(`${line.id}: station lane pin ${stationCode} has no display anchor`);
+    }
+  }
+  let result = rows;
+  for (const pin of pins) {
+    result = result.flatMap((row) => {
+      if (row[0] !== pin[0] || row[1] !== pin[1] || row[3] <= pin[2] || row[2] >= pin[3]) return [row];
+      const kept = [];
+      if (row[2] < pin[2]) kept.push([row[0], row[1], row[2], pin[2], row[4]]);
+      if (row[3] > pin[3]) kept.push([row[0], row[1], pin[3], row[3], row[4]]);
+      return kept;
+    });
+    result.push(pin);
+  }
+  return result.sort((a, b) => a[0].localeCompare(b[0]) || a[1] - b[1] || a[2] - b[2]);
+}
+
+function main(args = process.argv.slice(2)) {
 const reviewed = fs.existsSync(SHARED_CORRIDORS)
   ? JSON.parse(fs.readFileSync(SHARED_CORRIDORS, "utf8"))
   : { corridors: [] };
@@ -3014,6 +3212,77 @@ if (fs.existsSync(DISPLAY_LOOPS)) {
 // geometry byte for byte until their own lane tables are re-reviewed.
 const CONTINUOUS_STROKE_REGIONS = new Set(["us", "ca", "jp"]);
 
+if (args.length) {
+  if (args[0] === '--refresh-handoffs' && (args.length === 1 || (args.length === 2 && args[1] === '--check'))) {
+    const before = fs.readFileSync(OUTPUT, 'utf8');
+    const pkg = JSON.parse(fs.readFileSync(path.join(RAIL_DIR, 'jp-2025.json'), 'utf8'));
+    const existing = refreshJapanFamilyHandoffs(pkg, JSON.parse(before), reviewed);
+    repairOshiageLanes(pkg, existing);
+    const after = `${JSON.stringify(existing)}\n`;
+    if (args.includes('--check')) {
+      if (after !== before) throw new Error('Japan family handoffs are stale');
+    } else if (after !== before) fs.writeFileSync(OUTPUT, after);
+    process.stdout.write('jp: family handoffs use completed follow blends and exact shared endpoints\n');
+    return;
+  }
+  if (args.length !== 2 || !["--refresh-parts", "--refresh-region"].includes(args[0]) || !REGIONS.includes(args[1]))
+    throw new Error("Usage: build-display-lanes.mjs [--refresh-parts REGION | --refresh-region REGION | --refresh-handoffs [--check]]");
+  const region = args[1];
+  const existing = JSON.parse(fs.readFileSync(OUTPUT, "utf8"));
+  const pkg = JSON.parse(fs.readFileSync(path.join(RAIL_DIR, `${region}-2025.json`), "utf8"));
+  validateReviewedLoops(region, pkg, (loopsDoc.loops || []).filter(
+    (loop) => (loop.region || "us") === region));
+  const loopWinding = CONTINUOUS_STROKE_REGIONS.has(region) ? { reversed: [] } : null;
+  let rows, excluded;
+  if (args[0] === "--refresh-region" && CONTINUOUS_STROKE_REGIONS.has(region)) {
+    // A topology change also changes part indexes and their measure spaces.
+    // Re-derive the selected region's dependent rows together; retain the
+    // other regions, whose reviewed assignments have not changed.
+    const policy = renderGroupsByRegion.get(region) || { byLineId: {}, families: {} };
+    const derived = deriveDisplayRows(region, pkg, reviewed, policy, releasesByRegion,
+      (hubsDoc.hubs || []).filter((hub) => (hub.region || "us") === region), loopWinding);
+    rows = derived.parts;
+    excluded = derived.partsExcluded;
+    (existing.byRegion ||= {})[region] = derived.rows;
+    for (const [key, value] of Object.entries({
+      followsByRegion: derived.follows, familyWindowsByRegion: derived.familyWindows,
+      hubReportByRegion: derived.hubReport,
+    })) {
+      existing[key] ||= {};
+      if (value?.length) existing[key][region] = value;
+      else delete existing[key][region];
+    }
+    (existing.colorByRegion ||= {})[region] = deriveColorByRegion(pkg, policy);
+    (existing.renderGroupByRegion ||= {})[region] = deriveRenderGroupByRegion(pkg, policy);
+  } else {
+    // Geometry-only refresh preserves reviewed measure rows and is suitable
+    // only when the display part topology and measure spaces still agree.
+    const network = RailNetwork.buildNetworkFromCompactPackage(pkg, reviewed, existing);
+    ({ rows, excluded } = computePartsByRegionRows(pkg, network, reviewed, loopWinding));
+  }
+  for (const key of loopWinding?.reversed || []) {
+    const [lineId, partIndexRaw] = key.split("#");
+    const partIndex = Number(partIndexRaw);
+    if ((existing.byRegion?.[region] || []).some((row) => row[0] === lineId && row[1] === partIndex)
+      || (existing.followsByRegion?.[region] || []).some((row) =>
+        (row[0] === lineId && row[1] === partIndex) || (row[4] === lineId && row[5] === partIndex)))
+      throw new Error(`${region}: reversed loop part ${key} carries lane/follow measures`);
+  }
+  (existing.byRegion ||= {})[region] = applyStationLanePins(pkg, rows, existing.byRegion?.[region] || []);
+  if (existing.followsByRegion?.[region]) existing.followsByRegion[region] = existing.followsByRegion[region].filter(
+    (row) => row[2] !== row[3] && row[6] !== row[7]);
+  (existing.partsByRegion ||= {})[region] = rows;
+  (existing.strokeExcludedByRegion ||= {})[region] = excluded;
+  (existing.reversedLoopParts ||= {})[region] = loopWinding?.reversed || [];
+  if (region === 'jp') {
+    refreshJapanFamilyHandoffs(pkg, existing, reviewed);
+    repairOshiageLanes(pkg, existing);
+  }
+  fs.writeFileSync(OUTPUT, `${JSON.stringify(existing)}\n`);
+  process.stdout.write(`${region}: refreshed ${rows.length} parts (${rows.filter((row) => row[2] >= 0).length} vertex-exact plain)\n`);
+  return;
+}
+
 const byRegion = {};
 const followsByRegion = {};
 const familyWindowsByRegion = {};
@@ -3128,6 +3397,9 @@ for (const region of REGIONS) {
           `or leave its winding alone.`,
       );
   }
+  byRegion[region] = applyStationLanePins(pkg, partsRows, byRegion[region]);
+  if (followsByRegion[region]) followsByRegion[region] = followsByRegion[region].filter(
+    (row) => row[2] !== row[3] && row[6] !== row[7]);
   partsByRegion[region] = partsRows;
   const familyWindows = derived.familyWindows || [];
   const tenantWindowCount = familyWindows.filter((row) => row[4] === 1).length;
@@ -3164,7 +3436,7 @@ for (const [region, hubs] of Object.entries(hubReportByRegion)) {
   }
 }
 
-fs.writeFileSync(OUTPUT, `${JSON.stringify({
+const outputDocument = {
   format: "jtm-display-lanes-v1",
   northAmericaGrouping: ["operator", "color"],
   northAmericaRenderGroups: "na-render-groups.json",
@@ -3255,4 +3527,10 @@ fs.writeFileSync(OUTPUT, `${JSON.stringify({
   // to see it without re-running the build locally. See computeHubOverrides
   // and app/public/rail/README.md.
   hubReportByRegion,
-})}\n`);
+};
+repairOshiageLanes(JSON.parse(fs.readFileSync(path.join(RAIL_DIR, 'jp-2025.json'), 'utf8')), outputDocument);
+fs.writeFileSync(OUTPUT, `${JSON.stringify(outputDocument)}\n`);
+
+}
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();

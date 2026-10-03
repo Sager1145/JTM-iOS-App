@@ -23,6 +23,8 @@ const COUNTRIES = [
   { code: "HK", slug: "hk", readingsFile: "station-readings-hk.json" },
   { code: "KR", slug: "kr", readingsFile: "station-readings-kr.json" },
   { code: "MO", slug: "mo", readingsFile: "station-readings-mo.json" },
+  { code: "US", slug: "us", readingsFile: "station-readings-us.json" },
+  { code: "CA", slug: "ca", readingsFile: "station-readings-ca.json" },
 ];
 
 // N02_002 事業者種別. The four non-Japanese builders assign the same code
@@ -211,6 +213,11 @@ export function readSources() {
   const railDir = path.join(APP_DIR, "public", "rail");
   const dataDir = path.join(APP_DIR, "data");
   const byCountry = new Map();
+  const english = readJson(path.join(dataDir, "station-english.json"));
+  if (english.schema !== "station-english/1" ||
+      Object.keys(english.byCountry).sort().join(",") !== COUNTRIES.map(c => c.slug).sort().join(",")) {
+    throw new Error("English catalog must cover all seven regions");
+  }
   for (const country of COUNTRIES) {
     const packageFile = `${country.slug}-2025.json`;
     const sectionsFile =
@@ -223,9 +230,13 @@ export function readSources() {
       packageFile,
       sourcesDoc: fs.existsSync(path.join(railDir, sourcesDoc)) ? sourcesDoc : null,
       pkg: readJson(path.join(railDir, packageFile)),
-      readings: readJson(path.join(dataDir, country.readingsFile)),
+      readingsFile: ["us", "ca"].includes(country.slug) ? country.readingsFile
+        : country.readingsFile.replace("station-readings", "station-names"),
+      readings: readJson(path.join(dataDir, ["us", "ca"].includes(country.slug) ? country.readingsFile
+        : country.readingsFile.replace("station-readings", "station-names"))),
       englishCatalog: country.slug === "jp"
         ? readJson(path.join(dataDir, "station-english-jp.json")) : null,
+      allRegionEnglishCatalog: english.byCountry[country.slug],
       sections: readJson(path.join(dataDir, sectionsFile)).features,
       stations: readJson(path.join(dataDir, stationsFile)).features,
       sectionsFile,
@@ -358,6 +369,12 @@ export function buildDatabase({ outFile, geometry = true, log = () => {} } = {})
     VALUES (?,?,?,?,?,?,?,?,?)`);
   const insertStationEnglishJP = insert(`INSERT INTO station_english_jp
     (station_id, en, status, translation_may_be_wrong, source) VALUES (?,?,?,?,?)`);
+  const insertStationEnglish = insert(`INSERT INTO station_english
+    (station_id, en, status, translation_may_be_wrong, source, evidence_json)
+    VALUES (?,?,?,?,?,?)`);
+  const insertLineStationEnglish = insert(`INSERT INTO line_station_english
+    (line_id, seq, en, status, translation_may_be_wrong, source, evidence_json)
+    VALUES (?,?,?,?,?,?,?)`);
   const insertLineStation = insert(`INSERT INTO line_station
     (line_id, seq, station_id, name, name_roma, roma_source, lon, lat, measure_m, is_terminal)
     VALUES (?,?,?,?,?,?,?,?,?,?)`);
@@ -562,6 +579,22 @@ export function buildDatabase({ outFile, geometry = true, log = () => {} } = {})
       tally("station");
     }
 
+    const regionalEnglish = country.allRegionEnglishCatalog;
+    if (regionalEnglish.packageVersion !== pkg.version ||
+        Object.keys(regionalEnglish.byCode).length !== stationAgg.size) {
+      throw new Error(`English catalog does not match ${code}; rebuild it`);
+    }
+    for (const [stationCode, row] of Object.entries(regionalEnglish.byCode)) {
+      const stationId = stationIdByKey.get(`${code}␟${stationCode}`);
+      if (stationId === undefined || row.name !== majority(stationAgg.get(stationCode)?.names ?? new Map()) ||
+          row.translationMayBeWrong !== !["official_verified", "multiple_official_names"].includes(row.status)) {
+        throw new Error(`English catalog has a stale identity/provenance: ${code}:${stationCode}`);
+      }
+      insertStationEnglish.run(stationId, row.en, row.status,
+        row.translationMayBeWrong ? 1 : 0, row.source, JSON.stringify(row));
+      tally("station_english");
+    }
+
     if (slug === "jp") {
       const catalog = country.englishCatalog;
       if (catalog.schema !== "station-english-jp/1" ||
@@ -569,16 +602,16 @@ export function buildDatabase({ outFile, geometry = true, log = () => {} } = {})
           Object.keys(catalog.byCode).length !== stationAgg.size) {
         throw new Error("Japan English catalog does not match the rail package; rebuild it");
       }
-      const statuses = new Set(["official_verified", "official_spelling_candidate", "community_unverified", "manual_unverified"]);
-      for (const [stationCode, row] of Object.entries(catalog.byCode)) {
+      // Keep the legacy Japan table/view consistent with the unified evidence.
+      // The old catalog remains an input source, rather than a second verdict.
+      for (const [stationCode, row] of Object.entries(regionalEnglish.byCode)) {
         const stationId = stationIdByKey.get(`${code}␟${stationCode}`);
-        if (stationId === undefined || row.ja !== majority(stationAgg.get(stationCode)?.names ?? new Map())) {
+        if (stationId === undefined || row.name !== majority(stationAgg.get(stationCode)?.names ?? new Map())) {
           throw new Error(`Japan English catalog has a stale station: ${stationCode}`);
         }
         if (typeof row.en !== "string" || !row.en.trim() ||
             typeof row.source !== "string" || !row.source.trim() ||
-            !statuses.has(row.status) ||
-            row.translationMayBeWrong !== (row.status !== "official_verified")) {
+            row.translationMayBeWrong !== !["official_verified", "multiple_official_names"].includes(row.status)) {
           throw new Error(`Japan English catalog has invalid provenance: ${stationCode}`);
         }
         insertStationEnglishJP.run(
@@ -594,9 +627,9 @@ export function buildDatabase({ outFile, geometry = true, log = () => {} } = {})
     for (const [rawKey, entry] of Object.entries(readings.byName || {})) {
       readingByNameNorm.set(normalizeStationName(rawKey), entry);
     }
-    const japanKeyedByCode = slug === "jp";
     for (const [rawKey, entry] of Object.entries(readingByCode)) {
-      const keyType = japanKeyedByCode ? "code" : "line_station";
+      const keyType = ["us", "ca"].includes(slug) ? "line_station"
+        : rawKey.includes(":") ? "line_station" : "code";
       for (const field of NAME_FIELD_KEYS) {
         const value = entry[field];
         if (!value) continue;
@@ -717,15 +750,25 @@ export function buildDatabase({ outFile, geometry = true, log = () => {} } = {})
           !line.isLoop && (index === 0 || index === stations.length - 1) ? 1 : 0,
         );
         tally("line_station");
+        const englishMember = regionalEnglish.byCode[row[0]].memberships.find(
+          member => member.lineId === line.id && member.seq === index);
+        if (!englishMember || englishMember.name !== row[1]) {
+          throw new Error(`English catalog has a stale line membership: ${line.id}:${index}`);
+        }
+        insertLineStationEnglish.run(line.id, index, englishMember.en, englishMember.status,
+          englishMember.translationMayBeWrong ? 1 : 0, englishMember.source,
+          JSON.stringify(englishMember));
+        tally("line_station_english");
         if (index < segments.length) measureM += segments[index][0] * 1000;
 
         // Resolve this line-station's names through the frontend's own order.
         const lineStationKey = `${line.id}:${row[0]}`;
-        let entry = readingByCode[row[0]];
-        let source = "readings:code";
+        const frozen = ["us", "ca"].includes(slug);
+        let entry = readingByCode[frozen ? row[0] : lineStationKey];
+        let source = frozen ? "readings:code" : "readings:line_station";
         if (!entry) {
-          entry = readingByCode[lineStationKey];
-          source = "readings:line_station";
+          entry = readingByCode[frozen ? lineStationKey : row[0]];
+          source = frozen ? "readings:line_station" : "readings:code";
         }
         if (!entry) {
           entry = readingByNameNorm.get(normalizeStationName(row[1]));
@@ -855,7 +898,9 @@ export function buildDatabase({ outFile, geometry = true, log = () => {} } = {})
 
     country.stations.forEach((feature, index) => {
       const p = stationProperties(feature.properties);
-      const coordinates = feature.geometry?.coordinates || [];
+      const coordinates = feature.geometry?.type === "Point"
+        ? [feature.geometry.coordinates]
+        : feature.geometry?.coordinates || [];
       const result = insertSourceStation.run(
         code,
         index,
@@ -951,7 +996,7 @@ export function buildDatabase({ outFile, geometry = true, log = () => {} } = {})
   }
 
   const insertMeta = insert("INSERT OR REPLACE INTO meta (key, value) VALUES (?, ?)");
-  insertMeta.run("schema_version", "2");
+  insertMeta.run("schema_version", "3");
   insertMeta.run("generator", "scripts/build/build-rail-database.mjs");
   insertMeta.run("generated_at", new Date().toISOString());
   insertMeta.run("geometry_included", geometry ? "1" : "0");
@@ -963,7 +1008,7 @@ export function buildDatabase({ outFile, geometry = true, log = () => {} } = {})
         package: `public/rail/${country.packageFile}`,
         packageVersion: country.pkg.version,
         readings: `data/${country.readingsFile}`,
-        englishCatalog: country.slug === "jp" ? "data/station-english-jp.json" : null,
+        englishCatalog: "data/station-english.json",
         sections: `data/${country.sectionsFile}`,
         stations: `data/${country.stationsFile}`,
       })),

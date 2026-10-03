@@ -11,7 +11,8 @@ prepare_start = s.index('    static func prepare(')
 prepare_end = s.index('    /// Publish a worker result', prepare_start)
 worker_prepare = s[prepare_start:prepare_end]
 assert 'MKPolyline(' not in worker_prepare
-assert 'mapCoordinateChunks(points)' in worker_prepare
+assert 'mapCoordinateChunks(points, preservingPattern: preservingPattern)' in worker_prepare
+assert 'historicalCoordinateChunks: try coordinateChunks(historicalRuns, preservingPattern: true)' in worker_prepare
 assert '@unchecked Sendable' not in s
 assert '@MainActor\n    static func materialize(' in s
 cache_source = (root / 'ios/RailMap/MapNetworkRendering.swift').read_text()
@@ -59,6 +60,9 @@ precondition(!buildState.shouldRebuild(zoom: 12.26, visibilityBucket: 12,
 for count in [0,1,2,128,129,130,257,1000] {
     let coordinates = (0..<count).map { CLLocationCoordinate2D(latitude: 35 + sin(Double($0)) / 100, longitude: 139 + Double($0) / 1000) }
     let coordinateChunks = mapCoordinateChunks(coordinates)
+    let patterned = mapCoordinateChunks(coordinates, preservingPattern: true)
+    precondition(patterned.count == (count >= 2 ? 1 : 0), "dash phase restarts inside one run")
+    if count >= 2 { precondition(patterned[0].count == count, "patterned run lost vertices") }
     let chunks = mapPolylineChunks(coordinateChunks)
     let segmentCount = chunks.reduce(0) { $0 + $1.pointCount - 1 }
     precondition(segmentCount == max(0, count - 1), "lost/duplicated segments")
@@ -96,7 +100,7 @@ cache.beginFrame(key: "new-camera")
 precondition(cache.lineBuild(for: "line")?.revision == 2, "same camera lost cached chunks")
 cache.retainLineBuilds(withIDs: [])
 precondition(!cache.hasLineBuild(for: "line") && !cache.hasStrokeBuild(for: "line"))
-print("PASS: exact segments, seams, chunk identity, cancelled lane-bucket transition, stale-worker rejection, mounted-geometry retention and input invalidation")
+print("PASS: exact segments, seams, chunk identity, preserved dash runs, cancelled lane-bucket transition, stale-worker rejection, mounted-geometry retention and input invalidation")
 '''
 with tempfile.TemporaryDirectory(prefix='jtm-pan-geometry-') as directory:
     folder = Path(directory)

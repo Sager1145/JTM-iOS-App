@@ -72,6 +72,8 @@ if [ "$run_js" = 1 ]; then
         || { python3 scripts/railway/validate-station-tables.py 2>&1 | head -40
              fail "station tables violate ADR 0010 (see the lines above)"; }
     echo "  station tables share one schema and one code grammar per region"
+    python3 scripts/railway/build-station-names.py --check \
+        || fail "runtime station names are stale"
 fi
 
 if [ "$run_swift" = 1 ]; then
@@ -718,28 +720,14 @@ PY
 
     # The chase owns the camera at display-link cadence. Network LOD still
     # restyles continuously, but rebuilding its complete MapKit object graph
-    # waits until playback releases the camera. Basemap opacity is likewise a
-    # one-polygon renderer update, not a network invalidation.
+    # waits until playback releases the camera.
     grep -q 'if playbackLayer\.lastSnapshot != nil {' RailMap/RailMapView.swift \
         || fail "playback camera changes are no longer isolated from network rebuilds"
-    # Selection and ride visibility also repaint the retained veil. Accept
-    # those triggers and multiline formatting, while keeping opacity out of
-    # the complete-map update plan and the branch limited to veil paint.
-    python3 - RailMap/RailMapView.swift <<'PY' \
-        || fail "basemap opacity once again invalidates the complete map"
-import pathlib, re, sys
-
-source = pathlib.Path(sys.argv[1]).read_text()
-veil = re.search(
-    r'if\s+basemapChanged(?:\s*\|\|\s*(?:selectionChanged|ridesChanged))*\s*'
-    r'\{\s*updateBasemapVeil\(on:\s*mapView\)\s*\}', source)
-changes = re.search(
-    r'let\s+changes\s*=\s*MapDrawChanges\s*\((.*?)\)\s*switch\s+changes\.plan',
-    source, re.S)
-if veil is None or changes is None or 'basemapChanged' in changes.group(1):
-    sys.exit(1)
-PY
-    echo "  playback camera and basemap opacity use narrow MapKit invalidation"
+    # The basemap has no dark overlay or opacity control.
+    if grep -rnE 'BasemapVeil|basemapOpacity|layerBasemapOpacity' --include='*.swift' RailMap; then
+        fail "the removed basemap dimming overlay or control returned"
+    fi
+    echo "  playback camera uses narrow MapKit invalidation; basemap has no dimming overlay"
 
     # A region's package is opened and JSON-scanned ONCE, wherever it is read.
     #
@@ -824,7 +812,7 @@ PY
         | grep -qv 'there is deliberately no\|// '; then
         fail "an all-regions geometry decode is back"
     fi
-    grep -q 'controller.fitIfNeeded(region.networkExtent)' RailMap/ContentView.swift \
+    grep -q 'controller.fit(region.completeNetworkExtent)' RailMap/ContentView.swift \
         || fail "region focus no longer uses the catalog extent"
     echo "  region focus uses catalog bounds without eager network loading"
 

@@ -31,6 +31,19 @@ enum JourneyStrings {
 
     static let table: [String: [Localization.Language: String]] = [
 
+        "ios.journey.cardNames": [
+            .zhHans: "行程卡片", .zhHant: "行程卡片", .ja: "乗車カード", .en: "Journey cards",
+        ],
+        "ios.journey.showTranslations": [
+            .zhHans: "显示翻译", .zhHant: "顯示翻譯", .ja: "翻訳を表示", .en: "Show translations",
+        ],
+        "ios.journey.showTranslationsNote": [
+            .zhHans: "默认只显示原名。开启后，英文行程名称和已收录的车站译名优先显示，原名以小字括号显示；没有译名时保留原名。",
+            .zhHant: "預設只顯示原名。開啟後，英文行程名稱和已收錄的車站譯名優先顯示，原名以小字括號顯示；沒有譯名時保留原名。",
+            .ja: "通常は元の名前のみを表示します。オンにすると英語の列車名と収録済みの駅名訳を優先し、元の名前を小さな括弧書きで表示します。訳がなければ元の名前を表示します。",
+            .en: "Show original names by default. When enabled, English journey names and available station translations lead, with originals in smaller parentheses. Names without translations stay in their original language.",
+        ],
+
         // The date filter's own name, for the round button that now carries it
         // in the panel header on Upcoming and All Journeys. VoiceOver reads
         // this and then the bucket the filter is set to.

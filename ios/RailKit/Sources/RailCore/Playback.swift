@@ -234,6 +234,13 @@ public enum Playback {
         public var total: Double
         /// Where this run begins in the journey's global arc coordinate.
         public var offset: Double
+
+        public init(coords: [Coordinate], cum: [Double], total: Double, offset: Double) {
+            self.coords = coords
+            self.cum = cum
+            self.total = total
+            self.offset = offset
+        }
     }
 
     /// One ridden interval: a stretch of arc, and the slice of the journey's
@@ -286,9 +293,14 @@ public enum Playback {
     ///   - localize: `I18N.stationName`. Defaults to identity, which is what
     ///     the fixture's sandbox supplies; a shell passes
     ///     `Localization.stationName(_:code:)`.
+    ///   - preserveStationEndpoints: Keep arrival/departure beads on their own
+    ///     side of a disconnected run boundary. The default retains Web parity;
+    ///     native rendering opts in so distinct stations across a gap do not
+    ///     collapse onto the next run's origin at the same global arc distance.
     public static func compile(
         train: Train,
         features: [RiddenFeature],
+        preserveStationEndpoints: Bool = false,
         localize: (String, String?) -> String = { name, _ in name }
     ) -> Path? {
         let ridden = features.filter { $0.rideSegment }
@@ -406,7 +418,9 @@ public enum Playback {
         let color = train.style?.color ?? TrainValidation.defaultTrainColor
         return Path(
             zoom: zoom,
-            stations: stationList(train: train, runs: runs, hops: hops, localize: localize),
+            stations: stationList(
+                train: train, runs: runs, hops: hops,
+                preserveStationEndpoints: preserveStationEndpoints, localize: localize),
             trainID: train.id,
             color: color,
             runs: runs,
@@ -444,7 +458,8 @@ public enum Playback {
     /// `operational_stop` / `destination` all qualify, and so does a stop that
     /// declares no type.
     static func stationList(
-        train: Train, runs: [Run], hops: [Hop], localize: (String, String?) -> String
+        train: Train, runs: [Run], hops: [Hop], preserveStationEndpoints: Bool = false,
+        localize: (String, String?) -> String
     ) -> [Station] {
         let stops = train.stops
         let color = train.style?.color ?? TrainValidation.defaultTrainColor
@@ -456,6 +471,7 @@ public enum Playback {
         // They are equal when the two hops are contiguous and differ across a
         // gap, and the arrival is the right answer there.
         var distanceByStop: [Int: Double] = [:]
+        var arrivals: Set<Int> = []
         var order: [Int] = []
         func set(_ key: Int, _ value: Double) {
             if distanceByStop.updateValue(value, forKey: key) == nil { order.append(key) }
@@ -466,6 +482,7 @@ public enum Playback {
             guard hop.segmentIndex >= 0, let index = exactIndex(hop.segmentIndex) else { continue }
             if distanceByStop[index] == nil { set(index, hop.s0) }
             set(index + 1, hop.s1)
+            arrivals.insert(index + 1)
         }
 
         var stations: [Station] = []
@@ -475,9 +492,23 @@ public enum Playback {
             if stop.stopType == "pass_through" { continue }
             let name = stop.name
             if name.isEmpty { continue }
-            guard let s = distanceByStop[stopIndex],
-                let coord = position(in: runs, atDistance: s)
-            else { continue }
+            guard let s = distanceByStop[stopIndex] else { continue }
+            var coordinate = position(in: runs, atDistance: s)
+            if preserveStationEndpoints {
+                // Hop arc sums and run arc sums can differ by a rounding step.
+                // Match endpoints within a micrometre rather than requiring
+                // exact Double equality at a potentially national-scale arc.
+                if arrivals.contains(stopIndex), let incoming = runs.first(where: {
+                    $0.total > 0 && abs($0.offset + $0.total - s) <= 0.000001
+                }) {
+                    coordinate = incoming.coords.last
+                } else if !arrivals.contains(stopIndex), let outgoing = runs.reversed().first(where: {
+                    $0.total > 0 && abs($0.offset - s) <= 0.000001
+                }) {
+                    coordinate = outgoing.coords.first
+                }
+            }
+            guard let coord = coordinate else { continue }
             stations.append(
                 Station(s: s, coord: coord, color: color, name: localize(name, stop.n02StationCode))
             )
@@ -525,6 +556,28 @@ public enum Playback {
         let a = run.coords[lo]
         let b = run.coords[hi]
         return Coordinate(lon: a.lon + (b.lon - a.lon) * r, lat: a.lat + (b.lat - a.lat) * r)
+    }
+
+    /// The vertices behind the head within one continuous run. Retain every
+    /// surveyed bend between the two interpolated endpoints; sampling only
+    /// the endpoints would make the trail cut across the train's actual path.
+    /// Distances use the journey's global arc coordinate, as the playhead does.
+    public static func trailCoordinates(
+        in run: Run, fromDistance start: Double, throughDistance end: Double
+    ) -> [Coordinate] {
+        guard run.coords.count >= 2, run.cum.count == run.coords.count else { return [] }
+        let lower = max(run.offset, min(run.offset + run.total, start))
+        let upper = max(run.offset, min(run.offset + run.total, end))
+        guard upper > lower,
+              let first = position(in: [run], atDistance: lower),
+              let last = position(in: [run], atDistance: upper) else { return [] }
+        var result = [first]
+        for index in run.coords.indices
+            where run.offset + run.cum[index] > lower && run.offset + run.cum[index] < upper {
+            result.append(run.coords[index])
+        }
+        if result.last != last { result.append(last) }
+        return result
     }
 
     /// Which run the head is in, and how far along THAT run it is (0…1) — the
@@ -962,7 +1015,8 @@ public enum Playback {
                 from: $0.from, to: $0.to,
                 fromStationCode: $0.fromN02StationCode,
                 toStationCode: $0.toN02StationCode,
-                lineNames: $0.lineNames ?? [], operatorNames: $0.operatorNames ?? []
+                lineNames: $0.lineNames ?? [], operatorNames: $0.operatorNames ?? [],
+                lineIDs: $0.lineIDs ?? [], sectionCodes: $0.sectionCodes ?? []
             )
         }
         return "\(train.id):\(RouteGraph.templateKey(sections: sections))"

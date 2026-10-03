@@ -1,0 +1,124 @@
+{
+  "schema": "station-english-evidence/1",
+  "countries": [
+    "jp"
+  ],
+  "sources": [
+    {
+      "id": "keisei-vmap-en",
+      "source": "https://www.keisei.co.jp/keisei/tetudou/skyliner/us/access/vmap/index.php",
+      "resolvedSource": "https://www.keisei.co.jp/keisei/tetudou/skyliner/us/access/vmap/index.php",
+      "rawFile": "keisei-vmap-en.html",
+      "retrievedAt": "2026-10-01T02:25:26.629053+00:00",
+      "sha256": "ef1bcfb13b30ca9ed67baf316b34b4d9915a3f4ac98d938f14711d13e9c16abc",
+      "bytes": 140542,
+      "contentType": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "keisei-owada-page",
+      "source": "https://www.keisei.co.jp/keisei/tetudou/accessj/keisei-owada.php",
+      "resolvedSource": "https://www.keisei.co.jp/keisei/tetudou/accessj/keisei-owada.php",
+      "rawFile": "keisei-owada-page.html",
+      "retrievedAt": "2026-10-01T02:25:26.382617+00:00",
+      "sha256": "c12a5bac615a5e2586be4da728abf380af1d1cdce9b28c32e203eee5d519a920",
+      "bytes": 34182,
+      "contentType": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "hankyu-en",
+      "source": "https://www.hankyu.co.jp/en/station/index.html",
+      "rawFile": "hankyu-en.html.gz",
+      "retrievedAt": "2026-10-01T01:00:14.532484+00:00",
+      "sha256": "6303af7f11fb0cf187bc4fcc9d3d5afa39de6bea767680bd275131ff1f8786d7",
+      "bytes": 385814,
+      "compression": "gzip",
+      "sha256Of": "decompressed-original-response",
+      "compressedSha256": "b6c984fc5fe14609a2120238ef6131af19c9ad0253379a6dc768b761c647b010"
+    }
+  ],
+  "byLineStation": {
+    "jp-京成電鉄-本線:003511": {
+      "country": "jp",
+      "lineId": "jp-京成電鉄-本線",
+      "stationCode": "003511",
+      "operator": "京成電鉄",
+      "name": "京成大和田",
+      "en": "Keisei-Ōwada",
+      "source": "https://www.keisei.co.jp/keisei/tetudou/skyliner/us/access/vmap/index.php",
+      "identityEvidence": [
+        {
+          "officialStationId": "131",
+          "englishVehicleId": "KeiseiOwada",
+          "name": "京成大和田",
+          "en": "Keisei-Ōwada",
+          "operator": "京成電鉄",
+          "source": "https://www.keisei.co.jp/keisei/tetudou/skyliner/us/access/vmap/index.php",
+          "sha256": "ef1bcfb13b30ca9ed67baf316b34b4d9915a3f4ac98d938f14711d13e9c16abc",
+          "retrievedAt": "2026-10-01T02:25:26.629053+00:00",
+          "rawFile": "keisei-vmap-en.html",
+          "identitySource": "https://www.keisei.co.jp/keisei/tetudou/accessj/keisei-owada.php",
+          "identitySha256": "c12a5bac615a5e2586be4da728abf380af1d1cdce9b28c32e203eee5d519a920",
+          "identityRetrievedAt": "2026-10-01T02:25:26.382617+00:00",
+          "identityRawFile": "keisei-owada-page.html",
+          "nativeHeading": "京成大和田駅",
+          "sharedStationMapId": "131",
+          "publishedEnglishLabel": "Keisei-Ōwada",
+          "matchMethod": "operator exact native station page and English directory table row share numeric station-map ID131"
+        }
+      ]
+    },
+    "jp-阪急電鉄-神戸高速線:007216": {
+      "country": "jp",
+      "lineId": "jp-阪急電鉄-神戸高速線",
+      "stationCode": "007216",
+      "operator": "阪急電鉄",
+      "name": "高速神戸",
+      "en": "Kosoku-kobe",
+      "source": "https://www.hankyu.co.jp/en/station/index.html",
+      "identityEvidence": [
+        {
+          "officialStationId": "HS35",
+          "name": "高速神戸",
+          "en": "Kosoku-kobe",
+          "operator": "阪急電鉄",
+          "officialLine": "神戸高速線",
+          "source": "https://www.hankyu.co.jp/en/station/index.html",
+          "sha256": "6303af7f11fb0cf187bc4fcc9d3d5afa39de6bea767680bd275131ff1f8786d7",
+          "retrievedAt": "2026-10-01T01:00:14.532484+00:00",
+          "rawFile": "hankyu-en.html.gz",
+          "publishedStationNumber": "HS35",
+          "publishedNativeLabel": "高速神戸",
+          "publishedEnglishLabel": "Kosoku-kobe",
+          "matchMethod": "official Hankyu bilingual native comment and English station-box label with published HS station number; exact operator/native within Kobe Kosoku line"
+        }
+      ]
+    },
+    "jp-阪急電鉄-神戸高速線:007241": {
+      "country": "jp",
+      "lineId": "jp-阪急電鉄-神戸高速線",
+      "stationCode": "007241",
+      "operator": "阪急電鉄",
+      "name": "新開地",
+      "en": "Shinkaichi",
+      "source": "https://www.hankyu.co.jp/en/station/index.html",
+      "identityEvidence": [
+        {
+          "officialStationId": "HS36",
+          "name": "新開地",
+          "en": "Shinkaichi",
+          "operator": "阪急電鉄",
+          "officialLine": "神戸高速線",
+          "source": "https://www.hankyu.co.jp/en/station/index.html",
+          "sha256": "6303af7f11fb0cf187bc4fcc9d3d5afa39de6bea767680bd275131ff1f8786d7",
+          "retrievedAt": "2026-10-01T01:00:14.532484+00:00",
+          "rawFile": "hankyu-en.html.gz",
+          "publishedStationNumber": "HS36",
+          "publishedNativeLabel": "新開地",
+          "publishedEnglishLabel": "Shinkaichi",
+          "matchMethod": "official Hankyu bilingual native comment and English station-box label with published HS station number; exact operator/native within Kobe Kosoku line"
+        }
+      ]
+    }
+  },
+  "unresolved": []
+}

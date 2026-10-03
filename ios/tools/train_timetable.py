@@ -206,11 +206,23 @@ def entity_paths(canonical_dir, patterns):
     return sorted({path for path in result if path.is_file()}, key=lambda p: p.as_posix())
 
 
+def effective_entity_paths(canonical_dir, patterns):
+    """Ignore only byte-identical numbered copies; retain differing facts."""
+    result = []
+    for path in entity_paths(canonical_dir, patterns):
+        original_stem = re.sub(r" (?:[2-9]|[1-9][0-9]+)$", "", path.stem)
+        original = path.with_name(original_stem + path.suffix)
+        if original != path and original.is_file() and path.read_bytes() == original.read_bytes():
+            continue
+        result.append(path)
+    return result
+
+
 def load_dataset(canonical_dir, manifest):
     data = {entity: [] for entity in FIELDS}
     origins = {}
     for entity, patterns in manifest["entities"].items():
-        for path in entity_paths(canonical_dir, patterns):
+        for path in effective_entity_paths(canonical_dir, patterns):
             for line_number, raw in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
                 if not raw.strip():
                     continue
@@ -927,7 +939,7 @@ def source_fingerprint(canonical_dir, manifest):
     digest = hashlib.sha256()
     paths = [canonical_dir / "manifest.json", canonical_dir / manifest["schema_path"]]
     for patterns in manifest["entities"].values():
-        paths.extend(entity_paths(canonical_dir, patterns))
+        paths.extend(effective_entity_paths(canonical_dir, patterns))
     for path in sorted(set(paths), key=lambda p: p.as_posix()):
         relative = path.relative_to(canonical_dir).as_posix().encode("utf-8")
         payload = path.read_bytes()
@@ -1082,6 +1094,8 @@ def build_database(canonical_dir, output=None):
                     for row in data[entity]:
                         joins.extend({"timetable_version_id": row["timetable_version_id"], "source_id": source_id} for source_id in row["source_ids"])
                     insert_rows(connection, "timetable_version_sources", joins)
+            from rail_interval_codes import populate_interval_tables
+            populate_interval_tables(connection, json.loads(JP_PACKAGE.read_text(encoding="utf-8")), data)
             foreign_errors = connection.execute("PRAGMA foreign_key_check").fetchall()
             if foreign_errors:
                 raise DatasetError(f"SQLite foreign-key check failed: {foreign_errors}")

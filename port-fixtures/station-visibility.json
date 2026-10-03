@@ -7002,13 +7002,13 @@
     {
       "label": "jp:jp-東海旅客鉄道-東海道新幹線",
       "lineMinZoom": 3,
-      "totalKm": 515.217,
+      "totalKm": 515.151,
       "stationCount": 17,
-      "spacingKm": 32.2010625,
-      "densityRaw": 7.0286075806031665,
+      "spacingKm": 32.1969375,
+      "densityRaw": 7.0287924036427585,
       "country": "jp",
       "lineId": "jp-東海旅客鉄道-東海道新幹線",
-      "visibilityKm": 515.217,
+      "visibilityKm": 515.151,
       "stationMinZoom": 7
     },
     {
@@ -9688,6 +9688,30 @@
       "stationMinZoom": 11
     },
     {
+      "label": "jp:jp-東日本旅客鉄道-大崎支線",
+      "lineMinZoom": 7,
+      "totalKm": 2.521,
+      "stationCount": 2,
+      "spacingKm": 2.521,
+      "densityRaw": 10.703647849304517,
+      "country": "jp",
+      "lineId": "jp-東日本旅客鉄道-大崎支線",
+      "visibilityKm": 5.029999999999999,
+      "stationMinZoom": 11
+    },
+    {
+      "label": "jp:jp-東日本旅客鉄道-大崎支線-p1",
+      "lineMinZoom": 7,
+      "totalKm": 2.509,
+      "stationCount": 2,
+      "spacingKm": 2.509,
+      "densityRaw": 10.710531496753884,
+      "country": "jp",
+      "lineId": "jp-東日本旅客鉄道-大崎支線-p1",
+      "visibilityKm": 5.029999999999999,
+      "stationMinZoom": 11
+    },
+    {
       "label": "us:ace-ace",
       "lineMinZoom": 4,
       "totalKm": 136.84300000000002,
@@ -9864,8 +9888,44 @@
       "densityRaw": 6.712491448440433,
       "country": "us",
       "lineId": "amtrak-amtrak-cascades-us",
-      "visibilityKm": 641.4319999999998,
+      "visibilityKm": 739.2929999999998,
       "stationMinZoom": 7
+    },
+    {
+      "label": "us:amtrak-maple-leaf-us",
+      "lineMinZoom": 3,
+      "totalKm": 746.4670000000001,
+      "stationCount": 17,
+      "spacingKm": 46.654187500000006,
+      "densityRaw": 6.493709294980209,
+      "country": "us",
+      "lineId": "amtrak-maple-leaf-us",
+      "visibilityKm": 747.1290000000001,
+      "stationMinZoom": 6
+    },
+    {
+      "label": "us:amtrak-amtrak-cascades-border1",
+      "lineMinZoom": 3,
+      "totalKm": 97.861,
+      "stationCount": 2,
+      "spacingKm": 97.861,
+      "densityRaw": 5.4249818474793825,
+      "country": "us",
+      "lineId": "amtrak-amtrak-cascades-border1",
+      "visibilityKm": 739.2929999999998,
+      "stationMinZoom": 5
+    },
+    {
+      "label": "us:amtrak-maple-leaf-border1",
+      "lineMinZoom": 3,
+      "totalKm": 0.662,
+      "stationCount": 2,
+      "spacingKm": 0.662,
+      "densityRaw": 12.632740845355839,
+      "country": "us",
+      "lineId": "amtrak-maple-leaf-border1",
+      "visibilityKm": 747.1290000000001,
+      "stationMinZoom": 13
     },
     {
       "label": "us:amtrak-amtrak-hartford-line",
@@ -12852,8 +12912,20 @@
       "densityRaw": 15.063522599326575,
       "country": "us",
       "lineId": "san-francisco-municipal-tran-ph",
-      "visibilityKm": 4.345000000000001,
+      "visibilityKm": 5.183000000000001,
       "stationMinZoom": 14
+    },
+    {
+      "label": "us:san-francisco-municipal-tran-ph-direction1",
+      "lineMinZoom": 7,
+      "totalKm": 0.838,
+      "stationCount": 2,
+      "spacingKm": 0.838,
+      "densityRaw": 12.292621818463704,
+      "country": "us",
+      "lineId": "san-francisco-municipal-tran-ph-direction1",
+      "visibilityKm": 5.183000000000001,
+      "stationMinZoom": 12
     },
     {
       "label": "us:san-francisco-municipal-tran-ph-b1",
@@ -12864,7 +12936,7 @@
       "densityRaw": 14.80235455215008,
       "country": "us",
       "lineId": "san-francisco-municipal-tran-ph-b1",
-      "visibilityKm": 4.345000000000001,
+      "visibilityKm": 5.183000000000001,
       "stationMinZoom": 14
     },
     {
@@ -12876,19 +12948,7 @@
       "densityRaw": 15.210143024617597,
       "country": "us",
       "lineId": "san-francisco-municipal-tran-pm",
-      "visibilityKm": 3.332,
-      "stationMinZoom": 14
-    },
-    {
-      "label": "us:san-francisco-municipal-tran-pm-b1",
-      "lineMinZoom": 7,
-      "totalKm": 0.17,
-      "stationCount": 2,
-      "spacingKm": 0.17,
-      "densityRaw": 14.594037316025354,
-      "country": "us",
-      "lineId": "san-francisco-municipal-tran-pm-b1",
-      "visibilityKm": 3.332,
+      "visibilityKm": 3.162,
       "stationMinZoom": 14
     },
     {
@@ -12900,7 +12960,7 @@
       "densityRaw": 14.49563361196436,
       "country": "us",
       "lineId": "san-francisco-municipal-tran-pm-b2",
-      "visibilityKm": 3.332,
+      "visibilityKm": 3.162,
       "stationMinZoom": 14
     },
     {
@@ -12912,7 +12972,7 @@
       "densityRaw": 14.055061020578378,
       "country": "us",
       "lineId": "san-francisco-municipal-tran-pm-b3",
-      "visibilityKm": 3.332,
+      "visibilityKm": 3.162,
       "stationMinZoom": 14
     },
     {
@@ -13536,19 +13596,7 @@
       "densityRaw": 11.501017164830243,
       "country": "us",
       "lineId": "utah-transit-authority-uta-703",
-      "visibilityKm": 40.47900000000001,
-      "stationMinZoom": 12
-    },
-    {
-      "label": "us:utah-transit-authority-uta-703-b1",
-      "lineMinZoom": 5,
-      "totalKm": 2.7640000000000002,
-      "stationCount": 3,
-      "spacingKm": 1.3820000000000001,
-      "densityRaw": 11.570886351774798,
-      "country": "us",
-      "lineId": "utah-transit-authority-uta-703-b1",
-      "visibilityKm": 40.47900000000001,
+      "visibilityKm": 37.71500000000001,
       "stationMinZoom": 12
     },
     {
@@ -13961,15 +14009,39 @@
     },
     {
       "label": "ca:amtrak-adirondack-ca",
-      "lineMinZoom": 7,
+      "lineMinZoom": 4,
       "totalKm": 6.12,
       "stationCount": 2,
       "spacingKm": 6.12,
       "densityRaw": 9.424112314583041,
       "country": "ca",
       "lineId": "amtrak-adirondack-ca",
-      "visibilityKm": 6.12,
+      "visibilityKm": 78.215,
       "stationMinZoom": 9
+    },
+    {
+      "label": "ca:amtrak-maple-leaf-ca",
+      "lineMinZoom": 4,
+      "totalKm": 132.324,
+      "stationCount": 6,
+      "spacingKm": 26.464800000000004,
+      "densityRaw": 7.31164112134622,
+      "country": "ca",
+      "lineId": "amtrak-maple-leaf-ca",
+      "visibilityKm": 132.324,
+      "stationMinZoom": 7
+    },
+    {
+      "label": "ca:amtrak-adirondack-border1",
+      "lineMinZoom": 4,
+      "totalKm": 72.095,
+      "stationCount": 2,
+      "spacingKm": 72.095,
+      "densityRaw": 5.865816664816531,
+      "country": "ca",
+      "lineId": "amtrak-adirondack-border1",
+      "visibilityKm": 78.215,
+      "stationMinZoom": 6
     },
     {
       "label": "ca:edmonton-transit-system-capital",

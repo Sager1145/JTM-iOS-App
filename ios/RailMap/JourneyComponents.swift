@@ -166,6 +166,7 @@ struct RouteTimingView: View {
     var originCode: String? = nil
     var destinationCode: String? = nil
     var region: Region? = nil
+    var usesSmallTimes = false
 
     @Environment(AppLocalization.self) private var localization
     /// The two bands an endpoint prints in: one line of `.headline` for the
@@ -179,6 +180,7 @@ struct RouteTimingView: View {
     /// aligned at `.large` is a stack of three drifting things at `.xxxLarge`.
     @ScaledMetric(relativeTo: .headline) private var nameLineHeight: CGFloat = 22
     @ScaledMetric(relativeTo: .title3) private var timeLineHeight: CGFloat = 25
+    @ScaledMetric(relativeTo: .caption) private var smallTimeLineHeight: CGFloat = 16
 
     var body: some View {
         ViewThatFits(in: .horizontal) {
@@ -193,11 +195,11 @@ struct RouteTimingView: View {
         HStack(alignment: .top, spacing: 12) {
             endpoint(
                 origin, code: originCode, time: departure, platform: originPlatform,
-                alignment: .leading)
+                alignment: .center)
             connector(.rightwards)
             endpoint(
                 destination, code: destinationCode, time: arrival,
-                platform: destinationPlatform, alignment: .trailing)
+                platform: destinationPlatform, alignment: .center)
         }
     }
 
@@ -248,7 +250,7 @@ struct RouteTimingView: View {
             VStack(spacing: 2) {
                 arrow(direction)
                     .frame(height: nameLineHeight)
-                elapsedLabel(band: timeLineHeight)
+                elapsedLabel(band: usesSmallTimes ? smallTimeLineHeight : timeLineHeight)
             }
         case .downwards:
             // Beside the arrow here, for the mirror-image reason: the stacked
@@ -327,10 +329,11 @@ struct RouteTimingView: View {
             Text(localization.stationName(name, code: code, region: region))
                 .font(.headline)
                 .fixedSize(horizontal: false, vertical: true)
-                .multilineTextAlignment(alignment == .trailing ? .trailing : .leading)
+                .multilineTextAlignment(
+                    alignment == .center ? .center : alignment == .trailing ? .trailing : .leading)
             if let time, !time.isEmpty {
                 Text(time)
-                    .font(.title3.weight(.semibold))
+                    .font((usesSmallTimes ? Font.caption : Font.title3).weight(.semibold))
                     .monospacedDigit()
                     .foregroundStyle(.secondary)
             }
@@ -340,7 +343,7 @@ struct RouteTimingView: View {
         }
         .frame(
             maxWidth: .infinity,
-            alignment: alignment == .trailing ? .trailing : .leading)
+            alignment: alignment == .center ? .center : alignment == .trailing ? .trailing : .leading)
     }
 
     /// §10.2: one journey reads as one sentence, not as four labels.
@@ -378,22 +381,9 @@ struct RouteTimingView: View {
 
 // MARK: - §7.1 JourneySummary
 
-/// One journey, as a list reads it.
-///
-/// Flighty's passport row is the model, and it suits a record that is being
-/// recollected rather than acted on: a bounded brand mark gives every row the
-/// same visual start, a quiet header beside it carries the service and the
-/// date, the pair of stations is the TITLE, and everything else sits under it
-/// at footnote weight. The record ID never appears — §3.1 puts it in L4, which is
-/// the detail screen.
-///
-/// What is deliberately not borrowed is the two-line ceiling. A flight is
-/// identified by a carrier and a number, so Flighty needs nothing under the
-/// city pair; a ride is identified by a line, an operator, a type and a
-/// number, and the times are the thing the reader wrote down. So this row
-/// keeps exactly two footnote lines below the title — the route, then the
-/// timing — and nothing else joins them: state appears only when there is
-/// state to report.
+/// A ticket summary: service and date beside the logo, followed by the two
+/// stations with their times below and elapsed time below the arrow.
+/// Detailed railway sections and operational state belong to the opened card.
 struct JourneySummaryRow: View {
     /// Whether the row draws the card it sits on, or is already inside one.
     ///
@@ -417,10 +407,7 @@ struct JourneySummaryRow: View {
     var surface: Surface = .card
 
     @Environment(AppLocalization.self) private var localization
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
-    /// The loaded packages, for the passenger spelling of a detected line —
-    /// see ``RouteLogoSquare``, which declares this the same way.
-    @Environment(RailNetworkStore.self) private var network: RailNetworkStore?
+    @Environment(DisplaySettings.self) private var display: DisplaySettings?
 
     var body: some View {
         rowLayout
@@ -440,24 +427,7 @@ struct JourneySummaryRow: View {
         .accessibilityAddTraits(isSelected ? [.isSelected] : [])
     }
 
-    /// One layout, in every host.
-    ///
-    /// The mark shares a line with the metadata header only — the service on
-    /// one line, the date under it — and the endpoints, the times, the route
-    /// and any state receive the card's full width beneath. A journey row is
-    /// used in the full-width phone list, the narrow side panel, the overlap
-    /// chooser and Passport cards, and this is the one arrangement that reads
-    /// the same in all of them.
-    ///
-    /// There used to be a second, denser layout — the mark centred against
-    /// the whole text column, the date on the service's own line — chosen per
-    /// row by a `ViewThatFits` on the header's unwrapped width. Choosing per
-    /// row is what was wrong with it: in one list, a ride with a long service
-    /// name reflowed to this layout while the ride under it, with a short
-    /// name, kept the dense one, so the same sheet showed its date on the
-    /// right in one card and under the title in the next, with the mark
-    /// sitting on a different line in each. A list is read as a column, and
-    /// a column has to put the same fact in the same place on every row.
+    /// Ticket identity above the endpoint pair, shared with the opened card.
     private var rowLayout: some View {
         VStack(alignment: .leading, spacing: 9) {
             HStack(alignment: .center, spacing: 12) {
@@ -465,10 +435,16 @@ struct JourneySummaryRow: View {
                 headerLine
             }
 
-            stationTitle
-            timingLine
-            routeLine
-            stateBadge
+            RouteTimingView(
+                origin: train.origin,
+                destination: train.destination,
+                departure: departureTime,
+                arrival: arrivalTime,
+                originCode: train.originStationCode,
+                destinationCode: train.destinationStationCode,
+                region: Region.resolved(train),
+                usesSmallTimes: true
+            )
         }
     }
 
@@ -495,8 +471,8 @@ struct JourneySummaryRow: View {
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
 
-            if let latinName = nonEmpty(train.numberEn) {
-                Text(latinName)
+            if let original = serviceName.original {
+                Text("(\(original))")
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
@@ -513,103 +489,12 @@ struct JourneySummaryRow: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    /// 「東京 → 大阪」 — the row's title, and ONE `Text` rather than a stack
-    /// of two.
-    ///
-    /// Flighty writes the pair as a sentence with the connector in a lighter
-    /// weight, and writing it the same way here removes an arrangement problem
-    /// rather than only changing how it looks: two labels with an arrow
-    /// between them either fit on one line or have to become a stacked pair
-    /// with a downward arrow, and choosing between those needed a
-    /// `ViewThatFits` wrapped around both forms. A sentence just wraps. That
-    /// is §10.1's rule — the layout gives way, the type never shrinks —
-    /// reached by writing one piece of text instead of by choosing between two
-    /// layouts of it.
-    ///
-    /// The connector is an arrow in every language, and it comes from the
-    /// catalog rather than from a literal here — `ios.journey.stationConnector`
-    /// is the one place the mark is decided, next to `ios.journey.endpoints`,
-    /// which spells the same relationship for the surfaces that state it as a
-    /// sentence.
-    private var stationTitle: some View {
-        (Text(localization.originName(of: train))
-            .fontWeight(.bold)
-            + Text(" \(stationConnector) ")
-            .fontWeight(.regular)
-            .foregroundStyle(.secondary)
-            + Text(localization.destinationName(of: train))
-            .fontWeight(.bold))
-            .font(.title3)
-            // Three lines is generous for a station pair and still bounded; at
-            // an accessibility size the pair is the answer the row exists to
-            // give, so it takes whatever it needs (§14.4).
-            .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 3)
-            .fixedSize(horizontal: false, vertical: true)
-    }
-
-    private var stationConnector: String {
-        localization.text("ios.journey.stationConnector", fallback: "to")
-    }
-
-    /// 「東海道本線 · JR東海」 — which railway this was, after the pair of
-    /// stations and the times the reader wrote down.
-    ///
-    /// The operators are short names rather than legal ones — see
-    /// ``JourneyBranding/operatorLabels(of:)``, which is also what stops
-    /// 「東日本旅客鉄道 / JR東日本」 from printing one company twice.
-    @ViewBuilder
-    private var routeLine: some View {
-        if !routeDetailText.isEmpty {
-            Text(routeDetailText)
-                .font(.footnote.weight(.medium))
-                .foregroundStyle(.secondary)
-                .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
-                .fixedSize(horizontal: false, vertical: true)
-        }
-    }
-
-    /// 「発 08:00 3番線 · 着 09:32 5番線 · 12 駅」.
-    ///
-    /// Directly under the station pair, because the two answer one question
-    /// together: a row is 「関西空港 → 新大阪」 AND when that was. The railway
-    /// it ran over follows, which is the next question rather than part of
-    /// this one.
-    ///
-    /// One string, for the same reason the title above is one string: a row of
-    /// labelled chips has to be arranged twice — once across, once down — and
-    /// the arrangement is what broke at an accessibility size. A sentence
-    /// wraps at whatever width it is handed.
-    @ViewBuilder
-    private var timingLine: some View {
-        if !timingText.isEmpty {
-            Text(timingText)
-                .font(.footnote)
-                // §14.2: a time is a figure the reader compares down a column.
-                .monospacedDigit()
-                .foregroundStyle(.secondary)
-                .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
-                .fixedSize(horizontal: false, vertical: true)
-        }
-    }
-
-    /// State appears only when there is state to report.
-    ///
-    /// The row used to carry a permanent 「顯示中」/「已隱藏」 capsule beside
-    /// the times, which is exactly the success badge §7.5 forbids: two hundred
-    /// rows all saying they are shown is two hundred pills carrying nothing.
-    /// The resolver already returns 「已從地圖隱藏」 as this journey's status
-    /// when it is hidden — so the one badge below says it, and the capsule is
-    /// gone rather than duplicated.
-    @ViewBuilder
-    private var stateBadge: some View {
-        if let status = presentation.summaryStatus {
-            JourneyStatusBadge(status: status, compact: true)
-                .padding(.top, 1)
-        }
+    private var serviceName: JourneyTitle.CardName {
+        JourneyTitle.cardName(train, showsTranslation: display?.showJourneyTranslations == true)
     }
 
     private var serviceText: String {
-        [train.number, nonEmpty(train.trainType)]
+        [serviceName.primary, nonEmpty(train.trainType)]
             .compactMap { $0 }
             .joined(separator: " · ")
     }
@@ -619,52 +504,9 @@ struct JourneySummaryRow: View {
         return date
     }
 
-    /// The line and the operator, resolved the same way the mark beside them
-    /// is — see ``JourneyBranding``. Reads the detected route ahead of the
-    /// recorded names, so this redraws once ``TraversedLineDetector`` lands.
-    private var routeDetailText: String {
-        JourneyBranding.routeText(
-            of: train, detected: RideStatusCenter.shared.traversedLines(forTrainID: train.id),
-            badges: network?.badges)
-    }
-
-    private var timingText: String {
-        var parts: [String] = []
-        if let departureTime {
-            parts.append(
-                endpointText(
-                    localization.countryText("tag.dep", fallback: "Dep"),
-                    time: departureTime,
-                    platform: train.stops.first?.platformNumber))
-        }
-        if let arrivalTime {
-            parts.append(
-                endpointText(
-                    localization.countryText("tag.arr", fallback: "Arr"),
-                    time: arrivalTime,
-                    platform: train.stops.last?.platformNumber))
-        }
-        parts.append(stopCountText)
-        return parts.joined(separator: " · ")
-    }
-
-    private func endpointText(_ label: String, time: String, platform: Int?) -> String {
-        var parts = [label, time]
-        if let platform, platform >= 0 {
-            parts.append(
-                localization.editorText(
-                    "ios.detail.platformValue", ["number": .number(Double(platform))]))
-        }
-        return parts.joined(separator: " ")
-    }
-
     private func nonEmpty(_ value: String?) -> String? {
         guard let value, !value.isEmpty else { return nil }
         return value
-    }
-
-    private var stopCountText: String {
-        "\(train.stops.count) \(localization.countryText("unit.stops", fallback: "stops"))"
     }
 
     private var departureTime: String? {
@@ -700,6 +542,10 @@ struct QuietActionGroup: View {
 
     @Environment(AppLocalization.self) private var localization
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
+    private var actionButtonHeight: CGFloat? {
+        arrangesJourneyControlsInOneRow ? SheetIconButton<Image>.visualSide : nil
+    }
 
     var body: some View {
         let quiet = presentation.secondaryActions.filter(\.showsInQuietRow)
@@ -805,7 +651,7 @@ struct QuietActionGroup: View {
     /// The transparent slack the row's LAST control carries outside its own
     /// ink, when that control is one of the circles.
     ///
-    /// `journeyRowIcon` draws a 34-point circle inside a 44-point hit frame,
+    /// `journeyRowIcon` draws a 40-point circle inside a 44-point hit frame,
     /// so a row ending in one is 5 points wider than it looks while the filled
     /// pill that starts it is exactly as wide as its ink. Centring the layout
     /// box therefore lands the visible group 2.5 points left of the card's
@@ -843,10 +689,9 @@ struct QuietActionGroup: View {
                 .fixedSize(horizontal: true, vertical: false)
                 .padding(.horizontal, 2)
         }
-        .buttonStyle(.borderedProminent)
-        .controlSize(.regular)
-        // A compact visual button with the same 44-point landing area as the
-        // header icons. The action stays easy to hit without reading as a
+        .buttonStyle(RailCapsuleButtonStyle(prominent: true, visualHeight: actionButtonHeight))
+        // A compact visual button with a 44-point landing area.
+        // The action stays easy to hit without reading as a
         // full-width call-to-action that overwhelms the journey itself.
         .railMinimumTouchTarget()
         .accessibilityLabel(Text(appearance.label))
@@ -859,7 +704,7 @@ struct QuietActionGroup: View {
         .accessibilityIdentifier("journeyPrimaryAction")
     }
 
-    /// The playback control uses the same system geometry as the prominent
+    /// The playback control uses the same geometry as the prominent
     /// control beside it. Only emphasis differs; height, type and insets do
     /// not, so the row reads as one control family.
     private func journeyRowQuietButton(_ action: SecondaryAction) -> some View {
@@ -876,18 +721,40 @@ struct QuietActionGroup: View {
                 .fixedSize(horizontal: true, vertical: false)
                 .padding(.horizontal, 2)
         }
-        .buttonStyle(.bordered)
-        .controlSize(.regular)
+        .buttonStyle(RailCapsuleButtonStyle(visualHeight: actionButtonHeight))
         .railMinimumTouchTarget()
         .accessibilityLabel(Text(appearance.label))
     }
 
     @ViewBuilder
     private func quietRow(_ quiet: [SecondaryAction], more: [SecondaryAction]) -> some View {
-        HStack(spacing: 8) {
-            ForEach(quiet, id: \.self) { quietButton($0) }
-            if !more.isEmpty { moreMenu(more) }
+        if dynamicTypeSize.isAccessibilitySize {
+            VStack(alignment: .leading, spacing: 8) {
+                ForEach(quiet, id: \.self) { accessibilityQuietButton($0) }
+                if !more.isEmpty { moreMenu(more) }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        } else {
+            HStack(spacing: 8) {
+                ForEach(quiet, id: \.self) { quietButton($0) }
+                if !more.isEmpty { moreMenu(more) }
+            }
         }
+    }
+
+    private func accessibilityQuietButton(_ action: SecondaryAction) -> some View {
+        let appearance = action.appearance(localization)
+        return Button { performSecondary(action) } label: {
+            Label(appearance.label, systemImage: appearance.systemImage)
+                .font(.footnote.weight(.semibold))
+                .lineLimit(nil)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: .infinity)
+        }
+        .buttonStyle(RailCapsuleButtonStyle(visualHeight: actionButtonHeight))
+        .railMinimumTouchTarget()
+        .accessibilityLabel(Text(appearance.label))
     }
 
     private func quietButton(_ action: SecondaryAction) -> some View {
@@ -898,9 +765,8 @@ struct QuietActionGroup: View {
                 .lineLimit(1)
                 .minimumScaleFactor(0.85)
                 .frame(maxWidth: .infinity)
-                .padding(.vertical, 10)
         }
-        .buttonStyle(.bordered)
+        .buttonStyle(RailCapsuleButtonStyle(visualHeight: actionButtonHeight))
         .railMinimumTouchTarget()
         .accessibilityLabel(Text(appearance.label))
     }
@@ -915,6 +781,7 @@ struct QuietActionGroup: View {
         }
         .buttonStyle(RailPressStyle())
         .accessibilityLabel(Text(appearance.label))
+        .accessibilityIdentifier(action == .edit ? "journeyMenuEdit" : "journeySecondary-\(action)")
     }
 
     private func journeyRowMoreMenu(_ actions: [SecondaryAction]) -> some View {
@@ -933,13 +800,13 @@ struct QuietActionGroup: View {
             Text(localization.journeyText("ios.journey.moreActions", fallback: "More")))
     }
 
-    /// Icon-only controls share the text buttons' 34-point visual height and
+    /// Icon-only controls share the text buttons' 40-point visual height and
     /// the row's 44-point hit height. Accent-coloured glyphs match the quiet
     /// playback button while the neutral fill keeps the primary action unique.
     private func journeyRowIcon(_ systemImage: String) -> some View {
         Image(systemName: systemImage)
             // A fixed point size, not `.subheadline`. A text style scales with
-            // Dynamic Type and this glyph lives in a 34-point circle that does
+            // Dynamic Type and this glyph lives in a 40-point circle that does
             // not, so at an accessibility size the icon grew straight out of
             // its own shape. `MapControlBar.ControlButton` fixes its glyph for
             // exactly this reason: a control's meaning and its 44-point target
@@ -949,8 +816,7 @@ struct QuietActionGroup: View {
             .frame(
                 width: SheetIconButton<Image>.visualSide,
                 height: SheetIconButton<Image>.visualSide)
-            .background(.quaternary.opacity(0.5), in: Circle())
-            .overlay { Circle().stroke(Color.primary.opacity(0.06), lineWidth: 0.5) }
+            .railMenuControlSurface(in: Circle())
             .frame(width: 44, height: 44)
             .contentShape(.rect)
     }
@@ -967,9 +833,9 @@ struct QuietActionGroup: View {
             .font(.footnote.weight(.semibold))
             .foregroundStyle(.tint)
             .frame(minWidth: 44)
-            .padding(.vertical, 10)
         }
-        .buttonStyle(.bordered)
+        .buttonStyle(RailCapsuleButtonStyle(visualHeight: actionButtonHeight))
+        .railMenuButtonStyle()
         .railMinimumTouchTarget()
         .accessibilityLabel(
             Text(localization.journeyText("ios.journey.moreActions", fallback: "More")))

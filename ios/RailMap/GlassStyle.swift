@@ -34,6 +34,60 @@ extension View {
     func railGlass(in shape: some Shape, interactive: Bool = false) -> some View {
         modifier(RailGlassSurface(shape: AnyShape(shape), interactive: interactive))
     }
+
+    /// Leave sheet and popover glass to the system on iOS 26 and later.
+    /// An explicit color here would replace the native presentation material.
+    @ViewBuilder
+    func railMenuPresentationBackground() -> some View {
+        if #available(iOS 26.0, *) {
+            self
+        } else {
+            presentationBackground(Color.railMenuBackground)
+        }
+    }
+
+    /// Native sheets keep their lower corners concentric with the display.
+    /// A fixed radius overrides that geometry as the sheet changes height.
+    @ViewBuilder
+    func railMenuPresentationCornerRadius() -> some View {
+        if #available(iOS 26.0, *) {
+            presentationCornerRadius(nil)
+        } else {
+            presentationCornerRadius(WorkspaceMenuMetrics.cardCornerRadius)
+        }
+    }
+
+    /// A menu's custom circular label, with the system's touch response.
+    /// Standard menu popups supply their own material independently of labels.
+    @ViewBuilder
+    func railMenuControlSurface(in shape: some Shape, isActive: Bool = false) -> some View {
+        if #available(iOS 26.0, *) {
+            glassEffect(
+                isActive ? .regular.tint(.accentColor.opacity(0.16)).interactive()
+                    : .regular.interactive(),
+                in: shape)
+        } else {
+            background(
+                isActive ? AnyShapeStyle(Color.accentColor.opacity(0.16))
+                    : AnyShapeStyle(.quaternary.opacity(0.5)),
+                in: shape)
+                .overlay {
+                    shape.stroke(
+                        isActive ? Color.accentColor.opacity(0.28) : Color.primary.opacity(0.06),
+                        lineWidth: 0.5)
+                }
+        }
+    }
+
+    /// Text menu labels use the native glass button style and its sizing.
+    @ViewBuilder
+    func railMenuButtonStyle() -> some View {
+        if #available(iOS 26.0, *) {
+            buttonStyle(.glass)
+        } else {
+            self
+        }
+    }
 }
 
 private struct RailGlassSurface: ViewModifier {
@@ -69,11 +123,11 @@ private struct RailGlassSurface: ViewModifier {
 // MARK: - card colours
 
 extension Color {
-    /// One opaque content surface across the resident and secondary menu sheets.
-    /// Resolve at the base interface level so an elevated sheet does not shift
-    /// the specified light/dark colors as it changes detents.
+    /// Keep menu content transparent above native presentation glass.
+    /// Earlier systems retain the original color at the base interface level.
     static var railMenuBackground: Color {
-        Color(
+        if #available(iOS 26.0, *) { return .clear }
+        return Color(
             UIColor { traits in
                 let semantic: UIColor = traits.userInterfaceStyle == .dark
                     ? .secondarySystemBackground : .systemBackground

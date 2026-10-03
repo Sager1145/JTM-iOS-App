@@ -151,6 +151,12 @@ function getMatchedRouteFeatures(train) {
               continueFrom: previousEnd,
             })
           : normalized;
+      // An explicit physical interval is a hard choice. An invalid or stale
+      // code must not redraw this leg on the nearby graph railway.
+      if (!canonical && normalized.properties?.section_codes?.length) {
+        previousEnd = null;
+        return null;
+      }
       // No canonical slice means the two endpoints do not sit on one
       // continuous stroke of any display line — the package stores that hop's
       // stations in an order that only reaches them via a branch. Drawing it

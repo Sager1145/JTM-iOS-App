@@ -59,7 +59,8 @@ struct SamplePrecomputeProvenanceTests {
                 fromStationCode: section.fromN02StationCode,
                 toStationCode: section.toN02StationCode,
                 lineNames: section.lineNames ?? [],
-                operatorNames: section.operatorNames ?? [])
+                operatorNames: section.operatorNames ?? [],
+                lineIDs: section.lineIDs ?? [], sectionCodes: section.sectionCodes ?? [])
         }
         let policy = canonical.routePolicy
         let cacheTrain = RouteGraph.CacheKeyTrain(

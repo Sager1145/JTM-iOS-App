@@ -130,7 +130,7 @@ final class StationAnnotation: NSObject, MKAnnotation {
     /// `networkStationNames` switch. Both have to be true, and the
     /// zoom floor in `relayout` still applies under them: a switch
     /// can take a name away, never make it appear earlier.
-    let showsName: Bool
+    var showsName: Bool
     /// 1 for an open platform. A closed overlay station uses the same dot
     /// at a lower alpha — never the cross-day diamond.
     let markerAlpha: CGFloat
@@ -170,6 +170,10 @@ final class RideStationAnnotation: NSObject, MKAnnotation {
         let color: UIColor
     }
 
+    let rideID: String
+    /// Circle pixels participate in the route overlay stack; this annotation
+    /// still owns the station's touch target and accessibility identity.
+    let drawsInOverlay: Bool
     dynamic var coordinate: CLLocationCoordinate2D
     /// Empty on every record that lost the label election, which is
     /// what lets one station reached by twenty rides print its name
@@ -247,6 +251,7 @@ final class RideStationAnnotation: NSObject, MKAnnotation {
     }
 
     init(
+        rideID: String, drawsInOverlay: Bool,
         coordinate: CLLocationCoordinate2D, name: String,
         rawName: String, stationCode: String?, region: Region?, role: String,
         radius: CGFloat, lineWidth: CGFloat,
@@ -255,6 +260,8 @@ final class RideStationAnnotation: NSObject, MKAnnotation {
         fill: UIColor, stroke: UIColor, alpha: CGFloat,
         focusBoost: CGFloat, selected: Bool
     ) {
+        self.rideID = rideID
+        self.drawsInOverlay = drawsInOverlay
         self.coordinate = coordinate
         self.name = name
         self.rawName = rawName
@@ -271,6 +278,235 @@ final class RideStationAnnotation: NSObject, MKAnnotation {
         self.alpha = alpha
         self.focusBoost = focusBoost
         self.selected = selected
+    }
+}
+
+/// One journey's circles, mounted immediately above its own route strokes.
+/// Names remain annotations above the entire overlay stack.
+final class RideStationOverlay: NSObject, MKOverlay {
+    let rideID: String
+    var stations: [RideStationAnnotation]
+    var transitionDuration: TimeInterval = 0
+    var title: String? { "ride-stations|\(rideID)" }
+    var coordinate: CLLocationCoordinate2D { stations.first?.coordinate ?? CLLocationCoordinate2D() }
+    // Circle sizes are screen points, so a geographic extent cannot describe
+    // their footprint at every zoom. The renderer culls against each tile.
+    var boundingMapRect: MKMapRect { .world }
+
+    init(rideID: String, stations: [RideStationAnnotation]) {
+        self.rideID = rideID
+        self.stations = stations
+    }
+}
+
+final class RideStationOverlayRenderer: MKOverlayRenderer {
+    private struct Circle {
+        let point: MKMapPoint
+        let radius: CGFloat
+        let lineWidth: CGFloat
+        let fill: CGColor
+        let stroke: CGColor
+        let alpha: CGFloat
+        let coreRadius: CGFloat?
+        let coreColor: CGColor?
+    }
+
+    private struct Fade {
+        let from: CGFloat
+        let to: CGFloat
+        let startedAt: TimeInterval
+        let duration: TimeInterval
+    }
+
+    private struct Marker {
+        var station: RideStationAnnotation
+        var alpha: CGFloat
+        var fade: Fade?
+        var retiring: Bool
+    }
+
+    /// CADisplayLink retains its target; this bridge keeps the renderer weak.
+    private final class FrameTarget: NSObject {
+        weak var renderer: RideStationOverlayRenderer?
+        @objc func tick(_ link: CADisplayLink) { renderer?.advance(at: link.timestamp) }
+    }
+
+    // Marker and clock state are updated by the coordinator on the main thread.
+    // MapKit tile drawing reads only the locked immutable circle snapshot.
+    private var markers: [String: Marker] = [:]
+    private var markerOrder: [String] = []
+    private var circles: [Circle] = []
+    private let circleLock = NSLock()
+    private var scale: CGFloat = .nan
+    private var zoom: Double = .nan
+    private var initialDuration: TimeInterval = 0
+    private var displayLink: CADisplayLink?
+    private let frameTarget = FrameTarget()
+
+    deinit { displayLink?.invalidate() }
+
+    func applyScale(_ scale: CGFloat, zoom: Double) {
+        guard self.scale != scale || self.zoom != zoom else { return }
+        self.scale = scale
+        self.zoom = zoom
+        if markerOrder.isEmpty {
+            updateStations(duration: initialDuration)
+        } else {
+            // Resize current and departing dots without restarting opacity.
+            publishCircles()
+        }
+    }
+
+    /// Reuse the overlay per ride, assign its new station list, then call this.
+    /// Calling before the first scale sets the new renderer's arrival timing.
+    func updateStations(duration: TimeInterval = 0) {
+        guard scale.isFinite, zoom.isFinite else {
+            initialDuration = duration
+            return
+        }
+        guard let overlay = overlay as? RideStationOverlay else { return }
+        let duration = max(0, duration)
+        let now = CACurrentMediaTime()
+        sampleFades(at: now)
+        var occurrences: [String: Int] = [:]
+        var desiredKeys: Set<String> = []
+        var order: [String] = []
+        for station in overlay.stations {
+            let base = "\(station.coordinate.latitude)|\(station.coordinate.longitude)|\(station.role)|\(station.rawName)"
+            let occurrence = occurrences[base, default: 0]
+            occurrences[base] = occurrence + 1
+            let key = "\(base)|\(occurrence)"
+            desiredKeys.insert(key)
+            order.append(key)
+            if var marker = markers[key] {
+                let previousTarget = marker.fade?.to ?? marker.alpha
+                marker.station = station
+                if marker.retiring || previousTarget != station.alpha {
+                    marker.fade = duration > 0 ? Fade(
+                        from: marker.alpha, to: station.alpha, startedAt: now, duration: duration) : nil
+                    if duration == 0 { marker.alpha = station.alpha }
+                }
+                marker.retiring = false
+                markers[key] = marker
+            } else {
+                markers[key] = Marker(station: station,
+                    alpha: duration > 0 ? 0 : station.alpha,
+                    fade: duration > 0 ? Fade(from: 0, to: station.alpha,
+                                             startedAt: now, duration: duration) : nil,
+                    retiring: false)
+            }
+        }
+        for key in markerOrder where !desiredKeys.contains(key) {
+            guard var marker = markers[key] else { continue }
+            guard duration > 0 else {
+                markers.removeValue(forKey: key)
+                continue
+            }
+            if !marker.retiring {
+                marker.retiring = true
+                marker.fade = Fade(from: marker.alpha, to: 0,
+                                   startedAt: now, duration: duration)
+                markers[key] = marker
+            }
+            order.append(key)
+        }
+        markerOrder = order
+        publishCircles()
+        updateClock()
+    }
+
+    private func sampleFades(at now: TimeInterval) {
+        for key in markerOrder {
+            guard var marker = markers[key], let fade = marker.fade else { continue }
+            let fraction = min(1, max(0, (now - fade.startedAt) / fade.duration))
+            marker.alpha = fade.from + (fade.to - fade.from)
+                * RailMotion.mapHighlightProgress(fraction)
+            if fraction >= 1 {
+                if marker.retiring {
+                    markers.removeValue(forKey: key)
+                    continue
+                }
+                marker.fade = nil
+            }
+            markers[key] = marker
+        }
+        markerOrder.removeAll { markers[$0] == nil }
+    }
+
+    private func advance(at now: TimeInterval) {
+        sampleFades(at: now)
+        publishCircles()
+        updateClock()
+    }
+
+    private func updateClock() {
+        if markers.values.contains(where: { $0.fade != nil }) {
+            guard displayLink == nil else { return }
+            frameTarget.renderer = self
+            let link = CADisplayLink(target: frameTarget, selector: #selector(FrameTarget.tick(_:)))
+            link.add(to: .main, forMode: .common)
+            displayLink = link
+        } else {
+            displayLink?.invalidate()
+            displayLink = nil
+        }
+    }
+
+    private func publishCircles() {
+        let updated = markerOrder.compactMap { key -> Circle? in
+            guard let marker = markers[key] else { return nil }
+            let station = marker.station
+            return Circle(point: MKMapPoint(station.coordinate),
+                          radius: max(0.5, station.drawnRadiusToken(atZoom: zoom) * scale),
+                          lineWidth: station.drawnLineWidthToken(atZoom: zoom) * scale,
+                          fill: station.fill.cgColor, stroke: station.stroke.cgColor,
+                          alpha: marker.alpha,
+                          coreRadius: station.core.map { max(0.25, $0.radius * scale) },
+                          coreColor: station.core?.color.cgColor)
+        }
+        circleLock.lock()
+        circles = updated
+        circleLock.unlock()
+        setNeedsDisplay()
+    }
+
+    override func draw(_ mapRect: MKMapRect, zoomScale: MKZoomScale, in context: CGContext) {
+        guard zoomScale > 0 else { return }
+        circleLock.lock()
+        let circles = circles
+        circleLock.unlock()
+        for circle in circles {
+            let radius = circle.radius / zoomScale
+            let extent = MKMapRect(x: circle.point.x - Double(radius),
+                                   y: circle.point.y - Double(radius),
+                                   width: Double(radius * 2), height: Double(radius * 2))
+            guard extent.intersects(mapRect) else { continue }
+            let centre = point(for: circle.point)
+            let rect = CGRect(x: centre.x - radius, y: centre.y - radius,
+                              width: radius * 2, height: radius * 2)
+            context.saveGState()
+            // Match annotation alpha: apply opacity to the complete circle,
+            // rather than blending the fill and keyline against each other.
+            context.setAlpha(circle.alpha)
+            context.beginTransparencyLayer(auxiliaryInfo: nil)
+            context.setFillColor(circle.fill)
+            context.fillEllipse(in: rect)
+            let width = min(radius, circle.lineWidth / zoomScale)
+            if width > 0 {
+                context.setStrokeColor(circle.stroke)
+                context.setLineWidth(width)
+                // UIView borders are inset inside the dot's bounds.
+                context.strokeEllipse(in: rect.insetBy(dx: width / 2, dy: width / 2))
+            }
+            if let coreRadius = circle.coreRadius, let color = circle.coreColor {
+                let core = min(radius, coreRadius / zoomScale)
+                context.setFillColor(color)
+                context.fillEllipse(in: CGRect(x: centre.x - core, y: centre.y - core,
+                                               width: core * 2, height: core * 2))
+            }
+            context.endTransparencyLayer()
+            context.restoreGState()
+        }
     }
 }
 
@@ -400,24 +636,166 @@ final class DraftStopAnnotationView: MKAnnotationView {
 /// Preserve MapKit annotation identity when its complete presentation is
 /// unchanged. Buckets support coincident ride markers without merging them.
 @MainActor
-enum MapAnnotationReconciler {
-    static func reconcile(_ desired: [MKAnnotation], replacing old: [MKAnnotation],
-                          on mapView: MKMapView) -> [MKAnnotation] {
-        var available = Dictionary(grouping: old, by: key)
+final class MapAnnotationReconciler {
+    private struct Arrival {
+        let duration: TimeInterval
+        let startedAt: TimeInterval
+    }
+
+    private struct Departure {
+        let annotation: MKAnnotation
+        let token: UUID
+        let interactionEnabled: Bool
+    }
+
+    private var arrivals: [ObjectIdentifier: Arrival] = [:]
+    private var departures: [ObjectIdentifier: Departure] = [:]
+
+    func reconcile(_ desired: [MKAnnotation], replacing old: [MKAnnotation],
+                          on mapView: MKMapView,
+                          duration: TimeInterval? = nil) -> [MKAnnotation] {
+        let duration = max(0, duration ?? 0)
+        var available = Dictionary(grouping: old, by: Self.key)
+        var exiting = Dictionary(grouping: departures.values, by: { Self.key($0.annotation) })
         var added: [MKAnnotation] = []
         let installed = desired.map { candidate -> MKAnnotation in
-            let id = key(candidate)
-            if let index = available[id]?.firstIndex(where: { sameContent($0, candidate) }),
+            let id = Self.key(candidate)
+            if let index = available[id]?.firstIndex(where: { Self.sameContent($0, candidate) }),
                let retained = available[id]?.remove(at: index) {
+                updateNameVisibility(of: retained, from: candidate, on: mapView, duration: duration)
                 return retained
+            }
+            // A zoom reversal may ask for a label whose departure has not
+            // finished. Reuse that annotation and continue from its visible
+            // opacity instead of mounting a second copy at zero.
+            if let index = exiting[id]?.firstIndex(where: {
+                Self.sameContent($0.annotation, candidate)
+            }), let departure = exiting[id]?.remove(at: index) {
+                let retained = departure.annotation
+                departures.removeValue(forKey: ObjectIdentifier(retained))
+                updateNameVisibility(of: retained, from: candidate, on: mapView, duration: duration)
+                if let view = mapView.view(for: retained) {
+                    view.isUserInteractionEnabled = departure.interactionEnabled
+                    fade(view, to: Self.targetAlpha(retained), duration: duration)
+                }
+                return retained
+            }
+            if duration > 0, !(candidate is DraftStopAnnotation) {
+                arrivals[ObjectIdentifier(candidate)] = Arrival(
+                    duration: duration, startedAt: ProcessInfo.processInfo.systemUptime)
             }
             added.append(candidate)
             return candidate
         }
-        let removed = available.values.flatMap { $0 }
-        if !removed.isEmpty { mapView.removeAnnotations(removed) }
+        for removed in available.values.flatMap({ $0 }) {
+            retire(removed, on: mapView, duration: duration)
+        }
         if !added.isEmpty { mapView.addAnnotations(added) }
         return installed
+    }
+
+    /// Call after configuring a dequeued view, before returning it to MapKit.
+    /// This also clears opacity left behind by a previous reuse occupant.
+    func prepare(_ view: MKAnnotationView) {
+        guard let annotation = view.annotation else { return }
+        let id = ObjectIdentifier(annotation)
+        view.layer.removeAnimation(forKey: "opacity")
+        // Departing views can be recycled before their fade completion.
+        // Endpoint cards are the one intentionally noninteractive kind.
+        view.isUserInteractionEnabled = !(annotation is EndpointLabelAnnotation)
+        if departures[id] != nil {
+            view.isUserInteractionEnabled = false
+            view.alpha = 0
+        } else if let arrival = arrivals[id],
+           ProcessInfo.processInfo.systemUptime - arrival.startedAt < arrival.duration {
+            view.alpha = 0
+        } else {
+            arrivals.removeValue(forKey: id)
+            view.alpha = Self.targetAlpha(annotation)
+        }
+    }
+
+    /// MapKit has now mounted these views; starting earlier loses the fade.
+    func didAdd(_ views: [MKAnnotationView]) {
+        for view in views {
+            guard let annotation = view.annotation,
+                  let arrival = arrivals.removeValue(forKey: ObjectIdentifier(annotation)) else { continue }
+            let remaining = arrival.duration
+                - (ProcessInfo.processInfo.systemUptime - arrival.startedAt)
+            fade(view, to: Self.targetAlpha(annotation), duration: max(0, remaining))
+        }
+    }
+
+    /// Full map teardown also removes annotations temporarily kept for an exit.
+    func removeRetiring(on mapView: MKMapView) {
+        let retiring = Array(departures.values)
+        departures.removeAll()
+        arrivals.removeAll()
+        for departure in retiring {
+            if let view = mapView.view(for: departure.annotation) {
+                view.layer.removeAnimation(forKey: "opacity")
+                view.isUserInteractionEnabled = departure.interactionEnabled
+            }
+        }
+        mapView.removeAnnotations(retiring.map(\.annotation))
+    }
+
+    private func retire(_ annotation: MKAnnotation, on mapView: MKMapView,
+                        duration: TimeInterval) {
+        let id = ObjectIdentifier(annotation)
+        arrivals.removeValue(forKey: id)
+        guard duration > 0, !(annotation is DraftStopAnnotation),
+              let view = mapView.view(for: annotation) else {
+            mapView.removeAnnotation(annotation)
+            return
+        }
+        let departure = Departure(annotation: annotation, token: UUID(),
+                                  interactionEnabled: view.isUserInteractionEnabled)
+        departures[id] = departure
+        // A disappearing caption must not intercept a tap on the new one.
+        view.isUserInteractionEnabled = false
+        fade(view, to: 0, duration: duration) { [weak self, weak mapView, weak view] in
+            guard let self, self.departures[id]?.token == departure.token else { return }
+            self.departures.removeValue(forKey: id)
+            if let view, view.annotation.map({ ObjectIdentifier($0) }) == id {
+                view.isUserInteractionEnabled = departure.interactionEnabled
+            }
+            mapView?.removeAnnotation(annotation)
+        }
+    }
+
+    private func fade(_ view: MKAnnotationView, to alpha: CGFloat,
+                      duration: TimeInterval, completion: (() -> Void)? = nil) {
+        guard duration > 0 else {
+            view.layer.removeAnimation(forKey: "opacity")
+            view.alpha = alpha
+            completion?()
+            return
+        }
+        UIView.animate(withDuration: duration, delay: 0,
+                       options: [.beginFromCurrentState, .curveEaseOut, .allowUserInteraction]) {
+            view.alpha = alpha
+        } completion: { _ in
+            completion?()
+        }
+    }
+
+    private func updateNameVisibility(of retained: MKAnnotation, from candidate: MKAnnotation,
+                                      on mapView: MKMapView, duration: TimeInterval) {
+        guard let retained = retained as? StationAnnotation,
+              let candidate = candidate as? StationAnnotation,
+              retained.showsName != candidate.showsName else { return }
+        retained.showsName = candidate.showsName
+        (mapView.view(for: retained) as? StationAnnotationView)?
+            .applyNameVisibility(candidate.showsName, duration: duration)
+    }
+
+    private static func targetAlpha(_ annotation: MKAnnotation) -> CGFloat {
+        switch annotation {
+        case let station as StationAnnotation: return station.markerAlpha
+        case let station as RideStationAnnotation: return station.alpha
+        default: return 1
+        }
     }
 
     private static func key(_ annotation: MKAnnotation) -> String {
@@ -428,6 +806,8 @@ enum MapAnnotationReconciler {
             return "ride|\(item.coordinate.latitude)|\(item.coordinate.longitude)|\(item.role)|\(item.rawName)"
         case let item as RideLabelAnnotation:
             return "label|\(item.coordinate.latitude)|\(item.coordinate.longitude)|\(item.rawName)"
+        case let item as EndpointLabelAnnotation:
+            return "endpoint|\(item.spec.key)"
         case let item as DraftStopAnnotation:
             return "draft|\(item.occurrenceID)"
         default:
@@ -441,20 +821,28 @@ enum MapAnnotationReconciler {
         switch (lhs, rhs) {
         case let (a as StationAnnotation, b as StationAnnotation):
             return a.station.contentID == b.station.contentID && a.displayName == b.displayName
-                && a.readings == b.readings && a.showsName == b.showsName
+                && a.readings == b.readings
                 && a.markerAlpha == b.markerAlpha
         case let (a as RideLabelAnnotation, b as RideLabelAnnotation):
             return a.text == b.text && a.rawName == b.rawName && a.stationCode == b.stationCode
                 && a.tier == b.tier && a.dotRadiusToken == b.dotRadiusToken && a.selected == b.selected
                 && a.side == b.side
         case let (a as RideStationAnnotation, b as RideStationAnnotation):
-            return a.name == b.name && a.rawName == b.rawName && a.stationCode == b.stationCode
+            return a.rideID == b.rideID && a.drawsInOverlay == b.drawsInOverlay
+                && a.name == b.name && a.rawName == b.rawName && a.stationCode == b.stationCode
                 && a.role == b.role && a.radius == b.radius && a.lineWidth == b.lineWidth
                 && a.ordinaryRadius == b.ordinaryRadius && a.ordinaryLineWidth == b.ordinaryLineWidth
                 && a.focusScale == b.focusScale && a.fill == b.fill && a.stroke == b.stroke
                 && a.alpha == b.alpha && a.focusBoost == b.focusBoost && a.selected == b.selected
                 && a.core?.radius == b.core?.radius && a.core?.focusScale == b.core?.focusScale
                 && a.core?.color == b.core?.color
+        case let (a as EndpointLabelAnnotation, b as EndpointLabelAnnotation):
+            // Placement changes as the camera moves; the coordinator updates
+            // offset and direction in place after reconciliation.
+            return a.spec.trainID == b.spec.trainID && a.spec.name == b.spec.name
+                && a.spec.rawName == b.spec.rawName && a.spec.badge == b.spec.badge
+                && a.spec.time == b.spec.time && a.spec.readings == b.spec.readings
+                && a.spec.width == b.spec.width && a.spec.height == b.spec.height
         case let (a as DraftStopAnnotation, b as DraftStopAnnotation):
             return a.name == b.name && a.stopType == b.stopType && a.timeText == b.timeText
                 && a.index == b.index && a.stopTypeLabel == b.stopTypeLabel
@@ -474,6 +862,8 @@ final class StationAnnotationView: MKAnnotationView {
     /// stored rather than read back off the annotation in
     /// `relayout` — a rescale runs without a fresh `configure`.
     private var showsName = false
+    private var fadingNameOut = false
+    private var nameTransition: UUID?
     /// The zoom the name is currently sized for. Text does not ride
     /// the railway's scale ramp, but it does ride its own shallower
     /// one, so a rescale has to re-measure it.
@@ -505,16 +895,19 @@ final class StationAnnotationView: MKAnnotationView {
     func configure(_ item: StationAnnotation, scale: CGFloat, zoom: Double) {
         station = item.station
         showsName = item.showsName
+        fadingNameOut = false
+        nameTransition = nil
+        nameLabel.layer.removeAnimation(forKey: "opacity")
+        nameLabel.alpha = item.showsName ? 1 : 0
         alpha = item.markerAlpha
         self.scale = scale
         self.zoom = zoom
         let station = item.station
-        // Apple Maps keeps ordinary route stations light in both appearances
-        // and lets the route colour form the keyline. The previous inverse
-        // (solid route colour with a system-background ring) read as a field
-        // of map pins, especially when several operators crossed one city.
-        dot.backgroundColor = .white
-        dot.layer.borderColor = (UIColor(railHex: station.colorHex) ?? .systemGray).cgColor
+        // Network platforms are stopping stations. Journey pass-throughs
+        // render their hollow markers above these network dots.
+        let color = UIColor(railHex: station.colorHex) ?? .systemGray
+        dot.backgroundColor = color
+        dot.layer.borderColor = UIColor.white.cgColor
         // A deliberate deviation, and the only one on this label:
         // `rn-stations-label` draws the package's own spelling,
         // because `railmap.js` is a standalone library with no
@@ -535,6 +928,36 @@ final class StationAnnotationView: MKAnnotationView {
             named: item.showsName)
         accessibilityLabel = item.displayName
         relayout()
+    }
+
+    /// Name election changes fade only the caption; the station bead keeps
+    /// its identity, callout state, and opacity throughout the level change.
+    func applyNameVisibility(_ visible: Bool, duration: TimeInterval) {
+        guard showsName != visible else { return }
+        showsName = visible
+        let token = UUID()
+        nameTransition = token
+        fadingNameOut = !visible && duration > 0
+        if let station {
+            displayPriority = MapLabelStyle.stationDisplayPriority(
+                interchange: station.popup.lines.count > 1,
+                isTerminal: station.isTerminal, named: visible)
+        }
+        relayout()
+        guard duration > 0 else {
+            nameLabel.layer.removeAnimation(forKey: "opacity")
+            nameLabel.alpha = visible ? 1 : 0
+            return
+        }
+        UIView.animate(withDuration: duration, delay: 0,
+                       options: [.beginFromCurrentState, .curveEaseOut, .allowUserInteraction]) {
+            self.nameLabel.alpha = visible ? 1 : 0
+        } completion: { [weak self] _ in
+            guard let self, self.nameTransition == token else { return }
+            self.fadingNameOut = false
+            self.nameTransition = nil
+            self.relayout()
+        }
     }
 
     func applyScale(_ scale: CGFloat, zoom: Double) {
@@ -561,7 +984,7 @@ final class StationAnnotationView: MKAnnotationView {
 
         // The coordinator has already applied the importance-specific zoom
         // floor and collision pass; a second floor would hide distant hubs.
-        let names = showsName
+        let names = showsName || fadingNameOut
         var width = diameter
         // Nothing below is worth doing for a name that is not drawn
         // and was not drawn a moment ago — and that is the state
@@ -632,8 +1055,7 @@ final class StationAnnotationView: MKAnnotationView {
 
 }
 
-/// The dot itself: fill, ring, and — on an intermediate stop — the
-/// small route-coloured core that tells it from a pass-through.
+/// A solid circle for a stop, or a hollow circle for a pass-through.
 final class RideStationAnnotationView: MKAnnotationView {
     private let dot = UIView()
     private let core = UIView()
@@ -646,23 +1068,10 @@ final class RideStationAnnotationView: MKAnnotationView {
         addSubview(dot)
         dot.addSubview(core)
         core.isUserInteractionEnabled = false
-        // A circle, and `.required`: every dot on a ride draws. The
-        // names contend among themselves on their own annotations.
-        collisionMode = .circle
-        // Below the names deliberately. MapLibre never collides
-        // circles at all — only symbols — so in the web app a bead
-        // can never suppress a caption. MapKit collides every
-        // annotation view against every other, and with the dots
-        // at `.required` a name that touched ANY bead lost: along a
-        // dense route the beads are a few points apart, so all 80
-        // captions on screen were being suppressed by them.
-        //
-        // Inverting it costs a bead where a name lands on one, and
-        // that is much the smaller loss: the ride's LINE is an
-        // overlay and never collides, so the journey is still drawn
-        // through the station either way — while a suppressed name
-        // is the only text this map has.
-        displayPriority = .defaultLow
+        // Labels use their own collision grid. A visible label must never
+        // evict the station dot that anchors it.
+        collisionMode = .none
+        displayPriority = .required
         // No callout, for the reason the network's beads have none
         // (`StationAnnotationView`): a station's answer is the card
         // in a sheet now — see `mapView(_:didSelect:)`. The bubble
@@ -678,10 +1087,12 @@ final class RideStationAnnotationView: MKAnnotationView {
         self.item = item
         self.scale = scale
         self.zoom = zoom
+        applyStacking()
         dot.backgroundColor = item.fill
         dot.layer.borderColor = item.stroke.cgColor
         core.backgroundColor = item.core?.color
         core.isHidden = item.core == nil
+        dot.isHidden = item.drawsInOverlay
         alpha = item.alpha
         // The dot's own name, not the one it won: a dot that lost
         // the label election draws no caption but is still a
@@ -699,33 +1110,21 @@ final class RideStationAnnotationView: MKAnnotationView {
         relayout()
     }
 
+    func applyStacking() {
+        guard let item else { return }
+        zPriority = item.selected ? .max : .defaultSelected
+        // MapKit assigns its own layer order when mounting and moving views.
+        // Restore the selected journey above coincident station dots afterward.
+        layer.zPosition = item.selected ? (item.role == "terminal" ? 1_001 : 1_000) : 100
+    }
+
     private func relayout() {
         guard let item else { return }
         let diameter = max(1, item.drawnRadiusToken(atZoom: zoom) * 2 * scale)
         frame.size = CGSize(width: diameter, height: diameter)
-        // The cross-day break station is a DIAMOND, so the one
-        // place that is both "day D ends here" and "day D+1 starts
-        // here" can never read as an ordinary stop. A square
-        // turned a quarter is a diamond, and turning the dot
-        // itself keeps the ring, the fill and the focus boost it
-        // already carries — where a second layer would be a second
-        // mark to keep in step.
-        //
-        // Its side is the diagonal over √2, so the diamond's WIDTH
-        // is the dot's diameter and its half-diagonal is the
-        // record's radius, which is what `icon-size` scales the
-        // rasterised icon to.
-        let crossDay = item.role == "xday"
-        let side = crossDay ? diameter / 2.0.squareRoot() : diameter
-        // Reset before writing a frame: setting `frame` while a
-        // transform is in force is undefined, and this view is
-        // relaid out on every rescale.
         dot.transform = .identity
-        dot.frame = CGRect(
-            x: (diameter - side) / 2, y: (diameter - side) / 2,
-            width: side, height: side)
-        dot.layer.cornerRadius = crossDay ? 0 : diameter / 2
-        if crossDay { dot.transform = CGAffineTransform(rotationAngle: .pi / 4) }
+        dot.frame = CGRect(origin: .zero, size: CGSize(width: diameter, height: diameter))
+        dot.layer.cornerRadius = diameter / 2
         dot.layer.borderWidth = item.drawnLineWidthToken(atZoom: zoom) * scale
         centerOffset = .zero
         guard let coreSpec = item.core else { return }
@@ -742,10 +1141,8 @@ final class RideStationAnnotationView: MKAnnotationView {
     }
 
     /// ``StationAnnotationView/point(inside:with:)``'s rule, for the dots on a
-    /// ride. Same numbers, same reasons — and here `collisionMode = .circle`
-    /// is measured from these bounds, so the target is even more clearly not
-    /// something the frame may be grown to provide: a bead that collided at 44
-    /// points would suppress the captions this view already yields to.
+    /// ride. The visible circle stays small while its touch target remains
+    /// large enough to select without changing its layout.
     ///
     /// A stop that is also under the ride's own stroke is still answered by
     /// the stroke: `handleMapTap` claims that touch before
@@ -803,6 +1200,7 @@ final class RideLabelAnnotationView: MKAnnotationView {
         // ride tier order without asking accepted names to compete
         // with unrelated basemap text a second time.
         displayPriority = .required
+        applyStacking()
         relayout()
     }
 
@@ -811,6 +1209,14 @@ final class RideLabelAnnotationView: MKAnnotationView {
         self.scale = scale
         self.zoom = zoom
         relayout()
+    }
+
+    func applyStacking() {
+        // Names stay above circle annotations as well as route overlays,
+        // including while a selected journey's enlarged dots are present.
+        guard item != nil else { return }
+        zPriority = .max
+        layer.zPosition = 2_000
     }
 
     /// Text is not a mark: it rides the tier's own shallow ramp — the
@@ -890,7 +1296,13 @@ final class EndpointLabelView: MKAnnotationView {
 
     required init?(coder: NSCoder) { nil }
 
+    func applyStacking() {
+        zPriority = .max
+        layer.zPosition = 2_001
+    }
+
     func configure(_ item: EndpointLabelAnnotation) {
+        applyStacking()
         // Read here, not in `init`: an annotation view is reused
         // across a light/dark flip, and a colour resolved once at
         // construction is a colour from whichever theme happened to

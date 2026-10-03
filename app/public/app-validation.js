@@ -80,6 +80,7 @@ function warnBranchLeak(train) {
       return set;
     };
     sections.forEach((section, i) => {
+      if (section.section_codes?.length) return;
       if (Array.isArray(section.line_names) && section.line_names.length)
         return;
       const fromLines = linesOf({
@@ -98,6 +99,16 @@ function warnBranchLeak(train) {
     });
     stops.forEach((stop, idx) => {
       if (stop.stop_type !== "pass_through") return;
+      // Reviewed package identities take precedence over the older N02
+      // line-name catalog (Tokyo's Sobu tunnel is labelled Tokaido there).
+      const adjacent = [sections[idx - 1], sections[idx]].filter(Boolean);
+      const code = canonicalStationCode(String(stop.n02_station_code || ""));
+      if (code && adjacent.length === 2 && adjacent.every((section) =>
+        section.section_codes?.some((identity) => {
+          const [lineID, endpoints] = identity.split("@");
+          return (!section.line_ids?.length || section.line_ids.includes(lineID))
+            && endpoints?.split("~")[0].split(":").includes(code);
+        }))) return;
       const adjLines = new Set();
       [sections[idx - 1], sections[idx]].forEach((s) =>
         (s?.line_names || []).forEach((l) => adjLines.add(String(l))),
@@ -124,7 +135,7 @@ function validateTrain(train, index, ids) {
   });
   // Optional metadata: service class / rolling-stock type / operating
   // company ("/"-separated = 直通) / the service's Latin name.
-  ["train_type", "vehicle_type", "company", "number_en"].forEach((key) => {
+  ["train_type", "vehicle_type", "company", "number_en", "notes"].forEach((key) => {
     if (train[key] !== undefined && typeof train[key] !== "string")
       throw new Error(`${prefix}: ${key} must be a string when present.`);
   });
@@ -156,6 +167,7 @@ function validateTrain(train, index, ids) {
       `${prefix}: final stop should not need both arrival and departure.`,
     );
   train.stops.forEach((stop, stopIndex) => {
+    canonicalRouteEditingMetadata(stop.route_editing);
     if (!stopName(stop))
       throw new Error(`${prefix} stop ${stopIndex + 1}: name is required.`);
     if (!stop.stop_type)
@@ -221,7 +233,7 @@ function validateTrain(train, index, ids) {
           );
         }
       });
-      ["line_names", "operator_names"].forEach((field) => {
+      ["line_names", "operator_names", "line_ids", "section_codes"].forEach((field) => {
         const values = section[field] || [];
         if (
           !Array.isArray(values) ||

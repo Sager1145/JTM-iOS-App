@@ -4867,6 +4867,18 @@
       "limitsIndex": 2
     },
     {
+      "country": "jp",
+      "lineId": "jp-東日本旅客鉄道-大崎支線",
+      "medianSpacingMeters": 2521,
+      "limitsIndex": 2
+    },
+    {
+      "country": "jp",
+      "lineId": "jp-東日本旅客鉄道-大崎支線-p1",
+      "medianSpacingMeters": 2509,
+      "limitsIndex": 2
+    },
+    {
       "country": "us",
       "lineId": "ace-ace",
       "medianSpacingMeters": 17767,
@@ -4955,6 +4967,24 @@
       "lineId": "amtrak-amtrak-cascades-us",
       "medianSpacingMeters": 40285,
       "limitsIndex": 2
+    },
+    {
+      "country": "us",
+      "lineId": "amtrak-maple-leaf-us",
+      "medianSpacingMeters": 40683,
+      "limitsIndex": 2
+    },
+    {
+      "country": "us",
+      "lineId": "amtrak-amtrak-cascades-border1",
+      "medianSpacingMeters": 97861,
+      "limitsIndex": 2
+    },
+    {
+      "country": "us",
+      "lineId": "amtrak-maple-leaf-border1",
+      "medianSpacingMeters": 662,
+      "limitsIndex": 0
     },
     {
       "country": "us",
@@ -6452,6 +6482,12 @@
     },
     {
       "country": "us",
+      "lineId": "san-francisco-municipal-tran-ph-direction1",
+      "medianSpacingMeters": 838,
+      "limitsIndex": 1
+    },
+    {
+      "country": "us",
       "lineId": "san-francisco-municipal-tran-ph-b1",
       "medianSpacingMeters": 136,
       "limitsIndex": 0
@@ -6460,12 +6496,6 @@
       "country": "us",
       "lineId": "san-francisco-municipal-tran-pm",
       "medianSpacingMeters": 106,
-      "limitsIndex": 0
-    },
-    {
-      "country": "us",
-      "lineId": "san-francisco-municipal-tran-pm-b1",
-      "medianSpacingMeters": 170,
       "limitsIndex": 0
     },
     {
@@ -6794,12 +6824,6 @@
     },
     {
       "country": "us",
-      "lineId": "utah-transit-authority-uta-703-b1",
-      "medianSpacingMeters": 1457,
-      "limitsIndex": 1
-    },
-    {
-      "country": "us",
       "lineId": "utah-transit-authority-uta-704",
       "medianSpacingMeters": 831,
       "limitsIndex": 1
@@ -7006,6 +7030,18 @@
       "country": "ca",
       "lineId": "amtrak-adirondack-ca",
       "medianSpacingMeters": 6120,
+      "limitsIndex": 2
+    },
+    {
+      "country": "ca",
+      "lineId": "amtrak-maple-leaf-ca",
+      "medianSpacingMeters": 25069,
+      "limitsIndex": 2
+    },
+    {
+      "country": "ca",
+      "lineId": "amtrak-adirondack-border1",
+      "medianSpacingMeters": 72095,
       "limitsIndex": 2
     },
     {
@@ -80382,6 +80418,27 @@
       ]
     },
     {
+      "label": "us:amtrak-maple-leaf-border1",
+      "country": "us",
+      "lineId": "amtrak-maple-leaf-border1",
+      "medianSpacingMeters": 662,
+      "ownLimitsIndex": 0,
+      "coordinates": [
+        [
+          -79.055219,
+          43.109661
+        ],
+        [
+          -79.06051,
+          43.108958
+        ],
+        [
+          -79.063287,
+          43.108921
+        ]
+      ]
+    },
+    {
       "label": "us:septa-t3-b5",
       "country": "us",
       "lineId": "septa-t3-b5",
@@ -80399,43 +80456,6 @@
         [
           -75.209138,
           39.948406
-        ]
-      ]
-    },
-    {
-      "label": "us:new-orleans-rta-12-b3",
-      "country": "us",
-      "lineId": "new-orleans-rta-12-b3",
-      "medianSpacingMeters": 322,
-      "ownLimitsIndex": 0,
-      "coordinates": [
-        [
-          -90.12814,
-          29.948825
-        ],
-        [
-          -90.127397,
-          29.949505
-        ],
-        [
-          -90.127397,
-          29.949505
-        ],
-        [
-          -90.126877,
-          29.949963
-        ],
-        [
-          -90.126356,
-          29.950421
-        ],
-        [
-          -90.12574,
-          29.951023
-        ],
-        [
-          -90.125124,
-          29.951624
         ]
       ]
     },
@@ -181300,7 +181320,7 @@
       ]
     },
     {
-      "note": "us:septa-t3-b5 under rung 0 (its own)",
+      "note": "us:amtrak-maple-leaf-border1 under rung 0 (its own)",
       "input": 66,
       "limitsIndex": 0,
       "limits": {
@@ -181317,7 +181337,7 @@
       ]
     },
     {
-      "note": "us:septa-t3-b5 under rung 1",
+      "note": "us:amtrak-maple-leaf-border1 under rung 1",
       "input": 66,
       "limitsIndex": 1,
       "limits": {
@@ -181334,7 +181354,7 @@
       ]
     },
     {
-      "note": "us:septa-t3-b5 under rung 2",
+      "note": "us:amtrak-maple-leaf-border1 under rung 2",
       "input": 66,
       "limitsIndex": 2,
       "limits": {
@@ -181351,8 +181371,82 @@
       ]
     },
     {
-      "note": "us:septa-t3-b5: station anchors protected",
+      "note": "us:amtrak-maple-leaf-border1: station anchors protected",
       "input": 66,
+      "limitsIndex": 0,
+      "limits": {
+        "edge": 8,
+        "turn": 75,
+        "deviation": 0.8
+      },
+      "protectedIndices": [
+        0,
+        2
+      ],
+      "protectedKeys": [
+        "-79.055219,43.109661",
+        "-79.063287,43.108921"
+      ],
+      "keptIndices": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "note": "us:septa-t3-b5 under rung 0 (its own)",
+      "input": 67,
+      "limitsIndex": 0,
+      "limits": {
+        "edge": 8,
+        "turn": 75,
+        "deviation": 0.8
+      },
+      "protectedIndices": [],
+      "protectedKeys": [],
+      "keptIndices": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "note": "us:septa-t3-b5 under rung 1",
+      "input": 67,
+      "limitsIndex": 1,
+      "limits": {
+        "edge": 16,
+        "turn": 65,
+        "deviation": 1.5
+      },
+      "protectedIndices": [],
+      "protectedKeys": [],
+      "keptIndices": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "note": "us:septa-t3-b5 under rung 2",
+      "input": 67,
+      "limitsIndex": 2,
+      "limits": {
+        "edge": 30,
+        "turn": 55,
+        "deviation": 3
+      },
+      "protectedIndices": [],
+      "protectedKeys": [],
+      "keptIndices": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "note": "us:septa-t3-b5: station anchors protected",
+      "input": 67,
       "limitsIndex": 0,
       "limits": {
         "edge": 8,
@@ -181371,95 +181465,6 @@
         0,
         1,
         2
-      ]
-    },
-    {
-      "note": "us:new-orleans-rta-12-b3 under rung 0 (its own)",
-      "input": 67,
-      "limitsIndex": 0,
-      "limits": {
-        "edge": 8,
-        "turn": 75,
-        "deviation": 0.8
-      },
-      "protectedIndices": [],
-      "protectedKeys": [],
-      "keptIndices": [
-        0,
-        1,
-        3,
-        4,
-        5,
-        6
-      ]
-    },
-    {
-      "note": "us:new-orleans-rta-12-b3 under rung 1",
-      "input": 67,
-      "limitsIndex": 1,
-      "limits": {
-        "edge": 16,
-        "turn": 65,
-        "deviation": 1.5
-      },
-      "protectedIndices": [],
-      "protectedKeys": [],
-      "keptIndices": [
-        0,
-        1,
-        3,
-        4,
-        5,
-        6
-      ]
-    },
-    {
-      "note": "us:new-orleans-rta-12-b3 under rung 2",
-      "input": 67,
-      "limitsIndex": 2,
-      "limits": {
-        "edge": 30,
-        "turn": 55,
-        "deviation": 3
-      },
-      "protectedIndices": [],
-      "protectedKeys": [],
-      "keptIndices": [
-        0,
-        1,
-        3,
-        4,
-        5,
-        6
-      ]
-    },
-    {
-      "note": "us:new-orleans-rta-12-b3: station anchors protected",
-      "input": 67,
-      "limitsIndex": 0,
-      "limits": {
-        "edge": 8,
-        "turn": 75,
-        "deviation": 0.8
-      },
-      "protectedIndices": [
-        0,
-        1,
-        2,
-        6
-      ],
-      "protectedKeys": [
-        "-90.12814,29.948825",
-        "-90.127397,29.949505",
-        "-90.125124,29.951624"
-      ],
-      "keptIndices": [
-        0,
-        1,
-        3,
-        4,
-        5,
-        6
       ]
     },
     {

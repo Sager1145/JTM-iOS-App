@@ -400,6 +400,7 @@
     _groupTransitionRaf: null,
     _tooltipEl: null,
     _tooltipRecord: null, // record the tooltip currently shows (dedup)
+    _stationDetailsPopup: null,
     _stationPopup: null,
     _stationPopupKey: null, // station|line the popup currently shows (dedup)
     _pendingHoverPoint: null, // latest mousemove point awaiting the rAF pass
@@ -433,6 +434,17 @@
     // line geometry used by the hidden-by-default national-network overlay.
     // Keeping this adapter here makes the active country's network the single
     // display-geometry authority for every route consumer.
+    sourceRouteGeometry(properties) {
+      return this._network && global.RailNetwork
+        ? global.RailNetwork.sourceGeometryForIntervals(this._network, properties) : null;
+    },
+
+    permitsStationConnectorNode(stationCode, point) {
+      if (!this._network || !global.RailNetwork)
+        throw new Error("Railway source network must be loaded before constructing station connectors.");
+      return global.RailNetwork.permitsStationConnectorNode(this._network, stationCode, point);
+    },
+
     canonicalizeRouteFeature(feature, options) {
       if (
         !this._network ||
@@ -2178,6 +2190,10 @@
       this._strokeZoom = null;
       this._stationPopupKey = null;
       if (this._stationPopup) this._stationPopup.remove();
+      if (this._stationDetailsPopup) {
+        this._stationDetailsPopup.remove();
+        this._stationDetailsPopup = null;
+      }
       const seg = this._src(SEGMENTS_SOURCE);
       const withheld = this._src(SEGMENTS_WITHHELD_SOURCE);
       const sta = this._src(STATIONS_SOURCE);

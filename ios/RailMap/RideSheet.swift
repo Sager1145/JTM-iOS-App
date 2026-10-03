@@ -215,27 +215,25 @@ struct ArrivingJourneyCard<Content: View>: View {
 
 /// A round icon button in a card's top row.
 ///
-/// Drawn at 34 points and hit at 44. They are two different numbers on
-/// purpose: 34 is what the row looks right with next to a title, 44 is the
-/// smallest thing a thumb reliably lands on. Drawing the button at 44 to make
-/// the target big makes the header look like a toolbar; shrinking the target
-/// to 34 to make the header look right makes it miss.
+/// Drawn and laid out at the reference menu's 40 points.
 struct SheetIconButton<Label: View>: View {
     var accessibilityLabel: Text
     var action: () -> Void
     @ViewBuilder var label: Label
 
-    static var visualSide: CGFloat { 34 }
+    static var visualSide: CGFloat { WorkspaceMenuMetrics.buttonSide }
+
+    // Display-only toolbar glyphs remain 20 pt inside the 40 pt button.
 
     var body: some View {
         Button(action: action) {
             label
-                .font(.subheadline.weight(.semibold))
+                .font(.system(size: WorkspaceMenuMetrics.iconSize, weight: .semibold))
                 .foregroundStyle(Color.primary)
                 .frame(width: Self.visualSide, height: Self.visualSide)
                 .background(.quaternary.opacity(0.5), in: Circle())
                 .overlay { Circle().stroke(Color.primary.opacity(0.06), lineWidth: 0.5) }
-                .frame(minWidth: 44, minHeight: 44)
+                .frame(minWidth: WorkspaceMenuMetrics.touchSide, minHeight: WorkspaceMenuMetrics.touchSide)
                 .contentShape(.rect)
                 .accessibilityHidden(true)
         }
@@ -321,19 +319,10 @@ struct SheetIconLabel: View {
 
     var body: some View {
         Image(systemName: systemImage)
-            .font(.subheadline.weight(.semibold))
+            .font(.system(size: WorkspaceMenuMetrics.iconSize, weight: .semibold))
             .foregroundStyle(isActive ? AnyShapeStyle(Color.accentColor) : AnyShapeStyle(Color.primary))
             .frame(width: SheetIconButton<Image>.visualSide, height: SheetIconButton<Image>.visualSide)
-            .background(
-                isActive
-                    ? AnyShapeStyle(Color.accentColor.opacity(0.16))
-                    : AnyShapeStyle(.quaternary.opacity(0.5)),
-                in: Circle())
-            .overlay {
-                Circle().stroke(
-                    isActive ? Color.accentColor.opacity(0.28) : Color.primary.opacity(0.06),
-                    lineWidth: 0.5)
-            }
+            .railMenuControlSurface(in: Circle(), isActive: isActive)
             .overlay(alignment: .bottomTrailing) {
                 if isActive {
                     Image(systemName: "checkmark.circle.fill")
@@ -345,7 +334,7 @@ struct SheetIconLabel: View {
                         .allowsHitTesting(false)
                 }
             }
-            .frame(minWidth: 44, minHeight: 44)
+            .frame(minWidth: WorkspaceMenuMetrics.touchSide, minHeight: WorkspaceMenuMetrics.touchSide)
             .contentShape(.rect)
     }
 }

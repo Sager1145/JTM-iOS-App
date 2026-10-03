@@ -1,0 +1,85 @@
+{
+  "schema": "na-reviewed-topology-repairs-v1",
+  "reviewedAt": "2026-09-30",
+  "country": "us",
+  "repairs": [
+    {
+      "id": "sfmta-ph-materialize-surveyed-direction-edge",
+      "op": "materializeDirectionalEdge",
+      "lineId": "san-francisco-municipal-tran-ph",
+      "expectedLineSha256": "0408d38c57661121333f421b7bf58aa842abc02c8228084c2758d2301e8c2164",
+      "extraIndex": 0,
+      "newLineId": "san-francisco-municipal-tran-ph-direction1",
+      "geometrySource": "sfmta-ph-o",
+      "fromStationId": "us-official-hyde-st-jackson-st",
+      "toStationId": "us-official-washington-st-powell-st",
+      "maxDeviationMeters": 103,
+      "source": {
+        "publisher": "DataSF / San Francisco Municipal Transportation Agency",
+        "url": "https://data.sfgov.org/api/v3/views/9exe-acju/query.geojson?accessType=DOWNLOAD",
+        "version": "PH O F00, objectid 15474, data_as_of 2026-04-08",
+        "crs": "WGS84 EPSG:4326",
+        "licence": "DataSF open-data terms, retained from package source attribution; no new geometry",
+        "rawSha256": "6bb8aaa24dcc1e27de08b2683ef20bd8ada5dc12ae0a9079b30997f671d40e13",
+        "normalizedSha256": "929d5f013bfb0daa2f40ed06363ff880f8e2ceba684fb651c97e188b60f86935",
+        "retrievedAt": "Existing normalized source reviewed 2026-09-30; historical retrieval date not separately recorded"
+      },
+      "evidence": [
+        "https://www.sfmta.com/routes/powell-hyde-cable-car (read 2026-09-30): inbound uses Washington, outbound uses Jackson; the separate physical edge must be retained.",
+        "The extra row's original evidence names GTFS stop 6927, Washington St & Powell St. sf-muni-ph-merge-washington-mason in the cumulative service-pattern catalog removed one earlier station without remapping extraSegments indices. The target moved from index 18 to 17.",
+        "The unchanged direction-1 polyline ends 29.52 m from Washington St & Powell St, versus 104.04 m from the stale target Powell St & Clay St. Its two surveyed endpoints differ from the inbound canonical station anchors, so it is represented as a separate direction-specific physical branch with its own exact anchors in the same station complexes. No straight snap connector is invented."
+      ]
+    },
+    {
+      "id": "sfmta-pm-remove-redundant-terminal-stopping-pattern",
+      "op": "removeCoveredBranch",
+      "lineId": "san-francisco-municipal-tran-pm-b1",
+      "expectedLineSha256": "551fd65a06e34c838c85bf4634aa58ee5cf3bb5acab4a0180e889d8f68060cee",
+      "trunkId": "san-francisco-municipal-tran-pm",
+      "expectedTrunkSha256": "f2e1d854aeb68c8e51769d29a81021f00d5077eca89ddc4e54f41fee05387bec",
+      "stationAliases": {},
+      "maxCoverageDistanceMeters": 5,
+      "source": {
+        "publisher": "DataSF / San Francisco Municipal Transportation Agency",
+        "url": "https://data.sfgov.org/api/v3/views/9exe-acju/query.geojson?accessType=DOWNLOAD",
+        "version": "PM I F00, objectid 15475, data_as_of 2026-04-08",
+        "crs": "WGS84 EPSG:4326",
+        "licence": "DataSF open-data terms, retained from package source attribution; no new geometry",
+        "rawSha256": "6bb8aaa24dcc1e27de08b2683ef20bd8ada5dc12ae0a9079b30997f671d40e13",
+        "normalizedSha256": "4f185e0239518c4203e6ef9328ba833880d3c16c5b22ce5cee4c9749661a697c",
+        "retrievedAt": "Existing normalized source reviewed 2026-09-30; historical retrieval date not separately recorded"
+      },
+      "evidence": [
+        "https://www.sfmta.com/routes/powell-mason-cable-car (read 2026-09-30): both directions use Columbus and Taylor to Bay; Taylor & Francisco is an outbound-only call along that same alignment.",
+        "The branch's Chestnut-to-Bay geometry is within 0.43 m of its trunk's intervals 21 and 22 on the identical sfmta-pm-i survey (vertices plus 25 m sampling). It contributes no physical edge. Its 11.45 m extra length is a station-projection backtrack, not a distinct route.",
+        "The genuine Jackson-versus-Washington direction divergence remains on the trunk as its existing sfmta-pm-o extraSegments row; no directional edge or trunk stop is removed."
+      ]
+    },
+    {
+      "id": "uta703-fold-stadium-platform-pattern-into-trunk",
+      "op": "removeCoveredBranch",
+      "lineId": "utah-transit-authority-uta-703-b1",
+      "expectedLineSha256": "4ff7212dc0df75291d94095948fe3797702f18aeed62db549eff7ab236fcdba4",
+      "trunkId": "utah-transit-authority-uta-703",
+      "expectedTrunkSha256": "a3c24922d80a09eabd2f0e98d920aa11aedae8699ce372525a33369363d77b5d",
+      "stationAliases": {"us-official-stadium-4": "us-official-stadium-3"},
+      "maxCoverageDistanceMeters": 5,
+      "source": {
+        "publisher": "Utah Geospatial Resource Center (UGRC)",
+        "url": "https://services1.arcgis.com/99lidPhWCzftIe9K/ArcGIS/rest/services/UtahRailroads/FeatureServer/0/query?where=OPERATOR%3D%27UT%20Transit%20Auth%27&outFields=*&returnGeometry=true&outSR=4326&f=geojson",
+        "version": "UtahRailroads, normalized uta-703; Red Line and composite TRAX divisions",
+        "crs": "WGS84 EPSG:4326",
+        "licence": "UGRC public GIS attribution retained from package source notes; no new geometry",
+        "rawSha256": "e91c77bd1171d8b4ac3aba1f28a8b4454fdbf1af421a29c9e44455fa0761e93f",
+        "normalizedSha256": "37045ac71d35ba1db6b3e906724332e2587f570526f77a41e9b047b3f0f2ef94",
+        "retrievedAt": "Existing normalized source reviewed 2026-09-30; package source notes date the UTA rebuild to 2026-09-09"
+      },
+      "evidence": [
+        "https://rideuta.com/Rider-Tools/Schedules-and-Maps/703-Red-Line (read 2026-09-30): one regular sequence, 900 East, Stadium, University South Campus; no separate branch.",
+        "https://ir.rideuta.com/Rider-Info/Station-Addresses (read 2026-09-30) lists one Stadium station at 1349 E. 500 S.",
+        "Official https://gtfsfeed.rideuta.com/GTFS.zip, existing 170.zip SHA256 9625e760097320f1ba8ad9ab319c3104e37cc43c836159d63846b128ad248221, feed version 2026 AUG_20260813, valid 20260816 through 20261205: stop 18383 and 18384 both named Stadium Station with the same 1349 E 500 S & 300 S address; 18384 supplied stadium-4. These are stop records of the same station complex.",
+        "Both branch intervals follow the same uta-703 survey as trunk intervals 22 and 23. The branch-to-trunk maximum displacement is 2.05 m across 2.763 km; its Stadium anchor is 125.05 m along the same curve from the trunk anchor. The branch contributes no distinct physical edge. The 27 trunk stations and their canonical anchors remain intact."
+      ]
+    }
+  ]
+}

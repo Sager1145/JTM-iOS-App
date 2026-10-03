@@ -201,6 +201,7 @@ final class PlaybackController {
     @ObservationIgnored private var queue: [Entry] = []
     /// See ``PlaybackMapSnapshot/done``.
     @ObservationIgnored private var doneTrails: [PlaybackMapSnapshot.DoneTrail] = []
+    @ObservationIgnored private var completedEntries: Set<Int> = []
     @ObservationIgnored private var playhead = Playback.Playhead()
     @ObservationIgnored private var displayLink: CADisplayLink?
     @ObservationIgnored private var clockTarget: ClockTarget?
@@ -250,20 +251,37 @@ final class PlaybackController {
     /// was never reached, and the transport sat frozen reading "6/1". Costing a
     /// film is a question; it must not be an instruction.
     func estimate(
-        trains: [Train], rides: [RiddenRouteStore.DrawnRide]
+        trains: [Train], rides: [RiddenRouteStore.DrawnRide], reducedMotion: Bool? = nil
     ) -> Playback.Plan {
-        Playback.plan(compiled: compile(trains: trains, rides: rides).compiled, speed: speed)
+        nativePlan(
+            compiled: compile(trains: trains, rides: rides).compiled,
+            reducedMotion: reducedMotion ?? self.reducedMotion)
     }
 
     func prepare(
         trains: [Train], rides: [RiddenRouteStore.DrawnRide], reducedMotion: Bool
     ) -> Playback.Plan {
         let built = compile(trains: trains, rides: rides)
-        let result = Playback.plan(compiled: built.compiled, speed: speed)
+        let result = nativePlan(compiled: built.compiled, reducedMotion: reducedMotion)
         queue = built.entries
         queueCount = built.entries.count
         plan = result
         self.reducedMotion = reducedMotion
+        return result
+    }
+
+    /// The pure Web parity estimate deliberately preserves its original
+    /// omissions. Native filming includes opening/intro/finale camera moves
+    /// and a fixed terminus hold after EVERY journey, independent of speed.
+    private func nativePlan(compiled: [Playback.Path?], reducedMotion: Bool) -> Playback.Plan {
+        var result = Playback.plan(compiled: compiled, speed: speed)
+        guard result.trains > 0 else { result.seconds = 0; return result }
+        let running = compiled.compactMap { $0 }.reduce(0) { $0 + $1.duration } / speed
+        let holds = Double(result.trains) * Playback.Tuning.terminusHoldMilliseconds
+            + Playback.Tuning.finaleHoldMilliseconds + 120
+        let moves = reducedMotion ? 0 : Playback.Tuning.overviewMilliseconds
+            + Playback.Tuning.introMilliseconds + Playback.Tuning.finaleMilliseconds
+        result.seconds = running + (holds + moves) / 1000
         return result
     }
 
@@ -295,6 +313,7 @@ final class PlaybackController {
                 Playback.compile(
                     train: train,
                     features: playbackFeatures(train: train, ride: ride),
+                    preserveStationEndpoints: true,
                     // `assumeIsolated` rather than an isolated closure: this
                     // method is already on the main actor and `compile` is a
                     // synchronous pure function, so the closure runs where it
@@ -345,6 +364,20 @@ final class PlaybackController {
         title = queue.first.map(title(of:)) ?? ""
         currentTrainID = nil
         phase = .armed
+
+        // The opening overview is part of the filmed run too. Publish its
+        // stationary first frame before moving the camera; exports can retain
+        // that frame throughout the overview and intro, when no clock ticks.
+        if let entry = queue.first {
+            var initial = Playback.Playhead()
+            let frame = initial.advance(
+                nowMilliseconds: 0, path: entry.path, speed: speed,
+                shortSidePixels: 390, reducedMotion: reducedMotion)
+            stationName = entry.path.stations.first?.name ?? ""
+            let snapshot = PlaybackMapSnapshot(path: entry.path, frame: frame, autoFocus: false)
+            mapRenderer?.renderPlayback(snapshot)
+            onFrame?(snapshot)
+        }
 
         let overview = reducedMotion ? 0 : Playback.Tuning.overviewMilliseconds
         mapRenderer?.framePlayback(
@@ -411,24 +444,31 @@ final class PlaybackController {
 
     func previous() {
         guard canGoPrevious else { return }
+        let holding = navigationHold
         transitionTask?.cancel()
         cameraTask?.cancel()
         pausedMidTransition = false
         queueIndex -= 1
-        beginCurrent()
+        beginCurrent(holding: holding)
     }
 
     func next() {
-        guard isNavigable else { return }
-        guard queueIndex + 1 < queueCount else {
-            finishQueue()
-            return
-        }
+        guard canGoNext else { return }
+        let holding = navigationHold
         transitionTask?.cancel()
         cameraTask?.cancel()
         pausedMidTransition = false
         queueIndex += 1
-        beginCurrent()
+        beginCurrent(holding: holding)
+    }
+
+    /// Skipping while choosing a journey or while paused moves the playhead
+    /// without silently pressing play. An intro already requested by Play
+    /// remains a running navigation.
+    private var navigationHold: Phase? {
+        if phase == .paused { return .paused }
+        if phase == .armed && !isIntroducing { return .armed }
+        return nil
     }
 
     func stop(clearPlan: Bool = true) {
@@ -444,6 +484,7 @@ final class PlaybackController {
         queueIndex = 0
         queueCount = 0
         doneTrails = []
+        completedEntries = []
         resetProgress(to: 0)
         currentTrainID = nil
         title = ""
@@ -463,7 +504,7 @@ final class PlaybackController {
     /// opposite — starts immediately and lets the camera catch up — because
     /// mid-queue there is already a train on screen carrying the eye, and at
     /// the very start of a run there is not.
-    private func beginCurrent(intro: Bool = false) {
+    private func beginCurrent(intro: Bool = false, holding: Phase? = nil) {
         guard queue.indices.contains(queueIndex) else { return }
         invalidateClock()
         cameraTask?.cancel()
@@ -474,6 +515,24 @@ final class PlaybackController {
         stationName = ""
         resetProgress(to: 0)
         playhead = Playback.Playhead(camera: chase(handingOffTo: entry, intro: intro))
+
+        if let holding {
+            phase = holding
+            // Publish the new journey at its origin, so a paused skip cannot
+            // leave the previous train's marker on screen until resume.
+            let frame = playhead.advance(
+                nowMilliseconds: 0, path: entry.path, speed: speed,
+                shortSidePixels: Double(min(
+                    mapRendererViewSize?.width ?? 390, mapRendererViewSize?.height ?? 844)),
+                reducedMotion: reducedMotion)
+            if let center = frame.camera?.center { lastCameraCenter = center }
+            stationName = entry.path.stations.first?.name ?? ""
+            let snapshot = PlaybackMapSnapshot(
+                path: entry.path, frame: frame, autoFocus: autoFocus, done: doneTrails)
+            mapRenderer?.renderPlayback(snapshot)
+            onFrame?(snapshot)
+            return
+        }
 
         guard intro, let start = entry.path.start, !reducedMotion else {
             runClock()
@@ -549,6 +608,14 @@ final class PlaybackController {
         let step = coordinates.count / limit + 1
         var kept = Swift.stride(from: 0, to: coordinates.count, by: step).map { coordinates[$0] }
         if let last = coordinates.last, kept.last != last { kept.append(last) }
+        // Uniform sampling can miss the furthest bend of a long journey and
+        // clip it out of the opening/final framing. Preserve the extent too.
+        if let west = coordinates.min(by: { $0.lon < $1.lon }),
+           let east = coordinates.max(by: { $0.lon < $1.lon }),
+           let south = coordinates.min(by: { $0.lat < $1.lat }),
+           let north = coordinates.max(by: { $0.lat < $1.lat }) {
+            kept += [west, east, south, north]
+        }
         return kept
     }
 
@@ -584,7 +651,9 @@ final class PlaybackController {
         mapRenderer?.renderPlayback(snapshot)
         exportFrameSerial &+= 1
         onFrame?(snapshot)
-        if frame.finished { holdThenAdvance() }
+        // A frame consumer may stop playback (for example after an encoder
+        // error). It must not be resurrected into a terminus transition.
+        if frame.finished, phase == .playing { holdThenAdvance() }
     }
 
     /// Republish ``progress`` if the ladder allows it, or if it must.
@@ -623,7 +692,7 @@ final class PlaybackController {
         // backlog before the queue moves on. Only a journey that RAN to its
         // terminus does — skipping past one with the transport's next button
         // leaves it unlit, because it was not watched.
-        if queue.indices.contains(queueIndex) {
+        if queue.indices.contains(queueIndex), completedEntries.insert(queueIndex).inserted {
             let entry = queue[queueIndex]
             doneTrails += entry.path.runs.map {
                 PlaybackMapSnapshot.DoneTrail(coords: $0.coords, colorHex: entry.path.color)
@@ -658,6 +727,9 @@ final class PlaybackController {
     /// hold rather than firing the instant the last metre is covered, because
     /// a run that ends by cutting away is a run with no ending.
     private func finishQueue() {
+        transitionTask?.cancel()
+        pausedMidTransition = false
+        isIntroducing = false
         invalidateClock()
         phase = .ended
         resetProgress(to: 1)
@@ -706,7 +778,9 @@ final class PlaybackController {
                 arrival: $0.arrival, departure: $0.departure,
                 stopType: $0.stopType, rideSegment: $0.rideSegment)
         }
-        return ride.segments.sorted { $0.segmentIndex < $1.segmentIndex }.map { segment in
+        return ride.segments.sorted {
+            ($0.segmentIndex, $0.partIndex) < ($1.segmentIndex, $1.partIndex)
+        }.map { segment in
             Playback.RiddenFeature(
                 geometry: .lineString(drawnCoordinates?(ride, segment) ?? segment.coordinates),
                 rideSegment: Statistics.isRideSegment(stops, segmentIndex: segment.segmentIndex),

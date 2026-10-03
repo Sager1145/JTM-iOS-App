@@ -1831,6 +1831,13 @@
       "operatorLogo": null
     },
     {
+      "operator": "Via Rail Canada",
+      "country": "ca",
+      "companyLabel": "Via Rail Canada",
+      "normalizeTaiwanCompanyName": "Via Rail Canada",
+      "operatorLogo": null
+    },
+    {
       "operator": "Edmonton Transit Service",
       "country": "ca",
       "companyLabel": "Edmonton Transit Service",
@@ -1877,13 +1884,6 @@
       "country": "ca",
       "companyLabel": "UP Express",
       "normalizeTaiwanCompanyName": "UP Express",
-      "operatorLogo": null
-    },
-    {
-      "operator": "Via Rail Canada",
-      "country": "ca",
-      "companyLabel": "Via Rail Canada",
-      "normalizeTaiwanCompanyName": "Via Rail Canada",
       "operatorLogo": null
     },
     {
@@ -6196,6 +6196,16 @@
       "company": "黒部峡谷鉄道"
     },
     {
+      "operator": "東日本旅客鉄道",
+      "lineName": "大崎支線",
+      "company": "JR東日本"
+    },
+    {
+      "operator": "東日本旅客鉄道",
+      "lineName": "大崎支線",
+      "company": "JR東日本"
+    },
+    {
       "operator": "Altamont Corridor Express",
       "lineName": "Altamont Commuter Express",
       "company": "Altamont Corridor Express"
@@ -6269,6 +6279,21 @@
       "operator": "Amtrak",
       "lineName": "Amtrak Cascades",
       "company": ""
+    },
+    {
+      "operator": "Amtrak",
+      "lineName": "Maple Leaf",
+      "company": "Amtrak"
+    },
+    {
+      "operator": "Amtrak",
+      "lineName": "Amtrak Cascades",
+      "company": ""
+    },
+    {
+      "operator": "Amtrak",
+      "lineName": "Maple Leaf",
+      "company": "Amtrak"
     },
     {
       "operator": "Amtrak",
@@ -7522,7 +7547,7 @@
     },
     {
       "operator": "San Francisco Municipal Transportation Agency",
-      "lineName": "POWELL-MASON CABLE CAR",
+      "lineName": "POWELL-HYDE CABLE CAR",
       "company": "San Francisco Municipal Transportation Agency"
     },
     {
@@ -7802,11 +7827,6 @@
     },
     {
       "operator": "Utah Transit Authority",
-      "lineName": "Red Line",
-      "company": "Utah Transit Authority"
-    },
-    {
-      "operator": "Utah Transit Authority",
       "lineName": "Green Line",
       "company": "Utah Transit Authority"
     },
@@ -7974,6 +7994,16 @@
       "operator": "GO Transit",
       "lineName": "Stouffville",
       "company": "GO Transit"
+    },
+    {
+      "operator": "Amtrak",
+      "lineName": "Adirondack",
+      "company": "Amtrak"
+    },
+    {
+      "operator": "Via Rail Canada",
+      "lineName": "Maple Leaf",
+      "company": "Via Rail Canada"
     },
     {
       "operator": "Amtrak",
@@ -18103,6 +18133,30 @@
       "logoForLine": "/rail/logos/jp-黒部峡谷鉄道-本線.png"
     },
     {
+      "country": "jp",
+      "input": {
+        "lineId": "jp-東日本旅客鉄道-大崎支線",
+        "id": null,
+        "operator": "東日本旅客鉄道",
+        "logo": null
+      },
+      "verifiedPackageLineLogo": null,
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/jp/q499071.svg"
+    },
+    {
+      "country": "jp",
+      "input": {
+        "lineId": "jp-東日本旅客鉄道-大崎支線-p1",
+        "id": null,
+        "operator": "東日本旅客鉄道",
+        "logo": null
+      },
+      "verifiedPackageLineLogo": null,
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/jp/q499071.svg"
+    },
+    {
       "country": "us",
       "input": {
         "lineId": "ace-ace",
@@ -18274,6 +18328,42 @@
       "country": "us",
       "input": {
         "lineId": "amtrak-amtrak-cascades-us",
+        "id": null,
+        "operator": "Amtrak",
+        "logo": "/rail/operator-logos/na/amtrak.png"
+      },
+      "verifiedPackageLineLogo": "/rail/operator-logos/na/amtrak.png",
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/na/amtrak.png"
+    },
+    {
+      "country": "us",
+      "input": {
+        "lineId": "amtrak-maple-leaf-us",
+        "id": null,
+        "operator": "Amtrak",
+        "logo": "/rail/operator-logos/na/amtrak.png"
+      },
+      "verifiedPackageLineLogo": "/rail/operator-logos/na/amtrak.png",
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/na/amtrak.png"
+    },
+    {
+      "country": "us",
+      "input": {
+        "lineId": "amtrak-amtrak-cascades-border1",
+        "id": null,
+        "operator": "Amtrak",
+        "logo": "/rail/operator-logos/na/amtrak.png"
+      },
+      "verifiedPackageLineLogo": "/rail/operator-logos/na/amtrak.png",
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/na/amtrak.png"
+    },
+    {
+      "country": "us",
+      "input": {
+        "lineId": "amtrak-maple-leaf-border1",
         "id": null,
         "operator": "Amtrak",
         "logo": "/rail/operator-logos/na/amtrak.png"
@@ -21273,6 +21363,18 @@
     {
       "country": "us",
       "input": {
+        "lineId": "san-francisco-municipal-tran-ph-direction1",
+        "id": null,
+        "operator": "San Francisco Municipal Transportation Agency",
+        "logo": "/rail/operator-logos/na/san-francisco-municipal-tran.png"
+      },
+      "verifiedPackageLineLogo": "/rail/operator-logos/na/san-francisco-municipal-tran.png",
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/na/san-francisco-municipal-tran.png"
+    },
+    {
+      "country": "us",
+      "input": {
         "lineId": "san-francisco-municipal-tran-ph-b1",
         "id": null,
         "operator": "San Francisco Municipal Transportation Agency",
@@ -21286,18 +21388,6 @@
       "country": "us",
       "input": {
         "lineId": "san-francisco-municipal-tran-pm",
-        "id": null,
-        "operator": "San Francisco Municipal Transportation Agency",
-        "logo": "/rail/operator-logos/na/san-francisco-municipal-tran.png"
-      },
-      "verifiedPackageLineLogo": "/rail/operator-logos/na/san-francisco-municipal-tran.png",
-      "lineLogo": null,
-      "logoForLine": "/rail/operator-logos/na/san-francisco-municipal-tran.png"
-    },
-    {
-      "country": "us",
-      "input": {
-        "lineId": "san-francisco-municipal-tran-pm-b1",
         "id": null,
         "operator": "San Francisco Municipal Transportation Agency",
         "logo": "/rail/operator-logos/na/san-francisco-municipal-tran.png"
@@ -21957,18 +22047,6 @@
     {
       "country": "us",
       "input": {
-        "lineId": "utah-transit-authority-uta-703-b1",
-        "id": null,
-        "operator": "Utah Transit Authority",
-        "logo": "/rail/operator-logos/na/utah-transit-authority-uta.png"
-      },
-      "verifiedPackageLineLogo": "/rail/operator-logos/na/utah-transit-authority-uta.png",
-      "lineLogo": null,
-      "logoForLine": "/rail/operator-logos/na/utah-transit-authority-uta.png"
-    },
-    {
-      "country": "us",
-      "input": {
         "lineId": "utah-transit-authority-uta-704",
         "id": null,
         "operator": "Utah Transit Authority",
@@ -22378,6 +22456,30 @@
       "country": "ca",
       "input": {
         "lineId": "amtrak-adirondack-ca",
+        "id": null,
+        "operator": "Amtrak",
+        "logo": "/rail/operator-logos/na/amtrak.png"
+      },
+      "verifiedPackageLineLogo": "/rail/operator-logos/na/amtrak.png",
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/na/amtrak.png"
+    },
+    {
+      "country": "ca",
+      "input": {
+        "lineId": "amtrak-maple-leaf-ca",
+        "id": null,
+        "operator": "Via Rail Canada",
+        "logo": "/rail/operator-logos/na/via.png"
+      },
+      "verifiedPackageLineLogo": "/rail/operator-logos/na/via.png",
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/na/via.png"
+    },
+    {
+      "country": "ca",
+      "input": {
+        "lineId": "amtrak-adirondack-border1",
         "id": null,
         "operator": "Amtrak",
         "logo": "/rail/operator-logos/na/amtrak.png"
@@ -25532,6 +25634,10 @@
       "needsDarkMatte": false
     },
     {
+      "logo": "/rail/operator-logos/na/via.png",
+      "needsDarkMatte": false
+    },
+    {
       "logo": "/rail/operator-logos/na/edmonton-transit-system.png",
       "needsDarkMatte": false
     },
@@ -25557,10 +25663,6 @@
     },
     {
       "logo": "/rail/operator-logos/na/union-pearson-express-up-exp.png",
-      "needsDarkMatte": false
-    },
-    {
-      "logo": "/rail/operator-logos/na/via.png",
       "needsDarkMatte": false
     },
     {

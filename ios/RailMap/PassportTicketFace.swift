@@ -547,10 +547,7 @@ struct TicketFaceCard: View {
     @Environment(\.passportInk) private var ink
     @Environment(\.colorScheme) private var colorScheme
 
-    /// 券種名. `Text(verbatim:)` and never localized, for the reason a 乗車券
-    /// does not translate its own name: this is what is PRINTED on the stock,
-    /// in the same sense that a JR ticket says 乗車券 to a reader who has never
-    /// read Japanese.
+    /// 券種名, resolved by the caller and printed with `Text(verbatim:)`.
     let kind: String
     /// 集計範囲 — the region these figures are counted over, in the design's
     /// full-width parentheses. 「（全世界）」「（日本）」.

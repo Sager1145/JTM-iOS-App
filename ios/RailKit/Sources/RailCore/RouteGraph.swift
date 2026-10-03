@@ -79,6 +79,8 @@ public enum RouteGraph {
         public var toStationCode: String?
         public var lineNames: [String]
         public var operatorNames: [String]
+        public var lineIDs: [String]
+        public var sectionCodes: [String]
 
         public init(
             from: String? = nil,
@@ -86,7 +88,8 @@ public enum RouteGraph {
             fromStationCode: String? = nil,
             toStationCode: String? = nil,
             lineNames: [String] = [],
-            operatorNames: [String] = []
+            operatorNames: [String] = [],
+            lineIDs: [String] = [], sectionCodes: [String] = []
         ) {
             self.from = from
             self.to = to
@@ -94,6 +97,8 @@ public enum RouteGraph {
             self.toStationCode = toStationCode
             self.lineNames = lineNames
             self.operatorNames = operatorNames
+            self.lineIDs = lineIDs
+            self.sectionCodes = sectionCodes
         }
     }
 
@@ -116,7 +121,10 @@ public enum RouteGraph {
             let lines = jsSorted(section.lineNames.filter { !$0.isEmpty }).joined(separator: ",")
             let operators = jsSorted(section.operatorNames.filter { !$0.isEmpty })
                 .joined(separator: ",")
-            return "\(from)->\(to)|lines:\(lines)|operators:\(operators)"
+            var key = "\(from)->\(to)|lines:\(lines)|operators:\(operators)"
+            if !section.lineIDs.isEmpty { key += "|line_ids:" + jsSorted(section.lineIDs).joined(separator: ",") }
+            if !section.sectionCodes.isEmpty { key += "|section_codes:" + section.sectionCodes.joined(separator: ",") }
+            return key
         }
         .joined(separator: "|")
     }
@@ -174,17 +182,18 @@ public enum RouteGraph {
 
     /// `ROUTE_SOLVER_CACHE_VERSION`, from `app-config.js`. Bumping it in the
     /// web app retires every persisted route cache entry, so it is a
-    /// parameter here rather than a constant this file owns. Version 24
-    /// invalidates pinned routes that could previously contain only station
-    /// transfer connectors without traversing the required railway.
-    public static let routeSolverCacheVersion = "24"
+    /// parameter here rather than a constant this file owns. Version 25
+    /// retires station connectors snapped onto a non-serving parallel branch.
+    public static let routeSolverCacheVersion = "25"
 
     /// On-disk drawn-route cache (`RiddenRouteStore` save/read). Not part of
     /// `solveContext` or the route digest: version 22 files may have
     /// canonicalized historical geometry onto the current display network,
     /// and those files must miss. Precomputed `solver_version` stays
-    /// ``routeSolverCacheVersion``.
-    public static let routeDrawnCacheVersion = "23"
+    /// ``routeSolverCacheVersion``. Version 25 also retires legacy branch hops
+    /// projected onto a nearby trunk/branch station they do not serve. Version
+    /// 26 retires precomputed paths drawn without complete-network slicing.
+    public static let routeDrawnCacheVersion = "26"
 
     /// The operators a `company` field names, split on `/`.
     ///

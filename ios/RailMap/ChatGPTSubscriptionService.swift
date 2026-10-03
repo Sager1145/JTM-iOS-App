@@ -43,8 +43,11 @@ final class ChatGPTSubscriptionService {
         throw Failure.signInRequired
     }
 
-    func complete(prompt: String, model: String) async throws -> String {
-        let body = try ChatGPTSubscriptionProtocol.requestBody(prompt: prompt, model: model)
+    func complete(
+        prompt: String, model: String,
+        purpose: ChatGPTSubscriptionProtocol.RequestPurpose = .completion
+    ) async throws -> String {
+        let body = try ChatGPTSubscriptionProtocol.requestBody(prompt: prompt, model: model, purpose: purpose)
         for attempt in 0...1 {
             var request = try await request(path: "/responses", refresh: attempt == 1)
             request.httpMethod = "POST"

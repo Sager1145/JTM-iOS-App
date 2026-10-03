@@ -94,6 +94,29 @@ function addStationTransferConnectorEdges(graph, stationFeatures) {
     stationFeatures || (stationsGeoJson && stationsGeoJson.features) || [];
   const groups = new Map();
   const edgeKeys = new Set();
+  const surveyedReachability = new Map();
+
+  function hasLocalSurveyedConnection(a, b, lineName, operator) {
+    const cacheKey = `${a}\u0000${lineName}\u0000${operator}`;
+    let reachable = surveyedReachability.get(cacheKey);
+    if (!reachable) {
+      reachable = new Set([a]);
+      const queue = [a];
+      const anchor = graph.nodes.get(a);
+      for (let index = 0; index < queue.length; index++) {
+        for (const edge of graph.adjacency.get(queue[index]) || []) {
+          if (edge.is_station_connector || edge.valid_from || edge.valid_to ||
+              edge.line_name !== lineName || edge.operator !== operator || reachable.has(edge.to)) continue;
+          const point = graph.nodes.get(edge.to);
+          if (!point || distanceMeters(anchor, point) > 900) continue;
+          reachable.add(edge.to);
+          queue.push(edge.to);
+        }
+      }
+      surveyedReachability.set(cacheKey, reachable);
+    }
+    return reachable.has(b);
+  }
 
   function stationTransferGroupKey(feature) {
     const groupCode = stationGroupCode(feature);
@@ -130,6 +153,8 @@ function addStationTransferConnectorEdges(graph, stationFeatures) {
       nearest.distance > STATION_TRANSFER_MAX_SNAP_METERS
     )
       return;
+    if (typeof RailMap !== "undefined" && typeof RailMap.permitsStationConnectorNode === "function" &&
+        !RailMap.permitsStationConnectorNode(stationCode(feature), graph.nodes.get(nearest.key))) return;
     const membership = membershipOf(nearest, feature);
     const existing = group.get(nearest.key);
     if (!existing || nearest.distance < existing[0].distance) {
@@ -183,6 +208,13 @@ function addStationTransferConnectorEdges(graph, stationFeatures) {
     const aCoord = graph.nodes.get(a);
     const bCoord = graph.nodes.get(b);
     if (!aCoord || !bCoord) return;
+    // A transfer must not shortcut rail already connected by the station's
+    // own current surveyed track. Distinct lines and dated memberships retain
+    // the existing transfer behavior; a disconnected platform can still join.
+    if (infoA.line_name && infoA.operator && infoA.line_name === infoB.line_name &&
+        infoA.operator === infoB.operator && !infoA.valid_from && !infoA.valid_to &&
+        !infoB.valid_from && !infoB.valid_to &&
+        hasLocalSurveyedConnection(a, b, infoA.line_name, infoA.operator)) return;
     const gap = distanceMeters(aCoord, bCoord);
     if (gap > STATION_TRANSFER_MAX_NODE_GAP_METERS) return;
     edgeKeys.add(key);
@@ -214,6 +246,9 @@ function addStationTransferConnectorEdges(graph, stationFeatures) {
   }
 
   groups.forEach((nodeMap) => {
+    // Reachability is reused only among candidate pairs at this station.
+    // Keeping earlier stations' sets would retain the whole survey graph.
+    surveyedReachability.clear();
     const nodes = [...nodeMap.values()]
       .sort((a, b) => a[0].distance - b[0].distance)
       .slice(0, STATION_TRANSFER_MAX_NODES_PER_GROUP);
@@ -850,6 +885,8 @@ function solveRouteSectionOnN02Graph(
       allowed_institution_type_codes: allowedCodes,
       preferred_line_names: [...segmentHints.preferredLines],
       required_line_names: [...segmentHints.requiredLines],
+      required_line_ids: [...(section.line_ids || [])],
+      section_codes: [...(section.section_codes || [])],
       required_operator_names: [...segmentHints.requiredOperators],
       preferred_operator_names: [...segmentHints.preferredOperators],
       solve_mode: segmentHints.solve_mode || "base",
