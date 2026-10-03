@@ -300,3 +300,33 @@ struct SheetIconLabel: View {
             .contentShape(.rect)
     }
 }
+
+/// Shared hierarchy for map popup menus: identity first, round commands at
+/// the trailing edge, and scrolling detail beneath the fixed header.
+struct PopupMenuHeader<Actions: View>: View {
+    let title: String
+    var subtitle: String? = nil
+    @ViewBuilder var actions: () -> Actions
+    @ScaledMetric(relativeTo: .title2) private var titleSize: CGFloat = WorkspaceMenuMetrics.titleSize
+
+    var body: some View {
+        HStack(alignment: .top, spacing: WorkspaceMenuMetrics.titleActionSpacing) {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title)
+                    .font(.system(size: titleSize, weight: .semibold))
+                    .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityAddTraits(.isHeader)
+                if let subtitle, !subtitle.isEmpty {
+                    Text(subtitle).font(.subheadline).foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            HStack(spacing: WorkspaceMenuMetrics.actionSpacing) { actions() }
+        }
+        .padding(.horizontal, WorkspaceMenuMetrics.horizontalInset)
+        .padding(.top, WorkspaceMenuMetrics.topInset)
+        .padding(.bottom, WorkspaceMenuMetrics.bottomInset)
+        .accessibilityElement(children: .contain)
+    }
+}

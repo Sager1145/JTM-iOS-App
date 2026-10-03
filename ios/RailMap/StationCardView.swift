@@ -155,16 +155,10 @@ struct StationCardView: View {
 
     var body: some View {
         NavigationStack {
-            List {
+            VStack(spacing: 0) {
+                stationHeader
+                List {
                 Section {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(card.displayName)
-                            .font(.title2.weight(.semibold))
-                    }
-                    .padding(.vertical, 2)
-                    .accessibilityElement(children: .combine)
-                    .accessibilityAddTraits(.isHeader)
-
                     // The other half of the hand-off the share button starts:
                     // the same station, opened here instead of sent. Apple Maps
                     // knows what is around a station — the exits, the streets,
@@ -175,19 +169,6 @@ struct StationCardView: View {
                             systemImage: "map")
                     }
                     .accessibilityIdentifier("stationOpenInMaps")
-                }
-
-                Section {
-                    detailRow("original", value: card.rawName)
-                    ForEach(names) { field in
-                        detailRow("name.\(field.kind.rawValue)", value: field.text)
-                    }
-                    if !card.nameRoma.isEmpty, card.nameRoma != card.rawName,
-                        !names.contains(where: { $0.text == card.nameRoma }) {
-                        detailRow("alternateName", value: card.nameRoma)
-                    }
-                } header: {
-                    Text(localization.text("ios.station.names"))
                 }
 
                 if !card.lines.isEmpty {
@@ -225,6 +206,19 @@ struct StationCardView: View {
                 }
 
                 Section {
+                    detailRow("original", value: card.rawName)
+                    ForEach(names) { field in
+                        detailRow("name.\(field.kind.rawValue)", value: field.text)
+                    }
+                    if !card.nameRoma.isEmpty, card.nameRoma != card.rawName,
+                        !names.contains(where: { $0.text == card.nameRoma }) {
+                        detailRow("alternateName", value: card.nameRoma)
+                    }
+                } header: {
+                    Text(localization.text("ios.station.names"))
+                }
+
+                Section {
                     detailRow(
                         "region",
                         value: localization.text(
@@ -255,32 +249,14 @@ struct StationCardView: View {
                     Text(localization.text("ios.station.info"))
                 }
             }
-            // Deliberately no title: the card's own header carries the
-            // station's name at reading size, and a navigation bar repeating
-            // it two lines above would print the same word twice. The bar is
-            // still there for the close button, which is where a sheet's
-            // dismissal belongs.
+                .listStyle(.insetGrouped)
+                .scrollContentBackground(.hidden)
+                .accessibilityIdentifier("stationDetailsList")
+            }
+            .background(Color.railMenuBackground)
             .navigationTitle("")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    ShareLink(
-                        item: appleMapsURL,
-                        subject: Text(card.displayName),
-                        message: Text(card.displayName)
-                    ) {
-                        Image(systemName: "square.and.arrow.up")
-                    }
-                    .accessibilityLabel(localization.text("ios.share", fallback: "Share"))
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    SheetCloseButton(
-                        accessibilityLabel: Text(
-                            localization.text("ios.close", fallback: "Close")),
-                        action: { dismiss() })
-                    .accessibilityIdentifier("stationCardClose")
-                }
-            }
+            .toolbar(.hidden, for: .navigationBar)
         }
         // Keyed on the station rather than run once, because one sheet is
         // reused for the next station the reader taps: the card is a value the
@@ -306,13 +282,29 @@ struct StationCardView: View {
             focusLineIfReady()
         }
         .onDisappear { controller.journeyMenuBottomObstruction = nil }
-        // §9.5.6's no-Pull-Bar rule is the app's, not the resident sheet's —
-        // this card was the one bottom surface still drawing a grabber. As
-        // with the resident sheet, hiding it is only affordable next to
-        // `.resizes`: without that, a sheet with no grabber and a scrolling
-        // list inside it cannot be dragged between its stops at all.
+        .railMenuPresentationBackground()
+        .railMenuPresentationCornerRadius()
+        .presentationBackgroundInteraction(.enabled)
         .presentationDragIndicator(.hidden)
-        .presentationContentInteraction(.resizes)
+        .presentationContentInteraction(.scrolls)
+    }
+
+    private var stationHeader: some View {
+        PopupMenuHeader(
+            title: card.displayName,
+            subtitle: localization.text(card.region.localizationKey, fallback: card.region.fallbackName)
+        ) {
+            ShareLink(item: appleMapsURL, subject: Text(card.displayName), message: Text(card.displayName)) {
+                SheetIconLabel(systemImage: "square.and.arrow.up")
+            }
+            .accessibilityLabel(localization.text("ios.share", fallback: "Share"))
+            .accessibilityIdentifier("stationCardShare")
+            SheetCloseButton(
+                accessibilityLabel: Text(localization.text("ios.close", fallback: "Close")),
+                action: { dismiss() })
+                .accessibilityIdentifier("stationCardClose")
+        }
+        .accessibilityIdentifier("stationCardHeader")
     }
 
     private struct SheetMeasurements: Equatable {
@@ -343,14 +335,16 @@ struct StationCardView: View {
     }
 
     private func detailRow(_ key: String, value: String) -> some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(localization.text("ios.station.\(key)"))
-                .font(.caption)
-                .foregroundStyle(.secondary)
+        LabeledContent {
             Text(value)
                 .font(.body)
                 .textSelection(.enabled)
                 .fixedSize(horizontal: false, vertical: true)
+                .multilineTextAlignment(.trailing)
+        } label: {
+            Text(localization.text("ios.station.\(key)"))
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
         }
         .padding(.vertical, 2)
         .accessibilityElement(children: .combine)
