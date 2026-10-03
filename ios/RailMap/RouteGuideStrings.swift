@@ -2,6 +2,26 @@ import RailCore
 
 enum RouteGuideStrings {
     static let table: AppStrings.Table = [
+        "ios.routeGuide.infer": [
+            .en: "Automatically infer route sections", .zhHans: "自动推测区间",
+            .zhHant: "自動推測區間", .ja: "経路区間を自動推定",
+        ],
+        "ios.routeGuide.manual": [
+            .en: "Choose route sections manually", .zhHans: "手动选择区间",
+            .zhHant: "手動選擇區間", .ja: "経路区間を手動で選択",
+        ],
+        "ios.routeGuide.inferenceNote": [
+            .en: "Infer a mapped route through your recorded stations, then review before applying. Passing stations on this suggestion are unverified; choose sections manually when needed.",
+            .zhHans: "根据已记录车站推测地图上的区间，预览确认后应用。推测的通过站未经核实；必要时请手动选择区间。",
+            .zhHant: "根據已記錄車站推測地圖上的區間，預覽確認後套用。推測的通過站未經核實；必要時請手動選擇區間。",
+            .ja: "記録済みの駅から経路区間を推定し、確認してから適用します。推定した通過駅は未確認です。必要に応じて区間を手動で選択してください。",
+        ],
+        "ios.routeGuide.inferenceFailed": [
+            .en: "No connected route could be inferred through every recorded station. Select a range manually or check the stations.",
+            .zhHans: "无法推测连接全部已记录车站的路线。请手动选择区间或检查车站。",
+            .zhHant: "無法推測連接全部已記錄車站的路線。請手動選擇區間或檢查車站。",
+            .ja: "記録された全駅を結ぶ経路を推定できません。区間を手動で選ぶか、駅を確認してください。",
+        ],
         "ios.routeGuide.title": [
             .en: "Choose the railway route",
             .zhHans: "选择实际铁路走向",

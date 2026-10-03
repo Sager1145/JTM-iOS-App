@@ -1,3 +1,4 @@
+import MapKit
 import RailCore
 import RailPresentation
 import SwiftUI
@@ -100,14 +101,23 @@ struct StationCardView: View {
     @Environment(AppLocalization.self) private var localization
     @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     var card: StationCard
+    var network: RailNetworkStore
+    var controller: RailMapController
+    var onLinePreview: (RailwayLinePreview?) -> Void = { _ in }
 
     /// The Apple Maps place this station is, once `StationPlaceStore` has
     /// found it. `nil` while the search is in flight and `nil` for good when
     /// the service has no such station — the two are deliberately the same
     /// state here, because the answer to both is the same link.
     @State private var place: StationPlaceStore.Place?
+    @State private var detailDetent: PresentationDetent = .medium
+    @State private var lineIsShown = false
+    @State private var sheetHeight: CGFloat = 0
+    @State private var sheetContentHeight: CGFloat = 0
+    @State private var pendingLineFocus: MKMapRect?
 
     /// Recomputed as readings tables arrive. Detail content is independent
     /// of the switches that choose the map's annotation sublines.
@@ -183,7 +193,24 @@ struct StationCardView: View {
                 if !card.lines.isEmpty {
                     Section {
                         ForEach(card.lines, id: \.lineID) { row in
-                            StationCardLineRow(row: row)
+                            NavigationLink {
+                                RailwayLineCardView(
+                                    row: row, region: card.region,
+                                    network: network,
+                                    onPreview: { preview in
+                                        lineIsShown = preview != nil
+                                        onLinePreview(preview)
+                                        if preview == nil {
+                                            detailDetent = .medium
+                                            pendingLineFocus = nil
+                                            controller.journeyMenuBottomObstruction = nil
+                                        }
+                                    },
+                                    onLocate: requestLineFocus)
+                            } label: {
+                                StationCardLineRow(row: row)
+                            }
+                            .accessibilityIdentifier("stationLine.\(row.lineID)")
                         }
                     } header: {
                         // The catalog's own word for this (路線 / Line). The
@@ -264,7 +291,21 @@ struct StationCardView: View {
                 for: card,
                 aliases: names.map(\.text))
         }
-        .railHalfSheetDetents()
+        #if !targetEnvironment(macCatalyst)
+        .presentationDetents(
+            lineIsShown && !dynamicTypeSize.isAccessibilitySize
+                ? [.height(WorkspaceMenuMetrics.journeyCompactHeight), .medium, .large]
+                : [.medium, .large], selection: $detailDetent)
+        #endif
+        .onGeometryChange(for: SheetMeasurements.self) { proxy in
+            SheetMeasurements(height: proxy.size.height, bottomInset: proxy.safeAreaInsets.bottom)
+        } action: { measurements in
+            sheetContentHeight = measurements.height
+            sheetHeight = measurements.height + measurements.bottomInset
+            if lineIsShown { controller.journeyMenuBottomObstruction = sheetHeight }
+            focusLineIfReady()
+        }
+        .onDisappear { controller.journeyMenuBottomObstruction = nil }
         // §9.5.6's no-Pull-Bar rule is the app's, not the resident sheet's —
         // this card was the one bottom surface still drawing a grabber. As
         // with the resident sheet, hiding it is only affordable next to
@@ -272,6 +313,33 @@ struct StationCardView: View {
         // list inside it cannot be dragged between its stops at all.
         .presentationDragIndicator(.hidden)
         .presentationContentInteraction(.resizes)
+    }
+
+    private struct SheetMeasurements: Equatable {
+        var height: CGFloat
+        var bottomInset: CGFloat
+    }
+
+    private func requestLineFocus(_ rect: MKMapRect) {
+        pendingLineFocus = rect
+        #if !targetEnvironment(macCatalyst)
+        withAnimation(RailMotion.spring) {
+            detailDetent = dynamicTypeSize.isAccessibilitySize ? .large
+                : .height(WorkspaceMenuMetrics.journeyCompactHeight)
+        }
+        #endif
+        focusLineIfReady()
+    }
+
+    private func focusLineIfReady() {
+        guard let rect = pendingLineFocus, sheetHeight > 0 else { return }
+        #if !targetEnvironment(macCatalyst)
+        guard dynamicTypeSize.isAccessibilitySize
+            || sheetContentHeight <= WorkspaceMenuMetrics.journeyCompactHeight + 1 else { return }
+        #endif
+        pendingLineFocus = nil
+        controller.journeyMenuBottomObstruction = sheetHeight
+        controller.fit(rect)
     }
 
     private func detailRow(_ key: String, value: String) -> some View {

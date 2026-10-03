@@ -61,14 +61,17 @@ public enum RailwayRouteChoices {
         struct Step {
             let visit: Visit
             let lineID: String
+            let rowIndex: Int
+            let originIndex: Int
+            let destinationIndex: Int
             let section: RouteSection
         }
         var adjacency: [String: [Step]] = [:]
-        for line in lines.sorted(by: { $0.id < $1.id }) {
+        for (rowIndex, line) in lines.sorted(by: { $0.id < $1.id }).enumerated() {
             let intervals = RailIntervalCodes.intervals(for: line)
             for (index, interval) in intervals.enumerated() {
                 guard line.segments.indices.contains(index),
-                      !line.segments[index].coordinates.isEmpty else { continue }
+                      interval.coordinates.count >= 2 else { continue }
                 let start = line.stations[index]
                 let end = line.stations[(index + 1) % line.stations.count]
                 guard !excluding.contains(start.id), !excluding.contains(end.id) else { continue }
@@ -76,7 +79,9 @@ public enum RailwayRouteChoices {
                     let (origin, destination) = direction == 1 ? (start, end) : (end, start)
                     adjacency[origin.id, default: []].append(Step(
                         visit: Visit(code: destination.id, name: destination.name),
-                        lineID: line.id,
+                        lineID: line.id, rowIndex: rowIndex,
+                        originIndex: direction == 1 ? index : (index + 1) % line.stations.count,
+                        destinationIndex: direction == 1 ? (index + 1) % line.stations.count : index,
                         section: RouteSection(
                             from: origin.name, to: destination.name,
                             fromN02StationCode: origin.id, toN02StationCode: destination.id,
@@ -103,8 +108,23 @@ public enum RailwayRouteChoices {
         var visits = [Visit(code: from, name: origin.name)]
         var steps: [Step] = []
         var visited: Set<String> = [from]
-        func extend(_ code: String) {
-            if code == to {
+        // Keep traversal state on the heap. A country's long split family
+        // can exhaust a worker thread's stack with one recursive call per
+        // station even when there are only a few complete alternatives.
+        struct Frame {
+            let code: String
+            var nextStep: Int = 0
+        }
+        var frames = [Frame(code: from)]
+        func backtrack() {
+            frames.removeLast()
+            if let previous = steps.popLast() {
+                visits.removeLast()
+                visited.remove(previous.visit.code)
+            }
+        }
+        while let frame = frames.last {
+            if frame.code == to {
                 var lineIDs: [String] = []
                 for step in steps where lineIDs.last != step.lineID { lineIDs.append(step.lineID) }
                 let sections = steps.map(\.section)
@@ -115,20 +135,26 @@ public enum RailwayRouteChoices {
                     stations: visits,
                     sectionCodes: sections.flatMap { $0.sectionCodes ?? [] },
                     routeSections: sections))
-                return
+                backtrack()
+                continue
             }
-            for step in adjacency[code] ?? [] where reachable.contains(step.visit.code)
-                && !visited.contains(step.visit.code) {
-                visited.insert(step.visit.code)
-                visits.append(step.visit)
-                steps.append(step)
-                extend(step.visit.code)
-                steps.removeLast()
-                visits.removeLast()
-                visited.remove(step.visit.code)
+            guard let candidates = adjacency[frame.code], frame.nextStep < candidates.count else {
+                backtrack()
+                continue
             }
+            let step = candidates[frame.nextStep]
+            frames[frames.count - 1].nextStep += 1
+            guard reachable.contains(step.visit.code), !visited.contains(step.visit.code) else { continue }
+            // A repeated code in one row is a different physical visit.
+            // Continuing that row must use the occurrence just reached;
+            // otherwise A–B–C–B–D can incorrectly become A–B–D.
+            if let previous = steps.last, previous.rowIndex == step.rowIndex,
+               previous.destinationIndex != step.originIndex { continue }
+            visited.insert(step.visit.code)
+            visits.append(step.visit)
+            steps.append(step)
+            frames.append(Frame(code: step.visit.code))
         }
-        extend(from)
         return choices
     }
 
@@ -159,7 +185,7 @@ public enum RailwayRouteChoices {
                     let edge = direction == 1 ? index : next
                     guard intervals.indices.contains(edge), line.segments.indices.contains(edge),
                           RailwayDirection.allowedDirections(for: line, intervalIndex: edge).contains(direction),
-                          !line.segments[edge].coordinates.isEmpty else { break }
+                          intervals[edge].coordinates.count >= 2 else { break }
                     let station = line.stations[next]
                     guard !excluding.contains(station.id) else { break }
                     visits.append(Visit(code: station.id, name: station.name))

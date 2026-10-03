@@ -809,8 +809,8 @@ const PROGRAM = String.raw`
   // an interval time could equally be Math.pow or the metres fed into it.
   // These rows isolate them: same input, V8's answer, one function at a time.
   //
-  // The inputs are the values this module actually computes — hop lengths,
-  // frame deltas, the zoom argument, the latitudes — not a sweep.
+  // The inputs are values this module actually computes — hop lengths,
+  // measured geometry intervals, frame deltas, zoom arguments and latitudes.
   const libm = { pow: [], exp: [], log2: [], cos: [] };
   const seen = { pow: new Set(), exp: new Set(), log2: new Set(), cos: new Set() };
   const addLibm = (kind, x, y) => {
@@ -837,6 +837,21 @@ const PROGRAM = String.raw`
       Math.max(0.05, speed / Playback.TUNE.V_PX);
     addLibm("log2", arg, Math.log2(arg));
   }
+  // Sparse passenger calls must not shrink the floating-point regression
+  // corpus. Keep all real hop inputs and supplement them with 128 distinct
+  // positive interval lengths from the same compiled route geometry.
+  const intervalLengths = new Set();
+  for (const p of allPaths) {
+    if (!p) continue;
+    for (const run of p.runs) {
+      for (let index = 1; index < run.cum.length && intervalLengths.size < 128; index += 1) {
+        const meters = run.cum[index] - run.cum[index - 1];
+        if (meters > 0 && Number.isFinite(meters)) intervalLengths.add(meters);
+      }
+    }
+  }
+  for (const meters of intervalLengths)
+    addLibm("pow", meters, Math.pow(meters, Playback.TUNE.HOP_EXP));
   for (const item of catchUp) {
     addLibm("cos", item.train[1] * I.DEG, Math.cos(item.train[1] * I.DEG));
     addLibm("log2", Math.pow(2, item.zoom), Math.log2(Math.pow(2, item.zoom)));

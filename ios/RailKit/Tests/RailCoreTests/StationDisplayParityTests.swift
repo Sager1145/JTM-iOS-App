@@ -778,16 +778,16 @@ struct StationDisplayParityTests {
     /// The records come from the real `buildDeckMarkerRecords`, so the ROLES
     /// are the app's own — which matters, because the role is what the three
     /// tiers key on and what the rank table orders.
-    @Test("Narita Express underground sections emit only Tokyo, Shimbashi and Shinagawa")
+    @Test("Narita Express underground route emits only its recorded Tokyo and Shinagawa calls")
     func undergroundNaritaExpressMarkers() throws {
         let japan = try #require(Self.fixture.rides.first { $0.country == "jp" })
         let trainID = "20260727_08_narita_express"
         let rows = japan.records.filter { Self.same(Self.cells($0)[11], trainID) }
-        // These are the unchanged sample's explicit Sobu-3 sections
-        // 003766→003872→004095. Surface Tokaido stations must not leak in.
+        // The inferred physical corridor runs through Shimbashi, but the
+        // cleaned source records only these two passenger calls. Physical
+        // route boundaries must not manufacture timetable markers.
         let expected: [(String, String, Double, Double)] = [
             ("東京", "terminal", 139.766685, 35.680965),
-            ("新橋", "pass", 139.75873, 35.666205),
             ("品川", "terminal", 139.7394857, 35.6290157),
         ]
         let records = try rows.map(Self.record)
@@ -797,7 +797,7 @@ struct StationDisplayParityTests {
             #expect(Self.same(record.role, expected.1))
             #expect(record.position == Coordinate(lon: expected.2, lat: expected.3))
         }
-        for name in ["有楽町", "浜松町", "田町", "高輪ゲートウェイ"] {
+        for name in ["新橋", "有楽町", "浜松町", "田町", "高輪ゲートウェイ"] {
             #expect(!records.contains { Self.same($0.name, name) },
                     "Underground Narita Express must not acquire surface station \(name).")
         }
@@ -828,13 +828,13 @@ struct StationDisplayParityTests {
                 if !features[index].name.isEmpty { totalNamed += 1 }
             }
         }
-        // The current NEX underground sections omit four surface-line pass
-        // stations; undergroundNaritaExpressMarkers pins the exact replacement.
-        #expect(totalRecords == 4083, "4,083 marker records, got \(totalRecords)")
+        // Removing unsupported untimed passes removes 963 marker records;
+        // every remaining feature still has its exact JavaScript comparison.
+        #expect(totalRecords == 3120, "3,120 marker records, got \(totalRecords)")
         // Two fifths of them: a station reached by several trains ships one
         // record per train and one of those wins, and every intermediate stop
         // also ships a stop-center that can never win at all.
-        #expect(totalNamed == 1714, "1,714 of them carry a name, got \(totalNamed)")
+        #expect(totalNamed == 1104, "1,104 of them carry a name, got \(totalNamed)")
     }
 
     /// 東京 is 24 marker records across the Japanese store, and exactly one of

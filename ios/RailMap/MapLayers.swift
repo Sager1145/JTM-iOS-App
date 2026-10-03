@@ -34,9 +34,9 @@ struct MapLayers: Equatable {
     /// Separate from the dots, because they fail differently: the dot is the
     /// map's structure and the name is its labelling, and a reader who wants
     /// to see where the stations are while a ride's own labels stay legible
-    /// wants exactly one of the two. The zoom floor
-    /// (`MapLabelStyle.stationLabelMinZoom`) still applies underneath — this
-    /// can only take names away, never make them appear earlier.
+    /// wants exactly one of the two. Names on drawn railways are offered to
+    /// screen-space collision placement at every zoom; only those with room
+    /// appear, with interchanges and terminals taking priority.
     var networkStationNames = true
 
     // MARK: - 已乘坐線路: the reader's own journeys

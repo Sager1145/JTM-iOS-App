@@ -403,7 +403,7 @@
       "verified_station_count": 217,
       "verified_passenger_call_count": 14,
       "status": "passenger_timetable_verified_route_gap",
-      "notes": "岡山まで5031M、岡山から4031M。東京—岡山間はサンライズ瀬戸に併結。",
+      "notes": "岡山まで5031M、岡山から4031M。東京—岡山間はサンライズ瀬戸に併結。\n通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
       "remaining_gaps": [
         "Official physical-station rows omit 垂井; the N02 sample passes through 垂井 instead of the downhill 新垂井 branch.",
         "Official row 手柄山平和公園 between 姫路 and 英賀保 is absent from N02-25 sample geometry."

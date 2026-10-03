@@ -82,6 +82,28 @@ class TrainTimetablePipelineTests(unittest.TestCase):
         data, origins = timetable.load_dataset(self.canonical, manifest)
         return manifest, data, origins
 
+    def test_passing_station_requires_same_row_and_source_evidence(self):
+        manifest, data, origins = self.load()
+        stop = data["stop_times"][0]
+        stop["call_type"] = "pass"
+        def errors():
+            return timetable.validate_dataset(data, origins, manifest)
+        self.assertTrue(any("passing station requires row-specific" in e for e in errors()))
+        evidence = {
+            "entity_type": "stop_time", "entity_id": "trip.test:0", "field_name": "call_type",
+            "source_id": "source.test", "confidence": "high", "verification_status": "verified",
+            "page_or_locator": "Fixture numbered column, station A explicit pass mark",
+        }
+        data["fact_sources"].append(evidence)
+        origins[("fact_sources", len(data["fact_sources"]) - 1)] = "fixture:pass-mark"
+        self.assertFalse(any("passing station requires row-specific" in e for e in errors()))
+        for field, value in (("entity_id", "trip.test:1"), ("verification_status", "partial"),
+                             ("confidence", "medium"), ("page_or_locator", "")):
+            old = evidence[field]
+            evidence[field] = value
+            self.assertTrue(any("passing station requires row-specific" in e for e in errors()), field)
+            evidence[field] = old
+
     def test_service_day_materialization_preserves_after_midnight_time(self):
         _, data, origins = self.load()
         self.assertEqual([], timetable.validate_dataset(data, origins, timetable.load_manifest(self.canonical)))

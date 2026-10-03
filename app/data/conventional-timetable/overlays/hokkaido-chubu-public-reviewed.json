@@ -1,0 +1,362 @@
+{
+  "schemaVersion": 1,
+  "inventoryVersion": "2025.5.2",
+  "observedOn": "2026-10-02",
+  "lines": [
+    {
+      "lineID": "jp-名古屋鉄道-名古屋本線",
+      "operatorName": "名古屋鉄道",
+      "lineName": "名古屋本線",
+      "aliases": [],
+      "coverage": "partial",
+      "kinds": [
+        {
+          "id": "public-hokkaido-chubu-ab30106584fa24c7",
+          "displayName": "普通",
+          "trainType": "普通",
+          "sourceURL": "https://www.meitetsu.co.jp/train/timetable/__icsFiles/afieldfile/2026/06/22/kai_20260314_NH_W1.pdf",
+          "validFrom": "2026-10-02",
+          "validUntil": "2026-10-03",
+          "scope": "Weekday train 695, printed page 3: 東岡崎–新安城 excerpt only.",
+          "fromStationCode": "006185",
+          "toStationCode": "006072",
+          "observedOn": "2026-10-02"
+        },
+        {
+          "id": "public-hokkaido-chubu-0591f66690df186c",
+          "displayName": "急行",
+          "trainType": "急行",
+          "sourceURL": "https://www.meitetsu.co.jp/train/timetable/__icsFiles/afieldfile/2026/06/22/kai_20260314_NH_W1.pdf",
+          "validFrom": "2026-10-02",
+          "validUntil": "2026-10-03",
+          "scope": "Weekday train 611, printed page 3: 豊橋–東岡崎 excerpt only.",
+          "fromStationCode": "006786",
+          "toStationCode": "006185",
+          "observedOn": "2026-10-02"
+        },
+        {
+          "id": "public-hokkaido-chubu-2eb95c2c7dd28714",
+          "displayName": "準急",
+          "trainType": "準急",
+          "sourceURL": "https://www.meitetsu.co.jp/train/timetable/__icsFiles/afieldfile/2026/06/22/kai_20260314_NH_W1.pdf",
+          "validFrom": "2026-10-02",
+          "validUntil": "2026-10-03",
+          "scope": "Weekday train 645B, printed page 3: 神宮前–金山 excerpt only; source says 普通 after 須ヶ口.",
+          "fromStationCode": "005605",
+          "toStationCode": "005551",
+          "observedOn": "2026-10-02"
+        },
+        {
+          "id": "public-hokkaido-chubu-f10d3673250bcd4a",
+          "displayName": "特急",
+          "trainType": "特急",
+          "sourceURL": "https://www.meitetsu.co.jp/train/timetable/__icsFiles/afieldfile/2026/06/22/kai_20260314_NH_W1.pdf",
+          "validFrom": "2026-10-02",
+          "validUntil": "2026-10-03",
+          "scope": "Weekday train 71, printed page 3: 豊橋–東岡崎 excerpt only.",
+          "fromStationCode": "006786",
+          "toStationCode": "006185",
+          "observedOn": "2026-10-02"
+        },
+        {
+          "id": "public-hokkaido-chubu-444f3729b6027bbc",
+          "displayName": "快速特急",
+          "trainType": "快速特急",
+          "sourceURL": "https://www.meitetsu.co.jp/train/timetable/__icsFiles/afieldfile/2026/06/22/kai_20260314_NH_W1.pdf",
+          "validFrom": "2026-10-02",
+          "validUntil": "2026-10-03",
+          "scope": "Weekday train 77, printed page 4: 豊橋–東岡崎 excerpt only; 快特 expanded by official legend.",
+          "fromStationCode": "006786",
+          "toStationCode": "006185",
+          "observedOn": "2026-10-02"
+        }
+      ],
+      "note": "Reviewed published classes only in the stated sections; other classes, dates and stopping patterns remain unknown."
+    },
+    {
+      "lineID": "jp-東海旅客鉄道-東海道線",
+      "operatorName": "東海旅客鉄道",
+      "lineName": "東海道線",
+      "aliases": [],
+      "coverage": "partial",
+      "kinds": [
+        {
+          "id": "public-hokkaido-chubu-202ca24dc564f3a0",
+          "displayName": "普通",
+          "trainType": "普通",
+          "sourceURL": "https://railway.jr-central.co.jp/time-schedule/srch/_pdf/data/202603/tokaido_Nagoya_A_w_d.pdf",
+          "validFrom": null,
+          "validUntil": null,
+          "scope": "Current 202603 weekday Nagoya station PDF explicitly prints this class toward 岐阜/大垣; section 名古屋–岐阜. Effective end and particular operating dates not established.",
+          "fromStationCode": "005451",
+          "toStationCode": "004788",
+          "observedOn": "2026-10-02"
+        },
+        {
+          "id": "public-hokkaido-chubu-a170e7218267fadd",
+          "displayName": "区間快速",
+          "trainType": "区間快速",
+          "sourceURL": "https://railway.jr-central.co.jp/time-schedule/srch/_pdf/data/202603/tokaido_Nagoya_A_w_d.pdf",
+          "validFrom": null,
+          "validUntil": null,
+          "scope": "Current 202603 weekday Nagoya station PDF explicitly prints this class toward 岐阜/大垣; section 名古屋–岐阜. Effective end and particular operating dates not established.",
+          "fromStationCode": "005451",
+          "toStationCode": "004788",
+          "observedOn": "2026-10-02"
+        },
+        {
+          "id": "public-hokkaido-chubu-63f7ab900a753dd0",
+          "displayName": "快速",
+          "trainType": "快速",
+          "sourceURL": "https://railway.jr-central.co.jp/time-schedule/srch/_pdf/data/202603/tokaido_Nagoya_A_w_d.pdf",
+          "validFrom": null,
+          "validUntil": null,
+          "scope": "Current 202603 weekday Nagoya station PDF explicitly prints this class toward 岐阜/大垣; section 名古屋–岐阜. Effective end and particular operating dates not established.",
+          "fromStationCode": "005451",
+          "toStationCode": "004788",
+          "observedOn": "2026-10-02"
+        },
+        {
+          "id": "public-hokkaido-chubu-59fee3adbb192fda",
+          "displayName": "新快速",
+          "trainType": "新快速",
+          "sourceURL": "https://railway.jr-central.co.jp/time-schedule/srch/_pdf/data/202603/tokaido_Nagoya_A_w_d.pdf",
+          "validFrom": null,
+          "validUntil": null,
+          "scope": "Current 202603 weekday Nagoya station PDF explicitly prints this class toward 岐阜/大垣; section 名古屋–岐阜. Effective end and particular operating dates not established.",
+          "fromStationCode": "005451",
+          "toStationCode": "004788",
+          "observedOn": "2026-10-02"
+        },
+        {
+          "id": "public-hokkaido-chubu-176cc8716d07f07a",
+          "displayName": "特別快速",
+          "trainType": "特別快速",
+          "sourceURL": "https://railway.jr-central.co.jp/time-schedule/srch/_pdf/data/202603/tokaido_Nagoya_A_w_d.pdf",
+          "validFrom": null,
+          "validUntil": null,
+          "scope": "Current 202603 weekday Nagoya station PDF explicitly prints this class toward 岐阜/大垣; section 名古屋–岐阜. Effective end and particular operating dates not established.",
+          "fromStationCode": "005451",
+          "toStationCode": "004788",
+          "observedOn": "2026-10-02"
+        },
+        {
+          "id": "public-hokkaido-chubu-a7f14db51c5c9abd",
+          "displayName": "ホームライナー",
+          "trainType": "ホームライナー",
+          "sourceURL": "https://railway.jr-central.co.jp/time-schedule/srch/_pdf/data/202603/tokaido_Nagoya_A_w_d.pdf",
+          "validFrom": null,
+          "validUntil": null,
+          "scope": "Current 202603 weekday Nagoya station PDF explicitly prints this class toward 岐阜/大垣; section 名古屋–岐阜. Effective end and particular operating dates not established.",
+          "fromStationCode": "005451",
+          "toStationCode": "004788",
+          "observedOn": "2026-10-02"
+        },
+        {
+          "id": "public-hokkaido-chubu-d9995503bf66853f",
+          "displayName": "特急",
+          "trainType": "特急",
+          "sourceURL": "https://railway.jr-central.co.jp/time-schedule/srch/_pdf/data/202603/tokaido_Nagoya_A_w_d.pdf",
+          "validFrom": null,
+          "validUntil": null,
+          "scope": "Current 202603 weekday Nagoya station PDF explicitly prints this class toward 岐阜/大垣; section 名古屋–岐阜. Effective end and particular operating dates not established.",
+          "fromStationCode": "005451",
+          "toStationCode": "004788",
+          "observedOn": "2026-10-02"
+        }
+      ],
+      "note": "Reviewed published classes only in the stated sections; other classes, dates and stopping patterns remain unknown."
+    },
+    {
+      "lineID": "jp-北海道旅客鉄道-富良野線",
+      "operatorName": "北海道旅客鉄道",
+      "lineName": "富良野線",
+      "aliases": [],
+      "coverage": "partial",
+      "kinds": [
+        {
+          "id": "public-hokkaido-chubu-78c8eab952d527e2",
+          "displayName": "普通",
+          "trainType": "普通",
+          "sourceURL": "https://www.jrhokkaido.co.jp/travel/furanobiei/pdf/furanobiei2026.pdf",
+          "validFrom": null,
+          "validUntil": null,
+          "scope": "Official Furano/Biei brochure, timetable page 1, 2026-04-01 snapshot: 普通列車 columns 旭川–富良野. No later service date or closed effective interval established.",
+          "fromStationCode": "000095",
+          "toStationCode": "000137",
+          "observedOn": "2026-10-02"
+        }
+      ],
+      "note": "Reviewed published classes only in the stated sections; other classes, dates and stopping patterns remain unknown."
+    },
+    {
+      "lineID": "jp-北海道旅客鉄道-根室線-2",
+      "operatorName": "北海道旅客鉄道",
+      "lineName": "根室線",
+      "aliases": [],
+      "coverage": "partial",
+      "kinds": [
+        {
+          "id": "public-hokkaido-chubu-2e845c0a42e881f8",
+          "displayName": "普通",
+          "trainType": "普通",
+          "sourceURL": "https://www.jrhokkaido.co.jp/travel/furanobiei/pdf/furanobiei2026.pdf",
+          "validFrom": null,
+          "validUntil": null,
+          "scope": "Official Furano/Biei brochure, timetable page 1, 2026-04-01 snapshot: 普通列車 columns 滝川–富良野. No claim for other 根室線 rows or dates.",
+          "fromStationCode": "000117",
+          "toStationCode": "000137",
+          "observedOn": "2026-10-02"
+        }
+      ],
+      "note": "Reviewed published classes only in the stated sections; other classes, dates and stopping patterns remain unknown."
+    }
+  ],
+  "trips": [
+    {
+      "id": "meitetsu-695-20261002-public-excerpt",
+      "trainNumber": "695",
+      "trainType": "普通",
+      "operatorName": "名古屋鉄道",
+      "lineIDs": [
+        "jp-名古屋鉄道-名古屋本線"
+      ],
+      "serviceDates": [
+        "2026-10-02"
+      ],
+      "sourceURL": "https://www.meitetsu.co.jp/train/timetable/__icsFiles/afieldfile/2026/06/22/kai_20260314_NH_W1.pdf",
+      "coverage": "partial",
+      "note": "Printed page 3, weekday column 695; 2026-10-02 is Friday and not a Cabinet-listed holiday. Scheduled excerpt only; omitted calls/dates unknown. Calendar derivation and exceptions documented in accompanying sources.",
+      "stops": [
+        {
+          "stationCode": "006185",
+          "stationName": "東岡崎",
+          "arrivalSeconds": null,
+          "departureSeconds": 20940
+        },
+        {
+          "stationCode": "006072",
+          "stationName": "新安城",
+          "arrivalSeconds": 21540,
+          "departureSeconds": 21600
+        }
+      ]
+    },
+    {
+      "id": "meitetsu-611-20261002-public-excerpt",
+      "trainNumber": "611",
+      "trainType": "急行",
+      "operatorName": "名古屋鉄道",
+      "lineIDs": [
+        "jp-名古屋鉄道-名古屋本線"
+      ],
+      "serviceDates": [
+        "2026-10-02"
+      ],
+      "sourceURL": "https://www.meitetsu.co.jp/train/timetable/__icsFiles/afieldfile/2026/06/22/kai_20260314_NH_W1.pdf",
+      "coverage": "partial",
+      "note": "Printed page 3, weekday column 611; 2026-10-02 is Friday and not a Cabinet-listed holiday. Scheduled excerpt only; omitted calls/dates unknown. Calendar derivation and exceptions documented in accompanying sources.",
+      "stops": [
+        {
+          "stationCode": "006786",
+          "stationName": "豊橋",
+          "arrivalSeconds": null,
+          "departureSeconds": 21180
+        },
+        {
+          "stationCode": "006185",
+          "stationName": "東岡崎",
+          "arrivalSeconds": 22740,
+          "departureSeconds": 22740
+        }
+      ]
+    },
+    {
+      "id": "meitetsu-645B-20261002-public-excerpt",
+      "trainNumber": "645B",
+      "trainType": "準急",
+      "operatorName": "名古屋鉄道",
+      "lineIDs": [
+        "jp-名古屋鉄道-名古屋本線"
+      ],
+      "serviceDates": [
+        "2026-10-02"
+      ],
+      "sourceURL": "https://www.meitetsu.co.jp/train/timetable/__icsFiles/afieldfile/2026/06/22/kai_20260314_NH_W1.pdf",
+      "coverage": "partial",
+      "note": "Printed page 3, weekday column 645B; 2026-10-02 is Friday and not a Cabinet-listed holiday. Scheduled excerpt only; omitted calls/dates unknown. Calendar derivation and exceptions documented in accompanying sources.",
+      "stops": [
+        {
+          "stationCode": "005605",
+          "stationName": "神宮前",
+          "arrivalSeconds": 24600,
+          "departureSeconds": 24660
+        },
+        {
+          "stationCode": "005551",
+          "stationName": "金山",
+          "arrivalSeconds": 24780,
+          "departureSeconds": 24840
+        }
+      ]
+    },
+    {
+      "id": "meitetsu-71-20261002-public-excerpt",
+      "trainNumber": "71",
+      "trainType": "特急",
+      "operatorName": "名古屋鉄道",
+      "lineIDs": [
+        "jp-名古屋鉄道-名古屋本線"
+      ],
+      "serviceDates": [
+        "2026-10-02"
+      ],
+      "sourceURL": "https://www.meitetsu.co.jp/train/timetable/__icsFiles/afieldfile/2026/06/22/kai_20260314_NH_W1.pdf",
+      "coverage": "partial",
+      "note": "Printed page 3, weekday column 71; 2026-10-02 is Friday and not a Cabinet-listed holiday. Scheduled excerpt only; omitted calls/dates unknown. Calendar derivation and exceptions documented in accompanying sources.",
+      "stops": [
+        {
+          "stationCode": "006786",
+          "stationName": "豊橋",
+          "arrivalSeconds": null,
+          "departureSeconds": 22320
+        },
+        {
+          "stationCode": "006185",
+          "stationName": "東岡崎",
+          "arrivalSeconds": 23580,
+          "departureSeconds": 23640
+        }
+      ]
+    },
+    {
+      "id": "meitetsu-77-20261002-public-excerpt",
+      "trainNumber": "77",
+      "trainType": "快速特急",
+      "operatorName": "名古屋鉄道",
+      "lineIDs": [
+        "jp-名古屋鉄道-名古屋本線"
+      ],
+      "serviceDates": [
+        "2026-10-02"
+      ],
+      "sourceURL": "https://www.meitetsu.co.jp/train/timetable/__icsFiles/afieldfile/2026/06/22/kai_20260314_NH_W1.pdf",
+      "coverage": "partial",
+      "note": "Printed page 4, weekday column 77; 2026-10-02 is Friday and not a Cabinet-listed holiday. Scheduled excerpt only; omitted calls/dates unknown. Calendar derivation and exceptions documented in accompanying sources.",
+      "stops": [
+        {
+          "stationCode": "006786",
+          "stationName": "豊橋",
+          "arrivalSeconds": null,
+          "departureSeconds": 24660
+        },
+        {
+          "stationCode": "006185",
+          "stationName": "東岡崎",
+          "arrivalSeconds": 25860,
+          "departureSeconds": 25860
+        }
+      ]
+    }
+  ]
+}

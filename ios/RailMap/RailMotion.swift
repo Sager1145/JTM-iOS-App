@@ -98,7 +98,13 @@ enum RailMotion {
 
     /// Selection paint uses the same short arrival timing, without moving geometry.
     static func mapHighlightDuration(reduceMotion: Bool) -> TimeInterval {
-        reduceMotion ? 0.16 : 0.18
+        reduceMotion ? 0.20 : 0.30
+    }
+
+    /// A retiring selection casing fades out slightly faster than a new one
+    /// fades in, so the exit never outlasts the arrival that replaces it.
+    static func mapHighlightExitDuration(reduceMotion: Bool) -> TimeInterval {
+        reduceMotion ? 0.20 : 0.24
     }
 
     /// Map detail arriving or leaving at a zoom threshold, without moving it.
@@ -106,21 +112,24 @@ enum RailMotion {
         reduceMotion ? 0.16 : 0.24
     }
 
-    /// Strong ease-out, cubic-bezier(0.23, 1, 0.32, 1), for MapKit opacity.
+    /// Symmetric ease-in-out, cubic-bezier(0.4, 0, 0.2, 1), for MapKit opacity.
     static func mapHighlightProgress(_ fraction: Double) -> CGFloat {
         let x = min(max(fraction, 0), 1)
         if x == 0 || x == 1 { return CGFloat(x) }
+        let x1 = 0.4, y1 = 0.0, x2 = 0.2, y2 = 1.0
         var lower = 0.0
         var upper = 1.0
         for _ in 0..<14 {
             let t = (lower + upper) / 2
             let inverse = 1 - t
-            let sampledX = 3 * inverse * inverse * t * 0.23
-                + 3 * inverse * t * t * 0.32 + t * t * t
+            let sampledX = 3 * inverse * inverse * t * x1
+                + 3 * inverse * t * t * x2 + t * t * t
             if sampledX < x { lower = t } else { upper = t }
         }
         let t = (lower + upper) / 2
-        return CGFloat(1 - pow(1 - t, 3))
+        let inverse = 1 - t
+        let y = 3 * inverse * inverse * t * y1 + 3 * inverse * t * t * y2 + t * t * t
+        return CGFloat(y)
     }
 
     /// The Reduce Motion stand-in for anything that would otherwise spring or

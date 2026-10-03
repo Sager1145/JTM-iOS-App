@@ -38,6 +38,7 @@ struct PassportStatistics: Sendable {
     /// One journey, reduced to what a superlative row needs to name it.
     struct Journey: Sendable, Equatable {
         let id: String
+        let region: Region
         /// `JourneyTitle.compact` — the name cut to what identifies it.
         let title: String
         /// The first and last effectively-ridden calls, as the record spells
@@ -55,6 +56,9 @@ struct PassportStatistics: Sendable {
     struct Tally: Sendable, Identifiable {
         /// The stable key this row was accumulated under. Never shown.
         let id: String
+        /// Station and endpoint rows retain their region for all-region naming.
+        /// Operators have none.
+        let region: Region?
         /// What the row is named after, unresolved: a station name, or an
         /// operator's raw N02 name.
         let name: String
@@ -225,6 +229,7 @@ struct PassportStatistics: Sendable {
             journeys.append(
                 Journey(
                     id: train.id,
+                    region: region,
                     title: JourneyTitle.compact(train),
                     from: from, to: to,
                     date: calendarParts(bucket) == nil ? "" : bucket,
@@ -241,8 +246,8 @@ struct PassportStatistics: Sendable {
             // untouched — only the accumulator's internal key carries the
             // region, so what the row is named after is exactly what it was
             // before.
-            stations.add(key: "\(region.code)\u{001F}\(from)", name: from, count: 1, km: km)
-            stations.add(key: "\(region.code)\u{001F}\(to)", name: to, count: 1, km: km)
+            stations.add(key: "\(region.code)\u{001F}\(from)", region: region, name: from, count: 1, km: km)
+            stations.add(key: "\(region.code)\u{001F}\(to)", region: region, name: to, count: 1, km: km)
 
             // A route is undirected. 東京→新大阪 and 新大阪→東京 are the same
             // pair of places, and a passport that listed them apart would
@@ -251,6 +256,7 @@ struct PassportStatistics: Sendable {
             let ends = from <= to ? (from, to) : (to, from)
             routes.add(
                 key: "\(region.code)\u{001F}\(ends.0)\u{001F}\(ends.1)",
+                region: region,
                 name: ends.0, pair: ends.1, count: 1, km: km)
         }
 
@@ -287,10 +293,13 @@ struct PassportStatistics: Sendable {
     private struct Accumulator {
         private var rows: [String: Tally] = [:]
 
-        mutating func add(key: String, name: String, pair: String? = nil, count: Int, km: Double) {
+        mutating func add(
+            key: String, region: Region? = nil, name: String, pair: String? = nil,
+            count: Int, km: Double
+        ) {
             let existing = rows[key]
             rows[key] = Tally(
-                id: key, name: name, pair: pair,
+                id: key, region: region, name: name, pair: pair,
                 count: (existing?.count ?? 0) + count,
                 km: (existing?.km ?? 0) + km)
         }

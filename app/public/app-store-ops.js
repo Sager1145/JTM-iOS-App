@@ -197,11 +197,51 @@ function normalizeExportRouteSection(section) {
   return normalized;
 }
 
+// Keep source-only line boundaries when they form one complete route through
+// every recorded stop. Boundary identity never substitutes a matching name for
+// conflicting station codes, and anchors must occur as explicit endpoints.
+function completeRecordedRouteSectionChain(sections, stops) {
+  if (!sections.length || stops.length < 2) return false;
+  const matches = (left, right) => {
+    const leftCode = canonicalStationCode(left.code || null);
+    const rightCode = canonicalStationCode(right.code || null);
+    if (leftCode && rightCode) return String(leftCode) === String(rightCode);
+    return Boolean(left.name && right.name && left.name === right.name);
+  };
+  const endpoint = (section, side) => ({
+    name: section?.[side] || "",
+    code: section?.[`${side}_n02_station_code`] || null,
+  });
+  const anchors = stops.map((stop) => ({
+    name: stopName(stop), code: stopStationCode(stop),
+  }));
+  if (!matches(endpoint(sections[0], "from"), anchors[0])) return false;
+  if (!matches(endpoint(sections[sections.length - 1], "to"), anchors[anchors.length - 1]))
+    return false;
+  let nextAnchor = 1;
+  for (let index = 0; index < sections.length; index += 1) {
+    const section = sections[index];
+    const from = endpoint(section, "from");
+    const to = endpoint(section, "to");
+    if ((!from.code && !from.name) || (!to.code && !to.name)) return false;
+    if (index > 0 && !matches(endpoint(sections[index - 1], "to"), from))
+      return false;
+    // Source boundaries can revisit later call stations before the actual call.
+    // Consume only the next intermediate call, at a distinct non-final boundary;
+    // the final call belongs to the final endpoint, even if passed earlier.
+    if (index < sections.length - 1 && nextAnchor < anchors.length - 1 &&
+        matches(to, anchors[nextAnchor])) nextAnchor += 1;
+  }
+  return nextAnchor === anchors.length - 1;
+}
+
 function getRideRouteSectionsForTrain(train) {
   const stops = train?.stops || [];
   const sections = Array.isArray(train?.route_sections)
     ? train.route_sections
     : [];
+  if (completeRecordedRouteSectionChain(sections, stops))
+    return sections.map(normalizeExportRouteSection);
   const calculated = [];
 
   for (let index = 0; index < stops.length - 1; index += 1) {

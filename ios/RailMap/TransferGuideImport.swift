@@ -75,9 +75,18 @@ final class TransferGuideImport {
     private(set) var draft: Draft?
     private(set) var isCommitting = false
     private var pages: [Data] = []
+    /// The current display network's entries — this is what every build used
+    /// to use outright. Kept as entries rather than a built `StationIndex` so
+    /// a dated build can widen it with the ADR 0011 overlay before grouping.
+    private var baseEntries: [StationIndex.Entry] = []
     private var index = StationIndex([])
     private var task: Task<Void, Never>?
     private var readingID = UUID()
+    /// The dated index last built, keyed by ISO day — so toggling back and
+    /// forth between dates on the picker does not re-scan the overlay every
+    /// time. One entry is all a single draft ever needs; this is not a
+    /// cross-session cache.
+    private var datedIndex: (isoDate: String, index: StationIndex)?
 
     var isRunning: Bool {
         if case .reading = phase { return true }
@@ -100,7 +109,9 @@ final class TransferGuideImport {
         draft = nil
         self.pages = pages
         pageNames = names
-        index = Self.index(stations: stations, lines: lines)
+        baseEntries = Self.entries(stations: stations, lines: lines)
+        index = StationIndex(baseEntries)
+        datedIndex = nil
         phase = .reading(done: 0, total: 1)
 
         // A strong capture, not a weak one. `[weak self]` would make `self` a
@@ -242,15 +253,16 @@ final class TransferGuideImport {
         }
         route.legs = kept
         draft.recordByLeg = recordByLeg
+        let isoDate = RecordDate.text(from: draft.date)
         draft.build = TransferGuide.build(
             route: route,
             options: TransferGuide.BuildOptions(
-                date: RecordDate.text(from: draft.date),
+                date: isoDate,
                 region: Region.jp.code,
                 idPrefix: "yahoo",
                 ridden: draft.ridden,
                 existingIDs: existingIDs),
-            stations: index)
+            stations: stationIndex(forISODate: isoDate))
         func isEmpty(_ value: String?) -> Bool {
             (value ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         }
@@ -332,15 +344,41 @@ final class TransferGuideImport {
 
     // MARK: - the station table
 
+    /// The base index, widened with ADR 0011 overlay stations open on
+    /// `isoDate`. Cached per date: the picker can be nudged back and forth
+    /// before the reader settles, and only the last one matters.
+    private func stationIndex(forISODate isoDate: String?) -> StationIndex {
+        guard let isoDate else { return index }
+        if let cached = datedIndex, cached.isoDate == isoDate { return cached.index }
+        let retired = RailHistoryStations.open(RiddenRouteStore.retiredStations(region: "jp"), on: isoDate)
+        guard !retired.isEmpty else {
+            datedIndex = (isoDate, index)
+            return index
+        }
+        var entries = baseEntries
+        for station in retired {
+            entries.append(
+                StationIndex.Entry(
+                    code: station.id,
+                    name: station.name,
+                    coordinate: Coordinate(lon: station.longitude, lat: station.latitude),
+                    line: StationIndex.LineRef(
+                        name: station.lineName, operatorName: station.operatorName, colorHex: nil)))
+        }
+        let widened = StationIndex(entries)
+        datedIndex = (isoDate, widened)
+        return widened
+    }
+
     /// The rail package as the resolver needs it.
     ///
     /// Japan only, and that is not a limitation being papered over: Yahoo!
     /// 乗換案内 plans Japanese journeys, so a screenshot of one is a Japanese
     /// journey. Offering the region picker the JSON importer has would be
     /// offering a choice with one right answer.
-    private static func index(
+    private static func entries(
         stations: [RailNetworkStore.DrawnStation], lines: [RailNetworkStore.DrawnLine]
-    ) -> StationIndex {
+    ) -> [StationIndex.Entry] {
         var lineByID: [String: RailNetworkStore.DrawnLine] = [:]
         for line in lines where line.region == .jp { lineByID[line.id] = line }
         var entries: [StationIndex.Entry] = []
@@ -357,6 +395,6 @@ final class TransferGuideImport {
                         operatorName: line?.operatorName,
                         colorHex: line?.colorHex)))
         }
-        return StationIndex(entries)
+        return entries
     }
 }

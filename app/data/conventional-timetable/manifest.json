@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-02",
+  "coverage": "partial",
+  "inputs": [
+    {
+      "path": "app/data/conventional-timetable/overlays/hokkaido-chubu-public-reviewed.json",
+      "sourceNote": "app/data/conventional-timetable/overlays/hokkaido-chubu-public-reviewed.sources.md"
+    },
+    {
+      "path": "app/data/conventional-timetable/overlays/jr-west-20261004-reviewed-sections.json",
+      "sourceNote": "app/data/conventional-timetable/overlays/jr-west-20261004-reviewed-sections.sources.md"
+    },
+    {
+      "path": "app/data/conventional-timetable/overlays/kanto-public-reviewed.json",
+      "sourceNote": "app/data/conventional-timetable/overlays/kanto-public-reviewed.sources.md"
+    }
+  ]
+}

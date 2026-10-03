@@ -232,6 +232,19 @@ physical demolition.
 - **Station snapping** (closed 2026-09-23): endpoint station candidates are
   filtered by ride date with the same half-open rule as edges, in both
   solvers (`filterStationCandidatesByRideDate`).
+- **Station picker and screenshot importer** (closed 2026-10-03, iOS):
+  `RailHistoryStations` turns the overlay's stations into a directory, one
+  entry per name + line + operator. The ride editor's pickers and inline
+  suggestions offer an entry only when the ride has a plain ISO date inside
+  one of its periods, marked as a former station with its `valid_to`. An
+  undated or current ride sees nothing new. Picking one writes the old name
+  and, only when the builder certified it (`station_code_basis ==
+  exact_current_geometry_identity`), its `n02_station_code`; otherwise the
+  code stays nil and the solver resolves name + ride date. The Yahoo! importer
+  widens its name index with the entries open on the screenshot's date and
+  stores nil codes for them. Infer route and line selection still need codes
+  for every stop, so they stay disabled for uncertified former stations. The Web
+  editor has no equivalent yet.
 - **Both solvers keep every equal-distance platform membership and emit one connector per pair, with validity the intersection of the two memberships.**
 - **Cross-border cache keys include every region the journey names.** The Web
   and iOS derive that scope from the declared region, stop codes and route

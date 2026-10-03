@@ -91,6 +91,7 @@ struct RailWorkspaceView: View {
     /// §10.3's ⌘F target.
     @FocusState private var searchFocused: Bool
     @State private var sheet: WorkspaceSheet?
+    @State private var linePreview: RailwayLinePreview?
     @State private var selectionBeforeJourneyMenu: String?
     @State private var journeyMenuOwnsSelection = false
     @State private var workspaceMenuIsSuspended = false
@@ -338,6 +339,12 @@ struct RailWorkspaceView: View {
             await categoryIndexes.load(for: riddenCountries)
         }
 #if DEBUG
+        .overlay(alignment: .topLeading) {
+            if RouteStressHarness.enabled {
+                RouteStressHarnessPanel(itineraries: itineraries, library: library,
+                                        controller: controller, selectDate: selectDate)
+            }
+        }
         // A headless way to put the workspace into its selected state.
         //
         // The journey menu is reached by tapping a row, and a tap is the one thing a
@@ -577,6 +584,7 @@ struct RailWorkspaceView: View {
                 signal(.deleted)
             },
             onSheetDismiss: {
+                linePreview = nil
                 // Expanding during the child's dismissal competes with UIKit's
                 // sheet transition. Restore only after that presenter is free.
                 workspaceMenuIsSuspended = false
@@ -664,6 +672,7 @@ struct RailWorkspaceView: View {
             onStartExport: startVideoExport,
             onDismiss: { sheet = nil },
             onPick: { train in PresentationHost.afterTeardown { pick(train) } },
+            onLinePreview: { linePreview = $0 },
             onEditJourney: { train in
                 sheet = nil
                 presentJourneyEditor(JourneyEditorLaunch(
@@ -2588,11 +2597,11 @@ struct RailWorkspaceView: View {
         RailMapView(
             lines: lines,
             stations: store.mapStations,
-            rides: mapRides,
+            rides: linePreview.map { mapRides + [$0.ride] } ?? mapRides,
             networkExtent: store.networkExtent,
-            selectedTrainID: itineraries.selectedTrainID,
+            selectedTrainID: linePreview?.ride.id ?? itineraries.selectedTrainID,
             selectedDate: selectedDate,
-            networkRideDate: selectedTrainNetworkDate,
+            networkRideDate: linePreview == nil ? selectedTrainNetworkDate : nil,
 
             // One display switch, one source of truth. Statistics can change
             // the reported region and frame the camera, but it must not force
@@ -2657,6 +2666,7 @@ struct RailWorkspaceView: View {
     /// rides run the same corridor, "nearest" is decided by a fraction of a
     /// point.
     private func selectFromMap(_ ids: [String]) {
+        guard linePreview == nil else { return }
         let trains = ids.compactMap { id in
             itineraries.loaded?.trains.first { $0.id == id }
         }

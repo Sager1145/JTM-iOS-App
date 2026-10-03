@@ -127,13 +127,15 @@ struct RailwayRouteCorrectionView: View {
         let package = package
         let trainType = train.trainType
         let excluded = excludedStationCodes
-        // Physical graph enumeration can be substantial on national packages.
-        // The detached worker receives only immutable Sendable values.
-        let result = await Task.detached(priority: .userInitiated) {
-            RailwayRouteChoices.choices(
+        // Bounded physical search also supports spans crossing railway families.
+        let worker = Task.detached(priority: .userInitiated) {
+            LocalJourneySearch.choices(
                 package: package, originCode: search.origin, destinationCode: search.destination,
                 trainType: trainType, excludingStationCodes: excluded)
-        }.value
+        }
+        let result = await withTaskCancellationHandler {
+            await worker.value
+        } onCancel: { worker.cancel() }
         guard !Task.isCancelled, self.search == search else { return }
         foundChoices = result
         loadedSearch = search
@@ -206,6 +208,7 @@ struct RailwayRouteGuideView: View {
     private let onApply: (Choice) -> Void
     private let embeddedInNavigationStack: Bool
     private let onCancel: (() -> Void)?
+    private let isInferred: Bool
 
     @State private var step = 0
     @State private var confirmed: [String: String] = [:]
@@ -217,6 +220,7 @@ struct RailwayRouteGuideView: View {
     init(
         train: Train, package: CompactPackage, choices: [Choice],
         embeddedInNavigationStack: Bool = false, onCancel: (() -> Void)? = nil,
+        isInferred: Bool = false,
         onApply: @escaping (Choice) -> Void
     ) {
         // A single prepared snapshot gives every preview the same visit identity.
@@ -228,6 +232,7 @@ struct RailwayRouteGuideView: View {
         self.onApply = onApply
         self.embeddedInNavigationStack = embeddedInNavigationStack
         self.onCancel = onCancel
+        self.isInferred = isInferred
     }
 
     private var currentDecision: Decision? {
@@ -283,6 +288,11 @@ struct RailwayRouteGuideView: View {
     private var content: some View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
+                    if isInferred {
+                        Label(text("inferenceNote"), systemImage: "wand.and.stars")
+                            .font(.subheadline).foregroundStyle(.secondary)
+                            .accessibilityIdentifier("routeGuideInferenceNotice")
+                    }
                     if choices.isEmpty {
                         emptyState
                     } else if let decision = currentDecision {
@@ -484,6 +494,9 @@ struct RailwayRouteGuideView: View {
             if !plan.insertedStops.isEmpty {
                 changeNames(plan.insertedStops, title: text("inserted", ["count": .number(Double(plan.insertedStops.count))]),
                             symbol: "plus.circle.fill", color: .green)
+                Text(localization.editorText("ios.editor.generatedStationsNote"))
+                    .font(.footnote).foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             if !plan.removedStops.isEmpty {
                 changeNames(plan.removedStops, title: text("removed", ["count": .number(Double(plan.removedStops.count))]),
@@ -529,6 +542,9 @@ struct RailwayRouteGuideView: View {
                         .foregroundStyle(inserted ? Color.green : Color.secondary)
                     VStack(alignment: .leading, spacing: 3) {
                         Text(station(row.stop.name, code: row.stop.n02StationCode))
+                        if row.stop.routeEditing?.generatedBy != nil {
+                            AutoFilledStationLabel()
+                        }
                         if let detail = stopDetail(row.stop) {
                             Text(detail).font(.caption).foregroundStyle(.secondary)
                         }

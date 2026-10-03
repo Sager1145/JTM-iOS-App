@@ -231,6 +231,86 @@ struct RailwayRouteChoicesTests {
         }
     }
 
+    @Test("Repeated station codes cannot skip to another occurrence in the same row", arguments: [false, true])
+    func repeatedStationOccurrence(reverse: Bool) throws {
+        var repeated = line("repeat", stations: ["A", "B", "C", "B", "D"])
+        repeated["permittedTraversal"] = reverse ? "reverse" : "forward"
+        let origin = reverse ? "D" : "A", destination = reverse ? "A" : "D"
+        let package = try fixture([
+            repeated, line("unrelated", stations: ["X", "Y"]),
+        ])
+        let choices = RailwayRouteChoices.choices(package: package, originCode: origin, destinationCode: destination)
+        #expect(choices.count == 1)
+        let choice = try #require(choices.first)
+        let stations = ["A", "B", "C", "B", "D"]
+        let codes = ["repeat@A:B", "repeat@B:C~1", "repeat@B:C~2", "repeat@B:D"]
+        #expect(choice.stations.map(\.code) == (reverse ? Array(stations.reversed()) : stations))
+        #expect(choice.sectionCodes == (reverse ? Array(codes.reversed()) : codes))
+        #expect(RailwayRouteChoices.choices(
+            package: package, originCode: origin, destinationCode: destination,
+            excludingStationCodes: ["C"]).isEmpty)
+    }
+
+    @Test("A one-coordinate interval cannot be selected directly or through a split family")
+    func missingPhysicalInterval() throws {
+        var broken = line("broken", stations: ["A", "B"])
+        broken["segments"] = [[1, 0, [[0, 0]]] as [Any]]
+        let package = try fixture([broken, line("continuation", stations: ["B", "C"])])
+        #expect(RailwayRouteChoices.choices(package: package, originCode: "A", destinationCode: "B").isEmpty)
+        #expect(RailwayRouteChoices.choices(package: package, originCode: "A", destinationCode: "C").isEmpty)
+    }
+
+    @Test("Explicit choices preserve paired alignments and separate platform geometry")
+    func explicitSelectionPolicy() throws {
+        var paired = line("paired", stations: ["B", "C"])
+        paired["alignmentOf"] = "trunk"
+        paired["alignmentDirection"] = "down"
+        paired["stationOrderDirection"] = "down"
+        let package = try fixture([line("trunk", stations: ["A", "B"]), paired])
+        let choice = try #require(RailwayRouteChoices.choices(
+            package: package, originCode: "A", destinationCode: "C").first)
+        #expect(choice.lineIDs == ["trunk", "paired"])
+        let network = RouteNetwork(lines: package.lines.map {
+            RouteNetwork.Line(lineId: $0.id, name: $0.name, operator: $0.operator,
+                isLoop: $0.isLoop, alignmentDirection: $0.alignmentDirection, parts: [],
+                intervals: RailIntervalCodes.intervals(for: $0), compactLine: $0)
+        })
+        let hints = RouteHints(requiredLineIDs: choice.lineIDs, sectionCodes: choice.sectionCodes,
+            fromStationCode: "A", toStationCode: "C")
+        #expect(network.sourceGeometry(for: hints)?.lines.count == 2)
+        #expect(network.directedIntervals(sectionCodes: choice.sectionCodes,
+            fromStationCode: "A", toStationCode: "C")?.map(\.direction) == [1, 1])
+        #expect(RailwayRouteChoices.choices(
+            package: package, originCode: "C", destinationCode: "A").isEmpty)
+    }
+
+    @Test("Deep split families enumerate the complete path without recursive station calls")
+    func deepSplitFamily() throws {
+        let codes = (0...2048).map { "deep-\($0)" }
+        func point(_ code: String) -> [Double] {
+            [139 + Double(Int(code.dropFirst(5))!) * 0.00001, 35]
+        }
+        func row(_ id: String, _ visits: [String]) -> [String: Any] {
+            ["id": id, "name": "Deep physical family", "operator": "Operator", "rank": 3,
+             "stations": visits.map { [$0, $0, point($0)[0], point($0)[1]] as [Any] },
+             "segments": (0..<(visits.count - 1)).map {
+                 [1, 0, [point(visits[$0]), point(visits[$0 + 1])]] as [Any]
+             }]
+        }
+        let package = try fixture([
+            row("first", Array(codes[0...1024])), row("second", Array(codes[1024...2048])),
+        ])
+        let choices = RailwayRouteChoices.choices(
+            package: package, originCode: codes[0], destinationCode: codes[2048])
+        #expect(choices.count == 1)
+        let choice = try #require(choices.first)
+        #expect(choice.stations.map(\.code) == codes)
+        #expect(choice.sectionCodes.count == 2048)
+        #expect(choice.lineIDs == ["first", "second"])
+        #expect(choice.routeSections.map { $0.lineIDs ?? [] } ==
+            Array(repeating: ["first"], count: 1024) + Array(repeating: ["second"], count: 1024))
+    }
+
     private func line(_ id: String, stations: [String], loop: Bool = false) -> [String: Any] {
         ["id": id, "name": "Physical family", "operator": "Operator", "rank": 3, "isLoop": loop,
          "stations": stations.enumerated().map { [$0.element, $0.element, Double($0.offset), 0] as [Any] },

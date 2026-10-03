@@ -1505,13 +1505,15 @@ public enum TrainValidation {
 
     /// `getRideRouteSectionsForTrain` — one section per adjacent stop pair.
     ///
-    /// jsonspec §6.3/§18: the section list is *recomputed* from the stops on
-    /// every export, and an already-written section is reused only when it
-    /// matches that stop pair. That is what keeps a hand-edited stop list and
-    /// its sections from drifting apart.
+    /// Keep a complete authored boundary chain through every recorded stop.
+    /// Otherwise recompute adjacent pairs, reusing only matching sections so
+    /// a hand-edited stop list cannot retain an unrelated physical alignment.
     static func rideRouteSections(for train: Train, stations: StationTable) -> [RouteSection] {
         let stops = train.stops
         let sections = train.routeSections ?? []
+        if completeRecordedRouteSectionChain(sections, stops: stops) {
+            return sections.map(normalizeExportRouteSection)
+        }
         var fallbackIndex: RouteSectionPairIndex?
         var calculated: [RouteSection] = []
         for index in 0..<max(stops.count - 1, 0) {
@@ -1537,6 +1539,46 @@ public enum TrainValidation {
                     toN02StationCode: endpointCode(toStop)))
         }
         return calculated
+    }
+
+    /// Keep authored physical boundaries without inventing timetable visits.
+    /// Only section endpoints establish recorded-call coverage; an interval's
+    /// interior is not evidence that a particular passenger call was traversed.
+    private static func completeRecordedRouteSectionChain(
+        _ sections: [RouteSection], stops: [Stop]
+    ) -> Bool {
+        guard stops.count >= 2, let first = sections.first else { return false }
+        func endpointMatches(_ code: String?, _ name: String?, _ otherCode: String?, _ otherName: String?) -> Bool {
+            if let code, !code.isEmpty, let otherCode, !otherCode.isEmpty {
+                return jsStringEquals(StationCodeAliases.canonical(code), StationCodeAliases.canonical(otherCode))
+            }
+            guard let name, !name.isEmpty, let otherName, !otherName.isEmpty else { return false }
+            return jsStringEquals(name, otherName)
+        }
+        func matchesStop(_ code: String?, _ name: String?, _ index: Int) -> Bool {
+            endpointMatches(code, name, stops[index].n02StationCode, stops[index].name)
+        }
+        guard matchesStop(first.fromN02StationCode, first.from, 0),
+              let last = sections.last,
+              matchesStop(last.toN02StationCode, last.to, stops.count - 1) else { return false }
+        var nextStop = 1
+        for (index, section) in sections.enumerated() {
+            guard section.fromN02StationCode?.isEmpty == false || section.from?.isEmpty == false,
+                  section.toN02StationCode?.isEmpty == false || section.to?.isEmpty == false else { return false }
+            if index > 0 {
+                let before = sections[index - 1]
+                guard endpointMatches(before.toN02StationCode, before.to,
+                                      section.fromN02StationCode, section.from) else { return false }
+            }
+            // A route may pass a future call's station before that call.
+            // Reserve the last boundary for the destination visit, and consume
+            // each intermediate recorded visit at a distinct earlier boundary.
+            if index < sections.count - 1, nextStop < stops.count - 1,
+               matchesStop(section.toN02StationCode, section.to, nextStop) {
+                nextStop += 1
+            }
+        }
+        return nextStop == stops.count - 1
     }
 
     /// `findRouteSectionForStopPair` — the section at the same index if it

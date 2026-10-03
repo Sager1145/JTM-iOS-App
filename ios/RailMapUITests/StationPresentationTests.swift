@@ -80,6 +80,39 @@ final class StationPresentationTests: XCTestCase {
         add(attachment)
     }
 
+    func testStationLineOpensPreviewAndReturnsToStation() {
+        let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
+                               "-interface-language", "en"]
+        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
+        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "compact"
+        app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = "35.6812,139.7671,0.008"
+        app.launchEnvironment["RAILMAP_UI_TEST_LAYERS"] = "network"
+        app.launch()
+        let station = app.descendants(matching: .any)
+            .matching(NSPredicate(format: "label == %@", "東京")).firstMatch
+        XCTAssertTrue(station.waitForExistence(timeout: 45))
+        activate(station)
+        XCTAssertTrue(app.buttons["stationOpenInMaps"].waitForExistence(timeout: 12))
+        let line = app.buttons.matching(
+            NSPredicate(format: "identifier BEGINSWITH %@", "stationLine.")).firstMatch
+        for _ in 0..<8 where !line.isHittable { app.swipeUp() }
+        XCTAssertTrue(line.isHittable)
+        activate(line)
+        let locate = app.buttons["railwayLineLocate"]
+        XCTAssertTrue(locate.waitForExistence(timeout: 20), "Full railway geometry must load.")
+        XCTAssertTrue(locate.isEnabled)
+        activate(locate)
+        let attachment = XCTAttachment(screenshot: app.screenshot())
+        attachment.name = "station-selected-railway"
+        attachment.lifetime = .keepAlways
+        add(attachment)
+        activate(app.buttons["railwayLineClose"])
+        XCTAssertTrue(app.buttons["stationCardClose"].waitForExistence(timeout: 8))
+        activate(app.buttons["stationCardClose"])
+        XCTAssertTrue(app.buttons["stationOpenInMaps"].waitForNonExistence(timeout: 8))
+    }
+
     private func activate(_ element: XCUIElement) {
 #if targetEnvironment(macCatalyst)
         element.click()

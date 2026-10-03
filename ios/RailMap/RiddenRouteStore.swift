@@ -146,6 +146,9 @@ final class RiddenRouteStore {
         /// pass-through drawn as a stop is a claim about the journey that the
         /// reader did not make.
         let stops: [Stop]
+        /// Explicit display positions for network previews whose continuous
+        /// geometry does not split at every platform. Recorded rides use endpoints.
+        var markerPositions: [Int: Coordinate] = [:]
         /// The calendar days this itinerary touches and where it crosses them,
         /// so an overnight ride can draw the half that runs on the other day
         /// differently — `Dates.segmentDate(_:segmentIndex:)` maps a segment to
@@ -1368,6 +1371,23 @@ final class RiddenRouteStore {
     private nonisolated static func railHistoryRevision(region: String) -> String? {
         if case .loaded(let overlay, _) = historyState(region: region) { return overlay.revision }
         return nil
+    }
+
+    private nonisolated static let retiredStationsCache = OSAllocatedUnfairLock(
+        initialState: [String: [RetiredStation]]())
+
+    /// ADR 0011 overlay stations as a picker directory; [] when the region has
+    /// no overlay or it failed to load. Built once per region.
+    nonisolated static func retiredStations(region: String) -> [RetiredStation] {
+        if let cached = retiredStationsCache.withLock({ $0[region] }) { return cached }
+        let stations: [RetiredStation]
+        if case .loaded(let overlay, _) = historyState(region: region) {
+            stations = RailHistoryStations.directory(overlay)
+        } else {
+            stations = []
+        }
+        retiredStationsCache.withLock { $0[region] = stations }
+        return stations
     }
 
     private nonisolated static func historyRevisionSet(for train: Train) -> RailHistoryRevisionSet? {

@@ -48,10 +48,13 @@ struct SamplePrecomputeProvenanceTests {
         let part = try JSONDecoder().decode(
             Part.self,
             from: Data(contentsOf: datasetDirectory.appending(path: filename)))
-        let canonical = TrainValidation.normalizeExportTrain(
-            TrainValidation.restoringRouteSectionEndpointNames(part.train),
-            country: "jp",
-            stations: .empty)
+        // Match the production solve boundary, including existing physical
+        // corridor inference before computing the strict cache identity.
+        let canonical = TokyoConventionalRouteInference.applying(to:
+            TrainValidation.normalizeExportTrain(
+                TrainValidation.restoringRouteSectionEndpointNames(part.train),
+                country: "jp",
+                stations: .empty))
         let sections = (canonical.routeSections ?? []).map { section in
             RouteGraph.RouteSection(
                 from: section.from,

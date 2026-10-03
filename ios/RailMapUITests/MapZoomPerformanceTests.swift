@@ -25,6 +25,14 @@ final class MapZoomPerformanceTests: XCTestCase {
         try assertRepeatedZoom(camera: .tokyo, attachmentName: "tokyo-network-zoom")
     }
 
+    func testAll287JourneysRepeatedZoomAcrossJapan() throws {
+        try assertRepeatedZoom(camera: .japan, attachmentName: "all287-japan-zoom", requiredRides: 287)
+    }
+
+    func testAll287JourneysRepeatedZoomOverDenseTokyo() throws {
+        try assertRepeatedZoom(camera: .tokyo, attachmentName: "all287-tokyo-zoom", requiredRides: 287)
+    }
+
     func testDenseHobokenNewportParallelBranchesRemainVisibleAcrossZoom() throws {
         try assertRepeatedZoom(camera: .hoboken, attachmentName: "hoboken-parallel-zoom")
     }
@@ -56,7 +64,7 @@ final class MapZoomPerformanceTests: XCTestCase {
     private func assertRepeatedZoom(
         camera: Camera, attachmentName: String,
         orientation: UIDeviceOrientation = .portrait, rotateBeforeZoom: Bool = false,
-        rotateMapBeforeZoom: Bool = false
+        rotateMapBeforeZoom: Bool = false, requiredRides: Int? = nil
     ) throws {
         XCUIDevice.shared.orientation = orientation
         defer { XCUIDevice.shared.orientation = .portrait }
@@ -68,6 +76,16 @@ final class MapZoomPerformanceTests: XCTestCase {
 
         var initial = try waitForRenderedNetwork(status, near: camera.center,
                                                 minimumCamera: camera == .japan ? nil : 11, timeout: 30)
+        if let requiredRides {
+            let complete = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+                (try? RenderSnapshot(status.label).integer("rides")) == requiredRides
+            }, object: nil)
+            XCTAssertEqual(XCTWaiter.wait(for: [complete], timeout: 180), .completed,
+                           "Import every sample before running the all-journeys performance case.")
+            initial = try waitForRenderedNetwork(status, near: camera.center,
+                                                minimumCamera: camera == .japan ? nil : 11, timeout: 30)
+            XCTAssertEqual(try initial.integer("rides"), requiredRides)
+        }
         if rotateBeforeZoom {
             let width = try initial.double("viewportWidth")
             XCUIDevice.shared.orientation = .landscapeLeft

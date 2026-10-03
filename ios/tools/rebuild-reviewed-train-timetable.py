@@ -365,6 +365,7 @@ NORMALIZERS=[
     'normalize-reviewed-current-n02-route-identities-20260930.py',
     'normalize-reviewed-priority-current-n02-route-identities-20260930.py',
     'normalize-reviewed-central-hida1-nanki1-current-n02-routes-20260930.py',
+    'normalize-reviewed-pass-marks.py',
 ]
 STEPS=[
     'validate-train-timetable.py',

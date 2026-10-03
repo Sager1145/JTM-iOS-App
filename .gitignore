@@ -60,3 +60,8 @@ app/public/rail/.na-rail.lock
 *.prj
 *.cpg
 *.gpkg
+
+# Station-English scraping inputs and candidate builds: local-only (too large for GitHub)
+app/data/station-english-sources/
+app/data/station-english-verification-candidates/
+app/data/station-english-verification-review/

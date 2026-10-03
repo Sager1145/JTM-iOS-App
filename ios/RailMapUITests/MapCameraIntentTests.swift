@@ -83,7 +83,7 @@ final class MapCameraIntentTests: XCTestCase {
         XCTAssertTrue(row.waitForExistence(timeout: 30))
         row.tap()
         try waitFor(status) { self.number("centerLon", $0) > 125 }
-        try waitFor(status) { self.number("basemapMuted", $0) == 1 }
+        try waitFor(status) { self.number("basemapMuted", $0) == 0 }
     }
 
     func testUserSelectionZoomsFromNearbyOverviewAndKeepsStationNames() throws {
@@ -101,7 +101,7 @@ final class MapCameraIntentTests: XCTestCase {
         let origin = app.descendants(matching: .any).matching(NSPredicate(
             format: "label BEGINSWITH %@ AND label CONTAINS %@", "Start ", "関西空港")).firstMatch
         XCTAssertTrue(origin.waitForExistence(timeout: 15), app.debugDescription)
-        try waitFor(status) { self.number("basemapMuted", $0) == 1 }
+        try waitFor(status) { self.number("basemapMuted", $0) == 0 }
         // Close the independent menu to restore the source map selection.
         let back = app.buttons["journeyMenuClose"].firstMatch
         XCTAssertTrue(back.waitForExistence(timeout: 10))

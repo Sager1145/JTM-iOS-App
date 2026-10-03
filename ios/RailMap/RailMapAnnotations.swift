@@ -281,8 +281,11 @@ final class RideStationAnnotation: NSObject, MKAnnotation {
     }
 }
 
-/// One journey's circles, mounted immediately above its own route strokes.
-/// Names remain annotations above the entire overlay stack.
+/// Every unselected journey's circles in one canvas above all journey
+/// strokes, as the web map's TRAIN_STOPS_LAYER sits above TRAIN_ROUTES_LAYER.
+/// One raster overlay per journey gave MapKit hundreds of world-sized tile
+/// sets for a full Japan workspace and crashed the device in Metal drawable
+/// cleanup. Names remain annotations above the entire overlay stack.
 final class RideStationOverlay: NSObject, MKOverlay {
     let rideID: String
     var stations: [RideStationAnnotation]
@@ -300,7 +303,7 @@ final class RideStationOverlay: NSObject, MKOverlay {
 }
 
 final class RideStationOverlayRenderer: MKOverlayRenderer {
-    private struct Circle {
+    private struct Circle: Equatable {
         let point: MKMapPoint
         let radius: CGFloat
         let lineWidth: CGFloat
@@ -309,6 +312,14 @@ final class RideStationOverlayRenderer: MKOverlayRenderer {
         let alpha: CGFloat
         let coreRadius: CGFloat?
         let coreColor: CGColor?
+
+        static func == (lhs: Circle, rhs: Circle) -> Bool {
+            lhs.point.x == rhs.point.x && lhs.point.y == rhs.point.y
+                && lhs.radius == rhs.radius && lhs.lineWidth == rhs.lineWidth
+                && lhs.fill == rhs.fill && lhs.stroke == rhs.stroke
+                && lhs.alpha == rhs.alpha && lhs.coreRadius == rhs.coreRadius
+                && lhs.coreColor == rhs.coreColor
+        }
     }
 
     private struct Fade {
@@ -336,10 +347,17 @@ final class RideStationOverlayRenderer: MKOverlayRenderer {
     private var markers: [String: Marker] = [:]
     private var markerOrder: [String] = []
     private var circles: [Circle] = []
+    // Keep former painted positions too: an outgoing dot's tile must still
+    // receive an empty redraw after its fade ends. The renderer's lifetime
+    // bounds this history to the single shared station canvas.
+    private var paintCoverage = MKMapRect.null
+    private var paintRadius: CGFloat = 0
     private let circleLock = NSLock()
     private var scale: CGFloat = .nan
     private var zoom: Double = .nan
     private var initialDuration: TimeInterval = 0
+    private var hasPublishedStations = false
+    private var batchArrival: Fade?
     private var displayLink: CADisplayLink?
     private let frameTarget = FrameTarget()
 
@@ -357,7 +375,7 @@ final class RideStationOverlayRenderer: MKOverlayRenderer {
         }
     }
 
-    /// Reuse the overlay per ride, assign its new station list, then call this.
+    /// Reuse the shared overlay, assign its new station list, then call this.
     /// Calling before the first scale sets the new renderer's arrival timing.
     func updateStations(duration: TimeInterval = 0) {
         guard scale.isFinite, zoom.isFinite else {
@@ -368,11 +386,47 @@ final class RideStationOverlayRenderer: MKOverlayRenderer {
         let duration = max(0, duration)
         let now = CACurrentMediaTime()
         sampleFades(at: now)
+        if duration == 0 {
+            batchArrival = nil
+            alpha = 1
+        }
+        if batchArrival != nil, duration > 0 {
+            var occurrences: [String: Int] = [:]
+            let unchanged = overlay.stations.count == markers.count && overlay.stations.allSatisfy { station in
+                let base = "\(station.rideID)|\(station.coordinate.latitude)|\(station.coordinate.longitude)|\(station.role)|\(station.rawName)"
+                let occurrence = occurrences[base, default: 0]
+                occurrences[base] = occurrence + 1
+                guard let marker = markers["\(base)|\(occurrence)"] else { return false }
+                return !marker.retiring && (marker.fade?.to ?? marker.alpha) == station.alpha
+            }
+            if !unchanged {
+                // Preserve the visible opacity when membership changes during
+                // batch arrival, then let individual dots retarget their fades.
+                let batchAlpha = alpha
+                for key in markerOrder {
+                    guard var marker = markers[key] else { continue }
+                    marker.alpha *= batchAlpha
+                    marker.fade = nil
+                    markers[key] = marker
+                }
+                batchArrival = nil
+                alpha = 1
+            }
+        }
+        let fadesWholeBatch = !hasPublishedStations && !overlay.stations.isEmpty && duration > 0
+        if fadesWholeBatch {
+            // A new journey's dots arrive together. Fade the already painted
+            // texture in the compositor instead of rasterising every dot on
+            // every display-link tick for the shared station canvas.
+            batchArrival = Fade(from: 0, to: 1, startedAt: now, duration: duration)
+            alpha = 0
+        }
+        if !overlay.stations.isEmpty { hasPublishedStations = true }
         var occurrences: [String: Int] = [:]
         var desiredKeys: Set<String> = []
         var order: [String] = []
         for station in overlay.stations {
-            let base = "\(station.coordinate.latitude)|\(station.coordinate.longitude)|\(station.role)|\(station.rawName)"
+            let base = "\(station.rideID)|\(station.coordinate.latitude)|\(station.coordinate.longitude)|\(station.role)|\(station.rawName)"
             let occurrence = occurrences[base, default: 0]
             occurrences[base] = occurrence + 1
             let key = "\(base)|\(occurrence)"
@@ -390,8 +444,8 @@ final class RideStationOverlayRenderer: MKOverlayRenderer {
                 markers[key] = marker
             } else {
                 markers[key] = Marker(station: station,
-                    alpha: duration > 0 ? 0 : station.alpha,
-                    fade: duration > 0 ? Fade(from: 0, to: station.alpha,
+                    alpha: duration > 0 && !fadesWholeBatch ? 0 : station.alpha,
+                    fade: duration > 0 && !fadesWholeBatch ? Fade(from: 0, to: station.alpha,
                                              startedAt: now, duration: duration) : nil,
                     retiring: false)
             }
@@ -416,6 +470,11 @@ final class RideStationOverlayRenderer: MKOverlayRenderer {
     }
 
     private func sampleFades(at now: TimeInterval) {
+        if let fade = batchArrival {
+            let fraction = min(1, max(0, (now - fade.startedAt) / fade.duration))
+            alpha = fade.from + (fade.to - fade.from) * RailMotion.mapHighlightProgress(fraction)
+            if fraction >= 1 { batchArrival = nil }
+        }
         for key in markerOrder {
             guard var marker = markers[key], let fade = marker.fade else { continue }
             let fraction = min(1, max(0, (now - fade.startedAt) / fade.duration))
@@ -434,13 +493,14 @@ final class RideStationOverlayRenderer: MKOverlayRenderer {
     }
 
     private func advance(at now: TimeInterval) {
+        let changesPaint = markers.values.contains { $0.fade != nil }
         sampleFades(at: now)
-        publishCircles()
+        if changesPaint { publishCircles() }
         updateClock()
     }
 
     private func updateClock() {
-        if markers.values.contains(where: { $0.fade != nil }) {
+        if batchArrival != nil || markers.values.contains(where: { $0.fade != nil }) {
             guard displayLink == nil else { return }
             frameTarget.renderer = self
             let link = CADisplayLink(target: frameTarget, selector: #selector(FrameTarget.tick(_:)))
@@ -465,9 +525,79 @@ final class RideStationOverlayRenderer: MKOverlayRenderer {
                           coreColor: station.core?.color.cgColor)
         }
         circleLock.lock()
+        guard circles != updated else {
+            circleLock.unlock()
+            return
+        }
+        let previous = circles
         circles = updated
+        for circle in updated {
+            paintCoverage = paintCoverage.union(MKMapRect(
+                x: circle.point.x, y: circle.point.y, width: 0, height: 0))
+            paintRadius = max(paintRadius, circle.radius)
+        }
         circleLock.unlock()
-        setNeedsDisplay()
+        invalidateChangedCircles(previous: previous, updated: updated)
+    }
+
+    // A fade only ever moves a handful of dots, so invalidating the whole
+    // country canvas on every display-link tick wastes most of the redraw.
+    // Diff against the last published circles and invalidate just the map
+    // rect that covers what changed, padded by the largest affected radius.
+    private func invalidateChangedCircles(previous: [Circle], updated: [Circle]) {
+        guard zoom.isFinite, previous.count == updated.count else {
+            setNeedsDisplay()
+            return
+        }
+        let mapPointsPerScreenPoint = MKMapSize.world.width / (256 * pow(2, zoom))
+        var changed: [(old: Circle, new: Circle)] = []
+        for (old, new) in zip(previous, updated) where old != new {
+            changed.append((old, new))
+            if changed.count > 512 {
+                setNeedsDisplay()
+                return
+            }
+        }
+        guard !changed.isEmpty else { return }
+        // Invalidating each dot's own padded rect keeps Core Graphics redraws
+        // small when only a handful of dots are mid-fade. Once enough dots
+        // change in a single tick, a union covers the same area for less
+        // display-link overhead than many small invalidations.
+        if changed.count > 64 {
+            var union = MKMapRect.null
+            var maxRadius: CGFloat = 0
+            for (old, new) in changed {
+                union = union.union(MKMapRect(x: old.point.x, y: old.point.y, width: 0, height: 0))
+                union = union.union(MKMapRect(x: new.point.x, y: new.point.y, width: 0, height: 0))
+                maxRadius = max(maxRadius, old.radius, new.radius)
+            }
+            let padding = Double(maxRadius) * mapPointsPerScreenPoint * 2
+            setNeedsDisplay(union.insetBy(dx: -padding, dy: -padding))
+            return
+        }
+        for (old, new) in changed {
+            let radius = max(old.radius, new.radius)
+            let padding = Double(radius) * mapPointsPerScreenPoint * 2
+            var rect = MKMapRect(x: old.point.x, y: old.point.y, width: 0, height: 0)
+                .union(MKMapRect(x: new.point.x, y: new.point.y, width: 0, height: 0))
+            rect = rect.insetBy(dx: -padding, dy: -padding)
+            setNeedsDisplay(rect)
+        }
+    }
+
+    override func canDraw(_ mapRect: MKMapRect, zoomScale: MKZoomScale) -> Bool {
+        guard zoomScale > 0 else { return false }
+        circleLock.lock()
+        let coverage = paintCoverage
+        let radius = paintRadius
+        circleLock.unlock()
+        guard !coverage.isNull else { return false }
+        let padding = Double(radius) / zoomScale
+        // A world-sized MKOverlay keeps screen-sized dots valid at every
+        // zoom, but accepting every tile generates transparent textures for
+        // every journey across the world. Only tiles that may contain paint
+        // (including departing paint) need raster resources.
+        return coverage.insetBy(dx: -padding, dy: -padding).intersects(mapRect)
     }
 
     override func draw(_ mapRect: MKMapRect, zoomScale: MKZoomScale, in context: CGContext) {
@@ -982,8 +1112,8 @@ final class StationAnnotationView: MKAnnotationView {
         dot.layer.cornerRadius = diameter / 2
         dot.layer.borderWidth = RailStyle.stationRing * scale
 
-        // The coordinator has already applied the importance-specific zoom
-        // floor and collision pass; a second floor would hide distant hubs.
+        // The coordinator has already applied collision placement in
+        // importance order; a zoom floor here would hide names with room.
         let names = showsName || fadingNameOut
         var width = diameter
         // Nothing below is worth doing for a name that is not drawn

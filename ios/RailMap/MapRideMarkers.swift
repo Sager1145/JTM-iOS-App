@@ -228,7 +228,7 @@ enum MapRideMarkers {
     /// declares its endpoint names, a disagreement with the stop at that index
     /// means the index is not the stop's, and the position is not used.
     static func stopPositions(of ride: RiddenRouteStore.DrawnRide) -> [Int: Coordinate] {
-        var result: [Int: Coordinate] = [:]
+        var result = ride.markerPositions
         let stops = ride.stops
         guard !stops.isEmpty else { return [:] }
         for segment in ride.segments.sorted(by: { $0.segmentIndex < $1.segmentIndex }) {

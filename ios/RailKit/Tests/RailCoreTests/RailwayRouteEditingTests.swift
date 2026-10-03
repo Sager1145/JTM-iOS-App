@@ -80,6 +80,53 @@ struct RailwayRouteEditingTests {
         }
     }
 
+    @Test("Limited express route selection fills passing visits and protects edits after reload")
+    func limitedExpressPassingVisitsAfterReload() throws {
+        var published = train(["A", "C", "F"])
+        published.number = "Limited Express 7"
+        published.trainType = "limited_express"
+        for index in published.stops.indices {
+            published.stops[index].stopType = "passenger_stop"
+            published.stops[index].platformNumber = index + 1
+            published.stops[index].arrival = "09:\(index)0"
+            published.stops[index].departure = "09:\(index)1"
+        }
+        let choices = [choice(["A", "B", "C", "D", "F"]), choice(["A", "B", "C", "E", "F"])]
+        #expect(RailwayRouteEditing.decisions(choices: choices).count == 1)
+        let selected = try #require(RailwayRouteEditing.plan(train: published, choice: choices[0]))
+        #expect(selected.requiresConfirmation == false)
+        #expect(selected.insertedStops.map(\.n02StationCode) == ["B", "D"])
+        #expect(selected.insertedStops.allSatisfy {
+            $0.stopType == "pass_through" && $0.platformNumber == nil
+                && $0.arrival == nil && $0.departure == nil
+                && $0.actualArrival == nil && $0.actualDeparture == nil
+                && $0.routeEditing?.generatedBy != nil
+        })
+        #expect(selected.updatedTrain.stops.filter { $0.stopType == "passenger_stop" } == published.stops)
+
+        let saved = TrainValidation.normalizeExportTrain(selected.updatedTrain)
+        var reloaded = try TrainValidation.normalizeImportedTrain(StoreOperations.json(saved))
+        #expect(reloaded.stops == selected.updatedTrain.stops)
+        #expect(reloaded.stops.filter(RailwayRouteEditing.isUntouchedGenerated).map(\.n02StationCode) == ["B", "D"])
+        // Match the editor's promotion of a manually changed automatic visit.
+        reloaded.stops[1].actualArrival = "09:05"
+        reloaded.stops[1].routeEditing?.generatedBy = nil
+        let editedVisit = reloaded.stops[1]
+
+        let switched = try #require(RailwayRouteEditing.plan(train: reloaded, choice: choices[1]))
+        #expect(switched.requiresConfirmation == false)
+        #expect(switched.updatedTrain.stops[1] == editedVisit)
+        #expect(switched.removedStops.map(\.n02StationCode) == ["D"])
+        #expect(switched.insertedStops.map(\.n02StationCode) == ["E"])
+        #expect(switched.updatedTrain.stops.filter { $0.stopType == "passenger_stop" } == published.stops)
+
+        let removingEditedVisit = try #require(RailwayRouteEditing.plan(
+            train: switched.updatedTrain, choice: choice(["A", "C", "E", "F"])))
+        #expect(removingEditedVisit.requiresConfirmation)
+        #expect(removingEditedVisit.conflictingStops == [editedVisit])
+        #expect(removingEditedVisit.removedStops.isEmpty)
+    }
+
     @Test("Boundary and common visits retain every field, and outside sections remain exact")
     func preservePayloadAndSections() throws {
         var original = train(["X", "A", "B", "D", "Z"])

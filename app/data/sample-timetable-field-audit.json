@@ -1,28 +1,28 @@
 {
   "format": 1,
-  "database_sha256": "dbbe70077f8b849ad8d13b3d32ce7002a323b9227c19462aa4e5fdcbb556241b",
+  "database_sha256": "44dbd21da235bbeab2f9ef1a38c16812ecb8932abb3b55adcfc00c9c120ac926",
   "scope": "All sample stores; Japan-only limited express evidence; no timetable backprojection. Missing times at ride boundaries/pass-through stations are often intentional.",
   "counts": {
     "existing_caption_english_fields": 101,
     "existing_caption_vehicle_fields": 2,
-    "inventory": 292,
+    "inventory": 295,
     "no_database_trip_identity": 26,
     "no_date_valid_ridden_trip": 17,
-    "outside_japan_scope": 36,
+    "outside_japan_scope": 39,
     "outside_limited_express_scope": 213,
-    "region_ca": 3,
+    "region_ca": 4,
     "region_hk": 1,
     "region_jp": 256,
     "region_kr": 1,
     "region_mo": 1,
     "region_tw": 28,
-    "region_us": 2
+    "region_us": 4
   },
   "missing_train_field_counts": {
     "direction": 84,
-    "notes": 290,
-    "number_en": 191,
-    "vehicle_type": 290
+    "notes": 256,
+    "number_en": 194,
+    "vehicle_type": 293
   },
   "inventory": [
     {
@@ -179,6 +179,52 @@
       },
       "missing_section_operating_numbers": 4,
       "unresolved_current_station_ids": [],
+      "generated_copy": true,
+      "generated_station_ids_normalized": false
+    },
+    {
+      "dataset": "train-store-ca",
+      "region": "ca",
+      "train_id": "CA-SAMPLE-MAPLE-LEAF",
+      "date": "2026-08-21",
+      "status": "outside_japan_scope",
+      "identity_candidates": [],
+      "matched_trip_id": null,
+      "aligned_fields": [],
+      "english_field_source": null,
+      "vehicle_field_source": null,
+      "missing_train_fields": [
+        "number_en",
+        "vehicle_type",
+        "notes"
+      ],
+      "missing_stop_field_counts": {
+        "arrival": 23,
+        "departure": 23,
+        "actual_arrival": 23,
+        "actual_departure": 23,
+        "platform_number": 23
+      },
+      "missing_section_operating_numbers": 22,
+      "unresolved_current_station_ids": [
+        "US-AMTRAK-AMTRAK-NFL-US-OFFICIAL-NIAGARA-FALLS",
+        "US-AMTRAK-AMTRAK-BFX-US-OFFICIAL-BUFFALO",
+        "US-AMTRAK-AMTRAK-BUF-US-OFFICIAL-BUFFALO-DEPEW",
+        "US-AMTRAK-AMTRAK-ROC-US-OFFICIAL-ROCHESTER",
+        "US-AMTRAK-AMTRAK-NYF-US-OFFICIAL-NY-STATE-FAIR",
+        "US-AMTRAK-AMTRAK-SYR-US-OFFICIAL-SYRACUSE-REGIONAL-TRANSPORTATION-CENTER",
+        "US-AMTRAK-AMTRAK-ROM-US-OFFICIAL-ROME",
+        "US-AMTRAK-AMTRAK-UCA-US-OFFICIAL-UTICA",
+        "US-AMTRAK-AMTRAK-AMS-US-OFFICIAL-AMSTERDAM",
+        "US-AMTRAK-AMTRAK-SDY-US-OFFICIAL-SCHENECTADY",
+        "US-AMTRAK-AMTRAK-ALB-US-OFFICIAL-ALBANY-RENSSELAER",
+        "US-AMTRAK-AMTRAK-HUD-US-OFFICIAL-HUDSON",
+        "US-AMTRAK-AMTRAK-RHI-US-OFFICIAL-RHINECLIFF",
+        "US-AMTRAK-AMTRAK-POU-US-OFFICIAL-POUGHKEEPSIE",
+        "US-AMTRAK-AMTRAK-CRT-US-OFFICIAL-CROTON-HARMON",
+        "US-AMTRAK-AMTRAK-YNY-US-OFFICIAL-YONKERS",
+        "US-AMTRAK-AMTRAK-NYP-US-OFFICIAL-NY-MOYNIHAN-TRAIN-HALL-AT-PENN"
+      ],
       "generated_copy": true,
       "generated_station_ids_normalized": false
     },
@@ -1107,6 +1153,65 @@
       "generated_station_ids_normalized": false
     },
     {
+      "dataset": "train-store-us",
+      "region": "us",
+      "train_id": "US-SAMPLE-ADIRONDACK",
+      "date": "2026-08-19",
+      "status": "outside_japan_scope",
+      "identity_candidates": [],
+      "matched_trip_id": null,
+      "aligned_fields": [],
+      "english_field_source": null,
+      "vehicle_field_source": null,
+      "missing_train_fields": [
+        "number_en",
+        "vehicle_type",
+        "notes"
+      ],
+      "missing_stop_field_counts": {
+        "arrival": 18,
+        "departure": 18,
+        "actual_arrival": 18,
+        "actual_departure": 18,
+        "platform_number": 18
+      },
+      "missing_section_operating_numbers": 17,
+      "unresolved_current_station_ids": [
+        "CA-AMTRAK-AMTRAK-SLQ-CA-OFFICIAL-SAINT-LAMBERT",
+        "CA-AMTRAK-AMTRAK-MTR-CA-OFFICIAL-MONTR-AL"
+      ],
+      "generated_copy": true,
+      "generated_station_ids_normalized": false
+    },
+    {
+      "dataset": "train-store-us",
+      "region": "us",
+      "train_id": "US-SAMPLE-CASCADES",
+      "date": "2026-09-30",
+      "status": "outside_japan_scope",
+      "identity_candidates": [],
+      "matched_trip_id": null,
+      "aligned_fields": [],
+      "english_field_source": null,
+      "vehicle_field_source": null,
+      "missing_train_fields": [
+        "number_en",
+        "vehicle_type",
+        "notes"
+      ],
+      "missing_stop_field_counts": {
+        "arrival": 18,
+        "departure": 18,
+        "actual_arrival": 18,
+        "actual_departure": 18,
+        "platform_number": 18
+      },
+      "missing_section_operating_numbers": 17,
+      "unresolved_current_station_ids": [],
+      "generated_copy": true,
+      "generated_station_ids_normalized": false
+    },
+    {
       "dataset": "train-store",
       "region": "jp",
       "train_id": "20260703_01_haruka",
@@ -1123,17 +1228,16 @@
       "vehicle_field_source": null,
       "missing_train_fields": [
         "vehicle_type",
-        "direction",
-        "notes"
+        "direction"
       ],
       "missing_stop_field_counts": {
-        "arrival": 35,
-        "departure": 35,
-        "actual_arrival": 38,
-        "actual_departure": 38,
-        "platform_number": 38
+        "arrival": 1,
+        "departure": 1,
+        "actual_arrival": 4,
+        "actual_departure": 4,
+        "platform_number": 4
       },
-      "missing_section_operating_numbers": 37,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -1863,17 +1967,16 @@
       "english_field_source": "existing_bilingual_caption",
       "vehicle_field_source": null,
       "missing_train_fields": [
-        "vehicle_type",
-        "notes"
+        "vehicle_type"
       ],
       "missing_stop_field_counts": {
-        "arrival": 33,
-        "departure": 33,
-        "actual_arrival": 39,
-        "actual_departure": 39,
-        "platform_number": 39
+        "arrival": 1,
+        "departure": 1,
+        "actual_arrival": 7,
+        "actual_departure": 7,
+        "platform_number": 7
       },
-      "missing_section_operating_numbers": 38,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -1892,17 +1995,16 @@
       "english_field_source": "existing_bilingual_caption",
       "vehicle_field_source": null,
       "missing_train_fields": [
-        "vehicle_type",
-        "notes"
+        "vehicle_type"
       ],
       "missing_stop_field_counts": {
-        "arrival": 48,
-        "departure": 48,
-        "actual_arrival": 63,
-        "actual_departure": 63,
-        "platform_number": 63
+        "arrival": 1,
+        "departure": 1,
+        "actual_arrival": 16,
+        "actual_departure": 16,
+        "platform_number": 16
       },
-      "missing_section_operating_numbers": 62,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -2070,17 +2172,16 @@
       "missing_train_fields": [
         "number_en",
         "vehicle_type",
-        "direction",
-        "notes"
+        "direction"
       ],
       "missing_stop_field_counts": {
-        "arrival": 12,
-        "departure": 12,
-        "actual_arrival": 13,
-        "actual_departure": 13,
-        "platform_number": 13
+        "arrival": 2,
+        "departure": 2,
+        "actual_arrival": 3,
+        "actual_departure": 3,
+        "platform_number": 3
       },
-      "missing_section_operating_numbers": 12,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -3092,17 +3193,16 @@
       "english_field_source": "existing_bilingual_caption",
       "vehicle_field_source": null,
       "missing_train_fields": [
-        "vehicle_type",
-        "notes"
+        "vehicle_type"
       ],
       "missing_stop_field_counts": {
-        "arrival": 59,
-        "departure": 50,
-        "actual_arrival": 61,
-        "actual_departure": 61,
-        "platform_number": 61
+        "arrival": 10,
+        "departure": 1,
+        "actual_arrival": 12,
+        "actual_departure": 12,
+        "platform_number": 12
       },
-      "missing_section_operating_numbers": 60,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -3123,17 +3223,16 @@
       "english_field_source": "existing_bilingual_caption",
       "vehicle_field_source": null,
       "missing_train_fields": [
-        "vehicle_type",
-        "notes"
+        "vehicle_type"
       ],
       "missing_stop_field_counts": {
-        "arrival": 41,
-        "departure": 33,
-        "actual_arrival": 44,
-        "actual_departure": 44,
-        "platform_number": 44
+        "arrival": 9,
+        "departure": 1,
+        "actual_arrival": 12,
+        "actual_departure": 12,
+        "platform_number": 12
       },
-      "missing_section_operating_numbers": 43,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -3212,17 +3311,16 @@
       "english_field_source": "existing_bilingual_caption",
       "vehicle_field_source": null,
       "missing_train_fields": [
-        "vehicle_type",
-        "notes"
+        "vehicle_type"
       ],
       "missing_stop_field_counts": {
-        "arrival": 41,
-        "departure": 37,
-        "actual_arrival": 44,
-        "actual_departure": 44,
-        "platform_number": 44
+        "arrival": 5,
+        "departure": 1,
+        "actual_arrival": 8,
+        "actual_departure": 8,
+        "platform_number": 8
       },
-      "missing_section_operating_numbers": 43,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -3244,17 +3342,16 @@
       "english_field_source": "existing_bilingual_caption",
       "vehicle_field_source": null,
       "missing_train_fields": [
-        "vehicle_type",
-        "notes"
+        "vehicle_type"
       ],
       "missing_stop_field_counts": {
-        "arrival": 59,
-        "departure": 45,
-        "actual_arrival": 61,
-        "actual_departure": 61,
-        "platform_number": 61
+        "arrival": 15,
+        "departure": 1,
+        "actual_arrival": 17,
+        "actual_departure": 17,
+        "platform_number": 17
       },
-      "missing_section_operating_numbers": 60,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -3276,17 +3373,16 @@
       "english_field_source": "existing_bilingual_caption",
       "vehicle_field_source": null,
       "missing_train_fields": [
-        "vehicle_type",
-        "notes"
+        "vehicle_type"
       ],
       "missing_stop_field_counts": {
-        "arrival": 59,
-        "departure": 47,
-        "actual_arrival": 61,
-        "actual_departure": 61,
-        "platform_number": 61
+        "arrival": 13,
+        "departure": 1,
+        "actual_arrival": 15,
+        "actual_departure": 15,
+        "platform_number": 15
       },
-      "missing_section_operating_numbers": 60,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -3475,17 +3571,16 @@
       "english_field_source": "existing_bilingual_caption",
       "vehicle_field_source": null,
       "missing_train_fields": [
-        "vehicle_type",
-        "notes"
+        "vehicle_type"
       ],
       "missing_stop_field_counts": {
-        "arrival": 64,
-        "departure": 52,
-        "actual_arrival": 66,
-        "actual_departure": 66,
-        "platform_number": 66
+        "arrival": 13,
+        "departure": 1,
+        "actual_arrival": 15,
+        "actual_departure": 15,
+        "platform_number": 15
       },
-      "missing_section_operating_numbers": 65,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -3908,17 +4003,16 @@
       "english_field_source": "existing_bilingual_caption",
       "vehicle_field_source": null,
       "missing_train_fields": [
-        "vehicle_type",
-        "notes"
+        "vehicle_type"
       ],
       "missing_stop_field_counts": {
-        "arrival": 33,
-        "departure": 28,
-        "actual_arrival": 34,
-        "actual_departure": 34,
-        "platform_number": 34
+        "arrival": 6,
+        "departure": 1,
+        "actual_arrival": 7,
+        "actual_departure": 7,
+        "platform_number": 7
       },
-      "missing_section_operating_numbers": 33,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -3937,17 +4031,16 @@
       "english_field_source": "existing_bilingual_caption",
       "vehicle_field_source": null,
       "missing_train_fields": [
-        "vehicle_type",
-        "notes"
+        "vehicle_type"
       ],
       "missing_stop_field_counts": {
-        "arrival": 67,
-        "departure": 54,
-        "actual_arrival": 72,
-        "actual_departure": 72,
-        "platform_number": 72
+        "arrival": 14,
+        "departure": 1,
+        "actual_arrival": 19,
+        "actual_departure": 19,
+        "platform_number": 19
       },
-      "missing_section_operating_numbers": 71,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -4169,17 +4262,16 @@
       "missing_train_fields": [
         "number_en",
         "vehicle_type",
-        "direction",
-        "notes"
+        "direction"
       ],
       "missing_stop_field_counts": {
-        "arrival": 15,
-        "departure": 15,
-        "actual_arrival": 19,
-        "actual_departure": 19,
-        "platform_number": 19
+        "arrival": 1,
+        "departure": 1,
+        "actual_arrival": 5,
+        "actual_departure": 5,
+        "platform_number": 5
       },
-      "missing_section_operating_numbers": 18,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -4455,17 +4547,16 @@
       "english_field_source": "existing_bilingual_caption",
       "vehicle_field_source": null,
       "missing_train_fields": [
-        "vehicle_type",
-        "notes"
+        "vehicle_type"
       ],
       "missing_stop_field_counts": {
-        "arrival": 12,
-        "departure": 12,
-        "actual_arrival": 15,
-        "actual_departure": 15,
-        "platform_number": 15
+        "arrival": 1,
+        "departure": 1,
+        "actual_arrival": 4,
+        "actual_departure": 4,
+        "platform_number": 4
       },
-      "missing_section_operating_numbers": 14,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -4513,17 +4604,16 @@
       "english_field_source": "existing_bilingual_caption",
       "vehicle_field_source": null,
       "missing_train_fields": [
-        "vehicle_type",
-        "notes"
+        "vehicle_type"
       ],
       "missing_stop_field_counts": {
-        "arrival": 15,
-        "departure": 15,
-        "actual_arrival": 20,
-        "actual_departure": 20,
-        "platform_number": 20
+        "arrival": 1,
+        "departure": 1,
+        "actual_arrival": 6,
+        "actual_departure": 6,
+        "platform_number": 6
       },
-      "missing_section_operating_numbers": 19,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -4542,17 +4632,16 @@
       "english_field_source": "existing_bilingual_caption",
       "vehicle_field_source": null,
       "missing_train_fields": [
-        "vehicle_type",
-        "notes"
+        "vehicle_type"
       ],
       "missing_stop_field_counts": {
-        "arrival": 15,
-        "departure": 15,
-        "actual_arrival": 20,
-        "actual_departure": 20,
-        "platform_number": 20
+        "arrival": 1,
+        "departure": 1,
+        "actual_arrival": 6,
+        "actual_departure": 6,
+        "platform_number": 6
       },
-      "missing_section_operating_numbers": 19,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -4852,17 +4941,16 @@
       "english_field_source": "existing_bilingual_caption",
       "vehicle_field_source": null,
       "missing_train_fields": [
-        "vehicle_type",
-        "notes"
+        "vehicle_type"
       ],
       "missing_stop_field_counts": {
-        "arrival": 20,
-        "departure": 20,
-        "actual_arrival": 29,
-        "actual_departure": 29,
-        "platform_number": 29
+        "arrival": 1,
+        "departure": 1,
+        "actual_arrival": 10,
+        "actual_departure": 10,
+        "platform_number": 10
       },
-      "missing_section_operating_numbers": 28,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -4883,17 +4971,16 @@
       "english_field_source": "existing_bilingual_caption",
       "vehicle_field_source": null,
       "missing_train_fields": [
-        "vehicle_type",
-        "notes"
+        "vehicle_type"
       ],
       "missing_stop_field_counts": {
-        "arrival": 36,
-        "departure": 36,
-        "actual_arrival": 46,
-        "actual_departure": 46,
-        "platform_number": 46
+        "arrival": 1,
+        "departure": 1,
+        "actual_arrival": 11,
+        "actual_departure": 11,
+        "platform_number": 11
       },
-      "missing_section_operating_numbers": 45,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -4914,17 +5001,16 @@
       "english_field_source": "existing_bilingual_caption",
       "vehicle_field_source": null,
       "missing_train_fields": [
-        "vehicle_type",
-        "notes"
+        "vehicle_type"
       ],
       "missing_stop_field_counts": {
-        "arrival": 52,
-        "departure": 52,
-        "actual_arrival": 68,
-        "actual_departure": 68,
-        "platform_number": 68
+        "arrival": 1,
+        "departure": 1,
+        "actual_arrival": 17,
+        "actual_departure": 17,
+        "platform_number": 17
       },
-      "missing_section_operating_numbers": 67,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -4943,17 +5029,16 @@
       "english_field_source": "existing_bilingual_caption",
       "vehicle_field_source": null,
       "missing_train_fields": [
-        "vehicle_type",
-        "notes"
+        "vehicle_type"
       ],
       "missing_stop_field_counts": {
-        "arrival": 21,
-        "departure": 21,
-        "actual_arrival": 29,
-        "actual_departure": 29,
-        "platform_number": 29
+        "arrival": 1,
+        "departure": 1,
+        "actual_arrival": 9,
+        "actual_departure": 9,
+        "platform_number": 9
       },
-      "missing_section_operating_numbers": 28,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -4974,17 +5059,16 @@
       "english_field_source": null,
       "vehicle_field_source": "existing_vehicle_caption",
       "missing_train_fields": [
-        "number_en",
-        "notes"
+        "number_en"
       ],
       "missing_stop_field_counts": {
-        "arrival": 7,
-        "departure": 7,
-        "actual_arrival": 8,
-        "actual_departure": 8,
-        "platform_number": 8
+        "arrival": 1,
+        "departure": 1,
+        "actual_arrival": 2,
+        "actual_departure": 2,
+        "platform_number": 2
       },
-      "missing_section_operating_numbers": 7,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -5205,17 +5289,16 @@
       "english_field_source": "existing_bilingual_caption",
       "vehicle_field_source": null,
       "missing_train_fields": [
-        "vehicle_type",
-        "notes"
+        "vehicle_type"
       ],
       "missing_stop_field_counts": {
-        "arrival": 8,
-        "departure": 8,
-        "actual_arrival": 10,
-        "actual_departure": 10,
-        "platform_number": 10
+        "arrival": 1,
+        "departure": 1,
+        "actual_arrival": 3,
+        "actual_departure": 3,
+        "platform_number": 3
       },
-      "missing_section_operating_numbers": 9,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -5262,17 +5345,16 @@
       "english_field_source": "existing_bilingual_caption",
       "vehicle_field_source": null,
       "missing_train_fields": [
-        "vehicle_type",
-        "notes"
+        "vehicle_type"
       ],
       "missing_stop_field_counts": {
-        "arrival": 3,
-        "departure": 3,
-        "actual_arrival": 4,
-        "actual_departure": 4,
-        "platform_number": 4
+        "arrival": 1,
+        "departure": 1,
+        "actual_arrival": 2,
+        "actual_departure": 2,
+        "platform_number": 2
       },
-      "missing_section_operating_numbers": 3,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -5294,17 +5376,16 @@
       "english_field_source": "existing_bilingual_caption",
       "vehicle_field_source": null,
       "missing_train_fields": [
-        "vehicle_type",
-        "notes"
+        "vehicle_type"
       ],
       "missing_stop_field_counts": {
-        "arrival": 9,
-        "departure": 9,
-        "actual_arrival": 10,
-        "actual_departure": 10,
-        "platform_number": 10
+        "arrival": 2,
+        "departure": 2,
+        "actual_arrival": 3,
+        "actual_departure": 3,
+        "platform_number": 3
       },
-      "missing_section_operating_numbers": 9,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -5352,17 +5433,16 @@
       "english_field_source": "existing_bilingual_caption",
       "vehicle_field_source": null,
       "missing_train_fields": [
-        "vehicle_type",
-        "notes"
+        "vehicle_type"
       ],
       "missing_stop_field_counts": {
-        "arrival": 9,
-        "departure": 9,
-        "actual_arrival": 10,
-        "actual_departure": 10,
-        "platform_number": 10
+        "arrival": 3,
+        "departure": 3,
+        "actual_arrival": 4,
+        "actual_departure": 4,
+        "platform_number": 4
       },
-      "missing_section_operating_numbers": 9,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -5791,17 +5871,16 @@
       "vehicle_field_source": null,
       "missing_train_fields": [
         "vehicle_type",
-        "direction",
-        "notes"
+        "direction"
       ],
       "missing_stop_field_counts": {
-        "arrival": 32,
-        "departure": 32,
-        "actual_arrival": 33,
-        "actual_departure": 33,
-        "platform_number": 33
+        "arrival": 3,
+        "departure": 3,
+        "actual_arrival": 4,
+        "actual_departure": 4,
+        "platform_number": 4
       },
-      "missing_section_operating_numbers": 32,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -6089,17 +6168,16 @@
       "vehicle_field_source": null,
       "missing_train_fields": [
         "vehicle_type",
-        "direction",
-        "notes"
+        "direction"
       ],
       "missing_stop_field_counts": {
-        "arrival": 2,
-        "departure": 2,
-        "actual_arrival": 3,
-        "actual_departure": 3,
-        "platform_number": 3
+        "arrival": 1,
+        "departure": 1,
+        "actual_arrival": 2,
+        "actual_departure": 2,
+        "platform_number": 2
       },
-      "missing_section_operating_numbers": 2,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -6480,11 +6558,11 @@
         "direction"
       ],
       "missing_stop_field_counts": {
-        "arrival": 204,
-        "departure": 204,
-        "actual_arrival": 217,
-        "actual_departure": 217,
-        "platform_number": 217
+        "arrival": 1,
+        "departure": 1,
+        "actual_arrival": 14,
+        "actual_departure": 14,
+        "platform_number": 14
       },
       "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
@@ -6565,17 +6643,16 @@
       "missing_train_fields": [
         "number_en",
         "vehicle_type",
-        "direction",
-        "notes"
+        "direction"
       ],
       "missing_stop_field_counts": {
-        "arrival": 45,
-        "departure": 45,
-        "actual_arrival": 46,
-        "actual_departure": 46,
-        "platform_number": 46
+        "arrival": 7,
+        "departure": 7,
+        "actual_arrival": 8,
+        "actual_departure": 8,
+        "platform_number": 8
       },
-      "missing_section_operating_numbers": 45,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -6743,17 +6820,16 @@
       "missing_train_fields": [
         "number_en",
         "vehicle_type",
-        "direction",
-        "notes"
+        "direction"
       ],
       "missing_stop_field_counts": {
-        "arrival": 29,
-        "departure": 29,
-        "actual_arrival": 30,
-        "actual_departure": 30,
-        "platform_number": 30
+        "arrival": 4,
+        "departure": 4,
+        "actual_arrival": 5,
+        "actual_departure": 5,
+        "platform_number": 5
       },
-      "missing_section_operating_numbers": 29,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -8059,17 +8135,16 @@
       "vehicle_field_source": null,
       "missing_train_fields": [
         "number_en",
-        "vehicle_type",
-        "notes"
+        "vehicle_type"
       ],
       "missing_stop_field_counts": {
-        "arrival": 10,
-        "departure": 8,
-        "actual_arrival": 11,
-        "actual_departure": 11,
-        "platform_number": 11
+        "arrival": 3,
+        "departure": 1,
+        "actual_arrival": 4,
+        "actual_departure": 4,
+        "platform_number": 4
       },
-      "missing_section_operating_numbers": 10,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -8115,17 +8190,16 @@
       "vehicle_field_source": null,
       "missing_train_fields": [
         "number_en",
-        "vehicle_type",
-        "notes"
+        "vehicle_type"
       ],
       "missing_stop_field_counts": {
-        "arrival": 19,
-        "departure": 19,
-        "actual_arrival": 22,
-        "actual_departure": 22,
-        "platform_number": 22
+        "arrival": 1,
+        "departure": 1,
+        "actual_arrival": 4,
+        "actual_departure": 4,
+        "platform_number": 4
       },
-      "missing_section_operating_numbers": 21,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -8145,17 +8219,16 @@
       "vehicle_field_source": null,
       "missing_train_fields": [
         "number_en",
-        "vehicle_type",
-        "notes"
+        "vehicle_type"
       ],
       "missing_stop_field_counts": {
-        "arrival": 6,
-        "departure": 6,
-        "actual_arrival": 7,
-        "actual_departure": 7,
-        "platform_number": 7
+        "arrival": 1,
+        "departure": 1,
+        "actual_arrival": 2,
+        "actual_departure": 2,
+        "platform_number": 2
       },
-      "missing_section_operating_numbers": 6,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -8173,17 +8246,16 @@
       "vehicle_field_source": null,
       "missing_train_fields": [
         "number_en",
-        "vehicle_type",
-        "notes"
+        "vehicle_type"
       ],
       "missing_stop_field_counts": {
-        "arrival": 10,
-        "departure": 10,
-        "actual_arrival": 13,
-        "actual_departure": 13,
-        "platform_number": 13
+        "arrival": 1,
+        "departure": 1,
+        "actual_arrival": 4,
+        "actual_departure": 4,
+        "platform_number": 4
       },
-      "missing_section_operating_numbers": 12,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -8287,17 +8359,16 @@
       "vehicle_field_source": null,
       "missing_train_fields": [
         "number_en",
-        "vehicle_type",
-        "notes"
+        "vehicle_type"
       ],
       "missing_stop_field_counts": {
-        "arrival": 3,
-        "departure": 3,
-        "actual_arrival": 4,
-        "actual_departure": 4,
-        "platform_number": 4
+        "arrival": 1,
+        "departure": 1,
+        "actual_arrival": 2,
+        "actual_departure": 2,
+        "platform_number": 2
       },
-      "missing_section_operating_numbers": 3,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -8399,17 +8470,16 @@
       "vehicle_field_source": null,
       "missing_train_fields": [
         "number_en",
-        "vehicle_type",
-        "notes"
+        "vehicle_type"
       ],
       "missing_stop_field_counts": {
-        "arrival": 4,
-        "departure": 4,
-        "actual_arrival": 5,
-        "actual_departure": 5,
-        "platform_number": 5
+        "arrival": 1,
+        "departure": 1,
+        "actual_arrival": 2,
+        "actual_departure": 2,
+        "platform_number": 2
       },
-      "missing_section_operating_numbers": 4,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -8427,17 +8497,16 @@
       "vehicle_field_source": null,
       "missing_train_fields": [
         "number_en",
-        "vehicle_type",
-        "notes"
+        "vehicle_type"
       ],
       "missing_stop_field_counts": {
-        "arrival": 11,
-        "departure": 11,
-        "actual_arrival": 13,
-        "actual_departure": 13,
-        "platform_number": 13
+        "arrival": 1,
+        "departure": 1,
+        "actual_arrival": 3,
+        "actual_departure": 3,
+        "platform_number": 3
       },
-      "missing_section_operating_numbers": 12,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false
@@ -8455,17 +8524,16 @@
       "vehicle_field_source": null,
       "missing_train_fields": [
         "number_en",
-        "vehicle_type",
-        "notes"
+        "vehicle_type"
       ],
       "missing_stop_field_counts": {
-        "arrival": 19,
-        "departure": 19,
-        "actual_arrival": 21,
-        "actual_departure": 21,
-        "platform_number": 21
+        "arrival": 1,
+        "departure": 1,
+        "actual_arrival": 3,
+        "actual_departure": 3,
+        "platform_number": 3
       },
-      "missing_section_operating_numbers": 20,
+      "missing_section_operating_numbers": 0,
       "unresolved_current_station_ids": null,
       "generated_copy": true,
       "generated_station_ids_normalized": false

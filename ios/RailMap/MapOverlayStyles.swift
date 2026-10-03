@@ -52,11 +52,19 @@ final class MapOverlayStyles {
     private struct OpacityTransition {
         var start: CGFloat
         var target: CGFloat
-        var startedAt: CFTimeInterval
+        /// Nil until the clock has actually seen a frame with this key's
+        /// renderer present — the transition sits at `start` until then, so a
+        /// renderer that mounts a tick or two late doesn't lose part of its
+        /// animated duration to time it was never drawn.
+        var startedAt: CFTimeInterval?
+        /// When `animateOpacity` queued this transition. Used only to give up
+        /// and complete a transition whose renderer never shows up.
+        var queuedAt: CFTimeInterval
         var duration: TimeInterval
         var completion: (() -> Void)?
 
         func alpha(at time: CFTimeInterval) -> CGFloat {
+            guard let startedAt else { return start }
             let progress = RailMotion.mapHighlightProgress((time - startedAt) / duration)
             return start + (target - start) * progress
         }
@@ -71,7 +79,7 @@ final class MapOverlayStyles {
         init(owner: MapOverlayStyles) { self.owner = owner }
         @objc func tick(_ link: CADisplayLink) {
             guard let owner else { link.invalidate(); return }
-            owner.advanceOpacity(at: CACurrentMediaTime())
+            owner.advanceOpacity(at: link.timestamp)
         }
     }
 
@@ -81,10 +89,30 @@ final class MapOverlayStyles {
         displayLink = nil
     }
 
+    /// A pending transition whose renderer never showed up within this long
+    /// is completed anyway, so an exit completion (removing the overlay) is
+    /// never stranded by a renderer MapKit decided not to build.
+    private static let pendingTimeout: CFTimeInterval = 0.5
+
     private func advanceOpacity(at time: CFTimeInterval) {
         var completions: [() -> Void] = []
-        for (key, transition) in opacityTransitions {
-            let finished = time - transition.startedAt >= transition.duration
+        for key in opacityTransitions.keys {
+            guard var transition = opacityTransitions[key] else { continue }
+            if transition.startedAt == nil {
+                if renderers[key] != nil {
+                    // First frame this key's renderer exists for: start the
+                    // clock here rather than at `animateOpacity`'s call site,
+                    // and hold at `start` for this tick.
+                    transition.startedAt = time
+                    renderers[key]?.alpha = transition.start
+                    opacityTransitions[key] = transition
+                } else if time - transition.queuedAt > Self.pendingTimeout {
+                    opacityTransitions.removeValue(forKey: key)
+                    if let completion = transition.completion { completions.append(completion) }
+                }
+                continue
+            }
+            let finished = time - transition.startedAt! >= transition.duration
             renderers[key]?.alpha = finished ? transition.target : transition.alpha(at: time)
             if finished {
                 opacityTransitions.removeValue(forKey: key)
@@ -115,7 +143,7 @@ final class MapOverlayStyles {
         }
         renderers[key]?.alpha = start
         opacityTransitions[key] = OpacityTransition(
-            start: start, target: style.alpha, startedAt: now,
+            start: start, target: style.alpha, startedAt: renderers[key] != nil ? now : nil, queuedAt: now,
             duration: duration, completion: completion)
         if displayLink == nil {
             let link = CADisplayLink(target: OpacityClock(owner: self), selector: #selector(OpacityClock.tick(_:)))
@@ -186,6 +214,10 @@ final class MapOverlayStyles {
     func remember(_ renderer: MKOverlayRenderer, forKey key: String) {
         guard !key.isEmpty else { return }
         renderers[key] = renderer
+        if var transition = opacityTransitions[key], transition.startedAt == nil {
+            transition.startedAt = CACurrentMediaTime()
+            opacityTransitions[key] = transition
+        }
         if let style = styles[key] {
             // Keep style opacity separate from colour so a fade changes only
             // compositor alpha, never stroke geometry or per-frame paint.

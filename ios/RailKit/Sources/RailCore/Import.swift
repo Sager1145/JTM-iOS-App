@@ -255,6 +255,9 @@ public enum ImportEngine {
         /// on every external write, including a same-count one.
         private var existingIDsCache: Set<String> = []
         private var existingIDsCacheCount: Int = -1
+        /// First suffix not yet consumed by this session for each colliding base.
+        /// Rebuilt after external mutations so deleted suffixes can be reused.
+        private var nextIDSuffix: [String: Int] = [:]
 
         public var selectedTrainID: String?
         public var focusedTrainID: String?
@@ -336,11 +339,11 @@ public enum ImportEngine {
         /// See the file header for what the composition accepts that neither
         /// door accepts alone. Two details of the order matter:
         ///
-        /// `existingIDs` is built *before* the rename and is not updated by
-        /// it, so the id `validateTrain` then checks for duplication is one it
-        /// cannot possibly collide with — which is the point. Uniqueness
-        /// against the live store is `makeUniqueTrainId`'s job, and the
-        /// validator's duplicate rule is left doing nothing here.
+        /// The ID cache and suffix cursor choose the first unused identity
+        /// before validation. Validation uses a local set because its early
+        /// insertion must not reserve a failed row's identity. Copying the
+        /// full cached Set into that local used to trigger an O(N) copy on
+        /// every insertion, despite the cache itself avoiding a fresh scan.
         ///
         /// Only the incoming train is validated. Rebuilding and re-validating
         /// the whole canonical store on every append was an O(N²) pass that
@@ -353,20 +356,33 @@ public enum ImportEngine {
         ) throws -> String {
             var train = try TrainValidation.normalizeImportedTrain(
                 raw, fallbackDate: fallbackDate, country: country, stations: stations)
-            var existingIDs =
-                existingIDsCacheCount == trains.count
-                ? existingIDsCache : Set(trains.map(\.id))
-            train.id = TrainValidation.makeUniqueTrainId(train.id, existingIDs: existingIDs)
+            if existingIDsCacheCount != trains.count {
+                existingIDsCache = Set(trains.map(\.id))
+                existingIDsCacheCount = trains.count
+                nextIDSuffix.removeAll(keepingCapacity: true)
+            }
+            let base = TrainValidation.makeUniqueTrainId(train.id, existingIDs: [])
+            var suffix = nextIDSuffix[base] ?? 2
+            train.id = base
+            if existingIDsCache.contains(base) {
+                repeat {
+                    train.id = "\(base)-\(suffix)"
+                    suffix += 1
+                } while existingIDsCache.contains(train.id)
+            }
+            // Uniqueness was established above. The validator inserts before
+            // checking stops, so use a fresh set: a failed row must neither
+            // reserve its ID nor copy the entire cached set on every append.
+            var validatedIDs: Set<String> = []
             try TrainValidation.validateTrain(
                 Self.canonicalJSON(
                     TrainValidation.normalizeExportTrain(
                         train, country: country, stations: stations)),
                 index: trains.count,
-                ids: &existingIDs)
+                ids: &validatedIDs)
             trains.append(train)
-            // `validateTrain` already inserted the new id into `existingIDs`
-            // above, so the cache is exactly `Set(trains.map(\.id))` again.
-            existingIDsCache = existingIDs
+            existingIDsCache.insert(train.id)
+            if train.id != base { nextIDSuffix[base] = suffix }
             existingIDsCacheCount = trains.count
             return train.id
         }

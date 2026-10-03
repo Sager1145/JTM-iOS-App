@@ -418,7 +418,12 @@ struct RailMapView: View {
             // sole evidence that the railway layer actually drew. A one-point,
             // visually empty label gives XCTest a machine-readable render state;
             // it is compiled out of release builds and cannot intercept input.
-            let renderStatus = UILabel(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+            let renderStatus = RouteStressStatusLabel(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+            if RouteStressHarness.enabled {
+                renderStatus.readStatus = { [weak coordinator = context.coordinator, weak renderStatus] in
+                    (renderStatus?.text ?? "") + (coordinator?.stressSelectionReadiness() ?? "")
+                }
+            }
             renderStatus.text = " "
             renderStatus.textColor = .clear
             renderStatus.isUserInteractionEnabled = false
@@ -451,7 +456,9 @@ struct RailMapView: View {
             // Maps would show; only the railway is tiered by zoom, in
             // `NetworkLOD`. Points of interest are still excluded so Apple's
             // station pins do not compete with our own station marks.
-            let configuration = MKStandardMapConfiguration()
+            // Selection changes only railway styling; keep cartography stable
+            // so highlighting a route never triggers a muted-basemap transition.
+            let configuration = MKStandardMapConfiguration(emphasisStyle: .default)
             configuration.pointOfInterestFilter = .excludingAll
             mapView.preferredConfiguration = configuration
 
@@ -626,6 +633,8 @@ struct RailMapView: View {
             private var firstNetworkRenderMilliseconds: Double?
             private var rebuildCount = 0
             private var rebuildsDuringGesture = 0
+            private var labelPasses = 0
+            private var gestureLabelPasses = 0
             private var lineCacheHits = 0
             private var annotationReuses = 0
             private var panCallbacks = 0
@@ -733,6 +742,8 @@ struct RailMapView: View {
 #if DEBUG
             weak var renderStatus: UILabel?
             private let gestureFrameProbe = MapGestureFrameProbe()
+            private var stressSubmittedSelection: String?
+            private var stressSubmittedDate = Dates.allDates
 #endif
             /// When a tap was last answered with a ride of this map's own —
             /// read by ``mapView(_:didSelect:)`` half a second later, and
@@ -1076,9 +1087,11 @@ struct RailMapView: View {
                 case .rebuild:
                     rebuildOwed(on: mapView)
                 }
+#if DEBUG
                 if selectionChanged || ridesChanged {
-                    updateBasemapEmphasis(on: mapView)
+                    updateBasemapRenderStatus(on: mapView)
                 }
+#endif
             }
 
             /// The old full-rebuild branch, unchanged, extracted so the
@@ -1259,6 +1272,19 @@ struct RailMapView: View {
             private var cameraRebuildTask: Task<Void, Never>?
             private var pendingViewUpdate: (@MainActor () -> Void)?
             private var lastCameraChange: ContinuousClock.Instant?
+            /// Restarted on every camera callback and on gesture release; runs the
+            /// settle-time label pass (and a `restyle`) once the camera is quiet,
+            /// independent of the 120 ms full-rebuild debounce.
+            private var labelSettleTask: Task<Void, Never>?
+            /// The last `(zoom * 4).rounded(.down) / 4` a MOVING label pass ran at,
+            /// so a pan that has not crossed a quarter zoom level does not repeat it.
+            private var lastLabelPassStep = Double.nan
+            private var lastLabelPassAt: ContinuousClock.Instant?
+            /// How long the last moving label pass took. A moving pass only runs again
+            /// while the previous one stayed inside its frame budget — an
+            /// expensive pass turns itself off rather than compounding during a
+            /// gesture.
+            private var lastMovingLabelPassCost = Duration.zero
 
             /// Cancel work and release bridges installed by this coordinator when
             /// SwiftUI replaces the map during a composition or window-size change.
@@ -1271,6 +1297,8 @@ struct RailMapView: View {
                 stationImportanceCountry = nil
                 cameraRebuildTask?.cancel()
                 cameraRebuildTask = nil
+                labelSettleTask?.cancel()
+                labelSettleTask = nil
                 pendingViewUpdate = nil
                 viewportResizeTask?.cancel()
                 viewportResizeTask = nil
@@ -1391,6 +1419,50 @@ struct RailMapView: View {
                 lastCameraChange = .now
                 cancelGeometryPreparation()
                 scheduleCameraRebuild(on: mapView)
+                // Names update on their own quarter-zoom cadence, well ahead of
+                // the full rebuild's 120 ms debounce — gated by the previous
+                // moving pass's cost, so an expensive pass does not compound one
+                // every callback.
+                let zoom = MapProjection.zoomLevel(of: mapView)
+                let step = (zoom / Self.labelZoomStep).rounded(.down) * Self.labelZoomStep
+                if step != lastLabelPassStep,
+                   lastLabelPassAt.map({ ContinuousClock.now - $0 >= Self.labelPassMinInterval }) ?? true,
+                   lastMovingLabelPassCost <= Self.labelPassMovingBudget,
+                   runLabelPass(on: mapView, moving: true) {
+                    lastLabelPassStep = step
+                    lastLabelPassAt = .now
+                }
+                restartLabelSettleTask(on: mapView)
+            }
+
+            /// Debounces the settle-time label pass (and `restyle`) behind the
+            /// camera's own quiet period, independent of the full rebuild's
+            /// 120 ms debounce — a settle pass is much cheaper and can safely
+            /// run sooner.
+            private func restartLabelSettleTask(on mapView: MKMapView) {
+                labelSettleTask?.cancel()
+                labelSettleTask = Task { @MainActor [weak self, weak mapView] in
+                    do { try await Task.sleep(for: .milliseconds(32)) }
+                    catch { return }
+                    guard let self, let mapView else { return }
+                    self.labelSettleTask = nil
+                    guard !self.isManipulating,
+                          self.playback?.isActive != true,
+                          self.playbackLayer.lastSnapshot == nil
+                    else { return }
+                    // Let the full rebuild re-elect names when its LOD or extent
+                    // will change, avoiding captions that immediately get replaced.
+                    if let context = self.markerBuildContext {
+                        let zoom = MapProjection.zoomLevel(of: mapView)
+                        let visibilityZoom = self.networkVisibility(on: mapView).visibilityZoom(cameraZoom: zoom)
+                        if visibilityZoom != context.visibilityZoom
+                            || !context.buildRect.contains(mapView.visibleMapRect) {
+                            return
+                        }
+                    }
+                    self.restyle(on: mapView)
+                    self.runLabelPass(on: mapView, moving: false)
+                }
             }
 
 
@@ -1461,28 +1533,6 @@ struct RailMapView: View {
                 annotationsNeedRefresh = true
                 networkBuildState.invalidateZoomBucket()
                 rebuild(on: mapView)
-            }
-
-            /// Selection mutes Apple's cartography while keeping station captions.
-            private func updateBasemapEmphasis(on mapView: MKMapView) {
-                // Muted standard cartography keeps roads and terrain while
-                // reducing the prominence of Apple's geographic captions.
-                // JTM's station names keep their own appearance.
-                let emphasis: MKStandardMapConfiguration.EmphasisStyle = selectedTrainID == nil
-                    ? .default : .muted
-                if let configuration = mapView.preferredConfiguration as? MKStandardMapConfiguration {
-                    if configuration.emphasisStyle != emphasis {
-                        configuration.emphasisStyle = emphasis
-                        mapView.preferredConfiguration = configuration
-                    }
-                } else {
-                    let configuration = MKStandardMapConfiguration(emphasisStyle: emphasis)
-                    configuration.pointOfInterestFilter = .excludingAll
-                    mapView.preferredConfiguration = configuration
-                }
-#if DEBUG
-                updateBasemapRenderStatus(on: mapView)
-#endif
             }
 
 #if DEBUG
@@ -1653,7 +1703,6 @@ struct RailMapView: View {
                     annotationReconciler.removeRetiring(on: mapView)
                     overlayInstaller.removeRetiring(on: mapView)
                     mapView.removeOverlays(mapView.overlays(in: .aboveLabels))
-                    updateBasemapEmphasis(on: mapView)
                     if !networkAnnotations.isEmpty { mapView.removeAnnotations(networkAnnotations) }
                     networkAnnotations = []
                     if !rideStationAnnotations.isEmpty {
@@ -1734,6 +1783,7 @@ struct RailMapView: View {
                 // continuous geometry.
                 guard !lines.isEmpty || !rides.isEmpty else { return }
 
+                lastMovingLabelPassCost = .zero
 #if DEBUG
                 rebuildCount += 1
                 if isManipulating { rebuildsDuringGesture += 1 }
@@ -1948,7 +1998,6 @@ struct RailMapView: View {
                 var desiredOverlays: [MKOverlay] = []
                 annotationsNeedRefresh = false
                 RailSignpost.map.end("map.rebuild.teardown", teardown)
-                updateBasemapEmphasis(on: mapView)
                 let networkOverlays = RailSignpost.map.begin("map.rebuild.networkOverlays")
                 let hasSelection = rides.contains { $0.id == selectedTrainID }
                 let overlays = overlayInstaller.networkOverlays(
@@ -2120,9 +2169,7 @@ struct RailMapView: View {
                 desiredOverlays.append(contentsOf: overlayReconciliation.oldOverlays.filter {
                     $0 is RideStationOverlay
                 })
-                overlayInstaller.install(
-                    desiredOverlays, replacing: overlayReconciliation,
-                    scale: scale, on: mapView, detailTransitionDuration: detailDuration)
+                let animateHighlight = selectionNeedsHighlightTransition && playback?.isActive != true
                 selectionNeedsHighlightTransition = false
                 fullyBuiltSelectedRideID = selectedTrainID
                 RailSignpost.map.end("map.rebuild.rideOverlays", rideOverlayInterval)
@@ -2130,7 +2177,13 @@ struct RailMapView: View {
                     zoom: zoom, visibilityZoom: visibilityZoom, scale: scale,
                     buildRect: buildRect, strokeAnchors: strokeAnchors, visible: visible)
                 markerBuildContext = context
-                buildMarkers(context, on: mapView)
+                // Install once, after marker election has placed each journey's
+                // station circles amongst its strokes. Installing the temporary
+                // strokes-then-circles stack first forces MapKit to reorder the
+                // same hundreds of retained overlays twice on every pan.
+                buildMarkers(context, on: mapView, pendingOverlays: desiredOverlays,
+                             networkTransitionDuration: detailDuration,
+                             highlightTransitionDuration: playback?.isActive == true ? 0 : (animateHighlight ? highlightDuration : nil))
                 playbackLayer.repaint(on: mapView)
 
                 let elapsed = ContinuousClock.now - started
@@ -2211,17 +2264,53 @@ struct RailMapView: View {
                     + String(format: ";viewportWidth:%.1f;viewportHeight:%.1f", mapView.bounds.width, mapView.bounds.height)
                     + String(format: ";firstNetworkMs:%.1f", firstNetworkRenderMilliseconds ?? -1)
                     + ";rebuilds:\(rebuildCount);gestureBuilds:\(rebuildsDuringGesture)"
+                    + ";labelPasses:\(labelPasses);gestureLabelPasses:\(gestureLabelPasses)"
                     + ";cacheHits:\(lineCacheHits);annotationReuses:\(annotationReuses)"
                     + ";panCallbacks:\(panCallbacks);panMaxGapMs:\(maxPanCallbackGapMilliseconds)"
                     + ";gestureFrames:\(gestureFrameProbe.frames);gestureMaxFrameGapMs:\(Int(gestureFrameProbe.maximumGapMilliseconds))"
                     + ";buildMs:\(elapsed.milliseconds);covered:\(networkBuildState.builtRect.contains(mapView.visibleMapRect) ? 1 : 0)"
                 renderStatus?.text = (renderStatus?.text ?? "") + targetRideReadiness()
+                stressSubmittedSelection = selectedTrainID
+                stressSubmittedDate = selectedDate
                 updateBasemapRenderStatus(on: mapView)
 #endif
                 DispatchQueue.main.async { [onRender] in onRender(stats) }
             }
 
 #if DEBUG
+            /// Live inspection of mounted overlays and their MapKit renderers,
+            /// invoked only by an opt-in stress test's accessibility snapshot.
+            func stressSelectionReadiness() -> String {
+                guard let mapView else { return "" }
+                let id = stressSubmittedSelection ?? "none"
+                let target = rides.first { $0.id == stressSubmittedSelection }
+                let expected = target.map { ride in
+                    let flags = MapRideMarkers.rideFlags(ride.stops)
+                    return ride.segments.filter {
+                        $0.coordinates.count > 1 && draws(segment: $0, of: ride, riddenStops: flags)
+                    }.count
+                } ?? 0
+                let mounted = mapView.overlays.compactMap { $0 as? MKMultiPolyline }
+                let cores = mounted.filter { $0.title == "ride|\(id)" || $0.title == "ride-xday|\(id)" }
+                let casings = mounted.filter { $0.title == "ride-casing|\(id)" || $0.title == "ride-xday-casing|\(id)" }
+                let parts = cores.reduce(0) { $0 + $1.polylines.count }
+                let casingParts = casings.reduce(0) { $0 + $1.polylines.count }
+                let coreRenderers = cores.compactMap { mapView.renderer(for: $0) }
+                let casingRenderers = casings.compactMap { mapView.renderer(for: $0) }
+                let nonemptyRides = rides.filter { $0.segments.contains { $0.coordinates.count > 1 } }.count
+                let installedRideOverlays = mounted.filter {
+                    $0.title?.hasPrefix("ride|") == true || $0.title?.hasPrefix("ride-xday|") == true
+                }.count
+                let settled = !cores.isEmpty && coreRenderers.count == cores.count
+                    && casingRenderers.count == casings.count && casingParts == parts
+                    && !casings.isEmpty && casingRenderers.allSatisfy { $0.alpha >= 0.89 }
+                    && coreRenderers.allSatisfy { $0.alpha > 0 }
+                return ";submittedSelection:\(id);submittedDate:\(stressSubmittedDate)"
+                    + ";nonemptyRides:\(nonemptyRides);installedRideOverlays:\(installedRideOverlays)"
+                    + ";selectionExpectedParts:\(expected);selectionParts:\(parts);selectionCasingParts:\(casingParts)"
+                    + ";selectionRenderers:\(coreRenderers.count);selectionSettled:\(settled ? 1 : 0)"
+            }
+
             private func targetRideReadiness() -> String {
                 // A ride count includes entries whose geometry is still being
                 // decoded. Picking/focus tests wait for their target and the
@@ -2282,14 +2371,91 @@ struct RailMapView: View {
                 }
             }
 
-            private func buildMarkers(_ context: MarkerBuildContext, on mapView: MKMapView) {
+            /// Re-elects names through screen-space collisions while moving passes
+            /// preserve built zoom and dot positions to avoid replacing endpoint captions.
+            /// Settled passes refresh zoom and scale to recover what moving passes skipped.
+            @discardableResult
+            private func runLabelPass(on mapView: MKMapView, moving: Bool) -> Bool {
+                guard let context = markerBuildContext,
+                      playbackLayer.lastSnapshot == nil,
+                      playback?.isActive != true,
+                      pendingStrokeRefs == nil,
+                      mapView.bounds.width > 1,
+                      selectedTrainID == nil || selectedTrainID == fullyBuiltSelectedRideID
+                else { return false }
+                var copy = context
+                if !moving {
+                    copy.zoom = MapProjection.zoomLevel(of: mapView)
+                }
+                if !moving, styledScale.isFinite {
+                    copy.scale = styledScale
+                }
+                let started = ContinuousClock.now
+                buildMarkers(copy, on: mapView, pass: .labels(moving: moving))
+                if moving {
+                    lastMovingLabelPassCost = ContinuousClock.now - started
+                }
+#if DEBUG
+                labelPasses += 1
+                if isManipulating { gestureLabelPasses += 1 }
+#endif
+                return true
+            }
+
+            /// A full rebuild re-elects every marker and restyles the mount.
+            /// A label pass only touches station names and the lane-fallback
+            /// coordinate that holds a dot while it is moving, so it can run on
+            /// its own, much faster, between full rebuilds. `moving` marks a
+            /// pass that ran mid-gesture, where an installed dot's position
+            /// must not jump.
+            private enum MarkerPass {
+                case full
+                case labels(moving: Bool)
+            }
+
+            private func buildMarkers(
+                _ context: MarkerBuildContext, on mapView: MKMapView,
+                pendingOverlays: [MKOverlay]? = nil,
+                networkTransitionDuration: TimeInterval? = nil,
+                highlightTransitionDuration: TimeInterval? = nil,
+                pass: MarkerPass = .full
+            ) {
                 let zoom = context.zoom
                 let visibilityZoom = context.visibilityZoom
                 let scale = context.scale
                 let buildRect = context.buildRect
                 let strokeAnchors = context.strokeAnchors
                 let visible = context.visible
-                let markerInterval = RailSignpost.map.begin("map.rebuild.markers")
+                let isLabelPass: Bool
+                let movingLabelPass: Bool
+                switch pass {
+                case .full:
+                    isLabelPass = false
+                    movingLabelPass = false
+                case .labels(let moving):
+                    isLabelPass = true
+                    movingLabelPass = moving
+                }
+                // Reuse an installed dot's position rather than recomputing the
+                // lane fallback mid-gesture — see `parallelStationCoordinate`
+                // below. Built once per pass; empty outside a moving label pass,
+                // where nothing reads it.
+                let installedStationCoordinates: [String: CLLocationCoordinate2D] =
+                    movingLabelPass
+                    ? Dictionary(
+                        networkAnnotations.compactMap {
+                            annotation -> (String, CLLocationCoordinate2D)? in
+                            guard let station = (annotation as? StationAnnotation)?.station
+                            else { return nil }
+                            return (
+                                "\(station.region.rawValue)|\(station.lineID)|\(station.id)",
+                                annotation.coordinate
+                            )
+                        },
+                        uniquingKeysWith: { first, _ in first })
+                    : [:]
+                let markerInterval = RailSignpost.map.begin(
+                    isLabelPass ? "map.labels" : "map.rebuild.markers")
                 // Recomputed rather than cached: derived only from coordinator
                 // state (`rides`, `selectedTrainID`, `dateScope`, `stations`,
                 // `lines`), not from geometry the last rebuild produced.
@@ -2731,16 +2897,12 @@ struct RailMapView: View {
                             && drawnLineIDs.contains(candidate.lineID)
                             && buildRect.contains(MKMapPoint(candidate.coordinate.clLocation))
                     }
-                    func nameIsEligible(_ station: RailNetworkStore.DrawnStation) -> Bool {
-                        zoom >= RailStyle.zoom(fromMapLibre:
-                            StationLabelVisibility.minimumMapLibreZoom(
-                                lineCount: station.popup.lines.count,
-                                isTerminal: station.isTerminal))
-                    }
                     func promotesName(_ station: RailNetworkStore.DrawnStation) -> Bool {
+                        // Offer every elected name as soon as its railway is
+                        // drawn. Screen-space placement decides what fits;
+                        // only accepted names restore a supporting bead below
+                        // the station-dot LOD floor.
                         layers.networkStationNames && station.showsLabel
-                            && (station.popup.lines.count > 1 || station.isTerminal)
-                            && nameIsEligible(station)
                     }
                     func tenantGroupID(_ candidate: RailNetworkStore.DrawnStation) -> String? {
                         guard let slot = candidate.slot,
@@ -2780,7 +2942,7 @@ struct RailMapView: View {
                             .map(\.lineID)
                             .min()
                         // When every tenant is below the dot floor there is no
-                        // existing bead to defer to. Let elected hub names reach
+                        // existing bead to defer to. Let elected names reach
                         // placement; name deduplication and collision admission
                         // decide whether a supporting bead is restored.
                         guard let lowestTenantLineID else { return false }
@@ -2833,7 +2995,7 @@ struct RailMapView: View {
                     var acceptedStationNames: Set<String> = []
                     if layers.networkStationNames {
                         let ordered = visibleStations.filter {
-                            $0.station.showsLabel && nameIsEligible($0.station)
+                            $0.station.showsLabel
                         }.sorted {
                             let left = $0.station.popup.lines.count > 1
                                 ? $0.station.popup.lines.count + 1 : ($0.station.isTerminal ? 1 : 0)
@@ -2900,7 +3062,8 @@ struct RailMapView: View {
                                 ]?[slot.anchor]
                             } ?? nearestStrokeAnchorCoordinate(
                                 for: station, in: strokeAnchors
-                            ) ?? parallelStationCoordinate(
+                            ) ?? installedStationCoordinates[candidate.key]
+                            ?? parallelStationCoordinate(
                                 station.coordinate.clLocation,
                                 lane: station.lane,
                                 bearing: station.laneBearing,
@@ -2918,17 +3081,30 @@ struct RailMapView: View {
                 rideStationAnnotations = annotationReconciler.reconcile(
                     markerAnnotations, replacing: rideStationAnnotations, on: mapView,
                     duration: detailDuration)
-                installRideStationOverlays(on: mapView, scale: scale)
+                // A moving label pass never installs ride-station overlays: it
+                // only relabels, and must not fight the gesture for the dots
+                // a full rebuild already placed.
+                if !movingLabelPass {
+                    installRideStationOverlays(on: mapView, scale: scale,
+                        pendingOverlays: pendingOverlays,
+                        networkTransitionDuration: networkTransitionDuration,
+                        highlightTransitionDuration: highlightTransitionDuration)
+                }
 #if DEBUG
                 annotationReuses += (networkAnnotations + rideStationAnnotations).filter {
                     oldAnnotationIDs.contains(ObjectIdentifier($0))
                 }.count
 #endif
-                // Retained views need the final zoom's sizing after a pinch.
-                styledScale = .nan
-                styledMarkZoom = .nan
-                restyle(on: mapView)
-                RailSignpost.map.end("map.rebuild.markers", markerInterval)
+                // A label pass changes no scale and must not clear the mark
+                // zoom a full rebuild is still using to throttle `restyle`.
+                if !isLabelPass {
+                    // Retained views need the final zoom's sizing after a pinch.
+                    styledScale = .nan
+                    styledMarkZoom = .nan
+                    restyle(on: mapView)
+                }
+                RailSignpost.map.end(
+                    isLabelPass ? "map.labels" : "map.rebuild.markers", markerInterval)
 
                 // The selected ride's origin / destination cards, and — when a
                 // day is in scope — that DAY's first origin and last
@@ -2942,11 +3118,18 @@ struct RailMapView: View {
                 if !endpointAnnotations.isEmpty { layoutEndpointLabels(on: mapView) }
             }
 
-            /// Interleave every unselected journey's circles with its strokes.
+            private static let allRideStationsID = "all"
+
+            /// Mount every unselected journey's circles above all its strokes.
             /// Running after the final marker election also covers supporting
             /// dots restored by labels and endpoint replacements, and repairs
             /// the stack after the selection fast path clears a highlight.
-            private func installRideStationOverlays(on mapView: MKMapView, scale: CGFloat) {
+            private func installRideStationOverlays(
+                on mapView: MKMapView, scale: CGFloat,
+                pendingOverlays: [MKOverlay]? = nil,
+                networkTransitionDuration: TimeInterval? = nil,
+                highlightTransitionDuration: TimeInterval? = nil
+            ) {
                 let reconciliation = overlayInstaller.reconciliation(on: mapView)
                 let installed = reconciliation.oldOverlays
                 let previous = Dictionary(installed.compactMap { $0 as? RideStationOverlay }
@@ -2954,13 +3137,15 @@ struct RailMapView: View {
                 let stations = Dictionary(grouping: rideStationAnnotations.compactMap {
                     $0 as? RideStationAnnotation
                 }.filter(\.drawsInOverlay), by: \.rideID)
-                let base = installed.filter { !($0 is RideStationOverlay) }
+                let base = (pendingOverlays ?? installed).filter { !($0 is RideStationOverlay) }
                 // Selection already raised its casing and cores. Only remove
                 // ordinary circle batches here; rebuilding deck order would
                 // put a selected early ride underneath later journeys.
                 if rides.contains(where: { $0.id == selectedTrainID }) {
                     retiringStationOverlays.removeAll()
-                    overlayInstaller.install(base, replacing: reconciliation, scale: scale, on: mapView)
+                    overlayInstaller.install(base, replacing: reconciliation, scale: scale, on: mapView,
+                        detailTransitionDuration: networkTransitionDuration,
+                        alphaTransitionDuration: highlightTransitionDuration)
                     return
                 }
                 let duration = detailDuration
@@ -2982,14 +3167,18 @@ struct RailMapView: View {
                 // selected route may have been moved to the top of the stack.
                 for ride in rides {
                     desired.append(contentsOf: strokes.removeValue(forKey: ride.id) ?? [])
-                    let dots = stations[ride.id] ?? []
-                    guard !dots.isEmpty || (duration > 0 && previous[ride.id] != nil) else { continue }
+                }
+                // One canvas for every journey's circles, in deck order, above
+                // every journey's strokes. See ``RideStationOverlay``.
+                let dots = rides.flatMap { stations[$0.id] ?? [] }
+                let old = previous[Self.allRideStationsID]
+                if !dots.isEmpty || (duration > 0 && old != nil) {
                     let overlay: RideStationOverlay
-                    if let old = previous[ride.id] {
+                    if let old {
                         overlay = old
                         overlay.stations = dots
                     } else {
-                        overlay = RideStationOverlay(rideID: ride.id, stations: dots)
+                        overlay = RideStationOverlay(rideID: Self.allRideStationsID, stations: dots)
                     }
                     overlay.transitionDuration = duration
                     if let renderer = mapView.renderer(for: overlay) as? RideStationOverlayRenderer {
@@ -3015,7 +3204,9 @@ struct RailMapView: View {
                     desired.append(overlay)
                 }
                 desired.append(contentsOf: playbackOverlays)
-                overlayInstaller.install(desired, replacing: reconciliation, scale: scale, on: mapView)
+                overlayInstaller.install(desired, replacing: reconciliation, scale: scale, on: mapView,
+                    detailTransitionDuration: networkTransitionDuration,
+                    alphaTransitionDuration: highlightTransitionDuration)
             }
 
             /// The marker records, built once per ride set rather than per pan.
@@ -3446,6 +3637,17 @@ struct RailMapView: View {
             /// same one rather than inventing a second distance.
             static let labelMergeMeters: Double = 600
 
+            /// Quarter-zoom granularity for a moving label pass — fine enough
+            /// that names keep pace with a pinch, coarse enough that an inertial
+            /// pan does not run one every callback.
+            private static let labelZoomStep = 0.25
+            /// Floor between two moving label passes, independent of the zoom
+            /// step above.
+            private static let labelPassMinInterval = Duration.milliseconds(100)
+            /// A moving pass that cost more than this turns itself off until the
+            /// gesture settles; the settle pass always runs regardless.
+            private static let labelPassMovingBudget = Duration.milliseconds(8)
+
             // MARK: - the origin / destination cards
 
             /// `computeScopedEndpoints` — the rides that own the selected
@@ -3762,6 +3964,9 @@ struct RailMapView: View {
                         if let mapView { updateLiveRenderStatus(on: mapView, camera: mapView.camera) }
                     }
 #endif
+                    if !isManipulating, let mapView {
+                        restartLabelSettleTask(on: mapView)
+                    }
                     guard !isManipulating, rebuildDeferredByGesture, let mapView else { return }
                     rebuildDeferredByGesture = false
                     scheduleCameraRebuild(on: mapView)
@@ -4008,6 +4213,10 @@ struct RailMapView: View {
                 let markersInterval = RailSignpost.map.begin("map.selection.markers")
                 buildMarkers(context, on: mapView)
                 RailSignpost.map.end("map.selection.markers", markersInterval)
+#if DEBUG
+                stressSubmittedSelection = selectedTrainID
+                stressSubmittedDate = selectedDate
+#endif
                 return true
             }
 
@@ -4021,6 +4230,11 @@ struct RailMapView: View {
                     : RailMotion.mapHighlightDuration(reduceMotion: controller?.reduceMotion == true)
             }
 
+            private var highlightExitDuration: TimeInterval {
+                playback?.isActive == true ? 0
+                    : RailMotion.mapHighlightExitDuration(reduceMotion: controller?.reduceMotion == true)
+            }
+
             /// A casing exits where it entered. Retargeting the same key cancels
             /// its removal callback, so selecting it again keeps its current alpha.
             private func retiringCasings(from overlays: [MKOverlay], on mapView: MKMapView) -> [MKOverlay] {
@@ -4030,12 +4244,12 @@ struct RailMapView: View {
                         key.hasPrefix("ride-casing|") || key.hasPrefix("ride-xday-casing|"),
                         let separator = key.firstIndex(of: "|"),
                         String(key[key.index(after: separator)...]) != selectedTrainID,
-                        var style = overlayStyles[key], highlightDuration > 0 else { continue }
+                        var style = overlayStyles[key], highlightExitDuration > 0 else { continue }
                     retired.append(overlay)
                     guard style.alpha != 0 else { continue }
                     style.alpha = 0
                     overlayStyles[key] = style
-                    overlayStyles.animateOpacity(forKey: key, duration: highlightDuration) { [weak self, weak mapView] in
+                    overlayStyles.animateOpacity(forKey: key, duration: highlightExitDuration) { [weak self, weak mapView] in
                         guard let self, let mapView, self.mapView === mapView,
                             self.overlayStyles[key]?.alpha == 0,
                             mapView.overlays.contains(where: { $0 === overlay }) else { return }

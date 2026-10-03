@@ -1,0 +1,293 @@
+{
+  "schemaVersion": 1,
+  "inventoryVersion": "2025.5.2",
+  "observedOn": "2026-10-02",
+  "lines": [
+    {
+      "lineID": "jp-東日本旅客鉄道-中央線",
+      "operatorName": "東日本旅客鉄道",
+      "lineName": "中央線",
+      "aliases": [],
+      "coverage": "partial",
+      "kinds": [
+        {
+          "id": "public-jreast-995T-中央線",
+          "displayName": "快速",
+          "trainType": "快速",
+          "sourceURL": "https://timetables.jreast.co.jp/2610/train/155/155531.html",
+          "validFrom": "2026-10-02",
+          "validUntil": "2026-10-03",
+          "scope": "新宿–高円寺 only; reviewed trip excerpt",
+          "fromStationCode": "003700",
+          "toStationCode": "003573",
+          "observedOn": "2026-10-02"
+        },
+        {
+          "id": "public-jreast-967T-中央線",
+          "displayName": "中央特快",
+          "trainType": "中央特快",
+          "sourceURL": "https://timetables.jreast.co.jp/2610/train/105/109551.html",
+          "validFrom": "2026-10-02",
+          "validUntil": "2026-10-03",
+          "scope": "新宿–三鷹 only; reviewed trip excerpt",
+          "fromStationCode": "003700",
+          "toStationCode": "003587",
+          "observedOn": "2026-10-02"
+        },
+        {
+          "id": "public-jreast-1091T-中央線",
+          "displayName": "青梅特快",
+          "trainType": "青梅特快",
+          "sourceURL": "https://timetables.jreast.co.jp/2610/train/155/155641.html",
+          "validFrom": "2026-10-02",
+          "validUntil": "2026-10-03",
+          "scope": "新宿–立川 only; reviewed trip excerpt",
+          "fromStationCode": "003700",
+          "toStationCode": "003634",
+          "observedOn": "2026-10-02"
+        }
+      ],
+      "note": "Small reviewed dated service evidence; no exhaustive class or timetable coverage."
+    },
+    {
+      "lineID": "jp-東日本旅客鉄道-青梅線",
+      "operatorName": "東日本旅客鉄道",
+      "lineName": "青梅線",
+      "aliases": [],
+      "coverage": "partial",
+      "kinds": [
+        {
+          "id": "public-jreast-1091T-青梅線",
+          "displayName": "青梅特快",
+          "trainType": "青梅特快",
+          "sourceURL": "https://timetables.jreast.co.jp/2610/train/155/155641.html",
+          "validFrom": "2026-10-02",
+          "validUntil": "2026-10-03",
+          "scope": "立川–西立川 only; reviewed trip excerpt",
+          "fromStationCode": "003634",
+          "toStationCode": "003581",
+          "observedOn": "2026-10-02"
+        }
+      ],
+      "note": "Small reviewed dated service evidence; no exhaustive class or timetable coverage."
+    },
+    {
+      "lineID": "jp-東日本旅客鉄道-東北線-2",
+      "operatorName": "東日本旅客鉄道",
+      "lineName": "東北線",
+      "aliases": [],
+      "coverage": "partial",
+      "kinds": [
+        {
+          "id": "public-jreast-1541E-東北線-2",
+          "displayName": "普通",
+          "trainType": "普通",
+          "sourceURL": "https://timetables.jreast.co.jp/2610/train/065/069941.html",
+          "validFrom": "2026-10-02",
+          "validUntil": "2026-10-03",
+          "scope": "上野–東京 only; reviewed trip excerpt",
+          "fromStationCode": "003505",
+          "toStationCode": "003766",
+          "observedOn": "2026-10-02"
+        }
+      ],
+      "note": "Small reviewed dated service evidence; no exhaustive class or timetable coverage."
+    },
+    {
+      "lineID": "jp-東日本旅客鉄道-東海道線",
+      "operatorName": "東日本旅客鉄道",
+      "lineName": "東海道線",
+      "aliases": [],
+      "coverage": "partial",
+      "kinds": [
+        {
+          "id": "public-jreast-1541E-東海道線",
+          "displayName": "普通",
+          "trainType": "普通",
+          "sourceURL": "https://timetables.jreast.co.jp/2610/train/065/069941.html",
+          "validFrom": "2026-10-02",
+          "validUntil": "2026-10-03",
+          "scope": "東京–品川 only; reviewed trip excerpt",
+          "fromStationCode": "003766",
+          "toStationCode": "004095",
+          "observedOn": "2026-10-02"
+        }
+      ],
+      "note": "Small reviewed dated service evidence; no exhaustive class or timetable coverage."
+    }
+  ],
+  "trips": [
+    {
+      "id": "public-jreast-20261002-995T",
+      "trainNumber": "995T",
+      "trainType": "快速",
+      "operatorName": "東日本旅客鉄道",
+      "lineIDs": [
+        "jp-東日本旅客鉄道-中央線"
+      ],
+      "serviceDates": [
+        "2026-10-02"
+      ],
+      "sourceURL": "https://timetables.jreast.co.jp/2610/train/155/155531.html",
+      "coverage": "partial",
+      "note": "Reviewed October 2 calendar cell explicitly marked class=ok on the October 2026 official train page. Timed calls are a small excerpt; omitted calls are unknown. Previous/next train identities are not supplied by this source.",
+      "stops": [
+        {
+          "stationCode": "003700",
+          "stationName": "新宿",
+          "arrivalSeconds": 35040,
+          "departureSeconds": 35100
+        },
+        {
+          "stationCode": "003568",
+          "stationName": "中野",
+          "arrivalSeconds": 35280,
+          "departureSeconds": 35340
+        },
+        {
+          "stationCode": "003573",
+          "stationName": "高円寺",
+          "arrivalSeconds": 35460,
+          "departureSeconds": 35460
+        }
+      ],
+      "previousTrainIDs": null,
+      "nextTrainIDs": null,
+      "sourceOperatorID": null,
+      "sourceRailwayID": null,
+      "sourceTrainTypeID": null,
+      "sourceCalendarID": null
+    },
+    {
+      "id": "public-jreast-20261002-967T",
+      "trainNumber": "967T",
+      "trainType": "中央特快",
+      "operatorName": "東日本旅客鉄道",
+      "lineIDs": [
+        "jp-東日本旅客鉄道-中央線"
+      ],
+      "serviceDates": [
+        "2026-10-02"
+      ],
+      "sourceURL": "https://timetables.jreast.co.jp/2610/train/105/109551.html",
+      "coverage": "partial",
+      "note": "Reviewed October 2 calendar cell explicitly marked class=ok on the October 2026 official train page. Timed calls are a small excerpt; omitted calls are unknown. Previous/next train identities are not supplied by this source.",
+      "stops": [
+        {
+          "stationCode": "003700",
+          "stationName": "新宿",
+          "arrivalSeconds": 35280,
+          "departureSeconds": 35280
+        },
+        {
+          "stationCode": "003568",
+          "stationName": "中野",
+          "arrivalSeconds": 35580,
+          "departureSeconds": 35640
+        },
+        {
+          "stationCode": "003587",
+          "stationName": "三鷹",
+          "arrivalSeconds": 36240,
+          "departureSeconds": 36300
+        }
+      ],
+      "previousTrainIDs": null,
+      "nextTrainIDs": null,
+      "sourceOperatorID": null,
+      "sourceRailwayID": null,
+      "sourceTrainTypeID": null,
+      "sourceCalendarID": null
+    },
+    {
+      "id": "public-jreast-20261002-1091T",
+      "trainNumber": "1091T",
+      "trainType": "青梅特快",
+      "operatorName": "東日本旅客鉄道",
+      "lineIDs": [
+        "jp-東日本旅客鉄道-中央線",
+        "jp-東日本旅客鉄道-青梅線"
+      ],
+      "serviceDates": [
+        "2026-10-02"
+      ],
+      "sourceURL": "https://timetables.jreast.co.jp/2610/train/155/155641.html",
+      "coverage": "partial",
+      "note": "Reviewed October 2 calendar cell explicitly marked class=ok on the October 2026 official train page. Timed calls are a small excerpt; omitted calls are unknown. Previous/next train identities are not supplied by this source.",
+      "stops": [
+        {
+          "stationCode": "003700",
+          "stationName": "新宿",
+          "arrivalSeconds": 37980,
+          "departureSeconds": 38160
+        },
+        {
+          "stationCode": "003634",
+          "stationName": "立川",
+          "arrivalSeconds": 39840,
+          "departureSeconds": 39840
+        },
+        {
+          "stationCode": "003581",
+          "stationName": "西立川",
+          "arrivalSeconds": 40020,
+          "departureSeconds": 40080
+        }
+      ],
+      "previousTrainIDs": null,
+      "nextTrainIDs": null,
+      "sourceOperatorID": null,
+      "sourceRailwayID": null,
+      "sourceTrainTypeID": null,
+      "sourceCalendarID": null
+    },
+    {
+      "id": "public-jreast-20261002-1541E",
+      "trainNumber": "1541E",
+      "trainType": "普通",
+      "operatorName": "東日本旅客鉄道",
+      "lineIDs": [
+        "jp-東日本旅客鉄道-東北線-2",
+        "jp-東日本旅客鉄道-東海道線"
+      ],
+      "serviceDates": [
+        "2026-10-02"
+      ],
+      "sourceURL": "https://timetables.jreast.co.jp/2610/train/065/069941.html",
+      "coverage": "partial",
+      "note": "Reviewed October 2 calendar cell explicitly marked class=ok on the October 2026 official train page. Timed calls are a small excerpt; omitted calls are unknown. Previous/next train identities are not supplied by this source.",
+      "stops": [
+        {
+          "stationCode": "003505",
+          "stationName": "上野",
+          "arrivalSeconds": 32040,
+          "departureSeconds": 32100
+        },
+        {
+          "stationCode": "003766",
+          "stationName": "東京",
+          "arrivalSeconds": 32460,
+          "departureSeconds": 32520
+        },
+        {
+          "stationCode": "003872",
+          "stationName": "新橋",
+          "arrivalSeconds": 32700,
+          "departureSeconds": 32760
+        },
+        {
+          "stationCode": "004095",
+          "stationName": "品川",
+          "arrivalSeconds": 33120,
+          "departureSeconds": null
+        }
+      ],
+      "previousTrainIDs": null,
+      "nextTrainIDs": null,
+      "sourceOperatorID": null,
+      "sourceRailwayID": null,
+      "sourceTrainTypeID": null,
+      "sourceCalendarID": null
+    }
+  ]
+}

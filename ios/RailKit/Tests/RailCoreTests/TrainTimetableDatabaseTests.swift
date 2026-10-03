@@ -406,7 +406,7 @@ struct TrainTimetableDatabaseTests {
         #expect(applied.routePolicy?.preferredOperatorNames == ["JR東海", "東武鉄道"])
     }
 
-    @Test func routeOnlyLineBoundaryProjectsAnOrderedUntimedPassThrough() throws {
+    @Test func routeOnlyLineBoundaryRemainsAConstraintWithoutInventingPassingCalls() throws {
         let fixture = try FixtureDatabase(routeOnlyLineBoundary: true)
         defer { fixture.remove() }
         let database = try TrainTimetableDatabase(url: fixture.url)
@@ -429,12 +429,9 @@ struct TrainTimetableDatabaseTests {
         #expect(!publishedDraft.stops.contains { $0.name == "日暮里" })
 
         let applied = try #require(trip.applying(to: draft))
-        #expect(applied.stops.count == 3)
-        #expect(applied.stops.map(\.name) == ["水戸", "日暮里", "上野"])
-        #expect(applied.stops[1].n02StationCode == "003417")
-        #expect(applied.stops[1].stopType == "pass_through")
-        #expect(applied.stops[1].arrival == nil)
-        #expect(applied.stops[1].departure == nil)
+        #expect(applied.stops.count == 2)
+        #expect(applied.stops.map(\.name) == ["水戸", "上野"])
+        #expect(!applied.stops.contains { $0.stopType == "pass_through" })
         #expect(applied.routeSections?.count == 2)
         #expect(applied.routeSections?[0].fromN02StationCode == "002319")
         #expect(applied.routeSections?[0].toN02StationCode == "003417")

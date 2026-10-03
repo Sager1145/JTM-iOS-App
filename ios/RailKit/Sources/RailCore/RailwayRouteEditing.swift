@@ -28,7 +28,8 @@ public enum RailwayRouteEditing {
         fileprivate var after: [Stop]
         fileprivate var beforeSections: [RouteSection]
         fileprivate var afterSections: [RouteSection]
-        fileprivate var originalSectionsWereNil: Bool
+        /// Exact source constraints may include boundaries absent from calls.
+        fileprivate var originalRouteSections: [RouteSection]?
 
         public func restore(in train: Train) -> Train? {
             guard let range = RailwayRouteEditing.range(
@@ -42,8 +43,8 @@ public enum RailwayRouteEditing {
             sections.replaceSubrange(range.lowerBound..<range.upperBound, with: beforeSections)
             var result = train
             result.stops.replaceSubrange(range, with: before)
-            result.routeSections = originalSectionsWereNil && range.lowerBound == 0
-                && range.upperBound == train.stops.count - 1 ? nil : sections
+            result.routeSections = range.lowerBound == 0 && range.upperBound == train.stops.count - 1
+                ? originalRouteSections : sections
             return result
         }
     }
@@ -177,7 +178,7 @@ public enum RailwayRouteEditing {
             updatedTrain: updated, insertedStops: inserted,
             removedStops: removed.filter(isUntouchedGenerated), conflictingStops: conflicts,
             undo: Undo(before: oldStops, after: replacement, beforeSections: oldSections,
-                       afterSections: selectedSections, originalSectionsWereNil: train.routeSections == nil))
+                       afterSections: selectedSections, originalRouteSections: train.routeSections))
     }
 
     public static func isUntouchedGenerated(_ stop: Stop) -> Bool {

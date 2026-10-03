@@ -77,7 +77,22 @@ struct RideEditorView: View {
     @State private var routeChoicesLoaded = false
     @State private var routeChoiceLoadError: String?
     @State private var routePackage: CompactPackage?
+    @State private var showsLocalJourneyFill = false
+    @State private var localJourneyCommit: LocalJourneyAutofill.Proposal?
+    @State private var localJourneyUndo: LocalJourneyUndo?
+
+    private struct LocalJourneyUndo {
+        let before: Train
+        let after: Train
+        let previousChoice: RailwayRouteChoices.Choice?
+        let previousLineIDs: Set<String>
+        let previousPattern: TrainServicePatterns.Pattern?
+        let previousTimetableDate: String?
+    }
     @State private var routeGuideRequest: RouteGuideRequest?
+    @State private var routeInferenceTask: Task<Void, Never>?
+    @State private var isInferringRoute = false
+    @State private var routeInferenceFailed = false
     @State private var pendingRouteCommit: RouteCommit?
     @State private var routeEditUndo: RailwayRouteEditing.Undo?
     @State private var routeEditSummary: String?
@@ -95,6 +110,7 @@ struct RideEditorView: View {
         var train: Train
         var package: CompactPackage
         var excludedCodes: Set<String> = []
+        var inferredChoice: RailwayRouteChoices.Choice?
     }
 
     /// Cross-border journeys can carry station codes from more than one
@@ -170,6 +186,7 @@ struct RideEditorView: View {
                             stopsSection
                         case .service:
                             Section { numberFields }
+                            localLineServicesSection
                             searchableDetailsSection
                             serviceSectionsSection
                             Section {
@@ -183,6 +200,7 @@ struct RideEditorView: View {
                             }
                             journeyStatusSection
                             journeyGroupSection
+                            localLineServicesSection
                             if Region.resolved(draft) == .jp {
                                 TimetableQuickMatchView(
                                     train: JourneyCompletion.resolvingUniqueStationNames(
@@ -191,6 +209,7 @@ struct RideEditorView: View {
                                     pendingTimetableTrip = trip
                                     showsReplaceStopsConfirmation = true
                                 }
+                                routeSelectionSection
                             }
                         case .confirm:
                             confirmationSections
@@ -203,6 +222,7 @@ struct RideEditorView: View {
                         stationsSection
                         routeSelectionSection
                         stopsSection
+                        localLineServicesSection
                         searchableDetailsSection
                         serviceSectionsSection
                         journeyStatusSection
@@ -249,7 +269,10 @@ struct RideEditorView: View {
                     normalizeEndpointRoles()
                 }
                 .environment(\.editMode, $stopEditMode)
-                .onChange(of: draft, initial: true) { _, _ in revalidate() }
+                .onChange(of: draft, initial: true) { _, _ in
+                    routeInferenceFailed = false
+                    revalidate()
+                }
                 .onChange(of: draft.stops, initial: true) { _, _ in publishDraftMap() }
                 .onChange(of: draft.date) { _, _ in publishDraftMap() }
                 .onChange(of: stopIDs) { _, _ in publishDraftMap() }
@@ -274,7 +297,11 @@ struct RideEditorView: View {
                     officialEnglishName = result.map(OfficialEnglishName.available) ?? .unavailable
                 }
                 .task(id: routeChoiceTaskID) { await loadRouteChoices() }
-                .task(id: tokyoDefaultTaskID) { applyTokyoDefaultIfNeeded() }
+                .onDisappear {
+                    routeInferenceTask?.cancel()
+                    routeInferenceTask = nil
+                    isInferringRoute = false
+                }
                 .task(id: catalogTaskID) {
                     let region = Region.resolved(draft)
                     let loaded = try? await Task.detached(priority: .userInitiated) {
@@ -394,13 +421,30 @@ struct RideEditorView: View {
                 }
                 Button(localization.editorText("ios.editor.keepEditing"), role: .cancel) { pendingRegion = nil }
             } message: { _ in Text(localization.editorText("ios.editor.changeRegionNote")) }
+        .sheet(isPresented: $showsLocalJourneyFill, onDismiss: finishLocalJourneyFill) {
+            if let package = routePackage {
+                LocalJourneyFillView(train: routeEditingDraft, package: package) { proposal in
+                    localJourneyCommit = proposal
+                    showsLocalJourneyFill = false
+                }
+            }
+        }
         .sheet(item: $routeGuideRequest, onDismiss: finishRouteGuide) { request in
             NavigationStack {
-                RailwayRouteCorrectionView(
-                    train: request.train, package: request.package,
-                    excludedStationCodes: request.excludedCodes
-                ) { choice, fromID, toID in
-                    proposeRouteChoice(choice, fromID: fromID, toID: toID)
+                if let choice = request.inferredChoice,
+                   let fromID = request.train.stops.first?.routeEditing?.visitID,
+                   let toID = request.train.stops.last?.routeEditing?.visitID {
+                    RailwayRouteGuideView(train: request.train, package: request.package,
+                        choices: [choice], embeddedInNavigationStack: true, isInferred: true) { selected in
+                        proposeRouteChoice(selected, fromID: fromID, toID: toID)
+                    }
+                } else {
+                    RailwayRouteCorrectionView(
+                        train: request.train, package: request.package,
+                        excludedStationCodes: request.excludedCodes
+                    ) { choice, fromID, toID in
+                        proposeRouteChoice(choice, fromID: fromID, toID: toID)
+                    }
                 }
             }
             .alert(localization.editorText("ios.routeGuide.routeUnavailable"), isPresented: $routeGuideError) {
@@ -670,25 +714,6 @@ struct RideEditorView: View {
 
     private var routeChoiceTaskID: String { Region.resolved(draft).code }
 
-    private var tokyoDefaultTaskID: String {
-        [String(routeChoicesLoaded), draft.trainType ?? "", draft.company ?? "",
-         draft.stops.map { $0.n02StationCode ?? $0.name }.joined(separator: ">"),
-         (draft.routeSections ?? []).flatMap { $0.sectionCodes ?? [] }.joined(separator: ">")]
-            .joined(separator: "|")
-    }
-
-    /// Apply the reader's corridor default once. A manually selected physical
-    /// route, authored surface visit, or conflicting replacement remains intact.
-    private func applyTokyoDefaultIfNeeded() {
-        guard routeGuideRequest == nil, selectedRouteChoice == nil,
-              let package = routePackage,
-              let choice = TokyoConventionalRouteInference.choice(in: routeEditingDraft, package: package),
-              let plan = RailwayRouteEditing.plan(train: routeEditingDraft, choice: choice,
-                fromVisitID: stopIDs.first, toVisitID: stopIDs.last),
-              !plan.requiresConfirmation else { return }
-        applyRoutePlan(plan, choice: choice)
-    }
-
     private func loadRouteChoices() async {
         let region = Region.resolved(draft)
         routeChoicesLoaded = false
@@ -733,6 +758,29 @@ struct RideEditorView: View {
         routeGuideRequest = RouteGuideRequest(train: routeEditingDraft, package: package, excludedCodes: codes)
     }
 
+    /// Inference only proposes a route; the existing preview owns confirmation.
+    private func inferRoute() {
+        guard let package = routePackage, !isInferringRoute else { return }
+        let snapshot = draft
+        let prepared = routeEditingDraft
+        routeInferenceFailed = false
+        isInferringRoute = true
+        routeInferenceTask = Task {
+            let worker = Task.detached(priority: .userInitiated) {
+                RailwayRouteInference.choice(in: prepared, package: package)
+            }
+            let choice = await withTaskCancellationHandler {
+                await worker.value
+            } onCancel: { worker.cancel() }
+            guard !Task.isCancelled else { return }
+            isInferringRoute = false
+            guard draft == snapshot else { return }
+            guard let choice else { routeInferenceFailed = true; return }
+            pendingRouteCommit = nil
+            routeGuideRequest = RouteGuideRequest(train: prepared, package: package, inferredChoice: choice)
+        }
+    }
+
     private func proposeRouteChoice(_ choice: RailwayRouteChoices.Choice, fromID: UUID, toID: UUID) {
         guard let plan = RailwayRouteEditing.plan(
             train: routeEditingDraft, choice: choice, fromVisitID: fromID, toVisitID: toID
@@ -749,6 +797,31 @@ struct RideEditorView: View {
         routeCommitAfterDismiss = RouteCommit(plan: plan, choice: choice)
         pendingRouteCommit = nil
         routeGuideRequest = nil
+    }
+
+    private func finishLocalJourneyFill() {
+        guard let proposal = localJourneyCommit else { return }
+        localJourneyCommit = nil
+        let before = draft
+        let previousChoice = selectedRouteChoice
+        let previousLineIDs = selectedCatalogLineIDs
+        let previousPattern = selectedPattern
+        let previousTimetableDate = selectedTimetableDate
+        var completed = proposal.train
+        if completed.number.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            completed.number = completed.origin + " → " + completed.destination
+        }
+        if !proposal.choice.operatorNames.isEmpty {
+            completed.company = proposal.choice.operatorNames.joined(separator: " / ")
+        }
+        applyCompletedDraft(completed)
+        selectedRouteChoice = proposal.choice
+        selectedCatalogLineIDs = Set(proposal.choice.lineIDs)
+        selectedPattern = nil
+        selectedTimetableDate = nil
+        localJourneyUndo = LocalJourneyUndo(before: before, after: draft,
+            previousChoice: previousChoice, previousLineIDs: previousLineIDs,
+            previousPattern: previousPattern, previousTimetableDate: previousTimetableDate)
     }
 
     private func finishRouteGuide() {
@@ -901,8 +974,18 @@ struct RideEditorView: View {
                                          fallback: Region.resolved(draft).fallbackName))
             ForEach(stopIDs, id: \.self) { stopID in
                 if let index = stopIDs.firstIndex(of: stopID) {
-                    LabeledContent("\(index + 1)", value: draft.stops[index].name)
+                    LabeledContent("\(index + 1)") {
+                        VStack(alignment: .trailing, spacing: 4) {
+                            Text(draft.stops[index].name)
+                            if generatedStopIDs.contains(stopID) {
+                                AutoFilledStationLabel()
+                            }
+                        }
+                    }
                 }
+            }
+            if !generatedStopIDs.isEmpty {
+                autoFilledStationsNote
             }
             if let names = draft.routePolicy?.preferredLineNames, !names.isEmpty {
                 LabeledContent(localization.editorText("ios.editor.searchLines"), value: names.joined(separator: " · "))
@@ -948,6 +1031,14 @@ struct RideEditorView: View {
             LabeledContent(localization.text("ios.showOnMap", fallback: "Show on map"),
                 value: localization.editorText(draft.visible != false ? "ios.editor.yes" : "ios.editor.no"))
         }
+    }
+
+    private var autoFilledStationsNote: some View {
+        Label(localization.editorText("ios.editor.generatedStationsNote"), systemImage: "info.circle")
+            .font(.footnote)
+            .foregroundStyle(.secondary)
+            .fixedSize(horizontal: false, vertical: true)
+            .accessibilityIdentifier("rideEditorAutoFilledStationsNote")
     }
 
     // MARK: - Why the save is off (§5.4)
@@ -1273,7 +1364,50 @@ struct RideEditorView: View {
 
     /// Both editor modes expose the same physical-route workflow beside stops.
     private var routeSelectionSection: some View {
-        Section { guidedLineSelectionRow }
+        Section {
+            Button { showsLocalJourneyFill = true } label: {
+                Label(LocalJourneyStrings.text("title", language: localization.language),
+                    systemImage: "point.topleft.down.curvedto.point.bottomright.up")
+            }
+            .disabled(routePackage == nil)
+            .accessibilityIdentifier("rideEditorLocalAutofill")
+            if let undo = localJourneyUndo, undo.after == draft {
+                Button(localization.editorText("ios.routeGuide.undo")) {
+                    applyCompletedDraft(undo.before)
+                    selectedRouteChoice = undo.previousChoice
+                    selectedCatalogLineIDs = undo.previousLineIDs
+                    selectedPattern = undo.previousPattern
+                    selectedTimetableDate = undo.previousTimetableDate
+                    localJourneyUndo = nil
+                }
+                .accessibilityIdentifier("rideEditorLocalAutofillUndo")
+            }
+            Button { inferRoute() } label: {
+                HStack {
+                    Label(localization.editorText("ios.routeGuide.infer"), systemImage: "wand.and.stars")
+                    if isInferringRoute { Spacer(); ProgressView() }
+                }
+            }
+            .disabled(isInferringRoute || routePackage == nil || draft.stops.count < 2
+                || draft.stops.contains { $0.n02StationCode == nil })
+            .accessibilityIdentifier("rideEditorInferRoute")
+            guidedLineSelectionRow
+            if routeInferenceFailed {
+                Text(localization.editorText("ios.routeGuide.inferenceFailed"))
+                    .font(.footnote).foregroundStyle(.secondary)
+                    .accessibilityIdentifier("rideEditorInferenceFailed")
+            }
+        } footer: {
+            Text(localization.editorText("ios.routeGuide.inferenceNote"))
+        }
+    }
+
+    @ViewBuilder private var localLineServicesSection: some View {
+        if Region.resolved(draft) == .jp, let package = routePackage {
+            LocalLineServicesSection(package: package,
+                lineIDs: Array(selectedCatalogLineIDs).sorted(), serviceDate: draft.date,
+                trainType: optionalText(\.trainType))
+        }
     }
 
     private var preferredLineSelectionRow: some View {
@@ -1326,7 +1460,7 @@ struct RideEditorView: View {
     private var guidedLineSelectionRow: some View {
         Button { openRouteGuide() } label: {
             VStack(alignment: .leading, spacing: 4) {
-                Label(localization.editorText("ios.routeGuide.title"),
+                Label(localization.editorText("ios.routeGuide.manual"),
                       systemImage: "point.topleft.down.curvedto.point.bottomright.up")
                 if let choice = selectedRouteChoice {
                     Text(choice.lineNames.joined(separator: " · "))
@@ -1388,6 +1522,9 @@ struct RideEditorView: View {
 
     private var stopsSection: some View {
         Section {
+            if !generatedStopIDs.isEmpty {
+                autoFilledStationsNote
+            }
             ForEach(stopIDs, id: \.self) { stopID in
                 if let index = stopIDs.firstIndex(of: stopID) {
                     HStack(spacing: 8) {
@@ -1414,17 +1551,19 @@ struct RideEditorView: View {
                                             ? [] : selectedCatalogLineIDs,
                                            onRiddenChange: { riddenIsTheReaders = true })
                             } label: {
-                                StopEditorLabel(
-                                    stop: draft.stops[index], journeyDate: draft.date, index: index + 1,
-                                    emptyTitle: isNew ? localization.editorText(index == 0
-                                        ? "ios.editor.chooseOrigin" : index == stopIDs.count - 1
-                                        ? "ios.editor.chooseDestination" : "ios.editor.untitledStop") : nil)
+                                VStack(alignment: .leading, spacing: 6) {
+                                    StopEditorLabel(
+                                        stop: draft.stops[index], journeyDate: draft.date, index: index + 1,
+                                        emptyTitle: isNew ? localization.editorText(index == 0
+                                            ? "ios.editor.chooseOrigin" : index == stopIDs.count - 1
+                                            ? "ios.editor.chooseDestination" : "ios.editor.untitledStop") : nil)
+                                    if generatedStopIDs.contains(stopID) {
+                                        AutoFilledStationLabel()
+                                            .accessibilityIdentifier("rideEditorAutoFilledStop-\(index)")
+                                    }
+                                }
                             }
                             .accessibilityIdentifier("rideEditorStop-\(index)")
-                            if generatedStopIDs.contains(stopID) {
-                                Text(localization.editorText("ios.editor.generatedStation"))
-                                    .font(.caption).foregroundStyle(.secondary)
-                            }
                             fieldIssues(.stop(index))
                         }
                     }
@@ -1627,7 +1766,8 @@ struct RideEditorView: View {
             ForEach(routeSectionIndices, id: \.self) { index in
                 NavigationLink {
                     RouteSectionEditorView(
-                        section: routeSection(at: index), region: Region.resolved(draft))
+                        section: routeSection(at: index), region: Region.resolved(draft),
+                        rideDate: draft.date)
                         .environment(localization)
                 } label: {
                     RouteSectionLabel(
@@ -2204,6 +2344,7 @@ private struct RouteSectionEditorView: View {
     @Environment(AppLocalization.self) private var localization
     @Binding var section: RouteSection
     let region: Region
+    var rideDate: String? = nil
 
     var body: some View {
         Form {
@@ -2212,10 +2353,17 @@ private struct RouteSectionEditorView: View {
                     title: localization.editorText("ios.editor.fromStation"),
                     text: optionalText(\.from))
                 NavigationLink {
-                    StationPickerView(regionCode: region.code) { station in
-                        section.from = station.name
-                        section.fromN02StationCode = station.key.sourceCode
-                    }
+                    StationPickerView(
+                        regionCode: region.code,
+                        onSelect: { station in
+                            section.from = station.name
+                            section.fromN02StationCode = station.key.sourceCode
+                        },
+                        rideDate: rideDate,
+                        onSelectRetired: { station in
+                            section.from = station.name
+                            section.fromN02StationCode = station.certifiedCode
+                        })
                     .environment(localization)
                 } label: {
                     LabeledContent(
@@ -2226,10 +2374,17 @@ private struct RouteSectionEditorView: View {
                     title: localization.editorText("ios.editor.toStation"),
                     text: optionalText(\.to))
                 NavigationLink {
-                    StationPickerView(regionCode: region.code) { station in
-                        section.to = station.name
-                        section.toN02StationCode = station.key.sourceCode
-                    }
+                    StationPickerView(
+                        regionCode: region.code,
+                        onSelect: { station in
+                            section.to = station.name
+                            section.toN02StationCode = station.key.sourceCode
+                        },
+                        rideDate: rideDate,
+                        onSelectRetired: { station in
+                            section.to = station.name
+                            section.toN02StationCode = station.certifiedCode
+                        })
                     .environment(localization)
                 } label: {
                     LabeledContent(
@@ -2407,6 +2562,8 @@ private struct StopEditorView: View {
     @FocusState private var stationNameFocused: Bool
     @State private var catalog: EditorCatalog?
     @State private var stationMatches: [CatalogStation] = []
+    @State private var retiredStationMatches: [RetiredStation] = []
+    @State private var openRetiredStations: [RetiredStation] = []
 
     private var selectedLines: [CatalogLine] {
         guard let catalog else { return [] }
@@ -2444,6 +2601,15 @@ private struct StopEditorView: View {
     var body: some View {
         Form {
             Section(localization.editorText("ios.editor.station")) {
+                if stop.routeEditing?.generatedBy != nil {
+                    VStack(alignment: .leading, spacing: 8) {
+                        AutoFilledStationLabel()
+                        Text(localization.editorText("ios.editor.generatedStationsNote"))
+                            .font(.footnote).foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    .accessibilityIdentifier("stopEditorAutoFilledNote")
+                }
                 EditorField(title: localization.editorText("ios.editor.stationName")) {
                     TextField(localization.editorText("ios.editor.stationSearch"), text: stationName)
                         .focused($stationNameFocused)
@@ -2472,16 +2638,43 @@ private struct StopEditorView: View {
                         .buttonStyle(.borderless)
                         .accessibilityIdentifier("rideEditorStationSuggestion-\(station.key.sourceCode)")
                     }
+                    ForEach(retiredStationMatches, id: \.id) { station in
+                        Button {
+                            stop.name = station.name
+                            stop.n02StationCode = station.certifiedCode
+                            stationNameFocused = false
+                        } label: {
+                            VStack(alignment: .leading, spacing: 3) {
+                                Text(station.name)
+                                Label(
+                                    localization.editorText("ios.editor.retiredStation"),
+                                    systemImage: "clock.arrow.circlepath")
+                                    .font(.caption).foregroundStyle(.secondary)
+                            }
+                            .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                        }
+                        .buttonStyle(.borderless)
+                        .accessibilityIdentifier("stationPickerRetired-\(station.id)")
+                    }
                 }
                 if stop.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                     Text(localization.editorText("ios.editor.stationGuide"))
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                 } else if stop.n02StationCode?.isEmpty != false {
-                    Text(localization.editorText("ios.editor.stationUnmatched"))
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                        .fixedSize(horizontal: false, vertical: true)
+                    if openRetiredStations.contains(where: { $0.name == stop.name }) {
+                        Label(
+                            localization.editorText("ios.editor.retiredStationNote"),
+                            systemImage: "clock.arrow.circlepath")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    } else {
+                        Text(localization.editorText("ios.editor.stationUnmatched"))
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
                 }
                 if hasStationLineConflict {
                     Label {
@@ -2498,10 +2691,17 @@ private struct StopEditorView: View {
                     .accessibilityIdentifier("rideEditorStationLineConflict")
                 }
                 NavigationLink {
-                    StationPickerView(regionCode: region.code, selectedLineIDs: selectedLineIDs) { station in
-                        stop.name = station.name
-                        stop.n02StationCode = station.key.sourceCode
-                    }
+                    StationPickerView(
+                        regionCode: region.code, selectedLineIDs: selectedLineIDs,
+                        onSelect: { station in
+                            stop.name = station.name
+                            stop.n02StationCode = station.key.sourceCode
+                        },
+                        rideDate: journeyDate,
+                        onSelectRetired: { station in
+                            stop.name = station.name
+                            stop.n02StationCode = station.certifiedCode
+                        })
                     .environment(localization)
                 } label: {
                     Label(
@@ -2681,6 +2881,34 @@ private struct StopEditorView: View {
             guard !Task.isCancelled else { return }
             stationMatches = Array(found)
         }
+        .task(id: "\(region.code)|\(journeyDate ?? "")|\(selectedLineIDs.sorted().joined(separator: ","))|\(catalog == nil)") {
+            // Cheap empty check: an undated/current-date ride never has an
+            // open retired station, so skip the overlay decode entirely.
+            guard let journeyDate, !journeyDate.isEmpty else {
+                openRetiredStations = []
+                return
+            }
+            let regionCode = region.code
+            let lineIDs = selectedLineIDs
+            let loadedCatalog = catalog
+            let open = await Task.detached(priority: .userInitiated) {
+                openRetiredStations(
+                    catalog: loadedCatalog, regionCode: regionCode, selectedLineIDs: lineIDs,
+                    rideDate: journeyDate)
+            }.value
+            guard !Task.isCancelled else { return }
+            openRetiredStations = open
+        }
+        .task(id: "\(stop.name)|\(openRetiredStations.map(\.id).joined(separator: ","))") {
+            let query = stop.name.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !query.isEmpty, !openRetiredStations.isEmpty else {
+                retiredStationMatches = []
+                return
+            }
+            retiredStationMatches = openRetiredStations.filter {
+                $0.name.localizedStandardContains(query)
+            }
+        }
         .navigationTitle(
             stop.name.isEmpty
                 ? localization.editorText("ios.editor.stopIndex", ["index": .number(Double(index + 1))])
@@ -2763,6 +2991,28 @@ private struct CatalogStationCompanyGroup: Identifiable {
     var lines: [CatalogStationLineGroup]
 }
 
+/// ADR 0011 overlay stations open on `rideDate`, restricted to
+/// `selectedLineIDs` when non-empty. `[]` for an undated/current-date
+/// ride, matching ``RetiredStation/period(on:)``'s own guard.
+private nonisolated func openRetiredStations(
+    catalog: EditorCatalog?, regionCode: String, selectedLineIDs: Set<String>,
+    rideDate: String?
+) -> [RetiredStation] {
+    guard let rideDate, !rideDate.isEmpty else { return [] }
+    let all = RiddenRouteStore.retiredStations(region: regionCode)
+    guard !all.isEmpty else { return [] }
+    let open = RailHistoryStations.open(all, on: rideDate)
+    guard !open.isEmpty else { return [] }
+    guard !selectedLineIDs.isEmpty, let catalog else { return open }
+    let selectedLines = catalog.lines(in: regionCode).filter { selectedLineIDs.contains($0.id) }
+    let allowedNames = Set(selectedLines.flatMap { [$0.name] + $0.aliases })
+    // Overlay line names are N02 spellings and may not match the catalog's;
+    // an empty filtered result means the names didn't line up, not that
+    // there are truly no open retired stations on these lines.
+    let filtered = open.filter { allowedNames.contains($0.lineName) }
+    return filtered.isEmpty ? open : filtered
+}
+
 /// Catalog stations for one region. Empty search is a company → line → station
 /// browser. Search results keep those categories instead of flattening stations
 /// with the same display name into one ambiguous list.
@@ -2772,10 +3022,14 @@ private struct StationPickerView: View {
     let regionCode: String
     var selectedLineIDs: Set<String> = []
     let onSelect: (CatalogStation) -> Void
+    var rideDate: String? = nil
+    var onSelectRetired: ((RetiredStation) -> Void)? = nil
     @State private var query = ""
     @State private var prepared: [CatalogStationRow] = []
     @State private var preparedLineGroups: [CatalogStationLineGroup] = []
     @State private var matches: [CatalogStationRow] = []
+    @State private var retired: [RetiredStation] = []
+    @State private var matchedRetired: [RetiredStation] = []
     @State private var didLoad = false
     @State private var loadError: String?
     @State private var filterTask: Task<Void, Never>?
@@ -2831,7 +3085,10 @@ private struct StationPickerView: View {
                             }
                         }
                     }
-                    if matchedLineGroups.isEmpty {
+                    if !matchedRetired.isEmpty {
+                        ForEach(matchedRetired) { station in retiredStationButton(station) }
+                    }
+                    if matchedLineGroups.isEmpty && matchedRetired.isEmpty {
                         Text(localization.editorText("ios.editor.stationUnmatched"))
                             .foregroundStyle(.secondary)
                     }
@@ -2852,6 +3109,11 @@ private struct StationPickerView: View {
                                 }
                                 .accessibilityIdentifier("rideEditorStationLine-\(group.line.id)")
                             }
+                        }
+                    }
+                    if !retired.isEmpty {
+                        Section(localization.editorText("ios.editor.retiredStationsSection")) {
+                            ForEach(retired) { station in retiredStationButton(station) }
                         }
                     }
                 }
@@ -2879,6 +3141,14 @@ private struct StationPickerView: View {
                 }.value
                 prepared = result.rows
                 preparedLineGroups = result.groups
+                if onSelectRetired != nil {
+                    let date = rideDate
+                    retired = await Task.detached(priority: .userInitiated) {
+                        openRetiredStations(
+                            catalog: catalog, regionCode: regionCode, selectedLineIDs: lineIDs,
+                            rideDate: date)
+                    }.value
+                }
                 didLoad = true
                 apply(query: query)
             } catch {
@@ -2900,8 +3170,22 @@ private struct StationPickerView: View {
         .accessibilityIdentifier("rideEditorStation-\(row.station.key.sourceCode)")
     }
 
+    @ViewBuilder
+    private func retiredStationButton(_ station: RetiredStation) -> some View {
+        Button { selectRetired(station) } label: {
+            RetiredStationLabel(station: station, rideDate: rideDate)
+        }
+        .buttonStyle(RailRowPressStyle(cornerRadius: 0))
+        .accessibilityIdentifier("stationPickerRetired-\(station.id)")
+    }
+
     private func select(_ station: CatalogStation) {
         onSelect(station)
+        dismiss()
+    }
+
+    private func selectRetired(_ station: RetiredStation) {
+        onSelectRetired?(station)
         dismiss()
     }
 
@@ -2945,23 +3229,63 @@ private struct StationPickerView: View {
         }
     }
 
+    /// ADR 0011 overlay stations open on `rideDate`, restricted to
+    /// `selectedLineIDs` when non-empty. `[]` for an undated/current-date
+    /// ride, matching ``RetiredStation/period(on:)``'s own guard.
+    private nonisolated static func filterRetired(
+        _ stations: [RetiredStation], needle: String
+    ) -> [RetiredStation] {
+        stations.filter { $0.name.localizedStandardContains(needle) }
+    }
+
     private func apply(query: String) {
         filterTask?.cancel()
         let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !needle.isEmpty else {
             matches = prepared
+            matchedRetired = retired
             return
         }
         let source = prepared
+        let retiredSource = retired
         filterTask = Task { @MainActor in
             try? await Task.sleep(for: Self.debounce)
             guard !Task.isCancelled else { return }
             let found = await Task.detached(priority: .userInitiated) {
                 Self.filter(source, needle: needle)
             }.value
+            let foundRetired = await Task.detached(priority: .userInitiated) {
+                Self.filterRetired(retiredSource, needle: needle)
+            }.value
             guard !Task.isCancelled else { return }
             matches = found
+            matchedRetired = foundRetired
         }
+    }
+}
+
+private struct RetiredStationLabel: View {
+    @Environment(AppLocalization.self) private var localization
+    let station: RetiredStation
+    let rideDate: String?
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(station.name)
+            Text("\(station.lineName) · \(station.operatorName)")
+                .font(.caption).foregroundStyle(.secondary)
+            Label(
+                closedText, systemImage: "clock.arrow.circlepath"
+            )
+            .font(.caption).foregroundStyle(.secondary)
+        }
+        .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+    }
+
+    private var closedText: String {
+        let marker = localization.editorText("ios.editor.retiredStation")
+        guard let validTo = station.period(on: rideDate)?.validTo else { return marker }
+        return "\(marker) · \(localization.editorText("ios.editor.retiredOn", ["date": .string(validTo)]))"
     }
 }
 
@@ -3356,5 +3680,20 @@ private struct EditorLineSearchView: View {
             lineNames.append(name)
         }
         onCommit(selectedIDs.sorted(), lineNames, preference.operatorNames)
+    }
+}
+
+/// A compact source label shared by route previews and both editor modes.
+struct AutoFilledStationLabel: View {
+    @Environment(AppLocalization.self) private var localization
+
+    var body: some View {
+        Label(localization.editorText("ios.editor.generatedStation"), systemImage: "wand.and.stars")
+            .font(.caption.weight(.medium))
+            .foregroundStyle(.secondary)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
+            .background(.quaternary, in: Capsule())
+            .fixedSize(horizontal: false, vertical: true)
     }
 }

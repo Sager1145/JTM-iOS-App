@@ -128,7 +128,7 @@ function loadRouteGraphScope(APP_DIR, AppCore, RailNetwork) {
      });
      return {
        // §27 keys
-       getTrainRouteTemplateKey, routeKeyDigest,
+       getTrainRouteTemplateKey, inferredTokyoConventionalSection, routeKeyDigest,
        buildTrainRouteSolveContext, getAllowedInstitutionTypeCodes,
        derivedInstitutionTypeCodes, derivedPreferredOperatorNames,
        ROUTE_SOLVER_CACHE_VERSION,
@@ -147,6 +147,22 @@ function loadRouteGraphScope(APP_DIR, AppCore, RailNetwork) {
        install: (sections, stations) => {
          AppDatasets.installRailSections(sections);
          AppDatasets.installStations(stations);
+         // This synchronous graph fixture must install the station resolver's
+         // two indexes before deriving sections from sparse passenger calls.
+         // Use the production lookup keys and dataset boundary; browser boot
+         // builds these same maps in yielding slices.
+         const candidates = new Map();
+         const names = new Map();
+         for (const feature of stations.features || []) {
+           const name = stationName(feature);
+           const code = stationCode(feature);
+           for (const key of stationLookupKeys(name, code)) {
+             if (!candidates.has(key)) candidates.set(key, []);
+             candidates.get(key).push(feature);
+           }
+           if (code) names.set(String(code), name);
+         }
+         AppDatasets.installStationIndexes(candidates, names);
          invalidateRouteGraphIndexes();
        },
        regionCacheState: () => ({
@@ -568,8 +584,9 @@ function trainProjection(train) {
  * `routeSections` is recorded rather than recomputed. buildTrainRouteSolveContext
  * gets them from getRideRouteSectionsForTrain, which lives in app-store-ops.js
  * and belongs to the train store, not to the graph — so the fixture carries
- * the sections it produced as INPUT, and the port is asked for the part that
- * is this module's: template key, allowed codes, policy key, cache key.
+ * the production-prepared sections as INPUT (including the template builder
+ * Tokyo default, applied at native normalization), and the port is asked for
+ * template key, allowed codes, policy key and cache key.
  */
 function cacheKeyCases(js, country, store) {
   const cases = [];
@@ -579,7 +596,11 @@ function cacheKeyCases(js, country, store) {
     cases.push({
       country,
       train: trainProjection(train),
-      routeSections: context.routeSections,
+      // The JS template builder applies the Tokyo physical default itself;
+      // native normalization applies it before the pure RouteGraph boundary.
+      // Freeze that same production-prepared input for the graph parity test.
+      routeSections: context.routeSections.map((section) =>
+        js.inferredTokyoConventionalSection(section, train)),
       allowedCodes: context.allowedCodes,
       derivedInstitutionTypeCodes: js.derivedInstitutionTypeCodes(train),
       // Insertion order, NOT sorted — a Set spread. The policy key sorts it

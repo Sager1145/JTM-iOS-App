@@ -78,13 +78,9 @@ enum MapLabelStyle {
 
     // MARK: - the network's own station names
 
-    /// `STATION_LABEL_MIN_ZOOM`, in this app's zoom.
-    ///
-    /// 12 in `railmap-style.js`, which is a MapLibre number — see
-    /// `RailStyle.fullWeightZoom` for why that becomes 13 here. It is a floor
-    /// *in addition to* each station's own `minZoom`: the beads appear first
-    /// and the names follow, because a name needs a district's worth of room
-    /// and a bead does not.
+    /// Lower stop of the station-name font ramp, in this app's zoom.
+    /// Names below this stop retain the 10-point size; their visibility is
+    /// decided by screen-space collision placement rather than a zoom floor.
     static let stationLabelMinZoom = RailStyle.zoom(fromMapLibre: 12)
 
     /// `["interpolate", ["linear"], ["zoom"], 12, 10, 16, 12]`, clamped outside

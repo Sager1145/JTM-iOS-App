@@ -63,14 +63,25 @@ enum MergedStore {
     /// same projection, so the file is byte-for-byte what the web app's export
     /// writes for the trains it would have written.
     static func export(_ store: TrainStore) -> String {
-        let trains = store.trains.map { train in
-            TrainValidation.normalizeExportTrain(
+        let envelope = StoreOperations.stringify(StoreOperations.json(TrainStore()), indent: 2)
+        guard !store.trains.isEmpty,
+              let emptyArray = envelope.range(of: "[]") else { return envelope }
+        // Keep only one journey's normalized JSON tree alive at a time. A
+        // large archive still needs its output String, but no second complete
+        // train array and dynamic JSON tree alongside that output.
+        var text = String(envelope[..<emptyArray.lowerBound])
+        text += "[\n"
+        for (index, train) in store.trains.enumerated() {
+            if index > 0 { text += ",\n" }
+            let normalized = TrainValidation.normalizeExportTrain(
                 train.taggingRegion(), country: Region.resolved(train).code)
+            text += "    "
+            text += StoreOperations.stringify(StoreOperations.json(normalized), indent: 2)
+                .replacingOccurrences(of: "\n", with: "\n    ")
         }
-        return StoreOperations.stringify(
-            StoreOperations.json(
-                TrainStore(schemaVersion: TrainValidation.schemaVersion, trains: trains)),
-            indent: 2)
+        text += "\n  ]"
+        text += envelope[emptyArray.upperBound...]
+        return text
     }
 
     /// Every train with its region written down, as far as the ride itself

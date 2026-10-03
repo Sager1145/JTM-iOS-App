@@ -214,6 +214,7 @@ installer_doubles = r'''
 }
 @MainActor final class TestMapView {
     var mounted: [MKOverlay] = []
+    var exchanges = 0
     var ignored: Set<ObjectIdentifier> = []
     func overlays(in level: MKOverlayLevel) -> [MKOverlay] { mounted }
     func removeOverlay(_ overlay: MKOverlay) { mounted.removeAll { $0 === overlay } }
@@ -227,6 +228,7 @@ installer_doubles = r'''
         }
     }
     func exchangeOverlay(_ first: MKOverlay, with second: MKOverlay) {
+        exchanges += 1
         let a = mounted.firstIndex { $0 === first }!, b = mounted.firstIndex { $0 === second }!
         mounted.swapAt(a, b)
     }
@@ -272,6 +274,18 @@ installer_doubles = r'''
     ordered(map, [newNetwork, network, a, b])
     installer.removeRetiring(on: map)
     ordered(map, [newNetwork, a, b])
+    let largeDeck = (0..<287).flatMap { index in
+        [batch("ride|\(index)"), batch("stations|\(index)")]
+    }
+    installer.install(largeDeck, replacing: installer.reconciliation(on: map), scale: 1, on: map)
+    ordered(map, largeDeck)
+    let settledExchanges = map.exchanges
+    for _ in 0..<3 {
+        installer.install(largeDeck, replacing: installer.reconciliation(on: map), scale: 1, on: map)
+        ordered(map, largeDeck)
+    }
+    precondition(map.exchanges == settledExchanges,
+                 "Unchanged interleaved 287-journey deck must not reorder mounted overlays")
     print("PASS actual installer: ignored/missing and duplicate overlays; normal selection order and retiring stack")
 }
 '''

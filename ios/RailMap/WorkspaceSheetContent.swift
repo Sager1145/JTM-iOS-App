@@ -64,6 +64,7 @@ struct WorkspaceSheetContent: View {
     let onStartExport: () -> Void
     let onDismiss: () -> Void
     let onPick: (Train) -> Void
+    var onLinePreview: (RailwayLinePreview?) -> Void = { _ in }
     var onEditJourney: ((Train) -> Void)? = nil
 
     init(
@@ -90,6 +91,7 @@ struct WorkspaceSheetContent: View {
         onStartExport: @escaping () -> Void,
         onDismiss: @escaping () -> Void,
         onPick: @escaping (Train) -> Void,
+        onLinePreview: @escaping (RailwayLinePreview?) -> Void = { _ in },
         onEditJourney: ((Train) -> Void)? = nil
     ) {
         self.sheet = sheet
@@ -115,6 +117,7 @@ struct WorkspaceSheetContent: View {
         self.onStartExport = onStartExport
         self.onDismiss = onDismiss
         self.onPick = onPick
+        self.onLinePreview = onLinePreview
         self.onEditJourney = onEditJourney
     }
 
@@ -164,7 +167,8 @@ struct WorkspaceSheetContent: View {
                     controller: controller,
                     classifying: categoryIndexesAreBuilding)
             case .station(let card):
-                StationCardView(card: card)
+                StationCardView(card: card, network: network, controller: controller,
+                                onLinePreview: onLinePreview)
             case .chooseRide(let trains):
                 RideChooserView(
                     trains: trains,

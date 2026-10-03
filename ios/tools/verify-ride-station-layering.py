@@ -8,8 +8,10 @@ source = (root / "ios/RailMap/RailMapAnnotations.swift").read_text()
 start = source.index("final class RideStationOverlay: NSObject, MKOverlay")
 end = source.index("/// The NAME a marker won", start)
 production = source[start:end]
+# Allow a spy at MapKit's invalidation boundary; rendering logic is unchanged.
+production = production.replace("final class RideStationOverlayRenderer", "class RideStationOverlayRenderer", 1)
 view = (root / "ios/RailMap/RailMapView.swift").read_text()
-start = view.index("            private func installRideStationOverlays(")
+start = view.index("            private static let allRideStationsID = ")
 end = view.index("            /// The marker records", start)
 # Replace only the map boundary with a capture double; ordering and reuse logic
 # execute directly from the production helper.
@@ -65,14 +67,15 @@ struct TestInstaller {
         TestReconciliation(oldOverlays: mapView.overlays)
     }
     func install(_ desired: [MKOverlay], replacing: TestReconciliation,
-                 scale: CGFloat, on mapView: TestMapView) {
+                 scale: CGFloat, on mapView: TestMapView,
+                 detailTransitionDuration: TimeInterval? = nil) {
         mapView.overlays = desired
     }
 }
 struct TestRide { let id: String }
 final class TestCoordinator {
     let overlayInstaller = TestInstaller()
-    let detailDuration: TimeInterval = 0
+    var detailDuration: TimeInterval = 0
     var selectedTrainID: String? = nil
     var retiringStationOverlays: [ObjectIdentifier: UUID] = [:]
     var rideStationAnnotations: [MKAnnotation] = []
@@ -104,25 +107,25 @@ func checkInstallation() {
     // The formerly selected a core is last. Deselection must restore deck order.
     map.overlays = [network, b, a, aCrossDay, playback]
     coordinator.installRideStationOverlays(on: map, scale: 1)
-    let expected = ["network|base", "ride|a", "ride-xday|a", "ride-stations|a",
-                    "ride|b", "ride-stations|b", "playback-trail"]
+    let expected = ["network|base", "ride|a", "ride-xday|a", "ride|b",
+                    "ride-stations|all", "playback-trail"]
     require(titles(map) == expected,
-            "deselection did not restore each ride's solid/cross-day/circle stack")
+            "deselection did not restore each ride's strokes ahead of the shared station canvas")
     let retained = map.overlays.compactMap { $0 as? RideStationOverlay }
     coordinator.installRideStationOverlays(on: map, scale: 0.75)
     let reused = map.overlays.compactMap { $0 as? RideStationOverlay }
     require(zip(retained, reused).allSatisfy { $0 === $1 },
-            "unchanged station identities replaced overlays")
+            "unchanged station identities replaced the shared overlay")
 
     let replacement = RideStationAnnotation(rideID: "a")
     coordinator.rideStationAnnotations = [replacement, dotB]
     coordinator.installRideStationOverlays(on: map, scale: 1)
     let changed = map.overlays.compactMap { $0 as? RideStationOverlay }
-    require(changed[1] === retained[1]
-                && changed[0].stations.count == 1
-                && changed[0].stations.first === replacement
-                && changed[1].stations.first === dotB,
-            "changed stations must update only their ride's overlay contents")
+    require(changed[0] === retained[0]
+                && changed[0].stations.count == 2
+                && changed[0].stations[0] === replacement
+                && changed[0].stations[1] === dotB,
+            "changed stations must update the shared overlay's contents in deck order")
 
     // Selection uses annotation paint and removes the obsolete overlay paint.
     coordinator.rideStationAnnotations = [
@@ -144,8 +147,23 @@ func checkInstallation() {
     coordinator.rideStationAnnotations = [dotA, dotB]
     map.overlays = [network, playback]
     coordinator.installRideStationOverlays(on: map, scale: 1)
-    require(titles(map) == ["network|base", "ride-stations|a", "ride-stations|b", "playback-trail"],
+    require(titles(map) == ["network|base", "ride-stations|all", "playback-trail"],
             "hidden routes also hid their station dots")
+
+    // Removing one journey must keep the shared canvas mounted (identity
+    // reused) and drop only that journey's dots; the retirement timer only
+    // fires once every ride's dots are gone.
+    coordinator.detailDuration = 0.3
+    let beforeRemoval = map.overlays.compactMap { $0 as? RideStationOverlay }.first
+    coordinator.rideStationAnnotations = [dotA]
+    coordinator.installRideStationOverlays(on: map, scale: 1)
+    let afterRemoval = map.overlays.compactMap { $0 as? RideStationOverlay }.first
+    require(afterRemoval === beforeRemoval,
+            "removing one journey should reuse the shared station overlay")
+    require(afterRemoval?.stations.contains { $0 === dotB } == false,
+            "the removed journey's dots must leave the shared overlay")
+    require(afterRemoval?.stations.contains { $0 === dotA } == true,
+            "the surviving journey's dots must remain in the shared overlay")
 }
 '''
 
@@ -193,9 +211,35 @@ func paint(_ bitmap: Bitmap, alpha: CGFloat = 1,
         zoomScale: zoomScale, in: bitmap.context)
     bitmap.context.restoreGState()
 }
+final class InvalidationSpy: RideStationOverlayRenderer {
+    var invalidations = 0
+    override func setNeedsDisplay() { invalidations += 1 }
+}
 @main struct Checks {
     @MainActor static func main() {
         checkInstallation()
+        let station = RideStationAnnotation()
+        let overlay = RideStationOverlay(rideID: "coverage", stations: [station])
+        let renderer = InvalidationSpy(overlay: overlay)
+        renderer.applyScale(1, zoom: 14)
+        let initialInvalidations = renderer.invalidations
+        renderer.updateStations(duration: 0)
+        renderer.applyScale(1, zoom: 14)
+        require(renderer.invalidations == initialInvalidations,
+                "unchanged station paint must not regenerate textures")
+        let point = MKMapPoint(station.coordinate)
+        let near = MKMapRect(x: point.x - 1, y: point.y - 1, width: 2, height: 2)
+        let far = MKMapRect(x: 0, y: 0, width: 256, height: 256)
+        require(renderer.canDraw(near, zoomScale: 1), "station tile must draw")
+        require(!renderer.canDraw(far, zoomScale: 1), "empty world tile must not allocate paint")
+        let edge = MKMapRect(x: point.x + 18, y: point.y - 1, width: 2, height: 2)
+        require(!renderer.canDraw(edge, zoomScale: 1), "tile beyond circle must be culled")
+        require(renderer.canDraw(edge, zoomScale: 0.5), "circle radius must scale into adjoining tile")
+        overlay.stations = []
+        renderer.updateStations(duration: 0)
+        require(renderer.invalidations == initialInvalidations + 1,
+                "removing station paint must invalidate once")
+        require(renderer.canDraw(near, zoomScale: 1), "removed dot's tile must receive clearing redraw")
         let lowerFirst = Bitmap()
         paint(lowerFirst)
         lowerFirst.line()

@@ -862,6 +862,20 @@ def validate_dataset(data, origins, manifest, rail_history=None, current_package
         (row["entity_type"], row["entity_id"], row["field_name"])
         for row in data["fact_sources"] if row["verification_status"] == "verified"
     }
+    # A source URL or a trip-level stop list is insufficient to establish a
+    # passing station: the particular numbered column must explicitly attest
+    # this row. Never promote blank clocks or topology/solver stations to facts.
+    pass_evidence = {
+        (row["entity_id"], row["source_id"])
+        for row in data["fact_sources"]
+        if row["entity_type"] == "stop_time" and row["field_name"] == "call_type"
+        and row["verification_status"] == "verified"
+        and row["confidence"] == "high" and row.get("page_or_locator")
+    }
+    for i, row in enumerate(data["stop_times"]):
+        if row["call_type"] == "pass" and (
+                f"{row['trip_id']}:{row['stop_sequence']}", row["source_id"]) not in pass_evidence:
+            errors.append(f"{origins[('stop_times', i)]}: passing station requires row-specific verified source evidence; omitted stations and inferred routes are not timetable facts")
     for i, row in enumerate(data["fact_completeness"]):
         if row["status"] == "verified" and (row["entity_type"], row["entity_id"], row["dimension"]) not in verified_sources:
             errors.append(f"{origins[('fact_completeness', i)]}: verified completeness requires a matching verified fact_source for the same dimension")

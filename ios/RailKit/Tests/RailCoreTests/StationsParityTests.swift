@@ -851,13 +851,32 @@ struct StationsParityTests {
             )
             #expect(names.count == summary.packageNames, "\(summary.country) package names")
             packageNames += summary.packageNames
+            // Compare the actual stores rather than a historical minimum that
+            // included unsupported generated pass-through calls.
+            let storeCountries: Set<String> = ["jp", "tw", "hk", "mo", "kr"]
+            if storeCountries.contains(summary.country) {
+                struct Store: Decodable { let trains: [Fixture.TrainShape] }
+                let suffix = summary.country == "jp" ? "" : "-\(summary.country)"
+                let url = try PortFixtures.repositoryRoot().appending(path: "app/data/train-store\(suffix).json")
+                let store = try JSONDecoder().decode(Store.self, from: Data(contentsOf: url))
+                let stopNames = Set(store.trains.flatMap { $0.stops ?? [] }
+                    .compactMap(\.name).filter { !$0.isEmpty }.map { Array($0.utf16) })
+                #expect(summary.storeNames == stopNames.count, "\(summary.country) store names")
+                let queriedNames = Set(fixture.cases.compactMap { row -> [UInt16]? in
+                    let parts = Self.fields(row)
+                    guard parts.count >= 3, parts[0] == summary.country, parts[1] == "s" else { return nil }
+                    return Array(parts[2].utf16)
+                })
+                #expect(stopNames.isSubset(of: queriedNames), "\(summary.country) every stored call is queried")
+            } else {
+                #expect(summary.storeNames == 0)
+            }
             storeNames += summary.storeNames
         }
         // The original five packages contributed 10,361 names. North America
         // must increase that census, while store-only coverage intentionally
         // remains on the five established itinerary corpora.
         #expect(packageNames > 10_361)
-        #expect(storeNames > 1_600)
         #expect(fixture.sharedNames.count >= 33)
 
         // Every bare-name query in the fixture is one of those names, one of

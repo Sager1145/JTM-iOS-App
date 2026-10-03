@@ -479,6 +479,52 @@ async function restampPrecomputedOutput(context) {
   );
 }
 
+// Inference may select physical intervals absent from the authored sections.
+// Load only the requested lines and their station-owner dependencies, just as
+// the full browser network would, without excluding later inferred choices.
+export function createPrecomputeSourceGeometry(railNetwork, loadPackage, initialLineIDs = []) {
+  const included = new Set(initialLineIDs);
+  let packageData;
+  let lineByID;
+  let network;
+  return (properties) => {
+    const requested = [
+      ...(properties.required_line_ids || properties.line_ids || []),
+      ...(properties.section_codes || []).map((code) => code.split("@")[0]),
+    ];
+    if (!requested.length) return null;
+    if (!packageData) {
+      packageData = loadPackage();
+      lineByID = new Map(packageData.lines.map((line) => [line.id, line]));
+    }
+    let changed = !network;
+    const pending = network ? [] : [...included];
+    for (const id of requested) {
+      if (!included.has(id)) {
+        included.add(id);
+        pending.push(id);
+        changed = true;
+      }
+    }
+    for (let index = 0; index < pending.length; index++) {
+      const line = lineByID.get(pending[index]);
+      for (const owner of Object.values(line?.stationCircleOwnerByCode || {})) {
+        if (!included.has(owner)) {
+          included.add(owner);
+          pending.push(owner);
+          changed = true;
+        }
+      }
+    }
+    if (changed) {
+      network = railNetwork.buildNetworkFromCompactPackage({
+        ...packageData, lines: packageData.lines.filter((line) => included.has(line.id)),
+      });
+    }
+    return railNetwork.sourceGeometryForIntervals(network, properties);
+  };
+}
+
 async function main() {
   // Finalize-only mode: build the manifest from parts emitted by sliced runs.
   if (process.env.PRECOMPUTE_FINALIZE) {
@@ -559,20 +605,12 @@ async function main() {
       ...(section.line_ids || []),
       ...(section.section_codes || []).map((code) => code.split("@")[0]),
     ])));
-  if (physicalLineIDs.size) {
-    const packageData = context.RailNetwork.mergeCompactPackages(SCOPE_COUNTRIES.map((region) =>
-      readJson(path.join(APP_DIR, "public", "rail", `${region}-2025.json`))));
-    for (const line of packageData.lines) {
-      if (physicalLineIDs.has(line.id)) {
-        for (const owner of Object.values(line.stationCircleOwnerByCode || {})) physicalLineIDs.add(owner);
-      }
-    }
-    const physicalNetwork = context.RailNetwork.buildNetworkFromCompactPackage({
-      ...packageData, lines: packageData.lines.filter((line) => physicalLineIDs.has(line.id)),
-    });
-    context.RailMap.sourceRouteGeometry = (properties) =>
-      context.RailNetwork.sourceGeometryForIntervals(physicalNetwork, properties);
-  }
+  context.RailMap.sourceRouteGeometry = createPrecomputeSourceGeometry(
+    context.RailNetwork,
+    () => context.RailNetwork.mergeCompactPackages(SCOPE_COUNTRIES.map((region) =>
+      readJson(path.join(APP_DIR, "public", "rail", `${region}-2025.json`)))),
+    physicalLineIDs,
+  );
 
   const baseHost = {
     country: COUNTRY,

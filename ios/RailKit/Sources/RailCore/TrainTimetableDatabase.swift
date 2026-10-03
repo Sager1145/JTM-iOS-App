@@ -350,10 +350,8 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
             let routeSections: [RouteSection]
         }
 
-        /// Projects the physical line chain into editor stops. A route-only
-        /// line boundary becomes an untimed pass-through stop here; it remains
-        /// absent from the canonical timetable calls and passenger-stop APIs.
-        /// A source-listed non-passenger call keeps its published clock facts.
+        /// Keeps published calls separate from physical routing constraints.
+        /// A line boundary is never evidence of a passing-station call.
         private func editorProjection(ridden: Bool) -> EditorProjection? {
             let calls = passengerStops
             if hasCompletePhysicalRoute {
@@ -420,39 +418,13 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
                     sectionCodes: segment.sectionCodes.isEmpty ? nil : segment.sectionCodes))
             }
 
-            let callsByChainIndex = Dictionary(
-                uniqueKeysWithValues: zip(callChainIndices, calls.enumerated()).map {
-                    ($0.0, $0.1)
-                })
-            let projectedStops = chainStations.enumerated().map { index, station -> Stop in
-                if let (callIndex, call) = callsByChainIndex[index] {
-                    let type = callIndex == 0 ? "origin"
-                        : callIndex == calls.count - 1 ? "destination" : "passenger_stop"
-                    return Stop(
-                        name: call.station.name,
-                        n02StationCode: call.station.currentSourceCode,
-                        platformNumber: Self.editorPlatformNumber(call.platform),
-                        arrival: Self.editorTime(seconds: call.arrivalSeconds, source: call.arrivalTime),
-                        departure: Self.editorTime(seconds: call.departureSeconds, source: call.departureTime),
-                        stopType: type,
-                        rideSegment: ridden)
-                }
-                let sourceCalls = stops.filter { $0.station.id == station.id }
-                guard sourceCalls.count == 1, let sourceCall = sourceCalls.first else {
-                    return Stop(
-                        name: station.name, n02StationCode: station.currentSourceCode,
-                        stopType: "pass_through", rideSegment: ridden)
-                }
-                return Stop(
-                    name: sourceCall.station.name,
-                    n02StationCode: sourceCall.station.currentSourceCode,
-                    platformNumber: Self.editorPlatformNumber(sourceCall.platform),
-                    arrival: Self.editorTime(
-                        seconds: sourceCall.arrivalSeconds, source: sourceCall.arrivalTime),
-                    departure: Self.editorTime(
-                        seconds: sourceCall.departureSeconds, source: sourceCall.departureTime),
-                    stopType: "pass_through",
-                    rideSegment: ridden)
+            let projectedStops = calls.enumerated().map { index, call in
+                Stop(name: call.station.name, n02StationCode: call.station.currentSourceCode,
+                     platformNumber: Self.editorPlatformNumber(call.platform),
+                     arrival: Self.editorTime(seconds: call.arrivalSeconds, source: call.arrivalTime),
+                     departure: Self.editorTime(seconds: call.departureSeconds, source: call.departureTime),
+                     stopType: index == 0 ? "origin" : index == calls.count - 1 ? "destination" : "passenger_stop",
+                     rideSegment: ridden)
             }
             return EditorProjection(stops: projectedStops, routeSections: sections)
         }
@@ -462,7 +434,10 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
         /// segments; it never invents optional stops or a fallback route.
         public func compatibilityPattern() -> TrainServicePatterns.Pattern? {
             guard canApplyToRouteEditor,
-                  editorProjection(ridden: false)?.stops.count == passengerStops.count,
+                  lineSegments.allSatisfy({ segment in
+                      passengerStops.contains { $0.station.id == segment.fromStation.id }
+                          && passengerStops.contains { $0.station.id == segment.toStation.id }
+                  }),
                   let validUntil = Self.nextGregorianDay(after: serviceDate)
             else { return nil }
 

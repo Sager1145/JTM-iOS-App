@@ -898,8 +898,9 @@ struct StatisticsDashboardContent: View {
         "\(placeName(row.from)) ↔ \(placeName(row.to))"
     }
 
-    private func placeName(_ name: String) -> String {
-        localization.placeName(name, region: region ?? localization.regionNaming(name))
+    private func placeName(_ name: String, in recordedRegion: Region? = nil) -> String {
+        localization.placeName(
+            name, region: recordedRegion ?? region ?? localization.regionNaming(name))
     }
 
     private func rideCount(_ count: Int) -> String {
@@ -1308,7 +1309,9 @@ struct StatisticsDashboardContent: View {
 
     /// 最常進出的車站 — where the reader has boarded and got off most.
     private func stationsCard(_ passport: PassportStatistics) -> some View {
-        let rows = rankedRows(passport.stations, metric: .count) { placeName($0.name) }
+        let rows = rankedRows(passport.stations, metric: .count) {
+            placeName($0.name, in: $0.region)
+        }
         return rankedCard(
             title: localization.statsText("ios.stats.stationsTitle"),
             systemImage: "building.columns",
@@ -1344,7 +1347,7 @@ struct StatisticsDashboardContent: View {
     /// times is one route and about thirty sections.
     private func routesCard(_ passport: PassportStatistics) -> some View {
         let rows = rankedRows(passport.routes, metric: routeMetric) { tally in
-            "\(placeName(tally.name)) ↔ \(placeName(tally.pair ?? ""))"
+            "\(placeName(tally.name, in: tally.region)) ↔ \(placeName(tally.pair ?? "", in: tally.region))"
         }
         return rankedCard(
             title: localization.statsText("ios.stats.routesTitle"),
@@ -1511,7 +1514,7 @@ struct StatisticsDashboardContent: View {
     private func superlative(
         _ key: String, _ journey: PassportStatistics.Journey, value: String
     ) -> some View {
-        let endpoints = "\(placeName(journey.from)) → \(placeName(journey.to))"
+        let endpoints = "\(placeName(journey.from, in: journey.region)) → \(placeName(journey.to, in: journey.region))"
         let caption = journeyCaption(journey)
         let train = ridden(journey)
         return StatisticsSuperlative(

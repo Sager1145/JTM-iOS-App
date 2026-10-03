@@ -10,6 +10,7 @@ start = annotation.index("final class RideStationOverlay: NSObject, MKOverlay")
 end = annotation.index("/// The NAME a marker won", start)
 production = annotation[start:end].replace("CACurrentMediaTime()", "TestClock.now")
 production = production.replace("private func advance(", "func advance(")
+production = production.replace("final class RideStationOverlayRenderer", "class RideStationOverlayRenderer", 1)
 # Share only the platform doubles and bitmap utilities from the layering check.
 # The production renderer itself is extracted independently, unchanged except
 # for clock injection and access to its frame callback.
@@ -133,11 +134,77 @@ func red(_ renderer: RideStationOverlayRenderer, at station: RideStationAnnotati
                   zoomScale: 1, in: bitmap.context)
     return bitmap.pixel(32, 32)[0]
 }
+func effectiveOpacity(_ renderer: RideStationOverlayRenderer, at station: RideStationAnnotation) -> CGFloat {
+    CGFloat(red(renderer, at: station)) / 255 * renderer.alpha
+}
 @main struct FadeChecks {
     @MainActor static func main() {
         checkNetworkFades()
         let persistent = RideStationAnnotation()
+        let arrivalOverlay = RideStationOverlay(rideID: "arrival", stations: [persistent])
+        let arrival = InvalidationSpy(overlay: arrivalOverlay)
+        arrival.updateStations(duration: 0.24)
+        arrival.applyScale(1, zoom: 14)
+        let arrivalPaints = arrival.invalidations
+        require(arrival.alpha == 0, "whole-batch arrival must start transparent")
+        require(red(arrival, at: persistent) == 255, "arrival texture must be painted at final opacity")
+        TestClock.now += 0.12
+        arrival.advance(at: TestClock.now)
+        require(arrival.alpha > 0 && arrival.alpha < 1, "whole-batch arrival must animate compositor opacity")
+        require(arrival.invalidations == arrivalPaints, "whole-batch fade must not regenerate textures")
+        let repeatedArrivalAlpha = arrival.alpha
+        arrival.updateStations(duration: 0.24)
+        require(arrival.alpha == repeatedArrivalAlpha,
+                "unchanged update must not finish or restart compositor arrival")
+        require(arrival.invalidations == arrivalPaints,
+                "unchanged update must not repaint the arrival texture")
+        TestClock.now += 0.01
+        arrival.advance(at: TestClock.now)
+        require(arrival.alpha > repeatedArrivalAlpha && arrival.alpha < 1,
+                "unchanged update must preserve the running compositor arrival")
+        require(arrival.invalidations == arrivalPaints,
+                "unchanged update must not convert compositor arrival into per-marker repainting")
+        arrival.applyScale(0.75, zoom: 14.1)
+        let resizedPaints = arrival.invalidations
+        TestClock.now += 0.13
+        arrival.advance(at: TestClock.now)
+        require(arrival.alpha == 1, "whole-batch arrival must finish")
+        require(arrival.invalidations == resizedPaints, "resized arrival must finish without repaint")
+        let immediate = InvalidationSpy(overlay: arrivalOverlay)
+        immediate.updateStations(duration: 0.24)
+        immediate.applyScale(1, zoom: 14)
+        immediate.updateStations(duration: 0)
+        require(immediate.alpha == 1, "immediate update must finish batch opacity")
         let incoming = RideStationAnnotation(longitude: 139.01)
+        let interruptedOverlay = RideStationOverlay(rideID: "interrupted", stations: [persistent, incoming])
+        let interrupted = RideStationOverlayRenderer(overlay: interruptedOverlay)
+        interrupted.updateStations(duration: 0.24)
+        interrupted.applyScale(1, zoom: 14)
+        TestClock.now += 0.01
+        interrupted.advance(at: TestClock.now)
+        let outgoingOpacity = effectiveOpacity(interrupted, at: incoming)
+        let retainedOpacity = effectiveOpacity(interrupted, at: persistent)
+        require(outgoingOpacity > 0 && outgoingOpacity < 1, "interruption must occur during batch arrival")
+        interruptedOverlay.stations = [persistent]
+        interrupted.updateStations(duration: 0.24)
+        let pixelTolerance: CGFloat = 1 / 255
+        require(abs(effectiveOpacity(interrupted, at: incoming) - outgoingOpacity) <= pixelTolerance,
+                "departure during batch arrival must preserve the outgoing dot's visible opacity")
+        require(abs(effectiveOpacity(interrupted, at: persistent) - retainedOpacity) <= pixelTolerance,
+                "departure during batch arrival must preserve the retained dot's visible opacity")
+        var previousOutgoingOpacity = effectiveOpacity(interrupted, at: incoming)
+        for elapsed in [0.004, 0.008, 0.012] {
+            TestClock.now += elapsed
+            interrupted.advance(at: TestClock.now)
+            let opacity = effectiveOpacity(interrupted, at: incoming)
+            require(opacity <= previousOutgoingOpacity + pixelTolerance,
+                    "outgoing dot must not brighten while batch arrival is interrupted")
+            previousOutgoingOpacity = opacity
+        }
+        TestClock.now += 0.25
+        interrupted.advance(at: TestClock.now)
+        require(effectiveOpacity(interrupted, at: incoming) == 0,
+                "departure during batch arrival must finish removing the outgoing dot")
         let overlay = RideStationOverlay(rideID: "ride", stations: [persistent])
         let renderer = RideStationOverlayRenderer(overlay: overlay)
         renderer.applyScale(1, zoom: 14)
@@ -177,7 +244,7 @@ func red(_ renderer: RideStationOverlayRenderer, at station: RideStationAnnotati
         overlay.stations = [persistent, incoming]
         renderer.updateStations(duration: 0)
         require(red(renderer, at: incoming) == 255, "immediate playback updates unexpectedly faded")
-        print("Map network and dot fades pass: arrival, departure, retained opacity, resize, reversal, reduced motion, immediate updates")
+        print("Map network and dot fades pass: arrival, unchanged batch updates, interrupted batch departure, retained opacity, resize, reversal, reduced motion, immediate updates")
     }
 }
 '''

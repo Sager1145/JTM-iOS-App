@@ -200,6 +200,16 @@ extension TransferGuide {
             totalCalls: places.count)
     }
 
+    /// A resolved place's `n02_station_code`, or nil where that code is one
+    /// of ADR 0011's history ids. Those are the index's own bookkeeping key
+    /// for a retired complex, never a real `n02_station_code` — the solver
+    /// resolves a dated ride by station NAME, and handing it a `history:`
+    /// string would be handing it a code it cannot look up.
+    private static func liveCode(_ place: StationIndex.Place?) -> String? {
+        guard let code = place?.code, !RailHistoryStations.isHistoryCode(code) else { return nil }
+        return code
+    }
+
     private static func uniqueID(
         options: BuildOptions, ordinal: Int, used: inout Set<String>
     ) -> String {
@@ -230,7 +240,7 @@ extension TransferGuide {
             let isLast = index == leg.calls.count - 1
             let stop = Stop(
                 name: call.name,
-                n02StationCode: places[index]?.code,
+                n02StationCode: liveCode(places[index]),
                 platformNumber: isFirst
                     ? leg.departurePlatform : (isLast ? leg.arrivalPlatform : nil),
                 arrival: call.arrival,
@@ -259,8 +269,8 @@ extension TransferGuide {
                 RouteSection(
                     from: leg.calls[index].name,
                     to: leg.calls[index + 1].name,
-                    fromN02StationCode: from?.code,
-                    toN02StationCode: to?.code,
+                    fromN02StationCode: liveCode(from),
+                    toN02StationCode: liveCode(to),
                     lineNames: shared.isEmpty ? nil : shared.map(\.name),
                     operatorNames: shared.compactMap(\.operatorName).isEmpty
                         ? nil : Array(Set(shared.compactMap(\.operatorName))).sorted()))

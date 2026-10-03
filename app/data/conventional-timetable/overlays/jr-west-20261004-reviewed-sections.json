@@ -1,0 +1,409 @@
+{
+  "schemaVersion": 1,
+  "inventoryVersion": "2025.5.2",
+  "observedOn": "2026-10-02",
+  "lines": [
+    {
+      "lineID": "jp-西日本旅客鉄道-東海道線",
+      "operatorName": "西日本旅客鉄道",
+      "lineName": "東海道線",
+      "aliases": [],
+      "coverage": "partial",
+      "kinds": [
+        {
+          "id": "ec55dbee00a1f75867cc",
+          "displayName": "新快速",
+          "trainType": "新快速",
+          "sourceURL": "https://timetable.jr-odekake.net/train-timetable/238961?date=20261004",
+          "validFrom": "2026-10-04",
+          "validUntil": "2026-10-05",
+          "scope": "新快速 3442A researched section 大阪–京都; 2026-10-04 only (Asia/Tokyo). A-seat new rapid 26; all published passenger calls within this section are recorded.",
+          "fromStationCode": "007068",
+          "toStationCode": "006079",
+          "observedOn": "2026-10-02"
+        },
+        {
+          "id": "3c7e3ff894033abfabeb",
+          "displayName": "快速",
+          "trainType": "快速",
+          "sourceURL": "https://timetable.jr-odekake.net/train-timetable/101911?date=20261004",
+          "validFrom": "2026-10-04",
+          "validUntil": "2026-10-05",
+          "scope": "快速 752T researched section 大阪–高槻; 2026-10-04 only (Asia/Tokyo). Rapid section ends at Takatsuki; source explicitly says 西明石まで普通／高槻から普通. No rapid claim east of Takatsuki.",
+          "fromStationCode": "007068",
+          "toStationCode": "006432",
+          "observedOn": "2026-10-02"
+        },
+        {
+          "id": "ad49a1041e02cf769ed1",
+          "displayName": "普通",
+          "trainType": "普通",
+          "sourceURL": "https://timetable.jr-odekake.net/train-timetable/322251?date=20261004",
+          "validFrom": "2026-10-04",
+          "validUntil": "2026-10-05",
+          "scope": "普通 744T researched section 高槻–京都; 2026-10-04 only (Asia/Tokyo). Actual ordinary section of the train advertised as A快速744. Source expressly states 高槻から普通; classification is not inferred from train-number suffix or stop pattern.",
+          "fromStationCode": "006432",
+          "toStationCode": "006079",
+          "observedOn": "2026-10-02"
+        }
+      ],
+      "note": "Four public official train pages/sections researched; not a complete line timetable."
+    },
+    {
+      "lineID": "jp-西日本旅客鉄道-湖西線",
+      "operatorName": "西日本旅客鉄道",
+      "lineName": "湖西線",
+      "aliases": [],
+      "coverage": "partial",
+      "kinds": [
+        {
+          "id": "9101c49d6609c668d4a5",
+          "displayName": "新快速",
+          "trainType": "新快速",
+          "sourceURL": "https://timetable.jr-odekake.net/train-timetable/101572?date=20261004",
+          "validFrom": "2026-10-04",
+          "validUntil": "2026-10-05",
+          "scope": "新快速 3438M researched section 山科–近江今津; 2026-10-04 only (Asia/Tokyo). Source explicitly shows through continuation as 3138M from 近江今津; recorded physical segment only.",
+          "fromStationCode": "006043",
+          "toStationCode": "004835",
+          "observedOn": "2026-10-02"
+        },
+        {
+          "id": "70ecdb6ac68217ee27dd",
+          "displayName": "新快速",
+          "trainType": "新快速",
+          "sourceURL": "https://timetable.jr-odekake.net/train-timetable/101572?date=20261004",
+          "validFrom": "2026-10-04",
+          "validUntil": "2026-10-05",
+          "scope": "新快速 3138M researched section 近江今津–敦賀; 2026-10-04 only (Asia/Tokyo). Source says 毎日運転 for this continuation column; only explicit requested 2026-10-04 is imported. Same published through train as 3438M; do not count this as an additional independent departure.",
+          "fromStationCode": "004835",
+          "toStationCode": "004400",
+          "observedOn": "2026-10-02"
+        }
+      ],
+      "note": "Four public official train pages/sections researched; not a complete line timetable."
+    },
+    {
+      "lineID": "jp-西日本旅客鉄道-北陸線",
+      "operatorName": "西日本旅客鉄道",
+      "lineName": "北陸線",
+      "aliases": [],
+      "coverage": "partial",
+      "kinds": [
+        {
+          "id": "92151d17407af2703268",
+          "displayName": "新快速",
+          "trainType": "新快速",
+          "sourceURL": "https://timetable.jr-odekake.net/train-timetable/101572?date=20261004",
+          "validFrom": "2026-10-04",
+          "validUntil": "2026-10-05",
+          "scope": "新快速 3138M researched section 近江今津–敦賀; 2026-10-04 only (Asia/Tokyo). Source says 毎日運転 for this continuation column; only explicit requested 2026-10-04 is imported. Same published through train as 3438M; do not count this as an additional independent departure.",
+          "fromStationCode": "004400",
+          "toStationCode": "010186",
+          "observedOn": "2026-10-02"
+        }
+      ],
+      "note": "Four public official train pages/sections researched; not a complete line timetable."
+    }
+  ],
+  "trips": [
+    {
+      "id": "jr-west-3442A-20261004-reviewed-section",
+      "trainNumber": "3442A",
+      "trainType": "新快速",
+      "operatorName": "西日本旅客鉄道",
+      "lineIDs": [
+        "jp-西日本旅客鉄道-東海道線"
+      ],
+      "serviceDates": [
+        "2026-10-04"
+      ],
+      "sourceURL": "https://timetable.jr-odekake.net/train-timetable/238961?date=20261004",
+      "coverage": "partial",
+      "note": "JR時刻表2026年10月号; published 土曜・休日運転 for requested Sunday 2026-10-04; Japan service-day timezone Asia/Tokyo. Short manual factual section excerpt; omitted stations/dates unknown; scheduled service, not actual-operation report. A-seat new rapid 26; all published passenger calls within this section are recorded.",
+      "stops": [
+        {
+          "stationCode": "007068",
+          "stationName": "大阪",
+          "arrivalSeconds": 38580,
+          "departureSeconds": 38700
+        },
+        {
+          "stationCode": "006911",
+          "stationName": "新大阪",
+          "arrivalSeconds": 38940,
+          "departureSeconds": 39000
+        },
+        {
+          "stationCode": "006432",
+          "stationName": "高槻",
+          "arrivalSeconds": 39600,
+          "departureSeconds": 39660
+        },
+        {
+          "stationCode": "006079",
+          "stationName": "京都",
+          "arrivalSeconds": 40440,
+          "departureSeconds": 40500
+        }
+      ],
+      "previousTrainIDs": null,
+      "nextTrainIDs": null
+    },
+    {
+      "id": "jr-west-752T-20261004-reviewed-section",
+      "trainNumber": "752T",
+      "trainType": "快速",
+      "operatorName": "西日本旅客鉄道",
+      "lineIDs": [
+        "jp-西日本旅客鉄道-東海道線"
+      ],
+      "serviceDates": [
+        "2026-10-04"
+      ],
+      "sourceURL": "https://timetable.jr-odekake.net/train-timetable/101911?date=20261004",
+      "coverage": "partial",
+      "note": "JR時刻表2026年10月号; published 土曜・休日運転 for requested Sunday 2026-10-04; Japan service-day timezone Asia/Tokyo. Short manual factual section excerpt; omitted stations/dates unknown; scheduled service, not actual-operation report. Rapid section ends at Takatsuki; source explicitly says 西明石まで普通／高槻から普通. No rapid claim east of Takatsuki.",
+      "stops": [
+        {
+          "stationCode": "007068",
+          "stationName": "大阪",
+          "arrivalSeconds": 40920,
+          "departureSeconds": 40980
+        },
+        {
+          "stationCode": "006911",
+          "stationName": "新大阪",
+          "arrivalSeconds": 41220,
+          "departureSeconds": 41280
+        },
+        {
+          "stationCode": "006567",
+          "stationName": "茨木",
+          "arrivalSeconds": 41820,
+          "departureSeconds": 41820
+        },
+        {
+          "stationCode": "006432",
+          "stationName": "高槻",
+          "arrivalSeconds": 42180,
+          "departureSeconds": null
+        }
+      ],
+      "previousTrainIDs": null,
+      "nextTrainIDs": null
+    },
+    {
+      "id": "jr-west-744T-20261004-reviewed-section",
+      "trainNumber": "744T",
+      "trainType": "普通",
+      "operatorName": "西日本旅客鉄道",
+      "lineIDs": [
+        "jp-西日本旅客鉄道-東海道線"
+      ],
+      "serviceDates": [
+        "2026-10-04"
+      ],
+      "sourceURL": "https://timetable.jr-odekake.net/train-timetable/322251?date=20261004",
+      "coverage": "partial",
+      "note": "JR時刻表2026年10月号; published 土曜・休日運転 for requested Sunday 2026-10-04; Japan service-day timezone Asia/Tokyo. Short manual factual section excerpt; omitted stations/dates unknown; scheduled service, not actual-operation report. Actual ordinary section of the train advertised as A快速744. Source expressly states 高槻から普通; classification is not inferred from train-number suffix or stop pattern.",
+      "stops": [
+        {
+          "stationCode": "006432",
+          "stationName": "高槻",
+          "arrivalSeconds": null,
+          "departureSeconds": 38580
+        },
+        {
+          "stationCode": "006359",
+          "stationName": "島本",
+          "arrivalSeconds": 38880,
+          "departureSeconds": 38880
+        },
+        {
+          "stationCode": "006329",
+          "stationName": "山崎",
+          "arrivalSeconds": 39000,
+          "departureSeconds": 39060
+        },
+        {
+          "stationCode": "006258",
+          "stationName": "長岡京",
+          "arrivalSeconds": 39240,
+          "departureSeconds": 39240
+        },
+        {
+          "stationCode": "006178",
+          "stationName": "向日町",
+          "arrivalSeconds": 39420,
+          "departureSeconds": 39420
+        },
+        {
+          "stationCode": "006152",
+          "stationName": "桂川",
+          "arrivalSeconds": 39540,
+          "departureSeconds": 39540
+        },
+        {
+          "stationCode": "006096",
+          "stationName": "西大路",
+          "arrivalSeconds": 39720,
+          "departureSeconds": 39720
+        },
+        {
+          "stationCode": "006079",
+          "stationName": "京都",
+          "arrivalSeconds": 39900,
+          "departureSeconds": 40020
+        }
+      ],
+      "previousTrainIDs": null,
+      "nextTrainIDs": null
+    },
+    {
+      "id": "jr-west-3438M-20261004-reviewed-section",
+      "trainNumber": "3438M",
+      "trainType": "新快速",
+      "operatorName": "西日本旅客鉄道",
+      "lineIDs": [
+        "jp-西日本旅客鉄道-湖西線"
+      ],
+      "serviceDates": [
+        "2026-10-04"
+      ],
+      "sourceURL": "https://timetable.jr-odekake.net/train-timetable/101572?date=20261004",
+      "coverage": "partial",
+      "note": "JR時刻表2026年10月号; published 土曜・休日運転 for requested Sunday 2026-10-04; Japan service-day timezone Asia/Tokyo. Short manual factual section excerpt; omitted stations/dates unknown; scheduled service, not actual-operation report. Source explicitly shows through continuation as 3138M from 近江今津; recorded physical segment only.",
+      "stops": [
+        {
+          "stationCode": "006043",
+          "stationName": "山科",
+          "arrivalSeconds": 39000,
+          "departureSeconds": 39000
+        },
+        {
+          "stationCode": "005894",
+          "stationName": "大津京",
+          "arrivalSeconds": 39300,
+          "departureSeconds": 39300
+        },
+        {
+          "stationCode": "005764",
+          "stationName": "比叡山坂本",
+          "arrivalSeconds": 39540,
+          "departureSeconds": 39600
+        },
+        {
+          "stationCode": "005626",
+          "stationName": "堅田",
+          "arrivalSeconds": 39840,
+          "departureSeconds": 39900
+        },
+        {
+          "stationCode": "005264",
+          "stationName": "近江舞子",
+          "arrivalSeconds": 40560,
+          "departureSeconds": 40560
+        },
+        {
+          "stationCode": "005225",
+          "stationName": "北小松",
+          "arrivalSeconds": 40680,
+          "departureSeconds": 40740
+        },
+        {
+          "stationCode": "005134",
+          "stationName": "近江高島",
+          "arrivalSeconds": 40980,
+          "departureSeconds": 40980
+        },
+        {
+          "stationCode": "005032",
+          "stationName": "安曇川",
+          "arrivalSeconds": 41220,
+          "departureSeconds": 41220
+        },
+        {
+          "stationCode": "004955",
+          "stationName": "新旭",
+          "arrivalSeconds": 41400,
+          "departureSeconds": 41400
+        },
+        {
+          "stationCode": "004835",
+          "stationName": "近江今津",
+          "arrivalSeconds": 41640,
+          "departureSeconds": null
+        }
+      ],
+      "previousTrainIDs": null,
+      "nextTrainIDs": [
+        "jr-west-3138M-20261004-reviewed-section"
+      ]
+    },
+    {
+      "id": "jr-west-3138M-20261004-reviewed-section",
+      "trainNumber": "3138M",
+      "trainType": "新快速",
+      "operatorName": "西日本旅客鉄道",
+      "lineIDs": [
+        "jp-西日本旅客鉄道-湖西線",
+        "jp-西日本旅客鉄道-北陸線"
+      ],
+      "serviceDates": [
+        "2026-10-04"
+      ],
+      "sourceURL": "https://timetable.jr-odekake.net/train-timetable/101572?date=20261004",
+      "coverage": "partial",
+      "note": "JR時刻表2026年10月号; published 土曜・休日運転 for requested Sunday 2026-10-04; Japan service-day timezone Asia/Tokyo. Short manual factual section excerpt; omitted stations/dates unknown; scheduled service, not actual-operation report. Source says 毎日運転 for this continuation column; only explicit requested 2026-10-04 is imported. Same published through train as 3438M; do not count this as an additional independent departure.",
+      "stops": [
+        {
+          "stationCode": "004835",
+          "stationName": "近江今津",
+          "arrivalSeconds": null,
+          "departureSeconds": 42180
+        },
+        {
+          "stationCode": "004709",
+          "stationName": "近江中庄",
+          "arrivalSeconds": 42420,
+          "departureSeconds": 42420
+        },
+        {
+          "stationCode": "004649",
+          "stationName": "マキノ",
+          "arrivalSeconds": 42600,
+          "departureSeconds": 42660
+        },
+        {
+          "stationCode": "004527",
+          "stationName": "永原",
+          "arrivalSeconds": 42900,
+          "departureSeconds": 42960
+        },
+        {
+          "stationCode": "004400",
+          "stationName": "近江塩津",
+          "arrivalSeconds": 43260,
+          "departureSeconds": 43260
+        },
+        {
+          "stationCode": "004256",
+          "stationName": "新疋田",
+          "arrivalSeconds": 43680,
+          "departureSeconds": 43680
+        },
+        {
+          "stationCode": "010186",
+          "stationName": "敦賀",
+          "arrivalSeconds": 44100,
+          "departureSeconds": null
+        }
+      ],
+      "previousTrainIDs": [
+        "jr-west-3438M-20261004-reviewed-section"
+      ],
+      "nextTrainIDs": null
+    }
+  ]
+}

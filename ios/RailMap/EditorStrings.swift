@@ -22,8 +22,14 @@ enum EditorStrings {
     static let table: [String: [Localization.Language: String]] = [
 
         "ios.editor.generatedStation": [
-            .zhHans: "由实际线路自动补齐", .zhHant: "由實際路線自動補齊",
-            .ja: "実際の路線から自動補完", .en: "Added from the physical line",
+            .zhHans: "自动填入", .zhHant: "自動填入",
+            .ja: "自動入力", .en: "Automatically filled",
+        ],
+        "ios.editor.generatedStationsNote": [
+            .zhHans: "通过站根据你确认的线路自动补齐，未包含时刻表信息。可打开各站修改，保存后仍可编辑。",
+            .zhHant: "通過站根據你確認的路線自動補齊，未包含時刻表資訊。可開啟各站修改，儲存後仍可編輯。",
+            .ja: "確認した経路から通過駅を補完しています。時刻表の情報は含みません。各駅を開いて変更でき、保存後も編集できます。",
+            .en: "Passing stations are filled from the route you confirm, without timetable information. Open any station to make changes, including after saving.",
         ],
         "ios.editor.chooseEndpointsFirst": [
             .zhHans: "选择两端车站后，选择实际经过的线路。", .zhHant: "選擇兩端車站後，選擇實際經過的路線。",
@@ -1155,6 +1161,27 @@ enum EditorStrings {
             .zhHant: "正在處理，請稍候",
             .ja: "処理中です",
             .en: "A request is already in progress.",
+        ],
+
+        "ios.editor.retiredStation": [
+            .zhHans: "已废止车站", .zhHant: "已廢止車站",
+            .ja: "廃止駅", .en: "Former station",
+        ],
+        "ios.editor.retiredOn": [
+            .zhHans: "{date} 废止", .zhHant: "{date} 廢止",
+            .ja: "{date} 廃止", .en: "Closed {date}",
+        ],
+        "ios.editor.retiredStationsSection": [
+            .zhHans: "乘车日期仍在营业的已废止车站",
+            .zhHant: "乘車日期仍在營業的已廢止車站",
+            .ja: "乗車日に営業していた廃止駅",
+            .en: "Former stations open on the ride date",
+        ],
+        "ios.editor.retiredStationNote": [
+            .zhHans: "已废止车站。路线按乘车日期的线路绘制。",
+            .zhHant: "已廢止車站。路線按乘車日期的路線繪製。",
+            .ja: "廃止駅です。経路は乗車日の路線で描かれます。",
+            .en: "Former station. The route is drawn on the railway as it was on the ride date.",
         ],
     ]
 }

@@ -1,0 +1,347 @@
+{
+  "format": 1,
+  "owner": "passing-station data cleanup; publisher owns final Japan cache/port generation",
+  "source_freeze": {
+    "japan": {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/train-store.json",
+      "sha256": "dfd93166270e0932c8d02ffa7eef4ad1c2980197b2120726259c8e97409e0cee"
+    },
+    "tokyo": {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/special-samples/tokyo-limited-express-loop.json",
+      "sha256": "f139f109c30f63e9aaf9e1a359ac15203f790b68cad1fbd9673167be21ce5d91"
+    }
+  },
+  "added_files": [
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/scripts/samples/remove-unverified-limited-express-passes.py",
+      "sha256": "a4e574675d1d6d9a1fc9a64b6f37eb102d7cdba77889759004dc37c3dbaaa386"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/scripts/samples/tests/test_sample_passing_station_evidence.py",
+      "sha256": "b22d917ade4bfacda6eb7fb58fd46688d4535537d355afefbdde7f09b8e7c44e"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/ios/tools/normalize-reviewed-pass-marks.py",
+      "sha256": "8fee2e00f3a30f9a4d9fbcd34bb0811293c5a5e899cd1fe3d770b8a62bb273bc"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-passing-station-audit.json",
+      "sha256": "bc7b2390e02d04c17fb8344547615cd7df80a5d6033eaccd789a48b6a5cf5a76"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/train-service-history/normalized/fact-sources-explicit-pass-marks.jsonl",
+      "sha256": "89ebafb109c8ad1ebdaa7619321ee5dcbe45a4e132a1af4f42e103f1ee0c8371"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/train-service-history/sources/candidates/reviewed-pass-marks-20261003.json",
+      "sha256": "d0353a2e10c35629cd1472de784b16e35832955176c21e66a27c1811dc7afb91"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/limited-express-passing-stations-2026-10-02.md",
+      "sha256": "1746ba7f49373fd75bf35b5ca854fa88e0ff4638fa7512257642870f5be1b6ec"
+    }
+  ],
+  "modified_files": [
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/ios/tools/train_timetable.py",
+      "sha256": "71d29869ee7444b244e56bc032c1a64563dba4420f1a8345401dcbdfcd22b86a"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/ios/tools/tests/test_train_timetable.py",
+      "sha256": "9dfde7e40d0945b29f6d2bd1073372c477657bd170595902d9cf95a136924ab8"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/ios/tools/rebuild-reviewed-train-timetable.py",
+      "sha256": "80a3f78777fa0bf0fdb57bc6d5934b4f2b212e22f2e53e78eb62475d38b1374d"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/train-store.json",
+      "sha256": "dfd93166270e0932c8d02ffa7eef4ad1c2980197b2120726259c8e97409e0cee"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/special-samples/tokyo-limited-express-loop.json",
+      "sha256": "f139f109c30f63e9aaf9e1a359ac15203f790b68cad1fbd9673167be21ce5d91"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-timetable-reviews.json",
+      "sha256": "9b072c0620a5339ae794310f992424dad877bca5d6b25c6e21bc09217eda90b9"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-timetable-field-audit.json",
+      "sha256": "3064c08e4c878bedc55d90bd30d7e376c9a13521d6539de2df46bd26d4d3f2b1"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/train-service-history/derived/train-service-timetable.sqlite",
+      "sha256": "44dbd21da235bbeab2f9ef1a38c16812ecb8932abb3b55adcfc00c9c120ac926"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/ios/RailKit/Sources/RailCore/Resources/train-service-timetable.sqlite",
+      "sha256": "44dbd21da235bbeab2f9ef1a38c16812ecb8932abb3b55adcfc00c9c120ac926"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/train-service-history/audits/train-timetable-coverage.json",
+      "sha256": "18690257bfc4807ba4861846ad78e1d5fa1c3f1f2e63472f92ee324f34493c01"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/train-service-history/audits/train-service-patterns-projection.json",
+      "sha256": "e9197ed4219e56edcdb48603a38390344bddeb654f4e49d0a49462a05ee46a79"
+    }
+  ],
+  "interim_changed_generated_files": [
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/manifest.json",
+      "sha256": "832b089bd6d17290092ad28b8c831598b9a796c98404ae4460760b3fd97dc00b"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/part-000.json",
+      "sha256": "b9cb85aef6297ea9caacf2b61563797e05841105c625232e05e28fee66ad19f2"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/part-026.json",
+      "sha256": "0835f14aa30947f03e71196998573866bb89b1d6b5155d41c7f4007e640ff516"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/part-027.json",
+      "sha256": "e9c7fd13f78cd012e3d87f7a7f4935f46dc7ae891e45af7fae83ac23e51899f6"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/part-033.json",
+      "sha256": "9260ba4f8c100e20ac26fed7cd2b06b0c72193973684cb70d68915e49591049f"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/part-068.json",
+      "sha256": "190b3b210ca06e02115cf2e2a905ff43af650ee8c204510850e177269f3e60b1"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/part-069.json",
+      "sha256": "17b1c97dd1c4dd6acc1a85b3e50ad9b1eccbf93761b8159b5449a3c66d9be97f"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/part-072.json",
+      "sha256": "b548939cd3af205b6874e3640ab7ab084ba5f4da89a1b51c5ac4d7190285f429"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/part-073.json",
+      "sha256": "146b5bfd8b72788f4af03b6fe0ca54072e784e4e6797d3594037e41f9ef575a4"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/part-074.json",
+      "sha256": "f3fe78ebc02ab5df495d95a3c00e1331ce02ac5390dc0679a5901b8d2663c01e"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/part-081.json",
+      "sha256": "e4b1d9cca8bfc09dd5a82fe570e1dbfa8e6b4f08d7a8f9cefb4e68f162576e88"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/part-096.json",
+      "sha256": "b50ede6acc9b18223702141d5ee1851186aa7ced598d5e83fc3c8019b8b3d86c"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/part-097.json",
+      "sha256": "7c74faa47c1bf0abcd6cca15ca18dd35bb529571d30843e2c465a07cba85acd6"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/part-105.json",
+      "sha256": "6878d401dbc8deac2d66876f9ba753078cfd314a449f567360ff6594994276ef"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/part-115.json",
+      "sha256": "26bdf985013916381fbcc716e1966f80d0412ac16a0777148e7792d726a6627a"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/part-117.json",
+      "sha256": "1079eb889c77058caa84c9e1f02e22640b4468c7fd13ac6805640be33b86f7c3"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/part-118.json",
+      "sha256": "36964dcfbedf04eda13f48a4953a39c5d10a71ce8c094cb51fee16ef771dbe28"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/part-129.json",
+      "sha256": "525ce5250364e1c17504e3f1869fbf2ef24c951d933e920445bb7a8166e9b1ae"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/part-130.json",
+      "sha256": "7b0a62943710cdf96742b262bb11d27504e94edd287724f020ece62984e67e31"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/part-131.json",
+      "sha256": "306c507940b654e0fc57338af80ecae600f3e3664583b161f845679a80e024e5"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/part-132.json",
+      "sha256": "f202fa3538f2109f97e7728ac2344d20ba400e5d8581d89ecf0089f338470bda"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/part-133.json",
+      "sha256": "2f68e509500c3be47aab6290a4eb01633765f91641ded9300bd1a2eada230c16"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/part-141.json",
+      "sha256": "023e3a124ca004e1fa482a8113228fcd916a46e3103f2c597942a5a572f7e738"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/part-143.json",
+      "sha256": "dbfcc7516da0773c9583d7dcd8794f9c2e734144936001e718b741429c9ae93d"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/part-144.json",
+      "sha256": "a07b69515cfc8d1bb555f20e5b0aedb896cd1146065ed3b85fcd4e7e586fa90b"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/part-146.json",
+      "sha256": "d7ca9f167df13df151bed6f883a91a5e6cc296c758ca7f9bd10bfcb6df82c966"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/part-161.json",
+      "sha256": "d664fb14915ad80f2adcc87ddf42314b847d3e56fb885ef9d6b2b4ff3355409a"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/part-171.json",
+      "sha256": "454ef29f11810245fd388d81c55b0eee1c16a94e72ce24333c6ff7e8fe9ef037"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/part-184.json",
+      "sha256": "fc7b3fbb37d5eab1c2ea44d7029689784234ead6e130642c9433291be6dadf66"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/part-187.json",
+      "sha256": "4796b8ea4e4b705dec3182264fc1ddaa1cd972c280c99f8270e9906767257fae"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/part-193.json",
+      "sha256": "7eeca81d2b505e7e9486db612ba5e5a9cd3f0d3ec47e0d89ace493b2d7e86892"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data/sample-full.json",
+      "sha256": "cfd45be63a8d68f56f6137936a06ff112ccc0cc07f2fd199694838fd1d783393"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/tokyo-limited-express-loop-data/part-000.json",
+      "sha256": "290c912803d3924d181ad25c65ba91f8a1f35f7f106527333ad96080d603a011"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/tokyo-limited-express-loop-data/part-002.json",
+      "sha256": "07513d52e73517946d4ecf87027210fd918f0897f68cd16a35611f42c990b833"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/tokyo-limited-express-loop-data/part-003.json",
+      "sha256": "b38aff77a96f1c77b6007791a9f92eaf1e2f470e22ef007c3591552ce8939823"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/tokyo-limited-express-loop-data/part-004.json",
+      "sha256": "dd0e8cf369d2b30fc2d66b12d1538327d6055eab57b9962ace3fe54a6500be5f"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/tokyo-limited-express-loop-data/part-008.json",
+      "sha256": "f9b3eaec870968c19b0b000caf995e199cf109a873669825a6f148459afabb44"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/tokyo-limited-express-loop-data/part-012.json",
+      "sha256": "edb0c24cfa2699beefe57362493f300a03fecd54ded198f0e1f19e547acca547"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/tokyo-limited-express-loop-data/part-013.json",
+      "sha256": "c1da25f863ead23c2602d1a0a71fbfd948552e319085f830a5884ccd97f6b16b"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/tokyo-limited-express-loop-data/part-014.json",
+      "sha256": "4ee003bbcb5a524f1182f1ae086baf0a42515eefff15b5ae0c08d642c2007e85"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/tokyo-limited-express-loop-data/sample-full.json",
+      "sha256": "c0b78aa770e0768f81ade4de0c867ae8408ea833102b3e6e6a1eb38c41909e9c"
+    }
+  ],
+  "generated_artifact_status": [
+    {
+      "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/sample-data",
+      "status": "final_regeneration_complete_256_total_solved_0_unsolvable",
+      "interim_generation": {
+        "total": 201,
+        "solved": 200,
+        "unavailable": 1,
+        "elapsed_seconds": 415
+      },
+      "interim_unavailable_train_id": "20260727_08_narita_express",
+      "interim_status": "stale_after_final_route_policy_hint_removal"
+    },
+    {
+      "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/tokyo-limited-express-loop-data",
+      "status": "final_regeneration_complete_256_total_solved_0_unsolvable",
+      "interim_generation": {
+        "total": 16,
+        "solved": 16,
+        "elapsed_seconds": 86
+      },
+      "interim_status": "stale_after_final_route_policy_hint_removal"
+    },
+    {
+      "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/new-year-grand-loop-data",
+      "status": "final_regeneration_complete_256_total_solved_0_unsolvable",
+      "interim_status": "unchanged_sources_and_caches; included_in_publisher_final_Japan_256_generation"
+    }
+  ],
+  "required_followup": [
+    "Regenerate affected JavaScript/native port fixtures; fix route-graph fixture station candidate-index setup",
+    "Strict cleanup, passenger-review and sample alignment generated-copy checks",
+    "Publisher full Node/Core and native UI gates; no full PASS claimed"
+  ],
+  "checks": {
+    "sample_tests_initial": 14,
+    "timetable_pipeline_tests": 35,
+    "final_sample_evidence_tests": 4,
+    "final_canonical_cleanup_check": "passed",
+    "timetable_snapshot_and_integrity": "passed",
+    "interim_Japan_256_source_attestations": "passed_before_final_source_cleanup",
+    "global_sample_alignment_check": "failed_preexisting_stale_Canada_manifest; NA_sources_preserved"
+  },
+  "canonical_timetable_source_fingerprint": "1eab79052da2b9b1c343146540a9689891845492796c238ab1a7207ad7deb7ee",
+  "final_cache_regeneration": {
+    "status": "complete; supersedes interim stale caches below",
+    "proof": "/private/tmp/jtm-final-jp256-post-cleanup-proof.json",
+    "total": 256,
+    "solved": 256,
+    "unsolvable": 0,
+    "source_trains_exact": true,
+    "source_attestations_exact": true,
+    "physical_features_rechecked": 1,
+    "physical_geometry_changes": 0,
+    "nex_fix_regression_tests": 2,
+    "verification_limits": "Solved map paths are hypotheses, not timetable calls or historical route proof; Core/Node/native gates pending."
+  },
+  "save_export_repair": {
+    "swift_canonical_adoption": "/private/tmp/jtm-pass-export-fix/swift-canonical-adoption.json",
+    "swift_tests": 5,
+    "swift_typecheck_exit": 0,
+    "swift_runtime": {
+      "inference": 12,
+      "export": 5,
+      "scopedSuites": "passed",
+      "unionOverall": "failed 2 JapanThroughServices issues",
+      "log": "/private/tmp/jtm-post-cleanup-targeted-core-union.log"
+    },
+    "javascript_canonical": "adopted; exact reviewed bytes; canonical rerun pending Native CPU release",
+    "temporary_javascript_tests": 15,
+    "temporary_javascript_pass": 15,
+    "old_javascript_failures": 6,
+    "jp_sample_export_impact": {
+      "total": 256,
+      "changed": 0,
+      "proof": "/private/tmp/jtm-pass-export-fix/jp256-export-impact.json",
+      "station_catalog_scope": "Empty stationCandidatesIndex; full browser station catalog not loaded"
+    },
+    "javascript_adoption_proof": "/private/tmp/jtm-pass-export-fix/javascript-canonical-adoption.json"
+  },
+  "core_editor_source_freeze": {
+    "ios/RailKit/Sources/RailCore/RailwayRouteInference.swift": "da14c45a842ddbc08a2a68620f69115b789ebc24a7ef405b238d26424b1b753e",
+    "ios/RailKit/Tests/RailCoreTests/RailwayRouteInferenceTests.swift": "fcb1827a44c6b4da853b16fd3d208822ebf044eee8ef9ceee150c59660d789ac",
+    "ios/RailKit/Sources/RailCore/TrainTimetableDatabase.swift": "43d3eefb8b4e356b8b4b88b0702985723941862275cc5d8000510f7b7fb7b70c",
+    "ios/RailKit/Tests/RailCoreTests/TrainTimetableDatabaseTests.swift": "d58c329ed10e25a2debd7e02b466be987bda73268f53cd136b0659a40f302a17",
+    "ios/RailKit/Sources/RailCore/RailwayRouteEditing.swift": "9973bbd1ccb3c516b54ca6c5babd486683b1f5afe03f86f9fd9859cf759c83ca",
+    "ios/RailKit/Sources/RailCore/Train.swift": "9242a57728872e0f85beff657d68b40dd530f4f38c03f2c6b43cc82bb61a4470",
+    "ios/RailKit/Tests/RailCoreTests/RouteSectionExportTests.swift": "5d49850e3c950a823f5dae5edd2c5997ca1419a79866f087cf0fb274fb121bb3",
+    "app/public/app-store-ops.js": "455f5261af9f49c7217b1e389d26b2f7408fb219e5918913e6baebcb68d72d9c",
+    "app/tests/route-section-export.test.mjs": "338e95bde6203cc96d511e1294ed9b11148c52c28cfb50244b7a7d690fb88301"
+  }
+}

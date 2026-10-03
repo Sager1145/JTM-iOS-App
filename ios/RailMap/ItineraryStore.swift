@@ -420,6 +420,7 @@ final class ItineraryStore {
         // Taken before the grouping and checked after it, for the reason
         // `load` takes one: bumping afterwards would discard a rebuild that is
         // strictly newer than this grouping.
+        regroupTask?.cancel()
         groupingTicket += 1
         let ticket = groupingTicket
         // Published before grouping now — not after, as the comment above
@@ -722,6 +723,7 @@ final class ItineraryStore {
                 // so that this older grouping could publish in its place. Take
                 // a ticket first and check it after, exactly as `regroup`
                 // does.
+                regroupTask?.cancel()
                 groupingTicket += 1
                 let ticket = groupingTicket
                 let grouped = try await Self.group(store: self.store ?? store)
@@ -862,6 +864,7 @@ final class ItineraryStore {
     ///
     /// See ``regroup(_:reassertingSelection:)``.
     private var groupingTicket = 0
+    private var regroupTask: Task<Void, Never>?
 
     /// How many times the working set has been published.
     ///
@@ -964,15 +967,22 @@ final class ItineraryStore {
     /// rebuild lands, so a surface reading `loaded` can drop a selection it
     /// cannot find in the meantime; those two put it back.
     private func regroup(_ store: TrainStore, reassertingSelection: Bool = false) {
+        regroupTask?.cancel()
         groupingTicket += 1
         let ticket = groupingTicket
         let selection = selectedTrainID
-        Task {
+        regroupTask = Task {
             do {
+                // A burst of additions needs only its final date grouping.
+                // Yield before retaining more CPU work for superseded stores.
+                await Task.yield()
+                try Task.checkCancellation()
                 let grouped = try await Self.group(store: store)
-                guard ticket == groupingTicket else { return }
+                guard ticket == groupingTicket, !Task.isCancelled else { return }
                 state = .loaded(grouped)
                 if reassertingSelection { selectedTrainID = selection }
+            } catch is CancellationError {
+                // A newer mutation owns the next publish.
             } catch {
                 guard ticket == groupingTicket else { return }
                 state = .failed(error.localizedDescription)
@@ -980,9 +990,10 @@ final class ItineraryStore {
         }
     }
 
-    /// A national store is 201 itineraries, so the grouping runs off the main
-    /// actor and the main actor only sees the finished value.
+    /// Grouping runs off the main actor and checks cancellation between
+    /// phases so superseded large stores stop consuming background work.
     private nonisolated static func group(store: TrainStore) async throws -> Loaded {
+        try Task.checkCancellation()
         let interval = RailSignpost.ui.begin("itinerary.group")
         defer { RailSignpost.ui.end("itinerary.group", interval) }
         let started = ContinuousClock.now
@@ -1007,6 +1018,7 @@ final class ItineraryStore {
             store.trains.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
         let sorted = Dates.sortByDateAndDeparture(store.trains.map(\.forDates))
             .compactMap { bridged in bridged.id.flatMap { firstByID[$0] } }
+        try Task.checkCancellation()
 
         // One bridge and one `trainDate` per ride, rather than one of each per
         // ride per date. `availableDates` names the buckets with the same
@@ -1014,7 +1026,9 @@ final class ItineraryStore {
         // rides under it directly is the answer the two of them gave together.
         let bridged = sorted.map(\.forDates)
         var buckets: [String: [Train]] = [:]
-        for (train, row) in zip(sorted, bridged) {
+        for (index, pair) in zip(sorted, bridged).enumerated() {
+            if index.isMultiple(of: 256) { try Task.checkCancellation() }
+            let (train, row) = pair
             buckets[Dates.trainDate(row), default: []].append(train)
         }
         let days = Dates.availableDates(bridged).map { date in

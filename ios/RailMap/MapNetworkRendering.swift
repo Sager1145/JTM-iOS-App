@@ -294,7 +294,8 @@ final class MapOverlayInstaller {
         replacing reconciliation: MapOverlayReconciliation,
         scale: CGFloat,
         on mapView: MKMapView,
-        detailTransitionDuration: TimeInterval? = nil
+        detailTransitionDuration: TimeInterval? = nil,
+        alphaTransitionDuration: TimeInterval? = nil
     ) {
         let oldOverlays = reconciliation.oldOverlays
         let desiredIDs = Set(desiredOverlays.map { ObjectIdentifier($0) })
@@ -369,16 +370,21 @@ final class MapOverlayInstaller {
             let id = ObjectIdentifier(overlay)
             return mountedIDs.contains(id) && orderedIDs.insert(id).inserted
         }
+        var positions = Dictionary(installed.enumerated().map {
+            (ObjectIdentifier($0.element), $0.offset)
+        }, uniquingKeysWith: { first, _ in first })
         // MapKit can ignore an add or already hold a requested identity. Order
         // only the unique mounted overlays, with contiguous resident positions.
         for (position, overlay) in zip(installed.indices, residentStack) {
             guard installed[position] !== overlay,
-                  let other = installed.firstIndex(where: { $0 === overlay })
+                  let other = positions[ObjectIdentifier(overlay)]
             else { continue }
+            positions[ObjectIdentifier(installed[position])] = other
+            positions[ObjectIdentifier(overlay)] = position
             mapView.exchangeOverlay(installed[position], with: installed[other])
             installed.swapAt(position, other)
         }
-        styles.rescale(to: scale)
+        styles.rescale(to: scale, alphaTransitionDuration: alphaTransitionDuration)
     }
 }
 

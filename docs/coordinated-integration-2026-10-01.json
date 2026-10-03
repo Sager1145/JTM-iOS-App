@@ -1349,13 +1349,298 @@
       "Final transparent-tabbar source and native acceptance",
       "Real Load Sample / Show All 201-journey loading, early pan and quick toggle evidence and necessary repair",
       "Remaining six strict iPad acceptance failures",
-      "Latest clean staged export normal App with zero source drift, 1206 resources and matching timetable source fingerprints",
+      "Latest clean staged export normal App with zero source drift, resource count justified by final resource delta and matching timetable source fingerprints",
       "Final freeze, Git integration commit, main merge commit, nonforce push and exact remote SHA confirmation"
     ],
-    "evidenceReuse": "Existing valid Core 1098, Node 201, 29 goldens, JP 256 precompute and data/name checks retained at their recorded source scope",
+    "evidenceReuse": "Earlier full Core1098/Node201/29golden evidence remains historical at its source boundary. New Japan sample changes invalidate affected fixture/precompute/parity scope; refresh after all new source owners freeze. Unchanged package/name/NA evidence remains reusable.",
     "physicalCrashScope": "User reports previous installed physical iPhone App; current simulator evidence must not claim that physical crash was reproduced or confirmed fixed",
     "loaderV2": "Private candidate not adopted; national empty-store passes and sampled RSS do not establish crash or memory improvement",
     "latestHumanInstruction": "Commit all current canonical changes first as a checkpoint, then use Pro and multiple chats to analyze and repair route parsing and all related features",
-    "checkpointAcceptance": "Native acceptance still pending; checkpoint does not claim completion or release readiness"
+    "checkpointAcceptance": "Native acceptance still pending; checkpoint does not claim completion or release readiness",
+    "checkpointCommit": "fc8b85d9f115f0af9ddb1bb14ee6399c33d96258",
+    "oldNativeExplicitlyReleased": true,
+    "nativeReleaseHandoff": "/private/tmp/jtm-consolidated-20260930/final26-native-release-and-handoff-20261002.json",
+    "additionalHumanRequestedScopes": {
+      "officialTimetableStopsAndUserRouteInference": {
+        "owner": "01a0ff50-9464-70f3-a3de-4afb5edd0619",
+        "status": "core_and_data_frozen; full_core_and_native_UI_pending",
+        "scope": "Remove unsupported inferred passing stops from limited-express examples; retain official dated evidence; route inference is explicit preview/confirmation in journey editor"
+      },
+      "localRouteAutofillAndServiceTypes": {
+        "owner": "01a0ff50-a252-7cf3-be3b-a2b8976c1307",
+        "status": "core_tests_resources_frozen; unified_core_and_native_UI_pending",
+        "scope": "Local endpoint route search; regular/rapid/special rapid service types. User chose service types rather than rolling-stock models.",
+        "coverage": {
+          "inventory": 657,
+          "partialServiceClassLines": 50,
+          "unknownServiceClassLines": 607,
+          "datedTrainNumberSections": 16,
+          "verifiedCalls": 62,
+          "throughPatterns": 40
+        },
+        "resourceDelta": [
+          "RailCore/Resources/japan-through-services.json",
+          "RailCore/Resources/line-service-catalog.json"
+        ],
+        "nationwideTimetableComplete": false
+      }
+    },
+    "postCheckpointRepairs": {
+      "webCountryStrokeLifecycle": {
+        "status": "bounded_regression_passed_source_frozen",
+        "owner": "01a0ff4c-fb5d-7742-8d07-eca2b474b549",
+        "evidence": "/private/tmp/jtm-display-lifecycle-readout-20261002.json",
+        "tests": 5,
+        "actualExitCode": 0,
+        "regressionFailedOnPreviousSource": true,
+        "proConversation": "https://chatgpt.com/c/6ac057ac-f590-83e9-89e1-84e5fc6b7606",
+        "nativeMaterializationObservation": "MainActor geometry materialization precedes gesture defer; separate timing requested. No measured cost or crash causality claim."
+      },
+      "passportRegionNaming": {
+        "status": "host_regression_passed_source_frozen_app_compile_pending",
+        "owner": "01a0ff4d-0e71-7e70-a395-34e1c564b54d",
+        "evidence": "/private/tmp/jtm-consumer-region-regression/runtime.log",
+        "dependencyMatrix": "/private/tmp/jtm-consumer-dependency-matrix-20261002.json",
+        "actualExitCode": 0,
+        "scope": "Real PassportStatistics source and existing Core/Presentation objects with seven-region readings; JP/TW same-name labels and count/rank/km/minutes/route/superlative checks",
+        "limitations": "Host region/clock adapters; SwiftUI compilation and native UI not verified by this harness"
+      },
+      "explicitRouteChoices": {
+        "status": "iterative_search_adopted; full_core_pending",
+        "owner": "01a0ff4c-ee2b-7161-8eb8-258c9880a702",
+        "scope": "Prevent same-row repeated-code occurrence jumps and one-coordinate interval choices; retain explicit paired-alignment choices and separate platform geometry",
+        "evidence": "/private/tmp/jtm-solver-review-20261002/",
+        "earlierBroadInferencePolicyProposalRejected": true,
+        "iterativeEvidence": "/private/tmp/jtm-solver-review-20261002/iterative-comparison.json",
+        "realComparisons": 14,
+        "allRealChoicesIdentical": true,
+        "deepIntervals": 2048,
+        "outputLimitsAdded": false,
+        "canonicalAdoption": "/private/tmp/jtm-solver-review-20261002/canonical-iterative-adoption.json"
+      },
+      "inferredPrecomputePhysicalGeometry": {
+        "status": "production_helper_and_two_real_package_regressions_passed; full_Node_pending",
+        "scope": "Physical subset lazily includes inferred interval lines and station-circle dependencies even with empty authored route_sections",
+        "regressionLog": "/private/tmp/jtm-precompute-inferred-geometry-regression.log",
+        "actualExitCode": 0,
+        "final256Proof": "/private/tmp/jtm-final-jp256-post-cleanup-proof.json",
+        "counts": {
+          "Japan": 201,
+          "grandLoop": 39,
+          "Tokyo": 16,
+          "totalSolved": 256,
+          "unsolvable": 0
+        },
+        "sourceTrainsAndAttestationsExact": true,
+        "compactPhysicalFeaturesRechecked": 1,
+        "physicalGeometryChanges": 0,
+        "browserReadiness": "Actual ensureSolverReady network gate passed; no additional browser fix adopted",
+        "crashCausality": "No claim; this repairs offline derivative geometry lookup",
+        "realPackageRegressionTests": 3,
+        "grokBoundedRegression": {
+          "model": "grok-4.7",
+          "effort": "xhigh",
+          "onlyEdit": "app/tests/precompute-inferred-physical-geometry.test.mjs",
+          "actualCLIExitCode": 0,
+          "independentCodexValidationExitCode": 0,
+          "tests": 3,
+          "evidence": "/private/tmp/jtm-grok-incremental-geometry/status.json"
+        }
+      },
+      "routeOnlyBoundaryExport": {
+        "status": "Swift5tests passed; JavaScript canonical adopted; fresh full Node pending",
+        "owner": "01a0ff50-9464-70f3-a3de-4afb5edd0619",
+        "scope": "Preserve continuous ordered explicit section chain through recorded calls without synthesizing passing stops; allow legitimate repeated boundary identities",
+        "temporaryFiles": "/private/tmp/jtm-pass-export-fix/",
+        "nativeRuntimeTests": "pending",
+        "swiftAdoption": "/private/tmp/jtm-pass-export-fix/swift-canonical-adoption.json",
+        "raw256ExportComparisonChangedTrains": 0,
+        "raw256ComparisonScope": "Empty station candidate catalog; not complete browser catalog",
+        "javascriptAdoption": "/private/tmp/jtm-pass-export-fix/javascript-canonical-adoption.json"
+      }
+    },
+    "postCleanupTimetableSnapshot": {
+      "databaseSHA256": "44dbd21da235bbeab2f9ef1a38c16812ecb8932abb3b55adcfc00c9c120ac926",
+      "sourceFingerprint": "1eab79052da2b9b1c343146540a9689891845492796c238ab1a7207ad7deb7ee",
+      "verifyLog": "/private/tmp/jtm-post-cleanup-timetable-verify.log",
+      "actualExitCode": 0,
+      "finalAppBundleVerification": "pending"
+    },
+    "dateFixtureDiffReview": {
+      "scope": "Read-only structure comparison against checkpoint",
+      "inputs": 248,
+      "cases": 248,
+      "segmentDateProbes": 60,
+      "changedTrainInputs": 37,
+      "removedUntimedPassThroughEntries": 2046,
+      "retainedStopsAndTimesExact": true,
+      "TaiwanStoreUnchanged": true,
+      "sixOvernightBreakIndices": "14 to 2 after stop removal",
+      "fourSegmentDateProbeResults": "segment13 moves to following date",
+      "fullGenerationStatus": "Historical93 unchanged; later route-graph dependency failed then targeted7cases generated successfully"
+    },
+    "postCheckpointNodeGate": {
+      "actualExitCode": 0,
+      "tests": 220,
+      "pass": 220,
+      "fail": 0,
+      "log": "/private/tmp/jtm-post-export-full-node.log",
+      "scope": "Current production JS including adopted export-chain regression15; fixture builder-only edits followed this test run"
+    },
+    "postCheckpointCoreAttempts": {
+      "productionBuildExitCode": 0,
+      "firstGateExitCode": 1,
+      "firstFailure": "New Inference test parameter order; fixed",
+      "secondGateExitCode": 1,
+      "secondFailure": "Stale JP validation fixtures, one sample cache provenance issue group, then recursive choice search stack overflow; no complete passing summary",
+      "crashReport": "/Users/sager/Library/Logs/DiagnosticReports/swiftpm-testing-helper-2026-10-02-221514.ips",
+      "ownedPID": 10485,
+      "crashException": "Thread stack size exceeded, SIGBUS",
+      "faultingCall": "RailwayRouteChoices.connectedChoices.extend → RejoiningRailwayFamiliesTests.automaticPhysicalMatch",
+      "owningRepair": "Parsing/selection owner; iterative traversal proposal pending",
+      "physicalAppCrashCausality": "Not established",
+      "thirdGate": {
+        "actualExitCode": 1,
+        "terminatedSuperseded": true,
+        "ownedStopProof": "/private/tmp/jtm-core-v3-owned-stop.json",
+        "preservedLog": "/private/tmp/jtm-post-cleanup-full-core-v3-superseded.log",
+        "issues": 12,
+        "completedSummary": false
+      }
+    },
+    "sampleCacheProvenanceDiagnosis": {
+      "parts": 201,
+      "plainTestNormalizationAccepted": 200,
+      "productionNormalizationAccepted": 201,
+      "solePreviousMismatch": "part-171 / Narita Express",
+      "productionChangeNeeded": false,
+      "testCorrection": "Include existing TokyoConventionalRouteInference.applying exactly as production does; all strict assertions retained",
+      "evidence": "/private/tmp/jtm-solver-review-20261002/provenance-201-comparison.json",
+      "nativePreloadScope": "Exactly one part has explicit physical section identity and is excluded from legacy geometry seeding; acceptance does not prove all201 cache seeds",
+      "fullTestRuntime": "Targeted union strict201 passed; full Core pending"
+    },
+    "targetedCoreAfterIterativeRepair": {
+      "actualExitCode": 1,
+      "tests": 60,
+      "suites": 9,
+      "issues": 2,
+      "log": "/private/tmp/jtm-post-cleanup-targeted-core-union.log",
+      "passedScopes": [
+        "RailwayRouteChoicesTests including2048",
+        "RejoiningRailwayFamiliesTests",
+        "SamplePrecomputeProvenanceTests",
+        "RouteSectionExportTests5",
+        "RailwayRouteInferenceTests12",
+        "LocalJourneySearchTests",
+        "LocalJourneyAutofillTests",
+        "LineServiceCatalogTests"
+      ],
+      "failedScope": "JapanThroughServicesTests",
+      "diagnosis": "JS reverse and Sotetsu JR forward use southbound Osaki branch instead of explicit northbound paired alignment; direction restrictions correctly reject",
+      "diagnosticEvidence": "/private/tmp/jtm-local-autofill-corridor-diagnosis.jsonl",
+      "sourceRepairStatus": "Osaki explicit paired-row repair targeted25tests passed"
+    },
+    "nativeCoalescingAttempt": {
+      "status": "strict_failed; candidate_not_adopted; CPU_released",
+      "readout": "/private/tmp/jtm-native-20261002/real201-coalescing-v1-readout.json",
+      "secondPanMaxGapMs": 220,
+      "thresholdMs": 150,
+      "published": 73,
+      "baselinePublished": 137,
+      "rebuilds": 133,
+      "baselineRebuilds": 132,
+      "finalLoadedInputs": 180,
+      "requiredFinalInputs": 201,
+      "limitations": "Second actual solve overlap not confirmed; RSS diagnostic only; fixed95Core private A/B does not cover current canonical",
+      "exclusiveRuntimeConfirmed": false,
+      "performanceComparisonValidity": "Invalidated pending audit of overlapping287-input native work in new crash chat; raw observed counts retained as diagnostic only",
+      "adoption": "Not adopted; neither strict completion nor controlled performance improvement established"
+    },
+    "partialGoldenGeneration": {
+      "actualExitCode": 1,
+      "log": "/private/tmp/jtm-final-post-cleanup-fixtures-generate.log",
+      "historicalRoutes": {
+        "cases": 93,
+        "bytesUnchanged": true,
+        "durationMs": 3588857
+      },
+      "failure": "route-graph fixture station candidate indexes uninitialized; synchronous fixture dependency setup repaired",
+      "remaining": "Targeted13remaining/affected modules completed0; later route-graph Tokyo-normalized input and playback numerical corpus fixes generated0"
+    },
+    "osakiDirectedCorridorRepair": {
+      "status": "targeted25tests4suites_passed; independent_review_pending",
+      "log": "/private/tmp/jtm-post-cleanup-osaki-core.log",
+      "actualExitCode": 0,
+      "scope": "Explicit reviewed reverseLineID pair for JS and Sotetsu-JR; original direction and geometry restrictions unchanged",
+      "lineInventory": 657,
+      "partialCoverage": 51,
+      "unknownCoverage": 606,
+      "datedTimetableExcerpts": 16,
+      "catalogCheckExitCode": 0,
+      "grokConsultation": "/private/tmp/jtm-grok-osaki-pair-consult/output.log",
+      "grokScope": "Previously authorized package/RailNetwork metadata and generic pairing decision only"
+    },
+    "postCheckpointLint": {
+      "actualExitCode": 0,
+      "log": "/private/tmp/jtm-post-export-lint.log",
+      "localAssets": 63,
+      "classicScripts": 56
+    },
+    "goldenDiffReview": {
+      "report": "/private/tmp/jtm-post-cleanup-fixture-review/review.json",
+      "scope": "Eight changed families structural comparison against checkpoint",
+      "unexplainedChanges": false,
+      "displayPassMarkerRowsRemoved": 963,
+      "displayCoordinateRowsChanged": 6,
+      "note": "Kurashiki/Orio disambiguation changes follow current sparse call neighbor coordinates; not physical station identity or platform geometry proof"
+    },
+    "fixtureContractCorrections": {
+      "stationCensus": "Exact live-store UTF16 name counts and every stored-name query membership replace historical aggregate minimum",
+      "NEXMarkers": "Recorded Tokyo/Shinagawa only; physical Shimbashi boundary does not create a recorded call",
+      "markerPins": {
+        "total": 3120,
+        "named": 1104,
+        "removedRecords": 963
+      },
+      "routeGraph": "JS template applies Tokyo default internally; fixture now freezes same prepared sections provided by native normalization",
+      "playback": "Original >100 numeric input assertion retained; current real hop inputs plus128 measured compiled geometry interval lengths produce184pow inputs",
+      "targetedAndFullVerification": {
+        "targetedExitCode": 0,
+        "tests": 66,
+        "suites": 5,
+        "issues": 0,
+        "log": "/private/tmp/jtm-post-cleanup-fixture-corrections-core.log",
+        "fullCoreGate": "pending unified CPU availability"
+      },
+      "independentReview": "GPT-6.1 Sol medium read-only review found no concrete issue"
+    },
+    "currentExportProvenance": {
+      "proof": "/private/tmp/jtm-current-export-provenance-proof.json",
+      "actualExitCode": 0,
+      "total": 256,
+      "solverContextMismatches": 0,
+      "sourceHashMismatches": 0,
+      "rawTrainMismatches": 0,
+      "scope": "Full current JS family, production station/history preparation, contexts only; no new geometry regeneration"
+    },
+    "additionalNewHumanScopes": {
+      "earlyStationNames": {
+        "chat": "01a0ff93-4c88-70d2-8154-e0bb64cc80a9",
+        "status": "idle; simulator build passed; visual acceptance pending"
+      },
+      "lineSelectionDetail": {
+        "chat": "01a0ff95-27c1-7a42-86f6-05a6dc4116a9",
+        "status": "idle; iPhone interaction passed on owner snapshot; final canonical acceptance pending"
+      },
+      "automaticPassLabels": {
+        "chat": "01a0ff88-7b4c-71b2-831a-fa36cb1eb94b",
+        "status": "idle; build and14Core regressions passed on owner snapshot; finalUI pending"
+      },
+      "largeJapanCrash": {
+        "chat": "01a0ff92-356c-73a3-9ee0-55d1c783488b",
+        "status": "active; source and runtime ownership coordination requested from human; final canonical not frozen",
+        "provisionalSourceObservation": "/private/tmp/jtm-provisional-native-source-observation.json"
+      }
+    }
   }
 }

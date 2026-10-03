@@ -2168,6 +2168,11 @@
           this._networkPromise,
       );
       this._networkGeneration += 1;
+      // A queued stroke pass captured the previous network. Retire it before
+      // the replacement arrives so it cannot upload the previous country's
+      // sources after building strokes against the new network.
+      if (this._strokeRebuildTimer) clearTimeout(this._strokeRebuildTimer);
+      this._strokeRebuildTimer = null;
       this._network = null;
       this._networkPromise = null;
       // The old country's strokeModel is gone, so any record still sliced

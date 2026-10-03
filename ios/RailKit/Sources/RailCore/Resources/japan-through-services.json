@@ -1,0 +1,1464 @@
+{
+  "checkedAt": "2026-10-02",
+  "scope": "Representative established corridors across eight major Japanese regions, checked against official operator sources and jp-2025 physical IDs. Partial national coverage; neither dated service guarantees nor an exhaustive network.",
+  "patterns": [
+    {
+      "id": "JK",
+      "serviceCode": "JK",
+      "name": "京浜東北線・根岸線",
+      "aliases": [
+        "JK",
+        "Keihin-Tohoku",
+        "Keihin Tohoku",
+        "Negishi"
+      ],
+      "kind": "operationalAlias",
+      "legs": [
+        {
+          "lineID": "jp-東日本旅客鉄道-東北線",
+          "fromStationCode": "002914",
+          "toStationCode": "003155"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-東北線-2",
+          "fromStationCode": "003155",
+          "toStationCode": "003766"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-東海道線",
+          "fromStationCode": "003766",
+          "toStationCode": "004633"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-根岸線",
+          "fromStationCode": "004633",
+          "toStationCode": "004961"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.jreast.co.jp/map/pdf/map_tokyo.pdf"
+      ],
+      "notes": "Surface Tohoku/Tokaido and Negishi corridor. Never uses the Sobu/Yokosuka tunnel row."
+    },
+    {
+      "id": "JS-utsunomiya-zushi",
+      "serviceCode": "JS-utsunomiya-zushi",
+      "name": "湘南新宿ライン",
+      "aliases": [
+        "JS",
+        "Shonan-Shinjuku",
+        "Shonan Shinjuku"
+      ],
+      "kind": "operationalAlias",
+      "legs": [
+        {
+          "lineID": "jp-東日本旅客鉄道-東北線",
+          "fromStationCode": "002113",
+          "toStationCode": "003155"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-赤羽線",
+          "fromStationCode": "003155",
+          "toStationCode": "003390"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-山手線",
+          "fromStationCode": "003390",
+          "toStationCode": "004135"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-大崎支線",
+          "fromStationCode": "004135",
+          "toStationCode": "004235",
+          "reverseLineID": "jp-東日本旅客鉄道-大崎支線-p1"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-総武線-3",
+          "fromStationCode": "004235",
+          "toStationCode": "004496"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-東海道線",
+          "fromStationCode": "004496",
+          "toStationCode": "004961"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-横須賀線",
+          "fromStationCode": "004961",
+          "toStationCode": "005121"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.jreast.co.jp/map/pdf/map_tokyo.pdf"
+      ],
+      "notes": "Via Shinjuku, Osaki and Musashi-Kosugi; these rows represent the surveyed corridor, not dedicated service tracks. Branch identities remain separate."
+    },
+    {
+      "id": "JS-takasaki-odawara",
+      "serviceCode": "JS-takasaki-odawara",
+      "name": "湘南新宿ライン",
+      "aliases": [
+        "JS",
+        "Shonan-Shinjuku",
+        "Shonan Shinjuku"
+      ],
+      "kind": "operationalAlias",
+      "legs": [
+        {
+          "lineID": "jp-東日本旅客鉄道-高崎線",
+          "fromStationCode": "002389",
+          "toStationCode": "002914"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-東北線",
+          "fromStationCode": "002914",
+          "toStationCode": "003155"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-赤羽線",
+          "fromStationCode": "003155",
+          "toStationCode": "003390"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-山手線",
+          "fromStationCode": "003390",
+          "toStationCode": "004135"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-大崎支線",
+          "fromStationCode": "004135",
+          "toStationCode": "004235",
+          "reverseLineID": "jp-東日本旅客鉄道-大崎支線-p1"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-総武線-3",
+          "fromStationCode": "004235",
+          "toStationCode": "004496"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-東海道線",
+          "fromStationCode": "004496",
+          "toStationCode": "004961"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-東海道線",
+          "fromStationCode": "004961",
+          "toStationCode": "005215"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.jreast.co.jp/map/pdf/map_tokyo.pdf"
+      ],
+      "notes": "Via Shinjuku, Osaki and Musashi-Kosugi; these rows represent the surveyed corridor, not dedicated service tracks. Branch identities remain separate."
+    },
+    {
+      "id": "JO-sobu-yokosuka",
+      "serviceCode": "JO-sobu-yokosuka",
+      "name": "横須賀線・総武線快速",
+      "aliases": [
+        "JO",
+        "Yokosuka",
+        "Sobu Rapid"
+      ],
+      "kind": "operationalAlias",
+      "legs": [
+        {
+          "lineID": "jp-東日本旅客鉄道-総武線",
+          "fromStationCode": "004173",
+          "toStationCode": "003766"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-総武線-3",
+          "fromStationCode": "003766",
+          "toStationCode": "004496"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-東海道線",
+          "fromStationCode": "004496",
+          "toStationCode": "004961"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-横須賀線",
+          "fromStationCode": "004961",
+          "toStationCode": "005273"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.jreast.co.jp/map/pdf/map_tokyo.pdf"
+      ],
+      "notes": "Some scheduled trains run through this corridor; exact departures and stopping patterns are not modeled."
+    },
+    {
+      "id": "asakusa-keisei-keikyu",
+      "serviceCode": "asakusa-keisei-keikyu",
+      "name": "京成・都営浅草線・京急直通",
+      "aliases": [
+        "Keisei",
+        "Toei Asakusa",
+        "Keikyu",
+        "京成",
+        "浅草線",
+        "京急"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-京成電鉄-本線",
+          "fromStationCode": "003203",
+          "toStationCode": "003280"
+        },
+        {
+          "lineID": "jp-京成電鉄-押上線",
+          "fromStationCode": "003280",
+          "toStationCode": "003526"
+        },
+        {
+          "lineID": "jp-東京都-1号線浅草線",
+          "fromStationCode": "003526",
+          "toStationCode": "004042"
+        },
+        {
+          "lineID": "jp-京浜急行電鉄-本線",
+          "fromStationCode": "004042",
+          "toStationCode": "004331"
+        },
+        {
+          "lineID": "jp-京浜急行電鉄-空港線",
+          "fromStationCode": "004331",
+          "toStationCode": "004368"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.kotsu.metro.tokyo.jp/subway/map/asakusa_sogo.html"
+      ],
+      "notes": "Some scheduled trains run through this corridor; exact departures and stopping patterns are not modeled."
+    },
+    {
+      "id": "asakusa-access-keikyu",
+      "serviceCode": "asakusa-access-keikyu",
+      "name": "成田スカイアクセス・浅草線・京急直通",
+      "aliases": [
+        "Narita Sky Access",
+        "Access Express",
+        "アクセス特急"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-京成電鉄-成田空港線",
+          "fromStationCode": "003203",
+          "toStationCode": "003248"
+        },
+        {
+          "lineID": "jp-京成電鉄-本線",
+          "fromStationCode": "003248",
+          "toStationCode": "003280"
+        },
+        {
+          "lineID": "jp-京成電鉄-押上線",
+          "fromStationCode": "003280",
+          "toStationCode": "003526"
+        },
+        {
+          "lineID": "jp-東京都-1号線浅草線",
+          "fromStationCode": "003526",
+          "toStationCode": "004042"
+        },
+        {
+          "lineID": "jp-京浜急行電鉄-本線",
+          "fromStationCode": "004042",
+          "toStationCode": "004331"
+        },
+        {
+          "lineID": "jp-京浜急行電鉄-空港線",
+          "fromStationCode": "004331",
+          "toStationCode": "004368"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.kotsu.metro.tokyo.jp/subway/map/asakusa_sogo.html"
+      ],
+      "notes": "Some scheduled trains run through this corridor; exact departures and stopping patterns are not modeled."
+    },
+    {
+      "id": "shinjuku-keio-sagamihara",
+      "serviceCode": "shinjuku-keio-sagamihara",
+      "name": "都営新宿線・京王相模原線直通",
+      "aliases": [
+        "Toei Shinjuku",
+        "Keio",
+        "京王",
+        "新宿線"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-東京都-10号線新宿線",
+          "fromStationCode": "003449",
+          "toStationCode": "003700"
+        },
+        {
+          "lineID": "jp-京王電鉄-京王新線",
+          "fromStationCode": "003700",
+          "toStationCode": "003806"
+        },
+        {
+          "lineID": "jp-京王電鉄-京王線",
+          "fromStationCode": "003806",
+          "toStationCode": "003966"
+        },
+        {
+          "lineID": "jp-京王電鉄-相模原線",
+          "fromStationCode": "003966",
+          "toStationCode": "004253"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.kotsu.metro.tokyo.jp/subway/map/shinjuku_sogo.html"
+      ],
+      "notes": "Some scheduled trains run through this corridor; exact departures and stopping patterns are not modeled."
+    },
+    {
+      "id": "hibiya-tobu-nikko",
+      "serviceCode": "hibiya-tobu-nikko",
+      "name": "日比谷線・東武直通",
+      "aliases": [
+        "H",
+        "Hibiya",
+        "日比谷線"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-東京地下鉄-2号線日比谷線",
+          "fromStationCode": "004014",
+          "toStationCode": "003260"
+        },
+        {
+          "lineID": "jp-東武鉄道-伊勢崎線",
+          "fromStationCode": "003260",
+          "toStationCode": "002728"
+        },
+        {
+          "lineID": "jp-東武鉄道-日光線",
+          "fromStationCode": "002728",
+          "toStationCode": "002621"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.tokyometro.jp/corporate/ir/library/factbook/pdf/factbook_2025.pdf"
+      ],
+      "notes": "Some scheduled trains run through this corridor; exact departures and stopping patterns are not modeled."
+    },
+    {
+      "id": "hanzomon-denentoshi-nikko",
+      "serviceCode": "hanzomon-denentoshi-nikko",
+      "name": "田園都市線・半蔵門線・東武直通",
+      "aliases": [
+        "Z",
+        "Hanzomon",
+        "Den-en-toshi",
+        "半蔵門線"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-東急電鉄-田園都市線",
+          "fromStationCode": "004498",
+          "toStationCode": "003922"
+        },
+        {
+          "lineID": "jp-東京地下鉄-11号線半蔵門線",
+          "fromStationCode": "003922",
+          "toStationCode": "003526"
+        },
+        {
+          "lineID": "jp-東武鉄道-伊勢崎線-2",
+          "fromStationCode": "003526",
+          "toStationCode": "003479"
+        },
+        {
+          "lineID": "jp-東武鉄道-伊勢崎線",
+          "fromStationCode": "003479",
+          "toStationCode": "002728"
+        },
+        {
+          "lineID": "jp-東武鉄道-日光線",
+          "fromStationCode": "002728",
+          "toStationCode": "002621"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.tokyometro.jp/corporate/ir/library/factbook/pdf/factbook_2025.pdf"
+      ],
+      "notes": "Some scheduled trains run through this corridor; exact departures and stopping patterns are not modeled."
+    },
+    {
+      "id": "hanzomon-denentoshi-kuki",
+      "serviceCode": "hanzomon-denentoshi-kuki",
+      "name": "田園都市線・半蔵門線・久喜直通",
+      "aliases": [
+        "Z",
+        "Hanzomon",
+        "久喜"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-東急電鉄-田園都市線",
+          "fromStationCode": "004498",
+          "toStationCode": "003922"
+        },
+        {
+          "lineID": "jp-東京地下鉄-11号線半蔵門線",
+          "fromStationCode": "003922",
+          "toStationCode": "003526"
+        },
+        {
+          "lineID": "jp-東武鉄道-伊勢崎線-2",
+          "fromStationCode": "003526",
+          "toStationCode": "003479"
+        },
+        {
+          "lineID": "jp-東武鉄道-伊勢崎線",
+          "fromStationCode": "003479",
+          "toStationCode": "002683"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.tokyometro.jp/corporate/ir/library/factbook/pdf/factbook_2025.pdf"
+      ],
+      "notes": "Some scheduled trains run through this corridor; exact departures and stopping patterns are not modeled."
+    },
+    {
+      "id": "chiyoda-joban-odakyu",
+      "serviceCode": "chiyoda-joban-odakyu",
+      "name": "常磐線各駅停車・千代田線・小田急直通",
+      "aliases": [
+        "C",
+        "Chiyoda",
+        "Joban Local",
+        "千代田線"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-東日本旅客鉄道-常磐線",
+          "fromStationCode": "002925",
+          "toStationCode": "003214"
+        },
+        {
+          "lineID": "jp-東京地下鉄-9号線千代田線",
+          "fromStationCode": "003214",
+          "toStationCode": "003847"
+        },
+        {
+          "lineID": "jp-小田急電鉄-小田原線",
+          "fromStationCode": "003847",
+          "toStationCode": "004844"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.tokyometro.jp/corporate/ir/library/factbook/pdf/factbook_2025.pdf"
+      ],
+      "notes": "Some scheduled trains run through this corridor; exact departures and stopping patterns are not modeled."
+    },
+    {
+      "id": "tozai-toyo",
+      "serviceCode": "tozai-toyo",
+      "name": "東西線・東葉高速線直通",
+      "aliases": [
+        "T",
+        "Tozai",
+        "Toyo Rapid",
+        "東西線"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-東京地下鉄-5号線東西線",
+          "fromStationCode": "003568",
+          "toStationCode": "003547"
+        },
+        {
+          "lineID": "jp-東葉高速鉄道-東葉高速線",
+          "fromStationCode": "003547",
+          "toStationCode": "003487"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.tokyometro.jp/corporate/ir/library/factbook/pdf/factbook_2025.pdf"
+      ],
+      "notes": "Some scheduled trains run through this corridor; exact departures and stopping patterns are not modeled."
+    },
+    {
+      "id": "tozai-sobu",
+      "serviceCode": "tozai-sobu",
+      "name": "東西線・総武線各駅停車直通",
+      "aliases": [
+        "T",
+        "Tozai",
+        "Sobu Local"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-東京地下鉄-5号線東西線",
+          "fromStationCode": "003568",
+          "toStationCode": "003547"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-総武線",
+          "fromStationCode": "003547",
+          "toStationCode": "003681"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.tokyometro.jp/corporate/ir/library/factbook/pdf/factbook_2025.pdf"
+      ],
+      "notes": "Some scheduled trains run through this corridor; exact departures and stopping patterns are not modeled."
+    },
+    {
+      "id": "yurakucho-tobu",
+      "serviceCode": "yurakucho-tobu",
+      "name": "有楽町線・東武直通",
+      "aliases": [
+        "Y",
+        "Yurakucho",
+        "有楽町線"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-東武鉄道-東上本線",
+          "fromStationCode": "002708",
+          "toStationCode": "003123"
+        },
+        {
+          "lineID": "jp-東京地下鉄-8号線有楽町線",
+          "fromStationCode": "003123",
+          "toStationCode": "003294"
+        },
+        {
+          "lineID": "jp-東京地下鉄-8号線有楽町線",
+          "fromStationCode": "003294",
+          "toStationCode": "003997"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.tokyometro.jp/corporate/ir/library/factbook/pdf/factbook_2025.pdf"
+      ],
+      "notes": "Some scheduled trains run through this corridor; exact departures and stopping patterns are not modeled."
+    },
+    {
+      "id": "fukutoshin-tobu-minatomirai",
+      "serviceCode": "fukutoshin-tobu-minatomirai",
+      "name": "副都心線・東横線・みなとみらい直通",
+      "aliases": [
+        "F",
+        "Fukutoshin",
+        "Toyoko",
+        "副都心線"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-東武鉄道-東上本線",
+          "fromStationCode": "002708",
+          "toStationCode": "003123"
+        },
+        {
+          "lineID": "jp-東京地下鉄-8号線有楽町線",
+          "fromStationCode": "003123",
+          "toStationCode": "003294"
+        },
+        {
+          "lineID": "jp-東京地下鉄-13号線副都心線",
+          "fromStationCode": "003294",
+          "toStationCode": "003922"
+        },
+        {
+          "lineID": "jp-東急電鉄-東横線",
+          "fromStationCode": "003922",
+          "toStationCode": "004633"
+        },
+        {
+          "lineID": "jp-横浜高速鉄道-みなとみらい21線",
+          "fromStationCode": "004633",
+          "toStationCode": "004704"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.tokyometro.jp/corporate/ir/library/factbook/pdf/factbook_2025.pdf"
+      ],
+      "notes": "Some scheduled trains run through this corridor; exact departures and stopping patterns are not modeled."
+    },
+    {
+      "id": "yurakucho-seibu",
+      "serviceCode": "yurakucho-seibu",
+      "name": "有楽町線・西武直通",
+      "aliases": [
+        "Y",
+        "Yurakucho",
+        "有楽町線"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-西武鉄道-池袋線",
+          "fromStationCode": "002999",
+          "toStationCode": "003328"
+        },
+        {
+          "lineID": "jp-西武鉄道-西武有楽町線",
+          "fromStationCode": "003328",
+          "toStationCode": "003294"
+        },
+        {
+          "lineID": "jp-東京地下鉄-8号線有楽町線",
+          "fromStationCode": "003294",
+          "toStationCode": "003997"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.tokyometro.jp/corporate/ir/library/factbook/pdf/factbook_2025.pdf"
+      ],
+      "notes": "Some scheduled trains run through this corridor; exact departures and stopping patterns are not modeled."
+    },
+    {
+      "id": "fukutoshin-seibu-minatomirai",
+      "serviceCode": "fukutoshin-seibu-minatomirai",
+      "name": "副都心線・東横線・みなとみらい直通",
+      "aliases": [
+        "F",
+        "Fukutoshin",
+        "Toyoko",
+        "副都心線"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-西武鉄道-池袋線",
+          "fromStationCode": "002999",
+          "toStationCode": "003328"
+        },
+        {
+          "lineID": "jp-西武鉄道-西武有楽町線",
+          "fromStationCode": "003328",
+          "toStationCode": "003294"
+        },
+        {
+          "lineID": "jp-東京地下鉄-13号線副都心線",
+          "fromStationCode": "003294",
+          "toStationCode": "003922"
+        },
+        {
+          "lineID": "jp-東急電鉄-東横線",
+          "fromStationCode": "003922",
+          "toStationCode": "004633"
+        },
+        {
+          "lineID": "jp-横浜高速鉄道-みなとみらい21線",
+          "fromStationCode": "004633",
+          "toStationCode": "004704"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.tokyometro.jp/corporate/ir/library/factbook/pdf/factbook_2025.pdf"
+      ],
+      "notes": "Some scheduled trains run through this corridor; exact departures and stopping patterns are not modeled."
+    },
+    {
+      "id": "namboku-saitama-meguro",
+      "serviceCode": "namboku-saitama-meguro",
+      "name": "埼玉高速・南北線・目黒線直通",
+      "aliases": [
+        "N",
+        "Namboku",
+        "南北線",
+        "Meguro"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-埼玉高速鉄道-埼玉高速鉄道線",
+          "fromStationCode": "002933",
+          "toStationCode": "003141"
+        },
+        {
+          "lineID": "jp-東京地下鉄-7号線南北線",
+          "fromStationCode": "003141",
+          "toStationCode": "004072"
+        },
+        {
+          "lineID": "jp-東急電鉄-目黒線",
+          "fromStationCode": "004072",
+          "toStationCode": "004245"
+        },
+        {
+          "lineID": "jp-東急電鉄-東横線",
+          "fromStationCode": "004245",
+          "toStationCode": "004351"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.tokyometro.jp/corporate/ir/library/factbook/pdf/factbook_2025.pdf"
+      ],
+      "notes": "Some scheduled trains run through this corridor; exact departures and stopping patterns are not modeled."
+    },
+    {
+      "id": "mita-meguro",
+      "serviceCode": "mita-meguro",
+      "name": "三田線・目黒線直通",
+      "aliases": [
+        "I",
+        "Mita",
+        "三田線"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-東京都-6号線三田線",
+          "fromStationCode": "003104",
+          "toStationCode": "004072"
+        },
+        {
+          "lineID": "jp-東急電鉄-目黒線",
+          "fromStationCode": "004072",
+          "toStationCode": "004245"
+        },
+        {
+          "lineID": "jp-東急電鉄-東横線",
+          "fromStationCode": "004245",
+          "toStationCode": "004351"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.tokyometro.jp/news/2022/214156.html"
+      ],
+      "notes": "Some scheduled trains run through this corridor; exact departures and stopping patterns are not modeled."
+    },
+    {
+      "id": "sotetsu-tokyu-namboku",
+      "serviceCode": "sotetsu-tokyu-namboku",
+      "name": "相鉄・東急・南北線直通",
+      "aliases": [
+        "Sotetsu",
+        "Shin-Yokohama",
+        "相鉄",
+        "新横浜線"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-相模鉄道-相鉄本線",
+          "fromStationCode": "004672",
+          "toStationCode": "004594"
+        },
+        {
+          "lineID": "jp-相模鉄道-相鉄新横浜線",
+          "fromStationCode": "004594",
+          "toStationCode": "004501"
+        },
+        {
+          "lineID": "jp-東急電鉄-東急新横浜線",
+          "fromStationCode": "004501",
+          "toStationCode": "004351"
+        },
+        {
+          "lineID": "jp-東急電鉄-東横線",
+          "fromStationCode": "004351",
+          "toStationCode": "004245"
+        },
+        {
+          "lineID": "jp-東急電鉄-目黒線",
+          "fromStationCode": "004245",
+          "toStationCode": "004072"
+        },
+        {
+          "lineID": "jp-東京地下鉄-7号線南北線",
+          "fromStationCode": "004072",
+          "toStationCode": "003141"
+        },
+        {
+          "lineID": "jp-埼玉高速鉄道-埼玉高速鉄道線",
+          "fromStationCode": "003141",
+          "toStationCode": "002933"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.tokyometro.jp/news/2022/214156.html"
+      ],
+      "notes": "Some scheduled trains run through this corridor; exact departures and stopping patterns are not modeled."
+    },
+    {
+      "id": "nagoya-tsurumai-toyota",
+      "serviceCode": "nagoya-tsurumai-toyota",
+      "name": "鶴舞線・名鉄豊田線直通",
+      "aliases": [
+        "Tsurumai",
+        "Toyota",
+        "鶴舞線"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-名古屋市-3号線鶴舞線",
+          "fromStationCode": "005297",
+          "toStationCode": "005624"
+        },
+        {
+          "lineID": "jp-名古屋鉄道-豊田線",
+          "fromStationCode": "005624",
+          "toStationCode": "005698"
+        },
+        {
+          "lineID": "jp-名古屋鉄道-三河線",
+          "fromStationCode": "005698",
+          "toStationCode": "005733"
+        }
+      ],
+      "sourceURLs": [
+        "https://kotsu.city.nagoya.jp/jp/trp_redirect.html?trp=trp0000190"
+      ],
+      "notes": "Some scheduled trains run through this corridor; exact departures and stopping patterns are not modeled."
+    },
+    {
+      "id": "nagoya-inuyama-tsurumai",
+      "serviceCode": "nagoya-inuyama-tsurumai",
+      "name": "名鉄犬山線・鶴舞線直通",
+      "aliases": [
+        "Inuyama",
+        "Tsurumai",
+        "犬山線"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-名古屋鉄道-犬山線",
+          "fromStationCode": "004888",
+          "toStationCode": "005297"
+        },
+        {
+          "lineID": "jp-名古屋市-3号線鶴舞線",
+          "fromStationCode": "005297",
+          "toStationCode": "005624"
+        }
+      ],
+      "sourceURLs": [
+        "https://top.meitetsu.co.jp/trainlocation/TrainRunningPositionIY.aspx"
+      ],
+      "notes": "Some scheduled trains run through this corridor; exact departures and stopping patterns are not modeled."
+    },
+    {
+      "id": "nagoya-komaki-kamiiida",
+      "serviceCode": "nagoya-komaki-kamiiida",
+      "name": "名鉄小牧線・上飯田線直通",
+      "aliases": [
+        "Komaki",
+        "Kamiiida",
+        "上飯田線"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-名古屋鉄道-小牧線",
+          "fromStationCode": "004888",
+          "toStationCode": "005339"
+        },
+        {
+          "lineID": "jp-名古屋市-上飯田線",
+          "fromStationCode": "005339",
+          "toStationCode": "005366"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.meitetsu.co.jp/train/timetable/"
+      ],
+      "notes": "Some scheduled trains run through this corridor; exact departures and stopping patterns are not modeled."
+    },
+    {
+      "id": "osaka-midosuji-kita",
+      "serviceCode": "osaka-midosuji-kita",
+      "name": "御堂筋線・北大阪急行直通",
+      "aliases": [
+        "Midosuji",
+        "Kita Osaka",
+        "御堂筋線"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-北大阪急行電鉄-南北線",
+          "fromStationCode": "010183",
+          "toStationCode": "006800"
+        },
+        {
+          "lineID": "jp-大阪市高速電気軌道-1号線(御堂筋線)",
+          "fromStationCode": "006800",
+          "toStationCode": "007711"
+        }
+      ],
+      "sourceURLs": [
+        "https://subway.osakametro.co.jp/guide/fare/various_fares/mutual_price/price_sogo.php/1000"
+      ],
+      "notes": "Some scheduled trains run through this corridor; exact departures and stopping patterns are not modeled."
+    },
+    {
+      "id": "osaka-chuo-keihanna",
+      "serviceCode": "osaka-chuo-keihanna",
+      "name": "中央線・近鉄けいはんな線直通",
+      "aliases": [
+        "Chuo",
+        "Keihanna",
+        "けいはんな"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-大阪市高速電気軌道-4号線(中央線)",
+          "fromStationCode": "010188",
+          "toStationCode": "007232"
+        },
+        {
+          "lineID": "jp-近畿日本鉄道-けいはんな線",
+          "fromStationCode": "007232",
+          "toStationCode": "006945"
+        }
+      ],
+      "sourceURLs": [
+        "https://subway.osakametro.co.jp/guide/fare/various_fares/mutual_price/price_sogo.php/1000"
+      ],
+      "notes": "Some scheduled trains run through this corridor; exact departures and stopping patterns are not modeled."
+    },
+    {
+      "id": "osaka-sakaisuji-senri",
+      "serviceCode": "osaka-sakaisuji-senri",
+      "name": "堺筋線・阪急千里線直通",
+      "aliases": [
+        "Sakaisuji",
+        "Senri",
+        "堺筋線"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-大阪市高速電気軌道-6号線(堺筋線)",
+          "fromStationCode": "007483",
+          "toStationCode": "007028"
+        },
+        {
+          "lineID": "jp-阪急電鉄-千里線",
+          "fromStationCode": "007028",
+          "toStationCode": "006543"
+        }
+      ],
+      "sourceURLs": [
+        "https://subway.osakametro.co.jp/guide/fare/various_fares/mutual_price/price_sogo.php/1000"
+      ],
+      "notes": "Some scheduled trains run through this corridor; exact departures and stopping patterns are not modeled."
+    },
+    {
+      "id": "osaka-sakaisuji-kyoto",
+      "serviceCode": "osaka-sakaisuji-kyoto",
+      "name": "堺筋線・阪急京都線直通",
+      "aliases": [
+        "Sakaisuji",
+        "Hankyu Kyoto",
+        "堺筋線"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-大阪市高速電気軌道-6号線(堺筋線)",
+          "fromStationCode": "007483",
+          "toStationCode": "007028"
+        },
+        {
+          "lineID": "jp-阪急電鉄-千里線",
+          "fromStationCode": "007028",
+          "toStationCode": "006876"
+        },
+        {
+          "lineID": "jp-阪急電鉄-京都線",
+          "fromStationCode": "006876",
+          "toStationCode": "006440"
+        }
+      ],
+      "sourceURLs": [
+        "https://subway.osakametro.co.jp/guide/fare/various_fares/mutual_price/price_sogo.php/1000"
+      ],
+      "notes": "Some scheduled trains run through this corridor; exact departures and stopping patterns are not modeled."
+    },
+    {
+      "id": "kyoto-karasuma-kintetsu",
+      "serviceCode": "kyoto-karasuma-kintetsu",
+      "name": "烏丸線・近鉄京都線直通",
+      "aliases": [
+        "Karasuma",
+        "Kintetsu Kyoto",
+        "烏丸線"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-京都市-烏丸線",
+          "fromStationCode": "005791",
+          "toStationCode": "006172"
+        },
+        {
+          "lineID": "jp-近畿日本鉄道-京都線",
+          "fromStationCode": "006172",
+          "toStationCode": "006538"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.city.kyoto.lg.jp/kotsu/page/0000204847.html"
+      ],
+      "notes": "Some scheduled trains run through this corridor; exact departures and stopping patterns are not modeled."
+    },
+    {
+      "id": "kyoto-tozai-keishin",
+      "serviceCode": "kyoto-tozai-keishin",
+      "name": "東西線・京阪京津線直通",
+      "aliases": [
+        "Kyoto Tozai",
+        "Keihan Keishin",
+        "京津線"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-京都市-東西線",
+          "fromStationCode": "005959",
+          "toStationCode": "006026"
+        },
+        {
+          "lineID": "jp-京阪電気鉄道-京津線",
+          "fromStationCode": "006026",
+          "toStationCode": "005954"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.city.kyoto.lg.jp/kotsu/page/0000204847.html"
+      ],
+      "notes": "Some scheduled trains run through this corridor; exact departures and stopping patterns are not modeled."
+    },
+    {
+      "id": "fukuoka-kuko-chikuhi",
+      "serviceCode": "fukuoka-kuko-chikuhi",
+      "name": "福岡市地下鉄空港線・筑肥線直通",
+      "aliases": [
+        "Kuko",
+        "Chikuhi",
+        "空港線",
+        "筑肥線"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-福岡市-1号線(空港線)",
+          "fromStationCode": "009015",
+          "toStationCode": "009046"
+        },
+        {
+          "lineID": "jp-九州旅客鉄道-筑肥線",
+          "fromStationCode": "009046",
+          "toStationCode": "009278"
+        }
+      ],
+      "sourceURLs": [
+        "https://subway.city.fukuoka.lg.jp/subway/about/pdf/subway_all.pdf"
+      ],
+      "notes": "Some scheduled trains run through this corridor; exact departures and stopping patterns are not modeled."
+    },
+    {
+      "id": "hanshin-sanyo",
+      "serviceCode": "hanshin-sanyo",
+      "name": "阪神・山陽直通特急",
+      "aliases": [
+        "Hanshin",
+        "Sanyo",
+        "直通特急"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-阪神電気鉄道-本線",
+          "fromStationCode": "007071",
+          "toStationCode": "007160"
+        },
+        {
+          "lineID": "jp-阪神電気鉄道-神戸高速線",
+          "fromStationCode": "007160",
+          "toStationCode": "007361"
+        },
+        {
+          "lineID": "jp-山陽電気鉄道-本線",
+          "fromStationCode": "007361",
+          "toStationCode": "006497"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.sanyo-railway.co.jp/railway/express.html",
+        "https://www.hanshin.co.jp/company/division/"
+      ],
+      "notes": "Official operator evidence establishes through trains on this corridor. Exact departures and passenger stopping patterns are not modeled."
+    },
+    {
+      "id": "hanshin-kintetsu-nara",
+      "serviceCode": "hanshin-kintetsu-nara",
+      "name": "阪神・近鉄奈良直通",
+      "aliases": [
+        "Hanshin Namba",
+        "Kintetsu Nara",
+        "阪神なんば線",
+        "近鉄奈良線"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-阪神電気鉄道-本線",
+          "fromStationCode": "007120",
+          "toStationCode": "006981"
+        },
+        {
+          "lineID": "jp-阪神電気鉄道-阪神なんば線",
+          "fromStationCode": "006981",
+          "toStationCode": "007308"
+        },
+        {
+          "lineID": "jp-近畿日本鉄道-難波線",
+          "fromStationCode": "007308",
+          "toStationCode": "007323"
+        },
+        {
+          "lineID": "jp-近畿日本鉄道-大阪線",
+          "fromStationCode": "007323",
+          "toStationCode": "007347"
+        },
+        {
+          "lineID": "jp-近畿日本鉄道-奈良線",
+          "fromStationCode": "007347",
+          "toStationCode": "007183"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.hanshin.co.jp/company/division/",
+        "https://www.kintetsu.co.jp/railway/Dia/dia_higashi-hanazono_20260831.html"
+      ],
+      "notes": "Official operator evidence establishes through trains on this corridor. Exact departures and passenger stopping patterns are not modeled."
+    },
+    {
+      "id": "sotetsu-jr-shinjuku",
+      "serviceCode": "sotetsu-jr-shinjuku",
+      "name": "相鉄・JR新宿直通",
+      "aliases": [
+        "Sotetsu JR",
+        "Saikyo",
+        "相鉄JR直通",
+        "埼京線"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-相模鉄道-相鉄本線",
+          "fromStationCode": "004672",
+          "toStationCode": "004594"
+        },
+        {
+          "lineID": "jp-相模鉄道-相鉄新横浜線",
+          "fromStationCode": "004594",
+          "toStationCode": "004581"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-東海道線-3",
+          "fromStationCode": "004581",
+          "toStationCode": "004301"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-総武線-3",
+          "fromStationCode": "004301",
+          "toStationCode": "004235"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-大崎支線-p1",
+          "fromStationCode": "004235",
+          "toStationCode": "004135",
+          "reverseLineID": "jp-東日本旅客鉄道-大崎支線"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-山手線",
+          "fromStationCode": "004135",
+          "toStationCode": "003700"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.sotetsu.co.jp/about/companies/transportation/",
+        "https://www.jreast.co.jp/estation/facility_search.aspx?searchCategoryCd=1"
+      ],
+      "notes": "Official operator evidence establishes through trains on this corridor. Exact departures and passenger stopping patterns are not modeled."
+    },
+    {
+      "id": "hokkaido-airport-otaru",
+      "serviceCode": "hokkaido-airport-otaru",
+      "name": "快速エアポート・小樽直通",
+      "aliases": [
+        "Airport",
+        "快速エアポート",
+        "Otaru",
+        "New Chitose"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-北海道旅客鉄道-函館線",
+          "fromStationCode": "000159",
+          "toStationCode": "000255"
+        },
+        {
+          "lineID": "jp-北海道旅客鉄道-千歳線",
+          "fromStationCode": "000255",
+          "toStationCode": "000353"
+        },
+        {
+          "lineID": "jp-北海道旅客鉄道-千歳線-2",
+          "fromStationCode": "000353",
+          "toStationCode": "000357"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.jrhokkaido.co.jp/airport/index.html"
+      ],
+      "notes": "Official operator evidence establishes through trains on this corridor. Exact departures and passenger stopping patterns are not modeled."
+    },
+    {
+      "id": "tohoku-senzan-yamagata",
+      "serviceCode": "tohoku-senzan-yamagata",
+      "name": "仙山線・山形直通",
+      "aliases": [
+        "Senzan",
+        "仙山線",
+        "Yamagata"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-東日本旅客鉄道-仙山線",
+          "fromStationCode": "001177",
+          "toStationCode": "001148"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-奥羽線",
+          "fromStationCode": "001148",
+          "toStationCode": "001194"
+        }
+      ],
+      "sourceURLs": [
+        "https://media.jreast.co.jp/articles/4759",
+        "https://timetables.jreast.co.jp/timetable/list0913.html"
+      ],
+      "notes": "Official operator evidence establishes through trains on this corridor. Exact departures and passenger stopping patterns are not modeled."
+    },
+    {
+      "id": "tohoku-joban-sendai",
+      "serviceCode": "tohoku-joban-sendai",
+      "name": "常磐線・仙台直通",
+      "aliases": [
+        "Joban Sendai",
+        "常磐線仙台直通"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-東日本旅客鉄道-常磐線",
+          "fromStationCode": "001411",
+          "toStationCode": "001228"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-東北線",
+          "fromStationCode": "001228",
+          "toStationCode": "001177"
+        }
+      ],
+      "sourceURLs": [
+        "https://timetables.jreast.co.jp/timetable/list1259.html",
+        "https://timetables.jreast.co.jp/2610/timetable/tt1259/1259010.html"
+      ],
+      "notes": "Official operator evidence establishes through trains on this corridor. Exact departures and passenger stopping patterns are not modeled."
+    },
+    {
+      "id": "tohoku-sendai-airport",
+      "serviceCode": "tohoku-sendai-airport",
+      "name": "仙台空港アクセス線",
+      "aliases": [
+        "Sendai Airport",
+        "仙台空港アクセス線"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-東日本旅客鉄道-東北線",
+          "fromStationCode": "001177",
+          "toStationCode": "001212"
+        },
+        {
+          "lineID": "jp-仙台空港鉄道-仙台空港線",
+          "fromStationCode": "001212",
+          "toStationCode": "001222"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.senat.co.jp/question"
+      ],
+      "notes": "Official operator evidence establishes through trains on this corridor. Exact departures and passenger stopping patterns are not modeled."
+    },
+    {
+      "id": "seto-marine-liner",
+      "serviceCode": "seto-marine-liner",
+      "name": "快速マリンライナー",
+      "aliases": [
+        "Marine Liner",
+        "マリンライナー",
+        "Seto Ohashi"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-西日本旅客鉄道-宇野線",
+          "fromStationCode": "007310",
+          "toStationCode": "007662"
+        },
+        {
+          "lineID": "jp-西日本旅客鉄道-本四備讃線",
+          "fromStationCode": "007662",
+          "toStationCode": "007919"
+        },
+        {
+          "lineID": "jp-四国旅客鉄道-本四備讃線",
+          "fromStationCode": "007919",
+          "toStationCode": "008252"
+        },
+        {
+          "lineID": "jp-四国旅客鉄道-予讃線",
+          "fromStationCode": "008252",
+          "toStationCode": "008163"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.jr-shikoku.co.jp/01_trainbus/vehicle-info/marine.html"
+      ],
+      "notes": "Official operator evidence establishes through trains on this corridor. Exact departures and passenger stopping patterns are not modeled."
+    },
+    {
+      "id": "shikoku-naruto-tokushima",
+      "serviceCode": "shikoku-naruto-tokushima",
+      "name": "鳴門線・徳島直通",
+      "aliases": [
+        "Naruto",
+        "鳴門線",
+        "Tokushima"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-四国旅客鉄道-鳴門線",
+          "fromStationCode": "008414",
+          "toStationCode": "008443"
+        },
+        {
+          "lineID": "jp-四国旅客鉄道-高徳線",
+          "fromStationCode": "008443",
+          "toStationCode": "008493"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.jr-shikoku.co.jp/01_trainbus/jikoku/pdf/tokushima.pdf"
+      ],
+      "notes": "Official operator evidence establishes through trains on this corridor. Exact departures and passenger stopping patterns are not modeled."
+    },
+    {
+      "id": "kyushu-miyazaki-airport",
+      "serviceCode": "kyushu-miyazaki-airport",
+      "name": "延岡・宮崎空港直通",
+      "aliases": [
+        "Miyazaki Airport",
+        "宮崎空港線"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-九州旅客鉄道-日豊線",
+          "fromStationCode": "009864",
+          "toStationCode": "009960"
+        },
+        {
+          "lineID": "jp-九州旅客鉄道-日南線",
+          "fromStationCode": "009960",
+          "toStationCode": "009964"
+        },
+        {
+          "lineID": "jp-九州旅客鉄道-宮崎空港線",
+          "fromStationCode": "009964",
+          "toStationCode": "009968"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.jrkyushu.co.jp/byarea/kagoshima/info/__icsFiles/afieldfile/2026/03/12/nippo.miyazakiairport.pdf"
+      ],
+      "notes": "Official operator evidence establishes through trains on this corridor. Exact departures and passenger stopping patterns are not modeled."
+    }
+  ],
+  "coverage": [
+    {
+      "region": "Kanto",
+      "level": "checked",
+      "notes": "JR JK/JS/JO, seven Tokyo Metro through networks, Toei Asakusa/Shinjuku/Mita and a representative Sotetsu-Tokyu corridor; branch and limited-express coverage remains partial."
+    },
+    {
+      "region": "Chubu",
+      "level": "checked",
+      "notes": "Nagoya Tsurumai/Toyota, Inuyama/Tsurumai and Komaki/Kamiiida representative corridors."
+    },
+    {
+      "region": "Kansai",
+      "level": "checked",
+      "notes": "Osaka/Kyoto subway corridors, Hanshin–Sanyo and Hanshin–Kintetsu Nara. Other JR/private-railway corridors remain unknown."
+    },
+    {
+      "region": "Kyushu",
+      "level": "checked",
+      "notes": "Fukuoka Airport/Chikuhi and Miyazaki Airport representative corridors only."
+    },
+    {
+      "region": "Hokkaido",
+      "level": "checked",
+      "notes": "Otaru–New Chitose Airport rapid corridor only; other regional corridors remain unknown."
+    },
+    {
+      "region": "Tohoku",
+      "level": "checked",
+      "notes": "Senzan–Yamagata, Joban–Sendai and Sendai Airport representative corridors. Senseki-Tohoku cannot be encoded: its connecting track has no exact shared anchor in the shipped inventory."
+    },
+    {
+      "region": "Hokuriku",
+      "level": "unknown",
+      "notes": "Not researched in this catalog."
+    },
+    {
+      "region": "Chugoku",
+      "level": "checked",
+      "notes": "Okayama–Takamatsu Marine Liner corridor only; other regional corridors remain unknown."
+    },
+    {
+      "region": "Shikoku",
+      "level": "checked",
+      "notes": "Marine Liner and Naruto–Tokushima representative corridors only."
+    },
+    {
+      "region": "Okinawa",
+      "level": "unknown",
+      "notes": "Not researched in this catalog."
+    }
+  ]
+}

@@ -598,6 +598,30 @@ final class RailNetworkStore {
         activateDisplayLines(intersecting: rect, cameraZoom: cameraZoom)
     }
 
+    /// Read the selected railway's full display chunk independently of viewport LOD.
+    /// The result is a transient map preview; it never enters the ride ledger.
+    func linePreview(region: Region, lineID: String, era: DisplayNetworkEra) async throws -> RailwayLinePreview {
+        await manifestLoadTask?.value
+        try Task.checkCancellation()
+        let key = "\(region.code)|\(lineID)"
+        guard let manifest = displayManifest, let index = displayIndex,
+              let metadata = manifest.lines[key], let entry = index.entryByID[lineID],
+              entry.region == region.code,
+              let record = index.recordsByRegion[region.code] else {
+            throw RailDisplayNetworkError.unknownLine(region.code)
+        }
+        let cachedBlob = displayBlobs[region.code]
+        let history = displayHistoryByRegion[region.code]
+        return try await Task.detached(priority: .userInitiated) {
+            let blob = try cachedBlob ?? RailDisplayNetwork.blob(record)
+            let file = try RailDisplayNetwork.chunk(
+                entry, blob: blob, detail: .full, catalog: manifest.lines,
+                families: record.families ?? [:])
+            return RailwayLinePreview(
+                metadata: metadata, file: file, history: history, region: region, era: era)
+        }.value
+    }
+
     /// Called when the reader flips the North America setting.
     ///
     /// Off: drops every resident US/CA line immediately and republishes, so
