@@ -39,10 +39,9 @@ public enum JourneySearchMatcher {
 
     /// Whether one journey answers a query.
     ///
-    /// Case- and diacritic-insensitive substring matching, in the reader's
-    /// locale: `localizedCaseInsensitiveContains` is what makes ｶﾞ find が and
-    /// what keeps `odoriko` finding a record typed `Odoriko`. A `lowercased()`
-    /// comparison would do neither, and would additionally get Turkish wrong.
+    /// Multilingual folded matching for names; dates and IDs retain separators.
+    /// Operator aliases
+    /// and related operator families included in company discovery.
     ///
     /// An empty or whitespace-only query matches everything, so a caller can
     /// hand the raw text field through without deciding first whether the
@@ -57,46 +56,31 @@ public enum JourneySearchMatcher {
     ) -> Bool {
         let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !needle.isEmpty else { return true }
-        return matches(train, trimmed: needle, alsoNamed: alsoNamed)
+        return matches(train, prepared: SearchFold.PreparedQuery(needle), needle: needle,
+                       operatorCodes: OperatorIdentity.exactCodes(query: needle), alsoNamed: alsoNamed)
     }
 
-    /// The same answer, over a query that has already been trimmed.
-    ///
-    /// Two things are avoided by having this separately, and both were paid
-    /// per JOURNEY rather than per query: `trimmingCharacters` allocates a new
-    /// `String` and ``filter(_:query:)`` had already done it once; and
-    /// ``fields(of:)`` builds and filters an array of up to forty strings
-    /// before the first comparison is made, when the great majority of
-    /// journeys are settled by their number — the first field.
-    ///
-    /// The membership of the fields is ``fields(of:)``'s and is checked
-    /// against it by ``JourneySearchMatcherTests``, so this stays a faster
-    /// spelling of the same contract rather than a second one.
-    ///
-    /// The *order* is ``fields(of:)``'s in one place only: ``alsoNamed`` is
-    /// asked last here and listed beside the names it re-spells there. Both
-    /// placements are deliberate. In the field list it belongs next to
-    /// `origin`, `destination` and the stops, because that is what a reviewer
-    /// checking §5.1 needs to see it as — the same stations, spelled again.
-    /// Here it belongs after everything the record already carries, because it
-    /// is the only field that costs a dictionary lookup per stop to produce,
-    /// and a journey settled by its number must not pay for it. Which of two
-    /// fields is compared first cannot change the answer, so the two orders
-    /// are free to differ.
-    static func matches(
-        _ train: Train, trimmed needle: String, alsoNamed: (Train) -> [String] = { _ in [] }
+    /// A prepared query is shared across all journeys in a filter operation.
+    private static func matches(
+        _ train: Train, prepared: SearchFold.PreparedQuery, needle: String,
+        operatorCodes: Set<String>?, alsoNamed: (Train) -> [String]
     ) -> Bool {
+        guard !prepared.whole.isEmpty else { return false }
+        if let operatorCodes {
+            return !Set(OperatorIdentity.codes(forJoined: train.company ?? "")).isDisjoint(with: operatorCodes)
+        }
         func hit(_ field: String?) -> Bool {
             guard let field, !field.isEmpty else { return false }
-            return field.localizedCaseInsensitiveContains(needle)
+            return prepared.matches(fields: [field])
         }
         if hit(train.number) || hit(train.numberEn) || hit(train.origin) || hit(train.destination) {
             return true
         }
         for stop in train.stops where hit(stop.name) { return true }
-        if hit(train.date) || hit(train.direction) || hit(train.trainType)
-            || hit(train.company) || hit(train.id)
-        {
+        if train.date?.localizedCaseInsensitiveContains(needle) == true
+            || hit(train.direction) || hit(train.trainType)
+            || train.company.map({ prepared.matches(fields: OperatorIdentity.searchNames(for: $0)) }) == true
+            || train.id.localizedCaseInsensitiveContains(needle) {
             return true
         }
         return alsoNamed(train).contains(where: { hit($0) })
@@ -146,6 +130,9 @@ public enum JourneySearchMatcher {
     ) -> [Train] {
         let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !needle.isEmpty else { return trains }
-        return trains.filter { matches($0, trimmed: needle, alsoNamed: alsoNamed) }
+        let prepared = SearchFold.PreparedQuery(needle)
+        let operatorCodes = OperatorIdentity.exactCodes(query: needle)
+        return trains.filter { matches($0, prepared: prepared, needle: needle,
+                                       operatorCodes: operatorCodes, alsoNamed: alsoNamed) }
     }
 }

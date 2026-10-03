@@ -161,7 +161,6 @@ struct RideEditorView: View {
         self.suggestionTrains = suggestionTrains
         var initialDraft = train
         if isNew && (initialDraft.trainType?.isEmpty != false) { initialDraft.trainType = "local" }
-        if isNew && initialDraft.routeConfirmation == nil { initialDraft.routeConfirmation = .pending }
         _draft = State(initialValue: initialDraft)
         _stopIDs = State(initialValue: train.stops.map { $0.routeEditing?.visitID ?? UUID() })
         _generatedStopIDs = State(initialValue: Set(train.stops.compactMap {
@@ -184,7 +183,7 @@ struct RideEditorView: View {
                 onApply: { completed in
                     guard var train = completed.first else { return }
                     if train.stops != draft.stops || train.routeSections != draft.routeSections {
-                        train.routeConfirmation = .pending
+                        if train.routeConfirmation == .confirmed { train.routeConfirmation = nil }
                     }
                     applyCompletedDraft(train)
                 })
@@ -381,7 +380,7 @@ struct RideEditorView: View {
             if visitsChanged && before.routeSections == after.routeSections
                 && after.routeConfirmation == .confirmed
                 && acceptedRouteStopCodes != after.stops.map(\.n02StationCode) {
-                draft.routeConfirmation = .pending
+                draft.routeConfirmation = nil
             }
             acceptedRouteStopCodes = nil
             revalidate()
@@ -824,7 +823,8 @@ struct RideEditorView: View {
         isInferringRoute = true
         routeInferenceTask = Task {
             let worker = Task.detached(priority: .userInitiated) {
-                RailwayRouteInference.search(in: prepared, package: package)
+                let aliases = loadJourneyStationAliases(for: prepared.stops.compactMap(\.n02StationCode), package: package)
+                return RailwayRouteInference.search(in: prepared, package: package, stationAliases: aliases, maximumExpansions: 200_000)
             }
             let result = await withTaskCancellationHandler {
                 await worker.value
@@ -838,7 +838,6 @@ struct RideEditorView: View {
                 applyRoutePlan(plan, choice: choice)
                 return
             }
-            draft.routeConfirmation = .pending
             guard !result.choices.isEmpty else { routeInferenceFailed = true; return }
             pendingRouteCommit = nil
             routeGuideRequest = RouteGuideRequest(train: prepared, package: package, inferredChoices: result.choices)
@@ -2922,18 +2921,14 @@ private struct StopEditorView: View {
             guard !query.isEmpty else { return }
             do { try await Task.sleep(for: .milliseconds(120)) } catch { return }
             let found = await Task.detached(priority: .userInitiated) {
-                let options: String.CompareOptions = [
-                    .caseInsensitive, .diacriticInsensitive, .widthInsensitive,
-                ]
-                let needle = query.folding(options: options, locale: .current)
+                let prepared = SearchFold.PreparedQuery(query)
                 return stations.compactMap { station -> (station: CatalogStation, rank: Int)? in
-                    let names = ([station.name] + station.aliases).map {
-                        $0.folding(options: options, locale: .current)
-                    }
-                    guard names.contains(where: { $0.contains(needle) }) else { return nil }
-                    let rank = names.contains(needle)
+                    let fields = [station.name] + station.aliases
+                    guard prepared.matches(fields: fields) else { return nil }
+                    let names = fields.map(SearchFold.fold)
+                    let rank = names.contains(prepared.whole)
                         ? 0
-                        : names.contains(where: { $0.hasPrefix(needle) }) ? 1 : 2
+                        : names.contains(where: { $0.hasPrefix(prepared.whole) }) ? 1 : 2
                     return (station, rank)
                 }
                 .sorted { lhs, rhs in
@@ -2972,8 +2967,9 @@ private struct StopEditorView: View {
                 retiredStationMatches = []
                 return
             }
+            let prepared = SearchFold.PreparedQuery(query)
             retiredStationMatches = retiredOpenStations.filter {
-                $0.name.localizedStandardContains(query)
+                prepared.matches(fields: [$0.name])
             }
         }
         .navigationTitle(
@@ -3421,8 +3417,9 @@ private struct EditorSearchField: View {
 
     private var matches: [String] {
         let query = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        let prepared = SearchFold.PreparedQuery(query)
         return Array(Set(suggestions.filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }))
-            .filter { query.isEmpty || $0.localizedStandardContains(query) }
+            .filter { query.isEmpty || prepared.matches(fields: OperatorIdentity.searchNames(for: $0)) }
             .sorted { $0.localizedStandardCompare($1) == .orderedAscending }
             .prefix(6).map { $0 }
     }
@@ -3529,13 +3526,16 @@ private struct EditorLineSearchView: View {
 
     private var matches: [CatalogLine] {
         let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !needle.isEmpty else { return candidateLines }
+        let prepared = SearchFold.PreparedQuery(needle)
+        let operatorCodes = OperatorIdentity.exactCodes(query: needle)
         return candidateLines.filter { line in
-            line.name.localizedStandardContains(needle)
-                || line.aliases.contains { $0.localizedStandardContains(needle) }
-                || line.operatorIDs.contains {
-                    (operatorNameByID[$0] ?? "").localizedStandardContains(needle)
+            if let operatorCodes {
+                return line.operatorIDs.contains {
+                    !Set(OperatorIdentity.codes(forJoined: operatorNameByID[$0] ?? "")).isDisjoint(with: operatorCodes)
                 }
+            }
+            return needle.isEmpty || prepared.matches(fields: [line.name] + line.aliases
+                + line.operatorIDs.flatMap { OperatorIdentity.searchNames(for: operatorNameByID[$0] ?? "") })
         }
     }
 

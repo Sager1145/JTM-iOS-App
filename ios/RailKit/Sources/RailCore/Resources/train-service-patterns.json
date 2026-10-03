@@ -4371,7 +4371,16 @@
     "sourceCode": "000001"
    }
   ],
-  "optionalStops": [],
+  "optionalStops": [
+   {
+    "name": "美唄",
+    "sourceCode": "000139"
+   },
+   {
+    "name": "砂川",
+    "sourceCode": "000124"
+   }
+  ],
   "via": [],
   "lines": [
    "函館本線",
@@ -4386,7 +4395,7 @@
   },
   "confidence": "medium",
   "source": "https://www.jrhokkaido.co.jp/train/tr008_01.html",
-  "notes": "JR北海道 列車ガイド 停車駅図（2025年3月現在）は全列車の停車駅の和集合のみを示し、「列車により停車駅が異なる」と注記。公式停車駅図に美唄・砂川が無い（同じ図式のオホーツク図には有る）ため optionalStops から削除。stops は図と一致。"
+  "notes": "美唄・砂川は下り列車のみ停車。 JR北海道 tr008 の停車駅情報と2026-03-14時刻表に基づく一部停車。 W4照合: JR北海道 tr008、2026-03-14改正時刻表。"
  },
  {
   "patternId": "sarobetsu-asahikawa-wakkanai",
@@ -4739,6 +4748,10 @@
     "sourceCode": "008948"
    },
    {
+    "name": "香椎",
+    "sourceCode": "008931"
+   },
+   {
     "name": "福間",
     "sourceCode": "008847"
    },
@@ -4763,6 +4776,14 @@
     "sourceCode": "008830"
    },
    {
+    "name": "宇島",
+    "sourceCode": "008981"
+   },
+   {
+    "name": "柳ヶ浦",
+    "sourceCode": "009103"
+   },
+   {
     "name": "宇佐",
     "sourceCode": "009217"
    },
@@ -4773,10 +4794,6 @@
    {
     "name": "亀川",
     "sourceCode": "009373"
-   },
-   {
-    "name": "香椎",
-    "sourceCode": "008931"
    }
   ],
   "via": [],
@@ -4793,7 +4810,7 @@
   },
   "confidence": "low",
   "source": "https://ja.wikipedia.org/wiki/ソニック_(列車)",
-  "notes": "「ソニックにちりん」から「ソニック」へ改称した1997-11-29を起点とした（日付は記憶ベース、要確認）。停車駅は列車ごとの差が大きく、杵築・宇佐などの定期/一部停車の区別は未確認。 JR九州 2024-12-13「2025年春ダイヤ改正について」PDF: ソニック46号に赤間・福間・香椎停車追加。https://www.jrkyushu.co.jp/common/inc/news/newtopics/__icsFiles/afieldfile/2025/12/12/20251212_Spring_2026_timetable_revision.pdf: 2026-03-14改正でソニック6号が赤間に新規停車し、博多10時前着の博多方面特急は全て赤間停車。2022-09-23改正PDFで戸畑停車拡大・香椎停車の見直し。一部停車の全体表は未入手のためpartial維持。"
+  "notes": "「ソニックにちりん」から「ソニック」へ改称した1997-11-29を起点とした（日付は記憶ベース、要確認）。停車駅は列車ごとの差が大きく、杵築・宇佐などの定期/一部停車の区別は未確認。 JR九州 2024-12-13「2025年春ダイヤ改正について」PDF: ソニック46号に赤間・福間・香椎停車追加。https://www.jrkyushu.co.jp/common/inc/news/newtopics/__icsFiles/afieldfile/2025/12/12/20251212_Spring_2026_timetable_revision.pdf: 2026-03-14改正でソニック6号が赤間に新規停車し、博多10時前着の博多方面特急は全て赤間停車。2022-09-23改正PDFで戸畑停車拡大・香椎停車の見直し。一部停車の全体表は未入手のためpartial維持。 W4照合: rosen-zu.net 列車別ページ、2026-03-14改正時刻表。"
  },
  {
   "patternId": "sonic-hakata-saiki",
@@ -4859,6 +4876,10 @@
     "sourceCode": "008948"
    },
    {
+    "name": "香椎",
+    "sourceCode": "008931"
+   },
+   {
     "name": "福間",
     "sourceCode": "008847"
    },
@@ -4883,6 +4904,14 @@
     "sourceCode": "008830"
    },
    {
+    "name": "宇島",
+    "sourceCode": "008981"
+   },
+   {
+    "name": "柳ヶ浦",
+    "sourceCode": "009103"
+   },
+   {
     "name": "宇佐",
     "sourceCode": "009217"
    },
@@ -4897,10 +4926,6 @@
    {
     "name": "幸崎",
     "sourceCode": "009478"
-   },
-   {
-    "name": "香椎",
-    "sourceCode": "008931"
    }
   ],
   "via": [],
@@ -4917,7 +4942,7 @@
   },
   "confidence": "low",
   "source": "https://ja.wikipedia.org/wiki/ソニック_(列車)",
-  "notes": "大分以南佐伯まで延長する一部列車。現行運転は確認済み扱いだが、開始日は不明。幸崎・鶴崎の停車区分も未確認。 JR九州 2024-12-13「2025年春ダイヤ改正について」PDF: ソニック46号に赤間・福間・香椎停車追加。https://www.jrkyushu.co.jp/common/inc/news/newtopics/__icsFiles/afieldfile/2025/12/12/20251212_Spring_2026_timetable_revision.pdf: 2026-03-14改正でソニック6号が赤間に新規停車し、博多10時前着の博多方面特急は全て赤間停車。2022-09-23改正PDFで戸畑停車拡大・香椎停車の見直し。一部停車の全体表は未入手のためpartial維持。"
+  "notes": "大分以南佐伯まで延長する一部列車。現行運転は確認済み扱いだが、開始日は不明。幸崎・鶴崎の停車区分も未確認。 JR九州 2024-12-13「2025年春ダイヤ改正について」PDF: ソニック46号に赤間・福間・香椎停車追加。https://www.jrkyushu.co.jp/common/inc/news/newtopics/__icsFiles/afieldfile/2025/12/12/20251212_Spring_2026_timetable_revision.pdf: 2026-03-14改正でソニック6号が赤間に新規停車し、博多10時前着の博多方面特急は全て赤間停車。2022-09-23改正PDFで戸畑停車拡大・香椎停車の見直し。一部停車の全体表は未入手のためpartial維持。 W4照合: rosen-zu.net 列車別ページ、2026-03-14改正時刻表。"
  },
  {
   "patternId": "nichirin-oita-miyazakikuko",
@@ -5282,6 +5307,10 @@
    {
     "name": "三股",
     "sourceCode": "010011"
+   },
+   {
+    "name": "加治木",
+    "sourceCode": "010006"
    }
   ],
   "via": [],
@@ -5298,7 +5327,7 @@
   },
   "confidence": "low",
   "source": "https://ja.wikipedia.org/wiki/きりしま_(列車)",
-  "notes": "日豊本線経由、鹿児島〜鹿児島中央は鹿児島本線。鹿児島中央は2004-03-13まで西鹿児島。鹿児島中央〜国分の区間列車（別パターン）は本ファイル対象外。清武・田野・山之口・三股は一部停車扱い（未確認）。開始日不明。"
+  "notes": "日豊本線経由、鹿児島〜鹿児島中央は鹿児島本線。鹿児島中央は2004-03-13まで西鹿児島。鹿児島中央〜国分の区間列車（別パターン）は本ファイル対象外。清武・田野・山之口・三股は一部停車扱い（未確認）。開始日不明。 W4照合: rosen-zu.net 列車別ページ、2026-03-14改正時刻表。"
  },
  {
   "patternId": "relay-kamome-hakata-takeoonsen",
@@ -5651,12 +5680,12 @@
   ],
   "optionalStops": [
    {
-    "name": "東郷",
-    "sourceCode": "008822"
-   },
-   {
     "name": "八幡",
     "sourceCode": "008700"
+   },
+   {
+    "name": "東郷",
+    "sourceCode": "008822"
    },
    {
     "name": "香椎",
@@ -8455,8 +8484,20 @@
     "sourceCode": "007236"
    },
    {
+    "name": "日原",
+    "sourceCode": "007769"
+   },
+   {
     "name": "津和野",
     "sourceCode": "007902"
+   },
+   {
+    "name": "徳佐",
+    "sourceCode": "008021"
+   },
+   {
+    "name": "三谷",
+    "sourceCode": "008176"
    },
    {
     "name": "山口",
@@ -8483,6 +8524,18 @@
    {
     "name": "仁万",
     "sourceCode": "005524"
+   },
+   {
+    "name": "温泉津",
+    "sourceCode": "005724"
+   },
+   {
+    "name": "波子",
+    "sourceCode": "006153"
+   },
+   {
+    "name": "三保三隅",
+    "sourceCode": "006654"
    }
   ],
   "via": [],
@@ -8499,7 +8552,7 @@
   },
   "confidence": "medium",
   "source": "https://ja.wikipedia.org/wiki/スーパーおき",
-  "notes": "キハ187系で2001-07-07 設定（日付記憶ベース）。鳥取始発は一部、大半は米子始発。小郡は2003-10-01 に新山口へ改称。日原など山口線内の一部停車は未照合。"
+  "notes": "キハ187系で2001-07-07 設定（日付記憶ベース）。鳥取始発は一部、大半は米子始発。小郡は2003-10-01 に新山口へ改称。日原・徳佐・三谷は停車駅として照合。 W4照合: rosen-zu.net 列車別ページ、2026-03-14改正時刻表。"
  },
  {
   "patternId": "super-matsukaze-tottori-masuda",
@@ -22556,5 +22609,2462 @@
   "confidence": "low",
   "source": "https://ja.wikipedia.org/wiki/富士_(列車)",
   "notes": "本庫範囲前（2010年以前に廃止）。2005年3月以降は東京〜門司ではやぶさと併結。validFromは大分発着化の時期（記憶ベース）、validToは最終運行日（東京発）。夜間停車駅は不完全。"
+ },
+ {
+  "patternId": "nozomi-tokyo-shin-osaka",
+  "serviceId": "nozomi",
+  "name": "のぞみ",
+  "company": "東海旅客鉄道",
+  "label": "東京〜新大阪",
+  "origin": "東京",
+  "destination": "新大阪",
+  "stops": [
+   {
+    "name": "東京",
+    "sourceCode": "003766"
+   },
+   {
+    "name": "名古屋",
+    "sourceCode": "005451"
+   },
+   {
+    "name": "京都",
+    "sourceCode": "006079"
+   },
+   {
+    "name": "新大阪",
+    "sourceCode": "006911"
+   }
+  ],
+  "optionalStops": [
+   {
+    "name": "品川",
+    "sourceCode": "004095"
+   },
+   {
+    "name": "新横浜",
+    "sourceCode": "004501"
+   },
+   {
+    "name": "静岡",
+    "sourceCode": "006128"
+   },
+   {
+    "name": "浜松",
+    "sourceCode": "007059"
+   }
+  ],
+  "via": [],
+  "lines": [
+   "東海道新幹線"
+  ],
+  "validFrom": "2010-01-01",
+  "validUntil": null,
+  "completeness": {
+   "stops": "partial",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 東海道完結。小田原・熱海・三島・新富士・掛川・豊橋・三河安城・岐阜羽島・米原は定期のぞみ停車が未確認のため未収録。",
+  "confidence": "low",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "nozomi-tokyo-hakata",
+  "serviceId": "nozomi",
+  "name": "のぞみ",
+  "company": "東海旅客鉄道/西日本旅客鉄道",
+  "label": "東京〜博多（岡山・広島は短区間終点）",
+  "origin": "東京",
+  "destination": "博多",
+  "stops": [
+   {
+    "name": "東京",
+    "sourceCode": "003766"
+   },
+   {
+    "name": "名古屋",
+    "sourceCode": "005451"
+   },
+   {
+    "name": "京都",
+    "sourceCode": "006079"
+   },
+   {
+    "name": "新大阪",
+    "sourceCode": "006911"
+   },
+   {
+    "name": "博多",
+    "sourceCode": "009033"
+   }
+  ],
+  "optionalStops": [
+   {
+    "name": "品川",
+    "sourceCode": "004095"
+   },
+   {
+    "name": "新横浜",
+    "sourceCode": "004501"
+   },
+   {
+    "name": "静岡",
+    "sourceCode": "006128"
+   },
+   {
+    "name": "浜松",
+    "sourceCode": "007059"
+   },
+   {
+    "name": "新神戸",
+    "sourceCode": "007054"
+   },
+   {
+    "name": "岡山",
+    "sourceCode": "007310"
+   },
+   {
+    "name": "福山",
+    "sourceCode": "007862"
+   },
+   {
+    "name": "広島",
+    "sourceCode": "008029"
+   },
+   {
+    "name": "小倉",
+    "sourceCode": "008684"
+   }
+  ],
+  "via": [],
+  "lines": [
+   "東海道新幹線",
+   "山陽新幹線"
+  ],
+  "validFrom": "2010-01-01",
+  "validUntil": null,
+  "completeness": {
+   "stops": "partial",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 岡山・広島止めは別 pattern にせず、この東京〜博多の途中駅（optional）として扱う。新大阪〜博多のみの列車も同じ山陽停車の部分集合。博多は山陽新幹線の 009034。",
+  "confidence": "low",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "hikari-tokyo-shin-osaka",
+  "serviceId": "hikari",
+  "name": "ひかり",
+  "company": "東海旅客鉄道",
+  "label": "東京〜新大阪",
+  "origin": "東京",
+  "destination": "新大阪",
+  "stops": [
+   {
+    "name": "東京",
+    "sourceCode": "003766"
+   },
+   {
+    "name": "名古屋",
+    "sourceCode": "005451"
+   },
+   {
+    "name": "京都",
+    "sourceCode": "006079"
+   },
+   {
+    "name": "新大阪",
+    "sourceCode": "006911"
+   }
+  ],
+  "optionalStops": [
+   {
+    "name": "品川",
+    "sourceCode": "004095"
+   },
+   {
+    "name": "新横浜",
+    "sourceCode": "004501"
+   },
+   {
+    "name": "小田原",
+    "sourceCode": "005215"
+   },
+   {
+    "name": "熱海",
+    "sourceCode": "005685"
+   },
+   {
+    "name": "三島",
+    "sourceCode": "005601"
+   },
+   {
+    "name": "静岡",
+    "sourceCode": "006128"
+   },
+   {
+    "name": "浜松",
+    "sourceCode": "007059"
+   },
+   {
+    "name": "豊橋",
+    "sourceCode": "006786"
+   },
+   {
+    "name": "岐阜羽島",
+    "sourceCode": "005065"
+   },
+   {
+    "name": "米原",
+    "sourceCode": "005075"
+   }
+  ],
+  "via": [],
+  "lines": [
+   "東海道新幹線"
+  ],
+  "validFrom": "2010-01-01",
+  "validUntil": null,
+  "completeness": {
+   "stops": "partial",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 新富士・掛川・三河安城はこだま専用に近く、ひかりの一部停車が未確認のため未収録。名古屋・京都は全列車停車として required。",
+  "confidence": "low",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "hikari-tokyo-hiroshima",
+  "serviceId": "hikari",
+  "name": "ひかり",
+  "company": "東海旅客鉄道/西日本旅客鉄道",
+  "label": "東京〜広島（岡山は短区間終点）",
+  "origin": "東京",
+  "destination": "広島",
+  "stops": [
+   {
+    "name": "東京",
+    "sourceCode": "003766"
+   },
+   {
+    "name": "名古屋",
+    "sourceCode": "005451"
+   },
+   {
+    "name": "京都",
+    "sourceCode": "006079"
+   },
+   {
+    "name": "新大阪",
+    "sourceCode": "006911"
+   },
+   {
+    "name": "広島",
+    "sourceCode": "008029"
+   }
+  ],
+  "optionalStops": [
+   {
+    "name": "品川",
+    "sourceCode": "004095"
+   },
+   {
+    "name": "新横浜",
+    "sourceCode": "004501"
+   },
+   {
+    "name": "三島",
+    "sourceCode": "005601"
+   },
+   {
+    "name": "静岡",
+    "sourceCode": "006128"
+   },
+   {
+    "name": "浜松",
+    "sourceCode": "007059"
+   },
+   {
+    "name": "新神戸",
+    "sourceCode": "007054"
+   },
+   {
+    "name": "西明石",
+    "sourceCode": "007307"
+   },
+   {
+    "name": "姫路",
+    "sourceCode": "006509"
+   },
+   {
+    "name": "相生",
+    "sourceCode": "006554"
+   },
+   {
+    "name": "岡山",
+    "sourceCode": "007310"
+   },
+   {
+    "name": "福山",
+    "sourceCode": "007862"
+   }
+  ],
+  "via": [],
+  "lines": [
+   "東海道新幹線",
+   "山陽新幹線"
+  ],
+  "validFrom": "2010-01-01",
+  "validUntil": null,
+  "completeness": {
+   "stops": "partial",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 博多直通の定期ひかりはひかりレールスター（2011-03-11 まで）とさくら側に分け、この pattern の終点は広島。岡山止めは途中駅。 Sample conformance: verified regular partial stops added as optional; https://timetable.jr-odekake.net/train-timetable/315221?date=20260514",
+  "confidence": "low",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "hikari-rail-star-shin-osaka-hakata",
+  "serviceId": "hikari-rail-star",
+  "name": "ひかりレールスター",
+  "company": "西日本旅客鉄道",
+  "label": "新大阪〜博多（2011年3月まで）",
+  "origin": "新大阪",
+  "destination": "博多",
+  "stops": [
+   {
+    "name": "新大阪",
+    "sourceCode": "006911"
+   },
+   {
+    "name": "岡山",
+    "sourceCode": "007310"
+   },
+   {
+    "name": "広島",
+    "sourceCode": "008029"
+   },
+   {
+    "name": "博多",
+    "sourceCode": "009033"
+   }
+  ],
+  "optionalStops": [
+   {
+    "name": "新神戸",
+    "sourceCode": "007054"
+   },
+   {
+    "name": "姫路",
+    "sourceCode": "006509"
+   },
+   {
+    "name": "福山",
+    "sourceCode": "007862"
+   },
+   {
+    "name": "徳山",
+    "sourceCode": "008529"
+   },
+   {
+    "name": "新山口",
+    "sourceCode": "008476"
+   },
+   {
+    "name": "小倉",
+    "sourceCode": "008684"
+   }
+  ],
+  "via": [],
+  "lines": [
+   "山陽新幹線"
+  ],
+  "validFrom": "2010-01-01",
+  "validUntil": "2011-03-12",
+  "completeness": {
+   "stops": "partial",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "notes": "ひかりとは別ブランド（サフィール踊り子／踊り子と同じ、公開名が長い側を独立 id にする）。validTo 2011-03-11 は九州新幹線全線開業（2011-03-12）の前日。最終運転日のプレスは未照合のため validity は partial。名称自体は 2000-03-11 開始だが、このフラグメントは 2010 以降だけを主張する。",
+  "confidence": "low",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "kodama-tokyo-shin-osaka",
+  "serviceId": "kodama",
+  "name": "こだま",
+  "company": "東海旅客鉄道",
+  "label": "東京〜新大阪（各停）",
+  "origin": "東京",
+  "destination": "新大阪",
+  "stops": [
+   {
+    "name": "東京",
+    "sourceCode": "003766"
+   },
+   {
+    "name": "品川",
+    "sourceCode": "004095"
+   },
+   {
+    "name": "新横浜",
+    "sourceCode": "004501"
+   },
+   {
+    "name": "小田原",
+    "sourceCode": "005215"
+   },
+   {
+    "name": "熱海",
+    "sourceCode": "005685"
+   },
+   {
+    "name": "三島",
+    "sourceCode": "005601"
+   },
+   {
+    "name": "新富士",
+    "sourceCode": "005554"
+   },
+   {
+    "name": "静岡",
+    "sourceCode": "006128"
+   },
+   {
+    "name": "掛川",
+    "sourceCode": "006746"
+   },
+   {
+    "name": "浜松",
+    "sourceCode": "007059"
+   },
+   {
+    "name": "豊橋",
+    "sourceCode": "006786"
+   },
+   {
+    "name": "三河安城",
+    "sourceCode": "006133"
+   },
+   {
+    "name": "名古屋",
+    "sourceCode": "005451"
+   },
+   {
+    "name": "岐阜羽島",
+    "sourceCode": "005065"
+   },
+   {
+    "name": "米原",
+    "sourceCode": "005075"
+   },
+   {
+    "name": "京都",
+    "sourceCode": "006079"
+   },
+   {
+    "name": "新大阪",
+    "sourceCode": "006911"
+   }
+  ],
+  "optionalStops": [],
+  "via": [],
+  "lines": [
+   "東海道新幹線"
+  ],
+  "validFrom": "2010-01-01",
+  "validUntil": null,
+  "completeness": {
+   "stops": "complete",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 東海道区間のこだまは各駅停車。東京〜名古屋など途中打ち切りは同じ停車集合の prefix であり、別 pattern にしない。",
+  "confidence": "medium",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "kodama-shin-osaka-hakata",
+  "serviceId": "kodama",
+  "name": "こだま",
+  "company": "西日本旅客鉄道",
+  "label": "新大阪〜博多（各停）",
+  "origin": "新大阪",
+  "destination": "博多",
+  "stops": [
+   {
+    "name": "新大阪",
+    "sourceCode": "006911"
+   },
+   {
+    "name": "新神戸",
+    "sourceCode": "007054"
+   },
+   {
+    "name": "西明石",
+    "sourceCode": "007307"
+   },
+   {
+    "name": "姫路",
+    "sourceCode": "006509"
+   },
+   {
+    "name": "相生",
+    "sourceCode": "006554"
+   },
+   {
+    "name": "岡山",
+    "sourceCode": "007310"
+   },
+   {
+    "name": "新倉敷",
+    "sourceCode": "007697"
+   },
+   {
+    "name": "福山",
+    "sourceCode": "007862"
+   },
+   {
+    "name": "新尾道",
+    "sourceCode": "007969"
+   },
+   {
+    "name": "三原",
+    "sourceCode": "008019"
+   },
+   {
+    "name": "東広島",
+    "sourceCode": "008080"
+   },
+   {
+    "name": "広島",
+    "sourceCode": "008029"
+   },
+   {
+    "name": "新岩国",
+    "sourceCode": "008430"
+   },
+   {
+    "name": "徳山",
+    "sourceCode": "008529"
+   },
+   {
+    "name": "新山口",
+    "sourceCode": "008476"
+   },
+   {
+    "name": "厚狭",
+    "sourceCode": "008524"
+   },
+   {
+    "name": "新下関",
+    "sourceCode": "008577"
+   },
+   {
+    "name": "小倉",
+    "sourceCode": "008684"
+   },
+   {
+    "name": "博多",
+    "sourceCode": "009033"
+   }
+  ],
+  "optionalStops": [],
+  "via": [],
+  "lines": [
+   "山陽新幹線"
+  ],
+  "validFrom": "2010-01-01",
+  "validUntil": null,
+  "completeness": {
+   "stops": "complete",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 山陽区間のこだまは各駅停車。新大阪は山陽側コード 006911、博多は山陽側コード 009034。東海道直通は定期ではないため別 pattern にしない。",
+  "confidence": "medium",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "mizuho-shin-osaka-kagoshima-chuo",
+  "serviceId": "mizuho",
+  "name": "みずほ",
+  "company": "西日本旅客鉄道/九州旅客鉄道",
+  "label": "新大阪〜鹿児島中央",
+  "origin": "新大阪",
+  "destination": "鹿児島中央",
+  "stops": [
+   {
+    "name": "新大阪",
+    "sourceCode": "006911"
+   },
+   {
+    "name": "博多",
+    "sourceCode": "009033"
+   },
+   {
+    "name": "熊本",
+    "sourceCode": "009785"
+   },
+   {
+    "name": "鹿児島中央",
+    "sourceCode": "010047"
+   }
+  ],
+  "optionalStops": [
+   {
+    "name": "新神戸",
+    "sourceCode": "007054"
+   },
+   {
+    "name": "岡山",
+    "sourceCode": "007310"
+   },
+   {
+    "name": "広島",
+    "sourceCode": "008029"
+   },
+   {
+    "name": "小倉",
+    "sourceCode": "008684"
+   },
+   {
+    "name": "川内",
+    "sourceCode": "009984"
+   }
+  ],
+  "via": [],
+  "lines": [
+   "山陽新幹線",
+   "九州新幹線"
+  ],
+  "validFrom": "2011-03-12",
+  "validUntil": null,
+  "completeness": {
+   "stops": "partial",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "notes": "2011-03-12 九州新幹線全線開業で設定。博多・熊本止めは途中駅。博多は九州新幹線コード 009033。新鳥栖・久留米など九州の各駅はみずほが止まるか未確認のため未収録。",
+  "confidence": "low",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "mizuho-hakata-kagoshima-chuo",
+  "serviceId": "mizuho",
+  "name": "みずほ",
+  "company": "九州旅客鉄道",
+  "label": "博多〜鹿児島中央",
+  "origin": "博多",
+  "destination": "鹿児島中央",
+  "stops": [
+   {
+    "name": "博多",
+    "sourceCode": "009033"
+   },
+   {
+    "name": "熊本",
+    "sourceCode": "009785"
+   },
+   {
+    "name": "鹿児島中央",
+    "sourceCode": "010047"
+   }
+  ],
+  "optionalStops": [
+   {
+    "name": "川内",
+    "sourceCode": "009984"
+   }
+  ],
+  "via": [],
+  "lines": [
+   "九州新幹線"
+  ],
+  "validFrom": "2011-03-12",
+  "validUntil": null,
+  "completeness": {
+   "stops": "partial",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "notes": "九州内完結のみずほ。山陽直通は shin-osaka pattern。中間各駅は未確認のため未収録。",
+  "confidence": "low",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "sakura-shin-osaka-kagoshima-chuo",
+  "serviceId": "sakura",
+  "name": "さくら",
+  "company": "西日本旅客鉄道/九州旅客鉄道",
+  "label": "新大阪〜鹿児島中央",
+  "origin": "新大阪",
+  "destination": "鹿児島中央",
+  "stops": [
+   {
+    "name": "新大阪",
+    "sourceCode": "006911"
+   },
+   {
+    "name": "博多",
+    "sourceCode": "009033"
+   },
+   {
+    "name": "熊本",
+    "sourceCode": "009785"
+   },
+   {
+    "name": "鹿児島中央",
+    "sourceCode": "010047"
+   }
+  ],
+  "optionalStops": [
+   {
+    "name": "新神戸",
+    "sourceCode": "007054"
+   },
+   {
+    "name": "岡山",
+    "sourceCode": "007310"
+   },
+   {
+    "name": "福山",
+    "sourceCode": "007862"
+   },
+   {
+    "name": "広島",
+    "sourceCode": "008029"
+   },
+   {
+    "name": "徳山",
+    "sourceCode": "008529"
+   },
+   {
+    "name": "新山口",
+    "sourceCode": "008476"
+   },
+   {
+    "name": "新下関",
+    "sourceCode": "008577"
+   },
+   {
+    "name": "小倉",
+    "sourceCode": "008684"
+   },
+   {
+    "name": "新鳥栖",
+    "sourceCode": "009331"
+   },
+   {
+    "name": "久留米",
+    "sourceCode": "009383"
+   },
+   {
+    "name": "新八代",
+    "sourceCode": "009869"
+   },
+   {
+    "name": "川内",
+    "sourceCode": "009984"
+   }
+  ],
+  "via": [],
+  "lines": [
+   "山陽新幹線",
+   "九州新幹線"
+  ],
+  "validFrom": "2011-03-12",
+  "validUntil": null,
+  "completeness": {
+   "stops": "partial",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "notes": "2011-03-12 設定の山陽・九州直通。広島・熊本などへの短区間は途中駅。停車の組み合わせは列車ごとに違うため stops は partial。 Sample conformance: verified regular partial stops added as optional; https://www.westjr.co.jp/press/article/items/191213_00_hiroshima.pdf ; https://timetable.jr-odekake.net/train-timetable/189951?date=20260225",
+  "confidence": "low",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "sakura-hakata-kagoshima-chuo",
+  "serviceId": "sakura",
+  "name": "さくら",
+  "company": "九州旅客鉄道",
+  "label": "博多〜鹿児島中央",
+  "origin": "博多",
+  "destination": "鹿児島中央",
+  "stops": [
+   {
+    "name": "博多",
+    "sourceCode": "009033"
+   },
+   {
+    "name": "熊本",
+    "sourceCode": "009785"
+   },
+   {
+    "name": "鹿児島中央",
+    "sourceCode": "010047"
+   }
+  ],
+  "optionalStops": [
+   {
+    "name": "新鳥栖",
+    "sourceCode": "009331"
+   },
+   {
+    "name": "久留米",
+    "sourceCode": "009383"
+   },
+   {
+    "name": "筑後船小屋",
+    "sourceCode": "009546"
+   },
+   {
+    "name": "新大牟田",
+    "sourceCode": "009591"
+   },
+   {
+    "name": "新玉名",
+    "sourceCode": "009638"
+   },
+   {
+    "name": "新八代",
+    "sourceCode": "009869"
+   },
+   {
+    "name": "新水俣",
+    "sourceCode": "009918"
+   },
+   {
+    "name": "出水",
+    "sourceCode": "009929"
+   },
+   {
+    "name": "川内",
+    "sourceCode": "009984"
+   }
+  ],
+  "via": [],
+  "lines": [
+   "九州新幹線"
+  ],
+  "validFrom": "2011-03-12",
+  "validUntil": null,
+  "completeness": {
+   "stops": "partial",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "notes": "九州内のさくら。各駅停車のつばめとは別に、中間駅は一部停車として optional。熊本止めは途中駅。",
+  "confidence": "low",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "tsubame-shin-yatsushiro-kagoshima-chuo",
+  "serviceId": "tsubame",
+  "name": "つばめ",
+  "company": "九州旅客鉄道",
+  "label": "新八代〜鹿児島中央（全線開業前）",
+  "origin": "新八代",
+  "destination": "鹿児島中央",
+  "stops": [
+   {
+    "name": "新八代",
+    "sourceCode": "009869"
+   },
+   {
+    "name": "新水俣",
+    "sourceCode": "009918"
+   },
+   {
+    "name": "出水",
+    "sourceCode": "009929"
+   },
+   {
+    "name": "川内",
+    "sourceCode": "009984"
+   },
+   {
+    "name": "鹿児島中央",
+    "sourceCode": "010047"
+   }
+  ],
+  "optionalStops": [],
+  "via": [],
+  "lines": [
+   "九州新幹線"
+  ],
+  "validFrom": "2010-01-01",
+  "validUntil": "2011-03-12",
+  "completeness": {
+   "stops": "complete",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "notes": "2011-03-12 の前は九州新幹線が新八代〜鹿児島中央のみ。つばめはこの区間の各駅列車。博多〜新八代の在来線リレーつばめは既存 pattern（validUntil 2011-03-12）のまま。ここには入れない。validTo は全線開業前日。名称は 2004-03-13 からだが主張は 2010 以降。",
+  "confidence": "medium",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "tsubame-hakata-kagoshima-chuo",
+  "serviceId": "tsubame",
+  "name": "つばめ",
+  "company": "九州旅客鉄道",
+  "label": "博多〜鹿児島中央（各停）",
+  "origin": "博多",
+  "destination": "鹿児島中央",
+  "stops": [
+   {
+    "name": "博多",
+    "sourceCode": "009033"
+   },
+   {
+    "name": "新鳥栖",
+    "sourceCode": "009331"
+   },
+   {
+    "name": "久留米",
+    "sourceCode": "009383"
+   },
+   {
+    "name": "筑後船小屋",
+    "sourceCode": "009546"
+   },
+   {
+    "name": "新大牟田",
+    "sourceCode": "009591"
+   },
+   {
+    "name": "新玉名",
+    "sourceCode": "009638"
+   },
+   {
+    "name": "熊本",
+    "sourceCode": "009785"
+   },
+   {
+    "name": "新八代",
+    "sourceCode": "009869"
+   },
+   {
+    "name": "新水俣",
+    "sourceCode": "009918"
+   },
+   {
+    "name": "出水",
+    "sourceCode": "009929"
+   },
+   {
+    "name": "川内",
+    "sourceCode": "009984"
+   },
+   {
+    "name": "鹿児島中央",
+    "sourceCode": "010047"
+   }
+  ],
+  "optionalStops": [],
+  "via": [],
+  "lines": [
+   "九州新幹線"
+  ],
+  "validFrom": "2011-03-12",
+  "validUntil": null,
+  "completeness": {
+   "stops": "complete",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "notes": "全線開業後のつばめは九州新幹線の各駅停車。熊本〜鹿児島中央などの短区間は同じ停車集合の部分区間。",
+  "confidence": "medium",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "kamome-takeo-onsen-nagasaki",
+  "serviceId": "kamome",
+  "name": "かもめ",
+  "company": "九州旅客鉄道",
+  "label": "武雄温泉〜長崎",
+  "origin": "武雄温泉",
+  "destination": "長崎",
+  "stops": [
+   {
+    "name": "武雄温泉",
+    "sourceCode": "009518"
+   },
+   {
+    "name": "嬉野温泉",
+    "sourceCode": "009578"
+   },
+   {
+    "name": "新大村",
+    "sourceCode": "009648"
+   },
+   {
+    "name": "諫早",
+    "sourceCode": "009695"
+   },
+   {
+    "name": "長崎",
+    "sourceCode": "009822"
+   }
+  ],
+  "unsolvableLegs": [
+   [
+    "新大村",
+    "諫早"
+   ]
+  ],
+  "optionalStops": [],
+  "via": [],
+  "lines": [
+   "西九州新幹線"
+  ],
+  "validFrom": "2022-09-23",
+  "validUntil": null,
+  "completeness": {
+   "stops": "complete",
+   "lines": "complete",
+   "validity": "complete"
+  },
+  "notes": "西九州新幹線開業日 2022-09-23 からのかもめ。駅は同線の全 5 駅で、途中通過は資料上ない。博多へは在来線リレーかもめ（既存、同日開始）で、新幹線 pattern に博多は入れない。既存の在来線かもめ kamome-hakata-nagasaki は validUntil 2022-09-23（v3 排他、最終日 2022-09-22）で既に接続している。serviceId kamome を共有し、ブランド行は増やさない。 Known route-solver limitation (2026-10-03): with compact-package 西九州新幹線 station IDs 諫早 009695 / 新大村 009648, reverse 長崎→諫早 still snaps to the disconnected conventional 長崎線 graph component at 130.04181,32.85019. physicalContinuationKey preserves that surveyed node, so subsequent 諫早→新大村 fails; the isolated leg and forward chain solve on the 西九州新幹線 component. unsolvableLegs uses catalog-forward order and records this reverse-only limitation, not a missing railway or a timetable exception.",
+  "confidence": "medium",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "hayabusa-tokyo-shin-aomori",
+  "serviceId": "hayabusa",
+  "name": "はやぶさ",
+  "company": "東日本旅客鉄道",
+  "label": "東京〜新青森",
+  "origin": "東京",
+  "destination": "新青森",
+  "stops": [
+   {
+    "name": "東京",
+    "sourceCode": "003766"
+   },
+   {
+    "name": "大宮",
+    "sourceCode": "002914"
+   },
+   {
+    "name": "仙台",
+    "sourceCode": "001177"
+   },
+   {
+    "name": "盛岡",
+    "sourceCode": "000792"
+   },
+   {
+    "name": "新青森",
+    "sourceCode": "000531"
+   }
+  ],
+  "optionalStops": [
+   {
+    "name": "上野",
+    "sourceCode": "003505"
+   },
+   {
+    "name": "福島",
+    "sourceCode": "001373"
+   },
+   {
+    "name": "二戸",
+    "sourceCode": "000668"
+   },
+   {
+    "name": "八戸",
+    "sourceCode": "000626"
+   },
+   {
+    "name": "七戸十和田",
+    "sourceCode": "000561"
+   }
+  ],
+  "via": [],
+  "lines": [
+   "東北新幹線"
+  ],
+  "validFrom": "2011-03-05",
+  "validUntil": null,
+  "completeness": {
+   "stops": "partial",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "notes": "はやぶさの運行開始は 2011-03-05。盛岡止めは途中駅。2016-03-26 以降も新青森止めは残るため validTo は開けたまま。新函館北斗直通は別 pattern。七戸十和田など未確認の中間駅は未収録。 Sample conformance: verified regular partial stops added as optional; https://www.jreast.co.jp/press/2021/akita/20210902_a01.pdf 二戸も定期列車の一部停車駅として補完。https://www.jreast.co.jp/press/2021/akita/20210902_a01.pdf",
+  "confidence": "low",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "hayabusa-tokyo-shin-hakodate-hokuto",
+  "serviceId": "hayabusa",
+  "name": "はやぶさ",
+  "company": "東日本旅客鉄道/北海道旅客鉄道",
+  "label": "東京〜新函館北斗",
+  "origin": "東京",
+  "destination": "新函館北斗",
+  "stops": [
+   {
+    "name": "東京",
+    "sourceCode": "003766"
+   },
+   {
+    "name": "大宮",
+    "sourceCode": "002914"
+   },
+   {
+    "name": "仙台",
+    "sourceCode": "001177"
+   },
+   {
+    "name": "盛岡",
+    "sourceCode": "000792"
+   },
+   {
+    "name": "新青森",
+    "sourceCode": "000531"
+   },
+   {
+    "name": "新函館北斗",
+    "sourceCode": "000429"
+   }
+  ],
+  "optionalStops": [
+   {
+    "name": "上野",
+    "sourceCode": "003505"
+   },
+   {
+    "name": "福島",
+    "sourceCode": "001373"
+   },
+   {
+    "name": "二戸",
+    "sourceCode": "000668"
+   },
+   {
+    "name": "八戸",
+    "sourceCode": "000626"
+   },
+   {
+    "name": "七戸十和田",
+    "sourceCode": "000561"
+   },
+   {
+    "name": "奥津軽いまべつ",
+    "sourceCode": "000491"
+   },
+   {
+    "name": "木古内",
+    "sourceCode": "000477"
+   }
+  ],
+  "via": [],
+  "lines": [
+   "東北新幹線",
+   "北海道新幹線"
+  ],
+  "validFrom": "2016-03-26",
+  "validUntil": null,
+  "completeness": {
+   "stops": "partial",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "notes": "北海道新幹線開業 2016-03-26 以降。新青森は東北側コード 000531。新青森・盛岡止めは途中駅。奥津軽いまべつ・木古内は一部停車。 Sample conformance: verified regular partial stops added as optional; https://www.jreast.co.jp/press/2021/akita/20210902_a01.pdf 二戸も定期列車の一部停車駅として補完。https://www.jreast.co.jp/press/2021/akita/20210902_a01.pdf",
+  "confidence": "low",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "hayate-tokyo-hachinohe",
+  "serviceId": "hayate",
+  "name": "はやて",
+  "company": "東日本旅客鉄道",
+  "label": "東京〜八戸（新青森開業前）",
+  "origin": "東京",
+  "destination": "八戸",
+  "stops": [
+   {
+    "name": "東京",
+    "sourceCode": "003766"
+   },
+   {
+    "name": "大宮",
+    "sourceCode": "002914"
+   },
+   {
+    "name": "仙台",
+    "sourceCode": "001177"
+   },
+   {
+    "name": "盛岡",
+    "sourceCode": "000792"
+   },
+   {
+    "name": "八戸",
+    "sourceCode": "000626"
+   }
+  ],
+  "optionalStops": [
+   {
+    "name": "上野",
+    "sourceCode": "003505"
+   },
+   {
+    "name": "福島",
+    "sourceCode": "001373"
+   }
+  ],
+  "via": [],
+  "lines": [
+   "東北新幹線"
+  ],
+  "validFrom": "2010-01-01",
+  "validUntil": "2010-12-04",
+  "completeness": {
+   "stops": "partial",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 新青森開業（2010-12-04）の前日まで。七戸十和田・新青森は未開業のため入れない。はやての名称自体は 2002-12-01 から。",
+  "confidence": "low",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "hayate-tokyo-shin-aomori",
+  "serviceId": "hayate",
+  "name": "はやて",
+  "company": "東日本旅客鉄道",
+  "label": "東京〜新青森",
+  "origin": "東京",
+  "destination": "新青森",
+  "stops": [
+   {
+    "name": "東京",
+    "sourceCode": "003766"
+   },
+   {
+    "name": "大宮",
+    "sourceCode": "002914"
+   },
+   {
+    "name": "仙台",
+    "sourceCode": "001177"
+   },
+   {
+    "name": "盛岡",
+    "sourceCode": "000792"
+   },
+   {
+    "name": "新青森",
+    "sourceCode": "000531"
+   }
+  ],
+  "optionalStops": [
+   {
+    "name": "上野",
+    "sourceCode": "003505"
+   },
+   {
+    "name": "福島",
+    "sourceCode": "001373"
+   },
+   {
+    "name": "八戸",
+    "sourceCode": "000626"
+   },
+   {
+    "name": "七戸十和田",
+    "sourceCode": "000561"
+   }
+  ],
+  "via": [],
+  "lines": [
+   "東北新幹線"
+  ],
+  "validFrom": "2010-12-04",
+  "validUntil": "2016-03-26",
+  "completeness": {
+   "stops": "partial",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "notes": "2010-12-04 新青森開業から、北海道新幹線開業前日まで。2011-03-05 以降ははやぶさと並存。東京発はやてが 2016-03-26 ちょうどに消えたかは未照合のため validity は partial。",
+  "confidence": "low",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "hayate-morioka-shin-hakodate-hokuto",
+  "serviceId": "hayate",
+  "name": "はやて",
+  "company": "東日本旅客鉄道/北海道旅客鉄道",
+  "label": "盛岡〜新函館北斗",
+  "origin": "盛岡",
+  "destination": "新函館北斗",
+  "stops": [
+   {
+    "name": "盛岡",
+    "sourceCode": "000792"
+   },
+   {
+    "name": "新青森",
+    "sourceCode": "000531"
+   },
+   {
+    "name": "新函館北斗",
+    "sourceCode": "000429"
+   }
+  ],
+  "optionalStops": [
+   {
+    "name": "八戸",
+    "sourceCode": "000626"
+   },
+   {
+    "name": "七戸十和田",
+    "sourceCode": "000561"
+   },
+   {
+    "name": "奥津軽いまべつ",
+    "sourceCode": "000491"
+   },
+   {
+    "name": "木古内",
+    "sourceCode": "000477"
+   }
+  ],
+  "via": [],
+  "lines": [
+   "東北新幹線",
+   "北海道新幹線"
+  ],
+  "validFrom": "2016-03-26",
+  "validUntil": null,
+  "completeness": {
+   "stops": "partial",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "notes": "2016-03-26 以降のはやては盛岡／新青森〜新函館北斗が主体、という整理。新青森止めではなく新青森経由。東京直通が残るかは未確認のため、この pattern の起点は盛岡。",
+  "confidence": "low",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "yamabiko-tokyo-morioka",
+  "serviceId": "yamabiko",
+  "name": "やまびこ",
+  "company": "東日本旅客鉄道",
+  "label": "東京〜盛岡（仙台は短区間終点）",
+  "origin": "東京",
+  "destination": "盛岡",
+  "stops": [
+   {
+    "name": "東京",
+    "sourceCode": "003766"
+   },
+   {
+    "name": "大宮",
+    "sourceCode": "002914"
+   },
+   {
+    "name": "仙台",
+    "sourceCode": "001177"
+   },
+   {
+    "name": "盛岡",
+    "sourceCode": "000792"
+   }
+  ],
+  "optionalStops": [
+   {
+    "name": "上野",
+    "sourceCode": "003505"
+   },
+   {
+    "name": "小山",
+    "sourceCode": "002407"
+   },
+   {
+    "name": "宇都宮",
+    "sourceCode": "002113"
+   },
+   {
+    "name": "那須塩原",
+    "sourceCode": "001720"
+   },
+   {
+    "name": "新白河",
+    "sourceCode": "001629"
+   },
+   {
+    "name": "郡山",
+    "sourceCode": "001507"
+   },
+   {
+    "name": "福島",
+    "sourceCode": "001373"
+   },
+   {
+    "name": "白石蔵王",
+    "sourceCode": "001272"
+   },
+   {
+    "name": "古川",
+    "sourceCode": "001052"
+   },
+   {
+    "name": "くりこま高原",
+    "sourceCode": "001011"
+   },
+   {
+    "name": "一ノ関",
+    "sourceCode": "000975"
+   },
+   {
+    "name": "水沢江刺",
+    "sourceCode": "000942"
+   },
+   {
+    "name": "北上",
+    "sourceCode": "000912"
+   },
+   {
+    "name": "新花巻",
+    "sourceCode": "000863"
+   }
+  ],
+  "via": [],
+  "lines": [
+   "東北新幹線"
+  ],
+  "validFrom": "2010-01-01",
+  "validUntil": null,
+  "completeness": {
+   "stops": "partial",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 仙台止めは途中駅。どの中間駅が全列車停車かは未照合のため、東京・大宮・仙台・盛岡以外は optional。",
+  "confidence": "low",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "nasuno-tokyo-koriyama",
+  "serviceId": "nasuno",
+  "name": "なすの",
+  "company": "東日本旅客鉄道",
+  "label": "東京〜郡山（那須塩原・新白河は短区間終点）",
+  "origin": "東京",
+  "destination": "郡山",
+  "stops": [
+   {
+    "name": "東京",
+    "sourceCode": "003766"
+   },
+   {
+    "name": "大宮",
+    "sourceCode": "002914"
+   },
+   {
+    "name": "宇都宮",
+    "sourceCode": "002113"
+   },
+   {
+    "name": "郡山",
+    "sourceCode": "001507"
+   }
+  ],
+  "optionalStops": [
+   {
+    "name": "上野",
+    "sourceCode": "003505"
+   },
+   {
+    "name": "小山",
+    "sourceCode": "002407"
+   },
+   {
+    "name": "那須塩原",
+    "sourceCode": "001720"
+   },
+   {
+    "name": "新白河",
+    "sourceCode": "001629"
+   }
+  ],
+  "via": [],
+  "lines": [
+   "東北新幹線"
+  ],
+  "validFrom": "2010-01-01",
+  "validUntil": null,
+  "completeness": {
+   "stops": "partial",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 なすのは東北新幹線の近距離列車。那須塩原・新白河止めは郡山 pattern の途中駅。小山が全列車停車かは未確認。",
+  "confidence": "low",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "komachi-tokyo-akita",
+  "serviceId": "komachi",
+  "name": "こまち",
+  "company": "東日本旅客鉄道",
+  "label": "東京〜秋田",
+  "origin": "東京",
+  "destination": "秋田",
+  "stops": [
+   {
+    "name": "東京",
+    "sourceCode": "003766"
+   },
+   {
+    "name": "大宮",
+    "sourceCode": "002914"
+   },
+   {
+    "name": "仙台",
+    "sourceCode": "001177"
+   },
+   {
+    "name": "盛岡",
+    "sourceCode": "000792"
+   },
+   {
+    "name": "角館",
+    "sourceCode": "000833"
+   },
+   {
+    "name": "大曲",
+    "sourceCode": "000854"
+   },
+   {
+    "name": "秋田",
+    "sourceCode": "000783"
+   }
+  ],
+  "optionalStops": [
+   {
+    "name": "上野",
+    "sourceCode": "003505"
+   },
+   {
+    "name": "宇都宮",
+    "sourceCode": "002113"
+   },
+   {
+    "name": "郡山",
+    "sourceCode": "001507"
+   },
+   {
+    "name": "福島",
+    "sourceCode": "001373"
+   },
+   {
+    "name": "雫石",
+    "sourceCode": "000798"
+   },
+   {
+    "name": "田沢湖",
+    "sourceCode": "000795"
+   }
+  ],
+  "via": [],
+  "lines": [
+   "東北新幹線",
+   "田沢湖線",
+   "奥羽線"
+  ],
+  "validFrom": "2010-01-01",
+  "validUntil": null,
+  "completeness": {
+   "stops": "partial",
+   "lines": "partial",
+   "validity": "partial"
+  },
+  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 在来線区間は stations.json の田沢湖線・奥羽線の実在N02コードで収録。列車ごとの停車差と期間は未確認のためpartial。",
+  "confidence": "low",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "tsubasa-tokyo-shinjo",
+  "serviceId": "tsubasa",
+  "name": "つばさ",
+  "company": "東日本旅客鉄道",
+  "label": "東京〜新庄",
+  "origin": "東京",
+  "destination": "新庄",
+  "stops": [
+   {
+    "name": "東京",
+    "sourceCode": "003766"
+   },
+   {
+    "name": "大宮",
+    "sourceCode": "002914"
+   },
+   {
+    "name": "福島",
+    "sourceCode": "001373"
+   },
+   {
+    "name": "米沢",
+    "sourceCode": "001302"
+   },
+   {
+    "name": "赤湯",
+    "sourceCode": "001256"
+   },
+   {
+    "name": "かみのやま温泉",
+    "sourceCode": "001218"
+   },
+   {
+    "name": "山形",
+    "sourceCode": "001194"
+   },
+   {
+    "name": "村山",
+    "sourceCode": "001072"
+   },
+   {
+    "name": "新庄",
+    "sourceCode": "001004"
+   }
+  ],
+  "optionalStops": [
+   {
+    "name": "上野",
+    "sourceCode": "003505"
+   },
+   {
+    "name": "宇都宮",
+    "sourceCode": "002113"
+   },
+   {
+    "name": "郡山",
+    "sourceCode": "001507"
+   },
+   {
+    "name": "高畠",
+    "sourceCode": "001273"
+   },
+   {
+    "name": "天童",
+    "sourceCode": "001114"
+   },
+   {
+    "name": "さくらんぼ東根",
+    "sourceCode": "001089"
+   },
+   {
+    "name": "大石田",
+    "sourceCode": "001047"
+   }
+  ],
+  "via": [],
+  "lines": [
+   "東北新幹線",
+   "奥羽線"
+  ],
+  "validFrom": "2010-01-01",
+  "validUntil": null,
+  "completeness": {
+   "stops": "partial",
+   "lines": "partial",
+   "validity": "partial"
+  },
+  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 在来線区間は stations.json の田沢湖線・奥羽線の実在N02コードで収録。列車ごとの停車差と期間は未確認のためpartial。",
+  "confidence": "low",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "toki-tokyo-niigata",
+  "serviceId": "toki",
+  "name": "とき",
+  "company": "東日本旅客鉄道",
+  "label": "東京〜新潟",
+  "origin": "東京",
+  "destination": "新潟",
+  "stops": [
+   {
+    "name": "東京",
+    "sourceCode": "003766"
+   },
+   {
+    "name": "大宮",
+    "sourceCode": "002914"
+   },
+   {
+    "name": "新潟",
+    "sourceCode": "001296"
+   }
+  ],
+  "optionalStops": [
+   {
+    "name": "上野",
+    "sourceCode": "003505"
+   },
+   {
+    "name": "熊谷",
+    "sourceCode": "002589"
+   },
+   {
+    "name": "本庄早稲田",
+    "sourceCode": "002525"
+   },
+   {
+    "name": "高崎",
+    "sourceCode": "002389"
+   },
+   {
+    "name": "上毛高原",
+    "sourceCode": "001952"
+   },
+   {
+    "name": "越後湯沢",
+    "sourceCode": "001717"
+   },
+   {
+    "name": "浦佐",
+    "sourceCode": "001603"
+   },
+   {
+    "name": "長岡",
+    "sourceCode": "001489"
+   },
+   {
+    "name": "燕三条",
+    "sourceCode": "001406"
+   }
+  ],
+  "via": [],
+  "lines": [
+   "東北新幹線",
+   "上越新幹線"
+  ],
+  "validFrom": "2010-01-01",
+  "validUntil": null,
+  "completeness": {
+   "stops": "partial",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 東京・上野・大宮は東北新幹線のコード（上越新幹線に東京・上野の行がない）。大宮は東北側 002915。高崎は上越側 002386。中間駅が全列車停車かは未確認。Maxときは別サービス（2021-10-01 まで）。",
+  "confidence": "low",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "tanigawa-tokyo-echigo-yuzawa",
+  "serviceId": "tanigawa",
+  "name": "たにがわ",
+  "company": "東日本旅客鉄道",
+  "label": "東京〜越後湯沢",
+  "origin": "東京",
+  "destination": "越後湯沢",
+  "stops": [
+   {
+    "name": "東京",
+    "sourceCode": "003766"
+   },
+   {
+    "name": "大宮",
+    "sourceCode": "002914"
+   },
+   {
+    "name": "高崎",
+    "sourceCode": "002389"
+   },
+   {
+    "name": "越後湯沢",
+    "sourceCode": "001717"
+   }
+  ],
+  "optionalStops": [
+   {
+    "name": "上野",
+    "sourceCode": "003505"
+   },
+   {
+    "name": "熊谷",
+    "sourceCode": "002589"
+   },
+   {
+    "name": "本庄早稲田",
+    "sourceCode": "002525"
+   },
+   {
+    "name": "上毛高原",
+    "sourceCode": "001952"
+   }
+  ],
+  "via": [],
+  "lines": [
+   "東北新幹線",
+   "上越新幹線"
+  ],
+  "validFrom": "2010-01-01",
+  "validUntil": null,
+  "completeness": {
+   "stops": "partial",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 ガーラ湯沢は stations.json の新幹線 line_name に無いので未収録。越後湯沢は上越新幹線コード 001718（在来線 001717 ではない）。",
+  "confidence": "low",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "max-toki-tokyo-niigata",
+  "serviceId": "max-toki",
+  "name": "Maxとき",
+  "company": "東日本旅客鉄道",
+  "label": "東京〜新潟（Max、2021-10-01 まで）",
+  "origin": "東京",
+  "destination": "新潟",
+  "stops": [
+   {
+    "name": "東京",
+    "sourceCode": "003766"
+   },
+   {
+    "name": "大宮",
+    "sourceCode": "002914"
+   },
+   {
+    "name": "新潟",
+    "sourceCode": "001296"
+   }
+  ],
+  "optionalStops": [
+   {
+    "name": "上野",
+    "sourceCode": "003505"
+   },
+   {
+    "name": "熊谷",
+    "sourceCode": "002589"
+   },
+   {
+    "name": "本庄早稲田",
+    "sourceCode": "002525"
+   },
+   {
+    "name": "高崎",
+    "sourceCode": "002389"
+   },
+   {
+    "name": "上毛高原",
+    "sourceCode": "001952"
+   },
+   {
+    "name": "越後湯沢",
+    "sourceCode": "001717"
+   },
+   {
+    "name": "浦佐",
+    "sourceCode": "001603"
+   },
+   {
+    "name": "長岡",
+    "sourceCode": "001489"
+   },
+   {
+    "name": "燕三条",
+    "sourceCode": "001406"
+   }
+  ],
+  "via": [],
+  "lines": [
+   "東北新幹線",
+   "上越新幹線"
+  ],
+  "validFrom": "2010-01-01",
+  "validUntil": "2021-10-02",
+  "completeness": {
+   "stops": "partial",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "notes": "E4 系 Maxとき の定期運転最終日を validTo 2021-10-01 とする（指定値）。停車はときと同一扱いであり、Max 独自の停車差は未照合。名称は 2010 より前から。",
+  "confidence": "low",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "max-tanigawa-tokyo-echigo-yuzawa",
+  "serviceId": "max-tanigawa",
+  "name": "Maxたにがわ",
+  "company": "東日本旅客鉄道",
+  "label": "東京〜越後湯沢（Max、2021-10-01 まで）",
+  "origin": "東京",
+  "destination": "越後湯沢",
+  "stops": [
+   {
+    "name": "東京",
+    "sourceCode": "003766"
+   },
+   {
+    "name": "大宮",
+    "sourceCode": "002914"
+   },
+   {
+    "name": "高崎",
+    "sourceCode": "002389"
+   },
+   {
+    "name": "越後湯沢",
+    "sourceCode": "001717"
+   }
+  ],
+  "optionalStops": [
+   {
+    "name": "上野",
+    "sourceCode": "003505"
+   },
+   {
+    "name": "熊谷",
+    "sourceCode": "002589"
+   },
+   {
+    "name": "本庄早稲田",
+    "sourceCode": "002525"
+   },
+   {
+    "name": "上毛高原",
+    "sourceCode": "001952"
+   }
+  ],
+  "via": [],
+  "lines": [
+   "東北新幹線",
+   "上越新幹線"
+  ],
+  "validFrom": "2010-01-01",
+  "validUntil": "2021-10-02",
+  "completeness": {
+   "stops": "partial",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "notes": "Maxたにがわの定期最終日 validTo 2021-10-01（指定値）。停車はたにがわと同一扱い。ガーラ湯沢は新幹線駅一覧に無い。",
+  "confidence": "low",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "kagayaki-tokyo-kanazawa",
+  "serviceId": "kagayaki",
+  "name": "かがやき",
+  "company": "東日本旅客鉄道/西日本旅客鉄道",
+  "label": "東京〜金沢（敦賀開業前）",
+  "origin": "東京",
+  "destination": "金沢",
+  "stops": [
+   {
+    "name": "東京",
+    "sourceCode": "003766"
+   },
+   {
+    "name": "大宮",
+    "sourceCode": "002914"
+   },
+   {
+    "name": "長野",
+    "sourceCode": "002031"
+   },
+   {
+    "name": "富山",
+    "sourceCode": "001925"
+   },
+   {
+    "name": "金沢",
+    "sourceCode": "002093"
+   }
+  ],
+  "optionalStops": [
+   {
+    "name": "上野",
+    "sourceCode": "003505"
+   }
+  ],
+  "via": [],
+  "lines": [
+   "東北新幹線",
+   "上越新幹線",
+   "北陸新幹線"
+  ],
+  "validFrom": "2015-03-14",
+  "validUntil": "2024-03-16",
+  "completeness": {
+   "stops": "partial",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "notes": "北陸新幹線金沢開業 2015-03-14 から敦賀開業前日まで。高崎・上越妙高はかがやきが通過する前提で未収録（未照合の停車があれば partial のまま追加が必要）。上越新幹線は大宮〜高崎の通過区間として lines にだけ入れる。富山・金沢は西日本側コード。",
+  "confidence": "low",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "kagayaki-tokyo-tsuruga",
+  "serviceId": "kagayaki",
+  "name": "かがやき",
+  "company": "東日本旅客鉄道/西日本旅客鉄道",
+  "label": "東京〜敦賀（金沢は短区間終点）",
+  "origin": "東京",
+  "destination": "敦賀",
+  "stops": [
+   {
+    "name": "東京",
+    "sourceCode": "003766"
+   },
+   {
+    "name": "大宮",
+    "sourceCode": "002914"
+   },
+   {
+    "name": "長野",
+    "sourceCode": "002031"
+   },
+   {
+    "name": "富山",
+    "sourceCode": "001925"
+   },
+   {
+    "name": "金沢",
+    "sourceCode": "002093"
+   },
+   {
+    "name": "敦賀",
+    "sourceCode": "010186"
+   }
+  ],
+  "optionalStops": [
+   {
+    "name": "上野",
+    "sourceCode": "003505"
+   },
+   {
+    "name": "福井",
+    "sourceCode": "002688"
+   }
+  ],
+  "via": [],
+  "lines": [
+   "東北新幹線",
+   "上越新幹線",
+   "北陸新幹線"
+  ],
+  "validFrom": "2024-03-16",
+  "validUntil": null,
+  "completeness": {
+   "stops": "partial",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "notes": "敦賀開業 2024-03-16 以降。金沢止めは途中駅。福井は一部停車。小松・加賀温泉・芦原温泉・越前たけふはかがやき停車が未確認のため未収録。",
+  "confidence": "low",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "hakutaka-tokyo-kanazawa",
+  "serviceId": "hakutaka-zairaisen",
+  "name": "はくたか",
+  "company": "東日本旅客鉄道/西日本旅客鉄道",
+  "label": "東京〜金沢（新幹線、敦賀開業前）",
+  "origin": "東京",
+  "destination": "金沢",
+  "stops": [
+   {
+    "name": "東京",
+    "sourceCode": "003766"
+   },
+   {
+    "name": "大宮",
+    "sourceCode": "002914"
+   },
+   {
+    "name": "高崎",
+    "sourceCode": "002389"
+   },
+   {
+    "name": "長野",
+    "sourceCode": "002031"
+   },
+   {
+    "name": "富山",
+    "sourceCode": "001925"
+   },
+   {
+    "name": "金沢",
+    "sourceCode": "002093"
+   }
+  ],
+  "optionalStops": [
+   {
+    "name": "上野",
+    "sourceCode": "003505"
+   },
+   {
+    "name": "熊谷",
+    "sourceCode": "002589"
+   },
+   {
+    "name": "本庄早稲田",
+    "sourceCode": "002525"
+   },
+   {
+    "name": "軽井沢",
+    "sourceCode": "002361"
+   },
+   {
+    "name": "佐久平",
+    "sourceCode": "002451"
+   },
+   {
+    "name": "上田",
+    "sourceCode": "002275"
+   },
+   {
+    "name": "飯山",
+    "sourceCode": "001769"
+   },
+   {
+    "name": "上越妙高",
+    "sourceCode": "001643"
+   },
+   {
+    "name": "糸魚川",
+    "sourceCode": "001666"
+   },
+   {
+    "name": "黒部宇奈月温泉",
+    "sourceCode": "001742"
+   },
+   {
+    "name": "新高岡",
+    "sourceCode": "001886"
+   }
+  ],
+  "via": [],
+  "lines": [
+   "東北新幹線",
+   "上越新幹線",
+   "北陸新幹線"
+  ],
+  "validFrom": "2015-03-14",
+  "validUntil": "2024-03-16",
+  "completeness": {
+   "stops": "partial",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "notes": "新幹線はくたか。既存ブランド id は hakutaka-zairaisen のまま（同名のブランド行を増やさない）。在来線 3 pattern の validUntil は既に 2015-03-14（最終日 2015-03-13）。ここは 2015-03-14 開始。高崎は北陸新幹線コード 002387。上越妙高は西日本側 001643。安中榛名はあさま側として未収録。 Sample conformance: verified regular partial stops added as optional; https://timetable.jr-odekake.net/train-timetable/117911?date=20260221",
+  "confidence": "low",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "hakutaka-tokyo-tsuruga",
+  "serviceId": "hakutaka-zairaisen",
+  "name": "はくたか",
+  "company": "東日本旅客鉄道/西日本旅客鉄道",
+  "label": "東京〜敦賀（新幹線）",
+  "origin": "東京",
+  "destination": "敦賀",
+  "stops": [
+   {
+    "name": "東京",
+    "sourceCode": "003766"
+   },
+   {
+    "name": "大宮",
+    "sourceCode": "002914"
+   },
+   {
+    "name": "高崎",
+    "sourceCode": "002389"
+   },
+   {
+    "name": "長野",
+    "sourceCode": "002031"
+   },
+   {
+    "name": "富山",
+    "sourceCode": "001925"
+   },
+   {
+    "name": "金沢",
+    "sourceCode": "002093"
+   },
+   {
+    "name": "敦賀",
+    "sourceCode": "010186"
+   }
+  ],
+  "optionalStops": [
+   {
+    "name": "上野",
+    "sourceCode": "003505"
+   },
+   {
+    "name": "熊谷",
+    "sourceCode": "002589"
+   },
+   {
+    "name": "本庄早稲田",
+    "sourceCode": "002525"
+   },
+   {
+    "name": "軽井沢",
+    "sourceCode": "002361"
+   },
+   {
+    "name": "佐久平",
+    "sourceCode": "002451"
+   },
+   {
+    "name": "上田",
+    "sourceCode": "002275"
+   },
+   {
+    "name": "飯山",
+    "sourceCode": "001769"
+   },
+   {
+    "name": "上越妙高",
+    "sourceCode": "001643"
+   },
+   {
+    "name": "糸魚川",
+    "sourceCode": "001666"
+   },
+   {
+    "name": "黒部宇奈月温泉",
+    "sourceCode": "001742"
+   },
+   {
+    "name": "新高岡",
+    "sourceCode": "001886"
+   },
+   {
+    "name": "小松",
+    "sourceCode": "002267"
+   },
+   {
+    "name": "加賀温泉",
+    "sourceCode": "002392"
+   },
+   {
+    "name": "芦原温泉",
+    "sourceCode": "002529"
+   },
+   {
+    "name": "福井",
+    "sourceCode": "002688"
+   },
+   {
+    "name": "越前たけふ",
+    "sourceCode": "010180"
+   }
+  ],
+  "via": [],
+  "lines": [
+   "東北新幹線",
+   "上越新幹線",
+   "北陸新幹線"
+  ],
+  "validFrom": "2024-03-16",
+  "validUntil": null,
+  "completeness": {
+   "stops": "partial",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "notes": "2024-03-16 敦賀開業後。金沢止めは途中駅。敦賀までの追加駅は一部停車として optional（全列車停車かは未照合）。 Sample conformance: verified regular partial stops added as optional; https://timetable.jr-odekake.net/train-timetable/117911?date=20260221",
+  "confidence": "low",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "asama-tokyo-nagano",
+  "serviceId": "asama",
+  "name": "あさま",
+  "company": "東日本旅客鉄道",
+  "label": "東京〜長野",
+  "origin": "東京",
+  "destination": "長野",
+  "stops": [
+   {
+    "name": "東京",
+    "sourceCode": "003766"
+   },
+   {
+    "name": "大宮",
+    "sourceCode": "002914"
+   },
+   {
+    "name": "高崎",
+    "sourceCode": "002389"
+   },
+   {
+    "name": "軽井沢",
+    "sourceCode": "002361"
+   },
+   {
+    "name": "佐久平",
+    "sourceCode": "002451"
+   },
+   {
+    "name": "上田",
+    "sourceCode": "002275"
+   },
+   {
+    "name": "長野",
+    "sourceCode": "002031"
+   }
+  ],
+  "optionalStops": [
+   {
+    "name": "上野",
+    "sourceCode": "003505"
+   },
+   {
+    "name": "熊谷",
+    "sourceCode": "002589"
+   },
+   {
+    "name": "本庄早稲田",
+    "sourceCode": "002525"
+   },
+   {
+    "name": "安中榛名",
+    "sourceCode": "002328"
+   }
+  ],
+  "via": [],
+  "lines": [
+   "東北新幹線",
+   "上越新幹線",
+   "北陸新幹線"
+  ],
+  "validFrom": "2010-01-01",
+  "validUntil": null,
+  "completeness": {
+   "stops": "partial",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 2015-03-14 以降もあさまの終点は長野のままなので期間は割らない。飯山・上越妙高は長野より先なので入れない。高崎は北陸新幹線コード 002387。N02 の line_name は長野新幹線ではなく北陸新幹線。",
+  "confidence": "low",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "tsurugi-toyama-kanazawa",
+  "serviceId": "tsurugi",
+  "name": "つるぎ",
+  "company": "西日本旅客鉄道",
+  "label": "富山〜金沢（敦賀開業前）",
+  "origin": "富山",
+  "destination": "金沢",
+  "stops": [
+   {
+    "name": "富山",
+    "sourceCode": "001925"
+   },
+   {
+    "name": "新高岡",
+    "sourceCode": "001886"
+   },
+   {
+    "name": "金沢",
+    "sourceCode": "002093"
+   }
+  ],
+  "optionalStops": [],
+  "via": [],
+  "lines": [
+   "北陸新幹線"
+  ],
+  "validFrom": "2015-03-14",
+  "validUntil": "2024-03-16",
+  "completeness": {
+   "stops": "complete",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "notes": "金沢開業から敦賀開業前日までのシャトル。この 3 駅は全て停車として収録。開始日の時刻表原文は未照合のため validity は partial。",
+  "confidence": "medium",
+  "source": "w3-fragment; not a single-timetable transcription"
+ },
+ {
+  "patternId": "tsurugi-toyama-tsuruga",
+  "serviceId": "tsurugi",
+  "name": "つるぎ",
+  "company": "西日本旅客鉄道",
+  "label": "富山〜敦賀",
+  "origin": "富山",
+  "destination": "敦賀",
+  "stops": [
+   {
+    "name": "富山",
+    "sourceCode": "001925"
+   },
+   {
+    "name": "金沢",
+    "sourceCode": "002093"
+   },
+   {
+    "name": "敦賀",
+    "sourceCode": "010186"
+   }
+  ],
+  "optionalStops": [
+   {
+    "name": "新高岡",
+    "sourceCode": "001886"
+   },
+   {
+    "name": "小松",
+    "sourceCode": "002267"
+   },
+   {
+    "name": "加賀温泉",
+    "sourceCode": "002392"
+   },
+   {
+    "name": "芦原温泉",
+    "sourceCode": "002529"
+   },
+   {
+    "name": "福井",
+    "sourceCode": "002688"
+   },
+   {
+    "name": "越前たけふ",
+    "sourceCode": "010180"
+   }
+  ],
+  "via": [],
+  "lines": [
+   "北陸新幹線"
+  ],
+  "validFrom": "2024-03-16",
+  "validUntil": null,
+  "completeness": {
+   "stops": "partial",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "notes": "2024-03-16 以降、富山〜敦賀。金沢は途中の主要駅。新高岡と敦賀までの各駅を全列車が停まるかは未照合のため optional。",
+  "confidence": "low",
+  "source": "w3-fragment; not a single-timetable transcription"
  }
 ]

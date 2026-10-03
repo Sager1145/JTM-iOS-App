@@ -583,6 +583,12 @@ enum EditorStrings {
             .zhHant: "受影響區間", .zhHans: "受影响区间", .ja: "影響のある区間",
             .en: "Affected sections",
         ],
+        "ios.route.connectionUnverified": [
+            .en: "Connection at {station} unverified",
+            .zhHans: "{station} 处的线路衔接未核实",
+            .zhHant: "{station} 處的路線銜接未核實",
+            .ja: "{station}での線路接続は未確認",
+        ],
         "ios.route.affectedSection": [
             .zhHant: "第 {index} 段 · {from} → {to}",
             .zhHans: "第 {index} 段 · {from} → {to}",

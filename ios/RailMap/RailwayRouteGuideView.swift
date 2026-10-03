@@ -144,12 +144,20 @@ struct RailwayRouteCorrectionView: View {
             // original visit in the draft so the resulting plan still requires
             // explicit approval before removing its authored details.
             .filter { !excluded.contains($0) }
-        // Search only evidenced physical intervals; a shared station cannot add a junction.
+        // Shared station groups yield reviewable candidates, not certified junctions.
         let worker = Task.detached(priority: .userInitiated) {
-            LocalJourneySearch.search(
+            let aliases = loadJourneyStationAliases(
+                for: required + Array(excluded) + [search.origin, search.destination], package: package)
+            let packageCodes = Set(package.lines.flatMap { $0.stations.map(\.id) })
+            func canonical(_ code: String) -> String {
+                packageCodes.contains(code) ? code : aliases[code] ?? code
+            }
+            let protectedCodes = Set((required + [search.origin, search.destination]).map(canonical))
+            let canonicalExcluded = Set(excluded.map(canonical)).subtracting(protectedCodes)
+            return LocalJourneySearch.search(
                 package: package, originCode: search.origin, destinationCode: search.destination,
-                trainType: trainType, excludingStationCodes: excluded,
-                requiredStationCodes: required)
+                trainType: trainType, excludingStationCodes: canonicalExcluded,
+                requiredStationCodes: required, stationAliases: aliases)
         }
         let result = await withTaskCancellationHandler {
             await worker.value

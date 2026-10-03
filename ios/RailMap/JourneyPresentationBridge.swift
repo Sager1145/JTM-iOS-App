@@ -93,10 +93,14 @@ enum JourneyBridge {
         _ gaps: [RiddenRouteStore.SectionGap], _ localization: AppLocalization
     ) -> String {
         guard let first = gaps.first else { return "" }
-        let head = localization.journeyText(
-            "ios.journey.endpoints",
-            ["from": .string(first.from ?? "?"), "to": .string(first.to ?? "?")],
-            fallback: "{from} → {to}")
+        let head = first.isBoundary
+            ? localization.editorText("ios.route.connectionUnverified", [
+                "station": .string(first.from ?? "?"),
+            ])
+            : localization.journeyText(
+                "ios.journey.endpoints",
+                ["from": .string(first.from ?? "?"), "to": .string(first.to ?? "?")],
+                fallback: "{from} → {to}")
         guard gaps.count > 1 else { return head }
         return localization.journeyText(
             "ios.journey.gapMore",

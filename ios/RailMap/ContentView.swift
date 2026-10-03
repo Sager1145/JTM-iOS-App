@@ -351,11 +351,38 @@ struct RailWorkspaceView: View {
             guard let wanted = ProcessInfo.processInfo.environment["RAILMAP_UI_TEST_SELECT"],
                   itineraries.selectedTrainID == nil,
                   let trains = itineraries.loaded?.trains, !trains.isEmpty else { return }
+            let train: Train?
             if let index = Int(wanted) {
-                pick(trains[min(max(index, 0), trains.count - 1)])
-            } else if let train = trains.first(where: { $0.id == wanted }) {
-                pick(train)
+                train = trains[min(max(index, 0), trains.count - 1)]
+            } else {
+                train = trains.first(where: { $0.id == wanted })
             }
+            guard let train else { return }
+            if ProcessInfo.processInfo.environment["RAILMAP_UI_TEST_TAB"] == nil {
+                let inCurrentMapScope: Bool
+                switch selection {
+                case .upcoming: inCurrentMapScope = upcomingScope.ids.contains(train.id)
+                case .stats: inCurrentMapScope = statisticsScope.ids.contains(train.id)
+                case .all, .search:
+                    let inRegion = selection != .all || regionScope == nil
+                        || derived.trainIDs(inRegion: regionScope!, in: trains).contains(train.id)
+                    let inDate = !mapFollowsSelectedDate || selectedDate == Dates.allDates
+                        || derived.trainIDs(spanning: selectedDate, in: trains).contains(train.id)
+                    inCurrentMapScope = inRegion && inDate
+                }
+                if !inCurrentMapScope {
+                    selection = .all
+                    if let regionScope,
+                       !derived.trainIDs(inRegion: regionScope, in: trains).contains(train.id) {
+                        self.regionScope = nil
+                    }
+                    if mapFollowsSelectedDate, selectedDate != Dates.allDates,
+                       !derived.trainIDs(spanning: selectedDate, in: trains).contains(train.id) {
+                        selectedDate = Dates.allDates
+                    }
+                }
+            }
+            pick(train)
         }
         // Which region the camera starts on, and which sample is loaded —
         // the two things a `simctl` harness cannot tap its way to. The opening

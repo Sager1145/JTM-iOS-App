@@ -183,6 +183,14 @@ struct TrainServiceBrandingTests {
         #expect(TrainServiceBranding.service(for: Self.train(number: caption))?.id == expectedID)
     }
 
+    @Test("Musashi does not match inside Musashino")
+    func latinNameRespectsWordBoundary() {
+        #expect(TrainServiceBranding.service(for: Self.train(number: "Musashino Line Local")) == nil)
+        #expect(TrainServiceBranding.service(for: Self.train(number: "Musashino 3")) == nil)
+        #expect(TrainServiceBranding.service(for: Self.train(number: "Musashi 1"))?.id == "musashi")
+        #expect(TrainServiceBranding.service(for: Self.train(number: "Musashi no. 2"))?.id == "musashi")
+    }
+
     @Test(arguments: [
         ("スーパーはくと5号", "super-hakuto"),
         ("特急ソニック21号", "sonic"),

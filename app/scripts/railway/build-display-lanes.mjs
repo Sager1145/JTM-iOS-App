@@ -3110,7 +3110,10 @@ const RENDER_GROUP_FORMATS = new Set([
   // default by accident.
   "jtm-jp-render-groups-v2",
 ]);
-const RENDER_GROUP_POLICIES = [RENDER_GROUPS, JP_RENDER_GROUPS];
+// A Japan-only maintenance run does not consume the retired NA policy.
+const japanOnly = args[0] === '--refresh-handoffs'
+  || (['--refresh-parts', '--refresh-region'].includes(args[0]) && args[1] === 'jp');
+const RENDER_GROUP_POLICIES = japanOnly ? [JP_RENDER_GROUPS] : [RENDER_GROUPS, JP_RENDER_GROUPS];
 const renderGroupsByRegion = new Map();
 for (const policyPath of RENDER_GROUP_POLICIES) {
   if (!fs.existsSync(policyPath))
@@ -3132,7 +3135,7 @@ for (const policyPath of RENDER_GROUP_POLICIES) {
 // The North American policy stays the one named in this file's own output
 // metadata and in the family/colour validation message below; both are read
 // by a reader looking at a us/ca row.
-const renderGroups = JSON.parse(fs.readFileSync(RENDER_GROUPS, "utf8"));
+const renderGroups = japanOnly ? null : JSON.parse(fs.readFileSync(RENDER_GROUPS, "utf8"));
 // Every render group `byLineId` names must have a `families` entry, and that
 // entry must carry a colour — deriveFamilyWindows below needs it for every
 // landlord window, and a family present only as an identity (no colour) is

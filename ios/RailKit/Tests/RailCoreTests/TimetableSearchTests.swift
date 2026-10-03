@@ -47,4 +47,23 @@ struct TimetableSearchTests {
             #expect(TimetableSearch("azusa \(departure)").matches(trip))
         }
     }
+    @Test func timeSeparatorsRemainSignificant() {
+        #expect(!TimetableSearch("405").matches(fields: [], stops: [], plainFields: ["10:05", "2024-05-01"]))
+        #expect(!TimetableSearch("1005").matches(fields: [], stops: [], plainFields: ["10:05"]))
+        #expect(TimetableSearch("Azusa 10:05").matches(fields: ["Azusa"], stops: [], plainFields: ["10:05"]))
+    }
+    @Test func exactOperatorDoesNotBorrowStationTokens() {
+        func pattern(company: String) -> TrainServicePatterns.Pattern {
+            .init(id: "precision", serviceId: "test", name: "test", company: company,
+                  label: "test", origin: "西船橋", destination: "東京", stopRefs: [],
+                  optionalStopRefs: [], via: [], confidence: nil, source: nil)
+        }
+        #expect(!TimetableSearch("JR西").matches(pattern(company: "JR東日本")))
+        #expect(TimetableSearch("JR西").matches(pattern(company: "JR西日本")))
+        #expect(TimetableSearch("Tokyo 地铁").matches(pattern(company: "東京メトロ")))
+        #expect(TimetableSearch("Tokyo 地铁").matches(pattern(company: "東京都交通局")))
+        let results = TrainServicePatterns.search("JR西")
+        #expect(!results.isEmpty)
+        #expect(results.allSatisfy { OperatorIdentity.codes(forJoined: $0.company).contains("jp.jr-west") })
+    }
 }

@@ -48,7 +48,7 @@ public enum RailwayRouteChoices {
         let highSpeed = ["highspeed", "high speed", "high-speed", "shinkansen", "新幹線", "新干线", "高速"]
             .contains { type.contains($0) }
         let highSpeedLine = line.name.contains("新幹線") || ["high_speed", "shinkansen"].contains(line.kind ?? "")
-        return line.serviceStatus == nil && (highSpeed ? highSpeedLine : !highSpeedLine)
+        return line.isTraversableForSearch && (highSpeed ? highSpeedLine : !highSpeedLine)
     }
 
     private static func slices(

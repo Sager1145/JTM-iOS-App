@@ -17,6 +17,7 @@ import {
   buildChainWithExtensions,
   polylineKm,
   haversineM,
+  n02StationPoint,
 } from './geo.mjs';
 
 // --- structure tuple rebasing -----------------------------------------
@@ -260,8 +261,12 @@ function applySplitIntervalAtStation(pkg, op) {
     );
   }
 
-  const anchorLine = findLine(pkg, op.anchorSource.lineId);
-  const anchorRow = anchorLine.stations.find((r) => r[0] === op.anchorSource.sid);
+  const anchorLine = op.anchorSource.lineId ? findLine(pkg, op.anchorSource.lineId) : null;
+  const anchorRow = anchorLine
+    ? anchorLine.stations.find((r) => r[0] === op.anchorSource.sid)
+    : [op.newStation.sid, op.newStation.name,
+      ...n02StationPoint(op.anchorSource.operator, op.anchorSource.line, op.newStation.name),
+      op.newStation.roma, op.newStation.romaSource];
   if (!anchorRow) {
     throw new Error(`[${op.id}] anchor row ${op.anchorSource.sid} not found on ${op.anchorSource.lineId}`);
   }
@@ -282,10 +287,38 @@ function applySplitIntervalAtStation(pkg, op) {
   const newRow = [op.newStation.sid, op.newStation.name, proj.point[0], proj.point[1], anchorRow[4], anchorRow[5]];
   const polyA = [...poly.slice(0, proj.insertIndex + 1), proj.point];
   const polyB = [proj.point, ...poly.slice(proj.insertIndex + 1)];
-  polylines.splice(idx, 1, polyA, polyB);
+  if (op.keys) {
+    // Display coordinates may be simplified. Measure each half on the raw
+    // N02 walk, retaining the original interval's metre-rounded total.
+    const halves = [
+      [poly[0], proj.point],
+      [proj.point, poly[poly.length - 1]],
+    ].map(([fromAnchor, toAnchor]) => chainFromN02({
+      keys: op.keys, fromAnchor, toAnchor,
+      fromMaxM: op.maxM, toMaxM: op.maxM, snapM: op.snapM || 15,
+    }));
+    const oldM = Math.round(polylines[idx].km * 1000);
+    const firstM = Math.round(halves[0].km * 1000);
+    const secondM = Math.round(halves[1].km * 1000);
+    if (Math.abs(firstM + secondM - oldM) > 1) {
+      throw new Error(`[${op.id}] N02 split length does not preserve the original interval km`);
+    }
+    polylines.splice(idx, 1,
+      { coords: polyA, km: firstM / 1000 },
+      { coords: polyB, km: (oldM - firstM) / 1000 });
+  } else {
+    polylines.splice(idx, 1, polyA, polyB);
+  }
 
   line.stations.splice(idx + 1, 0, newRow);
   line.segments = encodeIntervals(polylines);
+
+  if (op.keys) {
+    // The metre total is unchanged, so structure positions and section
+    // boundaries need no rebasing when using the preserved N02 mileage.
+    op._result = { projDistanceM: proj.distanceM, splitKm: line.segments.slice(idx, idx + 2).map(r => r[0]) };
+    return false;
+  }
 
   // Splitting an interval doesn't move any cumulative-km position along the
   // line (it only inserts a vertex), so this is an identity rebase: every

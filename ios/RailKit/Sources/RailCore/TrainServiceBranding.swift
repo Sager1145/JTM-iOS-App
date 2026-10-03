@@ -131,9 +131,10 @@ public enum TrainServiceBranding {
             .joined(separator: " ")
     }
 
-    /// A Latin-leading name (e.g. "Haruka") needs a train-number context to
-    /// avoid matching inside unrelated station or line names such as
-    /// "Kinosaki-Onsen" or "Fuji Kyuko Line". CJK-leading names keep the
+    /// A Latin-leading name (e.g. "Haruka") needs a train-number context and
+    /// a word boundary on both sides, so it does not match inside an unrelated
+    /// station or line name ("Kinosaki-Onsen", "Fuji Kyuko Line") or a longer
+    /// Latin word ("Musashi" inside "Musashino"). CJK-leading names keep the
     /// original word-boundary rule.
     private static func containsServiceName(_ name: String, in caption: String) -> Bool {
         var searchStart = caption.startIndex
@@ -146,7 +147,13 @@ public enum TrainServiceBranding {
 
             if startsWithLatinWord {
                 let beforeIsWordOrHyphen = beforeIsWord || beforeCharacter == "-"
-                if beforeIsWordOrHyphen == false
+                let nextCharacter = range.upperBound < caption.endIndex ? caption[range.upperBound] : nil
+                // Immediate Latin letters continue the word — Musashi inside
+                // Musashino. Without this, "no " train-number context matches
+                // the "no…" tail. Digits and 号 stay context; "no." / "no "
+                // count only as a separate token after the name.
+                let latinRunContinues = nextCharacter?.isASCIILetter == true
+                if beforeIsWordOrHyphen == false && latinRunContinues == false
                     && hasTrainNumberContext(before: range.lowerBound, after: range.upperBound, in: caption) {
                     return true
                 }
@@ -297,5 +304,12 @@ private extension Character {
         unicodeScalars.count == 1
             && unicodeScalars.first.map { $0.isASCII && ($0.properties.isAlphabetic || $0.properties.numericType != nil) }
                 == true
+    }
+
+    /// ASCII letter. Digits and 号 are train-number context, so they do not
+    /// continue a Latin service name the way kana continues a kana word.
+    var isASCIILetter: Bool {
+        unicodeScalars.count == 1
+            && unicodeScalars.first.map { $0.isASCII && $0.properties.isAlphabetic } == true
     }
 }

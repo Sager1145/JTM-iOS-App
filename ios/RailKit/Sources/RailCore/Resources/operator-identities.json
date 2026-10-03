@@ -1,0 +1,5230 @@
+{
+  "version": 1,
+  "operators": [
+    {
+      "code": "hk.mtr",
+      "region": "hk",
+      "legal": "香港鐵路有限公司",
+      "label": "MTR",
+      "names": {
+        "ja": [
+          "香港鉄路",
+          "港鉄"
+        ],
+        "en": [
+          "MTR",
+          "MTR Corporation",
+          "Mass Transit Railway",
+          "MTR Corporation Limited"
+        ],
+        "zhHans": [
+          "港铁",
+          "香港铁路"
+        ],
+        "zhHant": [
+          "港鐵",
+          "香港鐵路",
+          "香港地鐵",
+          "香港鐵路有限公司"
+        ],
+        "ko": [
+          "홍콩 철도",
+          "MTR"
+        ]
+      },
+      "aliases": [
+        "MTRC",
+        "香港鐵路有限公司 MTR Corporation"
+      ],
+      "families": []
+    },
+    {
+      "code": "hk.tramways",
+      "region": "hk",
+      "legal": "香港電車有限公司",
+      "label": "香港電車",
+      "names": {
+        "ja": [
+          "香港トラム",
+          "香港電車"
+        ],
+        "en": [
+          "Hong Kong Tramways",
+          "Hongkong Tramways",
+          "Hongkong Tramways Limited"
+        ],
+        "zhHans": [
+          "香港电车"
+        ],
+        "zhHant": [
+          "香港電車",
+          "香港電車有限公司"
+        ],
+        "ko": [
+          "홍콩 트램",
+          "홍콩 전차"
+        ]
+      },
+      "aliases": [
+        "叮叮"
+      ],
+      "families": []
+    },
+    {
+      "code": "jp.abukuma",
+      "region": "jp",
+      "legal": "阿武隈急行",
+      "label": "阿武隈急行",
+      "names": {
+        "ja": [
+          "阿武隈急行"
+        ],
+        "en": [
+          "Abukuma Express"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.aikan",
+      "region": "jp",
+      "legal": "愛知環状鉄道",
+      "label": "愛知環状鉄道",
+      "names": {
+        "ja": [
+          "愛知環状鉄道",
+          "愛環"
+        ],
+        "en": [
+          "Aichi Loop Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.ainokaze",
+      "region": "jp",
+      "legal": "あいの風とやま鉄道",
+      "label": "あいの風とやま鉄道",
+      "names": {
+        "ja": [
+          "あいの風とやま鉄道",
+          "あいの風とやま"
+        ],
+        "en": [
+          "Ainokaze Toyama Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.aizu",
+      "region": "jp",
+      "legal": "会津鉄道",
+      "label": "会津鉄道",
+      "names": {
+        "ja": [
+          "会津鉄道"
+        ],
+        "en": [
+          "Aizu Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.akechi",
+      "region": "jp",
+      "legal": "明知鉄道",
+      "label": "明知鉄道",
+      "names": {
+        "ja": [
+          "明知鉄道"
+        ],
+        "en": [
+          "Akechi Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.akita-nairiku",
+      "region": "jp",
+      "legal": "秋田内陸縦貫鉄道",
+      "label": "秋田内陸縦貫鉄道",
+      "names": {
+        "ja": [
+          "秋田内陸縦貫鉄道",
+          "秋田内陸線"
+        ],
+        "en": [
+          "Akita Nairiku Jukan Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.alpico",
+      "region": "jp",
+      "legal": "アルピコ交通",
+      "label": "アルピコ交通",
+      "names": {
+        "ja": [
+          "アルピコ交通"
+        ],
+        "en": [
+          "Alpico Kotsu"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.amagi",
+      "region": "jp",
+      "legal": "甘木鉄道",
+      "label": "甘木鉄道",
+      "names": {
+        "ja": [
+          "甘木鉄道"
+        ],
+        "en": [
+          "Amagi Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.aoimori",
+      "region": "jp",
+      "legal": "青い森鉄道",
+      "label": "青い森鉄道",
+      "names": {
+        "ja": [
+          "青い森鉄道",
+          "青い森"
+        ],
+        "en": [
+          "Aoimori Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.aonami",
+      "region": "jp",
+      "legal": "名古屋臨海高速鉄道",
+      "label": "名古屋臨海高速鉄道",
+      "names": {
+        "ja": [
+          "名古屋臨海高速鉄道",
+          "あおなみ線"
+        ],
+        "en": [
+          "Aonami Line"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.asa-kaigan",
+      "region": "jp",
+      "legal": "阿佐海岸鉄道",
+      "label": "阿佐海岸鉄道",
+      "names": {
+        "ja": [
+          "阿佐海岸鉄道",
+          "阿佐海岸"
+        ],
+        "en": [
+          "Asa Kaigan Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.astram",
+      "region": "jp",
+      "legal": "広島高速交通",
+      "label": "広島高速交通",
+      "names": {
+        "ja": [
+          "広島高速交通",
+          "アストラムライン"
+        ],
+        "en": [
+          "Astram Line"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.asunaro",
+      "region": "jp",
+      "legal": "四日市あすなろう鉄道",
+      "label": "四日市あすなろう鉄道",
+      "names": {
+        "ja": [
+          "四日市あすなろう鉄道",
+          "あすなろう"
+        ],
+        "en": [
+          "Yokkaichi Asunarou Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.chiba-monorail",
+      "region": "jp",
+      "legal": "千葉都市モノレール",
+      "label": "千葉都市モノレール",
+      "names": {
+        "ja": [
+          "千葉都市モノレール",
+          "千葉モノレール"
+        ],
+        "en": [
+          "Chiba Urban Monorail"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.chichibu",
+      "region": "jp",
+      "legal": "秩父鉄道",
+      "label": "秩父鉄道",
+      "names": {
+        "ja": [
+          "秩父鉄道"
+        ],
+        "en": [
+          "Chichibu Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.chikuho",
+      "region": "jp",
+      "legal": "筑豊電気鉄道",
+      "label": "筑豊電気鉄道",
+      "names": {
+        "ja": [
+          "筑豊電気鉄道",
+          "筑豊電鉄"
+        ],
+        "en": [
+          "Chikuho Electric Railroad"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.chitetsu",
+      "region": "jp",
+      "legal": "富山地方鉄道",
+      "label": "富山地方鉄道",
+      "names": {
+        "ja": [
+          "富山地方鉄道",
+          "富山地鉄"
+        ],
+        "en": [
+          "Toyama Chiho Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.chizu",
+      "region": "jp",
+      "legal": "智頭急行",
+      "label": "智頭急行",
+      "names": {
+        "ja": [
+          "智頭急行"
+        ],
+        "en": [
+          "Chizu Express"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.choshi",
+      "region": "jp",
+      "legal": "銚子電気鉄道",
+      "label": "銚子電気鉄道",
+      "names": {
+        "ja": [
+          "銚子電気鉄道",
+          "銚子電鉄"
+        ],
+        "en": [
+          "Choshi Electric Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.disney-resort",
+      "region": "jp",
+      "legal": "舞浜リゾートライン",
+      "label": "舞浜リゾートライン",
+      "names": {
+        "ja": [
+          "舞浜リゾートライン",
+          "ディズニーリゾートライン"
+        ],
+        "en": [
+          "Disney Resort Line",
+          "Maihama Resort Line"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.donan-isaribi",
+      "region": "jp",
+      "legal": "道南いさりび鉄道",
+      "label": "道南いさりび鉄道",
+      "names": {
+        "ja": [
+          "道南いさりび鉄道",
+          "道南いさりび"
+        ],
+        "en": [
+          "South Hokkaido Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.echigo-tokimeki",
+      "region": "jp",
+      "legal": "えちごトキめき鉄道",
+      "label": "えちごトキめき鉄道",
+      "names": {
+        "ja": [
+          "えちごトキめき鉄道",
+          "トキ鉄"
+        ],
+        "en": [
+          "Echigo Tokimeki Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.echizen",
+      "region": "jp",
+      "legal": "えちぜん鉄道",
+      "label": "えちぜん鉄道",
+      "names": {
+        "ja": [
+          "えちぜん鉄道",
+          "えち鉄"
+        ],
+        "en": [
+          "Echizen Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.eizan",
+      "region": "jp",
+      "legal": "叡山電鉄",
+      "label": "叡山電鉄",
+      "names": {
+        "ja": [
+          "叡山電鉄",
+          "叡電"
+        ],
+        "en": [
+          "Eizan Electric Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.enoden",
+      "region": "jp",
+      "legal": "江ノ島電鉄",
+      "label": "江ノ島電鉄",
+      "names": {
+        "ja": [
+          "江ノ島電鉄",
+          "江ノ電"
+        ],
+        "en": [
+          "Enoshima Electric Railway",
+          "Enoden"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.entetsu",
+      "region": "jp",
+      "legal": "遠州鉄道",
+      "label": "遠州鉄道",
+      "names": {
+        "ja": [
+          "遠州鉄道",
+          "遠鉄"
+        ],
+        "en": [
+          "Enshu Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.fujikyu",
+      "region": "jp",
+      "legal": "富士山麓電気鉄道",
+      "label": "富士山麓電気鉄道",
+      "names": {
+        "ja": [
+          "富士山麓電気鉄道",
+          "富士山麓電鉄",
+          "富士急行"
+        ],
+        "en": [
+          "Fuji Kyuko",
+          "Fujikyu"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.fukui",
+      "region": "jp",
+      "legal": "福井鉄道",
+      "label": "福井鉄道",
+      "names": {
+        "ja": [
+          "福井鉄道",
+          "福鉄"
+        ],
+        "en": [
+          "Fukui Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.fukuoka-subway",
+      "region": "jp",
+      "legal": "福岡市",
+      "label": "福岡市営",
+      "names": {
+        "ja": [
+          "福岡市地下鉄",
+          "福岡市交通局",
+          "福岡市営",
+          "福岡市"
+        ],
+        "en": [
+          "Fukuoka City Subway"
+        ],
+        "zhHans": [
+          "福冈市地铁"
+        ],
+        "zhHant": [
+          "福岡市地鐵"
+        ],
+        "ko": [
+          "후쿠오카 시 지하철"
+        ]
+      },
+      "aliases": [],
+      "families": [
+        "jp.fukuoka-subway"
+      ]
+    },
+    {
+      "code": "jp.fukushima-kotsu",
+      "region": "jp",
+      "legal": "福島交通",
+      "label": "福島交通",
+      "names": {
+        "ja": [
+          "福島交通"
+        ],
+        "en": [
+          "Fukushima Kotsu"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.gakunan",
+      "region": "jp",
+      "legal": "岳南電車",
+      "label": "岳南電車",
+      "names": {
+        "ja": [
+          "岳南電車"
+        ],
+        "en": [
+          "Gakunan Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.hakodate-tram",
+      "region": "jp",
+      "legal": "函館市",
+      "label": "函館市電",
+      "names": {
+        "ja": [
+          "函館市電",
+          "函館市企業局交通部",
+          "函館市"
+        ],
+        "en": [
+          "Hakodate City Tram"
+        ],
+        "zhHans": [
+          "函馆市电"
+        ],
+        "zhHant": [
+          "函館市電"
+        ],
+        "ko": [
+          "하코다테 시영 전차"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.hakone-tozan",
+      "region": "jp",
+      "legal": "小田急箱根",
+      "label": "小田急箱根",
+      "names": {
+        "ja": [
+          "小田急箱根",
+          "箱根登山",
+          "箱根登山鉄道"
+        ],
+        "en": [
+          "Hakone Tozan Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.hankai",
+      "region": "jp",
+      "legal": "阪堺電気軌道",
+      "label": "阪堺電気軌道",
+      "names": {
+        "ja": [
+          "阪堺電気軌道",
+          "阪堺"
+        ],
+        "en": [
+          "Hankai Tramway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.hankyu",
+      "region": "jp",
+      "legal": "阪急電鉄",
+      "label": "阪急",
+      "names": {
+        "ja": [
+          "阪急電鉄",
+          "阪急",
+          "京阪神急行電鉄"
+        ],
+        "en": [
+          "Hankyu Corporation",
+          "Hankyu Railway"
+        ],
+        "zhHans": [
+          "阪急电铁",
+          "阪急"
+        ],
+        "zhHant": [
+          "阪急電鐵",
+          "阪急"
+        ],
+        "ko": [
+          "한큐 전철",
+          "한큐"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.hanshin",
+      "region": "jp",
+      "legal": "阪神電気鉄道",
+      "label": "阪神",
+      "names": {
+        "ja": [
+          "阪神電気鉄道",
+          "阪神"
+        ],
+        "en": [
+          "Hanshin Electric Railway",
+          "Hanshin"
+        ],
+        "zhHans": [
+          "阪神电气铁道",
+          "阪神"
+        ],
+        "zhHant": [
+          "阪神電氣鐵道",
+          "阪神"
+        ],
+        "ko": [
+          "한신 전기철도",
+          "한신"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.hapi-line-fukui",
+      "region": "jp",
+      "legal": "ハピラインふくい",
+      "label": "ハピラインふくい",
+      "names": {
+        "ja": [
+          "ハピラインふくい"
+        ],
+        "en": [
+          "Hapi-Line Fukui"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.heisei-chikuho",
+      "region": "jp",
+      "legal": "平成筑豊鉄道",
+      "label": "平成筑豊鉄道",
+      "names": {
+        "ja": [
+          "平成筑豊鉄道",
+          "平成筑豊"
+        ],
+        "en": [
+          "Heisei Chikuho Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.hieizan",
+      "region": "jp",
+      "legal": "比叡山鉄道",
+      "label": "比叡山鉄道",
+      "names": {
+        "ja": [
+          "比叡山鉄道",
+          "坂本ケーブル"
+        ],
+        "en": [
+          "Hieizan Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.hiroden",
+      "region": "jp",
+      "legal": "広島電鉄",
+      "label": "広島電鉄",
+      "names": {
+        "ja": [
+          "広島電鉄",
+          "広電"
+        ],
+        "en": [
+          "Hiroshima Electric Railway",
+          "Hiroden"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.hisatsu-orange",
+      "region": "jp",
+      "legal": "肥薩おれんじ鉄道",
+      "label": "肥薩おれんじ鉄道",
+      "names": {
+        "ja": [
+          "肥薩おれんじ鉄道",
+          "肥薩おれんじ"
+        ],
+        "en": [
+          "Hisatsu Orange Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.hitachinaka",
+      "region": "jp",
+      "legal": "ひたちなか海浜鉄道",
+      "label": "ひたちなか海浜鉄道",
+      "names": {
+        "ja": [
+          "ひたちなか海浜鉄道",
+          "ひたちなか海浜"
+        ],
+        "en": [
+          "Hitachinaka Seaside Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.hojo",
+      "region": "jp",
+      "legal": "北条鉄道",
+      "label": "北条鉄道",
+      "names": {
+        "ja": [
+          "北条鉄道"
+        ],
+        "en": [
+          "Hojo Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.hokuetsu",
+      "region": "jp",
+      "legal": "北越急行",
+      "label": "北越急行",
+      "names": {
+        "ja": [
+          "北越急行",
+          "ほくほく線"
+        ],
+        "en": [
+          "Hokuetsu Express"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.hokuriku",
+      "region": "jp",
+      "legal": "北陸鉄道",
+      "label": "北陸鉄道",
+      "names": {
+        "ja": [
+          "北陸鉄道",
+          "北鉄"
+        ],
+        "en": [
+          "Hokuriku Railroad"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.hokuso",
+      "region": "jp",
+      "legal": "北総鉄道",
+      "label": "北総鉄道",
+      "names": {
+        "ja": [
+          "北総鉄道",
+          "北総"
+        ],
+        "en": [
+          "Hokuso Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.ibara",
+      "region": "jp",
+      "legal": "井原鉄道",
+      "label": "井原鉄道",
+      "names": {
+        "ja": [
+          "井原鉄道"
+        ],
+        "en": [
+          "Ibara Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.ichibata",
+      "region": "jp",
+      "legal": "一畑電車",
+      "label": "一畑電車",
+      "names": {
+        "ja": [
+          "一畑電車"
+        ],
+        "en": [
+          "Ichibata Electric Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.iga",
+      "region": "jp",
+      "legal": "伊賀鉄道",
+      "label": "伊賀鉄道",
+      "names": {
+        "ja": [
+          "伊賀鉄道"
+        ],
+        "en": [
+          "Iga Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.igr",
+      "region": "jp",
+      "legal": "アイジーアールいわて銀河鉄道",
+      "label": "アイジーアールいわて銀河鉄道",
+      "names": {
+        "ja": [
+          "アイジーアールいわて銀河鉄道"
+        ],
+        "en": [
+          "IGR",
+          "Iwate Galaxy Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.ir-ishikawa",
+      "region": "jp",
+      "legal": "IRいしかわ鉄道",
+      "label": "IRいしかわ鉄道",
+      "names": {
+        "ja": [
+          "IRいしかわ鉄道",
+          "IRいしかわ"
+        ],
+        "en": [
+          "IR Ishikawa Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.ise",
+      "region": "jp",
+      "legal": "伊勢鉄道",
+      "label": "伊勢鉄道",
+      "names": {
+        "ja": [
+          "伊勢鉄道"
+        ],
+        "en": [
+          "Ise Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.isumi",
+      "region": "jp",
+      "legal": "いすみ鉄道",
+      "label": "いすみ鉄道",
+      "names": {
+        "ja": [
+          "いすみ鉄道"
+        ],
+        "en": [
+          "Isumi Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.iyo",
+      "region": "jp",
+      "legal": "伊予鉄道",
+      "label": "伊予鉄道",
+      "names": {
+        "ja": [
+          "伊予鉄道",
+          "伊予鉄"
+        ],
+        "en": [
+          "Iyo Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.izu-hakone",
+      "region": "jp",
+      "legal": "伊豆箱根鉄道",
+      "label": "伊豆箱根鉄道",
+      "names": {
+        "ja": [
+          "伊豆箱根鉄道",
+          "伊豆箱根"
+        ],
+        "en": [
+          "Izu Hakone Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.izukyu",
+      "region": "jp",
+      "legal": "伊豆急行",
+      "label": "伊豆急行",
+      "names": {
+        "ja": [
+          "伊豆急行",
+          "伊豆急"
+        ],
+        "en": [
+          "Izukyu"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.jomo",
+      "region": "jp",
+      "legal": "上毛電気鉄道",
+      "label": "上毛電気鉄道",
+      "names": {
+        "ja": [
+          "上毛電気鉄道",
+          "上毛電鉄"
+        ],
+        "en": [
+          "Jomo Electric Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.joshin",
+      "region": "jp",
+      "legal": "上信電鉄",
+      "label": "上信電鉄",
+      "names": {
+        "ja": [
+          "上信電鉄"
+        ],
+        "en": [
+          "Joshin Electric Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.jr-central",
+      "region": "jp",
+      "legal": "東海旅客鉄道",
+      "label": "JR東海",
+      "names": {
+        "ja": [
+          "東海旅客鉄道",
+          "JR東海"
+        ],
+        "en": [
+          "Central Japan Railway Company",
+          "JR Central",
+          "JR Tokai"
+        ],
+        "zhHans": [
+          "东海旅客铁道",
+          "JR东海"
+        ],
+        "zhHant": [
+          "東海旅客鐵道",
+          "JR東海"
+        ],
+        "ko": [
+          "JR 도카이",
+          "도카이 여객철도"
+        ]
+      },
+      "aliases": [
+        "JR-Central"
+      ],
+      "families": [
+        "jp.jr"
+      ]
+    },
+    {
+      "code": "jp.jr-central-transport",
+      "region": "jp",
+      "legal": "JR東海交通事業",
+      "label": "JR東海交通事業",
+      "names": {
+        "ja": [
+          "JR東海交通事業",
+          "東海交通事業"
+        ],
+        "en": [
+          "JR Central Transport Service"
+        ],
+        "zhHans": [
+          "JR东海交通事业"
+        ],
+        "zhHant": [
+          "JR東海交通事業"
+        ],
+        "ko": [
+          "JR 도카이 교통사업"
+        ]
+      },
+      "aliases": [],
+      "families": [
+        "jp.jr"
+      ]
+    },
+    {
+      "code": "jp.jr-east",
+      "region": "jp",
+      "legal": "東日本旅客鉄道",
+      "label": "JR東日本",
+      "names": {
+        "ja": [
+          "東日本旅客鉄道",
+          "JR東日本"
+        ],
+        "en": [
+          "East Japan Railway Company",
+          "JR East"
+        ],
+        "zhHans": [
+          "东日本旅客铁道",
+          "JR东日本"
+        ],
+        "zhHant": [
+          "東日本旅客鐵道",
+          "JR東日本"
+        ],
+        "ko": [
+          "JR 동일본",
+          "동일본 여객철도"
+        ]
+      },
+      "aliases": [
+        "JR東",
+        "JR-East"
+      ],
+      "families": [
+        "jp.jr"
+      ]
+    },
+    {
+      "code": "jp.jr-hokkaido",
+      "region": "jp",
+      "legal": "北海道旅客鉄道",
+      "label": "JR北海道",
+      "names": {
+        "ja": [
+          "北海道旅客鉄道",
+          "JR北海道"
+        ],
+        "en": [
+          "Hokkaido Railway Company",
+          "JR Hokkaido"
+        ],
+        "zhHans": [
+          "北海道旅客铁道",
+          "JR北海道"
+        ],
+        "zhHant": [
+          "北海道旅客鐵道",
+          "JR北海道"
+        ],
+        "ko": [
+          "JR 홋카이도",
+          "홋카이도 여객철도"
+        ]
+      },
+      "aliases": [
+        "JR北",
+        "JR-Hokkaido"
+      ],
+      "families": [
+        "jp.jr"
+      ]
+    },
+    {
+      "code": "jp.jr-kyushu",
+      "region": "jp",
+      "legal": "九州旅客鉄道",
+      "label": "JR九州",
+      "names": {
+        "ja": [
+          "九州旅客鉄道",
+          "JR九州"
+        ],
+        "en": [
+          "Kyushu Railway Company",
+          "JR Kyushu"
+        ],
+        "zhHans": [
+          "九州旅客铁道",
+          "JR九州"
+        ],
+        "zhHant": [
+          "九州旅客鐵道",
+          "JR九州"
+        ],
+        "ko": [
+          "JR 규슈",
+          "규슈 여객철도"
+        ]
+      },
+      "aliases": [
+        "JR-Kyushu"
+      ],
+      "families": [
+        "jp.jr"
+      ]
+    },
+    {
+      "code": "jp.jr-shikoku",
+      "region": "jp",
+      "legal": "四国旅客鉄道",
+      "label": "JR四国",
+      "names": {
+        "ja": [
+          "四国旅客鉄道",
+          "JR四国"
+        ],
+        "en": [
+          "Shikoku Railway Company",
+          "JR Shikoku"
+        ],
+        "zhHans": [
+          "四国旅客铁道",
+          "JR四国"
+        ],
+        "zhHant": [
+          "四國旅客鐵道",
+          "JR四國",
+          "JR四国"
+        ],
+        "ko": [
+          "JR 시코쿠",
+          "시코쿠 여객철도"
+        ]
+      },
+      "aliases": [
+        "JR-Shikoku"
+      ],
+      "families": [
+        "jp.jr"
+      ]
+    },
+    {
+      "code": "jp.jr-west",
+      "region": "jp",
+      "legal": "西日本旅客鉄道",
+      "label": "JR西日本",
+      "names": {
+        "ja": [
+          "西日本旅客鉄道",
+          "JR西日本"
+        ],
+        "en": [
+          "West Japan Railway Company",
+          "JR West"
+        ],
+        "zhHans": [
+          "西日本旅客铁道",
+          "JR西日本"
+        ],
+        "zhHant": [
+          "西日本旅客鐵道",
+          "JR西日本"
+        ],
+        "ko": [
+          "JR 서일본",
+          "서일본 여객철도"
+        ]
+      },
+      "aliases": [
+        "JR西",
+        "JRW",
+        "JR-West"
+      ],
+      "families": [
+        "jp.jr"
+      ]
+    },
+    {
+      "code": "jp.jukkoku",
+      "region": "jp",
+      "legal": "十国峠",
+      "label": "十国峠",
+      "names": {
+        "ja": [
+          "十国峠",
+          "十国峠ケーブルカー"
+        ],
+        "en": [
+          "Jukkokutoge Cable Car"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.kagoshima-tram",
+      "region": "jp",
+      "legal": "鹿児島市",
+      "label": "鹿児島市電",
+      "names": {
+        "ja": [
+          "鹿児島市電",
+          "鹿児島市交通局",
+          "鹿児島市"
+        ],
+        "en": [
+          "Kagoshima City Tram"
+        ],
+        "zhHans": [
+          "鹿儿岛市电"
+        ],
+        "zhHant": [
+          "鹿兒島市電"
+        ],
+        "ko": [
+          "가고시마 시영 전차"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.kanto",
+      "region": "jp",
+      "legal": "関東鉄道",
+      "label": "関東鉄道",
+      "names": {
+        "ja": [
+          "関東鉄道"
+        ],
+        "en": [
+          "Kanto Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.kashima",
+      "region": "jp",
+      "legal": "鹿島臨海鉄道",
+      "label": "鹿島臨海鉄道",
+      "names": {
+        "ja": [
+          "鹿島臨海鉄道",
+          "鹿島臨海"
+        ],
+        "en": [
+          "Kashima Coastal Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.keifuku",
+      "region": "jp",
+      "legal": "京福電気鉄道",
+      "label": "京福電気鉄道",
+      "names": {
+        "ja": [
+          "京福電気鉄道",
+          "嵐電"
+        ],
+        "en": [
+          "Keifuku Electric Railroad",
+          "Randen"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.keihan",
+      "region": "jp",
+      "legal": "京阪電気鉄道",
+      "label": "京阪",
+      "names": {
+        "ja": [
+          "京阪電気鉄道",
+          "京阪"
+        ],
+        "en": [
+          "Keihan Electric Railway",
+          "Keihan"
+        ],
+        "zhHans": [
+          "京阪电气铁道",
+          "京阪"
+        ],
+        "zhHant": [
+          "京阪電氣鐵道",
+          "京阪"
+        ],
+        "ko": [
+          "게이한 전기철도",
+          "게이한"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.keikyu",
+      "region": "jp",
+      "legal": "京浜急行電鉄",
+      "label": "京急",
+      "names": {
+        "ja": [
+          "京浜急行電鉄",
+          "京急",
+          "京急電鉄"
+        ],
+        "en": [
+          "Keikyu Corporation",
+          "Keihin Electric Express Railway"
+        ],
+        "zhHans": [
+          "京滨急行电铁",
+          "京急"
+        ],
+        "zhHant": [
+          "京濱急行電鐵",
+          "京急"
+        ],
+        "ko": [
+          "게이큐",
+          "게이힌 급행 전철"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.keio",
+      "region": "jp",
+      "legal": "京王電鉄",
+      "label": "京王",
+      "names": {
+        "ja": [
+          "京王電鉄",
+          "京王"
+        ],
+        "en": [
+          "Keio Corporation",
+          "Keio Electric Railway"
+        ],
+        "zhHans": [
+          "京王电铁",
+          "京王"
+        ],
+        "zhHant": [
+          "京王電鐵",
+          "京王"
+        ],
+        "ko": [
+          "게이오 전철",
+          "게이오"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.keisei",
+      "region": "jp",
+      "legal": "京成電鉄",
+      "label": "京成",
+      "names": {
+        "ja": [
+          "京成電鉄",
+          "京成",
+          "新京成電鉄"
+        ],
+        "en": [
+          "Keisei Electric Railway",
+          "Keisei"
+        ],
+        "zhHans": [
+          "京成电铁",
+          "京成"
+        ],
+        "zhHant": [
+          "京成電鐵",
+          "京成"
+        ],
+        "ko": [
+          "게이세이 전철",
+          "게이세이"
+        ]
+      },
+      "aliases": [
+        "新京成"
+      ],
+      "families": []
+    },
+    {
+      "code": "jp.kintetsu",
+      "region": "jp",
+      "legal": "近畿日本鉄道",
+      "label": "近鉄",
+      "names": {
+        "ja": [
+          "近畿日本鉄道",
+          "近鉄"
+        ],
+        "en": [
+          "Kintetsu Railway",
+          "Kinki Nippon Railway"
+        ],
+        "zhHans": [
+          "近畿日本铁道",
+          "近铁"
+        ],
+        "zhHant": [
+          "近畿日本鐵道",
+          "近鐵"
+        ],
+        "ko": [
+          "긴키 닛폰 철도",
+          "긴테츠"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.kishu",
+      "region": "jp",
+      "legal": "紀州鉄道",
+      "label": "紀州鉄道",
+      "names": {
+        "ja": [
+          "紀州鉄道"
+        ],
+        "en": [
+          "Kishu Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.kita-osaka",
+      "region": "jp",
+      "legal": "北大阪急行電鉄",
+      "label": "北大阪急行電鉄",
+      "names": {
+        "ja": [
+          "北大阪急行電鉄",
+          "北大阪急行",
+          "北急"
+        ],
+        "en": [
+          "Kita-Osaka Kyuko Railway"
+        ],
+        "zhHans": [
+          "北大阪急行电铁"
+        ],
+        "zhHant": [
+          "北大阪急行電鐵"
+        ],
+        "ko": [
+          "기타오사카 급행 전철"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.kitakyushu-monorail",
+      "region": "jp",
+      "legal": "北九州高速鉄道",
+      "label": "北九州高速鉄道",
+      "names": {
+        "ja": [
+          "北九州高速鉄道",
+          "北九州モノレール"
+        ],
+        "en": [
+          "Kitakyushu Monorail"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.kobe-new-transit",
+      "region": "jp",
+      "legal": "神戸新交通",
+      "label": "神戸新交通",
+      "names": {
+        "ja": [
+          "神戸新交通",
+          "ポートライナー/六甲ライナー",
+          "ポートライナー",
+          "六甲ライナー"
+        ],
+        "en": [
+          "Kobe New Transit",
+          "Port Liner"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [
+        "Rokko Liner"
+      ],
+      "families": []
+    },
+    {
+      "code": "jp.kobe-subway",
+      "region": "jp",
+      "legal": "神戸市",
+      "label": "神戸市営",
+      "names": {
+        "ja": [
+          "神戸市営地下鉄",
+          "神戸市交通局",
+          "神戸市営",
+          "神戸市"
+        ],
+        "en": [
+          "Kobe Municipal Subway"
+        ],
+        "zhHans": [
+          "神户市营地铁"
+        ],
+        "zhHant": [
+          "神戶市營地鐵"
+        ],
+        "ko": [
+          "고베 시영 지하철"
+        ]
+      },
+      "aliases": [],
+      "families": [
+        "jp.kobe-subway"
+      ]
+    },
+    {
+      "code": "jp.kominato",
+      "region": "jp",
+      "legal": "小湊鐵道",
+      "label": "小湊鐵道",
+      "names": {
+        "ja": [
+          "小湊鐵道",
+          "小湊鉄道"
+        ],
+        "en": [
+          "Kominato Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.konan",
+      "region": "jp",
+      "legal": "弘南鉄道",
+      "label": "弘南鉄道",
+      "names": {
+        "ja": [
+          "弘南鉄道"
+        ],
+        "en": [
+          "Konan Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.kotoden",
+      "region": "jp",
+      "legal": "高松琴平電気鉄道",
+      "label": "高松琴平電気鉄道",
+      "names": {
+        "ja": [
+          "高松琴平電気鉄道",
+          "ことでん"
+        ],
+        "en": [
+          "Kotoden"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.kumaden",
+      "region": "jp",
+      "legal": "熊本電気鉄道",
+      "label": "熊本電気鉄道",
+      "names": {
+        "ja": [
+          "熊本電気鉄道",
+          "熊本電鉄"
+        ],
+        "en": [
+          "Kumamoto Electric Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.kumagawa",
+      "region": "jp",
+      "legal": "くま川鉄道",
+      "label": "くま川鉄道",
+      "names": {
+        "ja": [
+          "くま川鉄道"
+        ],
+        "en": [
+          "Kumagawa Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.kumamoto-tram",
+      "region": "jp",
+      "legal": "熊本市",
+      "label": "熊本市電",
+      "names": {
+        "ja": [
+          "熊本市電",
+          "熊本市交通局",
+          "熊本市"
+        ],
+        "en": [
+          "Kumamoto City Tram"
+        ],
+        "zhHans": [
+          "熊本市电"
+        ],
+        "zhHant": [
+          "熊本市電"
+        ],
+        "ko": [
+          "구마모토 시영 전차"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.kurama",
+      "region": "jp",
+      "legal": "鞍馬寺",
+      "label": "鞍馬寺",
+      "names": {
+        "ja": [
+          "鞍馬寺",
+          "鞍馬山鋼索鉄道"
+        ],
+        "en": [
+          "Kurama-dera Cable"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.kurobe-gorge",
+      "region": "jp",
+      "legal": "黒部峡谷鉄道",
+      "label": "黒部峡谷鉄道",
+      "names": {
+        "ja": [
+          "黒部峡谷鉄道",
+          "黒部峡谷"
+        ],
+        "en": [
+          "Kurobe Gorge Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.kyoto-subway",
+      "region": "jp",
+      "legal": "京都市",
+      "label": "京都市営",
+      "names": {
+        "ja": [
+          "京都市営地下鉄",
+          "京都市交通局",
+          "京都市営",
+          "京都市"
+        ],
+        "en": [
+          "Kyoto Municipal Subway"
+        ],
+        "zhHans": [
+          "京都市营地铁"
+        ],
+        "zhHant": [
+          "京都市營地鐵"
+        ],
+        "ko": [
+          "교토 시영 지하철"
+        ]
+      },
+      "aliases": [],
+      "families": [
+        "jp.kyoto-subway"
+      ]
+    },
+    {
+      "code": "jp.kyoto-tango",
+      "region": "jp",
+      "legal": "WILLER TRAINS",
+      "label": "WILLER TRAINS",
+      "names": {
+        "ja": [
+          "京都丹後鉄道",
+          "北近畿タンゴ鉄道",
+          "丹鉄"
+        ],
+        "en": [
+          "WILLER TRAINS",
+          "WILLER　TRAINS",
+          "Kyoto Tango Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [
+        "KTR"
+      ],
+      "families": []
+    },
+    {
+      "code": "jp.linimo",
+      "region": "jp",
+      "legal": "愛知高速交通",
+      "label": "愛知高速交通",
+      "names": {
+        "ja": [
+          "愛知高速交通",
+          "リニモ"
+        ],
+        "en": [
+          "Linimo"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.manyosen",
+      "region": "jp",
+      "legal": "万葉線",
+      "label": "万葉線",
+      "names": {
+        "ja": [
+          "万葉線"
+        ],
+        "en": [
+          "Manyosen"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.matsuura",
+      "region": "jp",
+      "legal": "松浦鉄道",
+      "label": "松浦鉄道",
+      "names": {
+        "ja": [
+          "松浦鉄道"
+        ],
+        "en": [
+          "Matsuura Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.maya-cable",
+      "region": "jp",
+      "legal": "こうべ未来都市機構",
+      "label": "こうべ未来都市機構",
+      "names": {
+        "ja": [
+          "こうべ未来都市機構",
+          "摩耶ケーブル"
+        ],
+        "en": [
+          "Maya Cable"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.meitetsu",
+      "region": "jp",
+      "legal": "名古屋鉄道",
+      "label": "名鉄",
+      "names": {
+        "ja": [
+          "名古屋鉄道",
+          "名鉄"
+        ],
+        "en": [
+          "Nagoya Railroad",
+          "Meitetsu"
+        ],
+        "zhHans": [
+          "名古屋铁道",
+          "名铁"
+        ],
+        "zhHant": [
+          "名古屋鐵道",
+          "名鐵"
+        ],
+        "ko": [
+          "나고야 철도",
+          "메이테츠"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.minamiaso",
+      "region": "jp",
+      "legal": "南阿蘇鉄道",
+      "label": "南阿蘇鉄道",
+      "names": {
+        "ja": [
+          "南阿蘇鉄道"
+        ],
+        "en": [
+          "Minamiaso Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.minatomirai",
+      "region": "jp",
+      "legal": "横浜高速鉄道",
+      "label": "横浜高速鉄道",
+      "names": {
+        "ja": [
+          "横浜高速鉄道",
+          "横浜高速"
+        ],
+        "en": [
+          "Yokohama Minatomirai Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.mitake",
+      "region": "jp",
+      "legal": "御岳登山鉄道",
+      "label": "御岳登山鉄道",
+      "names": {
+        "ja": [
+          "御岳登山鉄道"
+        ],
+        "en": [
+          "Mitake Tozan Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.mizuma",
+      "region": "jp",
+      "legal": "水間鉄道",
+      "label": "水間鉄道",
+      "names": {
+        "ja": [
+          "水間鉄道"
+        ],
+        "en": [
+          "Mizuma Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.mizushima",
+      "region": "jp",
+      "legal": "水島臨海鉄道",
+      "label": "水島臨海鉄道",
+      "names": {
+        "ja": [
+          "水島臨海鉄道",
+          "水島臨海"
+        ],
+        "en": [
+          "Mizushima Rinkai Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.moka",
+      "region": "jp",
+      "legal": "真岡鐵道",
+      "label": "真岡鐵道",
+      "names": {
+        "ja": [
+          "真岡鐵道",
+          "真岡鉄道"
+        ],
+        "en": [
+          "Moka Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.nagaden",
+      "region": "jp",
+      "legal": "長野電鉄",
+      "label": "長野電鉄",
+      "names": {
+        "ja": [
+          "長野電鉄"
+        ],
+        "en": [
+          "Nagano Electric Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.nagaragawa",
+      "region": "jp",
+      "legal": "長良川鉄道",
+      "label": "長良川鉄道",
+      "names": {
+        "ja": [
+          "長良川鉄道"
+        ],
+        "en": [
+          "Nagaragawa Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.nagasaki-tram",
+      "region": "jp",
+      "legal": "長崎電気軌道",
+      "label": "長崎電気軌道",
+      "names": {
+        "ja": [
+          "長崎電気軌道",
+          "長崎電軌"
+        ],
+        "en": [
+          "Nagasaki Electric Tramway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.nagoya-subway",
+      "region": "jp",
+      "legal": "名古屋市",
+      "label": "名古屋市営",
+      "names": {
+        "ja": [
+          "名古屋市営地下鉄",
+          "名古屋市交通局",
+          "名古屋市営",
+          "名古屋市"
+        ],
+        "en": [
+          "Nagoya Municipal Subway"
+        ],
+        "zhHans": [
+          "名古屋市营地铁"
+        ],
+        "zhHant": [
+          "名古屋市營地鐵"
+        ],
+        "ko": [
+          "나고야 시영 지하철"
+        ]
+      },
+      "aliases": [],
+      "families": [
+        "jp.nagoya-subway"
+      ]
+    },
+    {
+      "code": "jp.nankai",
+      "region": "jp",
+      "legal": "南海電気鉄道",
+      "label": "南海",
+      "names": {
+        "ja": [
+          "南海電気鉄道",
+          "南海"
+        ],
+        "en": [
+          "Nankai Electric Railway",
+          "Nankai"
+        ],
+        "zhHans": [
+          "南海电气铁道",
+          "南海电铁"
+        ],
+        "zhHant": [
+          "南海電氣鐵道",
+          "南海電鐵"
+        ],
+        "ko": [
+          "난카이 전기철도",
+          "난카이"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.new-shuttle",
+      "region": "jp",
+      "legal": "埼玉新都市交通",
+      "label": "埼玉新都市交通",
+      "names": {
+        "ja": [
+          "埼玉新都市交通",
+          "ニューシャトル"
+        ],
+        "en": [
+          "New Shuttle"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.nishikigawa",
+      "region": "jp",
+      "legal": "錦川鉄道",
+      "label": "錦川鉄道",
+      "names": {
+        "ja": [
+          "錦川鉄道"
+        ],
+        "en": [
+          "Nishikigawa Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.nishitetsu",
+      "region": "jp",
+      "legal": "西日本鉄道",
+      "label": "西鉄",
+      "names": {
+        "ja": [
+          "西日本鉄道",
+          "西鉄"
+        ],
+        "en": [
+          "Nishi-Nippon Railroad",
+          "Nishitetsu"
+        ],
+        "zhHans": [
+          "西日本铁道",
+          "西铁"
+        ],
+        "zhHant": [
+          "西日本鐵道",
+          "西鐵"
+        ],
+        "ko": [
+          "니시닛폰 철도",
+          "니시테츠"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.nose",
+      "region": "jp",
+      "legal": "能勢電鉄",
+      "label": "能勢電鉄",
+      "names": {
+        "ja": [
+          "能勢電鉄"
+        ],
+        "en": [
+          "Nose Electric Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.noto",
+      "region": "jp",
+      "legal": "のと鉄道",
+      "label": "のと鉄道",
+      "names": {
+        "ja": [
+          "のと鉄道"
+        ],
+        "en": [
+          "Noto Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.odakyu",
+      "region": "jp",
+      "legal": "小田急電鉄",
+      "label": "小田急",
+      "names": {
+        "ja": [
+          "小田急電鉄",
+          "小田急"
+        ],
+        "en": [
+          "Odakyu Electric Railway",
+          "Odakyu"
+        ],
+        "zhHans": [
+          "小田急电铁",
+          "小田急"
+        ],
+        "zhHant": [
+          "小田急電鐵",
+          "小田急"
+        ],
+        "ko": [
+          "오다큐 전철",
+          "오다큐"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.ohmi",
+      "region": "jp",
+      "legal": "近江鉄道",
+      "label": "近江鉄道",
+      "names": {
+        "ja": [
+          "近江鉄道"
+        ],
+        "en": [
+          "Ohmi Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.oigawa",
+      "region": "jp",
+      "legal": "大井川鐵道",
+      "label": "大井川鐵道",
+      "names": {
+        "ja": [
+          "大井川鐵道",
+          "大井川鉄道"
+        ],
+        "en": [
+          "Oigawa Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.okaden",
+      "region": "jp",
+      "legal": "岡山電気軌道",
+      "label": "岡山電気軌道",
+      "names": {
+        "ja": [
+          "岡山電気軌道",
+          "岡電"
+        ],
+        "en": [
+          "Okayama Electric Tramway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.osaka-metro",
+      "region": "jp",
+      "legal": "大阪市高速電気軌道",
+      "label": "大阪メトロ",
+      "names": {
+        "ja": [
+          "大阪市高速電気軌道",
+          "大阪メトロ",
+          "大阪市営地下鉄"
+        ],
+        "en": [
+          "Osaka Metro"
+        ],
+        "zhHans": [
+          "大阪地铁",
+          "大阪Metro"
+        ],
+        "zhHant": [
+          "大阪地鐵"
+        ],
+        "ko": [
+          "오사카 메트로",
+          "오사카 지하철"
+        ]
+      },
+      "aliases": [
+        "大阪市交通局"
+      ],
+      "families": [
+        "jp.osaka-subway"
+      ]
+    },
+    {
+      "code": "jp.osaka-monorail",
+      "region": "jp",
+      "legal": "大阪モノレール",
+      "label": "大阪モノレール",
+      "names": {
+        "ja": [
+          "大阪モノレール"
+        ],
+        "en": [
+          "Osaka Monorail"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.oyama-cable",
+      "region": "jp",
+      "legal": "大山観光電鉄",
+      "label": "大山観光電鉄",
+      "names": {
+        "ja": [
+          "大山観光電鉄",
+          "大山ケーブル"
+        ],
+        "en": [
+          "Oyama Cable Car"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.rakutenchi",
+      "region": "jp",
+      "legal": "ラクテンチ",
+      "label": "ラクテンチ",
+      "names": {
+        "ja": [
+          "ラクテンチ",
+          "ラクテンチケーブル"
+        ],
+        "en": [
+          "Rakutenchi"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.rinkai",
+      "region": "jp",
+      "legal": "東京臨海高速鉄道",
+      "label": "東京臨海高速鉄道",
+      "names": {
+        "ja": [
+          "東京臨海高速鉄道",
+          "りんかい線"
+        ],
+        "en": [
+          "Tokyo Waterfront Area Rapid Transit",
+          "Rinkai Line"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.rokko-cable",
+      "region": "jp",
+      "legal": "神戸六甲鉄道",
+      "label": "神戸六甲鉄道",
+      "names": {
+        "ja": [
+          "神戸六甲鉄道",
+          "六甲ケーブル"
+        ],
+        "en": [
+          "Rokko Cable"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.ryutetsu",
+      "region": "jp",
+      "legal": "流鉄",
+      "label": "流鉄",
+      "names": {
+        "ja": [
+          "流鉄"
+        ],
+        "en": [
+          "Ryutetsu"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.sagano",
+      "region": "jp",
+      "legal": "嵯峨野観光鉄道",
+      "label": "嵯峨野観光鉄道",
+      "names": {
+        "ja": [
+          "嵯峨野観光鉄道",
+          "嵯峨野トロッコ"
+        ],
+        "en": [
+          "Sagano Scenic Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.saitama-rapid",
+      "region": "jp",
+      "legal": "埼玉高速鉄道",
+      "label": "埼玉高速鉄道",
+      "names": {
+        "ja": [
+          "埼玉高速鉄道",
+          "埼玉高速"
+        ],
+        "en": [
+          "Saitama Rapid Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.sangi",
+      "region": "jp",
+      "legal": "三岐鉄道",
+      "label": "三岐鉄道",
+      "names": {
+        "ja": [
+          "三岐鉄道"
+        ],
+        "en": [
+          "Sangi Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.sanriku",
+      "region": "jp",
+      "legal": "三陸鉄道",
+      "label": "三陸鉄道",
+      "names": {
+        "ja": [
+          "三陸鉄道"
+        ],
+        "en": [
+          "Sanriku Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.sanyo",
+      "region": "jp",
+      "legal": "山陽電気鉄道",
+      "label": "山陽電気鉄道",
+      "names": {
+        "ja": [
+          "山陽電気鉄道",
+          "山陽"
+        ],
+        "en": [
+          "Sanyo Electric Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.sapporo-streetcar",
+      "region": "jp",
+      "legal": "一般社団法人札幌市交通事業振興公社",
+      "label": "札幌市電",
+      "names": {
+        "ja": [
+          "札幌市電",
+          "札幌市交通事業振興公社",
+          "一般社団法人札幌市交通事業振興公社"
+        ],
+        "en": [
+          "Sapporo Streetcar"
+        ],
+        "zhHans": [
+          "札幌市电"
+        ],
+        "zhHant": [
+          "札幌市電"
+        ],
+        "ko": [
+          "삿포로 시영 전차"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.sapporo-subway",
+      "region": "jp",
+      "legal": "札幌市",
+      "label": "札幌市営",
+      "names": {
+        "ja": [
+          "札幌市営地下鉄",
+          "札幌市交通局",
+          "札幌市営",
+          "札幌市"
+        ],
+        "en": [
+          "Sapporo Municipal Subway"
+        ],
+        "zhHans": [
+          "札幌市营地铁"
+        ],
+        "zhHant": [
+          "札幌市營地鐵"
+        ],
+        "ko": [
+          "삿포로 시영 지하철"
+        ]
+      },
+      "aliases": [],
+      "families": [
+        "jp.sapporo-subway"
+      ]
+    },
+    {
+      "code": "jp.sarakura",
+      "region": "jp",
+      "legal": "皿倉登山鉄道",
+      "label": "皿倉登山鉄道",
+      "names": {
+        "ja": [
+          "皿倉登山鉄道"
+        ],
+        "en": [
+          "Sarakurayama Cable"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.seaside-line",
+      "region": "jp",
+      "legal": "横浜シーサイドライン",
+      "label": "横浜シーサイドライン",
+      "names": {
+        "ja": [
+          "横浜シーサイドライン",
+          "シーサイドライン"
+        ],
+        "en": [
+          "Yokohama Seaside Line"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.seibu",
+      "region": "jp",
+      "legal": "西武鉄道",
+      "label": "西武",
+      "names": {
+        "ja": [
+          "西武鉄道",
+          "西武"
+        ],
+        "en": [
+          "Seibu Railway",
+          "Seibu"
+        ],
+        "zhHans": [
+          "西武铁道",
+          "西武"
+        ],
+        "zhHant": [
+          "西武鐵道",
+          "西武"
+        ],
+        "ko": [
+          "세이부 철도",
+          "세이부"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.seikan-tunnel",
+      "region": "jp",
+      "legal": "一般財団法人青函トンネル記念館",
+      "label": "青函トンネル記念館",
+      "names": {
+        "ja": [
+          "一般財団法人青函トンネル記念館",
+          "青函トンネル記念館",
+          "青函トンネル竜飛斜坑線"
+        ],
+        "en": [
+          "Seikan Tunnel Museum"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.sendai-airport",
+      "region": "jp",
+      "legal": "仙台空港鉄道",
+      "label": "仙台空港鉄道",
+      "names": {
+        "ja": [
+          "仙台空港鉄道"
+        ],
+        "en": [
+          "Sendai Airport Transit"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.sendai-subway",
+      "region": "jp",
+      "legal": "仙台市",
+      "label": "仙台市営",
+      "names": {
+        "ja": [
+          "仙台市営地下鉄",
+          "仙台市交通局",
+          "仙台市営",
+          "仙台市"
+        ],
+        "en": [
+          "Sendai Municipal Subway"
+        ],
+        "zhHans": [
+          "仙台市营地铁"
+        ],
+        "zhHant": [
+          "仙台市營地鐵"
+        ],
+        "ko": [
+          "센다이 시영 지하철"
+        ]
+      },
+      "aliases": [],
+      "families": [
+        "jp.sendai-subway"
+      ]
+    },
+    {
+      "code": "jp.shibayama",
+      "region": "jp",
+      "legal": "芝山鉄道",
+      "label": "芝山鉄道",
+      "names": {
+        "ja": [
+          "芝山鉄道",
+          "芝山"
+        ],
+        "en": [
+          "Shibayama Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.shigaraki",
+      "region": "jp",
+      "legal": "信楽高原鐵道",
+      "label": "信楽高原鐵道",
+      "names": {
+        "ja": [
+          "信楽高原鐵道",
+          "信楽高原鉄道"
+        ],
+        "en": [
+          "Shigaraki Kogen Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.shikoku-cable",
+      "region": "jp",
+      "legal": "四国ケーブル",
+      "label": "四国ケーブル",
+      "names": {
+        "ja": [
+          "四国ケーブル",
+          "八栗ケーブル"
+        ],
+        "en": [
+          "Shikoku Cable"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.shimabara",
+      "region": "jp",
+      "legal": "島原鉄道",
+      "label": "島原鉄道",
+      "names": {
+        "ja": [
+          "島原鉄道"
+        ],
+        "en": [
+          "Shimabara Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.shinano",
+      "region": "jp",
+      "legal": "しなの鉄道",
+      "label": "しなの鉄道",
+      "names": {
+        "ja": [
+          "しなの鉄道"
+        ],
+        "en": [
+          "Shinano Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.shintetsu",
+      "region": "jp",
+      "legal": "神戸電鉄",
+      "label": "神戸電鉄",
+      "names": {
+        "ja": [
+          "神戸電鉄",
+          "神鉄"
+        ],
+        "en": [
+          "Kobe Electric Railway",
+          "Shintetsu"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.shizutetsu",
+      "region": "jp",
+      "legal": "静岡鉄道",
+      "label": "静岡鉄道",
+      "names": {
+        "ja": [
+          "静岡鉄道",
+          "静鉄"
+        ],
+        "en": [
+          "Shizuoka Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.shonan-monorail",
+      "region": "jp",
+      "legal": "湘南モノレール",
+      "label": "湘南モノレール",
+      "names": {
+        "ja": [
+          "湘南モノレール"
+        ],
+        "en": [
+          "Shonan Monorail"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.sotetsu",
+      "region": "jp",
+      "legal": "相模鉄道",
+      "label": "相鉄",
+      "names": {
+        "ja": [
+          "相模鉄道",
+          "相鉄"
+        ],
+        "en": [
+          "Sagami Railway",
+          "Sotetsu"
+        ],
+        "zhHans": [
+          "相模铁道",
+          "相铁"
+        ],
+        "zhHant": [
+          "相模鐵道",
+          "相鐵"
+        ],
+        "ko": [
+          "사가미 철도",
+          "소테츠"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.takao",
+      "region": "jp",
+      "legal": "高尾登山電鉄",
+      "label": "高尾登山電鉄",
+      "names": {
+        "ja": [
+          "高尾登山電鉄"
+        ],
+        "en": [
+          "Takao Tozan Electric Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.tama-monorail",
+      "region": "jp",
+      "legal": "多摩都市モノレール",
+      "label": "多摩都市モノレール",
+      "names": {
+        "ja": [
+          "多摩都市モノレール",
+          "多摩モノレール"
+        ],
+        "en": [
+          "Tama Monorail"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.tango-kairiku",
+      "region": "jp",
+      "legal": "丹後海陸交通",
+      "label": "丹後海陸交通",
+      "names": {
+        "ja": [
+          "丹後海陸交通",
+          "天橋立ケーブル"
+        ],
+        "en": [
+          "Tango Kairiku Kotsu"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.tarumi",
+      "region": "jp",
+      "legal": "樽見鉄道",
+      "label": "樽見鉄道",
+      "names": {
+        "ja": [
+          "樽見鉄道"
+        ],
+        "en": [
+          "Tarumi Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.tateyama-kurobe",
+      "region": "jp",
+      "legal": "立山黒部貫光",
+      "label": "立山黒部貫光",
+      "names": {
+        "ja": [
+          "立山黒部貫光"
+        ],
+        "en": [
+          "Tateyama Kurobe Kanko"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.tenhama",
+      "region": "jp",
+      "legal": "天竜浜名湖鉄道",
+      "label": "天竜浜名湖鉄道",
+      "names": {
+        "ja": [
+          "天竜浜名湖鉄道",
+          "天浜線"
+        ],
+        "en": [
+          "Tenryu Hamanako Railroad"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.tobu",
+      "region": "jp",
+      "legal": "東武鉄道",
+      "label": "東武",
+      "names": {
+        "ja": [
+          "東武鉄道",
+          "東武"
+        ],
+        "en": [
+          "Tobu Railway",
+          "Tobu"
+        ],
+        "zhHans": [
+          "东武铁道",
+          "东武"
+        ],
+        "zhHant": [
+          "東武鐵道",
+          "東武"
+        ],
+        "ko": [
+          "도부 철도",
+          "도부"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.toei",
+      "region": "jp",
+      "legal": "東京都",
+      "label": "都営",
+      "names": {
+        "ja": [
+          "都営地下鉄",
+          "東京都交通局",
+          "都営",
+          "東京都"
+        ],
+        "en": [
+          "Toei Subway",
+          "Toei",
+          "Tokyo Metropolitan Bureau of Transportation"
+        ],
+        "zhHans": [
+          "都营地铁",
+          "都营",
+          "东京都交通局"
+        ],
+        "zhHant": [
+          "都營地鐵",
+          "都營",
+          "東京都交通局"
+        ],
+        "ko": [
+          "도에이 지하철",
+          "도에이",
+          "도쿄도 교통국"
+        ]
+      },
+      "aliases": [
+        "都電"
+      ],
+      "families": [
+        "jp.tokyo-subway"
+      ]
+    },
+    {
+      "code": "jp.tokyo-metro",
+      "region": "jp",
+      "legal": "東京地下鉄",
+      "label": "東京メトロ",
+      "names": {
+        "ja": [
+          "東京地下鉄",
+          "東京メトロ"
+        ],
+        "en": [
+          "Tokyo Metro"
+        ],
+        "zhHans": [
+          "东京地铁",
+          "东京Metro"
+        ],
+        "zhHant": [
+          "東京地鐵",
+          "東京地下鐵"
+        ],
+        "ko": [
+          "도쿄 메트로"
+        ]
+      },
+      "aliases": [
+        "営団地下鉄",
+        "帝都高速度交通営団"
+      ],
+      "families": [
+        "jp.tokyo-subway"
+      ]
+    },
+    {
+      "code": "jp.tokyo-monorail",
+      "region": "jp",
+      "legal": "東京モノレール",
+      "label": "東京モノレール",
+      "names": {
+        "ja": [
+          "東京モノレール"
+        ],
+        "en": [
+          "Tokyo Monorail"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.tokyu",
+      "region": "jp",
+      "legal": "東急電鉄",
+      "label": "東急",
+      "names": {
+        "ja": [
+          "東急電鉄",
+          "東急",
+          "東京急行電鉄"
+        ],
+        "en": [
+          "Tokyu Corporation",
+          "Tokyu"
+        ],
+        "zhHans": [
+          "东急电铁",
+          "东急",
+          "东京急行电铁"
+        ],
+        "zhHant": [
+          "東急電鐵",
+          "東急",
+          "東京急行電鐵"
+        ],
+        "ko": [
+          "도큐 전철",
+          "도큐"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.tosa-kuroshio",
+      "region": "jp",
+      "legal": "土佐くろしお鉄道",
+      "label": "土佐くろしお鉄道",
+      "names": {
+        "ja": [
+          "土佐くろしお鉄道",
+          "土佐くろしお"
+        ],
+        "en": [
+          "Tosa Kuroshio Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.tosaden",
+      "region": "jp",
+      "legal": "とさでん交通",
+      "label": "とさでん交通",
+      "names": {
+        "ja": [
+          "とさでん交通",
+          "とさでん"
+        ],
+        "en": [
+          "Tosaden Traffic"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.toyo-rapid",
+      "region": "jp",
+      "legal": "東葉高速鉄道",
+      "label": "東葉高速鉄道",
+      "names": {
+        "ja": [
+          "東葉高速鉄道",
+          "東葉高速"
+        ],
+        "en": [
+          "Toyo Rapid Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.toyotetsu",
+      "region": "jp",
+      "legal": "豊橋鉄道",
+      "label": "豊橋鉄道",
+      "names": {
+        "ja": [
+          "豊橋鉄道",
+          "豊鉄"
+        ],
+        "en": [
+          "Toyohashi Railroad"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.tsugaru",
+      "region": "jp",
+      "legal": "津軽鉄道",
+      "label": "津軽鉄道",
+      "names": {
+        "ja": [
+          "津軽鉄道"
+        ],
+        "en": [
+          "Tsugaru Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.tsukuba-cable",
+      "region": "jp",
+      "legal": "筑波観光鉄道",
+      "label": "筑波観光鉄道",
+      "names": {
+        "ja": [
+          "筑波観光鉄道",
+          "筑波山ケーブル"
+        ],
+        "en": [
+          "Mt. Tsukuba Cable Car"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.tsukuba-express",
+      "region": "jp",
+      "legal": "首都圏新都市鉄道",
+      "label": "首都圏新都市鉄道",
+      "names": {
+        "ja": [
+          "首都圏新都市鉄道",
+          "つくばエクスプレス"
+        ],
+        "en": [
+          "Tsukuba Express"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.ueda",
+      "region": "jp",
+      "legal": "上田電鉄",
+      "label": "上田電鉄",
+      "names": {
+        "ja": [
+          "上田電鉄"
+        ],
+        "en": [
+          "Ueda Electric Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.utsunomiya-lrt",
+      "region": "jp",
+      "legal": "宇都宮ライトレール",
+      "label": "宇都宮ライトレール",
+      "names": {
+        "ja": [
+          "宇都宮ライトレール",
+          "ライトライン"
+        ],
+        "en": [
+          "Utsunomiya Light Rail"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.wakasa",
+      "region": "jp",
+      "legal": "若桜鉄道",
+      "label": "若桜鉄道",
+      "names": {
+        "ja": [
+          "若桜鉄道"
+        ],
+        "en": [
+          "Wakasa Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.wakayama-electric",
+      "region": "jp",
+      "legal": "和歌山電鐵",
+      "label": "和歌山電鐵",
+      "names": {
+        "ja": [
+          "和歌山電鐵",
+          "和歌山電鉄"
+        ],
+        "en": [
+          "Wakayama Electric Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.watarase",
+      "region": "jp",
+      "legal": "わたらせ渓谷鐵道",
+      "label": "わたらせ渓谷鐵道",
+      "names": {
+        "ja": [
+          "わたらせ渓谷鐵道",
+          "わたらせ渓谷",
+          "わたらせ渓谷鉄道"
+        ],
+        "en": [
+          "Watarase Keikoku Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.yagan",
+      "region": "jp",
+      "legal": "野岩鉄道",
+      "label": "野岩鉄道",
+      "names": {
+        "ja": [
+          "野岩鉄道"
+        ],
+        "en": [
+          "Yagan Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.yamagata",
+      "region": "jp",
+      "legal": "山形鉄道",
+      "label": "山形鉄道",
+      "names": {
+        "ja": [
+          "山形鉄道"
+        ],
+        "en": [
+          "Yamagata Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.yamaman",
+      "region": "jp",
+      "legal": "山万",
+      "label": "山万",
+      "names": {
+        "ja": [
+          "山万"
+        ],
+        "en": [
+          "Yamaman"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.yokohama-subway",
+      "region": "jp",
+      "legal": "横浜市",
+      "label": "横浜市営",
+      "names": {
+        "ja": [
+          "横浜市営地下鉄",
+          "横浜市交通局",
+          "横浜市営",
+          "横浜市"
+        ],
+        "en": [
+          "Yokohama Municipal Subway"
+        ],
+        "zhHans": [
+          "横滨市营地铁"
+        ],
+        "zhHant": [
+          "橫濱市營地鐵"
+        ],
+        "ko": [
+          "요코하마 시영 지하철"
+        ]
+      },
+      "aliases": [],
+      "families": [
+        "jp.yokohama-subway"
+      ]
+    },
+    {
+      "code": "jp.yoro",
+      "region": "jp",
+      "legal": "養老鉄道",
+      "label": "養老鉄道",
+      "names": {
+        "ja": [
+          "養老鉄道"
+        ],
+        "en": [
+          "Yoro Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.yui-rail",
+      "region": "jp",
+      "legal": "沖縄都市モノレール",
+      "label": "沖縄都市モノレール",
+      "names": {
+        "ja": [
+          "沖縄都市モノレール",
+          "ゆいレール"
+        ],
+        "en": [
+          "Yui Rail",
+          "Okinawa Urban Monorail"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.yuri-kogen",
+      "region": "jp",
+      "legal": "由利高原鉄道",
+      "label": "由利高原鉄道",
+      "names": {
+        "ja": [
+          "由利高原鉄道",
+          "由利高原"
+        ],
+        "en": [
+          "Yuri Kogen Railway"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.yurikamome",
+      "region": "jp",
+      "legal": "ゆりかもめ",
+      "label": "ゆりかもめ",
+      "names": {
+        "ja": [
+          "ゆりかもめ"
+        ],
+        "en": [
+          "Yurikamome"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "jp.yutorito",
+      "region": "jp",
+      "legal": "名古屋ガイドウェイバス",
+      "label": "名古屋ガイドウェイバス",
+      "names": {
+        "ja": [
+          "名古屋ガイドウェイバス",
+          "ゆとりーとライン"
+        ],
+        "en": [
+          "Nagoya Guideway Bus",
+          "Yutorito Line"
+        ],
+        "zhHans": [],
+        "zhHant": [],
+        "ko": []
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "kr.arex",
+      "region": "kr",
+      "legal": "공항철도주식회사",
+      "label": "공항철도주식회사",
+      "names": {
+        "ja": [
+          "空港鉄道",
+          "仁川国際空港鉄道"
+        ],
+        "en": [
+          "AREX",
+          "Airport Railroad"
+        ],
+        "zhHans": [
+          "机场铁道",
+          "仁川机场铁路"
+        ],
+        "zhHant": [
+          "機場鐵道",
+          "仁川機場鐵路"
+        ],
+        "ko": [
+          "공항철도",
+          "공항철도주식회사"
+        ]
+      },
+      "aliases": [],
+      "families": [
+        "kr.seoul-subway"
+      ]
+    },
+    {
+      "code": "kr.busan-gimhae",
+      "region": "kr",
+      "legal": "부산·김해경전철주식회사",
+      "label": "부산·김해경전철주식회사",
+      "names": {
+        "ja": [
+          "釜山金海軽電鉄"
+        ],
+        "en": [
+          "Busan-Gimhae Light Rail"
+        ],
+        "zhHans": [
+          "釜山金海轻电铁"
+        ],
+        "zhHant": [
+          "釜山金海輕電鐵"
+        ],
+        "ko": [
+          "부산김해경전철",
+          "부산·김해경전철주식회사"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "kr.busan-metro",
+      "region": "kr",
+      "legal": "부산교통공사",
+      "label": "부산교통공사",
+      "names": {
+        "ja": [
+          "釜山交通公社",
+          "釜山メトロ"
+        ],
+        "en": [
+          "Busan Transportation Corporation",
+          "Busan Metro"
+        ],
+        "zhHans": [
+          "釜山交通公社",
+          "釜山地铁"
+        ],
+        "zhHant": [
+          "釜山交通公社",
+          "釜山地鐵"
+        ],
+        "ko": [
+          "부산교통공사",
+          "부산 도시철도"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "kr.daegu-metro",
+      "region": "kr",
+      "legal": "대구교통공사",
+      "label": "대구교통공사",
+      "names": {
+        "ja": [
+          "大邱交通公社",
+          "大邱都市鉄道"
+        ],
+        "en": [
+          "Daegu Transportation Corporation",
+          "Daegu Metro"
+        ],
+        "zhHans": [
+          "大邱交通公社",
+          "大邱地铁"
+        ],
+        "zhHant": [
+          "大邱交通公社",
+          "大邱地鐵"
+        ],
+        "ko": [
+          "대구교통공사",
+          "대구 도시철도"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "kr.daejeon-metro",
+      "region": "kr",
+      "legal": "대전교통공사",
+      "label": "대전교통공사",
+      "names": {
+        "ja": [
+          "大田交通公社",
+          "大田都市鉄道"
+        ],
+        "en": [
+          "Daejeon Transportation Corporation",
+          "Daejeon Metro"
+        ],
+        "zhHans": [
+          "大田交通公社",
+          "大田地铁"
+        ],
+        "zhHant": [
+          "大田交通公社",
+          "大田地鐵"
+        ],
+        "ko": [
+          "대전교통공사",
+          "대전 도시철도"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "kr.everline",
+      "region": "kr",
+      "legal": "용인에버라인운영(주)",
+      "label": "용인에버라인운영(주)",
+      "names": {
+        "ja": [
+          "龍仁軽電鉄",
+          "龍仁エバーライン"
+        ],
+        "en": [
+          "Yongin EverLine"
+        ],
+        "zhHans": [
+          "龙仁轻电铁"
+        ],
+        "zhHant": [
+          "龍仁輕電鐵"
+        ],
+        "ko": [
+          "용인에버라인",
+          "용인경전철",
+          "용인에버라인운영(주)"
+        ]
+      },
+      "aliases": [],
+      "families": [
+        "kr.seoul-subway"
+      ]
+    },
+    {
+      "code": "kr.gimpo-goldline",
+      "region": "kr",
+      "legal": "김포골드라인SRS",
+      "label": "김포골드라인SRS",
+      "names": {
+        "ja": [
+          "金浦都市鉄道",
+          "金浦ゴールドライン"
+        ],
+        "en": [
+          "Gimpo Goldline"
+        ],
+        "zhHans": [
+          "金浦都市铁道"
+        ],
+        "zhHant": [
+          "金浦都市鐵道"
+        ],
+        "ko": [
+          "김포골드라인",
+          "김포 도시철도",
+          "김포골드라인SRS"
+        ]
+      },
+      "aliases": [],
+      "families": [
+        "kr.seoul-subway"
+      ]
+    },
+    {
+      "code": "kr.gtx-a",
+      "region": "kr",
+      "legal": "지티엑스에이운영주식회사",
+      "label": "지티엑스에이운영주식회사",
+      "names": {
+        "ja": [
+          "首都圏広域急行鉄道",
+          "GTX-A"
+        ],
+        "en": [
+          "GTX-A"
+        ],
+        "zhHans": [
+          "首都圈广域急行铁路A线"
+        ],
+        "zhHant": [
+          "首都圈廣域急行鐵道A線"
+        ],
+        "ko": [
+          "GTX-A",
+          "지티엑스A",
+          "수도권광역급행철도",
+          "지티엑스에이운영주식회사"
+        ]
+      },
+      "aliases": [
+        "GTX"
+      ],
+      "families": [
+        "kr.seoul-subway"
+      ]
+    },
+    {
+      "code": "kr.gwangju-metro",
+      "region": "kr",
+      "legal": "광주교통공사",
+      "label": "광주교통공사",
+      "names": {
+        "ja": [
+          "光州交通公社",
+          "光州都市鉄道"
+        ],
+        "en": [
+          "Gwangju Metropolitan Transit Corporation",
+          "Gwangju Metro"
+        ],
+        "zhHans": [
+          "光州交通公社",
+          "光州地铁"
+        ],
+        "zhHant": [
+          "光州交通公社",
+          "光州地鐵"
+        ],
+        "ko": [
+          "광주교통공사",
+          "광주 도시철도"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "kr.haeundae-blueline",
+      "region": "kr",
+      "legal": "해운대블루라인(주)",
+      "label": "해운대블루라인(주)",
+      "names": {
+        "ja": [
+          "海雲台ブルーライン"
+        ],
+        "en": [
+          "Haeundae Blueline Park"
+        ],
+        "zhHans": [
+          "海云台蓝线"
+        ],
+        "zhHant": [
+          "海雲台藍線"
+        ],
+        "ko": [
+          "해운대블루라인",
+          "해운대 해변열차",
+          "해운대블루라인(주)"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "kr.incheon-airport-shuttle",
+      "region": "kr",
+      "legal": "인천공항시설관리",
+      "label": "인천공항시설관리",
+      "names": {
+        "ja": [
+          "仁川空港シャトルトレイン"
+        ],
+        "en": [
+          "Incheon Airport Shuttle Train"
+        ],
+        "zhHans": [
+          "仁川机场摆渡列车"
+        ],
+        "zhHant": [
+          "仁川機場接駁列車"
+        ],
+        "ko": [
+          "인천공항 셔틀트레인",
+          "인천공항시설관리"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "kr.incheon-metro",
+      "region": "kr",
+      "legal": "인천교통공사",
+      "label": "인천교통공사",
+      "names": {
+        "ja": [
+          "仁川交通公社",
+          "仁川都市鉄道"
+        ],
+        "en": [
+          "Incheon Transit Corporation",
+          "Incheon Metro"
+        ],
+        "zhHans": [
+          "仁川交通公社",
+          "仁川地铁"
+        ],
+        "zhHant": [
+          "仁川交通公社",
+          "仁川地鐵"
+        ],
+        "ko": [
+          "인천교통공사",
+          "인천 도시철도"
+        ]
+      },
+      "aliases": [],
+      "families": [
+        "kr.seoul-subway"
+      ]
+    },
+    {
+      "code": "kr.jukbyeon-skyrail",
+      "region": "kr",
+      "legal": "(주)스카이레일",
+      "label": "(주)스카이레일",
+      "names": {
+        "ja": [
+          "竹辺海岸スカレーイル"
+        ],
+        "en": [
+          "Jukbyeon Coastal Skyrail"
+        ],
+        "zhHans": [
+          "竹边海岸天空铁路"
+        ],
+        "zhHant": [
+          "竹邊海岸天空鐵路"
+        ],
+        "ko": [
+          "죽변해안스카이레일",
+          "(주)스카이레일"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "kr.korail",
+      "region": "kr",
+      "legal": "한국철도공사",
+      "label": "한국철도공사",
+      "names": {
+        "ja": [
+          "韓国鉄道公社",
+          "韓国鉄道",
+          "コレイル"
+        ],
+        "en": [
+          "Korea Railroad Corporation",
+          "Korail"
+        ],
+        "zhHans": [
+          "韩国铁道公社",
+          "韩国铁道"
+        ],
+        "zhHant": [
+          "韓國鐵道公社",
+          "韓國鐵道"
+        ],
+        "ko": [
+          "한국철도공사",
+          "코레일"
+        ]
+      },
+      "aliases": [
+        "KORAIL"
+      ],
+      "families": [
+        "kr.seoul-subway"
+      ]
+    },
+    {
+      "code": "kr.neotrans",
+      "region": "kr",
+      "legal": "네오트랜스주식회사",
+      "label": "네오트랜스주식회사",
+      "names": {
+        "ja": [
+          "新盆唐線",
+          "ネオトランス"
+        ],
+        "en": [
+          "NeoTrans",
+          "Shinbundang Line"
+        ],
+        "zhHans": [
+          "新盆唐线"
+        ],
+        "zhHant": [
+          "新盆唐線"
+        ],
+        "ko": [
+          "네오트랜스",
+          "신분당선",
+          "네오트랜스주식회사"
+        ]
+      },
+      "aliases": [
+        "Sinbundang"
+      ],
+      "families": [
+        "kr.seoul-subway"
+      ]
+    },
+    {
+      "code": "kr.seoul-line9",
+      "region": "kr",
+      "legal": "서울시메트로9호선",
+      "label": "서울시메트로9호선",
+      "names": {
+        "ja": [
+          "ソウルメトロ9号線"
+        ],
+        "en": [
+          "Seoul Metro Line 9"
+        ],
+        "zhHans": [
+          "首尔地铁9号线"
+        ],
+        "zhHant": [
+          "首爾地鐵9號線"
+        ],
+        "ko": [
+          "서울시메트로9호선",
+          "서울 지하철 9호선"
+        ]
+      },
+      "aliases": [],
+      "families": [
+        "kr.seoul-subway"
+      ]
+    },
+    {
+      "code": "kr.seoul-metro",
+      "region": "kr",
+      "legal": "서울교통공사",
+      "label": "서울교통공사",
+      "names": {
+        "ja": [
+          "ソウル交通公社",
+          "ソウルメトロ"
+        ],
+        "en": [
+          "Seoul Metro",
+          "Seoul Transportation Corporation"
+        ],
+        "zhHans": [
+          "首尔交通公社",
+          "首尔地铁"
+        ],
+        "zhHant": [
+          "首爾交通公社",
+          "首爾地鐵"
+        ],
+        "ko": [
+          "서울교통공사",
+          "서울메트로",
+          "서울 지하철"
+        ]
+      },
+      "aliases": [
+        "서울도시철도공사"
+      ],
+      "families": [
+        "kr.seoul-subway"
+      ]
+    },
+    {
+      "code": "kr.sillim",
+      "region": "kr",
+      "legal": "로템SRS",
+      "label": "로템SRS",
+      "names": {
+        "ja": [
+          "新林線"
+        ],
+        "en": [
+          "Sillim Line"
+        ],
+        "zhHans": [
+          "新林线"
+        ],
+        "zhHant": [
+          "新林線"
+        ],
+        "ko": [
+          "신림선",
+          "로템SRS"
+        ]
+      },
+      "aliases": [],
+      "families": [
+        "kr.seoul-subway"
+      ]
+    },
+    {
+      "code": "kr.sr",
+      "region": "kr",
+      "legal": "에스알",
+      "label": "에스알",
+      "names": {
+        "ja": [
+          "水西高速鉄道",
+          "SR"
+        ],
+        "en": [
+          "SR",
+          "SRT"
+        ],
+        "zhHans": [
+          "水西高速铁路"
+        ],
+        "zhHant": [
+          "水西高速鐵路"
+        ],
+        "ko": [
+          "에스알",
+          "SRT",
+          "수서고속철도"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "kr.ui-sinseol",
+      "region": "kr",
+      "legal": "우이신설 도시철도",
+      "label": "우이신설 도시철도",
+      "names": {
+        "ja": [
+          "牛耳新設線"
+        ],
+        "en": [
+          "Ui-Sinseol LRT"
+        ],
+        "zhHans": [
+          "牛耳新设轻轨"
+        ],
+        "zhHant": [
+          "牛耳新設輕電鐵"
+        ],
+        "ko": [
+          "우이신설선",
+          "우이신설경전철",
+          "우이신설 도시철도"
+        ]
+      },
+      "aliases": [],
+      "families": [
+        "kr.seoul-subway"
+      ]
+    },
+    {
+      "code": "kr.uijeongbu-lrt",
+      "region": "kr",
+      "legal": "(주)우진메트로",
+      "label": "(주)우진메트로",
+      "names": {
+        "ja": [
+          "議政府軽電鉄"
+        ],
+        "en": [
+          "Uijeongbu Light Rail"
+        ],
+        "zhHans": [
+          "议政府轻电铁"
+        ],
+        "zhHant": [
+          "議政府輕電鐵"
+        ],
+        "ko": [
+          "의정부경전철",
+          "우진메트로",
+          "(주)우진메트로"
+        ]
+      },
+      "aliases": [],
+      "families": [
+        "kr.seoul-subway"
+      ]
+    },
+    {
+      "code": "mo.lrt",
+      "region": "mo",
+      "legal": "澳門輕軌股份有限公司",
+      "label": "澳門輕軌",
+      "names": {
+        "ja": [
+          "マカオLRT",
+          "マカオ軽軌"
+        ],
+        "en": [
+          "Macao Light Rapid Transit",
+          "Macao LRT",
+          "Macau Light Rapid Transit",
+          "Macao Light Rapid Transit Corporation, Limited"
+        ],
+        "zhHans": [
+          "澳门轻轨",
+          "澳门轻轨股份有限公司"
+        ],
+        "zhHant": [
+          "澳門輕軌",
+          "澳門輕軌股份有限公司"
+        ],
+        "ko": [
+          "마카오 경전철"
+        ]
+      },
+      "aliases": [
+        "MLRT"
+      ],
+      "families": []
+    },
+    {
+      "code": "tw.alishan",
+      "region": "tw",
+      "legal": "阿里山林業鐵路及文化資產管理處",
+      "label": "阿里山林鐵",
+      "names": {
+        "ja": [
+          "阿里山森林鉄路"
+        ],
+        "en": [
+          "Alishan Forest Railway"
+        ],
+        "zhHans": [
+          "阿里山森林铁路",
+          "阿里山林铁"
+        ],
+        "zhHant": [
+          "阿里山林業鐵路",
+          "阿里山林鐵",
+          "阿里山林業鐵路及文化資產管理處",
+          "農業部林業及自然保育署阿里山林業鐵路及文化資產管理處",
+          "農業部阿里山林業鐵路及文化資產管理處"
+        ],
+        "ko": [
+          "알리산 산림철도"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "tw.kaohsiung-metro",
+      "region": "tw",
+      "legal": "高雄捷運股份有限公司",
+      "label": "高雄捷運",
+      "names": {
+        "ja": [
+          "高雄捷運",
+          "高雄メトロ"
+        ],
+        "en": [
+          "Kaohsiung Metro",
+          "Kaohsiung Rapid Transit"
+        ],
+        "zhHans": [
+          "高雄捷运",
+          "高雄地铁"
+        ],
+        "zhHant": [
+          "高雄捷運",
+          "高雄捷運股份有限公司"
+        ],
+        "ko": [
+          "가오슝 지하철",
+          "가오슝 첩운"
+        ]
+      },
+      "aliases": [
+        "KRTC",
+        "高捷"
+      ],
+      "families": []
+    },
+    {
+      "code": "tw.new-taipei-metro",
+      "region": "tw",
+      "legal": "新北大眾捷運股份有限公司",
+      "label": "新北捷運",
+      "names": {
+        "ja": [
+          "新北捷運",
+          "新北メトロ"
+        ],
+        "en": [
+          "New Taipei Metro"
+        ],
+        "zhHans": [
+          "新北捷运",
+          "新北地铁"
+        ],
+        "zhHant": [
+          "新北捷運",
+          "新北大眾捷運股份有限公司",
+          "新北捷運股份有限公司"
+        ],
+        "ko": [
+          "신베이 지하철",
+          "신베이 첩운"
+        ]
+      },
+      "aliases": [],
+      "families": [
+        "tw.taipei-metro"
+      ]
+    },
+    {
+      "code": "tw.taichung-metro",
+      "region": "tw",
+      "legal": "臺中捷運股份有限公司",
+      "label": "台中捷運",
+      "names": {
+        "ja": [
+          "台中捷運",
+          "台中メトロ"
+        ],
+        "en": [
+          "Taichung Metro"
+        ],
+        "zhHans": [
+          "台中捷运",
+          "台中地铁"
+        ],
+        "zhHant": [
+          "台中捷運",
+          "臺中捷運",
+          "臺中捷運股份有限公司",
+          "台中捷運股份有限公司"
+        ],
+        "ko": [
+          "타이중 지하철",
+          "타이중 첩운"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "tw.taipei-metro",
+      "region": "tw",
+      "legal": "臺北大眾捷運股份有限公司",
+      "label": "台北捷運",
+      "names": {
+        "ja": [
+          "台北捷運",
+          "台北メトロ"
+        ],
+        "en": [
+          "Taipei Metro",
+          "Taipei Rapid Transit"
+        ],
+        "zhHans": [
+          "台北捷运",
+          "台北地铁"
+        ],
+        "zhHant": [
+          "台北捷運",
+          "臺北捷運",
+          "臺北大眾捷運股份有限公司",
+          "台北大眾捷運股份有限公司"
+        ],
+        "ko": [
+          "타이베이 지하철",
+          "타이베이 첩운"
+        ]
+      },
+      "aliases": [
+        "TRTC",
+        "北捷"
+      ],
+      "families": [
+        "tw.taipei-metro"
+      ]
+    },
+    {
+      "code": "tw.taoyuan-metro",
+      "region": "tw",
+      "legal": "桃園大眾捷運股份有限公司",
+      "label": "桃園捷運",
+      "names": {
+        "ja": [
+          "桃園捷運",
+          "桃園メトロ"
+        ],
+        "en": [
+          "Taoyuan Metro",
+          "Taoyuan Airport MRT"
+        ],
+        "zhHans": [
+          "桃园捷运",
+          "桃园机场捷运"
+        ],
+        "zhHant": [
+          "桃園捷運",
+          "桃園機場捷運",
+          "桃園大眾捷運股份有限公司",
+          "桃園捷運股份有限公司"
+        ],
+        "ko": [
+          "타오위안 지하철",
+          "타오위안 공항 첩운"
+        ]
+      },
+      "aliases": [
+        "機場捷運"
+      ],
+      "families": []
+    },
+    {
+      "code": "tw.thsr",
+      "region": "tw",
+      "legal": "台灣高速鐵路股份有限公司",
+      "label": "台灣高鐵",
+      "names": {
+        "ja": [
+          "台湾高速鉄道",
+          "台湾高鉄"
+        ],
+        "en": [
+          "Taiwan High Speed Rail"
+        ],
+        "zhHans": [
+          "台湾高铁",
+          "台湾高速铁路"
+        ],
+        "zhHant": [
+          "台灣高鐵",
+          "臺灣高鐵",
+          "台灣高速鐵路",
+          "臺灣高速鐵路",
+          "台灣高速鐵路股份有限公司",
+          "臺灣高速鐵路股份有限公司"
+        ],
+        "ko": [
+          "대만 고속철도",
+          "타이완 고속철도"
+        ]
+      },
+      "aliases": [
+        "THSR"
+      ],
+      "families": []
+    },
+    {
+      "code": "tw.tra",
+      "region": "tw",
+      "legal": "國營臺灣鐵路股份有限公司",
+      "label": "台鐵",
+      "names": {
+        "ja": [
+          "台湾鉄路",
+          "台湾鉄道",
+          "台鉄"
+        ],
+        "en": [
+          "Taiwan Railway Corporation",
+          "Taiwan Railway",
+          "Taiwan Railways Administration"
+        ],
+        "zhHans": [
+          "台湾铁路",
+          "台铁"
+        ],
+        "zhHant": [
+          "臺灣鐵路",
+          "台鐵",
+          "臺鐵",
+          "台灣鐵路",
+          "國營臺灣鐵路股份有限公司",
+          "臺灣鐵路股份有限公司",
+          "台灣鐵路股份有限公司",
+          "交通部臺灣鐵路管理局",
+          "臺灣鐵路管理局",
+          "台灣鐵路管理局"
+        ],
+        "ko": [
+          "대만 철도",
+          "타이완 철로"
+        ]
+      },
+      "aliases": [
+        "TRA"
+      ],
+      "families": []
+    }
+  ],
+  "families": [
+    {
+      "code": "jp.jr",
+      "names": {
+        "ja": [
+          "JR",
+          "JRグループ",
+          "ジェイアール"
+        ],
+        "en": [
+          "JR",
+          "JR Group",
+          "Japan Railways"
+        ],
+        "zhHans": [
+          "JR",
+          "日本旅客铁路"
+        ],
+        "zhHant": [
+          "JR",
+          "日本旅客鐵路"
+        ],
+        "ko": [
+          "JR",
+          "제이알",
+          "JR 그룹"
+        ]
+      },
+      "members": [
+        "jp.jr-hokkaido",
+        "jp.jr-east",
+        "jp.jr-central",
+        "jp.jr-west",
+        "jp.jr-shikoku",
+        "jp.jr-kyushu",
+        "jp.jr-central-transport"
+      ]
+    },
+    {
+      "code": "jp.tokyo-subway",
+      "names": {
+        "ja": [
+          "東京の地下鉄",
+          "東京地下鉄"
+        ],
+        "en": [
+          "Tokyo subway"
+        ],
+        "zhHans": [
+          "东京地铁"
+        ],
+        "zhHant": [
+          "東京地鐵",
+          "東京地下鐵"
+        ],
+        "ko": [
+          "도쿄 지하철"
+        ]
+      },
+      "members": [
+        "jp.tokyo-metro",
+        "jp.toei"
+      ]
+    },
+    {
+      "code": "jp.osaka-subway",
+      "names": {
+        "ja": [
+          "大阪の地下鉄",
+          "大阪地下鉄"
+        ],
+        "en": [
+          "Osaka subway"
+        ],
+        "zhHans": [
+          "大阪地铁"
+        ],
+        "zhHant": [
+          "大阪地鐵"
+        ],
+        "ko": [
+          "오사카 지하철"
+        ]
+      },
+      "members": [
+        "jp.osaka-metro"
+      ]
+    },
+    {
+      "code": "jp.nagoya-subway",
+      "names": {
+        "ja": [
+          "名古屋の地下鉄",
+          "名古屋市営地下鉄"
+        ],
+        "en": [
+          "Nagoya subway"
+        ],
+        "zhHans": [
+          "名古屋地铁"
+        ],
+        "zhHant": [
+          "名古屋地鐵"
+        ],
+        "ko": [
+          "나고야 지하철"
+        ]
+      },
+      "members": [
+        "jp.nagoya-subway"
+      ]
+    },
+    {
+      "code": "jp.kyoto-subway",
+      "names": {
+        "ja": [
+          "京都の地下鉄",
+          "京都市営地下鉄"
+        ],
+        "en": [
+          "Kyoto subway"
+        ],
+        "zhHans": [
+          "京都地铁"
+        ],
+        "zhHant": [
+          "京都地鐵"
+        ],
+        "ko": [
+          "교토 지하철"
+        ]
+      },
+      "members": [
+        "jp.kyoto-subway"
+      ]
+    },
+    {
+      "code": "jp.yokohama-subway",
+      "names": {
+        "ja": [
+          "横浜の地下鉄",
+          "横浜市営地下鉄"
+        ],
+        "en": [
+          "Yokohama subway"
+        ],
+        "zhHans": [
+          "横滨地铁"
+        ],
+        "zhHant": [
+          "橫濱地鐵"
+        ],
+        "ko": [
+          "요코하마 지하철"
+        ]
+      },
+      "members": [
+        "jp.yokohama-subway"
+      ]
+    },
+    {
+      "code": "jp.kobe-subway",
+      "names": {
+        "ja": [
+          "神戸の地下鉄",
+          "神戸市営地下鉄"
+        ],
+        "en": [
+          "Kobe subway"
+        ],
+        "zhHans": [
+          "神户地铁"
+        ],
+        "zhHant": [
+          "神戶地鐵"
+        ],
+        "ko": [
+          "고베 지하철"
+        ]
+      },
+      "members": [
+        "jp.kobe-subway"
+      ]
+    },
+    {
+      "code": "jp.fukuoka-subway",
+      "names": {
+        "ja": [
+          "福岡の地下鉄",
+          "福岡市地下鉄"
+        ],
+        "en": [
+          "Fukuoka subway"
+        ],
+        "zhHans": [
+          "福冈地铁"
+        ],
+        "zhHant": [
+          "福岡地鐵"
+        ],
+        "ko": [
+          "후쿠오카 지하철"
+        ]
+      },
+      "members": [
+        "jp.fukuoka-subway"
+      ]
+    },
+    {
+      "code": "jp.sapporo-subway",
+      "names": {
+        "ja": [
+          "札幌の地下鉄",
+          "札幌市営地下鉄"
+        ],
+        "en": [
+          "Sapporo subway"
+        ],
+        "zhHans": [
+          "札幌地铁"
+        ],
+        "zhHant": [
+          "札幌地鐵"
+        ],
+        "ko": [
+          "삿포로 지하철"
+        ]
+      },
+      "members": [
+        "jp.sapporo-subway"
+      ]
+    },
+    {
+      "code": "jp.sendai-subway",
+      "names": {
+        "ja": [
+          "仙台の地下鉄",
+          "仙台市営地下鉄"
+        ],
+        "en": [
+          "Sendai subway"
+        ],
+        "zhHans": [
+          "仙台地铁"
+        ],
+        "zhHant": [
+          "仙台地鐵"
+        ],
+        "ko": [
+          "센다이 지하철"
+        ]
+      },
+      "members": [
+        "jp.sendai-subway"
+      ]
+    },
+    {
+      "code": "kr.seoul-subway",
+      "names": {
+        "ja": [
+          "ソウルの地下鉄",
+          "ソウル地下鉄",
+          "首都圏電鉄"
+        ],
+        "en": [
+          "Seoul subway",
+          "Seoul Metropolitan Subway"
+        ],
+        "zhHans": [
+          "首尔地铁",
+          "首尔都市铁道"
+        ],
+        "zhHant": [
+          "首爾地鐵",
+          "首爾都市鐵道"
+        ],
+        "ko": [
+          "서울 지하철",
+          "수도권 전철"
+        ]
+      },
+      "members": [
+        "kr.seoul-metro",
+        "kr.korail",
+        "kr.seoul-line9",
+        "kr.neotrans",
+        "kr.arex",
+        "kr.ui-sinseol",
+        "kr.gimpo-goldline",
+        "kr.everline",
+        "kr.sillim",
+        "kr.gtx-a",
+        "kr.incheon-metro",
+        "kr.uijeongbu-lrt"
+      ]
+    },
+    {
+      "code": "tw.taipei-metro",
+      "names": {
+        "ja": [
+          "台北の地下鉄",
+          "台北メトロ"
+        ],
+        "en": [
+          "Taipei Metro"
+        ],
+        "zhHans": [
+          "台北地铁",
+          "台北捷运"
+        ],
+        "zhHant": [
+          "台北捷運",
+          "臺北捷運"
+        ],
+        "ko": [
+          "타이베이 지하철"
+        ]
+      },
+      "members": [
+        "tw.taipei-metro",
+        "tw.new-taipei-metro"
+      ]
+    }
+  ]
+}

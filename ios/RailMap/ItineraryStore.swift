@@ -72,6 +72,8 @@ final class ItineraryStore {
         forKey: ItineraryStore.lastViewedTrainKey)
 
     private static let lastViewedTrainKey = "last-viewed-train-id"
+    /// Set only after a load that ran the pending-route repair publishes.
+    private static let routeConfirmationRepairKey = "routeConfirmationRepair.20261003"
 
     /// Loads whatever the library says is current — a bundled sample, or the
     /// reader's own saved store.
@@ -526,9 +528,21 @@ final class ItineraryStore {
                 // A store saved before `number_en` existed carries the Latin
                 // name inside the caption. Split once, here; written back
                 // below, only if this load is still the one being published.
+                // The same write clears inferred `.pending` on a ride whose
+                // stops already name stations. Pending used to be applied
+                // before inference, which left a solvable ride undrawn. A
+                // ride that is still missing a station code stays pending.
                 var saved = loaded
                 let migratedCaptions = ServiceCaption.migrateLegacyCaptions(loaded.trains)
                 if let migratedCaptions { saved.trains = migratedCaptions }
+                let repairsRouteConfirmation = !UserDefaults.standard.bool(
+                    forKey: Self.routeConfirmationRepairKey)
+                var routeConfirmationChanges = 0
+                if repairsRouteConfirmation {
+                    let repair = RouteConfirmationRepair.clearInferredPending(saved.trains)
+                    routeConfirmationChanges = repair.changed
+                    if repair.changed > 0 { saved.trains = repair.trains }
+                }
                 for train in saved.trains { try TrainValidation.validateSupportedRegions(train) }
                 let store = await MergedStore.regionTagged(saved)
                 // Somebody published while this was reading the file — a
@@ -542,9 +556,11 @@ final class ItineraryStore {
                     return
                 }
                 publishWorkingSet(store)
-                // Write a caption migration only after this load has passed
+                // Write a store migration only after this load has passed
                 // the generation guard and published its snapshot.
-                if migratedCaptions != nil { _ = library.save(saved) }
+                if migratedCaptions != nil || routeConfirmationChanges > 0 {
+                    _ = library.save(saved)
+                }
                 publishRecordIndex()
                 // Taken, not bumped.
                 //
@@ -572,6 +588,11 @@ final class ItineraryStore {
                 // rewriting it on every launch would be a file touched for
                 // nothing.
                 if store != saved { library.save(self.store ?? store) }
+                // An abandoned read — generation race, validation failure,
+                // superseded grouping — leaves the flag unset and tries again.
+                if repairsRouteConfirmation {
+                    UserDefaults.standard.set(true, forKey: Self.routeConfirmationRepairKey)
+                }
                 loadInFlight = false
             } catch {
                 // A failure from a load nobody is waiting on any more must not

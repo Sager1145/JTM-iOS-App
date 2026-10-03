@@ -841,10 +841,10 @@ final class MileageStatisticsStore {
             }
         }
         if case .partial(_, _, let gaps) = ride.route {
-            // Physical boundary gaps were checked above with both adjacent legs.
-            let boundaries = Set(ride.physicalGaps.filter(\.isBoundary).map(\.segmentIndex))
-            if gaps.contains(where: { !boundaries.contains($0.segmentIndex)
-                && Statistics.isRideSegment(stops, segmentIndex: $0.segmentIndex) }) { return false }
+            if gaps.contains(where: {
+                Statistics.isRideSegment(stops, segmentIndex: $0.segmentIndex)
+                    && (!$0.isBoundary || Statistics.isRideSegment(stops, segmentIndex: $0.segmentIndex - 1))
+            }) { return false }
         }
         if case .unavailable = ride.route { return !hasRiddenSection }
         if case .historyDatabaseInvalid = ride.route { return !hasRiddenSection }

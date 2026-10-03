@@ -7,11 +7,11 @@
   "synthesisedVertices": {
     "total": 6509,
     "lines": 85,
-    "ofTotalVertices": 438138
+    "ofTotalVertices": 438139
   },
   "geometrySelection": {
     "lines": 809,
-    "totalOutputVertices": 438138,
+    "totalOutputVertices": 438139,
     "multiPartLines": 27,
     "storedLines": 98,
     "storedVertices": 63403,
@@ -33392,11 +33392,11 @@
       "lineId": "jp-筑豊電気鉄道-筑豊電気鉄道線",
       "name": "筑豊電気鉄道線",
       "partLengths": [
-        250
+        251
       ],
-      "verbatimDigest": "0xbdcf901b6aa7c3cc",
+      "verbatimDigest": "0x172ea413e392a1fa",
       "synthesised": [],
-      "continuousLength": 250,
+      "continuousLength": 251,
       "geometry": null
     },
     {

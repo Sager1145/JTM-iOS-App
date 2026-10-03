@@ -564,5 +564,32 @@
     "why": "Interval 西留辺蘂→生田原 still walked the 常紋信号場 switchback spur (two reversals at 43.836–43.838 N 143.548 E, 613 m of path for a 193 m straight run). The switchback's points were removed in October 2016 and the signal station abolished on 2017-03-04; OpenStreetMap's current 石北本線 ways run through the site as one continuous alignment with no reversal. Vertices 190–196 (the spur) are dropped; 189 and 197 both lie on the straight main line.",
     "source": "https://ja.wikipedia.org/wiki/常紋信号場 ; Overpass 2026-09-10 ways 24372192/480479011/1219724798/1077551249/536729839",
     "expectVertexCount": 428
+  },
+  {
+    "id": "C1-nishikurosaki",
+    "type": "split-interval-at-station",
+    "date": "2026-10-03",
+    "lineId": "jp-筑豊電気鉄道-筑豊電気鉄道線",
+    "betweenIds": [
+      "008703",
+      "008705"
+    ],
+    "newStation": {
+      "sid": "008704",
+      "name": "西黒崎",
+      "roma": null,
+      "romaSource": null
+    },
+    "anchorSource": {
+      "operator": "筑豊電気鉄道",
+      "line": "筑豊電気鉄道線"
+    },
+    "keys": [
+      "筑豊電気鉄道|筑豊電気鉄道線"
+    ],
+    "maxM": 1,
+    "snapM": 1,
+    "why": "Restore N02 group 008704 between 黒崎駅前 and 熊西; split the existing display interval at the source station projection and retain the pre-simplification N02 walk mileage.",
+    "source": "app/data/stations.json and app/data/rail-sections.json (MLIT N02-25), extracted into n02-fragments.json"
   }
 ]

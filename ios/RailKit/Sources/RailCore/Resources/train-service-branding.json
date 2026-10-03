@@ -2068,5 +2068,187 @@
       "Kyo-train"
     ],
     "logoPath": "/rail/service-logos/kyo-train-original.jpg"
+  },
+  {
+    "id": "nozomi",
+    "region": "jp",
+    "names": [
+      "のぞみ",
+      "Nozomi"
+    ],
+    "logoPath": null
+  },
+  {
+    "id": "hikari",
+    "region": "jp",
+    "names": [
+      "ひかり",
+      "Hikari"
+    ],
+    "logoPath": null
+  },
+  {
+    "id": "hikari-rail-star",
+    "region": "jp",
+    "names": [
+      "ひかりレールスター",
+      "Hikari Rail Star"
+    ],
+    "logoPath": null
+  },
+  {
+    "id": "kodama",
+    "region": "jp",
+    "names": [
+      "こだま",
+      "Kodama"
+    ],
+    "logoPath": null
+  },
+  {
+    "id": "mizuho",
+    "region": "jp",
+    "names": [
+      "みずほ",
+      "Mizuho"
+    ],
+    "logoPath": null
+  },
+  {
+    "id": "sakura",
+    "region": "jp",
+    "names": [
+      "さくら",
+      "Sakura"
+    ],
+    "logoPath": null
+  },
+  {
+    "id": "tsubame",
+    "region": "jp",
+    "names": [
+      "つばめ",
+      "Tsubame"
+    ],
+    "logoPath": null
+  },
+  {
+    "id": "hayabusa",
+    "region": "jp",
+    "names": [
+      "はやぶさ",
+      "Hayabusa"
+    ],
+    "logoPath": null
+  },
+  {
+    "id": "hayate",
+    "region": "jp",
+    "names": [
+      "はやて",
+      "Hayate"
+    ],
+    "logoPath": null
+  },
+  {
+    "id": "yamabiko",
+    "region": "jp",
+    "names": [
+      "やまびこ",
+      "Yamabiko"
+    ],
+    "logoPath": null
+  },
+  {
+    "id": "nasuno",
+    "region": "jp",
+    "names": [
+      "なすの",
+      "Nasuno"
+    ],
+    "logoPath": null
+  },
+  {
+    "id": "komachi",
+    "region": "jp",
+    "names": [
+      "こまち",
+      "Komachi"
+    ],
+    "logoPath": null
+  },
+  {
+    "id": "tsubasa",
+    "region": "jp",
+    "names": [
+      "つばさ",
+      "Tsubasa"
+    ],
+    "logoPath": null
+  },
+  {
+    "id": "toki",
+    "region": "jp",
+    "names": [
+      "とき",
+      "Toki"
+    ],
+    "logoPath": null
+  },
+  {
+    "id": "tanigawa",
+    "region": "jp",
+    "names": [
+      "たにがわ",
+      "Tanigawa"
+    ],
+    "logoPath": null
+  },
+  {
+    "id": "max-toki",
+    "region": "jp",
+    "names": [
+      "Maxとき",
+      "MAXとき",
+      "Max Toki"
+    ],
+    "logoPath": null
+  },
+  {
+    "id": "max-tanigawa",
+    "region": "jp",
+    "names": [
+      "Maxたにがわ",
+      "MAXたにがわ",
+      "Max Tanigawa"
+    ],
+    "logoPath": null
+  },
+  {
+    "id": "kagayaki",
+    "region": "jp",
+    "names": [
+      "かがやき",
+      "Kagayaki"
+    ],
+    "logoPath": null
+  },
+  {
+    "id": "asama",
+    "region": "jp",
+    "names": [
+      "あさま",
+      "Asama"
+    ],
+    "logoPath": null
+  },
+  {
+    "id": "tsurugi",
+    "region": "jp",
+    "names": [
+      "つるぎ",
+      "Tsurugi"
+    ],
+    "logoPath": null
   }
 ]

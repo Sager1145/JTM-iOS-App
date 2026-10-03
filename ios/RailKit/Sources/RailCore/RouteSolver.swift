@@ -997,6 +997,174 @@ public enum RouteSolver {
         return nil
     }
 
+    /// Remove short station-marker bridges only at the ends of a source line.
+    /// Interior vertices remain subject to exact surveyed-edge verification.
+    public static func trimmedToGraphNodes(
+        line: [Coordinate], graph: RouteGraph.Graph,
+        maxTrimMeters: Double = RouteNetwork.endpointSnapMeters
+    ) -> [Coordinate]? {
+        func isNode(_ coordinate: Coordinate) -> Bool {
+            let normalized = Grid.normalizeGraphCoord(coordinate)
+            return RouteGraph.nearbyNodes(normalized, in: graph, radiusDeg: 0, limit: Int.max)
+                .contains { graph.nodes[$0.key] == normalized }
+        }
+        guard let first = line.firstIndex(where: isNode),
+              let last = line.lastIndex(where: isNode), first < last else { return nil }
+        let leading = zip(line[...first], line[...first].dropFirst())
+            .reduce(0.0) { $0 + Geometry.distanceMeters($1.0, $1.1) }
+        let trailing = zip(line[last...], line[last...].dropFirst())
+            .reduce(0.0) { $0 + Geometry.distanceMeters($1.0, $1.1) }
+        guard leading <= maxTrimMeters, trailing <= maxTrimMeters else { return nil }
+        return Array(line[first...last])
+    }
+
+    /// Prove a bounded span of surveyed rail within one physical identity.
+    public static func sameIdentitySpan(
+        from previousKey: String, to firstKey: String, graph: RouteGraph.Graph,
+        date: String?, maxMeters: Double = 2 * RouteNetwork.endpointSnapMeters
+    ) -> Bool {
+        sameIdentitySpanPath(from: previousKey, to: firstKey, graph: graph,
+            date: date, maxMeters: maxMeters) != nil
+    }
+
+    private static func sameIdentitySpanPath(
+        from previousKey: String, to firstKey: String, graph: RouteGraph.Graph,
+        date: String?, maxMeters: Double
+    ) -> [String]? {
+        func identity(_ key: String) -> Substring {
+            guard let separator = key.lastIndex(of: "@") else { return key[...] }
+            return key[..<separator]
+        }
+        let requiredIdentity = identity(previousKey)
+        guard graph.nodes[previousKey] != nil, graph.nodes[firstKey] != nil,
+              requiredIdentity == identity(firstKey) else { return nil }
+        var pending: [(key: String, length: Double, path: [String])] = [(previousKey, 0, [previousKey])]
+        var best = [previousKey: 0.0]
+        var index = 0
+        while index < pending.count {
+            guard !Task.isCancelled else { return nil }
+            let current = pending[index]
+            index += 1
+            if current.key == firstKey { return current.path }
+            for edge in graph.adjacency[current.key] ?? [] {
+                let total = current.length + edge.length
+                guard edge.connector == nil, edge.physicalJunction == nil,
+                      graph.nodes[edge.to] != nil, identity(edge.to) == requiredIdentity,
+                      total <= maxMeters,
+                      RouteGraph.RailValidity.isValid(validFrom: edge.validFrom, validTo: edge.validTo, on: date),
+                      total < best[edge.to, default: .infinity] else { continue }
+                best[edge.to] = total
+                pending.append((edge.to, total, current.path + [edge.to]))
+            }
+        }
+        return nil
+    }
+
+    public static func physicalBoundaryIsProven(
+        from previous: String, to first: String, graph: RouteGraph.Graph, rideDate: String?
+    ) -> Bool {
+        previous == first
+            || physicalContinuationPath(from: previous, to: first, graph: graph, rideDate: rideDate) != nil
+            || sameIdentitySpan(from: previous, to: first, graph: graph, date: rideDate)
+    }
+
+    public struct StationSectionInference: Sendable {
+        public var hints: [Int: RouteHints] = [:]
+        public var ambiguous: Set<Int> = []
+    }
+
+    /// Resolve the entire compatible station run so later via stations can
+    /// distinguish an earlier branch. Preferences and journey IDs never turn
+    /// multiple physical choices into a unique inferred choice.
+    public static func inferStationSections(
+        _ sections: [RouteSection], resolver: StationIntervalResolver?, network: RouteNetwork?,
+        eligibility: StationRouteEligibility?, allowedCodes: [String], hard: Bool
+    ) -> StationSectionInference {
+        var result = StationSectionInference()
+        guard let resolver, let network, let eligibility else { return result }
+        let knownIDs = Set(network.lines.map(\.lineId))
+        var index = 0
+        while index < sections.count {
+            let first = sections[index]
+            guard first.sectionCodes?.isEmpty != false else { index += 1; continue }
+            let ids = first.lineIDs ?? [], names = first.lineNames ?? [], operators = first.operatorNames ?? []
+            var end = index + 1
+            while end < sections.count {
+                let next = sections[end]
+                guard next.sectionCodes?.isEmpty != false,
+                      (next.lineIDs ?? []) == ids, (next.lineNames ?? []) == names,
+                      (next.operatorNames ?? []) == operators,
+                      routeSectionBoundarySharesExplicitStop(sections[end - 1], next) else { break }
+                end += 1
+            }
+            defer { index = end }
+            if !ids.allSatisfy(knownIDs.contains) {
+                result.ambiguous.formUnion(index..<end)
+                continue
+            }
+            guard let candidates = resolver.candidateLineIDs(
+                requiredLineIDs: ids, requiredLineNames: names, requiredOperatorNames: operators),
+                  network.lines.filter({ candidates.contains($0.lineId) }).allSatisfy({
+                      eligibility.permits($0, allowedInstitutionCodes: allowedCodes, hard: hard)
+                  }),
+                  let from = eligibility.stationCode(first.fromN02StationCode) else { continue }
+            let destinations = sections[index..<end].compactMap { eligibility.stationCode($0.toN02StationCode) }
+            guard destinations.count == end - index,
+                  sections[(index + 1)..<end].enumerated().allSatisfy({ offset, section in
+                      eligibility.stationCode(section.fromN02StationCode) == destinations[offset]
+                  }) else { continue }
+            switch resolver.resolve(
+                stationCodes: [from] + destinations, requiredLineIDs: ids,
+                requiredLineNames: names, requiredOperatorNames: operators) {
+            case .resolved(let selection):
+                for offset in selection.legIntervals.indices {
+                    let leg = selection.legIntervals[offset]
+                    result.hints[index + offset] = RouteHints(
+                        requiredLineIDs: Array(Set(leg.map(\.lineID))).sorted(), sectionCodes: leg.map(\.code),
+                        fromStationCode: selection.stationCodes[offset],
+                        toStationCode: selection.stationCodes[offset + 1])
+                }
+            case .ambiguous: result.ambiguous.formUnion(index..<end)
+            case .unsupported: break
+            }
+        }
+        return result
+    }
+
+    public static func routeSectionBoundarySharesExplicitStop(
+        _ previous: RouteSection, _ next: RouteSection
+    ) -> Bool {
+        let previousCode = previous.toN02StationCode?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let nextCode = next.fromN02StationCode?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        if !previousCode.isEmpty, !nextCode.isEmpty { return previousCode == nextCode }
+        let previousName = Stations.normalizeStationName(previous.to ?? "")
+        let nextName = Stations.normalizeStationName(next.from ?? "")
+        return !previousName.isEmpty && previousName == nextName
+    }
+
+    /// Shared by production source certification and real-data regression tests.
+    public static func verifiedSourcePath(
+        _ lines: [[Coordinate]], graph: RouteGraph.Graph,
+        context: TrainContext, section: RouteSection
+    ) -> [String]? {
+        var result: [String] = []
+        for sourceLine in lines {
+            guard let line = trimmedToGraphNodes(line: sourceLine, graph: graph),
+                  let keys = verifiedPhysicalPathKeys(line, graph: graph, rideDate: context.rideDate,
+                    requiredLines: Set(section.lineNames ?? []),
+                    requiredOperators: Set(section.operatorNames ?? [])) else { return nil }
+            if let previous = result.last, let first = keys.first {
+                guard let bridge = physicalContinuationPath(
+                    from: previous, to: first, graph: graph, rideDate: context.rideDate)
+                    ?? sameIdentitySpanPath(from: previous, to: first, graph: graph,
+                        date: context.rideDate, maxMeters: 2 * RouteNetwork.endpointSnapMeters) else { return nil }
+                result += bridge.dropFirst()
+            }
+            result += keys.dropFirst(result.isEmpty ? 0 : 1)
+        }
+        return result.isEmpty ? nil : result
+    }
+
     /// Certify an already selected source polyline without replacing its rail
     /// choice with a newly solved route. Every step must be a surveyed edge;
     /// only reviewed zero junctions may change identity at a shared vertex.

@@ -58977,6 +58977,13 @@
       "translationMayBeWrong": true,
       "source": "public/rail/jp-2025.json:nameRoma (OSM-derived)"
     },
+    "008704": {
+      "ja": "西黒崎",
+      "en": "Nishi-Kurosaki",
+      "status": "manual_unverified",
+      "translationMayBeWrong": true,
+      "source": "data/jp-station-english-manual.json"
+    },
     "008705": {
       "ja": "熊西",
       "en": "Kumanishi",
@@ -76310,10 +76317,10 @@
     }
   ],
   "coverage": {
-    "stationGroups": 9041,
+    "stationGroups": 9042,
     "statusCounts": {
       "community_unverified": 8052,
-      "manual_unverified": 83,
+      "manual_unverified": 84,
       "official_verified": 905,
       "official_spelling_candidate": 1
     },
@@ -77014,9 +77021,9 @@
         "unresolved": 2
       },
       "筑豊電気鉄道": {
-        "stationGroups": 20,
+        "stationGroups": 21,
         "officialVerified": 0,
-        "unresolved": 20
+        "unresolved": 21
       },
       "紀州鉄道": {
         "stationGroups": 5,

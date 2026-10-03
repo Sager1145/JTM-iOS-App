@@ -466,7 +466,7 @@ struct TrainServicePatternsTests {
         let byCompany = TrainServicePatterns.search(
             "", filter: TrainServicePatterns.Filter(company: company))
         #expect(byCompany.isEmpty == false)
-        #expect(byCompany.allSatisfy { $0.companyLabel == company })
+        #expect(byCompany.allSatisfy { OperatorIdentity.sameCompany($0.company, company) })
 
         if let lineName = all.first(where: { $0.lines.isEmpty == false })?.lines.first {
             let byLine = TrainServicePatterns.search(lineName)

@@ -141,7 +141,16 @@ enum JourneyPoster {
         result.append(Block(text: status == .pendingConfirmation ? l.editorText(stateKey)
             : stateKey.hasPrefix("ios.route.") ? l.editorText(stateKey) : l.journeyText(stateKey), style: .heading))
         if case .needsReview(_, _, let gaps) = status {
-            for gap in gaps { result.append(Block(text: (gap.from ?? "?") + " → " + (gap.to ?? "?"))) }
+            for gap in gaps {
+                let stop = train.stops.indices.contains(gap.segmentIndex) ? train.stops[gap.segmentIndex] : nil
+                let text = gap.isBoundary
+                    ? l.editorText("ios.route.connectionUnverified", [
+                        "station": .string(l.stationName(gap.from ?? stop?.name, in: train,
+                            code: stop?.n02StationCode)),
+                    ])
+                    : (gap.from ?? "?") + " → " + (gap.to ?? "?")
+                result.append(Block(text: text))
+            }
         }
         if case .unavailable(_, let reason) = status, let reason, !reason.isEmpty {
             result.append(Block(text: reason))

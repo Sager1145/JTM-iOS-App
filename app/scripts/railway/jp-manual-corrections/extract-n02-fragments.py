@@ -14,6 +14,7 @@ SOURCE_NOTE = "国土交通省 国土数値情報 鉄道データ N02-25 (基準
 
 # key -> operator, line, bbox (lon_min, lon_max, lat_min, lat_max) or None for "whole line"
 SECTION_SPECS = [
+    ("筑豊電気鉄道", "筑豊電気鉄道線", (130.757, 130.766, 33.865, 33.867)),
     ("広島電鉄", "本線", (132.465, 132.480, 34.384, 34.400)),
     ("広島電鉄", "皆実線", (132.465, 132.480, 34.384, 34.400)),
     ("東武鉄道", "伊勢崎線", (139.800, 139.830, 35.700, 35.725)),
@@ -28,6 +29,7 @@ SECTION_SPECS = [
 ]
 
 STATION_SPECS = [
+    ("筑豊電気鉄道", "西黒崎"),
     ("広島電鉄", "的場町"),
     ("広島電鉄", "段原一丁目"),
     ("広島電鉄", "稲荷町"),
@@ -89,16 +91,16 @@ def main():
     stations_out = []
     for feat in stations_data["features"]:
         p = feat["properties"]
-        pair = (p.get("N02_004"), p.get("N02_005"))
+        pair = (p.get("N02_004", p.get("operator")), p.get("N02_005", p.get("station_name")))
         if pair not in station_pairs:
             continue
         stations_out.append(
             {
-                "operator": p.get("N02_004"),
-                "line": p.get("N02_003"),
-                "name": p.get("N02_005"),
-                "code": p.get("N02_005c"),
-                "group": p.get("N02_005g"),
+                "operator": pair[0],
+                "line": p.get("N02_003", p.get("line_name")),
+                "name": pair[1],
+                "code": p.get("N02_005c", p.get("n02_station_code")),
+                "group": p.get("N02_005g", p.get("n02_group_code")),
                 "display_point": p.get("display_point"),
             }
         )

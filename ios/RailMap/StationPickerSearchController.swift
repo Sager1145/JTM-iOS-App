@@ -112,13 +112,11 @@ final class StationPickerSearchController {
         await Task.detached(priority: .userInitiated) { filter(input) }.value
     }
 
-    /// Preserve catalog ordering and the existing localized matching rules.
+    /// Preserve catalog ordering while matching multilingual folded names.
     /// Historical stations match names only, not their codes or line names.
     nonisolated static func filter(_ input: Input) -> Result {
         Result(rows: input.rows.filter {
-            $0.station.name.localizedStandardContains(input.needle)
-                || $0.station.aliases.contains { $0.localizedStandardContains(input.needle) }
-                || $0.station.key.sourceCode.localizedStandardContains(input.needle)
-        }, retired: input.retired.filter { $0.name.localizedStandardContains(input.needle) })
+            SearchFold.matches(query: input.needle, fields: [$0.station.name, $0.station.key.sourceCode] + $0.station.aliases)
+        }, retired: input.retired.filter { SearchFold.matches(query: input.needle, fields: [$0.name]) })
     }
 }

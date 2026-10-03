@@ -3,12 +3,12 @@
   "regions": {
     "jp": {
       "stats": {
-        "groups": 9041,
-        "memberships": 10231,
-        "withEnglish": 10231,
+        "groups": 9042,
+        "memberships": 10232,
+        "withEnglish": 10232,
         "withKana": 5373,
-        "withTraditionalChinese": 9277,
-        "withSimplifiedChinese": 9277
+        "withTraditionalChinese": 9278,
+        "withSimplifiedChinese": 9278
       },
       "memberships": [
         {
@@ -85679,6 +85679,17 @@
           "chineseSource": "OpenCC character rendering; not official translation"
         },
         {
+          "key": "jp-筑豊電気鉄道-筑豊電気鉄道線:008704",
+          "group": "008704",
+          "name": "西黒崎",
+          "platformCodes": [
+            "008704"
+          ],
+          "englishSource": "data/jp-station-english-manual.json",
+          "englishStatus": "manual_unverified",
+          "chineseSource": "OpenCC character rendering; not official translation"
+        },
+        {
           "key": "jp-筑豊電気鉄道-筑豊電気鉄道線:008705",
           "group": "008705",
           "name": "熊西",
@@ -118829,6 +118840,7 @@
         "jp-筑波観光鉄道-筑波山鋼索鉄道線:002531",
         "jp-筑波観光鉄道-筑波山鋼索鉄道線:002515",
         "jp-筑豊電気鉄道-筑豊電気鉄道線:008703",
+        "jp-筑豊電気鉄道-筑豊電気鉄道線:008704",
         "jp-筑豊電気鉄道-筑豊電気鉄道線:008705",
         "jp-筑豊電気鉄道-筑豊電気鉄道線:008711",
         "jp-筑豊電気鉄道-筑豊電気鉄道線:008715",
@@ -144365,7 +144377,7 @@
     }
   },
   "inputSha256": {
-    "data/station-english.json": "b51866ec1c7a28a4550d3a2243f519f17a380804a1daa3c88c20256a434ae868",
+    "data/station-english.json": "e62d05fea9f978b298fa60f917b683a744c276fe0e5c870b4945a72b59e7ede4",
     "data/station-name-sources/jp-kana-evidence.json": "493ea19a817485f1c2516955b3e0f066273ce825125450bf6ea833dad32975bb",
     "data/station-name-sources/opencc/script-variants.json": "ec248ba605b3601eb9df91c69263c515a349bb45209d71b990e1172ae9a03926",
     "data/station-readings-hk.json": "420d4d0f46c5ab4677cde2de9a69857f64cb3bda17f6f956dfebd2c70c19d1f6",
@@ -144379,7 +144391,7 @@
     "data/stations-tw.json": "21e6b9be6fce9b5c1060cbecb41cdffb960961aaa0f138ae150d0fcd44f6a60a",
     "data/stations.json": "42ee2b75cde8449a881bfe699768d01da9fe5a12388556736d78c032e179a97f",
     "public/rail/hk-2025.json": "cbf78eca08becf515bd5f9bf71bd92203f9253e23a906921d9b8fea52e605184",
-    "public/rail/jp-2025.json": "03632f69aa742c0096685ec80d125191975986459aa2a36d221af065648e5325",
+    "public/rail/jp-2025.json": "e53dd792d7d4e36dc8f59bb856e60f49cd4b0995051c0072604b8218065ecdda",
     "public/rail/kr-2025.json": "207c07029b46962847b7b464f3346be0949ad3f5a2d4a210b8d50734dcbd5687",
     "public/rail/mo-2025.json": "138abaeb5ace82a0499e64394f7bf8ca4208c6fe7263f2a4b0caf96030df58f6",
     "public/rail/tw-2025.json": "2d22f8dd3ce0d7fe1018951af252731bd1308234bc3249159552e3dd0b51b638"

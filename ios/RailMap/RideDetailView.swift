@@ -1131,8 +1131,11 @@ private struct RideRouteStateCard: View {
                 .font(.caption.weight(.semibold))
                 .foregroundStyle(.secondary)
             ForEach(gaps, id: \.segmentIndex) { gap in
-                Text(
-                    localization.editorText(
+                Text(gap.isBoundary
+                    ? localization.editorText("ios.route.connectionUnverified", [
+                        "station": .string(name(gap.from, stopIndex: gap.segmentIndex)),
+                    ])
+                    : localization.editorText(
                         "ios.route.affectedSection",
                         [
                             "index": .number(Double(gap.segmentIndex + 1)),

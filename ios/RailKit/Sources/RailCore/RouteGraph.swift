@@ -273,8 +273,9 @@ public enum RouteGraph {
     /// projected onto a nearby trunk/branch station they do not serve. Version
     /// 26 retires precomputed paths drawn without complete-network slicing.
     /// Physical version 28 additionally retires paths with inferred connectivity.
+    /// Version 29 recomputes endpoint and same-identity boundary gap proofs.
     public static let legacyCoordinateDrawnCacheVersion = "26"
-    public static let routeDrawnCacheVersion = "28"
+    public static let routeDrawnCacheVersion = "29"
 
     /// The operators a `company` field names, split on `/`.
     ///

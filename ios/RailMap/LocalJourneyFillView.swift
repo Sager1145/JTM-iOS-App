@@ -224,8 +224,9 @@ struct LocalJourneyFillView: View {
         let required = [originCode] + requiredStationCodes + [destinationCode]
         // Service labels are display metadata, never additional graph edges.
         let worker = Task.detached(priority: .userInitiated) {
-            LocalJourneySearch.search(package: package, originCode: originCode,
-                destinationCode: destinationCode, trainType: type, requiredStationCodes: required)
+            let aliases = loadJourneyStationAliases(for: required, package: package)
+            return LocalJourneySearch.search(package: package, originCode: originCode,
+                destinationCode: destinationCode, trainType: type, requiredStationCodes: required, stationAliases: aliases)
         }
         let result = await withTaskCancellationHandler {
             await worker.value
@@ -396,11 +397,19 @@ private struct LocalJourneyStationPicker: View {
 
     nonisolated private static func stationRows(in package: CompactPackage) -> [Row] {
         var grouped: [String: (CompactPackage.Station, [String])] = [:]
+        var operatorNames: [String: [String]] = [:]
+        var seenOperatorNames: [String: Set<String>] = [:]
         for line in package.lines {
             let operatorName: String = line.operatorShort ?? line.operator ?? ""
             let label = [operatorName, line.name].filter { !$0.isEmpty }.joined(separator: " · ")
+            let expandedNames = OperatorIdentity.searchNames(for: operatorName)
             for station in line.stations {
                 if grouped[station.id] == nil { grouped[station.id] = (station, []) }
+                var seen = seenOperatorNames[station.id] ?? []
+                for name in expandedNames where seen.insert(name).inserted {
+                    operatorNames[station.id, default: []].append(name)
+                }
+                seenOperatorNames[station.id] = seen
                 if !grouped[station.id]!.1.contains(label) { grouped[station.id]!.1.append(label) }
             }
         }
@@ -409,9 +418,8 @@ private struct LocalJourneyStationPicker: View {
             let station = value.0
             let lineLabels = value.1
             let romanizedName = station.nameRoma ?? ""
-            let searchParts = [station.name, romanizedName, code] + lineLabels
-            let searchText = searchParts.joined(separator: " ").folding(
-                options: [.caseInsensitive, .diacriticInsensitive, .widthInsensitive], locale: .current)
+            let searchParts = [station.name, romanizedName, code] + lineLabels + (operatorNames[code] ?? [])
+            let searchText = searchParts.joined(separator: " ")
             result.append(Row(code: code, name: station.name, romanizedName: romanizedName,
                 lines: lineLabels.joined(separator: " · "), searchText: searchText))
         }
@@ -445,10 +453,10 @@ private struct LocalJourneyStationPicker: View {
         }
         .task(id: query + "|" + String(rows.count)) {
             let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
-                .folding(options: [.caseInsensitive, .diacriticInsensitive, .widthInsensitive], locale: .current)
             let rows = rows
             let result = await Task.detached(priority: .userInitiated) {
-                Array(rows.lazy.filter { needle.isEmpty || $0.searchText.contains(needle) }.prefix(100))
+                let prepared = SearchFold.PreparedQuery(needle)
+                return Array(rows.lazy.filter { needle.isEmpty || prepared.matches(fields: [$0.searchText]) }.prefix(100))
             }.value
             guard !Task.isCancelled else { return }
             matches = result
@@ -518,9 +526,14 @@ private struct LocalLineServiceBrowser: View {
     let catalog: LineServiceCatalog
     @State private var query = ""
     private var lines: [LineServiceCatalog.LineCoverage] {
-        catalog.lines.filter { line in
-            query.isEmpty || ([line.lineName, line.operatorName] + line.aliases
-                + line.kinds.map(\.displayName)).contains { $0.localizedStandardContains(query) }
+        let prepared = SearchFold.PreparedQuery(query)
+        let operatorCodes = OperatorIdentity.exactCodes(query: query)
+        return catalog.lines.filter { line in
+            if let operatorCodes {
+                return !Set(OperatorIdentity.codes(forJoined: line.operatorName)).isDisjoint(with: operatorCodes)
+            }
+            return query.isEmpty || prepared.matches(fields: [line.lineName, line.operatorName] + line.aliases
+                + line.kinds.map(\.displayName) + OperatorIdentity.searchNames(for: line.operatorName))
         }
     }
     var body: some View {

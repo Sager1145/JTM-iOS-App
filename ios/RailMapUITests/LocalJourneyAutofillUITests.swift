@@ -23,7 +23,7 @@ final class LocalJourneyAutofillUITests: XCTestCase {
         XCTAssertFalse(app.descendants(matching: .any)["rideEditorStop-2"].firstMatch.exists)
     }
 
-    func testKeiseiThroughServiceRemainsPendingWithoutPhysicalJunctionEvidence() {
+    func testKeiseiThroughServiceCanExplicitlyKeepPendingWithReviewableCandidates() {
         continueAfterFailure = false
         let app = newEditor()
         selectEndpoints(in: app, origin: "003280", destination: "004368")
@@ -41,13 +41,11 @@ final class LocalJourneyAutofillUITests: XCTestCase {
         XCTAssertTrue(operatingService.label.contains(serviceName),
                       "The bundled through-service label must remain available without a physical route.")
 
-        let empty = app.staticTexts["localJourneySearchEmpty"]
-        revealProposal(empty, in: app, before: deadline)
-        XCTAssertTrue(empty.waitForExistence(timeout: max(0, deadline.timeIntervalSinceNow)),
-                      "Wait for the explicit completed empty search before checking candidate absence.")
         let apply = app.buttons.matching(NSPredicate(
             format: "identifier BEGINSWITH %@", "localJourneyApply-")).firstMatch
-        XCTAssertFalse(apply.exists, "Service display metadata cannot invent cross-row physical junctions.")
+        revealProposal(apply, in: app, before: deadline)
+        XCTAssertTrue(apply.waitForExistence(timeout: max(0, deadline.timeIntervalSinceNow)),
+                      "Compatible shared-station rows should offer a reviewable candidate.")
         let keepPending = app.buttons["localJourneyKeepPending"]
         revealProposal(keepPending, in: app, before: deadline)
         XCTAssertTrue(keepPending.waitForExistence(timeout: max(0, deadline.timeIntervalSinceNow)))

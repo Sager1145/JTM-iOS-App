@@ -510,15 +510,16 @@ struct ServicePatternPickerView: View {
     }
 
     private var legacyMatches: [TrainServicePatterns.Pattern] {
-        TrainServicePatterns.search("", region: region, filter: .init(
+        let search = TimetableSearch(query)
+        return TrainServicePatterns.search("", region: region, filter: .init(
             company: companyFilter, status: .any, line: lineFilter, rideDate: rideDate))
-            .filter { TimetableSearch(query).matches($0) }
+            .filter { search.matches($0) }
     }
 
     private var exactMatches: [TrainServicePatterns.Pattern] {
         let search = TimetableSearch(query)
         return timetablePatterns.filter { pattern in
-            if let companyFilter, pattern.companyLabel != companyFilter { return false }
+            if let companyFilter, !OperatorIdentity.sameCompany(pattern.company, companyFilter) { return false }
             if let lineFilter {
                 let line = TrainServiceBranding.canonicalLineName(lineFilter)
                 guard pattern.lines.contains(where: {
@@ -534,7 +535,7 @@ struct ServicePatternPickerView: View {
         let search = TimetableSearch(query)
         return incompleteTimetableTrips.filter { trip in
             if let companyFilter,
-               !trip.operatorSegments.map(\.displayName).contains(companyFilter) { return false }
+               !trip.operatorSegments.contains(where: { OperatorIdentity.sameCompany($0.displayName, companyFilter) }) { return false }
             if let lineFilter {
                 let line = TrainServiceBranding.canonicalLineName(lineFilter)
                 guard trip.lineSegments.contains(where: {
@@ -575,11 +576,19 @@ struct ServicePatternPickerView: View {
     }
 
     private var companyLabels: [String] {
-        Array(Set(
-            TrainServicePatterns.companyLabels(region: region)
-                + timetablePatterns.map(\.companyLabel).filter { !$0.isEmpty }
-                + incompleteTimetableTrips.flatMap { $0.operatorSegments.map(\.displayName) }
-        )).sorted()
+        let names = TrainServicePatterns.companyLabels(region: region)
+            + timetablePatterns.map(\.companyLabel).filter { !$0.isEmpty }
+            + incompleteTimetableTrips.flatMap { $0.operatorSegments.map(\.displayName) }
+        return Array(Set(names.flatMap { name -> [String] in
+            name.components(separatedBy: "/").map {
+                let part = $0.trimmingCharacters(in: .whitespacesAndNewlines)
+                return OperatorIdentity.code(for: part) ?? part
+            }.filter { !$0.isEmpty }
+        })).sorted { companyDisplayName($0).localizedStandardCompare(companyDisplayName($1)) == .orderedAscending }
+    }
+
+    private func companyDisplayName(_ code: String) -> String {
+        OperatorIdentity.displayName(code: code, language: localization.language.rawValue) ?? code
     }
 
     private var lineNames: [String] {
@@ -643,10 +652,10 @@ struct ServicePatternPickerView: View {
                         Menu {
                             Button("すべての会社") { companyFilter = nil }
                             ForEach(companyLabels, id: \.self) { label in
-                                Button(label) { companyFilter = label }
+                                Button(companyDisplayName(label)) { companyFilter = label }
                             }
                         } label: {
-                            Label(companyFilter ?? "すべての会社", systemImage: "building.2")
+                            Label(companyFilter.map(companyDisplayName) ?? "すべての会社", systemImage: "building.2")
                         }
                         .railMenuButtonStyle()
                         .accessibilityIdentifier("servicePatternCompanyFilter")

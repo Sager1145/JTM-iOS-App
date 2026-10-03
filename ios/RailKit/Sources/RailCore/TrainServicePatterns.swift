@@ -341,7 +341,7 @@ public enum TrainServicePatterns {
             case any, onDate, current, discontinued
         }
 
-        /// Matches `Pattern.companyLabel` exactly.
+        /// Matches the stable operator identity, including joined companies.
         public var company: String?
         public var status: Status
         /// ISO calendar date used by `onDate` and date-aware ordering.
@@ -376,6 +376,8 @@ public enum TrainServicePatterns {
     }
 
     public static func search(_ query: String, region: String = "jp", filter: Filter) -> [Pattern] {
+        let prepared = SearchFold.PreparedQuery(query)
+        let operatorCodes = OperatorIdentity.exactCodes(query: query)
         let normalizedQuery = normalizedText(
             query.trimmingCharacters(in: .whitespacesAndNewlines))
         let servicesByID = Dictionary(
@@ -386,7 +388,7 @@ public enum TrainServicePatterns {
         }
 
         if let company = filter.company {
-            candidates = candidates.filter { $0.companyLabel == company }
+            candidates = candidates.filter { OperatorIdentity.sameCompany($0.company, company) }
         }
         switch filter.status {
         case .any: break
@@ -409,7 +411,10 @@ public enum TrainServicePatterns {
             matched = candidates
         } else {
             matched = candidates.filter { pattern in
-                (haystacksByPatternID[pattern.id] ?? "").contains(normalizedQuery)
+                if let operatorCodes {
+                    return !Set(OperatorIdentity.codes(forJoined: pattern.company)).isDisjoint(with: operatorCodes)
+                }
+                return prepared.matches(fields: haystacksByPatternID[pattern.id] ?? [])
             }
         }
 
@@ -425,7 +430,7 @@ public enum TrainServicePatterns {
         }
 
         func isPrimaryMatch(_ pattern: Pattern) -> Bool {
-            (primaryHaystacksByPatternID[pattern.id] ?? "").contains(normalizedQuery)
+            prepared.matches(fields: primaryHaystacksByPatternID[pattern.id] ?? [])
         }
 
         return matched.sorted {
@@ -461,31 +466,30 @@ public enum TrainServicePatterns {
         return Array(Set(names)).sorted()
     }
 
-    /// Each pattern's normalised search haystack — its name, label, origin,
-    /// destination, passenger-facing company label, traversed lines, stops,
-    /// and every name its service is known by — joined and normalised once,
-    /// rather than on every ``search(_:region:filter:)`` call.
-    private static let haystacksByPatternID: [String: String] = {
+    /// Search fields include multilingual operator and family names. Keep the
+    /// fields separate so query tokens can match across languages and fields.
+    private static let haystacksByPatternID: [String: [String]] = {
         let servicesByID = Dictionary(
             uniqueKeysWithValues: TrainServiceBranding.services.map { ($0.id, $0) })
         return Dictionary(uniqueKeysWithValues: patterns.map { pattern in
             var haystacks = [pattern.name, pattern.label, pattern.origin,
                               pattern.destination, pattern.companyLabel]
+            haystacks.append(contentsOf: OperatorIdentity.searchNames(for: pattern.company))
             haystacks.append(contentsOf: pattern.lines)
             haystacks.append(contentsOf: pattern.stops)
             if let service = servicesByID[pattern.serviceId] {
                 haystacks.append(contentsOf: service.names)
             }
-            return (pattern.id, haystacks.map(normalizedText).joined(separator: " "))
+            return (pattern.id, haystacks)
         })
     }()
 
     /// Each pattern's "primary" search haystack — its name, label, and every
-    /// name its service is known by, joined and normalised once. A query
+    /// name its service is known by. A query
     /// that matches here names the service or pattern directly, rather than
     /// matching only via a stop or traversed line; ``search(_:region:filter:)``
     /// ranks those matches first.
-    private static let primaryHaystacksByPatternID: [String: String] = {
+    private static let primaryHaystacksByPatternID: [String: [String]] = {
         let servicesByID = Dictionary(
             uniqueKeysWithValues: TrainServiceBranding.services.map { ($0.id, $0) })
         return Dictionary(uniqueKeysWithValues: patterns.map { pattern in
@@ -493,7 +497,7 @@ public enum TrainServicePatterns {
             if let service = servicesByID[pattern.serviceId] {
                 haystacks.append(contentsOf: service.names)
             }
-            return (pattern.id, haystacks.map(normalizedText).joined(separator: " "))
+            return (pattern.id, haystacks)
         })
     }()
 

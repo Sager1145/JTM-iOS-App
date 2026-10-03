@@ -48,3 +48,32 @@ nonisolated func loadCatalog(for region: Region) throws -> EditorCatalog {
     let catalog = EditorCatalogBuilder.build(directory.lineSources(regionCode: region.code))
     return EditorCatalogCache.Store.shared.store(catalog, code: region.code)
 }
+
+/// Official station identity is shared by route searches and cached per region.
+private enum JourneyStationIdentity {
+    static let lock = NSLock()
+    nonisolated(unsafe) static var groups: [String: [String: String]] = [:]
+
+    nonisolated static func load(country: String) -> [String: String] {
+        lock.lock()
+        defer { lock.unlock() }
+        if let cached = groups[country] { return cached }
+        guard let url = Bundle.main.url(
+            forResource: Region.countrySuffixed("stations", country: country), withExtension: "json"),
+              let collection = try? Stations.FeatureCollection.load(contentsOf: url) else { return [:] }
+        var result: [String: String] = [:]
+        for feature in collection.features {
+            if let code = Stations.stationCode(feature), let group = Stations.stationGroupCode(feature) {
+                result[code] = group
+            }
+        }
+        groups[country] = result
+        return result
+    }
+}
+
+/// Call from the detached search worker, keeping cold JSON decoding off the main actor.
+nonisolated func loadJourneyStationAliases(for codes: [String], package: CompactPackage) -> [String: String] {
+    let groups = JourneyStationIdentity.load(country: package.country)
+    return LocalJourneySearch.stationAliases(for: codes, package: package) { groups[$0] }
+}

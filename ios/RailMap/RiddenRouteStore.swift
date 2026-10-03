@@ -790,9 +790,15 @@ final class RiddenRouteStore {
             }
         for gap in physicalGaps where expectedSections.indices.contains(gap.segmentIndex) {
             let section = expectedSections[gap.segmentIndex]
-            if !unsolved.contains(where: { $0.segmentIndex == gap.segmentIndex }) {
-                unsolved.append(SectionGap(segmentIndex: gap.segmentIndex,
-                    from: section.from, to: gap.isBoundary ? section.from : section.to))
+            let sectionGap = SectionGap(segmentIndex: gap.segmentIndex,
+                from: section.from, to: section.to, isBoundary: gap.isBoundary)
+            if let existing = unsolved.firstIndex(where: { $0.segmentIndex == gap.segmentIndex }) {
+                // An interior failure must remain visible even if a boundary was recorded first.
+                if unsolved[existing].isBoundary && !gap.isBoundary {
+                    unsolved[existing] = sectionGap
+                }
+            } else {
+                unsolved.append(sectionGap)
             }
         }
         let certified = solved.subtracting(physicalGaps.map(\.segmentIndex))
@@ -992,67 +998,12 @@ final class RiddenRouteStore {
         }
     }
 
-    private struct StationSectionInference {
-        var hints: [Int: RouteHints] = [:]
-        var ambiguous: Set<Int> = []
-    }
-
-    /// Resolve the entire compatible station run so later via stations can
-    /// distinguish an earlier branch. Preferences and journey IDs never turn
-    /// multiple physical choices into a unique inferred choice.
     private nonisolated static func inferStationSections(
         _ sections: [RouteSection], resolver: StationIntervalResolver?, network: RouteNetwork?,
         eligibility: StationRouteEligibility?, allowedCodes: [String], hard: Bool
-    ) -> StationSectionInference {
-        var result = StationSectionInference()
-        guard let resolver, let network, let eligibility else { return result }
-        let knownIDs = Set(network.lines.map(\.lineId))
-        var index = 0
-        while index < sections.count {
-            let first = sections[index]
-            guard first.sectionCodes?.isEmpty != false else { index += 1; continue }
-            let ids = first.lineIDs ?? [], names = first.lineNames ?? [], operators = first.operatorNames ?? []
-            var end = index + 1
-            while end < sections.count {
-                let next = sections[end]
-                guard next.sectionCodes?.isEmpty != false,
-                      (next.lineIDs ?? []) == ids, (next.lineNames ?? []) == names,
-                      (next.operatorNames ?? []) == operators,
-                      routeSectionBoundarySharesExplicitStop(sections[end - 1], next) else { break }
-                end += 1
-            }
-            defer { index = end }
-            if !ids.allSatisfy(knownIDs.contains) {
-                result.ambiguous.formUnion(index..<end)
-                continue
-            }
-            guard let candidates = resolver.candidateLineIDs(
-                requiredLineIDs: ids, requiredLineNames: names, requiredOperatorNames: operators),
-                  network.lines.filter({ candidates.contains($0.lineId) }).allSatisfy({
-                      eligibility.permits($0, allowedInstitutionCodes: allowedCodes, hard: hard)
-                  }),
-                  let from = eligibility.stationCode(first.fromN02StationCode) else { continue }
-            let destinations = sections[index..<end].compactMap { eligibility.stationCode($0.toN02StationCode) }
-            guard destinations.count == end - index,
-                  sections[(index + 1)..<end].enumerated().allSatisfy({ offset, section in
-                      eligibility.stationCode(section.fromN02StationCode) == destinations[offset]
-                  }) else { continue }
-            switch resolver.resolve(
-                stationCodes: [from] + destinations, requiredLineIDs: ids,
-                requiredLineNames: names, requiredOperatorNames: operators) {
-            case .resolved(let selection):
-                for offset in selection.legIntervals.indices {
-                    let leg = selection.legIntervals[offset]
-                    result.hints[index + offset] = RouteHints(
-                        requiredLineIDs: Array(Set(leg.map(\.lineID))).sorted(), sectionCodes: leg.map(\.code),
-                        fromStationCode: selection.stationCodes[offset],
-                        toStationCode: selection.stationCodes[offset + 1])
-                }
-            case .ambiguous: result.ambiguous.formUnion(index..<end)
-            case .unsupported: break
-            }
-        }
-        return result
+    ) -> RouteSolver.StationSectionInference {
+        RouteSolver.inferStationSections(sections, resolver: resolver, network: network,
+            eligibility: eligibility, allowedCodes: allowedCodes, hard: hard)
     }
 
     private nonisolated static func physicalSelection(
@@ -1120,28 +1071,15 @@ final class RiddenRouteStore {
         store: RouteGraph.RouteGraphStore, rideDate: String?
     ) -> Bool {
         if previous == first { return true }
-        return RouteSolver.physicalContinuationPath(from: previous, to: first,
-            graph: physicalProofGraph(coordinates: [coordinate], store: store), rideDate: rideDate) != nil
+        return RouteSolver.physicalBoundaryIsProven(from: previous, to: first,
+            graph: physicalProofGraph(coordinates: [coordinate], store: store), rideDate: rideDate)
     }
 
     private nonisolated static func verifiedSourcePath(
         _ lines: [[Coordinate]], graph: RouteGraph.Graph,
         context: RouteSolver.TrainContext, section: RouteSection
     ) -> [String]? {
-        var result: [String] = []
-        for line in lines {
-            guard let keys = RouteSolver.verifiedPhysicalPathKeys(
-                line, graph: graph, rideDate: context.rideDate,
-                requiredLines: Set(section.lineNames ?? []),
-                requiredOperators: Set(section.operatorNames ?? [])) else { return nil }
-            if let previous = result.last, let first = keys.first {
-                guard let bridge = RouteSolver.physicalContinuationPath(
-                    from: previous, to: first, graph: graph, rideDate: context.rideDate) else { return nil }
-                result += bridge.dropFirst()
-            }
-            result += keys.dropFirst(result.isEmpty ? 0 : 1)
-        }
-        return result.isEmpty ? nil : result
+        RouteSolver.verifiedSourcePath(lines, graph: graph, context: context, section: section)
     }
 
     @concurrent private nonisolated static func solveMissingWithPermit(
@@ -1238,9 +1176,11 @@ final class RiddenRouteStore {
                         }
                         if sharesBoundary {
                             if let previous = physicalContinuationKey, let first = recordedKeys?.first,
-                               RouteSolver.physicalContinuationPath(from: previous, to: first,
-                                   graph: graph, rideDate: context.rideDate) != nil { }
-                            else { physicalGaps.append(PhysicalGap(segmentIndex: index, isBoundary: true)) }
+                               RouteSolver.physicalBoundaryIsProven(from: previous, to: first,
+                                   graph: graph, rideDate: context.rideDate) { }
+                            else if !physicalGaps.contains(where: { $0.segmentIndex == index && $0.isBoundary }) {
+                                physicalGaps.append(PhysicalGap(segmentIndex: index, isBoundary: true))
+                            }
                         }
                         physicalContinuationKey = recordedKeys?.last
                         for (partIndex, coordinates) in exact.geometry.lines.enumerated() {
@@ -1301,7 +1241,9 @@ final class RiddenRouteStore {
                         if let previous = physicalContinuationKey, let first = solved.rawPathKeys.first,
                            physicalBoundaryIsProven(from: previous, to: first, at: solved.coordinates[0],
                                store: graphStore!, rideDate: context.rideDate) { }
-                        else { physicalGaps.append(PhysicalGap(segmentIndex: index, isBoundary: true)) }
+                        else if !physicalGaps.contains(where: { $0.segmentIndex == index && $0.isBoundary }) {
+                            physicalGaps.append(PhysicalGap(segmentIndex: index, isBoundary: true))
+                        }
                     }
                     physicalContinuationKey = solved.rawPathKeys.last
 
@@ -1350,7 +1292,9 @@ final class RiddenRouteStore {
                                let coordinate = matchedSource.lines.first?.first,
                                physicalBoundaryIsProven(from: previous, to: first, at: coordinate,
                                    store: graphStore!, rideDate: context.rideDate) { }
-                            else { physicalGaps.append(PhysicalGap(segmentIndex: index, isBoundary: true)) }
+                            else if !physicalGaps.contains(where: { $0.segmentIndex == index && $0.isBoundary }) {
+                                physicalGaps.append(PhysicalGap(segmentIndex: index, isBoundary: true))
+                            }
                         }
                         physicalContinuationKey = keys?.last
                     }
@@ -1842,12 +1786,7 @@ final class RiddenRouteStore {
     private nonisolated static func routeSectionBoundarySharesExplicitStop(
         _ previous: RouteSection, _ next: RouteSection
     ) -> Bool {
-        let previousCode = previous.toN02StationCode?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        let nextCode = next.fromN02StationCode?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        if !previousCode.isEmpty, !nextCode.isEmpty { return previousCode == nextCode }
-        let previousName = Stations.normalizeStationName(previous.to ?? "")
-        let nextName = Stations.normalizeStationName(next.from ?? "")
-        return !previousName.isEmpty && previousName == nextName
+        RouteSolver.routeSectionBoundarySharesExplicitStop(previous, next)
     }
 
     private struct Part: Decodable {

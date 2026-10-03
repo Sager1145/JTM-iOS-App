@@ -731,7 +731,7 @@ public struct RouteNetwork: Sendable {
     /// Distance from a platform anchor to its track that is still just the
     /// station's own approach; beyond it, the projection is telling us
     /// something is wrong with the data and it should not be hidden.
-    static let endpointSnapMeters = 260.0
+    public static let endpointSnapMeters = 260.0
 
     /// A hinted line this far from one of the hop's platforms is not the track
     /// the train stood on — no station in these packages puts its own line more

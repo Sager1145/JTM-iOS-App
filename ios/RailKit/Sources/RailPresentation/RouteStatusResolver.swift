@@ -37,11 +37,13 @@ public struct SectionGap: Sendable, Equatable {
     public let segmentIndex: Int
     public let from: String?
     public let to: String?
+    public let isBoundary: Bool
 
-    public init(segmentIndex: Int, from: String?, to: String?) {
+    public init(segmentIndex: Int, from: String?, to: String?, isBoundary: Bool = false) {
         self.segmentIndex = segmentIndex
         self.from = from
         self.to = to
+        self.isBoundary = isBoundary
     }
 }
 

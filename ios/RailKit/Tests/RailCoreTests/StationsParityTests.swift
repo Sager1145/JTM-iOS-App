@@ -874,7 +874,7 @@ struct StationsParityTests {
             storeNames += summary.storeNames
         }
         // The supported five-package name census stays exact.
-        #expect(packageNames == 10_363)
+        #expect(packageNames == 10_364)
         #expect(fixture.sharedNames.count == 33)
 
         // Every bare-name query in the fixture is one of those names, one of

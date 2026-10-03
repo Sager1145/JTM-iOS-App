@@ -83544,6 +83544,16 @@
       "katakana": "",
       "romaji": "Kurosaki-Ekimae"
     },
+    "008704": {
+      "name": "西黒崎",
+      "zh_Hant": "西黑崎",
+      "zh_Hans": "西黑崎",
+      "en": "Nishi-Kurosaki",
+      "ja": "西黒崎",
+      "kana": "",
+      "katakana": "",
+      "romaji": "Nishi-Kurosaki"
+    },
     "008705": {
       "name": "熊西",
       "zh_Hant": "熊西",
@@ -175453,6 +175463,16 @@
       "kana": "",
       "katakana": "",
       "romaji": "Kurosaki-Ekimae"
+    },
+    "jp-筑豊電気鉄道-筑豊電気鉄道線:008704": {
+      "name": "西黒崎",
+      "zh_Hant": "西黑崎",
+      "zh_Hans": "西黑崎",
+      "en": "Nishi-Kurosaki",
+      "ja": "西黒崎",
+      "kana": "",
+      "katakana": "",
+      "romaji": "Nishi-Kurosaki"
     },
     "jp-筑豊電気鉄道-筑豊電気鉄道線:008705": {
       "name": "熊西",
@@ -269765,6 +269785,16 @@
       "kana": "にしおえ",
       "katakana": "ニシオエ",
       "romaji": "Nishioe"
+    },
+    "西黒崎": {
+      "name": "西黒崎",
+      "zh_Hant": "西黑崎",
+      "zh_Hans": "西黑崎",
+      "en": "Nishi-Kurosaki",
+      "ja": "西黒崎",
+      "kana": "",
+      "katakana": "",
+      "romaji": "Nishi-Kurosaki"
     },
     "要田": {
       "name": "要田",

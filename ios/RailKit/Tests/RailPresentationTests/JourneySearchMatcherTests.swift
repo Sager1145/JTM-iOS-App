@@ -417,8 +417,7 @@ struct JourneySearchMatcherLocalizedNameTests {
         ]
         for needle in needles {
             for train in trains {
-                let byFields = JourneySearchMatcher.fields(of: train, alsoNamed: alsoNamed)
-                    .contains { $0.localizedCaseInsensitiveContains(needle) }
+                let byFields = referenceMatch(train, needle: needle, aliases: alsoNamed(train))
                 #expect(
                     JourneySearchMatcher.matches(train, query: needle, alsoNamed: alsoNamed)
                         == byFields,
@@ -430,7 +429,7 @@ struct JourneySearchMatcherLocalizedNameTests {
 
 /// The fast path and the field list may not disagree.
 ///
-/// `matches(_:trimmed:)` walks the fields inline rather than building
+/// The prepared matcher walks the fields inline rather than building
 /// ``JourneySearchMatcher/fields(of:)`` first, which is what makes a keystroke
 /// cheap — and which is also how the two could drift apart, silently, the next
 /// time a field is added to one of them. So the contract is checked directly:
@@ -469,8 +468,7 @@ struct JourneySearchMatcherFastPathTests {
         ]
         for needle in needles {
             for train in trains {
-                let byFields = JourneySearchMatcher.fields(of: train)
-                    .contains { $0.localizedCaseInsensitiveContains(needle) }
+                let byFields = referenceMatch(train, needle: needle)
                 #expect(
                     JourneySearchMatcher.matches(train, query: needle) == byFields,
                     "\(train.id) disagreed on \(needle)")
@@ -494,4 +492,41 @@ struct JourneySearchMatcherFastPathTests {
                     == JourneySearchMatcher.filter(trains, query: trimmed).map(\.id))
         }
     }
+    @Test func numericAndOperatorPrecision() {
+        let east = JourneySearchMatcherTests.train(id: "ride-2024-05-01", date: "2024-05-01", origin: "西船橋")
+        #expect(!JourneySearchMatcher.matches(east, query: "501"))
+        #expect(!JourneySearchMatcher.matches(east, query: "405"))
+        #expect(!JourneySearchMatcher.matches(east, query: "JR西"))
+        #expect(JourneySearchMatcher.matches(JourneySearchMatcherTests.train(company: "JR西日本"), query: "JR西"))
+        #expect(JourneySearchMatcher.matches(JourneySearchMatcherTests.train(number: "のぞみ501号"), query: "501"))
+    }
+
+    @Test(.enabled(if: ProcessInfo.processInfo.environment["SEARCH_BENCH"] == "1"))
+    func warmThousandRideBenchmark() {
+        let rides = (0..<1000).map { JourneySearchMatcherTests.train(id: "ride-\($0)", number: "のぞみ\($0)号") }
+        let queries = ["501", "Tokyo 地铁", "熱海", "nonexistent"]
+        for query in queries { _ = JourneySearchMatcher.filter(rides, query: query) }
+        let start = Date()
+        var count = 0
+        for _ in 0..<25 {
+            for query in queries { count += JourneySearchMatcher.filter(rides, query: query).count }
+        }
+        let microseconds = Date().timeIntervalSince(start) * 1_000_000 / 100_000
+        print("SEARCH_BENCH warm 1000 rides: \(microseconds) µs/row; matches=\(count)")
+        #expect(count > 0)
+    }
+}
+
+private func referenceMatch(_ train: Train, needle: String, aliases: [String] = []) -> Bool {
+    guard !SearchFold.fold(needle).isEmpty else { return false }
+    if let codes = OperatorIdentity.exactCodes(query: needle) {
+        return !Set(OperatorIdentity.codes(forJoined: train.company ?? "")).isDisjoint(with: codes)
+    }
+    let names = [train.number, train.numberEn, train.origin, train.destination,
+                 train.direction, train.trainType].compactMap { $0 }
+        + train.stops.map(\.name) + aliases
+        + OperatorIdentity.searchNames(for: train.company ?? "")
+    return names.contains { SearchFold.matches(query: needle, fields: [$0]) }
+        || train.date?.localizedCaseInsensitiveContains(needle) == true
+        || train.id.localizedCaseInsensitiveContains(needle)
 }
