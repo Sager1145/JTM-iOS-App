@@ -401,7 +401,7 @@ struct LocalizationParityTests {
 
     // MARK: - Country
 
-    @Test("setCountry accepts seven countries and silently answers jp for the rest")
+    @Test("setCountry accepts supported countries and silently answers jp for the rest")
     func countryWhitelist() throws {
         let fixture = try Self.fixture()
         var localization = Localization(catalog: try Self.catalog())
@@ -424,7 +424,27 @@ struct LocalizationParityTests {
         let catalog = try Self.catalog()
         var localization = Localization(catalog: catalog)
         localization.setLanguage("zh-Hant")
-        #expect(fixture.variantKeys.count == fixture.catalog.keyCount * 8)
+        let supported = Set(Localization.supportedCountries)
+        let acceptedFixtureCountries = Set(fixture.countries.filter(\.accepted).compactMap(\.input))
+        #expect(acceptedFixtureCountries == supported)
+        let variantCountries = Set(fixture.variantKeys.map(\.country))
+        let fallbackCountries = variantCountries.subtracting(supported)
+        // One unsupported-country probe accompanies every supported country.
+        // Verify the full Cartesian coverage, not merely a smaller row count.
+        #expect(fallbackCountries.count == 1)
+        for country in fallbackCountries {
+            #expect(fixture.countries.contains { $0.input == country && !$0.accepted })
+        }
+        let expectedCountries = supported.union(fallbackCountries)
+        #expect(variantCountries == expectedCountries)
+        #expect(catalog.strings.count == fixture.catalog.keyCount)
+        #expect(fixture.variantKeys.count == fixture.catalog.keyCount * (supported.count + 1))
+        let rowsByKey = Dictionary(grouping: fixture.variantKeys, by: \.key)
+        #expect(Set(rowsByKey.keys) == Set(catalog.strings.keys))
+        for (key, rows) in rowsByKey {
+            #expect(rows.count == expectedCountries.count, "\(key): one row per country")
+            #expect(Set(rows.map(\.country)) == expectedCountries, "\(key): complete country coverage")
+        }
 
         let fellBack = 0
         for item in fixture.variantKeys {

@@ -517,17 +517,8 @@ struct StatisticsParityTests {
         // The parallel arrays, sampled — and the keys they are reached by,
         // which is the part a port can get subtly wrong and still look right.
         for edge in expected.sampledEdges {
-            // The five original regions stay bit-identical. North American
-            // latitudes cross π/4, where the Node/V8 cosine used to build the
-            // fixture and Swift's fdlibm port differ by the last one or two
-            // bits on a few sampled North American edges. Keep that measured
-            // allowance local to US/CA. Totals and category denominators above
-            // remain exact, so it cannot hide accumulated drift.
-            // Rechecked on 2026-09-06 against Node 26.4 / V8 14.6:
-            // all 11,874 Canadian source edges, 41 distance disagreements,
-            // maximum 2 ULP (cos itself differs by at most 1 ULP). The
-            // sampled edges 4321 and 4350 both reach that measured ceiling.
-            let ulpCeiling: Int64 = (country == "us" || country == "ca") ? 2 : 0
+            // The five supported corpora retain exact sampled-edge parity.
+            let ulpCeiling: Int64 = 0
             let ulp = idx.km[edge.index].ulpDistance(to: edge.km)
             #expect(
                 ulp <= ulpCeiling,

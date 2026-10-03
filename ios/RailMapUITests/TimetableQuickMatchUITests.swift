@@ -6,6 +6,7 @@ final class TimetableQuickMatchUITests: XCTestCase {
 
     func testAutomaticLookupClearsResultsAfterDateAndServiceChanges() {
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-interface-language", "en"]
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
@@ -22,8 +23,7 @@ final class TimetableQuickMatchUITests: XCTestCase {
         replace(app.textFields["rideEditorDateInput"], with: "2026-09-30")
         app.buttons["rideEditorPrevious"].tap()
         app.buttons["rideEditorPrevious"].tap()
-        app.buttons["rideEditorServicePattern"].tap()
-        app.buttons["rideEditorReplaceStops"].firstMatch.tap()
+        openServicePatterns(in: app, replacingStops: true)
         searchServicePatterns("北斗", in: app)
         let details = app.buttons.matching(NSPredicate(
             format: "identifier BEGINSWITH %@", "timetableDetails-jr-hokkaido.hokuto.1.")).firstMatch
@@ -56,27 +56,47 @@ final class TimetableQuickMatchUITests: XCTestCase {
 
         app.buttons["rideEditorPrevious"].tap()
         let name = app.otherElements["rideEditorLimitedExpressName"].textFields.firstMatch
-        XCTAssertTrue(name.waitForExistence(timeout: 8))
+        reveal(name, in: app.collectionViews["rideEditorForm"], app: app)
         replace(name, with: "北斗")
         replace(name, with: "No matching service")
+        name.typeText("\n")
+        XCTAssertTrue(app.keyboards.firstMatch.waitForNonExistence(timeout: 8))
         next.tap()
         showLookup(in: app)
         XCTAssertTrue(noMatch.waitForExistence(timeout: 20))
         XCTAssertFalse(matches.firstMatch.exists)
         app.buttons["rideEditorPrevious"].tap()
+        reveal(name, in: app.collectionViews["rideEditorForm"], app: app)
         replace(name, with: "北斗")
+        name.typeText("\n")
+        XCTAssertTrue(app.keyboards.firstMatch.waitForNonExistence(timeout: 8))
         next.tap()
         showLookup(in: app)
         XCTAssertTrue(matches.firstMatch.waitForExistence(timeout: 30))
     }
 
     private func seedNamedRoute(in app: XCUIApplication) {
-        app.buttons["rideEditorServicePattern"].tap()
+        openServicePatterns(in: app, replacingStops: false)
         searchServicePatterns("はちおうじ", in: app)
         let route = app.buttons.matching(NSPredicate(
             format: "label CONTAINS %@", "東京〜八王子")).firstMatch
         reveal(route, in: app.collectionViews["servicePatternList"], app: app)
         route.tap()
+    }
+
+    private func openServicePatterns(in app: XCUIApplication, replacingStops: Bool) {
+        let form = app.collectionViews["rideEditorForm"]
+        XCTAssertTrue(form.waitForExistence(timeout: 8), app.debugDescription)
+        // The route step now starts with route-choice controls and endpoint
+        // rows. Its express-stop picker sits below them in the lazy Form.
+        let picker = app.buttons["rideEditorServicePattern"]
+        reveal(picker, in: form, app: app)
+        picker.tap()
+        if replacingStops {
+            let replaceStops = app.buttons["rideEditorReplaceStops"].firstMatch
+            XCTAssertTrue(replaceStops.waitForExistence(timeout: 8), app.debugDescription)
+            replaceStops.tap()
+        }
     }
 
     private func searchServicePatterns(_ query: String, in app: XCUIApplication) {

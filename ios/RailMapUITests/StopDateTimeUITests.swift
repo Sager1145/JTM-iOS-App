@@ -6,6 +6,7 @@ final class StopDateTimeUITests: XCTestCase {
 
     func testJourneyDateIsSharedAndNextDayStopTimeShowsItsCivilDate() {
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
@@ -16,8 +17,9 @@ final class StopDateTimeUITests: XCTestCase {
         XCTAssertTrue(next.waitForExistence(timeout: 30))
         next.tap()
         let first = app.buttons["rideEditorStop-0"]
+        XCTAssertTrue(EditorUITestSupport.reveal(first, in: app), app.debugDescription)
         XCTAssertTrue(first.waitForExistence(timeout: 8))
-        first.tap()
+        EditorUITestSupport.tap(first, in: app)
 
         let includeDate = app.switches["rideEditorStopIncludeDate"]
         XCTAssertTrue(includeDate.waitForExistence(timeout: 8))
@@ -47,10 +49,11 @@ final class StopDateTimeUITests: XCTestCase {
 
         app.navigationBars.buttons.element(boundBy: 0).tap()
         let firstSummary = app.buttons["rideEditorStop-0"]
+        XCTAssertTrue(EditorUITestSupport.reveal(firstSummary, in: app), app.debugDescription)
         XCTAssertTrue(firstSummary.waitForExistence(timeout: 8))
         XCTAssertTrue(firstSummary.label.contains("2026-10-13 01:10"), firstSummary.label)
         let second = app.buttons["rideEditorStop-1"]
-        second.tap()
+        EditorUITestSupport.tap(second, in: app)
         let sharedDate = app.textFields["rideEditorStopJourneyDate"]
         XCTAssertTrue(sharedDate.waitForExistence(timeout: 8))
         XCTAssertEqual(sharedDate.value as? String, "2026-10-12")

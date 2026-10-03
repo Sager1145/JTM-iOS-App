@@ -15,13 +15,17 @@ import Foundation
 ///
 /// Two properties are load-bearing far beyond their appearance.
 ///
-/// **A node's identity is its coordinate.** The key is `coordKey` of the
-/// quantised pair, so two vertices become one node exactly when both
+/// **Coordinate parity is explicit.** In `.coordinateParity`, the key is
+/// `coordKey` of the quantised pair, so vertices merge exactly when both
 /// languages *spell* that pair identically. JavaScript writes an integral
 /// coordinate `"139"`; Swift's `String(139.0)` is `"139.0"`. Seven node keys
 /// in the shipped data — five Japanese, two Korean — have an integral half,
 /// and under a naive port each of them becomes two nodes at the same place
 /// with no edge between them. Everything goes through ``Grid``.
+///
+/// The application uses `.physicalRailway`: track identity scopes each node,
+/// and only an evidenced physical junction joins independent identities.
+/// Display geometry and passenger station groups do not establish connectivity.
 ///
 /// **Order is an answer, not an accident.** Grid buckets and adjacency lists
 /// are JavaScript arrays walked in insertion order; `nearbyGraphNodes` sorts
@@ -31,6 +35,79 @@ import Foundation
 /// `Set` have no order and `sort` is not stable, so each of those is
 /// reproduced explicitly below rather than inherited.
 public enum RouteGraph {
+    public enum BuildPolicy: Sendable {
+        /// The original JavaScript coordinate-only graph, for explicit parity checks.
+        case coordinateParity
+        /// Independent track identities meet only at evidenced physical junctions.
+        case physicalRailway
+    }
+
+    public struct TrackIdentity: Sendable, Hashable {
+        public let operatorName: String
+        public let lineName: String
+        public let railwayClassCode: String
+        public let level: String?
+        public let trackID: String?
+        public let sourceID: String?
+        public let geometryDigest: String?
+
+        public init(operatorName: String, lineName: String, railwayClassCode: String = "",
+                    level: String? = nil, trackID: String? = nil,
+                    sourceID: String? = nil, geometryDigest: String? = nil) {
+            self.operatorName = operatorName
+            self.lineName = lineName
+            self.railwayClassCode = railwayClassCode
+            self.level = level
+            self.trackID = trackID
+            self.sourceID = sourceID
+            self.geometryDigest = geometryDigest
+        }
+
+        fileprivate var key: String {
+            [operatorName, lineName, railwayClassCode, level ?? "", trackID ?? "", sourceID ?? "", geometryDigest ?? ""]
+                .map { "\($0.utf8.count):\($0)" }.joined(separator: "|")
+        }
+    }
+
+    public struct PhysicalJunction: Sendable, Equatable {
+        public struct Endpoint: Sendable, Equatable {
+            public let identity: TrackIdentity
+            public let coordinate: Coordinate
+            public init(identity: TrackIdentity, coordinate: Coordinate) {
+                self.identity = identity
+                self.coordinate = coordinate
+            }
+        }
+        public let id: String
+        public let from: Endpoint
+        public let to: Endpoint
+        public let evidence: [String]
+        public let validFrom: String?
+        public let validTo: String?
+
+        /// This boundary accepts same-coordinate surveyed junctions only.
+        /// A connection between distinct points requires source rail geometry;
+        /// neither distance nor a service/display relationship can create it.
+        public init(id: String, from: Endpoint, to: Endpoint, evidence: [String],
+                    validFrom: String? = nil, validTo: String? = nil) {
+            self.id = id
+            self.from = from
+            self.to = to
+            self.evidence = evidence
+            self.validFrom = validFrom
+            self.validTo = validTo
+        }
+    }
+
+    public struct PhysicalJunctionEdge: Sendable, Equatable {
+        public let junction: PhysicalJunction
+        public let institutionTypeCodes: Set<String>
+    }
+
+    public static func physicalNodeKey(_ coordinate: Coordinate, identity: TrackIdentity) -> String {
+        identity.key + "@" + Grid.coordKey(coordinate)
+    }
+
 
     // =====================================================================
     //  §27 — route template and cache keys
@@ -182,9 +259,11 @@ public enum RouteGraph {
 
     /// `ROUTE_SOLVER_CACHE_VERSION`, from `app-config.js`. Bumping it in the
     /// web app retires every persisted route cache entry, so it is a
-    /// parameter here rather than a constant this file owns. Version 25
-    /// retires station connectors snapped onto a non-serving parallel branch.
-    public static let routeSolverCacheVersion = "25"
+    /// parameter here rather than a constant this file owns. The explicit
+    /// coordinate parity version stays 25; physical version 27 rejects cached
+    /// paths produced by coordinate merging or passenger transfer edges.
+    public static let legacyCoordinateSolverCacheVersion = "25"
+    public static let routeSolverCacheVersion = "27"
 
     /// On-disk drawn-route cache (`RiddenRouteStore` save/read). Not part of
     /// `solveContext` or the route digest: version 22 files may have
@@ -193,7 +272,9 @@ public enum RouteGraph {
     /// ``routeSolverCacheVersion``. Version 25 also retires legacy branch hops
     /// projected onto a nearby trunk/branch station they do not serve. Version
     /// 26 retires precomputed paths drawn without complete-network slicing.
-    public static let routeDrawnCacheVersion = "26"
+    /// Physical version 28 additionally retires paths with inferred connectivity.
+    public static let legacyCoordinateDrawnCacheVersion = "26"
+    public static let routeDrawnCacheVersion = "28"
 
     /// The operators a `company` field names, split on `/`.
     ///
@@ -440,6 +521,13 @@ public enum RouteGraph {
         public var `operator`: String
         public var institutionTypeCode: String
         public var railwayClassCode: String
+        public var level: String?
+        public var trackID: String?
+        public var sourceID: String?
+
+        public var trackIdentity: TrackIdentity {
+            .init(operatorName: `operator`, lineName: lineName, railwayClassCode: railwayClassCode, level: level, trackID: trackID, sourceID: sourceID)
+        }
         /// ADR 0011 validity bounds (`valid_from`/`valid_to`), half-open
         /// `[validFrom, validTo)`. `nil` means unbounded on that side.
         public var validFrom: String?
@@ -454,12 +542,16 @@ public enum RouteGraph {
             lineName: String = "", operator: String = "",
             institutionTypeCode: String = "", railwayClassCode: String = "",
             validFrom: String? = nil, validTo: String? = nil,
-            historyId: String? = nil, temporalKind: TemporalKind = .current
+            historyId: String? = nil, temporalKind: TemporalKind = .current,
+            level: String? = nil, trackID: String? = nil, sourceID: String? = nil
         ) {
             self.lineName = lineName
             self.operator = `operator`
             self.institutionTypeCode = institutionTypeCode
             self.railwayClassCode = railwayClassCode
+            self.level = level
+            self.trackID = trackID
+            self.sourceID = sourceID
             self.validFrom = validFrom
             self.validTo = validTo
             self.historyId = historyId
@@ -492,6 +584,37 @@ public enum RouteGraph {
             self.properties = properties
             self.lines = lines
             self.geometryType = geometryType
+        }
+
+        /// Missing operator/line identity cannot merge unrelated source
+        /// features just because their vertices coincide. Explicit source or
+        /// track identities remain usable; otherwise source geometry supplies
+        /// an order-independent, stable fallback shared by full/regional graphs.
+        public var physicalTrackIdentity: TrackIdentity {
+            func present(_ value: String?) -> Bool {
+                !(value?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true)
+            }
+            if (present(properties.operator) && present(properties.lineName))
+                || present(properties.trackID) || present(properties.sourceID) {
+                return properties.trackIdentity
+            }
+            let geometry = geometryType + "|" + lines.map { line in
+                line.map { String($0.lon.bitPattern, radix: 16) + "," + String($0.lat.bitPattern, radix: 16) }
+                    .joined(separator: ";")
+            }.joined(separator: "/")
+            // Two independent 64-bit FNV-1a streams. Never use Swift Hasher,
+            // whose process randomization would change persisted node identity.
+            var first: UInt64 = 14_695_981_039_346_656_037
+            var second: UInt64 = 7_809_847_782_465_536_322
+            for byte in geometry.utf8 {
+                first = (first ^ UInt64(byte)) &* 1_099_511_628_211
+                second = (second ^ UInt64(byte)) &* 1_400_294_673_668_886_211
+            }
+            let digest = String(first, radix: 16) + ":" + String(second, radix: 16)
+                + ":" + String(geometry.utf8.count)
+            return .init(operatorName: properties.operator, lineName: properties.lineName,
+                         railwayClassCode: properties.railwayClassCode, level: properties.level,
+                         trackID: properties.trackID, geometryDigest: digest)
         }
 
         /// `iterateGeometryLines` — every vertex on the 5-decimal grid.
@@ -622,8 +745,8 @@ public enum RouteGraph {
 
     public struct Edge: Sendable, Equatable {
         public var to: String
-        /// Metres, floored at 0.01 so a zero-length edge cannot make a
-        /// zero-cost cycle.
+        /// Source rail metres, floored at 0.01. Same-coordinate physical
+        /// junctions have exactly zero length and no invented rail geometry.
         public var length: Double
         public var institutionTypeCode: String
         public var railwayClassCode: String
@@ -631,6 +754,8 @@ public enum RouteGraph {
         public var `operator`: String
         /// Non-nil only on the solver's station-transfer edges.
         public var connector: StationConnector?
+        /// An evidenced physical junction, distinct from passenger transfers.
+        public var physicalJunction: PhysicalJunctionEdge? = nil
         /// ADR 0011 validity bounds, carried from the section (or, for a
         /// station-transfer connector, from the station) this edge came from.
         public var validFrom: String? = nil
@@ -668,10 +793,16 @@ public enum RouteGraph {
     /// graph and get the same lifetime — no edit to this file required.
     public final class Graph {
         /// Node key → its quantised coordinate.
-        public var nodes: [String: Coordinate] = [:]
+        public var nodes: [String: Coordinate] = [:] {
+            didSet { physicalRailComponentCache = nil }
+        }
+        public var rejectedPhysicalJunctionIDs: [String] = []
         /// Node key → its edges, **in insertion order**. Dijkstra relaxes an
         /// adjacency list in order, so this is a sequence, not a set.
-        public var adjacency: [String: [Edge]] = [:]
+        public var adjacency: [String: [Edge]] = [:] {
+            didSet { physicalRailComponentCache = nil }
+        }
+        private var physicalRailComponentCache: [String: Int]?
         /// `graphGridKey` cell → the node keys in it, in insertion order.
         /// ``nearbyNodes`` leans on that order to break distance ties.
         public var grid: [String: [String]] = [:]
@@ -683,6 +814,76 @@ public enum RouteGraph {
         init(cellSize: Double) { self.cellSize = cellSize }
 
         public var nodeCount: Int { nodes.count }
+
+        /// Weak components of surveyed rail and approved physical junctions.
+        /// These ignore direction, dates and route filters: sharing a component
+        /// is only a necessary condition for Dijkstra to find a physical path.
+        /// Passenger connectors never merge components. Public dictionary
+        /// mutations invalidate the cache, including nested edge replacement.
+        /// A cancelled build publishes nothing and can be retried later.
+        func physicalRailComponents(
+            isCancelled: () -> Bool = { Task.isCancelled }
+        ) -> [String: Int]? {
+            guard !isCancelled() else { return nil }
+            if let physicalRailComponentCache { return physicalRailComponentCache }
+
+            // Union by size and path compression avoid storing a second copy
+            // of every rail adjacency merely to handle one-way source edges.
+            var indices: [String: Int] = [:]
+            indices.reserveCapacity(nodes.count)
+            var parents: [Int] = []
+            var sizes: [Int] = []
+            parents.reserveCapacity(nodes.count)
+            sizes.reserveCapacity(nodes.count)
+            func index(_ key: String) -> Int {
+                if let existing = indices[key] { return existing }
+                let next = parents.count
+                indices[key] = next
+                parents.append(next)
+                sizes.append(1)
+                return next
+            }
+            func root(_ index: Int) -> Int {
+                var current = index
+                while parents[current] != current {
+                    parents[current] = parents[parents[current]]
+                    current = parents[current]
+                }
+                return current
+            }
+            var work = 0
+            func cancelled() -> Bool {
+                work += 1
+                return work & 255 == 0 && isCancelled()
+            }
+            for key in nodes.keys {
+                if cancelled() { return nil }
+                _ = index(key)
+            }
+            for (from, edges) in adjacency {
+                if cancelled() { return nil }
+                let fromIndex = index(from)
+                for edge in edges {
+                    if cancelled() { return nil }
+                    guard edge.connector == nil else { continue }
+                    var first = root(fromIndex)
+                    var second = root(index(edge.to))
+                    guard first != second else { continue }
+                    if sizes[first] < sizes[second] { swap(&first, &second) }
+                    parents[second] = first
+                    sizes[first] += sizes[second]
+                }
+            }
+            var components: [String: Int] = [:]
+            components.reserveCapacity(indices.count)
+            for (key, value) in indices {
+                if cancelled() { return nil }
+                components[key] = root(value)
+            }
+            guard !isCancelled() else { return nil }
+            physicalRailComponentCache = components
+            return components
+        }
     }
 
     /// The cell size of a graph's own node grid. Not the same grid as the
@@ -695,17 +896,19 @@ public enum RouteGraph {
     /// The Python pipeline's rule, kept: the routable graph is built ONLY
     /// from RailroadSection geometry. An N02 Station LineString is a snap
     /// candidate, never a train-runnable edge.
-    public static func build(from features: [SectionFeature]) -> Graph {
+    public static func build(from features: [SectionFeature], policy: BuildPolicy = .physicalRailway,
+                             junctions: [PhysicalJunction] = []) -> Graph {
         let graph = Graph(cellSize: graphCellSize)
 
-        func ensureNode(_ coord: Coordinate) -> String {
+        func ensureNode(_ coord: Coordinate, _ identity: TrackIdentity) -> String {
             // Quantised twice, exactly as the JavaScript does: once by
             // `iterateGeometryLines` on the way in, once here by
             // `normalizeGraphCoord`, and `coordKey` quantises a third time.
             // Idempotent in practice, but "in practice" is not a reason to
             // drop a step from a function that decides node identity.
             let normalized = Grid.normalizeGraphCoord(coord)
-            let key = Grid.coordKey(normalized)
+            let key = policy == .coordinateParity ? Grid.coordKey(normalized)
+                : physicalNodeKey(normalized, identity: identity)
             if graph.nodes[key] == nil {
                 graph.nodes[key] = normalized
                 graph.adjacency[key] = []
@@ -732,9 +935,9 @@ public enum RouteGraph {
             }
         }
 
-        func addRailEdge(_ a: Coordinate, _ b: Coordinate, _ properties: SectionProperties) {
-            let keyA = ensureNode(a)
-            let keyB = ensureNode(b)
+        func addRailEdge(_ a: Coordinate, _ b: Coordinate, _ properties: SectionProperties, _ identity: TrackIdentity) {
+            let keyA = ensureNode(a, identity)
+            let keyB = ensureNode(b, identity)
             // Two vertices that quantise to one node produce no edge — which
             // is the whole reason the spelling of a key matters.
             if keyA == keyB { return }
@@ -760,11 +963,42 @@ public enum RouteGraph {
         }
 
         for feature in features {
+            let identity = feature.physicalTrackIdentity
             for line in feature.quantisedLines {
                 guard line.count >= 2 else { continue }
                 for i in 0..<(line.count - 1) {
-                    addRailEdge(line[i], line[i + 1], feature.properties)
+                    addRailEdge(line[i], line[i + 1], feature.properties, identity)
                 }
+            }
+        }
+        if policy == .physicalRailway {
+            var acceptedIDs: Set<String> = []
+            for junction in junctions {
+                let fromKey = physicalNodeKey(junction.from.coordinate, identity: junction.from.identity)
+                let toKey = physicalNodeKey(junction.to.coordinate, identity: junction.to.identity)
+                let validBounds = [junction.validFrom, junction.validTo].compactMap { $0 }
+                    .allSatisfy(isPlainISODay)
+                let orderedBounds = junction.validFrom == nil || junction.validTo == nil
+                    || junction.validFrom! < junction.validTo!
+                guard !junction.id.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+                      !junction.evidence.isEmpty,
+                      junction.evidence.allSatisfy({ !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }),
+                      validBounds, orderedBounds,
+                      junction.from.coordinate == junction.to.coordinate,
+                      graph.nodes[fromKey] != nil, graph.nodes[toKey] != nil,
+                      fromKey != toKey, acceptedIDs.insert(junction.id).inserted else {
+                    graph.rejectedPhysicalJunctionIDs.append(junction.id)
+                    continue
+                }
+                let institutions = (graph.nodeMeta[fromKey]?.institutionTypeCodes ?? [])
+                    .union(graph.nodeMeta[toKey]?.institutionTypeCodes ?? [])
+                var edge = Edge(to: toKey, length: 0, institutionTypeCode: "", railwayClassCode: "",
+                                lineName: "", operator: "", connector: nil,
+                                physicalJunction: .init(junction: junction, institutionTypeCodes: institutions),
+                                validFrom: junction.validFrom, validTo: junction.validTo)
+                graph.adjacency[fromKey, default: []].append(edge)
+                edge.to = fromKey
+                graph.adjacency[toKey, default: []].append(edge)
             }
         }
         return graph
@@ -1026,6 +1260,8 @@ extension RouteGraph {
     public final class RouteGraphStore {
 
         public let sections: [SectionFeature]
+        public let policy: BuildPolicy
+        public let junctions: [PhysicalJunction]
 
         /// The solver's `addStationTransferConnectorEdges`, if it has been
         /// ported. Called with the freshly built graph and the region it
@@ -1044,8 +1280,11 @@ extension RouteGraph {
         private var regionalOrder: [String] = []
         private var residentNodes = 0
 
-        public init(sections: [SectionFeature], augment: ((Graph, BBox?) -> Void)? = nil) {
+        public init(sections: [SectionFeature], policy: BuildPolicy = .physicalRailway,
+                    junctions: [PhysicalJunction] = [], augment: ((Graph, BBox?) -> Void)? = nil) {
             self.sections = sections
+            self.policy = policy
+            self.junctions = junctions
             self.augment = augment
         }
 
@@ -1144,7 +1383,7 @@ extension RouteGraph {
         /// insufficient, never eagerly at startup.
         public func fullGraph() -> Graph {
             if let fullGraphCache { return fullGraphCache }
-            let graph = RouteGraph.build(from: sections)
+            let graph = RouteGraph.build(from: sections, policy: policy, junctions: junctions)
             augment?(graph, nil)
             fullGraphCache = graph
             return graph
@@ -1186,7 +1425,7 @@ extension RouteGraph {
                 regionalOrder.append(key)
                 return cached
             }
-            let graph = RouteGraph.build(from: featuresInBBox(qbbox))
+            let graph = RouteGraph.build(from: featuresInBBox(qbbox), policy: policy, junctions: junctions)
             augment?(graph, qbbox)
             graph.regionBBox = qbbox
             regionalGraphs[key] = graph
@@ -1270,6 +1509,9 @@ extension RouteGraph.SectionFeature: Decodable {
         let validFrom: String?
         let validTo: String?
         let historyId: String?
+        let level: String?
+        let trackID: String?
+        let sourceID: String?
 
         private enum CodingKeys: String, CodingKey {
             case n02_001 = "N02_001"
@@ -1279,6 +1521,7 @@ extension RouteGraph.SectionFeature: Decodable {
             case line_name, `operator`, institution_type_code, railway_class_code
             case valid_from, valid_to, history_id
             case service_validity, infrastructure_validity
+            case level, track_id, source_id
         }
 
         init(from decoder: Decoder) throws {
@@ -1290,6 +1533,14 @@ extension RouteGraph.SectionFeature: Decodable {
                 if let value, !value.isEmpty { return value }
                 return try c.decodeIfPresent(String.self, forKey: secondary)
             }
+            func identityValue(_ key: CodingKeys) throws -> String? {
+                guard c.contains(key), !(try c.decodeNil(forKey: key)) else { return nil }
+                if let text = try? c.decode(String.self, forKey: key) { return text }
+                return JSNumber.string(try c.decode(Double.self, forKey: key))
+            }
+            level = try identityValue(.level)
+            trackID = try identityValue(.track_id)
+            sourceID = try identityValue(.source_id)
             railwayClassCode = try orFallback(.n02_001, .railway_class_code)
             institutionTypeCode = try orFallback(.n02_002, .institution_type_code)
             lineName = try orFallback(.n02_003, .line_name)
@@ -1354,7 +1605,7 @@ extension RouteGraph.SectionFeature: Decodable {
                 railwayClassCode: nonEmpty(properties?.railwayClassCode),
                 validFrom: properties?.validFrom,
                 validTo: properties?.validTo,
-                historyId: properties?.historyId),
+                historyId: properties?.historyId, level: properties?.level, trackID: properties?.trackID, sourceID: properties?.sourceID),
             lines: geometry?.lines ?? [], geometryType: geometry?.type ?? "")
     }
 }

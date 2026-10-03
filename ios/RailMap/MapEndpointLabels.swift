@@ -23,9 +23,10 @@ import UIKit
 ///   * the reader's enabled **readings**, one per line under the name.
 ///
 /// All four come off `train.stops`, which `RiddenRouteStore.DrawnRide` now
-/// carries. The station identities are resolved the same way the dots are —
-/// see ``MapRideMarkers/stopPositions(of:)`` — so a card and its terminal dot
-/// can never disagree about where the ride ended.
+/// carries. A complete drawn endpoint supplies its actual terminal location.
+/// If physical routing is partial, an independently verified, dated regional
+/// station identity can locate a name card without extending the railway path
+/// or establishing route continuity or mileage.
 ///
 /// ## The one deviation: the time is a SUBLINE, not a suffix
 ///
@@ -41,6 +42,39 @@ import UIKit
 /// `RailMapView.Coordinator.rebuild`), because a card that carries the name
 /// and a caption beside the dot carrying it again is the same word twice.
 enum MapEndpointLabels {
+
+    /// A station's independently known display location, not a railway path.
+    nonisolated struct StationServiceBounds: Sendable, Equatable {
+        let validFrom: String?
+        let validTo: String?
+    }
+
+    nonisolated struct StationPosition: Sendable, Equatable {
+        let country: String
+        let coordinate: Coordinate
+        let serviceBounds: [StationServiceBounds]
+    }
+
+    nonisolated static func validPosition(_ position: Coordinate) -> Bool {
+        position.lon.isFinite && position.lat.isFinite
+            && (-180...180).contains(position.lon) && (-90...90).contains(position.lat)
+    }
+
+    nonisolated static func stationPosition(
+        for stop: Stop, country: String, on date: String,
+        in positions: [String: StationPosition]
+    ) -> Coordinate? {
+        guard let code = stop.n02StationCode, !code.isEmpty,
+              let station = positions[code], station.country == country,
+              validPosition(station.coordinate) else { return nil }
+        if station.serviceBounds.contains(where: { $0.validFrom != nil || $0.validTo != nil }) {
+            guard Dates.isValidDateString(date), station.serviceBounds.contains(where: {
+                RouteGraph.RailValidity.isValid(validFrom: $0.validFrom, validTo: $0.validTo, on: date)
+            })
+            else { return nil }
+        }
+        return station.coordinate
+    }
 
     /// One card, before and after placement.
     struct Spec {
@@ -165,14 +199,19 @@ enum MapEndpointLabels {
     /// The two normally coincide; where they do not, the reader's own labelling
     /// is the answer and the geometry is not.
     static func endpointStop(
-        of ride: RiddenRouteStore.DrawnRide, kind: Kind
+        of ride: RiddenRouteStore.DrawnRide, kind: Kind,
+        stationPosition: (Stop) -> Coordinate? = { _ in nil }
     ) -> (index: Int, stop: Stop, position: Coordinate)? {
         guard let index = ride.stops.firstIndex(where: { $0.stopType == kind.rawValue })
         else { return fallbackEndpoint(of: ride, kind: kind) }
-        guard let position = MapRideMarkers.stopPositions(of: ride)[index] else {
-            return fallbackEndpoint(of: ride, kind: kind)
+        let stop = ride.stops[index]
+        if let position = MapRideMarkers.stopPositions(of: ride)[index], validPosition(position) {
+            return (index, stop, position)
         }
-        return (index, ride.stops[index], position)
+        if let position = stationPosition(stop), validPosition(position) {
+            return (index, stop, position)
+        }
+        return fallbackEndpoint(of: ride, kind: kind)
     }
 
     /// Where the stop itself has no drawn position, the ends of the drawn line
@@ -191,13 +230,15 @@ enum MapEndpointLabels {
         let ordered = ride.segments.sorted { $0.segmentIndex < $1.segmentIndex }
         switch kind {
         case .origin:
-            guard let segment = ordered.first, let position = segment.coordinates.first
+            guard let segment = ordered.first, let position = segment.coordinates.first,
+                  validPosition(position)
             else { return nil }
             let name = segment.from ?? ride.stops.first?.name ?? ""
             guard !name.isEmpty else { return nil }
             return (0, Stop(name: name, stopType: Kind.origin.rawValue), position)
         case .destination:
-            guard let segment = ordered.last, let position = segment.coordinates.last
+            guard let segment = ordered.last, let position = segment.coordinates.last,
+                  validPosition(position)
             else { return nil }
             let name = segment.to ?? ride.stops.last?.name ?? ""
             guard !name.isEmpty else { return nil }

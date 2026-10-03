@@ -13,6 +13,7 @@ final class WorkspaceEditingTests: XCTestCase {
 
     func testSearchSurvivesDetailReturn() {
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "search"
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
@@ -33,6 +34,7 @@ final class WorkspaceEditingTests: XCTestCase {
 
     func testPlaybackCanPauseResumeAndStop() {
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         // Sample journeys remain playable after their calendar dates pass.
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
@@ -58,6 +60,7 @@ final class WorkspaceEditingTests: XCTestCase {
         let fixtureID = "20260704_02_kodama918"
         let originalNumber = "こだま918号（Kodama 918）（918A）"
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-interface-language", "en"]
         app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
@@ -115,6 +118,10 @@ final class WorkspaceEditingTests: XCTestCase {
         XCTAssertTrue(more.waitForExistence(timeout: 5))
         // More shares the native action row with Edit. Require the actual
         // foreground ScrollView to contain its complete tappable bounds.
+        for _ in 0..<4 {
+            if detailScroll.frame.intersection(app.frame).contains(more.frame) { break }
+            detailScroll.swipeUp()
+        }
         XCTAssertTrue(more.isHittable)
         XCTAssertTrue(detailScroll.frame.intersection(app.frame).contains(more.frame), app.debugDescription)
         more.tap()
@@ -150,6 +157,18 @@ final class WorkspaceEditingTests: XCTestCase {
 
         func revealRegionControl() -> (element: XCUIElement, isPopUpButton: Bool) {
             let anyRegion = app.descendants(matching: .any)["importRegion"].firstMatch
+            let importForm = app.collectionViews["importForm"]
+            XCTAssertTrue(importForm.waitForExistence(timeout: 5))
+            // The raw JSON editor can fill the visible Form. Scroll its
+            // outer gutter so the lazy mode rows mount before querying them.
+            for _ in 0..<8 where !anyRegion.exists {
+                let bounds = importForm.frame.intersection(app.frame)
+                XCTAssertFalse(bounds.isEmpty)
+                let start = importForm.coordinate(withNormalizedOffset: .zero)
+                    .withOffset(CGVector(dx: 8, dy: bounds.height * 0.7))
+                start.press(forDuration: 0.05, thenDragTo: start.withOffset(
+                    CGVector(dx: 0, dy: -bounds.height * 0.4)))
+            }
             XCTAssertTrue(anyRegion.waitForExistence(timeout: 5))
             let forms = app.collectionViews.containing(.any, identifier: "importRegion")
             XCTAssertEqual(forms.count, 1, "Resolve the import region's own foreground Form.")
@@ -261,6 +280,7 @@ final class WorkspaceEditingTests: XCTestCase {
 
         next.tap()
         let firstStop = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
+        XCTAssertTrue(EditorUITestSupport.reveal(firstStop, in: app), app.debugDescription)
         XCTAssertTrue(firstStop.waitForExistence(timeout: 8))
 
         next.tap()
@@ -336,6 +356,7 @@ final class WorkspaceEditingTests: XCTestCase {
         // Train-type autocomplete is an existing-record field; new journeys
         // choose their type through the region-step Picker.
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-interface-language", "en"]
         app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
@@ -532,8 +553,9 @@ final class WorkspaceEditingTests: XCTestCase {
         XCTAssertFalse(save.exists)
 
         next.tap()
-        XCTAssertTrue(app.descendants(matching: .any)["rideEditorStop-0"]
-            .waitForExistence(timeout: 8))
+        let firstStop = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
+        XCTAssertTrue(EditorUITestSupport.reveal(firstStop, in: app), app.debugDescription)
+        XCTAssertTrue(firstStop.waitForExistence(timeout: 8))
         XCTAssertFalse(save.exists)
         fillRequiredStops(in: app, names: ["Tokyo", "Shinagawa"])
 
@@ -636,14 +658,14 @@ final class WorkspaceEditingTests: XCTestCase {
         XCTAssertTrue(save.waitForExistence(timeout: 8))
 
         XCUIDevice.shared.orientation = .landscapeLeft
-        let landscape = XCTNSPredicateExpectation(
+        let portraitLock = XCTNSPredicateExpectation(
             predicate: NSPredicate { object, _ in
                 guard let window = object as? XCUIElement else { return false }
-                return window.frame.width > window.frame.height
+                return window.frame.height > window.frame.width
             },
             object: app.windows.firstMatch)
-        XCTAssertEqual(XCTWaiter().wait(for: [landscape], timeout: 8), .completed,
-                       "The app window must finish rotating before layout is inspected.")
+        XCTAssertEqual(XCTWaiter().wait(for: [portraitLock], timeout: 8), .completed,
+                       "The iPhone confirmation must stay in portrait after a rotation request.")
         XCTAssertTrue(save.waitForExistence(timeout: 8),
                       "Rotation must retain the confirmation step.")
         let editorForm = app.descendants(matching: .any)["rideEditorForm"].firstMatch
@@ -661,7 +683,7 @@ final class WorkspaceEditingTests: XCTestCase {
             XCTAssertTrue(summaryValue.waitForExistence(timeout: 5),
                           "Rotation must retain the draft value \(value).")
         }
-        attach(app, named: "new-journey-confirmation-landscape")
+        attach(app, named: "new-journey-confirmation-portrait-locked")
     }
 
     func testClearedEnabledDateStaysOnDateStepUntilRepaired() {
@@ -839,8 +861,9 @@ final class WorkspaceEditingTests: XCTestCase {
         XCTAssertFalse(app.buttons["Reset route"].exists,
                        "A blank remaining route should change region directly.")
         app.buttons["rideEditorNext"].tap()
-        XCTAssertTrue(app.descendants(matching: .any)["rideEditorStop-0"]
-            .waitForExistence(timeout: 8))
+        let firstStop = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
+        XCTAssertTrue(EditorUITestSupport.reveal(firstStop, in: app), app.debugDescription)
+        XCTAssertTrue(firstStop.waitForExistence(timeout: 8))
         XCTAssertFalse(undo.exists,
                        "Changing region must not offer an undo from the previous route.")
     }
@@ -850,8 +873,9 @@ final class WorkspaceEditingTests: XCTestCase {
         XCTAssertTrue(next.waitForExistence(timeout: 30))
         XCTAssertFalse(app.buttons["rideEditorPrevious"].exists)
         next.tap()
-        XCTAssertTrue(app.descendants(matching: .any)["rideEditorStop-0"]
-            .waitForExistence(timeout: 8))
+        let firstStop = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
+        XCTAssertTrue(EditorUITestSupport.reveal(firstStop, in: app), app.debugDescription)
+        XCTAssertTrue(firstStop.waitForExistence(timeout: 8))
     }
 
     private func advanceToServiceStep(in app: XCUIApplication) {
@@ -921,6 +945,7 @@ final class WorkspaceEditingTests: XCTestCase {
         launchArguments: [String] = []
     ) -> XCUIApplication {
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = [
             "-AppleLanguages", "(\(language))",
             "-AppleLocale", locale,
@@ -947,10 +972,45 @@ final class WorkspaceEditingTests: XCTestCase {
 
 @MainActor
 enum EditorUITestSupport {
+    /// A lazy Form row must be brought into the viewport before querying it.
+    static func reveal(_ element: XCUIElement, in app: XCUIApplication) -> Bool {
+        if element.exists, element.isHittable, isUsable(element.frame),
+           app.frame.contains(element.frame) { return true }
+        let form = app.descendants(matching: .any)["rideEditorForm"].firstMatch
+        guard form.waitForExistence(timeout: 2) else { return false }
+        XCTContext.runActivity(named: "Lazy editor control before reveal") { activity in
+            let screenshot = XCTAttachment(screenshot: app.screenshot())
+            screenshot.lifetime = .keepAlways
+            activity.add(screenshot)
+        }
+        for attempt in 0..<8 {
+            let viewport = form.frame.intersection(app.frame)
+            guard isUsable(viewport) else { return false }
+            if element.exists, isUsable(element.frame), viewport.contains(element.frame) {
+                return true
+            }
+            // An unmounted row can be above or below the current position.
+            // Search both directions within the same eight-drag budget.
+            let downward = element.exists
+                ? element.frame.minY < viewport.minY : attempt >= 4
+            let gutter = viewport.width > 20 ? viewport.minX + 8 : viewport.midX
+            let start = CGPoint(x: gutter,
+                y: viewport.midY + (downward ? -1 : 1) * viewport.height * 0.275)
+            let end = CGPoint(x: gutter,
+                y: viewport.midY + (downward ? 1 : -1) * viewport.height * 0.275)
+            let origin = app.coordinate(withNormalizedOffset: .zero)
+            let appFrame = app.frame
+            origin.withOffset(CGVector(dx: start.x - appFrame.minX, dy: start.y - appFrame.minY))
+                .press(forDuration: 0.05, thenDragTo: origin.withOffset(
+                    CGVector(dx: end.x - appFrame.minX, dy: end.y - appFrame.minY)))
+        }
+        return element.waitForExistence(timeout: 5)
+    }
+
     /// Seed named endpoints through the real route picker before advancing
     /// the new-journey wizard to its date step.
     static func seedNamedRoute(in app: XCUIApplication) {
-        app.buttons["rideEditorServicePattern"].tap()
+        EditorUITestSupport.tap(app.buttons["rideEditorServicePattern"], in: app)
         let search = app.searchFields.firstMatch
         XCTAssertTrue(search.waitForExistence(timeout: 8))
         search.tap()
@@ -967,6 +1027,7 @@ enum EditorUITestSupport {
         file: StaticString = #filePath,
         line: UInt = #line
     ) {
+        _ = reveal(element, in: app)
         guard element.waitForExistence(timeout: 5) else {
             XCTFail("The element to tap does not exist.", file: file, line: line)
             return

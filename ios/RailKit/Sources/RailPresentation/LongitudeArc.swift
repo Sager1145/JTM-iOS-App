@@ -4,29 +4,9 @@
 
 import Foundation
 
-/// The narrowest band of longitude that contains a set of boxes.
-///
-/// **This is not a port**, and it is not geometry the drawn map needs: it
-/// decides where a CAMERA opens when the subject is more than one network.
-/// It lives one tier down from the app's region catalog for the reason
-/// ``RegionClock`` and ``RegionScopeRule`` do — the app target has no test
-/// target under it, and "which way round the world is the short way from
-/// Vancouver to Wakkanai" is arithmetic that has to be checked rather than
-/// reviewed.
-///
-/// ## Why a circle
-///
-/// With five Asian packages a plain `min`/`max` over longitudes was exactly
-/// right: they run from 113°E to 146°E and nothing wraps. The North American
-/// packages made it wrong. They run from 130°W to 63°W, so `min` is −130 and
-/// `max` is +146, and the box that describes is 276° wide and centred over
-/// Africa. It does contain every network — nothing was ever *missing* from it
-/// — the reader was simply shown the Atlantic in the middle of a view of the
-/// Pacific rim.
-///
-/// Taking the smallest arc that covers every box instead centres the view on
-/// the Pacific, which is the map somebody with journeys in Tokyo and Chicago
-/// is asking for.
+/// Finds the smallest circular longitude arc covering a set of geographic
+/// bounds. The antimeridian is a wrap boundary rather than a railway seam;
+/// this math only frames the map and does not establish route connectivity.
 public enum LongitudeArc {
 
     /// One box's western and eastern edges, in degrees. A box whose east edge

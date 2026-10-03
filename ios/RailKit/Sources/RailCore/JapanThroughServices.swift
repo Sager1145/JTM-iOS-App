@@ -31,8 +31,10 @@ public enum JapanThroughServices {
                 .filter { seen.insert($0).inserted }
         }
 
-        /// Slice the ordered anchored corridor, preserving station occurrences.
-        /// Selecting JS cannot silently turn into a shorter route through Tokyo.
+        /// Display-only slices of the catalog's anchored service corridor.
+        /// These preserve service identity and station occurrences, but do not
+        /// prove track connectivity. Never use them as physical search edges or
+        /// auto-fill candidates; LocalJourneySearch owns physical proposals.
         public func choices(package: CompactPackage, originCode: String,
                             destinationCode: String) -> [RailwayRouteChoices.Choice] {
             guard originCode != destinationCode, !legs.isEmpty else { return [] }

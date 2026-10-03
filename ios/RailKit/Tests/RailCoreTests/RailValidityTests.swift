@@ -189,13 +189,14 @@ final class RailValidityTests: XCTestCase {
         let pinnedHints = RouteSolver.SegmentHints(
             requiredLines: ["Opening Line"])
         func solve(_ date: String?, hints: RouteSolver.SegmentHints? = nil,
-                   target: String = "B") -> [RouteSolver.SolvedTarget]
+                   target: String = "B",
+                   policy: RouteSolver.TraversalPolicy = .passengerTransfers) -> [RouteSolver.SolvedTarget]
         {
             RouteSolver.dijkstra(
                 graph: graph,
                 sourceCandidates: [.init(key: "A", distance: 0)],
                 targetKeys: [target], train: .init(rideDate: date),
-                allowedCodes: ["1"], hints: hints ?? pinnedHints)
+                allowedCodes: ["1"], hints: hints ?? pinnedHints, traversalPolicy: policy)
         }
 
         XCTAssertTrue(solve("2009-12-22").isEmpty)
@@ -218,15 +219,28 @@ final class RailValidityTests: XCTestCase {
             try XCTUnwrap(solve(
                 "2009-12-23", hints: unconstrained, target: "A").first).pathKeys,
             ["A"])
+
+        // Passenger routing above still requires a real matching rail edge
+        // before a pinned result can settle. Physical routing cannot reach B
+        // through either passenger connector, with or without route hints.
+        XCTAssertTrue(solve("2009-12-23", policy: .physicalRail).isEmpty)
+        XCTAssertTrue(solve("2009-12-23", hints: operatorPinned, policy: .physicalRail).isEmpty)
+        XCTAssertTrue(solve("2009-12-23", hints: unconstrained, policy: .physicalRail).isEmpty)
+        XCTAssertTrue(solve("2009-12-22", target: "C", policy: .physicalRail).isEmpty)
+        XCTAssertEqual(
+            try XCTUnwrap(solve("2009-12-23", target: "C", policy: .physicalRail).first).pathKeys,
+            ["A", "C"])
     }
 
     // MARK: - (c) cache key
 
-    private func cacheKey(rideDate: String?, historyRevision: String?) -> String? {
+    private func cacheKey(rideDate: String?, historyRevision: String?,
+                          cacheVersion: String = RouteGraph.routeSolverCacheVersion) -> String? {
         RouteGraph.solveContext(
             train: RouteGraph.CacheKeyTrain(),
             routeSections: [RouteGraph.RouteSection(from: "東京", to: "大阪")],
             country: "jp",
+            cacheVersion: cacheVersion,
             rideDate: rideDate,
             historyRevision: historyRevision)?.cacheKey
     }
@@ -237,12 +251,26 @@ final class RailValidityTests: XCTestCase {
         let c = try XCTUnwrap(cacheKey(rideDate: "2019-12-31", historyRevision: "r2"))
         XCTAssertNotEqual(a, b)
         XCTAssertNotEqual(a, c)
-        XCTAssertTrue(a.contains("solver:25"), a)
-        XCTAssertEqual(RouteGraph.routeSolverCacheVersion, "25")
-        XCTAssertEqual(RouteGraph.routeDrawnCacheVersion, "26")
+        XCTAssertTrue(a.hasPrefix("solver:27|"), a)
+        XCTAssertEqual(RouteGraph.routeSolverCacheVersion, "27")
+        XCTAssertEqual(RouteGraph.routeDrawnCacheVersion, "28")
         XCTAssertTrue(a.contains("|date:2019-12-31|history:r1"), a)
         let undated = try XCTUnwrap(cacheKey(rideDate: nil, historyRevision: nil))
         XCTAssertTrue(undated.contains("|date:none|history:none"), undated)
+    }
+
+    func testLegacyCoordinateCacheVersionsAreExplicitAndDistinctFromPhysicalDefaults() throws {
+        XCTAssertEqual(RouteGraph.legacyCoordinateSolverCacheVersion, "25")
+        XCTAssertEqual(RouteGraph.legacyCoordinateDrawnCacheVersion, "26")
+        XCTAssertNotEqual(RouteGraph.legacyCoordinateSolverCacheVersion, RouteGraph.routeSolverCacheVersion)
+        XCTAssertNotEqual(RouteGraph.legacyCoordinateDrawnCacheVersion, RouteGraph.routeDrawnCacheVersion)
+        let physical = try XCTUnwrap(cacheKey(rideDate: "2019-12-31", historyRevision: "r1"))
+        let coordinate = try XCTUnwrap(cacheKey(
+            rideDate: "2019-12-31", historyRevision: "r1",
+            cacheVersion: RouteGraph.legacyCoordinateSolverCacheVersion))
+        XCTAssertTrue(coordinate.hasPrefix("solver:25|"), coordinate)
+        XCTAssertTrue(coordinate.contains("|date:2019-12-31|history:r1"), coordinate)
+        XCTAssertNotEqual(coordinate, physical)
     }
 
     // MARK: - Endpoint station candidates honour the ride date

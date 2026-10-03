@@ -10,8 +10,8 @@ const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", ".
 const rail = path.join(repo, "app", "public", "rail");
 const RailNetwork = require(path.join(repo, "app", "public", "rail-network.js"));
 const region = process.argv[2];
-if (!["jp", "tw", "hk", "mo", "kr", "us", "ca"].includes(region)) {
-  console.error("usage: audit-zoom-chords.mjs <jp|tw|hk|mo|kr|us|ca>");
+if (!["jp", "tw", "hk", "mo", "kr"].includes(region)) {
+  console.error("usage: audit-zoom-chords.mjs <jp|tw|hk|mo|kr>");
   process.exit(2);
 }
 

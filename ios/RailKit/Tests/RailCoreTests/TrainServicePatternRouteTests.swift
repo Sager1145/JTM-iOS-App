@@ -25,19 +25,13 @@ struct TrainServicePatternRouteTests {
             from: root.appending(path: "app/data/rail-history.json"))
         _ = RailHistory.apply(overlay, sections: &sections, stations: &stationFeatures)
         let stationCollection = Stations.FeatureCollection(features: stationFeatures)
-        let graphStore = RouteGraph.RouteGraphStore(sections: sections)
-        graphStore.augment = { graph, bbox in
-            // Match RiddenRouteStore: connectors only see stations in this
-            // regional graph, avoiding unrelated nationwide platform searches.
-            let features = stationCollection.features.filter { feature in
-                guard let bbox else { return true }
-                guard let pair = Stations.displayCoordinate(feature),
-                      let coordinate = Coordinate(pair: pair) else { return false }
-                return coordinate.lon >= bbox.minX && coordinate.lon <= bbox.maxX
-                    && coordinate.lat >= bbox.minY && coordinate.lat <= bbox.maxY
-            }
-            RouteSolver.addStationTransferConnectorEdges(graph: graph, stations: features)
-        }
+        let registry = try! PhysicalRailJunctionRegistry(data: Data(contentsOf:
+            root.appending(path: "app/data/physical-rail-junctions.json")))
+        // Use the application's physical graph and its reviewed registry.
+        // Passenger station transfers are not train edges.
+        let graphStore = RouteGraph.RouteGraphStore(
+            sections: sections, policy: .physicalRailway,
+            junctions: registry.junctions(for: "jp"))
         return Environment(
             graphStore: graphStore, stations: Stations.Index(stationCollection),
             historyRevision: overlay.revision)
@@ -247,19 +241,49 @@ struct TrainServicePatternRouteTests {
         let canonical = TrainValidation.normalizeExportTrain(applied, country: "jp")
         let sections = StoreOperations.rideRouteSections(for: canonical)
         #expect(sections.count == pattern.stopRefs.count - 1)
-        let train = Self.context(canonical)
-        var anchor: Coordinate?
-        for (index, section) in sections.enumerated() {
-            let solved = RouteSolver.solveSectionOnDemand(
-                section, segmentIndex: index, train: train, country: "jp",
+        // Isolate service expiry from unrelated, unreviewed line-identity
+        // boundaries on Tokyo–Shinjuku. This source railway section stays
+        // within one Chuo identity and must exist on both sides of expiry.
+        let section = try #require(sections.first { $0.from == "新宿" && $0.to == "立川" })
+        var before: RouteSolver.SolvedSection?
+        for day in ["2025-03-14", end] {
+            var dated = canonical
+            dated.date = day
+            let solved = try #require(RouteSolver.solveSectionOnDemand(
+                section, segmentIndex: 1, train: Self.context(dated), country: "jp",
                 graphStore: Self.environment.graphStore, stations: Self.environment.stations,
-                continuityAnchor: anchor)
-            let pair = [pattern.stopRefs[index].name, pattern.stopRefs[index + 1].name]
-            if pattern.unsolvableLegs.contains(pair) { continue }
-            let solvedSection = try #require(
-                solved, "\(pair.joined(separator: "→")) still has a railway on \(end)")
-            anchor = solvedSection.coordinates.last
+                continuityAnchor: nil), "新宿→立川 still has a railway on \(day)")
+            #expect(solved.physicalLength > 0)
+            if let before {
+                #expect(solved.coordinates == before.coordinates)
+                #expect(solved.physicalLength == before.physicalLength)
+            }
+            before = solved
         }
+    }
+
+    @Test("Service display and durable stop identities survive an unproven physical boundary")
+    func serviceDisplaySurvivesUnprovenPhysicalBoundary() throws {
+        let pattern = try #require(TrainServicePatterns.patterns.first {
+            $0.id == "metro-hakone-kitasenju-hakoneyumoto"
+        })
+        let day = "2026-10-03"
+        #expect(pattern.isValid(on: day))
+        #expect(TrainServicePatterns.search(pattern.name).contains { $0.id == pattern.id })
+        let applied = TrainServicePatterns.apply(pattern, to: Train(
+            id: pattern.id, date: day, number: "", origin: "", destination: "", stops: []))
+        #expect(TrainServiceBranding.service(for: applied)?.id == pattern.serviceId)
+        #expect(Self.saveReopenFailure(of: applied, direction: "forward") == nil)
+        let canonical = TrainValidation.normalizeExportTrain(applied, country: "jp")
+        #expect(canonical.stops.map(\.n02StationCode) == pattern.stopRefs.map { Optional($0.sourceCode) })
+        let sections = StoreOperations.rideRouteSections(for: canonical)
+        let index = try #require(sections.firstIndex { $0.from == "表参道" && $0.to == "町田" })
+        // No reviewed Chiyoda–Odakyu boundary exists in this fixture. The
+        // service catalog cannot supply that missing physical evidence.
+        #expect(RouteSolver.solveSectionOnDemand(
+            sections[index], segmentIndex: index, train: Self.context(canonical), country: "jp",
+            graphStore: Self.environment.graphStore, stations: Self.environment.stations,
+            continuityAnchor: nil) == nil)
     }
 
     /// A retired branch is a property of the railway, not of a service pattern.
@@ -346,6 +370,7 @@ struct TrainServicePatternRouteTests {
             }
             let train = Self.context(canonical)
             var anchor: Coordinate?
+            var previousPhysicalKey: String?
             for (index, section) in sections.enumerated() {
                 outcome.legCount += 1
                 #expect(section.fromN02StationCode == refs[index].sourceCode)
@@ -355,13 +380,17 @@ struct TrainServicePatternRouteTests {
                 outcome.attemptedLegs += 1
                 let solved = RouteSolver.solveSectionOnDemand(
                     section, segmentIndex: index, train: train, country: "jp",
-                    graphStore: env.graphStore, stations: env.stations, continuityAnchor: anchor)
+                    graphStore: env.graphStore, stations: env.stations, continuityAnchor: anchor,
+                    physicalContinuationKey: index > 0
+                        && sections[index - 1].toN02StationCode == section.fromN02StationCode
+                        ? previousPhysicalKey : nil)
                 guard let solved, let last = solved.coordinates.last else {
                     let pair = reversed ? [refs[index + 1].name, refs[index].name]
                         : [refs[index].name, refs[index + 1].name]
                     if pattern.unsolvableLegs.contains(pair) { outcome.unsolvableCount += 1 }
                     else { outcome.failed.append("\(direction): \(label)") }
                     anchor = nil
+                    previousPhysicalKey = nil
                     continue
                 }
                 for (ref, actual) in [(refs[index], solved.fromStationIndex),
@@ -397,6 +426,7 @@ struct TrainServicePatternRouteTests {
                     "physicalLengthMeters": solved.physicalLength,
                 ])
                 anchor = last
+                previousPhysicalKey = solved.rawPathKeys.last
             }
         }
         var payloads: [String: [String: Any]] = [:]

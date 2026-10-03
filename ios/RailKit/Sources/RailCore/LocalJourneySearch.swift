@@ -2,21 +2,54 @@ import Foundation
 
 /// Offline physical route proposals, ordered by distance, then row changes.
 /// This searches surveyed intervals, not dated passenger services. Transfers
-/// require an exact shared station ID; compact station groups are not decoded.
+/// cannot be inferred from station identity, names, or platform proximity.
 public enum LocalJourneySearch {
+    public struct Result: Sendable {
+        public let choices: [RailwayRouteChoices.Choice]
+        public let isTruncated: Bool
+        /// compact-v1 provides interval order but no audited network junctions
+        /// or declaration that every possible physical route is represented.
+        public let topologyIsComplete: Bool
+        public var hasAmbiguity: Bool { choices.count > 1 }
+        public var uniqueChoice: RailwayRouteChoices.Choice? {
+            guard topologyIsComplete, !isTruncated, choices.count == 1 else { return nil }
+            return choices.first
+        }
+    }
+
+    public static func choices(
+        package: CompactPackage, originCode: String, destinationCode: String,
+        trainType: String? = nil, excludingStationCodes: Set<String> = [],
+        requiredStationCodes: [String] = [],
+        maximumChoices: Int = 3, maximumExpansions: Int = 50_000
+    ) -> [RailwayRouteChoices.Choice] {
+        search(package: package, originCode: originCode, destinationCode: destinationCode,
+               trainType: trainType, excludingStationCodes: excludingStationCodes,
+               requiredStationCodes: requiredStationCodes,
+               maximumChoices: maximumChoices, maximumExpansions: maximumExpansions).choices
+    }
+
     /// Keeps at most `maximumChoices` settled labels per station occurrence and
     /// never expands more than `maximumExpansions` labels. This bounded search
     /// returns useful short alternatives rather than enumerating every path.
     /// The first result is a shortest directed route; the alternative set is
     /// deliberately bounded and is not an exhaustive list of simple paths.
-    public static func choices(
+    public static func search(
         package: CompactPackage, originCode: String, destinationCode: String,
         trainType: String? = nil, excludingStationCodes: Set<String> = [],
+        requiredStationCodes: [String] = [],
         maximumChoices: Int = 3, maximumExpansions: Int = 50_000
-    ) -> [RailwayRouteChoices.Choice] {
-        guard originCode != destinationCode, maximumChoices > 0, maximumExpansions > 0,
+    ) -> Result {
+        func result(_ choices: [RailwayRouteChoices.Choice] = [], truncated: Bool = false) -> Result {
+            Result(choices: choices, isTruncated: truncated, topologyIsComplete: false)
+        }
+        guard maximumChoices > 0, maximumExpansions > 0 else { return result(truncated: true) }
+        guard originCode != destinationCode,
               !excludingStationCodes.contains(originCode),
-              !excludingStationCodes.contains(destinationCode) else { return [] }
+              !excludingStationCodes.contains(destinationCode) else { return result() }
+        let anchors = requiredStationCodes.isEmpty ? [originCode, destinationCode] : requiredStationCodes
+        guard anchors.first == originCode, anchors.last == destinationCode,
+              anchors.allSatisfy({ !excludingStationCodes.contains($0) }) else { return result() }
         let limit = min(maximumChoices, 3)
         let budget = min(maximumExpansions, 200_000)
         let lines = package.lines.filter { permits($0, trainType: trainType) }
@@ -25,7 +58,7 @@ public enum LocalJourneySearch {
         var edges: [Edge] = []
         var outgoing: [String: [Int]] = [:]
         for (row, line) in lines.enumerated() {
-            guard !Task.isCancelled else { return [] }
+            guard !Task.isCancelled else { return result(truncated: true) }
             let base = nodes.count
             nodes += line.stations.map { Node(row: row, station: $0) }
             let intervals = RailIntervalCodes.intervals(for: line)
@@ -45,7 +78,7 @@ public enum LocalJourneySearch {
                 }
             }
         }
-        guard outgoing[originCode] != nil else { return [] }
+        guard outgoing[originCode] != nil else { return result() }
         // A cheap directed reachability pass avoids searching disconnected
         // national components. Occurrence constraints are applied below.
         var predecessors: [String: [String]] = [:]
@@ -59,21 +92,26 @@ public enum LocalJourneySearch {
                 pending.append(previous)
             }
         }
-        guard reachable.contains(originCode) else { return [] }
+        guard reachable.contains(originCode) else { return result() }
         var records: [Record] = []
         var heap = Heap()
         var settled = Array(repeating: 0, count: nodes.count)
         var results: [RailwayRouteChoices.Choice] = []
         var seen: Set<String> = []
         var expansions = 0
+        var truncated = false
         // Queue storage also has a hard bound; a large interchange cannot
         // consume unbounded memory before the expansion budget is reached.
         let queueBudget = budget * 8
         func enqueue(edgeIndex: Int, parent: Int?) {
-            guard records.count < queueBudget else { return }
+            guard records.count < queueBudget else { truncated = true; return }
             let edge = edges[edgeIndex]
             let previous = parent.map { records[$0] }
-            let record = Record(edge: edgeIndex, parent: parent,
+            var anchorIndex = previous?.anchorIndex ?? 0
+            if anchorIndex + 1 < anchors.count, nodes[edge.to].station.id == anchors[anchorIndex + 1] {
+                anchorIndex += 1
+            }
+            let record = Record(edge: edgeIndex, parent: parent, anchorIndex: anchorIndex,
                                 distance: (previous?.distance ?? 0) + edge.distance,
                                 transfers: (previous?.transfers ?? 0)
                                     + (previous.map { edges[$0.edge].row != edge.row ? 1 : 0 } ?? 0),
@@ -86,15 +124,17 @@ public enum LocalJourneySearch {
         for edge in outgoing[originCode] ?? [] where reachable.contains(nodes[edges[edge].to].station.id) {
             enqueue(edgeIndex: edge, parent: nil)
         }
-        while let entry = heap.pop(), expansions < budget, results.count < limit {
-            guard !Task.isCancelled else { return [] }
+        while !heap.items.isEmpty {
+            guard expansions < budget, results.count < limit else { truncated = true; break }
+            guard let entry = heap.pop() else { break }
+            guard !Task.isCancelled else { return result(results, truncated: true) }
             let record = records[entry.id]
             let arrived = edges[record.edge]
-            guard settled[arrived.to] < limit else { continue }
+            guard settled[arrived.to] < limit else { truncated = true; continue }
             settled[arrived.to] += 1
             expansions += 1
             let code = nodes[arrived.to].station.id
-            if code == destinationCode {
+            if code == destinationCode && record.anchorIndex == anchors.count - 1 {
                 var path: [Edge] = []
                 var cursor: Int? = entry.id
                 while let id = cursor {
@@ -107,10 +147,12 @@ public enum LocalJourneySearch {
             }
             for edgeIndex in outgoing[code] ?? [] {
                 let edge = edges[edgeIndex]
-                guard reachable.contains(nodes[edge.to].station.id), settled[edge.to] < limit else { continue }
+                guard reachable.contains(nodes[edge.to].station.id) else { continue }
                 // Continuing one row must use the actual occurrence reached.
                 // A–B–C–B–D therefore cannot silently become A–B–D.
-                guard edge.row != arrived.row || edge.from == arrived.to else { continue }
+                // compact-v1 has no verified junction relation. Shared station
+                // identity is a passenger/place relation, not connected track.
+                guard edge.row == arrived.row, edge.from == arrived.to else { continue }
                 // Forbid revisiting an occurrence, including a transfer's
                 // departure occurrence; repeated IDs at other positions remain.
                 var cursor: Int? = entry.id
@@ -127,7 +169,7 @@ public enum LocalJourneySearch {
                 if !cycle { enqueue(edgeIndex: edgeIndex, parent: entry.id) }
             }
         }
-        return results
+        return result(results, truncated: truncated)
     }
 
     private struct Node {
@@ -144,6 +186,7 @@ public enum LocalJourneySearch {
     private struct Record {
         let edge: Int
         let parent: Int?
+        let anchorIndex: Int
         let distance: Double
         let transfers: Int
         let hops: Int
@@ -222,6 +265,6 @@ public enum LocalJourneySearch {
         let highSpeed = ["highspeed", "high speed", "high-speed", "shinkansen", "新幹線", "新干线", "高速"]
             .contains { type.contains($0) }
         let highSpeedLine = line.name.contains("新幹線") || ["high_speed", "shinkansen"].contains(line.kind ?? "")
-        return highSpeed ? highSpeedLine : !highSpeedLine
+        return line.serviceStatus == nil && (highSpeed ? highSpeedLine : !highSpeedLine)
     }
 }

@@ -60,10 +60,19 @@ struct HakodateRouteConnectionTests {
     @Test("Coded trunk–branch–trunk chains meet at exact junctions in both directions")
     func selectedBranchGeometry() throws {
         let package = try PortFixtures.package(country: "jp")
-        let choice = try #require(RailwayRouteChoices.choices(
-            package: package, originCode: "000424", destinationCode: "000426")
-            .first { $0.lineIDs == [main, main + "-2", main] })
-        let hints = RouteHints(requiredLineIDs: choice.lineIDs, sectionCodes: choice.sectionCodes,
+        // Render an authored interval chain, without deriving junction
+        // connectivity from the compact station identities.
+        let rows = [main, main + "-2", main]
+        let endpoints = ["000424", "000420", "000427", "000426"]
+        var codes: [String] = []
+        for index in rows.indices {
+            let row = CompactPackage(format: package.format, version: package.version, country: package.country,
+                                     lines: package.lines.filter { $0.id == rows[index] })
+            let leg = try #require(RailwayRouteChoices.choices(package: row, originCode: endpoints[index],
+                                                               destinationCode: endpoints[index + 1]).first)
+            codes += leg.sectionCodes
+        }
+        let hints = RouteHints(requiredLineIDs: rows, sectionCodes: codes,
                                fromStationCode: "000424", toStationCode: "000426")
         let network = try network()
         let source = try #require(network.sourceGeometry(for: hints))
@@ -77,7 +86,7 @@ struct HakodateRouteConnectionTests {
             #expect(display.geometry.lines[0].contains(station.coordinate))
         }
         let reverseHints = RouteHints(
-            requiredLineIDs: choice.lineIDs, sectionCodes: choice.sectionCodes.reversed(),
+            requiredLineIDs: rows, sectionCodes: codes.reversed(),
             fromStationCode: "000426", toStationCode: "000424")
         let reverseSource = try #require(network.sourceGeometry(for: reverseHints))
         let reverseDisplay = try #require(network.canonicalizeRouteFeature(

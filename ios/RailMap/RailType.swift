@@ -54,9 +54,7 @@ nonisolated enum RailType {
     enum Role {
         /// A figure in a dense tile — a metric row, a statistics card.
         ///
-        /// Follows the reader all the way up — on a statistics screen the
-        /// figure is the content, not chrome. What is bounded here is the
-        /// SHAPE, not the size: one line, stating its true width, so the grid
+        /// Uses the shared text-size bounds. One line states its true width so the grid
         /// above can honestly decide between four-across, two-by-two and
         /// stacked instead of being told that everything fits.
         case metricValue
@@ -71,56 +69,28 @@ nonisolated enum RailType {
         /// inside it.
         case metricValueStacked
         /// The caption under a ``metricValue``. Two lines, because a caption
-        /// is words and words wrap — and the one capped role in this pair,
-        /// held at or below the figure it labels. A caption that out-sizes its
-        /// own value inverts the hierarchy exactly as surely as the reverse.
+        /// is words and words wrap. Its size uses the same permanent bounds
+        /// as the figure it labels.
         case metricLabel
         /// Chrome: a control's glyph, a bar label, a scope capsule. Barely
         /// moves — §7.7's note is that chrome is not reading text, and a map
         /// control that grows past its 48-point capsule is less usable, not
         /// more.
         case chrome
-        /// A heading. Follows the reader all the way up, but is allowed to
+        /// A heading. Uses the shared size bounds and is allowed to
         /// take a second line rather than shrink to fit one.
         case title
         /// Reading text — a journey name, a station, a status sentence, body
         /// copy.
         ///
-        /// Its ceiling is the system maximum: this is the role §14.4 is about,
-        /// and it must reach `.accessibility5` intact. It carries no line
-        /// limit on purpose. When it does not fit, the CONTAINER changes shape
-        /// — that is the whole of §10.1.
+        /// Its size uses the permanent app bounds. It carries no line limit;
+        /// the container can change shape when the content needs more room.
         case content
     }
 
-    /// The floor and ceiling for a role, as Dynamic Type sizes.
+    /// Every role uses the permanent app bounds, including captions and chrome.
     static func range(_ role: Role) -> ClosedRange<DynamicTypeSize> {
-        switch role {
-        // A floor of `.xSmall` everywhere rather than `.large`: the reader who
-        // has turned text DOWN has done it deliberately and gets what they
-        // asked for. The bounds exist to protect layout from the top end.
-        //
-        // NOT capped, and the reasoning is the point: on a statistics screen
-        // the figure IS the content — 「8,266 km」 is the answer the reader
-        // opened the screen for. A ceiling here below the one on `.content`
-        // and `.title` would render the prose in the same card LARGER than the
-        // number it describes, which inverts the hierarchy at exactly the text
-        // size where it matters most. The cap also bought nothing:
-        // a metric layout already degrades from across to stacked — by a
-        // `ViewThatFits` walk, or by the adaptive column count
-        // `PassportMetricGrid` uses — and with the figure stating its true
-        // width (or wrapping inside a fixed column) that happens on its own.
-        // This is gotcha 6 in the handoff — a size problem answered with a
-        // ceiling when the layout was already able to answer it.
-        case .metricValue, .metricValueStacked: DynamicTypeSize.xSmall ... .accessibility5
-        // The caption stays capped, and stays at or below the figure it
-        // labels: a label that out-sizes its own value is the same inversion
-        // from the other direction.
-        case .metricLabel: DynamicTypeSize.xSmall ... .accessibility1
-        case .chrome: DynamicTypeSize.xSmall ... .xxLarge
-        case .title: DynamicTypeSize.xSmall ... .accessibility5
-        case .content: DynamicTypeSize.xSmall ... .accessibility5
-        }
+        AppTypographyPolicy.supportedSizes
     }
 
     /// How many lines the role may take. `nil` means unbounded — the container

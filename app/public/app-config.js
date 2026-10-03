@@ -70,7 +70,7 @@ function installLongTaskObserver() {
 // reachable.
 let TRAIN_STORE_API = "train-store";
 const COUNTRY_STORAGE_KEY = "n02-active-country";
-const SUPPORTED_COUNTRIES = ["jp", "tw", "hk", "mo", "kr", "us", "ca"];
+const SUPPORTED_COUNTRIES = ["jp", "tw", "hk", "mo", "kr"];
 let activeCountry = "jp";
 // Every per-country resource name flows through AppCore.countrySuffixed
 // (Japan keeps the historical unsuffixed name, others get "-{country}") —
@@ -81,12 +81,9 @@ function trainStoreApiForCountry(country) {
 function railPackageUrlForCountry(country) {
   return `./rail/${country}-2025.json`;
 }
-// The United States and Canada form one connected passenger-rail graph. Keep
-// the selected country as the storage/statistics namespace, but load both
-// countries' infrastructure so Maple Leaf, Adirondack and Cascades journeys
-// can cross the border without an artificial network break.
 function railScopeCountriesForCountry(country) {
-  return country === "us" || country === "ca" ? ["us", "ca"] : [country];
+  if (!SUPPORTED_COUNTRIES.includes(country)) throw new Error(`Unsupported railway region: ${country}`);
+  return [country];
 }
 function railPackageUrlsForCountry(country) {
   return railScopeCountriesForCountry(country).map(railPackageUrlForCountry);
@@ -94,7 +91,7 @@ function railPackageUrlsForCountry(country) {
 // Derived table joins curated readings and operator-specific English names.
 function stationReadingsApiForCountry(country) {
   return AppCore.countrySuffixed(
-    country === "us" || country === "ca" ? "station-readings" : "station-names",
+    "station-names",
     country,
   );
 }
@@ -169,9 +166,7 @@ function countryDbName(base) {
 // Does the ACTIVE country ship a solver dataset pair? Every supported country
 // now does (railSectionsApiForCountry), so the in-browser solver and the
 // mileage statistics built on the same graph run for all of them — each on its
-// own country's files, never on a mixture. (North America is the ONE exception
-// the rule is written to allow: us and ca deliberately load BOTH of their
-// files, because railScopeCountriesForCountry says the two are one network.)
+// own country's files.
 // A country added without datasets
 // must return false here: its cache misses then stay misses instead of
 // solving foreign stops against another country's network, where a same-named
@@ -198,8 +193,6 @@ const COUNTRY_SAMPLE_DATA_APIS = {
   hk: "sample-data-hk",
   mo: "sample-data-mo",
   kr: "sample-data-kr",
-  us: "sample-data-us",
-  ca: "sample-data-ca",
 };
 const NEW_YEAR_GRAND_LOOP_API = "new-year-grand-loop-data";
 const TOKYO_LIMITED_EXPRESS_LOOP_API = "tokyo-limited-express-loop-data";
@@ -284,37 +277,12 @@ const KOREA_FULL_TERRITORY_BOUNDS = [
   [33.0, 124.5],
   [38.7, 131.1],
 ];
-// The United States: the contiguous network plus the Alaska Railroad, which
-// is what puts the west edge at Seward rather than Seattle. The territory
-// clamp adds Puerto Rico's Tren Urbano and Hawaii's Skyline, both of which are
-// in the package and neither of which the overview frames — a view that
-// included San Juan would open on two thousand kilometres of Atlantic.
-const UNITED_STATES_MAINLAND_BOUNDS = [
-  [24.4, -125.0],
-  [49.4, -66.9],
-];
-const UNITED_STATES_FULL_TERRITORY_BOUNDS = [
-  [17.9, -160.3],
-  [64.9, -65.2],
-];
-// Canada: the corridor and the transcontinental, Vancouver Island to Halifax
-// and north to Churchill on the Hudson Bay line.
-const CANADA_MAINLAND_BOUNDS = [
-  [42.2, -123.4],
-  [50.5, -52.6],
-];
-const CANADA_FULL_TERRITORY_BOUNDS = [
-  [42.2, -128.5],
-  [59.2, -52.6],
-];
 const COUNTRY_OVERVIEW_BOUNDS = {
   jp: JAPAN_MAIN_ISLANDS_BOUNDS,
   tw: TAIWAN_MAIN_ISLAND_BOUNDS,
   hk: HONG_KONG_BOUNDS,
   mo: MACAO_BOUNDS,
   kr: KOREA_MAINLAND_BOUNDS,
-  us: UNITED_STATES_MAINLAND_BOUNDS,
-  ca: CANADA_MAINLAND_BOUNDS,
 };
 const COUNTRY_TERRITORY_BOUNDS = {
   jp: JAPAN_FULL_TERRITORY_BOUNDS,
@@ -322,8 +290,6 @@ const COUNTRY_TERRITORY_BOUNDS = {
   hk: HONG_KONG_BOUNDS,
   mo: MACAO_BOUNDS,
   kr: KOREA_FULL_TERRITORY_BOUNDS,
-  us: UNITED_STATES_FULL_TERRITORY_BOUNDS,
-  ca: CANADA_FULL_TERRITORY_BOUNDS,
 };
 // The map frames / clamps to the ACTIVE country (see loadActiveCountry).
 function activeCountryOverviewBounds() {

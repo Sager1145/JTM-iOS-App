@@ -15,6 +15,7 @@ struct RailwayRouteCorrectionView: View {
     private let package: CompactPackage
     private let excludedStationCodes: Set<String>
     private let onApply: (Choice, UUID, UUID) -> Void
+    private let onPending: (() -> Void)?
 
     @State private var fromID: UUID?
     @State private var toID: UUID?
@@ -26,12 +27,14 @@ struct RailwayRouteCorrectionView: View {
 
     init(
         train: Train, package: CompactPackage, excludedStationCodes: Set<String> = [],
+        onPending: (() -> Void)? = nil,
         onApply: @escaping (Choice, UUID, UUID) -> Void
     ) {
         let prepared = RailwayRouteEditing.preparing(train)
         self.train = prepared
         self.package = package
         self.excludedStationCodes = excludedStationCodes
+        self.onPending = onPending
         self.onApply = onApply
         let mappedStops = prepared.stops.filter { $0.n02StationCode != nil }
         _fromID = State(initialValue: mappedStops.first?.routeEditing?.visitID)
@@ -80,6 +83,10 @@ struct RailwayRouteCorrectionView: View {
             }
 
             Section {
+                if let onPending {
+                    Button(text("keepPending"), action: onPending)
+                        .accessibilityIdentifier("routeCorrectionPending")
+                }
                 if loading {
                     ProgressView(text("findingPaths"))
                 } else if search == nil {
@@ -87,6 +94,9 @@ struct RailwayRouteCorrectionView: View {
                 } else if loadedSearch == search && foundChoices.isEmpty {
                     Text(text("emptyDetail")).foregroundStyle(.secondary)
                         .accessibilityIdentifier("routeCorrectionEmpty")
+                }
+                if loadedSearch == search {
+                    Text(text("incompleteSearch")).font(.footnote).foregroundStyle(.secondary)
                 }
                 Button(text("findPaths"), systemImage: "map") { openGuide() }
                     .disabled(loading || search == nil || loadedSearch != search || foundChoices.isEmpty)
@@ -111,7 +121,7 @@ struct RailwayRouteCorrectionView: View {
             if let session {
                 RailwayRouteGuideView(
                     train: session.train, package: package, choices: session.choices,
-                    embeddedInNavigationStack: true, onCancel: { dismiss() }
+                    embeddedInNavigationStack: true, onCancel: { dismiss() }, onPending: onPending
                 ) { choice in
                     onApply(choice, session.fromID, session.toID)
                 }
@@ -127,17 +137,25 @@ struct RailwayRouteCorrectionView: View {
         let package = package
         let trainType = train.trainType
         let excluded = excludedStationCodes
-        // Bounded physical search also supports spans crossing railway families.
+        let required = train.stops[(from?.index ?? 0)...(to?.index ?? 0)]
+            .filter { $0.routeEditing?.generatedBy == nil || $0.n02StationCode == search.origin || $0.n02StationCode == search.destination }
+            .compactMap(\.n02StationCode)
+            // A Delete action requests omission of this station. Keep the
+            // original visit in the draft so the resulting plan still requires
+            // explicit approval before removing its authored details.
+            .filter { !excluded.contains($0) }
+        // Search only evidenced physical intervals; a shared station cannot add a junction.
         let worker = Task.detached(priority: .userInitiated) {
-            LocalJourneySearch.choices(
+            LocalJourneySearch.search(
                 package: package, originCode: search.origin, destinationCode: search.destination,
-                trainType: trainType, excludingStationCodes: excluded)
+                trainType: trainType, excludingStationCodes: excluded,
+                requiredStationCodes: required)
         }
         let result = await withTaskCancellationHandler {
             await worker.value
         } onCancel: { worker.cancel() }
         guard !Task.isCancelled, self.search == search else { return }
-        foundChoices = result
+        foundChoices = result.choices
         loadedSearch = search
         loading = false
     }
@@ -208,6 +226,7 @@ struct RailwayRouteGuideView: View {
     private let onApply: (Choice) -> Void
     private let embeddedInNavigationStack: Bool
     private let onCancel: (() -> Void)?
+    private let onPending: (() -> Void)?
     private let isInferred: Bool
 
     @State private var step = 0
@@ -220,6 +239,7 @@ struct RailwayRouteGuideView: View {
     init(
         train: Train, package: CompactPackage, choices: [Choice],
         embeddedInNavigationStack: Bool = false, onCancel: (() -> Void)? = nil,
+        onPending: (() -> Void)? = nil,
         isInferred: Bool = false,
         onApply: @escaping (Choice) -> Void
     ) {
@@ -232,6 +252,7 @@ struct RailwayRouteGuideView: View {
         self.onApply = onApply
         self.embeddedInNavigationStack = embeddedInNavigationStack
         self.onCancel = onCancel
+        self.onPending = onPending
         self.isInferred = isInferred
     }
 
@@ -289,7 +310,7 @@ struct RailwayRouteGuideView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
                     if isInferred {
-                        Label(text("inferenceNote"), systemImage: "wand.and.stars")
+                        Label(text("incompleteSearch"), systemImage: "wand.and.stars")
                             .font(.subheadline).foregroundStyle(.secondary)
                             .accessibilityIdentifier("routeGuideInferenceNotice")
                     }
@@ -306,6 +327,7 @@ struct RailwayRouteGuideView: View {
                 }
                 .padding()
             }
+            .accessibilityIdentifier("routeGuideScroll")
             .background(Color(uiColor: .systemGroupedBackground))
             .navigationTitle(text("title"))
             .navigationBarTitleDisplayMode(.inline)
@@ -371,7 +393,8 @@ struct RailwayRouteGuideView: View {
             Text(text("help")).font(.subheadline).foregroundStyle(.secondary)
             RailwayGuideMap(
                 choices: currentOptions, geometry: geometry, selectedID: preview?.id,
-                geometryWarning: text("geometryUnavailable")
+                geometryWarning: text("geometryUnavailable"),
+                onSelect: { id in animate { previewID = id } }
             )
             .id(decision.id + "-map")
             ForEach(numbered(currentOptions)) { option in
@@ -414,7 +437,8 @@ struct RailwayRouteGuideView: View {
                 .accessibilityAddTraits(.isHeader)
             RailwayGuideMap(
                 choices: remainingChoices, geometry: geometry,
-                selectedID: reviewChoice?.id, geometryWarning: text("geometryUnavailable")
+                selectedID: reviewChoice?.id, geometryWarning: text("geometryUnavailable"),
+                onSelect: { id in animate { reviewChoiceID = id } }
             )
             .id("whole-route-map")
             // A safety net when two complete physical alignments still share all
@@ -542,6 +566,7 @@ struct RailwayRouteGuideView: View {
                         .foregroundStyle(inserted ? Color.green : Color.secondary)
                     VStack(alignment: .leading, spacing: 3) {
                         Text(station(row.stop.name, code: row.stop.n02StationCode))
+                            .accessibilityIdentifier("routeGuideProjectedStop-\(row.stop.n02StationCode ?? row.id)")
                         if row.stop.routeEditing?.generatedBy != nil {
                             AutoFilledStationLabel()
                         }
@@ -586,8 +611,8 @@ struct RailwayRouteGuideView: View {
                     }
                 }
                 HStack(spacing: 16) {
-                    Button(text("unsure")) { leave() }
-                    Button(text("noCandidate")) { leave() }
+                    Button(text("unsure")) { keepPending() }
+                    Button(text("noCandidate")) { keepPending() }
                 }
                 .font(.caption)
             }
@@ -670,6 +695,10 @@ struct RailwayRouteGuideView: View {
         withAnimation(.easeOut(duration: reduceMotion ? 0.12 : 0.22), updates)
     }
 
+    private func keepPending() {
+        if let onPending { onPending() } else { leave() }
+    }
+
     private func leave() {
         if let onCancel { onCancel() } else { dismiss() }
     }
@@ -684,6 +713,9 @@ struct RailwayRouteGuideView: View {
 
     private func stopDetail(_ stop: Stop) -> String? {
         let times = [stop.arrival, stop.departure].compactMap { $0 }.filter { !$0.isEmpty }
+        if times.isEmpty && stop.stopType == "pass_through" {
+            return text(stop.routeEditing?.generatedBy != nil ? "inferredPass" : "passUnknown")
+        }
         return times.isEmpty ? nil : times.joined(separator: " · ")
     }
 
@@ -736,7 +768,7 @@ struct RailwayRouteGuideView: View {
 /// One geometry lookup per guide session, using the exact survey intervals
 /// selected by the solver. Missing intervals stay missing; no endpoint chord
 /// or passenger stop sequence can manufacture railway geometry here.
-private struct RailwayGuideGeometry {
+struct RailwayGuideGeometry {
     let intervals: [String: [CLLocationCoordinate2D]]
     let stations: [String: CLLocationCoordinate2D]
 
@@ -762,12 +794,13 @@ private struct RailwayGuideGeometry {
     }
 }
 
-private struct RailwayGuideMap: View {
+struct RailwayGuideMap: View {
     @Environment(AppLocalization.self) private var localization
     let choices: [RailwayRouteChoices.Choice]
     let geometry: RailwayGuideGeometry
     let selectedID: String?
     let geometryWarning: String
+    var onSelect: ((String) -> Void)? = nil
 
     private var common: Set<String> {
         guard let first = choices.first else { return [] }
@@ -854,13 +887,22 @@ private struct RailwayGuideMap: View {
                 }
                 ForEach(markers) { marker in
                     Annotation("", coordinate: marker.coordinate) {
-                        Text("\(marker.number)")
-                            .font(.caption.weight(.bold).monospacedDigit())
-                            .foregroundStyle(.white)
-                            .frame(width: 26, height: 26)
-                            .background(Self.color(marker.number), in: Circle())
-                            .overlay(Circle().stroke(.white, lineWidth: 2))
-                            .accessibilityHidden(true)
+                        Button { onSelect?(marker.id) } label: {
+                            Text("\(marker.number)")
+                                .font(.caption.weight(.bold).monospacedDigit())
+                                .foregroundStyle(.white)
+                                .frame(width: 30, height: 30)
+                                .background(Self.color(marker.number), in: Circle())
+                                .overlay(Circle().stroke(.white, lineWidth: selectedID == marker.id ? 3 : 1))
+                                .frame(width: 44, height: 44)
+                                .contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
+                        .disabled(onSelect == nil)
+                        .accessibilityLabel(localization.editorText("ios.routeGuide.option",
+                            ["number": .number(Double(marker.number))]))
+                        .accessibilityAddTraits(selectedID == marker.id ? .isSelected : [])
+                        .accessibilityIdentifier("routeGuideMapOption-\(marker.number)")
                     }
                 }
                 ForEach(endpoints) { endpoint in

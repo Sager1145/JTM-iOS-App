@@ -68,7 +68,8 @@ struct TestInstaller {
     }
     func install(_ desired: [MKOverlay], replacing: TestReconciliation,
                  scale: CGFloat, on mapView: TestMapView,
-                 detailTransitionDuration: TimeInterval? = nil) {
+                 detailTransitionDuration: TimeInterval? = nil,
+                 alphaTransitionDuration: TimeInterval? = nil) {
         mapView.overlays = desired
     }
 }

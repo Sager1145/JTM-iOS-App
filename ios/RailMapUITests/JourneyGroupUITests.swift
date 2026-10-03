@@ -5,6 +5,7 @@ final class JourneyGroupUITests: XCTestCase {
     func testDraftGroupNameRemainsEditableWhenReselectedAndAfterConfirmation() {
         continueAfterFailure = false
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-interface-language", "en"]
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
@@ -53,7 +54,8 @@ final class JourneyGroupUITests: XCTestCase {
         for _ in 0..<5 where !name.isHittable { app.swipeUp() }
         XCTAssertTrue(name.waitForExistence(timeout: 5))
         XCTAssertEqual(name.value as? String, "Rail holiday")
-        name.tap()
+        // Put the insertion point after the final character before replacing it.
+        name.coordinate(withNormalizedOffset: CGVector(dx: 0.98, dy: 0.5)).tap()
         name.typeText(XCUIKeyboardKey.delete.rawValue + "s\n")
         XCTAssertEqual(name.value as? String, "Rail holidas")
         next.tap()
@@ -66,6 +68,7 @@ final class JourneyGroupUITests: XCTestCase {
     func testExistingJourneyGroupPersistsAndCanBeSelectedInStatistics() {
         continueAfterFailure = false
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-interface-language", "en"]
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "search"

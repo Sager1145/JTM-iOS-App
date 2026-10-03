@@ -275,7 +275,7 @@ struct RouteGraphParityTests {
         let features = try Self.sections(country)
         #expect(features.count == expected.sectionFeatureCount)
 
-        let graph = RouteGraph.build(from: features)
+        let graph = RouteGraph.build(from: features, policy: .coordinateParity)
 
         #expect(graph.nodes.count == expected.nodeCount)
         #expect(graph.grid.count == expected.gridCellCount)
@@ -420,7 +420,7 @@ struct RouteGraphParityTests {
         #expect(RouteGraph.railIndexCellDeg == fixture.constants.railIndexCellDeg)
         #expect(RouteGraph.regionQuantDeg == fixture.constants.regionQuantDeg)
 
-        let store = RouteGraph.RouteGraphStore(sections: try Self.sections(country))
+        let store = RouteGraph.RouteGraphStore(sections: try Self.sections(country), policy: .coordinateParity)
         let stations = try Self.stations(country)
 
         for item in fixture.spatialIndex where item.country == country {
@@ -469,7 +469,7 @@ struct RouteGraphParityTests {
                 == fixture.constants.regionalGraphLoadNodeBudget)
 
         for item in fixture.regions where item.importInProgress == importInProgress {
-            let store = RouteGraph.RouteGraphStore(sections: try Self.sections(item.country))
+            let store = RouteGraph.RouteGraphStore(sections: try Self.sections(item.country), policy: .coordinateParity)
             for (stepIndex, step) in item.steps.enumerated() {
                 let bbox = try #require(RouteGraph.BBox(array: step.bbox))
                 // The margin and the padding are recomputed and checked, but
@@ -510,7 +510,7 @@ struct RouteGraphParityTests {
     func cacheKeys() throws {
         let fixture = try Self.fixture()
         #expect(fixture.cacheKeys.count > 200)
-        #expect(RouteGraph.routeSolverCacheVersion == fixture.constants.routeSolverCacheVersion)
+        #expect(RouteGraph.legacyCoordinateSolverCacheVersion == fixture.constants.routeSolverCacheVersion)
 
         for item in fixture.cacheKeys {
             let policy = item.train.route_policy
@@ -549,6 +549,7 @@ struct RouteGraphParityTests {
             let context = try #require(
                 RouteGraph.solveContext(
                     train: train, routeSections: sections, country: item.country,
+                    cacheVersion: RouteGraph.legacyCoordinateSolverCacheVersion,
                     rideDate: item.train.date, historyRevision: item.historyRevision))
             #expect(context.templateKey == item.templateKey, "template key — \(where_)")
             #expect(context.allowedCodes == item.allowedCodes, "allowed codes — \(where_)")

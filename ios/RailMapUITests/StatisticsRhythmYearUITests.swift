@@ -4,6 +4,7 @@ import XCTest
 final class StatisticsRhythmYearUITests: XCTestCase {
     func testPassportYearBarScopesRidesAndMonthColumns() {
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "stats"
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"

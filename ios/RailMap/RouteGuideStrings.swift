@@ -2,6 +2,47 @@ import RailCore
 
 enum RouteGuideStrings {
     static let table: AppStrings.Table = [
+        "ios.routeGuide.pendingMileageNote": [
+            .en: "Routes pending confirmation are excluded from precise mileage.",
+            .zhHans: "待确认路线不计入精确里程。", .zhHant: "待確認路線不計入精確里程。", .ja: "確認待ちの経路は正確な距離に含めません。",
+        ],
+        "ios.routeGuide.confirmedDistance": [
+            .en: "Confirmed distance", .zhHans: "已确认里程", .zhHant: "已確認里程", .ja: "確認済み距離",
+        ],
+        "ios.routeGuide.unknownDistance": [
+            .en: "Distance unknown", .zhHans: "里程未知", .zhHant: "里程未知", .ja: "距離不明",
+        ],
+        "ios.routeGuide.via": [
+            .en: "Required stations (optional)", .zhHans: "必经站（可选）", .zhHant: "必經站（可選）", .ja: "経由駅（任意）",
+        ],
+        "ios.routeGuide.addVia": [
+            .en: "Add required station", .zhHans: "添加必经站", .zhHant: "新增必經站", .ja: "経由駅を追加",
+        ],
+        "ios.routeGuide.pending": [
+            .en: "Route pending confirmation", .zhHans: "路线待确认", .zhHant: "路線待確認", .ja: "経路の確認待ち",
+        ],
+        "ios.routeGuide.keepPending": [
+            .en: "Keep route pending confirmation", .zhHans: "保留为待确认路线", .zhHant: "保留為待確認路線", .ja: "経路を確認待ちにする",
+        ],
+        "ios.routeGuide.pendingNote": [
+            .en: "Save the journey with its route pending confirmation. No route line or precise mileage will be inferred.",
+            .zhHans: "可保存行程，路线保留待确认；不强行连线，也不推算精确里程。",
+            .zhHant: "可儲存行程，路線保留待確認；不強行連線，也不推算精確里程。",
+            .ja: "経路を確認待ちとして行程を保存できます。経路線や正確な距離は推定しません。",
+        ],
+        "ios.routeGuide.incompleteSearch": [
+            .en: "These are candidate paths, not proof of a unique route. Network coverage is unverified or the search was limited. Select a path you can confirm, or keep it pending.",
+            .zhHans: "这些是候选走向，不能证明路线唯一。路网覆盖尚未核实或搜索受限；请选择能够确认的走向，或保留待确认。",
+            .zhHant: "這些是候選走向，不能證明路線唯一。路網覆蓋尚未核實或搜尋受限；請選擇能夠確認的走向，或保留待確認。",
+            .ja: "候補は経路が唯一である証明ではありません。網羅性が未確認または探索が制限されています。確認できる経路を選ぶか、確認待ちにしてください。",
+        ],
+        "ios.routeGuide.inferredPass": [
+            .en: "Inferred passing station · time unknown", .zhHans: "推测通过站 · 通过、时刻未知",
+            .zhHant: "推測通過站 · 通過、時刻未知", .ja: "推定通過駅・時刻不明",
+        ],
+        "ios.routeGuide.passUnknown": [
+            .en: "Passing · time unknown", .zhHans: "通过、时刻未知", .zhHant: "通過、時刻未知", .ja: "通過・時刻不明",
+        ],
         "ios.routeGuide.infer": [
             .en: "Automatically infer route sections", .zhHans: "自动推测区间",
             .zhHant: "自動推測區間", .ja: "経路区間を自動推定",
@@ -11,10 +52,10 @@ enum RouteGuideStrings {
             .zhHant: "手動選擇區間", .ja: "経路区間を手動で選択",
         ],
         "ios.routeGuide.inferenceNote": [
-            .en: "Infer a mapped route through your recorded stations, then review before applying. Passing stations on this suggestion are unverified; choose sections manually when needed.",
-            .zhHans: "根据已记录车站推测地图上的区间，预览确认后应用。推测的通过站未经核实；必要时请手动选择区间。",
-            .zhHant: "根據已記錄車站推測地圖上的區間，預覽確認後套用。推測的通過站未經核實；必要時請手動選擇區間。",
-            .ja: "記録済みの駅から経路区間を推定し、確認してから適用します。推定した通過駅は未確認です。必要に応じて区間を手動で選択してください。",
+            .en: "Find candidate paths through your recorded stations. Only a unique route from a complete search can fill automatically. Inferred intermediate stations remain visible as passing, with unknown times.",
+            .zhHans: "根据已记录车站查找候选走向；仅在路网与搜索完整且唯一可达时自动填入。推测中间站继续显示为“通过、时刻未知”。",
+            .zhHant: "根據已記錄車站尋找候選走向；僅在路網與搜尋完整且唯一可達時自動填入。推測中間站繼續顯示為「通過、時刻未知」。",
+            .ja: "記録駅を経由する候補を検索します。網羅的な探索で唯一と確認できる場合のみ自動補完します。推定した中間駅は「通過・時刻不明」と表示します。",
         ],
         "ios.routeGuide.inferenceFailed": [
             .en: "No connected route could be inferred through every recorded station. Select a range manually or check the stations.",

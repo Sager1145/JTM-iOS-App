@@ -37,8 +37,11 @@ def verify_artifact(canonical_dir=DEFAULT_CANONICAL, database=None, history=RAIL
         ):
             match = re.search(expression, path.read_text())
             actual_version = match.group(1) if match else None
-            if actual_version != expected['solver_version']:
-                errors.append({'field': label, 'expected': expected['solver_version'],
+            expected_version = (str(manifest['coordinate_solver_version'])
+                                if label == 'web_solver_version' and 'coordinate_solver_version' in manifest
+                                else expected['solver_version'])
+            if actual_version != expected_version:
+                errors.append({'field': label, 'expected': expected_version,
                                'actual': actual_version})
     with sqlite3.connect(database.resolve().as_uri() + '?mode=ro', uri=True) as connection:
         actual = dict(connection.execute('SELECT key, value FROM metadata'))

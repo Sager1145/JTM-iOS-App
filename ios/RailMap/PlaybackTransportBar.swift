@@ -1,5 +1,8 @@
 import RailCore
 import SwiftUI
+#if DEBUG
+import UIKit
+#endif
 
 /// §5.6's transport, as a view of its own rather than as a computed property
 /// of the workspace.
@@ -34,8 +37,6 @@ struct PlaybackTransportBar: View {
     var onRequestVideoOptions: () -> Void
 
     @Environment(AppLocalization.self) private var localization
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
-    @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
@@ -87,13 +88,9 @@ struct PlaybackTransportBar: View {
 
     @ViewBuilder
     private var activeLayout: some View {
-        if dynamicTypeSize.isAccessibilitySize {
-            accessibilityLayout
-        } else {
-            ViewThatFits(in: .horizontal) {
-                standardLayout.fixedSize(horizontal: true, vertical: false)
-                compactLayout
-            }
+        ViewThatFits(in: .horizontal) {
+            standardLayout.fixedSize(horizontal: true, vertical: false)
+            compactLayout
         }
     }
 
@@ -177,40 +174,6 @@ struct PlaybackTransportBar: View {
         }
     }
 
-    /// Accessibility text gets a content-led composition instead of a scaled
-    /// copy of the two dense horizontal rows. Text may grow; transport chrome
-    /// keeps a familiar size and each group gets the full available width.
-    private var accessibilityLayout: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            identity(titleLines: 3, stationLines: 2)
-                .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
-
-            HStack(spacing: 8) {
-                transportControls
-                stopButton
-                Spacer(minLength: 0)
-            }
-            .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
-
-            progressBar
-
-            HStack(spacing: 8) {
-                queueLabel
-                focusToggle
-                videoControl
-                Spacer(minLength: 0)
-            }
-            .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
-
-            HStack(spacing: 10) {
-                speedSlider
-                speedReadout
-                    .fixedSize(horizontal: true, vertical: false)
-            }
-            .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
-        }
-    }
-
     private var transportControls: some View {
         HStack(spacing: 8) {
             Button { playback.previous() } label: {
@@ -240,6 +203,13 @@ struct PlaybackTransportBar: View {
                     .contentShape(.rect)
             }
             .disabled(playback.phase == .ended)
+            .background {
+                #if DEBUG
+                if ProcessInfo.processInfo.environment["RAILMAP_UI_TEST_PLAYBACK_HIT_PROBE"] == "1" {
+                    PlaybackHitProbe().allowsHitTesting(false).accessibilityHidden(true)
+                }
+                #endif
+            }
             .accessibilityIdentifier("playbackPauseResume")
             .accessibilityLabel(
                 Text(localization.journeyText(
@@ -431,3 +401,37 @@ struct PlaybackTransportBar: View {
         }
     }
 }
+
+#if DEBUG
+/// Passive, opt-in diagnostics. This view never handles a touch or changes layout.
+private struct PlaybackHitProbe: UIViewRepresentable {
+    func makeUIView(context: Context) -> Probe { Probe() }
+    func updateUIView(_ uiView: Probe, context: Context) {}
+
+    final class Probe: UIView {
+        private var observation: Task<Void, Never>?
+        override func didMoveToWindow() {
+            super.didMoveToWindow()
+            observation?.cancel()
+            guard window != nil else { return }
+            observation = Task { @MainActor [weak self] in
+                for index in 0..<6 {
+                    try? await Task.sleep(for: .seconds(2))
+                    guard !Task.isCancelled, let self, let window = self.window else { return }
+                    let point = self.convert(CGPoint(x: self.bounds.midX, y: self.bounds.midY), to: window)
+                    var lines = ["sample=\(index) point=\(point) probe=\(self.convert(self.bounds, to: window)) window=\(window.bounds)"]
+                    var hit = window.hitTest(point, with: nil)
+                    while let view = hit {
+                        lines.append("\(type(of: view)) frame=\(view.frame) bounds=\(view.bounds) windowRect=\(view.convert(view.bounds, to: window)) interactive=\(view.isUserInteractionEnabled) hidden=\(view.isHidden) alpha=\(view.alpha)")
+                        hit = view.superview
+                    }
+                    let url = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
+                        .appendingPathComponent("playback-hit-probe.txt")
+                    let prior = (try? String(contentsOf: url, encoding: .utf8)) ?? ""
+                    try? (prior + lines.joined(separator: "\n") + "\n\n").write(to: url, atomically: true, encoding: .utf8)
+                }
+            }
+        }
+    }
+}
+#endif

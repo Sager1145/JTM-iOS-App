@@ -12,7 +12,7 @@ end = source.index("    /// The rides one precomputed dataset can answer for.", 
 decode = source[start:end]
 harness = r'''
 import Foundation
-struct Train: Sendable { let id: String }
+struct Train: Sendable { let id: String; var requiresRouteConfirmation: Bool { false } }
 struct RouteScope: Hashable, Sendable {
     let code = "jp"
     var home: String { code }
@@ -21,10 +21,6 @@ struct RouteScope: Hashable, Sendable {
     static func ordered(_ scopes: Dictionary<RouteScope, [Train]>.Keys) -> [RouteScope] { Array(scopes) }
 }
 enum RideLibrary { static func routeDatasets(for region: String) -> [String] { ["sample"] } }
-actor StationClockIndex {
-    static let shared = StationClockIndex()
-    func prime(regions: [String]) {}
-}
 actor Probe {
     let useDataset: Bool
     let pause: Bool

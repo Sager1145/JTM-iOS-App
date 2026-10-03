@@ -57,7 +57,7 @@ struct WorkspaceRideDetailView: View {
                     case let .savedKeepingID(keptID, _):
                         recordID = keptID
                         return true
-                    case .refusedImportRunning, .notFound:
+                    case .refusedImportRunning, .notFound, .unsupportedRegion:
                         return false
                     }
                 }, onRebuild: { onRebuild(train) }, suggestionTrains: itineraries.loaded?.trains ?? [],
@@ -472,13 +472,8 @@ struct RideDetailContent: View {
     /// question a list of bare times raises for a reader who is not in the
     /// region — which, with five networks in one store, is most of the time.
     ///
-    /// One line rather than a badge per row, and two clocks named in it rather
-    /// than one when the journey changes clock on the way — which in the two
-    /// North American networks it can: the *Empire Builder* departs on Central
-    /// time and arrives on Pacific. Naming only the first would make the
-    /// second half of the list say something untrue, and naming a clock per
-    /// row would put an eight-word phrase beside forty times to state
-    /// something that changes twice.
+    /// One note describes the journey's printed clock; any offset comparison
+    /// uses the journey date rather than the day the record is viewed.
     private var localTimeNote: some View {
         Text(clockNote(train.journeyClock))
             .font(.caption)
@@ -489,17 +484,11 @@ struct RideDetailContent: View {
 
     /// The sentence under the stop list, for one clock or for two.
     ///
-    /// The offset is read on the JOURNEY's own day rather than on today's.
-    /// Seven of the nine North American zones move an hour twice a year, so a
-    /// ride recorded in January and read in July would otherwise be labelled
-    /// with an offset it never ran on.
+    /// The offset is read on the journey's own day.
     private func clockNote(_ clock: JourneyClock) -> String {
         guard clock.crossesTimeZones, train.stops.count > 1 else {
             let home = clock.home
-            // On the journey's own day, not on today's: seven of the nine
-            // North American zones move an hour twice a year, so a ride
-            // recorded in January and read in July would otherwise be
-            // labelled with an offset it never ran on.
+            // Read historical offsets on the recorded day.
             let instant = home.startOfDay(train.date) ?? Date()
             return localization.journeyText(
                 "ios.clock.localTimes",
@@ -569,6 +558,12 @@ struct RideDetailContent: View {
                             .foregroundStyle(.secondary)
                             .fixedSize()
                     }
+                }
+                if stop.stopType == "pass_through",
+                   stop.arrival?.isEmpty != false, stop.departure?.isEmpty != false {
+                    Text(localization.editorText(stop.routeEditing?.generatedBy != nil
+                        ? "ios.routeGuide.inferredPass" : "ios.routeGuide.passUnknown"))
+                        .font(.caption).foregroundStyle(.secondary)
                 }
                 if showsLineNames {
                     ForEach(Array(lines.enumerated()), id: \.offset) { _, line in
@@ -793,7 +788,8 @@ struct RideDetailContent: View {
     private var routeStateCard: some View {
         RideRouteStateCard(
             train: train,
-            status: routeStatus ?? RideStatusCenter.shared.status(forTrainID: train.id),
+            status: train.requiresRouteConfirmation ? .pendingConfirmation
+                : (routeStatus ?? RideStatusCenter.shared.status(forTrainID: train.id)),
             surface: surface,
             rebuiltSections: rebuiltSections,
             onRebuild: onRebuild.map { rebuildAction in
@@ -1003,6 +999,11 @@ struct RideDetailContent: View {
     /// §7.4's reading order: 站名，类型，到达时间，出发时间，是否乘坐.
     private func accessibilityLabel(for stop: Stop) -> String {
         var values = [stop.name, stopTypeName(stop.stopType)]
+        if stop.stopType == "pass_through",
+           stop.arrival?.isEmpty != false, stop.departure?.isEmpty != false {
+            values.append(localization.editorText(stop.routeEditing?.generatedBy != nil
+                ? "ios.routeGuide.inferredPass" : "ios.routeGuide.passUnknown"))
+        }
         if let arrival = stop.arrival, !arrival.isEmpty {
             values.append(
                 [
@@ -1221,7 +1222,7 @@ private struct RideRouteStateCard: View {
 
     private var needsHumanFix: Bool {
         switch status {
-        case .needsReview, .unavailable, .noRoute: true
+        case .pendingConfirmation, .needsReview, .unavailable, .noRoute: true
         default: false
         }
     }
@@ -1234,6 +1235,7 @@ private struct RideRouteStateCard: View {
 
     private var title: String {
         switch status {
+        case .pendingConfirmation: localization.editorText("ios.routeGuide.pending")
         case .unknown: localization.editorText("ios.route.preparing")
         case .resolving: localization.editorText("ios.route.resolving")
         case .resolved: localization.editorText("ios.route.resolved")
@@ -1245,6 +1247,8 @@ private struct RideRouteStateCard: View {
 
     private var detail: String? {
         switch status {
+        case .pendingConfirmation:
+            localization.editorText("ios.routeGuide.pendingNote")
         case .unknown:
             localization.editorText("ios.route.preparingDetail")
         case .resolving:
@@ -1302,6 +1306,7 @@ private struct RideRouteStateCard: View {
 
     private var symbol: String {
         switch status {
+        case .pendingConfirmation: "questionmark.circle"
         case .resolved: "checkmark.circle"
         case .needsReview: "exclamationmark.triangle"
         case .unavailable: "xmark.octagon"

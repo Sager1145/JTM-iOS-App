@@ -49,6 +49,7 @@ struct PassportStatistics: Sendable {
         let date: String
         let km: Double
         let minutes: Double
+        let distanceIsKnown: Bool
     }
 
     /// One row of a ranked list — a station, an operating company, or a pair
@@ -89,6 +90,9 @@ struct PassportStatistics: Sendable {
 
     let journeys: Int
     let totalKm: Double
+    /// Complete journey distances only; proven parts still enter `totalKm`.
+    private let completedDistanceKm: Double
+    let measuredJourneys: Int
     /// How many journeys carry times at all — the denominator of the mean
     /// below, and the reason it is not simply `journeys`.
     let timedJourneys: Int
@@ -112,10 +116,8 @@ struct PassportStatistics: Sendable {
     let routes: [Tally]
     let regions: [RegionTally]
 
-    /// Mean ridden distance per journey. Every journey counts, including one
-    /// whose geometry matched nothing — a ride that left no kilometres on the
-    /// network still happened, and dropping it would inflate the mean.
-    var averageKm: Double { journeys > 0 ? totalKm / Double(journeys) : 0 }
+    /// A partial or pending route cannot supply a complete journey distance.
+    var averageKm: Double { measuredJourneys > 0 ? completedDistanceKm / Double(measuredJourneys) : 0 }
 
     /// Mean ride time over the journeys that carry times. See ``timedJourneys``.
     var averageMinutes: Double { timedJourneys > 0 ? totalMinutes / Double(timedJourneys) : 0 }
@@ -167,13 +169,26 @@ struct PassportStatistics: Sendable {
         var regions: [Region: (count: Int, km: Double)] = [:]
 
         var totalKm = 0.0
+        var completedDistanceKm = 0.0
         var totalMinutes = 0.0
         var timed = 0
+        var measured = 0
 
         for (train, entry) in zip(trains, entries) {
             let flags = MapRideMarkers.rideFlags(train.stops)
             let ridden = Statistics.effectivelyRiddenStopIndexes(flags)
-            let km = entry.km.isFinite ? entry.km : 0
+            let distanceIsKnown = entry.distanceIsKnown && !train.requiresRouteConfirmation
+            // Proven individual sections remain ridden kilometres even when
+            // a missing section or physical boundary leaves the full journey
+            // distance unknown. Pending choices and legacy unknown entries
+            // provide no such proof, regardless of any stale numeric value.
+            let contributesDistance = !train.requiresRouteConfirmation
+                && (distanceIsKnown || entry.partialDistanceIsProven)
+            let km = contributesDistance && entry.km.isFinite ? entry.km : 0
+            if distanceIsKnown {
+                measured += 1
+                completedDistanceKm += km
+            }
             // The ported answer, then the correction for a journey that
             // changes clock on the way. `Statistics.trainRideMinutes`
             // subtracts a printed departure from a printed arrival, which is
@@ -234,7 +249,8 @@ struct PassportStatistics: Sendable {
                     from: from, to: to,
                     date: calendarParts(bucket) == nil ? "" : bucket,
                     km: km,
-                    minutes: minutes ?? 0))
+                    minutes: minutes ?? 0,
+                    distanceIsKnown: distanceIsKnown))
 
             // Boarded here, alighted there: two visits, and the same station
             // reached twice in one journey is still two — a there-and-back on
@@ -263,14 +279,16 @@ struct PassportStatistics: Sendable {
         return PassportStatistics(
             journeys: min(trains.count, entries.count),
             totalKm: totalKm,
+            completedDistanceKm: completedDistanceKm,
+            measuredJourneys: measured,
             timedJourneys: timed,
             totalMinutes: totalMinutes,
             byYear: columns(years).sorted { $0.id < $1.id },
             monthsByYear: monthsByYear.mapValues { filled($0, over: 1...12) },
             weekdaysByYear: weekdaysByYear.mapValues { filled($0, over: 1...7) },
             undated: undated,
-            longestByDistance: journeys.max { $0.km < $1.km },
-            shortestByDistance: journeys.filter { $0.km > 0 }.min { $0.km < $1.km },
+            longestByDistance: journeys.filter(\.distanceIsKnown).max { $0.km < $1.km },
+            shortestByDistance: journeys.filter { $0.distanceIsKnown && $0.km > 0 }.min { $0.km < $1.km },
             longestByTime: journeys.filter { $0.minutes > 0 }.max { $0.minutes < $1.minutes },
             shortestByTime: journeys.filter { $0.minutes > 0 }.min { $0.minutes < $1.minutes },
             stations: stations.ranked(),

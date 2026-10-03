@@ -32,6 +32,7 @@ final class RailMapUITests: XCTestCase {
                    last.frame.maxY <= tabs.frame.minY - 12 { break }
                 viewport.swipeUp()
             }
+            print("[tab-clearance] viewport=\(viewport.frame) value=\(String(describing: viewport.value)) tab=\(tabs.frame) last=\(last.frame)")
             XCTAssertTrue(last.exists)
             XCTAssertTrue(last.isHittable)
             XCTAssertGreaterThanOrEqual(last.frame.minY, viewport.frame.minY)
@@ -137,6 +138,7 @@ final class RailMapUITests: XCTestCase {
                note.frame.maxY <= tabs.frame.minY { break }
             viewport.swipeUp()
         }
+        print("[tab-clearance] viewport=\(viewport.frame) value=\(String(describing: viewport.value)) tab=\(tabs.frame) noteExists=\(note.exists) note=\(note.exists ? String(describing: note.frame) : "absent")")
         XCTAssertTrue(note.exists)
         XCTAssertTrue(note.isHittable)
         XCTAssertGreaterThanOrEqual(note.frame.minY, viewport.frame.minY)
@@ -323,7 +325,10 @@ final class RailMapUITests: XCTestCase {
         XCTAssertTrue(element("journeySearchField", in: app).waitForExistence(timeout: 8))
     }
 
-    func testLandscapeUsesReachableSidebarChrome() {
+    func testLandscapeUsesReachableSidebarChrome() throws {
+        try XCTSkipUnless(
+            UIDevice.current.userInterfaceIdiom == .pad,
+            "Landscape sidebar coverage belongs to iPad; iPhone remains portrait-only.")
         XCUIDevice.shared.orientation = .landscapeLeft
         defer { XCUIDevice.shared.orientation = .portrait }
 
@@ -424,7 +429,10 @@ final class RailMapUITests: XCTestCase {
         try XCTSkipUnless(UIDevice.current.userInterfaceIdiom == .phone)
         XCUIDevice.shared.orientation = .portrait
         let app = launch(tab: "all", stage: "expanded", sample: "train-store")
-        let id = "20260703_01_haruka"
+        // Exercise the short same-line Mishima–Numazu journey. The primary
+        // action assertion below prevents a partial route from standing in
+        // for the actual Locate action.
+        let id = "20260703_03_tokaido_main_local"
         let row = element("journeyRow-\(id)", in: app)
         XCTAssertTrue(row.waitForExistence(timeout: 20))
         row.tap()
@@ -451,7 +459,9 @@ final class RailMapUITests: XCTestCase {
                   let value = Double(field.dropFirst(prefix.count)) else { return -1 }
             return value
         }
-        element("journeyPrimaryAction", in: app).tap()
+        let focus = element("journeyPrimaryAction", in: app)
+        XCTAssertEqual(focus.label, "Locate route", "This regression must exercise the actual locate action.")
+        focus.tap()
         let lowered = expectation(
             for: NSPredicate { _, _ in title.exists && title.frame.minY >= lowestTop - 3 },
             evaluatedWith: app)
@@ -690,6 +700,10 @@ final class RailMapUITests: XCTestCase {
         launchArguments: [String] = []
     ) -> XCUIApplication {
         let app = XCUIApplication()
+        if ProcessInfo.processInfo.environment["RAILMAP_UI_TEST_TAB_BAR_PROBE"] == "1" {
+            app.launchEnvironment["RAILMAP_UI_TEST_TAB_BAR_PROBE"] = "1"
+        }
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = tab
         app.launchEnvironment["RAILMAP_UI_TEST_STATS_REGION"] = "all"
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = stage
@@ -732,6 +746,7 @@ final class TransferGuideImportUITests: XCTestCase {
 
     func testTheScreenshotImporterOpensFromTheDataWorkspace() {
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
         app.launch()

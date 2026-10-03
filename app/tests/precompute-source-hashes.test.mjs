@@ -8,7 +8,7 @@ import {precomputedRouteCoversSections, precomputeScopeCountries, currentPrecomp
 test("changed solver inputs invalidate every country's precomputed attestation", () => {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), "jtm-source-hashes-"));
   try {
-    for (const country of ["jp", "tw", "hk", "mo", "kr", "us", "ca"]) {
+    for (const country of ["jp", "tw", "hk", "mo", "kr"]) {
       const suffix = country === "jp" ? "" : `-${country}`;
       const names = ["matched-routes.json", "matched-stops.json", ...precomputeScopeCountries(country).flatMap((region) => {
         const suffix = region === "jp" ? "" : `-${region}`;

@@ -96,6 +96,8 @@ public struct RouteStatusEntry: Equatable, Sendable {
 /// 明確受影響區間"), so the gaps travel all the way to the screen rather than
 /// being flattened into "something failed".
 public enum RideRouteStatus: Equatable, Sendable {
+    /// The reader saved the calls without confirming a physical railway.
+    case pendingConfirmation
     /// Nothing has been asked yet — no solve has started (§5.5 `unknown`).
     case unknown
     /// A solve is running for this journey (§5.5 `resolving`).
@@ -143,6 +145,7 @@ public enum RideRouteStatus: Equatable, Sendable {
     /// this enum instead.
     public func journeyRouteState(reason: String = "") -> JourneyRouteState {
         switch self {
+        case .pendingConfirmation: .needsReview(reason: reason)
         case .unknown: .unknown
         case .resolving: .resolving(completed: nil, total: nil)
         case .resolved: .resolved
@@ -174,8 +177,10 @@ public enum RouteStatusResolver {
         id: String,
         resolvingIDs: Set<String>,
         entries: [String: RouteStatusEntry],
-        phase: RouteLoadPhase
+        phase: RouteLoadPhase,
+        pendingConfirmationIDs: Set<String> = []
     ) -> RideRouteStatus {
+        if pendingConfirmationIDs.contains(id) { return .pendingConfirmation }
         if resolvingIDs.contains(id) { return .resolving }
         guard let entry = entries[id] else {
             switch phase {

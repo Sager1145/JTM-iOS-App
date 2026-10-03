@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		000000000000000000000100 /* RailCore in Frameworks */ = {isa = PBXBuildFile; productRef = 000000000000000000000112 /* RailCore */; };
 		000000000000000000000113 /* RailPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 000000000000000000000114 /* RailPresentation */; };
+		000000000000000000000115 /* RailApplication in Frameworks */ = {isa = PBXBuildFile; productRef = 000000000000000000000116 /* RailApplication */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 			files = (
 				000000000000000000000100 /* RailCore in Frameworks */,
 				000000000000000000000113 /* RailPresentation in Frameworks */,
+				000000000000000000000115 /* RailApplication in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,6 +102,7 @@
 			packageProductDependencies = (
 				000000000000000000000112 /* RailCore */,
 				000000000000000000000114 /* RailPresentation */,
+				000000000000000000000116 /* RailApplication */,
 			);
 			productName = RailMap;
 			productReference = 000000000000000000000101 /* RailMap.app */;
@@ -290,7 +293,8 @@
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Shows where you are on the railway map.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -321,7 +325,8 @@
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Shows where you are on the railway map.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -418,6 +423,10 @@
 		000000000000000000000114 /* RailPresentation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RailPresentation;
+		};
+		000000000000000000000116 /* RailApplication */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RailApplication;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

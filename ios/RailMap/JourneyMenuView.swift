@@ -15,6 +15,7 @@ struct WorkspaceJourneyMenu: View {
     @State private var detent: PresentationDetent = .height(WorkspaceMenuMetrics.journeyCompactHeight)
     @Environment(\.dismiss) private var dismiss
     @Environment(AppLocalization.self) private var localization
+    @Environment(RailNetworkStore.self) private var network
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     let presentation: (Train) -> JourneyPresentation
     let onSave: (Train, String) -> ItineraryStore.SaveOutcome
@@ -73,6 +74,8 @@ struct WorkspaceJourneyMenu: View {
                             onSave: { edited in
                                 if save(edited) { showsEditor = false }
                             })
+                            .environment(localization)
+                            .environment(network)
                     }
                     .sheet(isPresented: $showsDetails) {
                         NavigationStack {
@@ -86,6 +89,8 @@ struct WorkspaceJourneyMenu: View {
                                     }
                                 }
                         }
+                        .environment(localization)
+                        .environment(network)
                     }
             }
         }
@@ -154,7 +159,7 @@ struct WorkspaceJourneyMenu: View {
         case let .savedKeepingID(keptID, _):
             recordID = keptID
             return true
-        case .refusedImportRunning, .notFound:
+        case .refusedImportRunning, .notFound, .unsupportedRegion:
             return false
         }
     }

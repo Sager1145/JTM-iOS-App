@@ -7,19 +7,19 @@ final class StationPresentationTests: XCTestCase {
 
     func testStationCardOpensAndDismisses() {
         let app = XCUIApplication()
-        // Hoboken is a us station; North America is off by default.
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
-                               "-feature-north-america-enabled", "YES"]
+                               "-interface-language", "en"]
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "compact"
-        app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = "40.735,-74.027,0.016"
+        app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = "35.6812,139.7671,0.008"
         app.launchEnvironment["RAILMAP_UI_TEST_LAYERS"] = "network"
         app.launch()
         let openInMaps = app.buttons["stationOpenInMaps"]
         // Wait for a real, loaded annotation. The automatic DEBUG sheet hook
         // runs before cold network loading finishes and may select no station.
         let station = app.descendants(matching: .any)
-            .matching(NSPredicate(format: "label == %@", "Hoboken")).firstMatch
+            .matching(NSPredicate(format: "label == %@", "東京")).firstMatch
         XCTAssertTrue(station.waitForExistence(timeout: 45))
         for attempt in 0..<2 {
             activate(station)
@@ -38,6 +38,7 @@ final class StationPresentationTests: XCTestCase {
 
     func testStationCardShowsCompleteNamesAndInformation() {
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-interface-language", "en"]
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
@@ -82,6 +83,7 @@ final class StationPresentationTests: XCTestCase {
 
     func testStationLineOpensPreviewAndReturnsToStation() {
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-interface-language", "en"]
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"

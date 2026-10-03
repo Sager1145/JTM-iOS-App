@@ -1,4 +1,19 @@
 import SwiftUI
+import UIKit
+
+/// The user-selected text-size bounds apply to every app and test surface.
+enum AppTypographyPolicy {
+    static let supportedSizes: ClosedRange<DynamicTypeSize> = .xSmall ... .xLarge
+
+    static func preferredFont(forTextStyle style: UIFont.TextStyle) -> UIFont {
+        let requested = UIFont.preferredFont(forTextStyle: style)
+        let minimum = UIFont.preferredFont(forTextStyle: style,
+            compatibleWith: UITraitCollection(preferredContentSizeCategory: .extraSmall))
+        let maximum = UIFont.preferredFont(forTextStyle: style,
+            compatibleWith: UITraitCollection(preferredContentSizeCategory: .extraLarge))
+        return requested.withSize(min(maximum.pointSize, max(minimum.pointSize, requested.pointSize)))
+    }
+}
 
 /// Japan Train Map, native.
 ///
@@ -15,6 +30,14 @@ struct RailMapApp: App {
     var body: some Scene {
         WindowGroup {
             testableContent
+                .overlay(alignment: .topLeading) {
+#if DEBUG
+                    if ProcessInfo.processInfo.environment["RAILMAP_UI_TEST_TYPOGRAPHY"] == "1" {
+                        AppTypographyUITestProbe()
+                    }
+#endif
+                }
+                .dynamicTypeSize(AppTypographyPolicy.supportedSizes)
                 .preferredColorScheme(preferredColorScheme)
         }
     }
@@ -61,18 +84,19 @@ struct RailMapApp: App {
     }
 }
 
-// There is no Dynamic Type ceiling here any more, and its removal is the
-// point rather than a simplification.
-//
-// `railTypeCeiling()` used to clamp the whole app at `xxxLarge`, so the five
-// accessibility sizes were never rendered. The stated reason was true — a
-// half-height sheet at `accessibility5` holds a title and nothing else — but
-// the lever was wrong. Clamping made every AX-size path already written in
-// this app unreachable by the readers it was written for: `RouteTimingView`'s
-// stacked layout, the journey name's three-line ceiling, and the panel's own
-// measured compact row. §10.1 asks the LAYOUT to follow the setting.
-//
-// So the layout follows it now, in the one place where the fit actually
-// breaks: `BottomChromeMetrics` measures its compact stop from the reader's
-// text size and drops the half stop entirely at an accessibility size, which
-// is the stop that could not hold anything. See `BottomChromeMetrics.detents`.
+#if DEBUG
+private struct AppTypographyUITestProbe: View {
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
+    var body: some View {
+        Text(" ")
+            .font(.system(size: 1))
+            .foregroundStyle(.clear)
+            .frame(width: 1, height: 1)
+            .allowsHitTesting(false)
+            .accessibilityIdentifier("appTypographySize")
+            .accessibilityLabel("App text size")
+            .accessibilityValue(Text(verbatim: "size:\(dynamicTypeSize);subtitleRow:\(BottomChromeMetrics.subtitleRow)"))
+    }
+}
+#endif

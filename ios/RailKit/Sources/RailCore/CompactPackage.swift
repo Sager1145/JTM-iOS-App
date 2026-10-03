@@ -27,8 +27,8 @@ public struct CompactPackage: Sendable {
         public let operatorShort: String?
         /// Audited operator/network artwork bundled under `rail/`.
         public let operatorLogo: String?
-        /// Normalised service class produced by the North American builder
-        /// (`metro`, `commuter`, `intercity`, `streetcar`, …).
+        /// Normalised service class (`metro`, `commuter`, `intercity`,
+        /// `streetcar`, …), when supplied by the supported package builder.
         public let kind: String?
         /// Current service exceptions require the dated solver until their
         /// interval-level validity is available to compact route inference.
@@ -52,8 +52,7 @@ public struct CompactPackage: Sendable {
         /// ever passed the set was a test.
         public let hasLogo: Bool
         /// Whether the railway closes on itself — 大阪環状線, Kaohsiung's
-        /// circular LRT, Hong Kong's two light-rail loops, and the twenty-six
-        /// North American streetcar and people-mover loops.
+        /// circular LRT, and Hong Kong's two light-rail loops.
         ///
         /// Stored as `1` like ``hasLogo``, and decoded here for the same
         /// reason that one is: until it was, nothing on this side of the port

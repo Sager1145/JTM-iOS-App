@@ -3,24 +3,24 @@ import Testing
 @testable import RailCore
 
 struct RailResourceRevisionsTests {
-    @Test func everyCountryAndBorderScopeUseContentRevisions() {
-        let codes = ["jp", "tw", "hk", "mo", "kr", "us", "ca"]
+    @Test func everyCountryAndCombinedScopeUseContentRevisions() {
+        let codes = ["jp", "tw", "hk", "mo", "kr"]
         let snapshot = RailResourceRevisions(regions: Dictionary(uniqueKeysWithValues:
             codes.map { ($0, "revision-\($0)") }), timetableRevision: "timetable")
         for code in codes { #expect(snapshot.revision(for: code) == "\(code):revision-\(code)") }
-        #expect(snapshot.revision(for: "us+ca") == snapshot.revision(for: "ca+us"))
-        let changed = RailResourceRevisions(regions: ["us": "revision-us", "ca": "changed"],
+        #expect(snapshot.revision(for: "hk+mo") == snapshot.revision(for: "mo+hk"))
+        let changed = RailResourceRevisions(regions: ["hk": "revision-hk", "mo": "changed"],
                                             timetableRevision: "timetable")
-        #expect(changed.revision(for: "us") == snapshot.revision(for: "us"))
-        #expect(changed.revision(for: "us+ca") != snapshot.revision(for: "us+ca"))
+        #expect(changed.revision(for: "hk") == snapshot.revision(for: "hk"))
+        #expect(changed.revision(for: "hk+mo") != snapshot.revision(for: "hk+mo"))
         #expect(snapshot.revision(for: "unknown") == nil)
-        #expect(snapshot.revision(for: "us+unknown") == nil)
+        #expect(snapshot.revision(for: "hk+unknown") == nil)
         #expect(RailResourceRevisions(schemaVersion: 2, regions: snapshot.regions,
                                       timetableRevision: "timetable").revision(for: "jp") == nil)
     }
 
     @Test func staleOrUnattestedPrecomputesCannotSeedFreshCache() {
-        for country in ["jp", "tw", "hk", "mo", "kr", "us", "ca"] {
+        for country in ["jp", "tw", "hk", "mo", "kr"] {
             let suffix = country == "jp" ? "" : "-\(country)"
             let names = ["\(country)-2025.json", "rail-sections\(suffix).json", "stations\(suffix).json",
                          "matched-routes.json", "matched-stops.json", "rail-history\(suffix).json"]

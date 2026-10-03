@@ -26,49 +26,34 @@ final class MapZoomPerformanceTests: XCTestCase {
     }
 
     func testAll287JourneysRepeatedZoomAcrossJapan() throws {
-        try assertRepeatedZoom(camera: .japan, attachmentName: "all287-japan-zoom", requiredRides: 287)
+        try assertRepeatedZoom(camera: .japan, attachmentName: "all287-japan-zoom", requiredRecords: 287)
     }
 
     func testAll287JourneysRepeatedZoomOverDenseTokyo() throws {
-        try assertRepeatedZoom(camera: .tokyo, attachmentName: "all287-tokyo-zoom", requiredRides: 287)
+        try assertRepeatedZoom(camera: .tokyo, attachmentName: "all287-tokyo-zoom", requiredRecords: 287)
     }
 
-    func testDenseHobokenNewportParallelBranchesRemainVisibleAcrossZoom() throws {
-        try assertRepeatedZoom(camera: .hoboken, attachmentName: "hoboken-parallel-zoom")
-    }
-
-    func testDenseHudsonPennStationBundleRemainsVisibleAcrossZoom() throws {
-        try assertRepeatedZoom(camera: .hudson, attachmentName: "hudson-parallel-zoom")
-    }
-
-    func testOrangeHighlandAvenueBendRemainsVisibleAcrossZoom() throws {
-        try assertRepeatedZoom(camera: .orange, attachmentName: "orange-bend-zoom")
-    }
-
-    func testOrangeHighlandAvenueBendAtWiderZoomRemainsVisible() throws {
-        try assertRepeatedZoom(camera: .orangeWide, attachmentName: "orange-wide-bend-zoom")
-    }
-
-    func testDenseBundleRemainsVisibleAfterRotation() throws {
-        try assertRepeatedZoom(camera: .hudson, attachmentName: "rotated-hudson-zoom", rotateBeforeZoom: true)
-    }
-
-    func testOrangeBendRemainsVisibleInLandscape() throws {
-        try assertRepeatedZoom(camera: .orangeWide, attachmentName: "landscape-orange-zoom", orientation: .landscapeLeft)
+    func testTokyoNetworkRemainsVisibleAfterDeviceRotation() throws {
+        try assertRepeatedZoom(camera: .tokyo, attachmentName: "rotated-tokyo-zoom", rotateBeforeZoom: true)
     }
 
     func testTwoFingerMapRotationThenZoomDefersGeometryBuilds() throws {
-        try assertRepeatedZoom(camera: .hudsonSharedBundle, attachmentName: "map-rotation-zoom", rotateMapBeforeZoom: true)
+        try assertRepeatedZoom(camera: .tokyo, attachmentName: "map-rotation-zoom", rotateMapBeforeZoom: true)
     }
 
     private func assertRepeatedZoom(
         camera: Camera, attachmentName: String,
-        orientation: UIDeviceOrientation = .portrait, rotateBeforeZoom: Bool = false,
-        rotateMapBeforeZoom: Bool = false, requiredRides: Int? = nil
+        rotateBeforeZoom: Bool = false,
+        rotateMapBeforeZoom: Bool = false, requiredRecords: Int? = nil
     ) throws {
-        XCUIDevice.shared.orientation = orientation
+        XCUIDevice.shared.orientation = .portrait
         defer { XCUIDevice.shared.orientation = .portrait }
         let app = launch(camera: camera)
+        if requiredRecords != nil {
+            MapSampleUITestSupport.importAllSamples(in: app)
+            app.terminate()
+            app.launch()
+        }
         let status = app.staticTexts["railMapRenderStatus"]
         XCTAssertTrue(
             status.waitForExistence(timeout: 12),
@@ -76,33 +61,43 @@ final class MapZoomPerformanceTests: XCTestCase {
 
         var initial = try waitForRenderedNetwork(status, near: camera.center,
                                                 minimumCamera: camera == .japan ? nil : 11, timeout: 30)
-        if let requiredRides {
+        if let requiredRecords {
+            let inventory = app.staticTexts["journeyLoadInventory"]
+            XCTAssertTrue(inventory.waitForExistence(timeout: 10))
             let complete = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
-                (try? RenderSnapshot(status.label).integer("rides")) == requiredRides
+                let loaded = RenderSnapshot(inventory.label)
+                return loaded.integerIfPresent("registered") == requiredRecords
+                    && loaded.fields["phase"] == "loaded"
+                    && loaded.fields["drawable"] == RenderSnapshot(status.label).fields["rides"]
             }, object: nil)
             XCTAssertEqual(XCTWaiter.wait(for: [complete], timeout: 180), .completed,
-                           "Import every sample before running the all-journeys performance case.")
+                           "Every record must finish processing: \(inventory.label); \(status.label)")
             initial = try waitForRenderedNetwork(status, near: camera.center,
                                                 minimumCamera: camera == .japan ? nil : 11, timeout: 30)
-            XCTAssertEqual(try initial.integer("rides"), requiredRides)
+            let loaded = RenderSnapshot(inventory.label)
+            XCTAssertEqual(try loaded.integer("registered"), requiredRecords)
+            XCTAssertEqual(try initial.integer("rides"), try loaded.integer("drawable"))
+            XCTAssertGreaterThan(try initial.integer("rides"), 0)
         }
         if rotateBeforeZoom {
             let width = try initial.double("viewportWidth")
             XCUIDevice.shared.orientation = .landscapeLeft
-            // A compact/docked composition swap owns a new coordinator, so its
-            // rebuild counter starts over. Require the resized viewport and
-            // preserved city camera rather than comparing unrelated counters.
-            initial = try waitForRenderedNetwork(status, afterViewportWidth: width,
-                                                near: camera.center, minimumCamera: 11, timeout: 20)
-            XCTAssertGreaterThan(try initial.double("viewportWidth"), try initial.double("viewportHeight"))
+            if UIDevice.current.userInterfaceIdiom == .phone {
+                initial = try waitForRenderedNetwork(status, near: camera.center,
+                                                    minimumCamera: 11, timeout: 20)
+                XCTAssertGreaterThan(try initial.double("viewportHeight"), try initial.double("viewportWidth"))
+                XCTAssertEqual(try initial.double("viewportWidth"), width, accuracy: 1,
+                               "iPhone rotation requests must keep the portrait map viewport.")
+            } else {
+                // An iPad composition swap owns a new coordinator; require
+                // the resized viewport and preserved city camera.
+                initial = try waitForRenderedNetwork(status, afterViewportWidth: width,
+                                                    near: camera.center, minimumCamera: 11, timeout: 20)
+                XCTAssertGreaterThan(try initial.double("viewportWidth"), try initial.double("viewportHeight"))
+            }
         }
         attach(initial.raw, named: "\(attachmentName)-00-initial")
-        let initialMap = camera.isDenseBundle || camera.isOrange
-            ? try waitForVisibleRailways(app, requireAllColours: camera.isDenseBundle) : XCUIScreen.main.screenshot()
-        attach(initialMap, named: "\(attachmentName)-00-initial-map")
-        if camera.isDenseBundle {
-            XCTAssertEqual(try initial.integer("budgetDrops"), 0)
-        }
+        attach(XCUIScreen.main.screenshot(), named: "\(attachmentName)-00-initial-map")
         let gestureTarget = app.otherElements["railMapGestureTarget"]
         XCTAssertTrue(
             gestureTarget.waitForExistence(timeout: 8),
@@ -134,15 +129,6 @@ final class MapZoomPerformanceTests: XCTestCase {
             if rotateMapBeforeZoom, index == 0 {
                 XCTAssertGreaterThan(abs(sin(try settled.double("heading") * .pi / 180)), 0.2,
                                      "The two-finger gesture did not rotate the map.")
-            }
-            if camera.isDenseBundle {
-                XCTAssertEqual(
-                    try settled.integer("budgetDrops"), 0,
-                    "The vertex budget removed a line from the dense parallel bundle.")
-                attach(try waitForVisibleRailways(app), named: "\(attachmentName)-0\(index + 1)-map")
-            } else if camera.isOrange {
-                XCTAssertEqual(try settled.integer("budgetDrops"), 0)
-                attach(try waitForVisibleRailways(app, requireAllColours: false), named: "\(attachmentName)-0\(index + 1)-map")
             }
             previous = settled
         }
@@ -188,96 +174,25 @@ final class MapZoomPerformanceTests: XCTestCase {
 
     private func launch(camera: Camera) -> XCUIApplication {
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
-                               "-AppleInterfaceStyle", "Light", "-appearance", "light",
-                               // The Hoboken/Hudson/Orange cases are us stations; North America is off by default.
-                               "-feature-north-america-enabled", "YES"]
+                               "-AppleInterfaceStyle", "Light", "-appearance", "light"]
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
         app.launchEnvironment["RAILMAP_UI_TEST_STATS_REGION"] = "all"
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "compact"
         app.launchEnvironment["RAILMAP_UI_TEST_LAYERS"] = "network"
         app.launchEnvironment["RAILMAP_UI_TEST_GESTURE_TARGET"] = "1"
+        app.launchEnvironment["RAILMAP_UI_TEST_JOURNEY_INVENTORY"] = "1"
         switch camera {
         case .japan:
-            // An explicit camera also loads Japan on a fresh simulator whose
-            // default MapKit region is North America. Waiting for already
-            // loaded Japanese lines before framing them deadlocks that launch.
+            // Explicit framing starts Japanese resource loading on a fresh
+            // simulator instead of waiting for those resources first.
             app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = "37,138,24"
         case .tokyo:
             app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = "35.68,139.75,0.12"
-        case .hoboken:
-            app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = "40.731,-74.031,0.026"
-        case .hudson:
-            app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = "40.749,-74.012,0.065"
-        case .hudsonSharedBundle:
-            // Keep the Penn–Secaucus shared corridor centered at a detail
-            // level where each parallel colour is visible on wide viewports.
-            app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = "40.7557,-74.0341,0.04"
-        case .orange:
-            app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = "40.762,-74.234,0.04"
-        case .orangeWide:
-            app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = "40.762,-74.234,0.075"
         }
         app.launch()
         return app
-    }
-
-    /// Overlay submission precedes MapKit's asynchronous rasterization. A
-    /// nonzero overlay count alone passed even with an empty railway screenshot.
-    /// The dense cameras contain green, blue and orange parallel tracks;
-    /// Orange's bend requires green ink before taking its geometry screenshot.
-    /// Exclude the controls and sheet, then require enough saturated pixels of
-    /// EACH colour to distinguish the strokes from a few detached station dots.
-    private func waitForVisibleRailways(_ app: XCUIApplication, requireAllColours: Bool = true) throws -> XCUIScreenshot {
-        let deadline = Date().addingTimeInterval(10)
-        var counts = [0, 0, 0]
-        // App snapshots can crop a landscape window using stale portrait
-        // bounds, producing a large black band. Capture the physical screen.
-        var screenshot = XCUIScreen.main.screenshot()
-        repeat {
-            screenshot = XCUIScreen.main.screenshot()
-            // UIKit can return a landscape screenshot with a rotated backing
-            // CGImage. Draw through UIImage so the exclusion rectangle below
-            // is applied in the visible screen's orientation on every device.
-            let captured = screenshot.image
-            let format = UIGraphicsImageRendererFormat()
-            format.scale = 1
-            let size = CGSize(width: captured.size.width * captured.scale,
-                              height: captured.size.height * captured.scale)
-            let upright = UIGraphicsImageRenderer(size: size, format: format).image { _ in
-                captured.draw(in: CGRect(origin: .zero, size: size))
-            }
-            let source = try XCTUnwrap(upright.cgImage)
-            let width = source.width, height = source.height
-            var pixels = [UInt8](repeating: 0, count: width * height * 4)
-            try pixels.withUnsafeMutableBytes { bytes in
-                let context = try XCTUnwrap(CGContext(
-                    data: bytes.baseAddress, width: width, height: height,
-                    bitsPerComponent: 8, bytesPerRow: width * 4,
-                    space: CGColorSpaceCreateDeviceRGB(),
-                    bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
-                        | CGBitmapInfo.byteOrder32Big.rawValue))
-                context.draw(source, in: CGRect(x: 0, y: 0, width: width, height: height))
-            }
-            counts = [0, 0, 0]
-            for y in (height / 10)..<(height * 78 / 100) {
-                for x in (width / 10)..<(width * 90 / 100) {
-                    let index = (y * width + x) * 4
-                    let r = Int(pixels[index]), g = Int(pixels[index + 1]), b = Int(pixels[index + 2])
-                    // NJ Transit uses a bluer green than PATH. Test green
-                    // dominance, rather than a blue-channel cutoff which
-                    // falsely rejected the visible Hudson trunk after zoom.
-                    if g > 100, g * 4 > r * 5, g * 4 > b * 5 { counts[0] += 1 }
-                    if b > 140, b * 4 > g * 5, r < 80 { counts[1] += 1 }
-                    if r > 170, g > 65, g < 180, b < 70 { counts[2] += 1 }
-                }
-            }
-            if (requireAllColours ? counts : [counts[0]]).allSatisfy({ $0 >= 300 }) { return screenshot }
-            Thread.sleep(forTimeInterval: 0.25)
-        } while Date() < deadline
-        attach(screenshot, named: "missing-railway-ink")
-        XCTFail("Railways did not become visible: green/blue/orange pixel counts \(counts)")
-        return screenshot
     }
 
     /// Wait for a renderer publication rather than sleeping for a guessed
@@ -353,24 +268,11 @@ private extension MapZoomPerformanceTests {
     enum Camera {
         case japan
         case tokyo
-        case hoboken
-        case hudson
-        case hudsonSharedBundle
-        case orange
-        case orangeWide
-
-        var isOrange: Bool { self == .orange || self == .orangeWide }
-
-        var isDenseBundle: Bool { self == .hoboken || self == .hudson || self == .hudsonSharedBundle }
 
         var center: (latitude: Double, longitude: Double) {
             switch self {
             case .japan: (37, 138)
             case .tokyo: (35.68, 139.75)
-            case .hoboken: (40.731, -74.031)
-            case .hudson: (40.749, -74.012)
-            case .hudsonSharedBundle: (40.7557, -74.0341)
-            case .orange, .orangeWide: (40.762, -74.234)
             }
         }
     }

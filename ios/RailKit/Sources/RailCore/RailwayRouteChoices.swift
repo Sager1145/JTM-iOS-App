@@ -31,17 +31,8 @@ public enum RailwayRouteChoices {
             found += slices(line: line, from: originCode, to: destinationCode,
                             excluding: excludingStationCodes)
         }
-        // Package rows split at operator/source boundaries can still describe
-        // one physical line family. Join only the same named/operator family
-        // at a shared station, never through a proximity transfer.
-        let families = Dictionary(grouping: lines) { line in
-            (line.operator ?? "") + "|" + (line.nameNorm ?? line.name)
-        }
-        for family in families.values where family.count > 1 {
-            found += connectedChoices(
-                lines: family, from: originCode, to: destinationCode,
-                excluding: excludingStationCodes)
-        }
+        // compact-v1 does not carry verified junctions between line rows.
+        // A shared station/name/operator cannot establish a train connection.
         var seen: Set<String> = []
         return found.filter { seen.insert($0.id).inserted }.sorted {
             if $0.lineIDs.count != $1.lineIDs.count { return $0.lineIDs.count < $1.lineIDs.count }
@@ -52,118 +43,12 @@ public enum RailwayRouteChoices {
         }
     }
 
-    /// Package rows are strokes, not whole journeys: a branch may leave and
-    /// rejoin the same trunk. Track visited stations rather than visited rows
-    /// so this is possible without adding a loop or a proximity transfer.
-    private static func connectedChoices(
-        lines: [CompactPackage.Line], from: String, to: String, excluding: Set<String>
-    ) -> [Choice] {
-        struct Step {
-            let visit: Visit
-            let lineID: String
-            let rowIndex: Int
-            let originIndex: Int
-            let destinationIndex: Int
-            let section: RouteSection
-        }
-        var adjacency: [String: [Step]] = [:]
-        for (rowIndex, line) in lines.sorted(by: { $0.id < $1.id }).enumerated() {
-            let intervals = RailIntervalCodes.intervals(for: line)
-            for (index, interval) in intervals.enumerated() {
-                guard line.segments.indices.contains(index),
-                      interval.coordinates.count >= 2 else { continue }
-                let start = line.stations[index]
-                let end = line.stations[(index + 1) % line.stations.count]
-                guard !excluding.contains(start.id), !excluding.contains(end.id) else { continue }
-                for direction in RailwayDirection.allowedDirections(for: line, intervalIndex: index) {
-                    let (origin, destination) = direction == 1 ? (start, end) : (end, start)
-                    adjacency[origin.id, default: []].append(Step(
-                        visit: Visit(code: destination.id, name: destination.name),
-                        lineID: line.id, rowIndex: rowIndex,
-                        originIndex: direction == 1 ? index : (index + 1) % line.stations.count,
-                        destinationIndex: direction == 1 ? (index + 1) % line.stations.count : index,
-                        section: RouteSection(
-                            from: origin.name, to: destination.name,
-                            fromN02StationCode: origin.id, toN02StationCode: destination.id,
-                            lineNames: [line.name], operatorNames: line.operator.map { [$0] },
-                            lineIDs: [line.id], sectionCodes: [interval.code])))
-                }
-            }
-        }
-        guard let origin = lines.flatMap(\.stations).first(where: { $0.id == from }) else { return [] }
-        // Work backwards through directed edges to skip disconnected components.
-        var predecessors: [String: Set<String>] = [:]
-        for (code, steps) in adjacency {
-            for step in steps { predecessors[step.visit.code, default: []].insert(code) }
-        }
-        var reachable: Set<String> = [to]
-        var pending = [to]
-        while let code = pending.popLast() {
-            for previous in predecessors[code] ?? [] where reachable.insert(previous).inserted {
-                pending.append(previous)
-            }
-        }
-        guard reachable.contains(from) else { return [] }
-        var choices: [Choice] = []
-        var visits = [Visit(code: from, name: origin.name)]
-        var steps: [Step] = []
-        var visited: Set<String> = [from]
-        // Keep traversal state on the heap. A country's long split family
-        // can exhaust a worker thread's stack with one recursive call per
-        // station even when there are only a few complete alternatives.
-        struct Frame {
-            let code: String
-            var nextStep: Int = 0
-        }
-        var frames = [Frame(code: from)]
-        func backtrack() {
-            frames.removeLast()
-            if let previous = steps.popLast() {
-                visits.removeLast()
-                visited.remove(previous.visit.code)
-            }
-        }
-        while let frame = frames.last {
-            if frame.code == to {
-                var lineIDs: [String] = []
-                for step in steps where lineIDs.last != step.lineID { lineIDs.append(step.lineID) }
-                let sections = steps.map(\.section)
-                choices.append(Choice(
-                    lineIDs: lineIDs,
-                    lineNames: unique(sections.flatMap { $0.lineNames ?? [] }),
-                    operatorNames: unique(sections.flatMap { $0.operatorNames ?? [] }),
-                    stations: visits,
-                    sectionCodes: sections.flatMap { $0.sectionCodes ?? [] },
-                    routeSections: sections))
-                backtrack()
-                continue
-            }
-            guard let candidates = adjacency[frame.code], frame.nextStep < candidates.count else {
-                backtrack()
-                continue
-            }
-            let step = candidates[frame.nextStep]
-            frames[frames.count - 1].nextStep += 1
-            guard reachable.contains(step.visit.code), !visited.contains(step.visit.code) else { continue }
-            // A repeated code in one row is a different physical visit.
-            // Continuing that row must use the occurrence just reached;
-            // otherwise A–B–C–B–D can incorrectly become A–B–D.
-            if let previous = steps.last, previous.rowIndex == step.rowIndex,
-               previous.destinationIndex != step.originIndex { continue }
-            visited.insert(step.visit.code)
-            visits.append(step.visit)
-            steps.append(step)
-            frames.append(Frame(code: step.visit.code))
-        }
-        return choices
-    }
-
     private static func permits(_ line: CompactPackage.Line, trainType: String?) -> Bool {
         let type = (trainType ?? "local").lowercased()
         let highSpeed = ["highspeed", "high speed", "high-speed", "shinkansen", "新幹線", "新干线", "高速"]
             .contains { type.contains($0) }
         let highSpeedLine = line.name.contains("新幹線") || ["high_speed", "shinkansen"].contains(line.kind ?? "")
-        return highSpeed ? highSpeedLine : !highSpeedLine
+        return line.serviceStatus == nil && (highSpeed ? highSpeedLine : !highSpeedLine)
     }
 
     private static func slices(

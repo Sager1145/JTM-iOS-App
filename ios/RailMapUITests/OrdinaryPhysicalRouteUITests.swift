@@ -5,6 +5,7 @@ final class OrdinaryPhysicalRouteUITests: XCTestCase {
     func testGuidedCorrectionPreviewsBeforeApplyingAndCanUndo() {
         continueAfterFailure = false
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-interface-language", "en"]
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
@@ -86,6 +87,35 @@ final class OrdinaryPhysicalRouteUITests: XCTestCase {
         app.navigationBars.buttons.firstMatch.tap()
         openRouteGuide(in: app)
         comparePaths(in: app)
+        XCTAssertTrue(app.buttons["routeGuideApply"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["No stations will be added or removed."].exists,
+                      "Ordinary route search must retain the edited authored station as a required anchor.")
+        let protectedStation = app.staticTexts["routeGuideProjectedStop-003798"]
+        let guideScroll = app.scrollViews["routeGuideScroll"]
+        XCTAssertTrue(guideScroll.waitForExistence(timeout: 8))
+        for _ in 0..<8 {
+            if protectedStation.exists && protectedStation.isHittable { break }
+            guideScroll.swipeUp()
+        }
+        XCTAssertTrue(protectedStation.exists,
+                      "The ordinary physical route must still visit the exact JR Yurakucho identity.")
+        XCTAssertTrue(protectedStation.isHittable)
+        XCTAssertTrue(["有楽町", "Yurakucho"].contains(
+            protectedStation.label.folding(options: .diacriticInsensitive, locale: Locale(identifier: "en_US"))),
+            "The reviewed station identity must retain its displayed name.")
+        app.buttons["routeGuideCancel"].tap()
+        XCTAssertTrue(app.buttons["routeGuideApply"].waitForNonExistence(timeout: 8))
+        let authoredVisit = app.descendants(matching: .any)["rideEditorStop-1"].firstMatch
+        revealEditorStop(authoredVisit, in: app)
+        XCTAssertTrue(authoredVisit.label.hasPrefix("2, 有楽町,"))
+        XCTAssertTrue(authoredVisit.label.contains("Platform 3"),
+                      "Cancelling ordinary correction must preserve the authored platform.")
+        revealSurfaceDestination(lastSurfaceStop, in: app)
+
+        // Explicit Delete requests omission; the draft and platform remain
+        // protected until the replacement plan receives destructive approval.
+        deleteRow(1, in: app)
+        comparePaths(in: app)
         confirmChoices(preferring: "総武線", in: app)
         app.buttons["routeGuideApply"].tap()
         let remove = app.buttons["Remove stations and apply route"]
@@ -116,7 +146,7 @@ final class OrdinaryPhysicalRouteUITests: XCTestCase {
                       "Cancelling must retain the protected authored platform exactly.")
         revealSurfaceDestination(lastSurfaceStop, in: app)
         recordFailure("protected-removal-cancel-keeps-surface-route-and-platform", app: app)
-        openRouteGuide(in: app)
+        deleteRow(1, in: app)
         comparePaths(in: app)
         confirmChoices(preferring: "総武線", in: app)
         app.buttons["routeGuideApply"].tap()

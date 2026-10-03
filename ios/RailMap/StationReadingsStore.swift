@@ -14,7 +14,6 @@ import RailCore
 ///
 /// Resource names follow the web app's `countrySuffixed` rule: Japan uses
 /// `station-names.json`, other countries use `station-names-{country}.json`.
-/// US and Canada retain their existing `station-readings` resources.
 actor StationReadingsStore {
 
     static let shared = StationReadingsStore()
@@ -24,9 +23,7 @@ actor StationReadingsStore {
 
     /// `AppCore.countrySuffixed("station-names", country)`.
     nonisolated static func resourceName(country: String) -> String {
-        Region.countrySuffixed(
-            country == "us" || country == "ca" ? "station-readings" : "station-names",
-            country: country)
+        Region.countrySuffixed("station-names", country: country)
     }
 
     /// The table for a country, or `.empty` when the bundle has no such file.

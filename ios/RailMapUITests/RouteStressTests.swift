@@ -78,6 +78,7 @@ final class RouteStressTests: XCTestCase {
 
     private func launch() -> XCUIApplication {
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-appearance", "light", "-map-follows-selected-date", "NO",
                                "-auto-focus-zoom", "NO"]

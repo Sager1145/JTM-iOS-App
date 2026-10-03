@@ -67,6 +67,7 @@ public enum TokyoConventionalRouteInference {
     }
 
     private static func eligible(_ train: Train) -> Bool {
+        guard !train.requiresRouteConfirmation else { return false }
         guard (train.region ?? "jp") == "jp" else { return false }
         let type = (train.trainType ?? "").lowercased()
         guard !["highspeed", "high speed", "high-speed", "shinkansen", "新幹線", "新干线", "高速"]

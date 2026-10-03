@@ -888,31 +888,6 @@ export function build({ RailNetwork, railPackage, APP_DIR }) {
       "with 서울 지하철 9호선, so the operator hint is what decides.",
   );
 
-  // North America has no checked-in solver output yet. One real package hop
-  // per country keeps canonicalization parity honest without copying either
-  // complete network into the fixture: each subset is still checked against
-  // its complete country network before it is emitted below.
-  hop(
-    "us",
-    "amtrak-capitol-corridor",
-    2,
-    6,
-    "capitol-corridor",
-    "A real US intercity hop across the Capitol Corridor package. It proves " +
-      "English line/operator hints and western-hemisphere coordinates take " +
-      "the same display-geometry path as the five original countries.",
-  );
-  hop(
-    "ca",
-    "translink-canada-line",
-    2,
-    6,
-    "canada-line",
-    "A real Canadian rapid-transit hop on Vancouver's Canada Line. The case " +
-      "is verified against the complete Canadian network before its bounded " +
-      "network subset is serialized.",
-  );
-
   // Japan: the topologies the two checked-in trains do not reach.
   hop(
     "jp",

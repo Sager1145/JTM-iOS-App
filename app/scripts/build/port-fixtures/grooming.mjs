@@ -20,7 +20,7 @@
 //
 //  The derivation of the limits from a line's median station spacing is
 //  checked separately, by recording `medianSpacingMeters` and `limitsIndex`
-//  for every line of all seven packages: the port re-derives both from the
+//  for every line of all five packages: the port re-derives both from the
 //  same package and must land on the same rung.
 // =========================================================================
 
@@ -140,7 +140,7 @@ function keptIndicesOf(input, output) {
 
 // ── the fixture ──────────────────────────────────────────────────────────
 
-const COUNTRIES = ["mo", "hk", "tw", "kr", "jp", "us", "ca"];
+const COUNTRIES = ["mo", "hk", "tw", "kr", "jp"];
 
 // Total input vertices allowed into `inputs`. The inputs dominate the file
 // size (the answers are integers), so this is the knob that keeps the fixture
@@ -168,7 +168,7 @@ export function build({ RailNetwork, railPackage }) {
   }));
 
   // ── survey every line of every package ────────────────────────────────
-  // The spacing table covers all seven countries in full, because "which rung
+  // The spacing table covers all five countries in full, because "which rung
   // does this line land on" is the part of the machinery with real data
   // spanning its whole range: the shipped packages run from a 169 m tram
   // spacing to a 46 km high-speed hop, and both ends have to sort correctly.
@@ -244,28 +244,6 @@ export function build({ RailNetwork, railPackage }) {
   // vertices; nothing shorter substitutes for it.
   take(surveyed.find((entry) => entry.line.id === "tw-alsr-alishan"));
 
-  // North America must contribute geometry, not only spacing metadata. Keep
-  // this representative rather than proportional: the exhaustive spacing
-  // table already covers every line, while one most-contested real chain per
-  // new country proves the groomer itself sees each survey's coordinates
-  // without letting the much larger US package consume the fixed budget.
-  for (const country of ["us", "ca"]) {
-    const changed = surveyed
-      .filter(
-        (entry) =>
-          entry.country === country &&
-          entry.removals > 0 &&
-          entry.chain.length <= MAX_CHAIN_VERTICES,
-      )
-      .sort(
-        (a, b) =>
-          b.removals - a.removals ||
-          a.chain.length - b.chain.length ||
-          (a.line.id < b.line.id ? -1 : 1),
-      );
-    take(changed[0]);
-  }
-
   // Then the lines the groomer actually changes, most-changed first, so the
   // budget goes to geometry that exercises the thresholds rather than to
   // geometry that walks straight through them.
@@ -281,7 +259,7 @@ export function build({ RailNetwork, railPackage }) {
   // And a few the groomer leaves alone, one per remaining country: a port
   // that removes something here is as broken as one that keeps a barb, and
   // this is the only place that shows it.
-  for (const country of ["tw", "kr", "jp", "us", "ca"]) {
+  for (const country of ["tw", "kr", "jp"]) {
     const quiet = surveyed
       .filter(
         (entry) =>
@@ -506,7 +484,7 @@ export function build({ RailNetwork, railPackage }) {
   );
   // Exact threshold comparisons. `shortEdge <= edge` and `deflection >= turn`
   // are inclusive; a port that writes `<` or `>` differs from this app on
-  // exactly these four cases and on nothing else in seven countries.
+  // exactly these four cases and on nothing else in five countries.
   probe(
     "shortEdge exactly at the edge limit is groomed (<=)",
     [A, spikeTip, A],
@@ -544,7 +522,7 @@ export function build({ RailNetwork, railPackage }) {
 
   // ── spacings the shipped packages never produce ───────────────────────
   // Two rules of the ladder are unreachable from real data and therefore
-  // untestable without this list — both measured: no line in seven countries
+  // untestable without this list — both measured: no line in five countries
   // carries a zero-length segment, and none has a median spacing of exactly
   // 700 or 1600 m (the nearest are 698 and 701). So a port that dropped the
   // `> 0` filter, or wrote `<` for the rung ceiling's `<=`, passed everything
@@ -605,7 +583,7 @@ export function build({ RailNetwork, railPackage }) {
       "microKinkLimitsForSpacing is not exported: the contract here is " +
       "'given exactly these limits, this answer', and the derivation is " +
       "checked separately through `spacings`, which carries every line of " +
-      "all seven packages.",
+      "all five packages.",
     scales,
     spikeMinTurnDegrees: SPIKE_MIN_TURN_DEGREES,
     spacings,

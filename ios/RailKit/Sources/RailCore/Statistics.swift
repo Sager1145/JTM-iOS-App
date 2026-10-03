@@ -130,7 +130,7 @@ public enum Statistics {
 
     /// The countries whose national railway is recorded as CONV rather than
     /// through a JR-style union bit. See ``filterCategoryForMask(_:country:)``.
-    static let nationalRailwayInConvSlot: Set<String> = ["tw", "us", "ca"]
+    static let nationalRailwayInConvSlot: Set<String> = ["tw"]
 
     // MARK: - section attributes
 
@@ -326,39 +326,8 @@ public enum Statistics {
         case "hk": return classifyHkSectionMask(props)
         case "mo": return maskMETRO  // Macao's whole network is one automated LRT system.
         case "kr": return classifyKrSectionMask(props)
-        case "us", "ca": return classifyNorthAmericaSectionMask(props)
         default: return classifyJpSectionMask(props)
         }
-    }
-
-    /// The United States and Canada, over the code space the North American
-    /// package build assigns: institution 1 = the two services their operators
-    /// sell as high-speed (Acela, Brightline), 2 = the intercity passenger
-    /// railroads (Amtrak, VIA Rail, the Alaska Railroad, Ontario Northland),
-    /// 3 = the public transit authorities, 4 = private and heritage operators,
-    /// with the railway class separating rapid transit and light rail
-    /// (普通鉄道) from streetcars (軌道), people movers and monorails (案内軌条式)
-    /// and funiculars and heritage lines (特殊鉄道).
-    ///
-    /// The same rules as Taiwan's, and deliberately so rather than by
-    /// accident: the two builds emit the same code space because the two
-    /// networks decompose the same way — one national intercity railway, a
-    /// layer of publicly operated urban rail, and a private remainder. The
-    /// buckets are exclusive, as Taiwan's and Korea's are, because North
-    /// America has no JR-style union spanning two of them.
-    static func classifyNorthAmericaSectionMask(_ props: SectionProperties) -> Int {
-        let code = props.institutionTypeCodeString
-        let cls = props.railwayClassCodeString
-        if code == "1" { return maskHSR }
-        if cls == "21" { return maskTRAM }
-        if cls == "31" { return maskPRIV }
-        // Guided systems — airport people movers, monorails and personal
-        // rapid transit — belong to the remainder, not the public urban-rail
-        // bucket selected by institution code 3.
-        if cls == "22" { return maskPRIV }
-        if code == "4" { return maskPRIV }
-        if code == "3" { return maskMETRO }
-        return maskCONV
     }
 
     /// Taiwan, over the code space the package build assigns: institution 1 =
@@ -1250,13 +1219,22 @@ public enum Statistics {
         /// service-type rows, unlike the deduped network-coverage sums.
         public var km: Double
         public var segments: [RiddenSection]
+        /// False when no physical route has been confirmed. The empty numeric
+        /// contribution in that case represents unknown distance, not zero km.
+        public var distanceIsKnown: Bool
+        /// Independently matched source geometry can contribute its measured
+        /// parts even while a missing section or boundary leaves the total unknown.
+        public var partialDistanceIsProven: Bool
 
         public init(edges: [Int] = [], spans: [Span] = [], km: Double = 0,
-                    segments: [RiddenSection] = []) {
+                    segments: [RiddenSection] = [], distanceIsKnown: Bool = true,
+                    partialDistanceIsProven: Bool = false) {
             self.edges = edges
             self.spans = spans
             self.km = km
             self.segments = segments
+            self.distanceIsKnown = distanceIsKnown
+            self.partialDistanceIsProven = partialDistanceIsProven
         }
     }
 
@@ -1546,12 +1524,6 @@ public enum Statistics {
         case "kr":
             identifier = "Asia/Seoul"
             fallbackSeconds = 9 * 3600
-        case "us":
-            identifier = "America/New_York"
-            fallbackSeconds = -5 * 3600
-        case "ca":
-            identifier = "America/Toronto"
-            fallbackSeconds = -5 * 3600
         default:
             identifier = "Asia/Tokyo"
             fallbackSeconds = 9 * 3600

@@ -41,7 +41,6 @@ struct SettingsView: View {
     /// the workspace root with the whole app in between.
     @AppStorage("launch-map-scope") private var launchScope = LaunchMapScope.auto.rawValue
     @AppStorage("launch-map-region") private var launchScopeRegion = Region.jp.rawValue
-    @AppStorage(Region.northAmericaDefaultsKey) private var northAmericaEnabled = true
 
     var body: some View {
         Form {
@@ -56,7 +55,6 @@ struct SettingsView: View {
             selectionSection
             resetSection
             diagnosticsSection
-            northAmericaSection
         }
         .navigationTitle(localization.text("ios.settings", fallback: "Settings"))
         // The switch positions follow the interface language until the reader
@@ -539,32 +537,6 @@ struct SettingsView: View {
         }
     }
 
-    // MARK: - North America
-
-    private var northAmericaSection: some View {
-        Section {
-            SettingToggleRow(
-                title: localization.text(
-                    "ios.settings.northAmerica.title", fallback: "North America"),
-                note: localization.text(
-                    "ios.settings.northAmerica.note",
-                    fallback:
-                        "Show United States and Canada lines, stations and journeys. "
-                        + "When off they are completely hidden; saved North American "
-                        + "journeys are hidden, not deleted."),
-                isOn: $northAmericaEnabled
-            )
-        }
-        .onChange(of: northAmericaEnabled) { _, enabled in
-            if launchScope == LaunchMapScope.region.rawValue,
-                let region = Region(rawValue: launchScopeRegion), region.isNorthAmerica, !enabled
-            {
-                launchScopeRegion = Region.jp.rawValue
-            }
-            network.northAmericaEnabledChanged()
-            Task { await itineraries.setNorthAmericaEnabled(enabled, library: library) }
-        }
-    }
 
 }
 

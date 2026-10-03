@@ -40,6 +40,7 @@ final class JourneyTranslationUITests: XCTestCase {
 
     private func launchTranslationSwitch() -> XCUIApplication {
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-interface-language", "en"]
         app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "search"
@@ -159,6 +160,7 @@ final class JourneyTranslationUITests: XCTestCase {
 
     private func launchOfficialNameScenario() -> XCUIApplication {
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-interface-language", "en"]
         app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "search"
@@ -271,6 +273,7 @@ final class JourneyTranslationUITests: XCTestCase {
 
     private func launch(sheet: String) -> XCUIApplication {
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-interface-language", "en"]
         app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
         app.launchEnvironment["RAILMAP_UI_TEST_SELECT"] = "20260703_01_haruka"

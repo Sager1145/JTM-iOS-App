@@ -1,6 +1,7 @@
 import Foundation
 import Observation
 import RailCore
+import RailApplication
 import RailPresentation
 
 /// Owner of the 里程統計 numbers.
@@ -615,10 +616,7 @@ final class MileageStatisticsStore {
     /// nothing else — a key built from fewer would reuse an entry the reader's
     /// edit had invalidated, which is a mileage figure that silently does not
     /// move. The date is an input even when the geometry is identical.
-    struct CachedEntry: Sendable {
-        let digest: Int
-        let entry: Statistics.TrainEntry
-    }
+    typealias CachedEntry = MileageMatching.CachedEntry
 
     /// Every journey's entry from the last load, and the index they were
     /// matched against.
@@ -652,64 +650,38 @@ final class MileageStatisticsStore {
         let interval = RailSignpost.jobs.begin("stats.matchRides")
         defer { RailSignpost.jobs.end("stats.matchRides", interval) }
         let ridesByID = Dictionary(rides.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
-        var statisticsTrains: [Statistics.Train] = []
-        var entries: [Statistics.TrainEntry] = []
-        var fresh: [String: CachedEntry] = [:]
-        statisticsTrains.reserveCapacity(trains.count)
-        entries.reserveCapacity(trains.count)
-        fresh.reserveCapacity(trains.count)
-
-        // `journeys` was built from `trains`, in this order, one element each —
-        // it is the value ``load`` compared to decide this run was needed at
-        // all. Read here rather than recomputed so the date bucket and the
-        // entry digest have exactly one definition: a fingerprint that said
-        // "unchanged" while the matcher keyed on something else would be a
-        // cache that hides an edit.
-        for (position, pair) in zip(trains, journeys).enumerated() {
-            let (train, journey) = pair
+        // The fingerprint and matcher share date/digest definitions. Map only
+        // platform route values here; the use case owns matching, cache reuse,
+        // ordered entries and pruning. Coordinate arrays retain their storage.
+        let snapshots = try zip(trains, journeys).map { train, journey in
             try Task.checkCancellation()
-            let stops = train.stops.map {
-                Statistics.Stop(
-                    arrival: $0.arrival, departure: $0.departure,
-                    stopType: $0.stopType, rideSegment: $0.rideSegment)
+            // A valid cached entry needs no route payload. Preserve the fast
+            // path instead of mapping all segments for already-matched rides.
+            let segments: [MileageMatching.Segment]
+            if train.requiresRouteConfirmation || cache[train.id]?.digest == journey.entry {
+                segments = []
+            } else {
+                let ride = ridesByID[train.id]
+                let uncertified = Set(ride?.physicalGaps.filter { !$0.isBoundary }.map(\.segmentIndex) ?? [])
+                segments = ride?.segments.filter { !uncertified.contains($0.segmentIndex) }.map {
+                    MileageMatching.Segment(
+                        sourceCoordinates: $0.sourceCoordinates, segmentIndex: $0.segmentIndex,
+                        from: $0.from, to: $0.to)
+                } ?? []
             }
-            // `date` carries the normalised date BUCKET, not the raw field:
-            // the day slice compares it against a bucket the date bar named,
-            // and `getTrainDate` in the web app normalises there too. A train
-            // with no usable date lands in `Dates.undated`, which is a bucket
-            // the reader can select, not a missing value.
-            let statisticsTrain = Statistics.Train(
-                id: train.id, trainType: train.trainType,
-                date: journey.date, stops: stops)
-            statisticsTrains.append(statisticsTrain)
-            let ride = ridesByID[train.id]
-            let digest = journey.entry
-            if let cached = cache[train.id], cached.digest == digest {
-                entries.append(cached.entry)
-                fresh[train.id] = cached
-                if position % 25 == 24 { report(position + 1) }
-                continue
-            }
-            let features = ride?.segments.map { segment in
-                Statistics.RouteFeature(
-                    // Statistics indexes the canonical WGS84 rail package.
-                    // `coordinates` is presentation-only GCJ-02 in four
-                    // regions and will not match that index there.
-                    lines: [segment.sourceCoordinates], hasGeometry: true,
-                    rideSegment: Statistics.isRideSegment(
-                        stops, segmentIndex: segment.segmentIndex),
-                    from: segment.from, to: segment.to)
-            } ?? []
-            let entry = Statistics.collectTrainStatsEntry(
-                features: features, index: index, rideDate: statisticsTrain.date)
-            entries.append(entry)
-            fresh[train.id] = CachedEntry(digest: digest, entry: entry)
-            // Reported in blocks: one hop to the main actor per train would
-            // cost more than the matching itself on a small store.
-            if position % 25 == 24 { report(position + 1) }
+            return MileageMatching.Journey(
+                train: Statistics.Train(
+                    id: train.id, trainType: train.trainType, date: journey.date,
+                    stops: train.stops.map {
+                        Statistics.Stop(arrival: $0.arrival, departure: $0.departure,
+                            stopType: $0.stopType, rideSegment: $0.rideSegment)
+                    }),
+                entryDigest: journey.entry,
+                segments: segments,
+                routeConfirmation: train.routeConfirmation,
+                fullDistanceKnown: fullDistanceKnown(train: train, ride: ridesByID[train.id]))
         }
-        report(trains.count)
-        return Prepared(trains: statisticsTrains, entries: entries, cache: fresh)
+        return try MileageMatching.match(journeys: snapshots, index: index, cache: cache, report: report)
     }
 
     // MARK: - what the numbers are a function of
@@ -849,11 +821,43 @@ final class MileageStatisticsStore {
     /// arrived: both produce an empty feature list today, but the second will
     /// stop doing so the moment it solves, and a digest that could not tell
     /// them apart would keep serving the empty answer.
+    /// Missing unridden sections do not make the selected ridden total unknown.
+    /// A disconnected boundary matters when both adjacent sections were ridden.
+    private nonisolated static func fullDistanceKnown(
+        train: Train, ride: RiddenRouteStore.DrawnRide?
+    ) -> Bool {
+        let stops = train.stops.map {
+            Statistics.Stop(arrival: $0.arrival, departure: $0.departure,
+                stopType: $0.stopType, rideSegment: $0.rideSegment)
+        }
+        let hasRiddenSection = (0..<max(0, stops.count - 1)).contains {
+            Statistics.isRideSegment(stops, segmentIndex: $0)
+        }
+        guard let ride else { return !hasRiddenSection }
+        for gap in ride.physicalGaps {
+            if Statistics.isRideSegment(stops, segmentIndex: gap.segmentIndex),
+               !gap.isBoundary || Statistics.isRideSegment(stops, segmentIndex: gap.segmentIndex - 1) {
+                return false
+            }
+        }
+        if case .partial(_, _, let gaps) = ride.route {
+            // Physical boundary gaps were checked above with both adjacent legs.
+            let boundaries = Set(ride.physicalGaps.filter(\.isBoundary).map(\.segmentIndex))
+            if gaps.contains(where: { !boundaries.contains($0.segmentIndex)
+                && Statistics.isRideSegment(stops, segmentIndex: $0.segmentIndex) }) { return false }
+        }
+        if case .unavailable = ride.route { return !hasRiddenSection }
+        if case .historyDatabaseInvalid = ride.route { return !hasRiddenSection }
+        return true
+    }
+
     private nonisolated static func entryDigest(
         train: Train, ride: RiddenRouteStore.DrawnRide?
     ) -> Int {
         var hasher = Hasher()
-        if let ride {
+        hasher.combine(train.requiresRouteConfirmation)
+        hasher.combine(fullDistanceKnown(train: train, ride: ride))
+        if let ride, !train.requiresRouteConfirmation {
             hasher.combine(true)
             hasher.combine(ride.geometryDigest)
             for segment in ride.segments {
@@ -911,14 +915,8 @@ final class MileageStatisticsStore {
         let entries: [Statistics.TrainEntry]
     }
 
-    private struct Prepared: Sendable {
-        let trains: [Statistics.Train]
-        let entries: [Statistics.TrainEntry]
-        /// Only the journeys this load actually saw. Rebuilt rather than
-        /// merged so a deleted journey's entry leaves with it: an entry cache
-        /// that only ever grows is a leak with a plausible name.
-        let cache: [String: CachedEntry]
-    }
+    private typealias Prepared = MileageMatching.Result
+
 }
 
 private extension Statistics.Train {

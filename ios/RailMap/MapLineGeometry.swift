@@ -136,7 +136,7 @@ struct ContinuousStrokeBuild: Sendable {
     let familyRuns: [(colorHex: String, colorDarkHex: String, runs: [[Coordinate]])]
 }
 
-/// Draw a continuous-stroke line (North America) as ONE polyline: the chain
+/// Draw a reviewed continuous-stroke line as ONE polyline: the chain
 /// of intervals is joined at its shared station anchors, projected to the
 /// pixel space this frame is drawn in, handed to `RailCore.ContinuousStroke`
 /// — the port of rail-stroke.js — which bakes the screen-space lane offset in

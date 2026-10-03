@@ -1,3 +1,4 @@
+import RailApplication
 import RailCore
 import SwiftUI
 
@@ -22,6 +23,7 @@ struct DataImportView: View {
                 if !flow.isRunning { modeSection }
                 phaseSection
             }
+            .accessibilityIdentifier("importForm")
             .navigationTitle(localization.text("sec.import", fallback: "Import"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

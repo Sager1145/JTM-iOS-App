@@ -31,27 +31,10 @@ actor DisplayNetworkCache {
     /// border gets the two networks concatenated and filed under the scope's
     /// own key, so the second such journey in a log reuses it.
     ///
-    /// Concatenation is enough because a `RouteNetwork` is a list of lines and
-    /// two indexes over it, and the two packages share no line id: every id is
-    /// the operator's own slug (`kenosha-streetcar-sc`, `go-transit-lw`), and
-    /// no operator appears in both countries' packages. A name IS shared —
-    /// exactly four of them, the *Maple Leaf*, the *Adirondack*, the *Amtrak
-    /// Cascades* and VIA's *Toronto - New York*, each drawn as two lines split
-    /// at the border under one name — and that is exactly what the name index
-    /// has to hold both of for a crossing to canonicalise all the way through.
-    ///
-    /// ## The lines go in in the CATALOG's order, never the ride's
-    ///
-    /// ``RouteScope/graphRegions`` rather than ``RouteScope/regions``, and the
-    /// difference is what makes this cache sound. The *Maple Leaf* reaches
-    /// `[ca, us]` and the *Adirondack* `[us, ca]`; both file under `"us+ca"`,
-    /// so whichever asked first would decide the order of the lines in the
-    /// network the OTHER one then canonicalises against. `linesByName` is
-    /// insertion-ordered and load-bearing — for a name held by two lines the
-    /// first to reach a given score wins — so a hop over the border could
-    /// canonicalise onto the American line on one launch and the Canadian one
-    /// on the next, from nothing but which journey the route cache happened to
-    /// be missing.
+    /// Combined working sets retain every line identity and use the catalog's
+    /// canonical region order, independently of which journey requested them
+    /// first. Display normalization does not establish physical connections
+    /// between those lines; the route solver requires separate source proof.
     func network(scope: RouteScope) async throws -> RouteNetwork {
         guard scope.crossesBorder else { return try await network(country: scope.code) }
         if let ready = networks[scope.key] { return ready }

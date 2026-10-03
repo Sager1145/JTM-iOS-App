@@ -37,16 +37,10 @@ import RailCore
 ///   it set out from first. That is the region the journey is filed under,
 ///   dated on and measured in, and the caller reads `.first` for it.
 /// * ``canonicalOrder(_:)`` answers in the CATALOG's order, and it is what a
-///   shared working set has to be built in. A Toronto→New York journey and a
-///   New York→Toronto one touch the same two packages in opposite orders and
-///   share one cache key (``scopeKey(_:)`` sorts); if the working set filed
-///   under that key were built in the asking journey's order, then *which*
-///   graph the key names would depend on which journey happened to be solved
-///   first in a given launch. The line-name index inside a `RouteNetwork` is
-///   insertion-ordered and load-bearing — the *Maple Leaf* is one name over
-///   two lines, one per country, and the first to reach a given score wins —
-///   so that is a route that could canonicalise differently between two
-///   launches of the same build over the same store.
+///   shared working set has to be built in. The same supported-region set
+///   shares one cache key regardless of journey order. Building that working
+///   set in catalog order makes insertion-ordered line scoring deterministic
+///   across launches and across records that touch those regions.
 public struct RegionScopeRule: Sendable {
 
     /// Every region this build ships a package for, in the catalog's own
@@ -101,11 +95,8 @@ public struct RegionScopeRule: Sendable {
     /// Japan's is ``numericCodeLength`` ASCII digits; every other region's
     /// begins with something before a dash. Both spellings a record can carry
     /// are read by the same rule: the packages' own group ids are
-    /// `"<region>-official-…"`, and the North American build prefixes the
-    /// operator's code with the region too — `US-AMTRAK-RSP`, `CA-AMTRAK-RSP`,
-    /// which is the pair of station codes the *Adirondack* crosses the border
-    /// on, and is precisely why a Windsor in Ontario cannot answer for a
-    /// Windsor in Connecticut when both packages are in one graph.
+    /// `"<region>-official-…"`. Explicit region prefixes are recognized
+    /// only when that region belongs to this build's supported catalog.
     ///
     /// An operator's own code that names no region — `TYMC-A13`,
     /// `MTR-HOK`, `MLM-BARRA` — answers `nil` rather than a
@@ -194,10 +185,8 @@ public struct RegionScopeRule: Sendable {
 
     /// The key one merged working set is cached under.
     ///
-    /// `"us"` for a journey inside the United States, `"us+ca"` for one that
-    /// crosses into Canada — in the catalog's order rather than the ride's, so
-    /// that a Toronto→New York journey and a New York→Toronto one share a
-    /// graph instead of building it twice.
+    /// Supported region codes are joined in catalog order, regardless of
+    /// record order, so identical working sets share one cache entry.
     public func scopeKey(_ regions: [String]) -> String {
         guard regions.count > 1 else { return regions.first ?? fallback }
         let ordered = canonicalOrder(regions)

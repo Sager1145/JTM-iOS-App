@@ -143,31 +143,12 @@ struct BottomChromeMetrics: Equatable {
     /// header reserving the slot, and the compact detent that has to be tall
     /// enough to hold the ordinary title bar's visible subtitle rows.
     static var subtitleRow: CGFloat {
-        UIFont.preferredFont(forTextStyle: .footnote).lineHeight
+        AppTypographyPolicy.preferredFont(forTextStyle: .footnote).lineHeight
     }
 
     /// The legibility floor for the shared title fit and subtitle labels.
     /// Titles use one fit for every tab; subtitles fit their own summary text.
     static let smallestLegibleScale: CGFloat = 0.5
-
-    /// Whether the panel header draws a subtitle at all in this window.
-    ///
-    /// One rule, two readers: ``PanelHeader`` uses it to decide whether to
-    /// draw, and the workspace uses it to decide whether the compact stop has
-    /// to be a line taller. Spelled once because the two disagreeing is a
-    /// clipped line at one stop and a gap at the other, with nothing on screen
-    /// saying which of the two is wrong.
-    ///
-    /// A landscape phone at an accessibility text size has 402 points in
-    /// total, and two wrapped lines of subtitle take eighty of them out of the
-    /// content below — where `RouteTimingView` states the same origin,
-    /// destination and times properly, as its own row. §6: every element earns
-    /// its place, and here the same sentence is already paid for once.
-    static func drawsSubtitle(
-        isAccessibilitySize: Bool, verticalSizeClass: UserInterfaceSizeClass?
-    ) -> Bool {
-        !(isAccessibilitySize && verticalSizeClass == .compact)
-    }
 
     var compact: CGFloat {
         let wanted = max(compactRow, Self.minimumCompact)
@@ -202,12 +183,10 @@ struct BottomChromeMetrics: Equatable {
     var detents: Set<PresentationDetent> {
         // Two stops at an accessibility text size, not three.
         //
-        // This is what replaced the app-wide Dynamic Type ceiling. Clamping
-        // the text was the wrong lever: it made every AX-size code path in the
-        // app — the stacked `RouteTiming`, the three-line journey name, the
-        // measured compact row above — unreachable by the readers they were
-        // written for, and §10.1 asks the layout to follow the setting rather
-        // than the setting to be discarded.
+        // AppTypographyPolicy permanently limits every app surface to
+        // xSmall...xLarge by explicit product requirement. This alternative
+        // detent rule remains useful for independently hosted layouts, but
+        // must never replace or relax that app-wide hard limit.
         //
         // What actually does not fit at those sizes is the MIDDLE stop: a
         // half-height panel holding a 34-point-equivalent title and one row is
@@ -332,8 +311,6 @@ struct RailControlHeightKey: PreferenceKey {
 /// otherwise the large title occupies the shared text area on its own.
 struct PanelHeader<Actions: View>: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
-    @Environment(\.verticalSizeClass) private var verticalSizeClass
     @ScaledMetric(relativeTo: .title2) private var titleSize = WorkspaceMenuMetrics.titleSize
     @ScaledMetric(relativeTo: .largeTitle) private var largeTitleSize = WorkspaceMenuMetrics.largeTitleSize
     @ScaledMetric(relativeTo: .title2) private var titleRow = WorkspaceMenuMetrics.titleRowHeight
@@ -343,18 +320,8 @@ struct PanelHeader<Actions: View>: View {
     var subtitle: String?
     @ViewBuilder var actions: Actions
 
-    private var stacksActions: Bool {
-        dynamicTypeSize.isAccessibilitySize && verticalSizeClass != .compact
-    }
-
-    private var drawsSubtitle: Bool {
-        BottomChromeMetrics.drawsSubtitle(
-            isAccessibilitySize: dynamicTypeSize.isAccessibilitySize,
-            verticalSizeClass: verticalSizeClass)
-    }
-
     private var visibleSubtitle: String? {
-        guard drawsSubtitle, let subtitle,
+        guard let subtitle,
               !subtitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return nil }
         return subtitle
     }
@@ -362,24 +329,14 @@ struct PanelHeader<Actions: View>: View {
     var body: some View {
         GeometryReader { geometry in
             let sharedTitleSize = fittedTitleSize(in: geometry.size.width)
-            if stacksActions {
-                VStack(alignment: .leading, spacing: WorkspaceMenuMetrics.stackedActionSpacing) {
-                    titleBlock(size: sharedTitleSize)
-                    HStack {
-                        Spacer(minLength: 0)
-                        actionStrip
-                    }
-                }
-            } else {
-                HStack(alignment: .center, spacing: WorkspaceMenuMetrics.titleActionSpacing) {
-                    titleBlock(size: sharedTitleSize)
-                    Spacer(minLength: 0)
-                    actionStrip
-                }
+            HStack(alignment: .center, spacing: WorkspaceMenuMetrics.titleActionSpacing) {
+                titleBlock(size: sharedTitleSize)
+                Spacer(minLength: 0)
+                actionStrip
             }
         }
         .frame(height: WorkspaceMenuMetrics.headerContentHeight(
-            titleRow: titleRow, stacked: stacksActions, drawsSubtitle: drawsSubtitle))
+            titleRow: titleRow, stacked: false, drawsSubtitle: true))
         .padding(.horizontal, WorkspaceMenuMetrics.horizontalInset)
         .padding(.top, WorkspaceMenuMetrics.topInset)
         .padding(.bottom, WorkspaceMenuMetrics.bottomInset)
@@ -389,9 +346,8 @@ struct PanelHeader<Actions: View>: View {
     private func fittedTitleSize(in width: CGFloat) -> CGFloat {
         let hasSubtitle = visibleSubtitle != nil
         let size = hasSubtitle ? titleSize : largeTitleSize
-        guard !stacksActions else { return size }
         let font = UIFont.systemFont(ofSize: size, weight: .bold)
-        let scale = tabHeadings.filter { (drawsSubtitle && $0.hasSubtitle) == hasSubtitle }
+        let scale = tabHeadings.filter { $0.hasSubtitle == hasSubtitle }
             .reduce(CGFloat(1)) { scale, heading in
                 let actions = CGFloat(heading.actionCount) * WorkspaceMenuMetrics.touchSide
                     + CGFloat(max(0, heading.actionCount - 1)) * WorkspaceMenuMetrics.actionSpacing
@@ -406,12 +362,12 @@ struct PanelHeader<Actions: View>: View {
         VStack(alignment: .leading, spacing: WorkspaceMenuMetrics.subtitleSpacing) {
             Text(title)
                 .font(.system(size: size, weight: .bold))
-                .lineLimit(stacksActions ? 2 : 1)
+                .lineLimit(1)
                 .fixedSize(horizontal: false, vertical: true)
                 .frame(height: visibleSubtitle == nil
                     ? WorkspaceMenuMetrics.headerTextHeight(
-                        titleRow: titleRow, stacked: stacksActions, drawsSubtitle: drawsSubtitle)
-                    : titleRow * (stacksActions ? 2 : 1),
+                        titleRow: titleRow, stacked: false, drawsSubtitle: true)
+                    : titleRow,
                     alignment: visibleSubtitle == nil ? .leading : .topLeading)
                 .accessibilityIdentifier("panelHeader")
                 .accessibilityAddTraits(.isHeader)
@@ -419,7 +375,7 @@ struct PanelHeader<Actions: View>: View {
                 .modifier(ReduceMotionUITestProbe(enabled: reduceMotion))
             if let visibleSubtitle {
                 subtitleLabel(visibleSubtitle)
-                    .frame(height: BottomChromeMetrics.subtitleRow * (stacksActions ? 2 : 1),
+                    .frame(height: BottomChromeMetrics.subtitleRow,
                            alignment: .topLeading)
             }
         }
@@ -429,7 +385,7 @@ struct PanelHeader<Actions: View>: View {
         Text(value)
             .font(.footnote)
             .foregroundStyle(.secondary)
-            .lineLimit(stacksActions ? 2 : 1)
+            .lineLimit(1)
             .minimumScaleFactor(BottomChromeMetrics.smallestLegibleScale)
             .fixedSize(horizontal: false, vertical: true)
     }
@@ -437,7 +393,6 @@ struct PanelHeader<Actions: View>: View {
     private var actionStrip: some View {
         HStack(spacing: WorkspaceMenuMetrics.actionSpacing) { actions }
             .buttonStyle(RailPressStyle())
-            .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
             .fixedSize(horizontal: true, vertical: false)
     }
 }

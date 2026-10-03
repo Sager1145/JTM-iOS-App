@@ -18,7 +18,7 @@ import sys
 from collections import Counter
 from pathlib import Path
 
-REGIONS = ("jp", "tw", "hk", "kr", "mo", "ca", "us")
+REGIONS = ("jp", "tw", "hk", "kr", "mo")
 APP_FILE_LIMIT = 64 * 1024 * 1024
 
 
@@ -54,6 +54,22 @@ def generate(count, regions, scenario, id_mode):
 
 def write_json(path, value):
     path.write_text(json.dumps(value, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
+
+
+def route_name_coverage(trains):
+    lines = set()
+    operators = set()
+    regions = {train["region"] for train in trains}
+    for train in trains:
+        for section in train.get("route_sections") or []:
+            lines.update((train["region"], name) for name in section.get("line_names") or [] if name)
+            operators.update((train["region"], name) for name in section.get("operator_names") or [] if name)
+    return {
+        "distinct_region_line_names": len(lines),
+        "distinct_region_operator_names": len(operators),
+        "line_names_by_region": {region: sum(country == region for country, _ in lines) for region in sorted(regions)},
+        "operator_names_by_region": {region: sum(country == region for country, _ in operators) for region in sorted(regions)},
+    }
 
 
 def main():
@@ -100,12 +116,15 @@ def main():
         "route_section_count": sum(len(train.get("route_sections") or []) for train in trains),
         "files": files,
         "bytes": {key: Path(value).stat().st_size for key, value in files.items()},
+        **route_name_coverage(trains),
     }
     write_json(output / "stress-manifest.json", report)
     oversized = [key for key, size in report["bytes"].items() if size > APP_FILE_LIMIT]
     if oversized:
         print(f"Files above the app's 64 MiB import limit: {', '.join(oversized)}. Use --part-size to create smaller stores for sequential append imports.", file=sys.stderr)
-    print(json.dumps({key: report[key] for key in ("count", "regions", "stop_count", "route_section_count", "bytes")}, indent=2))
+    print(json.dumps({key: report[key] for key in (
+        "count", "regions", "distinct_region_line_names", "distinct_region_operator_names",
+        "stop_count", "route_section_count", "bytes")}, indent=2))
     print(f"Import {mixed_path} in the app; individual region stores are alongside it.")
 
 

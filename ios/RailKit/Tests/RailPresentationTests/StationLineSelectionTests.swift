@@ -10,7 +10,7 @@ struct StationLineSelectionTests {
     private let kan = StationKey(regionCode: "jp", sourceCode: "KAN")
     private let nam = StationKey(regionCode: "jp", sourceCode: "NAM")
     private let umd = StationKey(regionCode: "jp", sourceCode: "UMD")
-    private let usTYO = StationKey(regionCode: "us", sourceCode: "TYO")
+    private let twTYO = StationKey(regionCode: "tw", sourceCode: "TYO")
 
     private let first = UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
     private let second = UUID(uuidString: "00000000-0000-0000-0000-000000000002")!
@@ -52,7 +52,7 @@ struct StationLineSelectionTests {
         #expect(result.stops[0].stationKey == nil)
         #expect(
             result.prompt
-                == .ambiguousName(occurrenceID: first, query: "Tokyo", candidates: [tyo, usTYO])
+                == .ambiguousName(occurrenceID: first, query: "Tokyo", candidates: [tyo, twTYO])
         )
     }
 
@@ -326,8 +326,8 @@ private enum Fixture {
             station("NAM", name: "Namba"),
             station("UMD", name: "Umeda"),
         ]),
-        line("L", region: "us", name: "L", operatorName: "CTA", stations: [
-            station("TYO", name: "Toyko CTA", nameRoma: "Tokyo"),
+        line("L", region: "tw", name: "L", operatorName: "Metro", stations: [
+            station("TYO", name: "Tokyo Metro", nameRoma: "Tokyo"),
         ]),
     ])
 

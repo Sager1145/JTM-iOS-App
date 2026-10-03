@@ -16,7 +16,7 @@ func benchmarkLaunchLoad(root: URL) {
     print("\n-- what one country costs to read --")
     let rail = root.appending(path: "app/public/rail")
     let data = root.appending(path: "app/data")
-    let countries = ["mo", "hk", "tw", "kr", "ca", "jp", "us"]
+    let countries = ["mo", "hk", "tw", "kr", "jp"]
 
     for country in countries {
         let url = rail.appending(path: "\(country)-2025.json")

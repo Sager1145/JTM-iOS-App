@@ -7,7 +7,7 @@ struct StationLabelVisibilityTests {
         #expect(StationLabelVisibility.preservesSelectedCalls(trainType: "快速", country: "jp", callCount: 12))
         #expect(!StationLabelVisibility.preservesSelectedCalls(trainType: "快速", country: "jp", callCount: 13))
         #expect(!StationLabelVisibility.preservesSelectedCalls(trainType: "普通", country: "jp", callCount: 8))
-        #expect(!StationLabelVisibility.preservesSelectedCalls(trainType: "Local", country: "ca", callCount: 8))
+        #expect(!StationLabelVisibility.preservesSelectedCalls(trainType: "Local", country: "kr", callCount: 8))
         #expect(StationLabelVisibility.preservesSelectedCalls(trainType: "特急", country: "jp", callCount: 20))
         #expect(!StationLabelVisibility.preservesSelectedCalls(trainType: "特急", country: "jp", callCount: 21))
     }

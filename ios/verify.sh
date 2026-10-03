@@ -11,6 +11,8 @@
 #   ./verify.sh --core     RailCore + its parity tests only (the porting loop)
 #   ./verify.sh --js       JavaScript only
 #   ./verify.sh --app      App build + app contracts only
+#   ./verify.sh --boundaries Source ownership and import boundaries only
+#   ./verify.sh --native   Build packages + native lifecycle/source contracts
 #
 # SCRATCH lets parallel workers avoid fighting over one build directory:
 #
@@ -38,6 +40,7 @@ fi
 run_js=1
 run_swift=1
 run_app=1
+run_package_tests=1
 case "${1:-}" in
     --swift) run_js=0 ;;
     # --core skips the app build: several ports can run at once, and the
@@ -46,11 +49,23 @@ case "${1:-}" in
     --core) run_js=0; run_app=0 ;;
     --js) run_swift=0; run_app=0 ;;
     --app) run_js=0; run_swift=0 ;;
+    --boundaries) run_js=0; run_swift=0; run_app=0 ;;
+    --native) run_js=0; run_app=0; run_package_tests=0 ;;
     "") ;;
-    *) echo "usage: verify.sh [--swift|--core|--js|--app]" >&2; exit 2 ;;
+    *) echo "usage: verify.sh [--swift|--core|--js|--app|--boundaries|--native]" >&2; exit 2 ;;
 esac
 
 fail() { echo "FAIL: $1" >&2; exit 1; }
+
+if [ "$run_swift" = 1 ] || [ "$run_app" = 1 ] || [ "${1:-}" = "--boundaries" ]; then
+    python3 "$here/tools/verify-typography-limit.py" || fail "permanent typography bounds"
+    echo "== source boundaries ==========================================="
+    python3 "$here/tools/verify-source-ownership.py" --repo-root "$repo" \
+        || fail "source ownership or dependency boundary"
+    python3 -m unittest discover -s "$here/tools/tests" -p test_source_ownership.py \
+        || fail "source ownership checker regression"
+fi
+
 
 if [ "$run_js" = 1 ]; then
     echo "== JavaScript =================================================="
@@ -92,36 +107,60 @@ if [ "$run_swift" = 1 ]; then
         swift build --scratch-path "$scratch" 2>&1 | grep -E 'error:' | head -20
         fail "swift build"
     }
-    echo "  RailCore and RailPresentation build"
+    echo "  RailCore, RailPresentation and RailApplication build"
 
-    if ! swift test --scratch-path "$scratch" >"$scratch.log" 2>&1; then
-        grep -E '^✘|error:' "$scratch.log" | head -30
-        fail "swift test (full log: $scratch.log)"
+    if [ "$run_package_tests" = 1 ]; then
+        if ! swift test --scratch-path "$scratch" >"$scratch.log" 2>&1; then
+            grep -E '^✘|error:' "$scratch.log" | head -30
+            fail "swift test (full log: $scratch.log)"
+        fi
+        # Sum Swift Testing's final summaries rather than counting individual
+        # completion lines. Parallel tests write those lines concurrently, so two
+        # identical successful runs used to report different totals when output
+        # was interleaved (465, then 370, for a 277-test run).
+        #
+        # Each test target emits its own summary; taking the last one drops the
+        # other target. Counted rather than described as "parity tests": most are, but
+        # RailPresentationTests checks invariants no fixture can express.
+        passed=$(sed -nE 's/^.*Test run with ([0-9]+) tests? in [0-9]+ suites?.*/\1/p' \
+            "$scratch.log" | awk '{ total += $1; summaries++ } END { if (summaries) print total }')
+        [ -n "$passed" ] || fail "could not read the Swift Testing summary (full log: $scratch.log)"
+        echo "  $passed tests pass"
+
     fi
-    # Sum Swift Testing's final summaries rather than counting individual
-    # completion lines. Parallel tests write those lines concurrently, so two
-    # identical successful runs used to report different totals when output
-    # was interleaved (465, then 370, for a 277-test run).
-    #
-    # Each test target emits its own summary; taking the last one drops the
-    # other target. Counted rather than described as "parity tests": most are, but
-    # RailPresentationTests checks invariants no fixture can express.
-    passed=$(sed -nE 's/^.*Test run with ([0-9]+) tests? in [0-9]+ suites?.*/\1/p' \
-        "$scratch.log" | awk '{ total += $1; summaries++ } END { if (summaries) print total }')
-    [ -n "$passed" ] || fail "could not read the Swift Testing summary (full log: $scratch.log)"
-    echo "  $passed tests pass"
 
     python3 "$here/tools/verify-editor-validation.py" "$scratch" \
         || fail "native journey editor validation harness"
     python3 "$here/tools/verify-store-ordering.py" "$scratch" \
         || fail "native persistence harness"
     echo "  native journey editor and persistence harnesses pass"
+    python3 "$here/tools/verify-timetable-quick-match-lifecycle.py" "$scratch" \
+        || fail "timetable quick-match lifecycle"
+    python3 "$here/tools/verify-route-caches.py" "$scratch" \
+        || fail "route and map cache invalidation"
+    python3 "$here/tools/verify-physical-section-continuity.py" "$scratch" \
+        || fail "physical route section continuity and mileage scope"
+    python3 "$here/tools/verify-passport-distance.py" "$scratch" \
+        || fail "proven partial passport distance"
+    python3 "$here/tools/verify-map-endpoint-stations.py" "$scratch" \
+        || fail "known endpoint station locations independent of partial railway"
+    for contract in map-pan-geometry map-worker-lifecycle ride-station-layering route-resolution-cancellation route-progress; do
+        python3 "$here/tools/verify-$contract.py" || fail "$contract"
+    done
+    echo "  timetable, route publication and map lifecycle harnesses pass"
+
 
     python3 "$here/tools/verify-subscription-auth.py" \
         || fail "subscription authentication harness"
     python3 "$here/tools/verify-subscription-service.py" "$scratch" \
         || fail "subscription HTTP harness"
-    echo "  subscription authentication and HTTP harnesses pass"
+    python3 "$here/tools/verify-completion-request.py" \
+        || fail "AI request lifecycle harness"
+    python3 "$here/tools/verify-share-request.py" \
+        || fail "share request lifecycle harness"
+    python3 "$here/tools/verify-station-picker-search-lifecycle.py" "$scratch" \
+        || fail "station picker search lifecycle harness"
+    echo "  subscription authentication, HTTP and request lifecycle harnesses pass"
 
     # Warnings in our own sources fail the gate.
     #
@@ -138,13 +177,13 @@ if [ "$run_swift" = 1 ]; then
     # build log, below.
     warnings=$(swift build --scratch-path "$scratch" 2>&1 \
         | grep 'warning:' \
-        | grep -E '/(RailCore|RailPresentation)/' \
+        | grep -E '/(RailCore|RailPresentation|RailApplication)/' \
         | sort -u)
     if [ -n "$warnings" ]; then
         echo "$warnings"
-        fail "warnings in RailCore or RailPresentation"
+        fail "warnings in RailCore, RailPresentation or RailApplication"
     fi
-    echo "  no warnings in RailCore or RailPresentation"
+    echo "  no warnings in RailCore, RailPresentation or RailApplication"
 
     # RailCore must not reach for a platform. That constraint is what makes the
     # port checkable at all — with no platform underneath it, the same code can
@@ -158,7 +197,7 @@ if [ "$run_swift" = 1 ]; then
     # it. One `import SwiftUI` and the priority resolver is back inside the app
     # target, where nothing runs it.
     if grep -rlE '^import (MapKit|SwiftUI|UIKit|CoreLocation)' \
-        Sources/RailCore/ Sources/RailPresentation/ 2>/dev/null | grep .; then
+        Sources/RailCore/ Sources/RailPresentation/ Sources/RailApplication/ 2>/dev/null | grep .; then
         fail "a pure target imported a platform framework (see the files above)"
     fi
     unexpected_core_imports=$(grep -rhE '^import ' Sources/RailCore/ 2>/dev/null \
@@ -181,6 +220,13 @@ if [ "$run_swift" = 1 ]; then
         fail "RailPresentation imported something other than Foundation/RailCore (above)"
     fi
     echo "  RailPresentation imports nothing but Foundation and RailCore"
+
+    if grep -rhE '^import ' Sources/RailApplication/ 2>/dev/null \
+        | sort -u | grep -vE '^import (Foundation|Observation|RailCore)$' | grep .; then
+        fail "RailApplication imported a platform or presentation dependency"
+    fi
+    echo "  RailApplication imports only Foundation, Observation and RailCore"
+
 
     # Both renderers decimate, and how far the drawn line may leave the
     # surveyed one is ONE number they have to agree on.
@@ -282,7 +328,7 @@ if [ "$run_swift" = 1 ]; then
     annotation_users=$(cd "$here" && grep -rnE \
         '\b(PlaybackAnnotation|PlaybackAnnotationView|StationAnnotation|RideStationAnnotation|RideLabelAnnotation|EndpointLabelAnnotation|StationAnnotationView|RideStationAnnotationView|RideLabelAnnotationView|EndpointLabelView)\b' \
         --include='*.swift' RailMap \
-        | grep -vE '^RailMap/(RailMapAnnotations|RailMapView|MapPlaybackLayer)\.swift:' \
+        | grep -vE '^RailMap/(RailMapAnnotations|RailMapView|MapPlaybackLayer|MapInteractionCoordinator|MapRenderDiagnostics)\.swift:' \
         | grep -vE ':[0-9]+: *//' || true)
     if [ -n "$annotation_users" ]; then
         echo "$annotation_users"
@@ -315,7 +361,7 @@ if [ "$run_swift" = 1 ]; then
         "$here/RailMap/RailMapView.swift" \
         || fail "ridden-line statistics no longer use canonical WGS84 coordinates"
     grep -q 'lines: \[segment\.sourceCoordinates\]' \
-        "$here/RailMap/MileageStatisticsStore.swift" \
+        "$here/RailKit/Sources/RailApplication/MileageMatching.swift" \
         || fail "mileage statistics no longer use canonical WGS84 coordinates"
     # Whether those four are shifted is the device's MapKit service's call
     # (China service: GCJ-02; global service: WGS84), measured at launch by
@@ -873,17 +919,17 @@ PY
             END { exit !found }' RailMap/RideLibrary.swift; then
         fail "RideLibrary writes a file outside RideStorage (lines above)"
     fi
-    grep -q 'await previous?.value' RailMap/RideLibrary.swift \
+    grep -q 'await previous?.value' RailMap/RidePersistenceQueue.swift \
         || fail "RideLibrary's file operations no longer wait for the one before them"
 
     # A store half-written because the app was killed mid-save is worse than no
     # store: the reader does not find out until the next launch. And both the
     # store and its backup are the web app's own export spelling — a second
     # spelling on disk under the first's name is a file nothing can import.
-    if grep -n '\.write(to:' RailMap/RideLibrary.swift | grep -v 'options: \.atomic'; then
+    if grep -n '\.write(to:' RailMap/RideStorage.swift | grep -v 'options: \.atomic'; then
         fail "a store or backup file is written non-atomically (lines above)"
     fi
-    [ "$(grep -c 'MergedStore.export(store, cache: &exportCache)' RailMap/RideLibrary.swift)" = 2 ] \
+    [ "$(grep -c 'MergedStore.export(store, cache: &exportCache)' RailMap/RideStorage.swift)" = 2 ] \
         || fail "the saved store or its backup is no longer written canonically"
     echo "  saved stores are written in order, atomically, in the canonical spelling"
 

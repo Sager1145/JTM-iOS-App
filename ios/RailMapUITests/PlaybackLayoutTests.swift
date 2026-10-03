@@ -20,19 +20,31 @@ final class PlaybackLayoutTests: XCTestCase {
         assertPlaybackLayout(orientation: .portrait, accessibilitySize: true)
     }
 
-    func testPhoneLandscapePlaybackControlsDoNotOverlap() throws {
+    func testPhoneRotationRequestsKeepPlaybackPortrait() throws {
         try XCTSkipUnless(UIDevice.current.userInterfaceIdiom == .phone)
-        assertPlaybackLayout(orientation: .landscapeLeft, accessibilitySize: false)
+        assertPlaybackLayout(orientation: .portrait, accessibilitySize: false,
+                             rotationRequests: [.landscapeLeft, .landscapeRight, .portraitUpsideDown])
     }
 
-    func testPhoneLandscapeAX5PlaybackControlsDoNotOverlap() throws {
+    func testPhoneAX5RotationRequestsKeepPlaybackPortrait() throws {
         try XCTSkipUnless(UIDevice.current.userInterfaceIdiom == .phone)
-        assertPlaybackLayout(orientation: .landscapeLeft, accessibilitySize: true)
+        assertPlaybackLayout(orientation: .portrait, accessibilitySize: true,
+                             rotationRequests: [.landscapeLeft, .landscapeRight, .portraitUpsideDown])
     }
 
     func testIPadPlaybackControlsDoNotOverlap() throws {
         try XCTSkipUnless(UIDevice.current.userInterfaceIdiom == .pad)
         assertPlaybackLayout(orientation: .landscapeLeft, accessibilitySize: false)
+    }
+
+    func testIPadPortraitPlaybackControlsDoNotOverlap() throws {
+        try XCTSkipUnless(UIDevice.current.userInterfaceIdiom == .pad)
+        assertPlaybackLayout(orientation: .portrait, accessibilitySize: false)
+    }
+
+    func testIPadPortraitAX5PlaybackControlsDoNotOverlap() throws {
+        try XCTSkipUnless(UIDevice.current.userInterfaceIdiom == .pad)
+        assertPlaybackLayout(orientation: .portrait, accessibilitySize: true)
     }
 
     func testIPadAX5PlaybackControlsDoNotOverlap() throws {
@@ -41,31 +53,57 @@ final class PlaybackLayoutTests: XCTestCase {
     }
 
     private func assertPlaybackLayout(
-        orientation: UIDeviceOrientation, accessibilitySize: Bool
+        orientation: UIDeviceOrientation, accessibilitySize: Bool,
+        rotationRequests: [UIDeviceOrientation] = []
     ) {
         XCUIDevice.shared.orientation = orientation
         defer { XCUIDevice.shared.orientation = .portrait }
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         if accessibilitySize {
             app.launchArguments += [
                 "-UIPreferredContentSizeCategoryName",
-                "UICTContentSizeCategoryAccessibilityExtraExtraExtraLarge",
+                UIContentSizeCategory.accessibilityExtraExtraExtraLarge.rawValue,
             ]
         }
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "compact"
         app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
         app.launchEnvironment["RAILMAP_UI_TEST_PLAYBACK"] = "1"
+        // Match the video regression's explicit, longer surveyed journey;
+        // asynchronous first-ready routes can finish before the hit checks.
+        app.launchEnvironment["RAILMAP_UI_TEST_PLAYBACK_TRAIN_ID"] =
+            "20260703_02_tokaido_shinkansen_hikari_kodama"
+        if ProcessInfo.processInfo.environment["RAILMAP_UI_TEST_PLAYBACK_HIT_PROBE"] == "1" {
+            app.launchEnvironment["RAILMAP_UI_TEST_PLAYBACK_HIT_PROBE"] = "1"
+        }
         app.launch()
         let device = UIDevice.current.userInterfaceIdiom == .pad ? "ipad" : "iphone"
         let direction = orientation == .portrait ? "portrait" : "landscape"
-        let name = "playback-\(device)-\(direction)-\(accessibilitySize ? "ax5" : "standard")"
+        let name = "playback-\(device)-\(direction)-\(accessibilitySize ? "ax5" : "standard")\(rotationRequests.isEmpty ? "" : "-rotation-locked")"
         defer { attachScreen(named: "\(name)-final") }
 
         let toggle = element("playbackPauseResume", in: app)
         XCTAssertTrue(toggle.waitForExistence(timeout: 60))
+        XCTAssertEqual(app.buttons.matching(identifier: "playbackPauseResume").count, 1,
+                       "Playback must expose one active pause/resume control.")
         waitForLabel("Pause", on: toggle)
+        for requestedOrientation in rotationRequests {
+            XCUIDevice.shared.orientation = requestedOrientation
+            XCTAssertEqual(XCUIDevice.shared.orientation, requestedOrientation,
+                           "The device must receive the rotation request.")
+            XCTAssertGreaterThan(app.frame.height, app.frame.width,
+                                 "iPhone must keep its portrait window after \(requestedOrientation).")
+        }
+        attachScreen(named: "\(name)-before-pause")
+        let hitState = XCTAttachment(string:
+            "window=\(app.frame); pause=\(toggle.frame); "
+                + "enabled=\(toggle.isEnabled); hittable=\(toggle.isHittable)\n"
+                + app.debugDescription)
+        hitState.name = "\(name)-before-pause-hit-state"
+        hitState.lifetime = .keepAlways
+        add(hitState)
         toggle.tap()
         // The English catalog translates the resume action as "Play".
         waitForLabel("Play", on: toggle)
@@ -112,7 +150,8 @@ final class PlaybackLayoutTests: XCTestCase {
             }
             // Previous/Next can legitimately be disabled at a queue boundary.
             if control.isEnabled {
-                XCTAssertTrue(control.isHittable, "\(identifier) must remain reachable.")
+                XCTAssertTrue(control.isHittable,
+                              "\(identifier) must remain reachable.\n\(app.debugDescription)")
             }
         }
 

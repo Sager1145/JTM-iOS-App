@@ -86,8 +86,8 @@ final class RailHistoryTests: XCTestCase {
     }
 
     func testHistoryRevisionSetUsesSortedRegions() {
-        let revisions = RailHistoryRevisionSet(["us": "2026.2", "ca": nil])
-        XCTAssertEqual(revisions.canonical, "ca:none|us:2026.2")
+        let revisions = RailHistoryRevisionSet(["tw": "2026.2", "hk": nil])
+        XCTAssertEqual(revisions.canonical, "hk:none|tw:2026.2")
     }
 
     func testPrecomputedRouteRequiresItsOwnSolverContext() throws {

@@ -2,23 +2,16 @@ import Foundation
 import RailCore
 
 enum Region: String, CaseIterable, Sendable {
-    case jp, tw, hk, mo, kr, us, ca
+    case jp, tw, hk, mo, kr
 
     var code: String { rawValue }
-    var isNorthAmerica: Bool { self == .us || self == .ca }
-    static let ordered: [Region] = [.mo, .hk, .tw, .kr, .ca, .jp, .us]
-    static let northAmericaDefaultsKey = "feature-north-america-enabled"
-    nonisolated static var northAmericaEnabled: Bool {
-        UserDefaults.standard.bool(forKey: northAmericaDefaultsKey)
-    }
+    static let ordered: [Region] = [.mo, .hk, .tw, .kr, .jp]
 
     static func resolved(_ train: Train) -> Region {
         Region(rawValue: train.region ?? "jp") ?? .jp
     }
 
-    static func isNorthAmerica(_ train: Train) -> Bool {
-        resolved(train).isNorthAmerica
-    }
+
 }
 
 extension Train {
@@ -65,11 +58,47 @@ struct DiskChecks {
             return value
         }
 
+        let isolated = RideStorage(directory: expectedHome.appending(path: "isolated"))
+        let isolatedLibrary = RideLibrary(storage: isolated)
+        let isolatedSaved = await isolatedLibrary.save(TrainStore(trains: [train("isolated", number: "Only here")])).value
+        precondition(isolatedSaved)
+        let separate = RideStorage(directory: expectedHome.appending(path: "separate"))
+        let separateState = await separate.savedState()
+        precondition(!separateState.hasStore)
+        let reopened = RideStorage(directory: expectedHome.appending(path: "isolated"))
+        let isolatedRead = try await reopened.decodeStore()
+        precondition(isolatedRead.trains.map(\.id) == ["isolated"])
+        print("PASS injected stores isolate writes and preserve their own relaunch snapshot")
+
+        let legacyDirectory = expectedHome.appending(path: "supported-legacy")
+        try FileManager.default.createDirectory(at: legacyDirectory, withIntermediateDirectories: true)
+        var legacyTrain = train("shared-legacy-id", number: "Legacy")
+        legacyTrain.region = nil
+        let legacyBytes = try JSONEncoder().encode(TrainStore(trains: [legacyTrain]))
+        for region in ["tw", "hk"] {
+            try legacyBytes.write(to: legacyDirectory.appending(path: "train-store-" + region + ".json"))
+        }
+        let legacyStorage = RideStorage(directory: legacyDirectory)
+        let foldedDate = try await legacyStorage.foldLegacyStores()
+        precondition(foldedDate != nil)
+        let folded = try await legacyStorage.decodeStore()
+        precondition(folded.trains.map(\.region) == ["hk", "tw"])
+        precondition(Set(folded.trains.map(\.id)).count == 2)
+        for region in ["tw", "hk"] {
+            try requireBytes(legacyDirectory.appending(path: "train-store-" + region + ".json"), equalTo: legacyBytes)
+        }
+        await legacyStorage.removeStore()
+        let refoldedDate = try await legacyStorage.foldLegacyStores()
+        precondition(refoldedDate == nil)
+        let afterLegacyDelete = await legacyStorage.savedState()
+        precondition(!afterLegacyDelete.hasStore)
+        print("PASS supported legacy stores retain duplicate journeys and source bytes; deletion cannot resurrect them")
+
         let library = RideLibrary()
         var added = train("journey-1", number: "First", vehicle: "EMU-1")
         let addSaved = await library.save(TrainStore(trains: [added])).value
         precondition(addSaved)
-        var read = try await RideLibrary().savedStore().store
+        var read = try await RideLibrary().savedStore()
         precondition(read.trains.map(\.id) == ["journey-1"])
         precondition(read.trains[0].number == "First")
         precondition(read.trains[0].vehicleType == "EMU-1")
@@ -78,7 +107,7 @@ struct DiskChecks {
         added.vehicleType = "EMU-2"
         let replacementSaved = await library.save(TrainStore(trains: [added])).value
         precondition(replacementSaved)
-        read = try await RideLibrary().savedStore().store
+        read = try await RideLibrary().savedStore()
         precondition(read.trains.map(\.id) == ["journey-1"])
         precondition(read.trains[0].number == "Replaced")
         precondition(read.trains[0].vehicleType == "EMU-2")
@@ -91,7 +120,7 @@ struct DiskChecks {
         }
         let lastSaved = await lastTask?.value
         precondition(lastSaved == true)
-        read = try await RideLibrary().savedStore().store
+        read = try await RideLibrary().savedStore()
         precondition(read.trains.first?.number == "Rapid 99")
         print("PASS one hundred rapid queued saves leave the newest generation on disk")
 
@@ -105,7 +134,7 @@ struct DiskChecks {
         let recoverySaved = await library.save(recoveredStore).value
         precondition(recoverySaved)
         precondition(library.lastSaveError == nil)
-        let recoveredRead = try await RideLibrary().savedStore().store
+        let recoveredRead = try await RideLibrary().savedStore()
         precondition(recoveredRead.trains.map(\.id) == ["recovered"])
         precondition(recoveredRead.trains.first?.number == "Recovered")
         print("PASS a filesystem error is reported and the next valid save recovers")
@@ -118,34 +147,89 @@ struct DiskChecks {
         let afterReplaceSaved = await library.save(afterReplace).value
         precondition(afterReplaceSaved)
         _ = try await library.restoreBackup()
-        let restoredRead = try await RideLibrary().savedStore().store
+        let restoredRead = try await RideLibrary().savedStore()
         precondition(restoredRead.trains.map(\.id) == ["backup"])
         precondition(restoredRead.trains.first?.number == "Before")
         precondition(library.backup == nil)
         print("PASS backup restore returns the exact prior snapshot and consumes recovery metadata")
 
-        UserDefaults.standard.set(true, forKey: Region.northAmericaDefaultsKey)
-        library.northAmericaInWorkingSet = true
-        let japan = train("jp-identity", number: "JP", region: "jp")
-        let america = train("us-identity", number: "US", region: "us")
-        let partitionSaved = await library.save(TrainStore(trains: [japan, america])).value
-        precondition(partitionSaved)
-        read = try await library.savedStore().store
-        precondition(read.trains.map(\.id) == ["jp-identity", "us-identity"])
+        let supported = TrainStore(trains: ["jp", "tw", "hk", "mo", "kr"].map {
+            train("identity-" + $0, number: $0.uppercased(), region: $0)
+        })
+        let supportedSaved = await library.save(supported).value
+        precondition(supportedSaved)
+        let supportedRead = try await library.savedStore()
+        precondition(supportedRead.trains.map(\.id) == supported.trains.map(\.id))
+        precondition(supportedRead.trains.map(\.region) == supported.trains.map(\.region))
+        precondition(MergedStore.export(supportedRead) == MergedStore.export(supported))
+        let mainURL = rides.appending(path: "train-store.json")
+        let beforeRejection = try Data(contentsOf: mainURL)
+        try await library.snapshotBackup(supported, reason: .beforeImport)
+        let recoveryURL = rides.appending(path: "train-store.backup.json")
+        let recoveryMetaURL = rides.appending(path: "train-store.backup-meta.json")
+        let beforeBackupRejection = try Data(contentsOf: recoveryURL)
+        let beforeMetaRejection = try Data(contentsOf: recoveryMetaURL)
+        let legacyNames = ["train-store-na.json", "train-store-us.json", "train-store-ca.json"]
+        let oldBytes = Data("legacy bytes must remain untouched".utf8)
+        for name in legacyNames { try oldBytes.write(to: rides.appending(path: name)) }
+        for region in ["us", "ca"] {
+            let rejected = TrainStore(trains: [train("unsupported", number: region, region: region)])
+            let rejectedSaved = await library.save(rejected).value
+            precondition(rejectedSaved == false)
+            precondition(library.lastSaveError != nil)
+            try requireBytes(mainURL, equalTo: beforeRejection)
+            do {
+                try await library.snapshotBackup(rejected, reason: .beforeReplace)
+                preconditionFailure("unsupported-region backup must be refused")
+            } catch {}
+            try requireBytes(recoveryURL, equalTo: beforeBackupRejection)
+            try requireBytes(recoveryMetaURL, equalTo: beforeMetaRejection)
+        }
+        var untagged = train("unsupported-code", number: "Prefix")
+        untagged.region = nil
+        untagged.stops[0].n02StationCode = "US-EXAMPLE"
+        let untaggedSaved = await library.save(TrainStore(trains: [untagged])).value
+        precondition(untaggedSaved == false)
+        try requireBytes(mainURL, equalTo: beforeRejection)
+        print("PASS five supported regions round-trip; unsupported regions and untagged identities cannot overwrite the store")
 
-        UserDefaults.standard.set(false, forKey: Region.northAmericaDefaultsKey)
-        let mainOnly = try await library.savedStore()
-        precondition(mainOnly.store.trains.map(\.id) == ["jp-identity"])
-        precondition(mainOnly.includedNorthAmerica == false)
-        let northAmerica = try await library.northAmericaStore()
-        precondition(northAmerica.trains.map(\.id) == ["us-identity"])
-        print("PASS regional partitioning preserves identities while North America is hidden")
+        // Old snapshots may contain retired regions. Refuse the read/restore
+        // without migrating, rewriting or consuming those bytes.
+        let retired = TrainStore(trains: [train("retired", number: "Old", region: "ca")])
+        let retiredBytes = try JSONEncoder().encode(retired)
+        try retiredBytes.write(to: mainURL)
+        do {
+            _ = try await library.savedStore()
+            preconditionFailure("unsupported-region saved store must be refused")
+        } catch {}
+        try requireBytes(mainURL, equalTo: retiredBytes)
+        try retiredBytes.write(to: recoveryURL)
+        do {
+            _ = try await library.restoreBackup()
+            preconditionFailure("unsupported-region recovery must be refused")
+        } catch {}
+        try requireBytes(recoveryURL, equalTo: retiredBytes)
+        try requireBytes(recoveryMetaURL, equalTo: beforeMetaRejection)
+        precondition(library.backup != nil)
+        try requireBytes(mainURL, equalTo: retiredBytes)
+        library.deleteSavedStore()
+        await library.migrateLegacyStores()
+        await library.refreshSavedState()
+        precondition(library.hasSavedStore == false)
+        for name in legacyNames {
+            try requireBytes(rides.appending(path: name), equalTo: oldBytes)
+        }
+        print("PASS retired disk snapshots are refused; save, restore, delete and legacy folding leave old separate files untouched")
 
-        UserDefaults.standard.removeObject(forKey: Region.northAmericaDefaultsKey)
     }
 }
 
 private func requireURL(_ value: URL?) throws -> URL {
     guard let value else { throw CocoaError(.fileNoSuchFile) }
     return value
+}
+
+private func requireBytes(_ url: URL, equalTo expected: Data) throws {
+    let actual = try Data(contentsOf: url)
+    precondition(actual == expected)
 }

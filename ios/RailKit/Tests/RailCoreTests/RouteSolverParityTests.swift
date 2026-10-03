@@ -92,7 +92,7 @@ struct RouteSolverParityTests {
                     institutionTypeCode: p.institutionTypeCode,
                     railwayClassCode: p.railwayClassCode),
                 lines: lines)
-        ])
+        ], policy: .coordinateParity)
     }
 
     static func edge(_ value: Fixture.Edge) -> RouteGraph.Edge {
@@ -281,7 +281,8 @@ struct RouteSolverParityTests {
                 graph: graph, sourceCandidates: [.init(key: "A", distance: 0)],
                 targetKeys: ["B"], train: .init(institutionFilterMode: sample.mode),
                 allowedCodes: sample.allowedCodes,
-                hints: .init(requirePreferredInstitution: sample.requirePreferred))
+                hints: .init(requirePreferredInstitution: sample.requirePreferred),
+                traversalPolicy: .passengerTransfers)
             if let expectedCost = sample.expectedCost {
                 let result = try #require(results.first)
                 #expect(results.count == 1)

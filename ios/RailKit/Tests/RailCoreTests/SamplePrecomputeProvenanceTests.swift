@@ -48,8 +48,9 @@ struct SamplePrecomputeProvenanceTests {
         let part = try JSONDecoder().decode(
             Part.self,
             from: Data(contentsOf: datasetDirectory.appending(path: filename)))
-        // Match the production solve boundary, including existing physical
-        // corridor inference before computing the strict cache identity.
+        // Reconstruct the attested browser artifact with its original solver
+        // identity, then independently prove the strict native gate rejects it.
+        // Existing corridor inference remains part of normalization.
         let canonical = TokyoConventionalRouteInference.applying(to:
             TrainValidation.normalizeExportTrain(
                 TrainValidation.restoringRouteSectionEndpointNames(part.train),
@@ -81,18 +82,20 @@ struct SamplePrecomputeProvenanceTests {
             train: cacheTrain,
             routeSections: sections,
             country: "jp",
+            cacheVersion: RouteGraph.legacyCoordinateSolverCacheVersion,
             rideDate: Dates.normalizeDateString(part.train.date),
             historyRevision: revisions.revisions.keys.sorted().map {
                 "\($0):\(revisions.revisions[$0]!)"
             }.joined(separator: "|")))
         #expect(part.route.cacheKey == browserSolveContext.cacheKey)
-        let solveContext = try #require(RouteGraph.solveContext(
+        let legacySolveContext = try #require(RouteGraph.solveContext(
             train: cacheTrain,
             routeSections: sections,
             country: "jp",
+            cacheVersion: RouteGraph.legacyCoordinateSolverCacheVersion,
             rideDate: Dates.normalizeDateString(part.train.date),
             historyRevision: revisions.canonical))
-        let expectedDigest = RouteGraph.keyDigest(solveContext.cacheKey)
+        let expectedDigest = RouteGraph.keyDigest(legacySolveContext.cacheKey)
         let context = part.route.solverContext
 
         #expect(context.routeCacheDigest == expectedDigest)
@@ -100,10 +103,28 @@ struct SamplePrecomputeProvenanceTests {
         #expect(RailPrecomputedRouteGate.accepts(
             context,
             expectedDigest: expectedDigest,
-            solverVersion: RouteGraph.routeSolverCacheVersion,
+            solverVersion: RouteGraph.legacyCoordinateSolverCacheVersion,
             rideDate: Dates.normalizeDateString(part.train.date),
             revisions: revisions,
             expectedHashes: revisions.contentHashes))
+        let strictSolveContext = try #require(RouteGraph.solveContext(
+            train: cacheTrain, routeSections: sections, country: "jp",
+            rideDate: Dates.normalizeDateString(part.train.date), historyRevision: revisions.canonical))
+        let strictDigest = RouteGraph.keyDigest(strictSolveContext.cacheKey)
+        #expect(strictSolveContext.cacheKey != legacySolveContext.cacheKey)
+        #expect(strictDigest != expectedDigest)
+        #expect(!RailPrecomputedRouteGate.accepts(
+            context, expectedDigest: strictDigest,
+            solverVersion: RouteGraph.routeSolverCacheVersion,
+            rideDate: Dates.normalizeDateString(part.train.date),
+            revisions: revisions, expectedHashes: revisions.contentHashes))
+        // Even with the old digest supplied, the version gate alone must reject
+        // coordinate-parity geometry for the strict native solver.
+        #expect(!RailPrecomputedRouteGate.accepts(
+            context, expectedDigest: expectedDigest,
+            solverVersion: RouteGraph.routeSolverCacheVersion,
+            rideDate: Dates.normalizeDateString(part.train.date),
+            revisions: revisions, expectedHashes: revisions.contentHashes))
         return part.train.id
     }
 

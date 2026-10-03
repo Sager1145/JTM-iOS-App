@@ -6,6 +6,7 @@ final class TrainTimetableUsabilityUITests: XCTestCase {
 
     func testAzusaDateVariantIsVisibleWithFullStopsAndSource() {
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
@@ -14,7 +15,7 @@ final class TrainTimetableUsabilityUITests: XCTestCase {
         let next = app.buttons["rideEditorNext"]
         XCTAssertTrue(next.waitForExistence(timeout: 30))
         next.tap()
-        app.buttons["rideEditorServicePattern"].tap()
+        EditorUITestSupport.tap(app.buttons["rideEditorServicePattern"], in: app)
         let search = app.searchFields.firstMatch
         XCTAssertTrue(search.waitForExistence(timeout: 8))
         search.tap()
@@ -36,6 +37,7 @@ final class TrainTimetableUsabilityUITests: XCTestCase {
         XCTAssertTrue(app.otherElements["rideEditorNumber"].textFields.firstMatch.waitForExistence(timeout: 8))
         app.buttons["rideEditorPrevious"].tap()
         let picker = app.buttons["rideEditorServicePattern"]
+        XCTAssertTrue(EditorUITestSupport.reveal(picker, in: app), app.debugDescription)
         XCTAssertTrue(picker.waitForExistence(timeout: 8))
         picker.tap()
         app.buttons["rideEditorReplaceStops"].firstMatch.tap()

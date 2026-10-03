@@ -46,6 +46,178 @@ struct RailHistoryPackageTests {
         return Environment(graphStore: graphStore, stations: stations, overlay: overlay)
     }()
 
+    /// Only browser-golden comparisons use the legacy coordinate graph.
+    /// Native opening/closure/date tests continue to use `environment`.
+    static let webParitySolverVersion = RouteGraph.legacyCoordinateSolverCacheVersion
+    nonisolated(unsafe) static let webParityEnvironment: Environment = {
+        let native = Self.environment
+        let graphStore = RouteGraph.RouteGraphStore(
+            sections: native.graphStore.sections, policy: .coordinateParity)
+        graphStore.augment = { graph, _ in
+            RouteSolver.addStationTransferConnectorEdges(
+                graph: graph, stations: native.stations.features)
+        }
+        return Environment(graphStore: graphStore, stations: native.stations, overlay: native.overlay)
+    }()
+
+    /// A legacy kernel audit is evidence about browser output, never a native
+    /// SolvedSection. In particular, its coordinates may include walking edges.
+    struct BrowserPathAudit {
+        let coordinates: [Coordinate]
+        let edges: [RouteGraph.Edge]
+        let pathKeys: [String]
+    }
+
+    static func auditBrowserPath(
+        _ section: RouteSection, rideDate: String?
+    ) -> BrowserPathAudit? {
+        let env = Self.webParityEnvironment
+        let train = Self.train(rideDate: rideDate)
+        let allowed = RouteGraph.allowedInstitutionTypeCodes(.init(
+            trainType: "", company: "", preferredLineNames: [], preferredOperatorNames: [],
+            allowedInstitutionTypeCodes: nil, institutionFilterMode: "soft"), country: "jp")
+        func endpoints(_ name: String?, _ code: String?) -> [Int] {
+            RouteSolver.filterStationCandidatesByRideDate(
+                RouteSolver.resolveRouteEndpointStationCandidates(
+                    .stop(.init(name: name, n02StationCode: code)), in: env.stations,
+                    allowedCodes: allowed, sectionLineNames: section.lineNames ?? [],
+                    sectionOperatorNames: section.operatorNames ?? [], rideDate: rideDate),
+                in: env.stations, rideDate: rideDate)
+        }
+        let fromStations = endpoints(section.from, section.fromN02StationCode)
+        let toStations = endpoints(section.to, section.toN02StationCode)
+        guard !fromStations.isEmpty, !toStations.isEmpty else { return nil }
+        let endpointCoordinates = (fromStations + toStations).compactMap { index -> Coordinate? in
+            guard let pair = Stations.displayCoordinate(env.stations.features[index]) else { return nil }
+            return Coordinate(pair: pair)
+        }
+        guard let first = endpointCoordinates.first else { return nil }
+        let box = endpointCoordinates.dropFirst().reduce(RouteGraph.BBox(
+            minX: first.lon, minY: first.lat, maxX: first.lon, maxY: first.lat)) { box, p in
+            RouteGraph.BBox(minX: min(box.minX, p.lon), minY: min(box.minY, p.lat),
+                           maxX: max(box.maxX, p.lon), maxY: max(box.maxY, p.lat))
+        }
+        // The wider on-demand margin contains the surveyed historical curves;
+        // this audit never constructs a country-wide passenger graph.
+        let graph = env.graphStore.regionalGraph(for: RouteGraph.padBBoxMeters(
+            box, meters: max(90_000, RouteGraph.bboxDiagonalMeters(box) * 1.5)),
+            routeSolveInProgress: true)
+        let base = RouteSolver.buildSegmentRouteHints(
+            section: section, fromStationIndices: fromStations, toStationIndices: toStations,
+            stations: env.stations, train: train, country: "jp")
+        #expect(!base.explicitRequiredLines.isEmpty,
+                "Historical browser fixtures supply an explicit railway identity")
+        for hints in RouteSolver.buildSegmentRouteSolveAttempts(base) {
+            let from = Array(RouteSolver.collectStationCandidateGraphNodes(
+                stationIndices: fromStations, stations: env.stations, graph: graph,
+                hints: hints, allowedCodes: allowed).prefix(12))
+            let to = Array(RouteSolver.collectStationCandidateGraphNodes(
+                stationIndices: toStations, stations: env.stations, graph: graph,
+                hints: hints, allowedCodes: allowed).prefix(12))
+            let fromByKey = Dictionary(uniqueKeysWithValues: from.map { ($0.key, $0) })
+            let toByKey = Dictionary(uniqueKeysWithValues: to.map { ($0.key, $0) })
+            let paths = RouteSolver.dijkstra(
+                graph: graph, sourceCandidates: from.map { .init(key: $0.key, distance: $0.distance) },
+                targetKeys: Set(toByKey.keys), train: train.policy, allowedCodes: allowed,
+                hints: hints, traversalPolicy: .passengerTransfers)
+            var selected: (path: RouteSolver.SolvedTarget, from: Int, to: Int, score: Double)?
+            for path in paths where path.pathKeys.count >= 2 {
+                guard let f = fromByKey[path.sourceKey], let t = toByKey[path.targetKey],
+                      let fc = graph.nodes[f.key], let tc = graph.nodes[t.key] else { continue }
+                let straight = Geometry.distanceMeters(fc, tc)
+                let length = RouteSolver.pathLengthMeters(graph: graph, pathKeys: path.pathKeys)
+                if straight > 1_500 && length > max(straight * 3.8 + 6_000, 12_000) { continue }
+                let score = path.cost + (f.distance + t.distance) * RouteSolver.stationSnapCostFactor
+                    + RouteSolver.routeLineMismatchPenalty(edges: path.edges, hints: hints)
+                if selected == nil || score < selected!.score {
+                    selected = (path, f.stationIndex, t.stationIndex, score)
+                }
+            }
+            if let selected {
+                let raw = selected.path.pathKeys.compactMap { graph.nodes[$0] }
+                #expect(raw.count == selected.path.pathKeys.count)
+                // Browser v25 used the routing candidate's display marker,
+                // including aliases; native fixed identity is a separate contract.
+                return BrowserPathAudit(coordinates: RouteSolver.completeRouteEndpointCoordinates(
+                    raw, fromStation: env.stations.features[selected.from],
+                    toStation: env.stations.features[selected.to]),
+                    edges: selected.path.edges, pathKeys: selected.path.pathKeys)
+            }
+        }
+        return nil
+    }
+
+    struct ConnectorEvidence: Equatable {
+        let station: String
+        let from: String
+        let to: String
+    }
+    /// Independently traced unsafe v25 browser paths. Coordinate coincidence
+    /// and station groups do not authorize a native railway connection.
+    static let browserConnectorEvidence: [String: [ConnectorEvidence]] = [
+        "mashike": [.init(station: "箸別", from: "141.55597,43.85751", to: "141.54525,43.85583")],
+        "takachiho": [
+            .init(station: "上崎", from: "131.51278,32.57305", to: "131.50679,32.57705"),
+            .init(station: "亀ヶ崎", from: "131.47387,32.60166", to: "131.46803,32.60381")],
+        "guideway-shidami": [
+            .init(station: "矢田", from: "136.94454,35.19081", to: "136.9524,35.19532"),
+            .init(station: "守山自衛隊前", from: "136.9524,35.19532", to: "136.95601,35.19946")],
+        "kobe-kaigan": [
+            .init(station: "駒ヶ林", from: "135.14628,34.65548", to: "135.15512,34.65314"),
+            .init(station: "和田岬", from: "135.171,34.65518", to: "135.17594,34.6621")],
+        "sendai-tozai": [
+            .init(station: "八木山動物公園", from: "140.8444,38.24354", to: "140.84515,38.24804"),
+            .init(station: "青葉山", from: "140.83692,38.25133", to: "140.8389,38.25805")],
+        "utsunomiya-lrt": [
+            .init(station: "清原地区市民センター前", from: "139.97861,36.54556", to: "139.98395,36.55134"),
+            .init(station: "芳賀町工業団地管理センター前", from: "140.00514,36.56649", to: "140.0134,36.56895")],
+        "toyama-city-loop": [.init(station: "西町", from: "137.21117,36.69196", to: "137.21567,36.6894")],
+        "rinkai-osaki": [.init(station: "大井町", from: "139.73896,35.60678", to: "139.73096,35.6114")],
+    ]
+
+    static func assertBrowserEdges(_ audit: BrowserPathAudit, id: String) {
+        let actual = audit.edges.enumerated().compactMap { i, edge -> ConnectorEvidence? in
+            guard let connector = edge.connector else { return nil }
+            return .init(station: connector.stationName,
+                         from: audit.pathKeys[i], to: edge.to)
+        }
+        let family = String(id.split(separator: ":")[0])
+        #expect(actual == browserConnectorEvidence[family, default: []],
+                "\(id) must expose exactly its independently traced browser shortcuts")
+    }
+
+    struct SurveyedHop: Hashable { let from: String; let to: String }
+    static func assertNativeSurveyedPath(
+        _ solved: RouteSolver.SolvedSection, section: RouteSection, rideDate: String, id: String
+    ) {
+        #expect(solved.coordinates.count == solved.rawPathKeys.count)
+        #expect(abs(solved.physicalLength - solved.rawPhysicalLength) < 0.000001)
+        #expect(abs(solved.physicalLength - RouteSolver.pathLength(for: solved.coordinates)) < 0.000001)
+        let wanted = Set(zip(solved.rawPathKeys, solved.rawPathKeys.dropFirst()).map {
+            SurveyedHop(from: $0.0, to: $0.1)
+        })
+        var matched = Set<SurveyedHop>()
+        let lines = Set(section.lineNames ?? [])
+        for source in Self.environment.graphStore.sections where lines.contains(source.properties.lineName) {
+            guard RouteGraph.RailValidity.isValid(validFrom: source.properties.validFrom,
+                validTo: source.properties.validTo, on: rideDate) else { continue }
+            for line in source.quantisedLines {
+                for (a, b) in zip(line, line.dropFirst()) {
+                    let from = RouteGraph.physicalNodeKey(a, identity: source.physicalTrackIdentity)
+                    let to = RouteGraph.physicalNodeKey(b, identity: source.physicalTrackIdentity)
+                    for hop in [SurveyedHop(from: from, to: to), SurveyedHop(from: to, to: from)]
+                    where wanted.contains(hop) { matched.insert(hop) }
+                }
+            }
+        }
+        #expect(!wanted.isEmpty && matched == wanted,
+                "\(id): every native hop must be adjacent surveyed source geometry valid on the ride date")
+        for (key, coordinate) in zip(solved.rawPathKeys, solved.coordinates) {
+            #expect(key.hasSuffix("@" + Grid.coordKey(coordinate)),
+                    "\(id): native coordinates must remain raw physical graph vertices")
+        }
+    }
+
     static func train(rideDate: String?) -> RouteSolver.TrainContext {
         RouteSolver.TrainContext(
             id: "rail-history-test", number: "", trainType: "", company: "",
@@ -182,8 +354,10 @@ struct RailHistoryPackageTests {
             struct Revisions: Decodable { let jp: String }
             struct SolverContext: Decodable {
                 let historyRevisions: Revisions
+                let solverVersion: String
                 enum CodingKeys: String, CodingKey {
                     case historyRevisions = "history_revisions"
+                    case solverVersion = "solver_version"
                 }
             }
             let id: String
@@ -221,16 +395,30 @@ struct RailHistoryPackageTests {
                 toN02StationCode: answer.section.toStationCode,
                 lineNames: answer.section.lineNames,
                 operatorNames: answer.section.operatorNames)
-            let solved = Self.solve(section, rideDate: answer.train.date)
-            #expect((solved != nil) == (answer.outcome == "solved"),
+            #expect(answer.solverContext.solverVersion == Self.webParitySolverVersion)
+            let audit = Self.auditBrowserPath(section, rideDate: answer.train.date)
+            #expect((audit != nil) == (answer.outcome == "solved"),
                     "\(answer.id) at \(answer.train.date)")
-            if let solved {
-                #expect(abs(solved.physicalLength - answer.physicalLengthM) < 0.1,
+            if let audit {
+                Self.assertBrowserEdges(audit, id: answer.id)
+                let legacyCoordinates = audit.coordinates
+                #expect(abs(RouteSolver.pathLength(for: legacyCoordinates) - answer.physicalLengthM) < 0.1,
                         "\(answer.id) distance at \(answer.train.date)")
+                if Self.browserConnectorEvidence[String(answer.id.split(separator: ":")[0])] != nil {
+                    #expect(RouteGraph.keyDigest(Self.canonicalPath(legacyCoordinates)) == answer.pathDigest,
+                            "\(answer.id) preserves the unchanged unsafe browser record")
+                }
                 if answer.id.hasPrefix("myoko-wakinoda-relocation:") {
-                    #expect(RouteGraph.keyDigest(Self.canonicalPath(solved.coordinates)) == answer.pathDigest,
+                    #expect(RouteGraph.keyDigest(Self.canonicalPath(legacyCoordinates)) == answer.pathDigest,
                             "Wakinoda surveyed path at \(answer.train.date)")
                 }
+            }
+            let native = Self.solve(section, rideDate: answer.train.date)
+            #expect((native != nil) == (answer.outcome == "solved"),
+                    "\(answer.id): native physical validity at \(answer.train.date)")
+            if let native {
+                Self.assertNativeSurveyedPath(native, section: section,
+                    rideDate: answer.train.date, id: answer.id)
             }
         }
     }
@@ -248,22 +436,31 @@ struct RailHistoryPackageTests {
         ]
         let answers = Dictionary(
             uniqueKeysWithValues: (fixture.cases + fixture.pinned).map { ($0.id, $0) })
-        for (id, outcome) in expectedOutcome {
+        for id in expectedOutcome.keys.sorted() {
+            let outcome = expectedOutcome[id]!
             let answer = try #require(answers[id])
             #expect(answer.outcome == outcome)
-            #expect(answer.solverContext.historyRevisions.jp == Self.environment.overlay.revision)
+            #expect(answer.solverContext.historyRevisions.jp == Self.webParityEnvironment.overlay.revision)
+            #expect(answer.solverContext.solverVersion == Self.webParitySolverVersion)
             let lineName = answer.section.lineNames.first { !$0.isEmpty }
-            let solved = Self.solve(
-                answer.section.from, answer.section.to,
-                lineName: lineName, rideDate: answer.train.date)
+            let section = RouteSection(from: answer.section.from, to: answer.section.to,
+                                       lineNames: lineName.map { [$0] })
+            let audit = Self.auditBrowserPath(section, rideDate: answer.train.date)
+            let native = Self.solve(section, rideDate: answer.train.date)
+            #expect((native != nil) == (outcome == "solved"), "\(id) native outcome")
+            if let native {
+                Self.assertNativeSurveyedPath(native, section: section, rideDate: answer.train.date, id: id)
+            }
             if outcome == "unsolvable" {
-                #expect(solved == nil)
+                #expect(audit == nil, "\(id) browser outcome")
                 #expect(answer.segmentCount == 0)
                 #expect(answer.pathDigest == RouteGraph.keyDigest(""))
             } else {
-                let solved = try #require(solved)
+                let audit = try #require(audit, "\(id) browser outcome")
+                Self.assertBrowserEdges(audit, id: id)
                 #expect(answer.segmentCount == 1)
-                #expect(RouteGraph.keyDigest(Self.canonicalPath(solved.coordinates)) == answer.pathDigest)
+                let legacyCoordinates = audit.coordinates
+                #expect(RouteGraph.keyDigest(Self.canonicalPath(legacyCoordinates)) == answer.pathDigest)
             }
         }
     }

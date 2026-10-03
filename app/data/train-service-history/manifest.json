@@ -5,7 +5,7 @@
   "first_scope_date": "1912-06-15",
   "timezone": "Asia/Tokyo",
   "service_day_time_semantics": "seconds_since_service_day_start",
-  "solver_version": "25",
+  "solver_version": "27",
   "schema_path": "schema.sql",
   "database_path": "derived/train-service-timetable.sqlite",
   "runtime_database_path": "../../../ios/RailKit/Sources/RailCore/Resources/train-service-timetable.sqlite",
@@ -141,5 +141,7 @@
     "route_lines",
     "station_refs",
     "provenance"
-  ]
+  ],
+  "coordinate_solver_version": "25",
+  "physical_topology_policy": "evidenced-junctions-v1"
 }

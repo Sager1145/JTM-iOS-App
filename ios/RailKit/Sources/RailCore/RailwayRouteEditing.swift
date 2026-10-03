@@ -30,6 +30,8 @@ public enum RailwayRouteEditing {
         fileprivate var afterSections: [RouteSection]
         /// Exact source constraints may include boundaries absent from calls.
         fileprivate var originalRouteSections: [RouteSection]?
+        fileprivate var originalRouteConfirmation: RouteConfirmation?
+        fileprivate var updatedRouteConfirmation: RouteConfirmation?
 
         public func restore(in train: Train) -> Train? {
             guard let range = RailwayRouteEditing.range(
@@ -40,11 +42,13 @@ public enum RailwayRouteEditing {
                 Array(train.stops[range]) == after else { return nil }
             var sections = RailwayRouteEditing.sections(for: train)
             guard Array(sections[range.lowerBound..<range.upperBound]) == afterSections else { return nil }
+            guard train.routeConfirmation == updatedRouteConfirmation else { return nil }
             sections.replaceSubrange(range.lowerBound..<range.upperBound, with: beforeSections)
             var result = train
             result.stops.replaceSubrange(range, with: before)
             result.routeSections = range.lowerBound == 0 && range.upperBound == train.stops.count - 1
                 ? originalRouteSections : sections
+            result.routeConfirmation = originalRouteConfirmation
             return result
         }
     }
@@ -174,11 +178,17 @@ public enum RailwayRouteEditing {
         var updated = train
         updated.stops.replaceSubrange(range, with: replacement)
         updated.routeSections = updatedSections
+        // Confirming one span does not attest the rest of a pending ride.
+        if range.lowerBound == 0 && range.upperBound == train.stops.count - 1 {
+            updated.routeConfirmation = .confirmed
+        }
         return Plan(
             updatedTrain: updated, insertedStops: inserted,
             removedStops: removed.filter(isUntouchedGenerated), conflictingStops: conflicts,
             undo: Undo(before: oldStops, after: replacement, beforeSections: oldSections,
-                       afterSections: selectedSections, originalRouteSections: train.routeSections))
+                       afterSections: selectedSections, originalRouteSections: train.routeSections,
+                       originalRouteConfirmation: train.routeConfirmation,
+                       updatedRouteConfirmation: updated.routeConfirmation))
     }
 
     public static func isUntouchedGenerated(_ stop: Stop) -> Bool {

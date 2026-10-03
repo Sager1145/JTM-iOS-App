@@ -15,7 +15,7 @@
 //
 //  ── how the answers are recorded ──────────────────────────────────────
 //
-//  EVERY line of all seven packages (1,128 of them) is run and pinned by:
+//  EVERY line of all five packages is run and pinned by:
 //
 //    * how many parts it emits and how many vertices each part has — the
 //      STRUCTURAL answer, which must be exact, because every decision this
@@ -73,7 +73,7 @@
 
 export const name = "display-parts.json";
 
-const COUNTRIES = ["mo", "hk", "tw", "kr", "jp", "us", "ca"];
+const COUNTRIES = ["mo", "hk", "tw", "kr", "jp"];
 
 // ── verbatim vertices, and the few that are computed ────────────────────
 //
@@ -791,7 +791,7 @@ export function build({ RailNetwork, railPackage }) {
       "interval chain BEFORE any branch splitting, so a lead-in copied off a " +
       "trunk copies the finished geometry and the two strokes stay coincident " +
       "to the vertex. Fold trimming runs on both sides of grooming, and " +
-      "neither may touch a platform anchor. Every line of all seven packages " +
+      "neither may touch a platform anchor. Every line of all five packages " +
       "is pinned by part count, per-part vertex count and a digest of every " +
       "COPIED output vertex; the 6.82% of vertices the approach pass computes " +
       "are listed explicitly and held to a measured ULP ceiling — see " +

@@ -188,6 +188,9 @@ struct WorkspaceSheetContent: View {
                     controller: controller)
             }
         }
+        // Native sheet hosts may not inherit the resident map environment.
+        // Pass the existing workspace network through this explicit boundary.
+        .environment(network)
         // Let native presentation glass show through lists and forms.
         .scrollContentBackground(.hidden)
         .railMenuPresentationBackground()

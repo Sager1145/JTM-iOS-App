@@ -5,7 +5,7 @@
 //
 //  Everything pinned here is produced by calling the exported functions of
 //  rail-stroke.js — never a restatement. The module works in an abstract
-//  pixel space, so the cases are pixel polylines: real North American parts
+//  pixel space, so the cases are pixel polylines: real Japanese parts
 //  projected at a handful of zooms (through the module's own `project`, which
 //  is pinned too), plus synthetic probes for the branches a real corridor may
 //  not reach at those zooms — a plateau shorter than the kernel, an exact
@@ -31,28 +31,13 @@ export const name = "continuous-stroke.json";
 const require = createRequire(import.meta.url);
 
 // The real parts of real lines, chosen for what they exercise: a multi-lane
-// commuter trunk that changes lane six times, a subway trunk with a
-// half-lane, a streetcar with station-spaced corners, and a line with no
-// lane rows at all (the fillet-only path).
+// commuter trunk with lane changes, a closed loop, a split subway ring,
+// and a route-preserving family pair.
 const REAL_CASES = [
   // The Ochanomizu branch must retain the exact Kinshicho junction after
   // follow substitution, at both regional and close inspection scales.
   { country: "jp", lineId: "jp-東日本旅客鉄道-総武線-2", zooms: [12, 16, 19] },
-  // Follow-inserted samples must not erase surveyed station approaches.
-  { country: "us", lineId: "metrolink-vc-line", zooms: [13, 16] },
-  { country: "us", lineId: "amtrak-amtrak-hartford-line", zooms: [13, 16] },
-  { country: "us", lineId: "new-jersey-transit-nj-transi-nec", zooms: [9, 13, 16] },
-  { country: "us", lineId: "metropolitan-transit-authori-m", zooms: [12, 15] },
-  { country: "us", lineId: "trimet-portland-streetcar-a", zooms: [14, 17] },
-  { country: "us", lineId: "cta-orange-line", zooms: [13] },
-  // A survey seam welded sideways east of Jamaica: the taper's real case.
-  { country: "us", lineId: "mta-long-island-rail-road-west-hempstead-branch", zooms: [12, 15, 17] },
-  // Five seam jogs and a lane over a transcontinental part.
-  { country: "us", lineId: "amtrak-empire-builder", zooms: [10] },
-  // Follows Metra BNSF out of Chicago Union Station: the corridor case.
-  { country: "us", lineId: "amtrak-carl-sandburg", zooms: [14] },
-  { country: "ca", lineId: "go-transit-br", zooms: [11, 15] },
-  // jp joined CONTINUOUS_STROKE_COUNTRIES alongside us/ca: an open arc with
+  // An open arc with
   // seven lane changes across Tokyo's Shinagawa/Tamachi throat.
   { country: "jp", lineId: "jp-東日本旅客鉄道-山手線", zooms: [12, 15] },
   // The Tokaido Line local-service split near Shinagawa: its own hub-derived
@@ -1006,14 +991,16 @@ export function build({ RailNetwork, railPackage, APP_DIR }) {
     });
   };
 
-  const njtIndex = findCase("us new-jersey-transit-nj-transi-nec part 0 at z9");
-  const njtMeasures = cases[njtIndex].expected.measures;
-  const njtLo = njtMeasures[0];
-  const njtHi = njtMeasures[njtMeasures.length - 1];
-  addSlice(njtIndex, njtLo, njtHi); // whole part
-  addSlice(njtIndex, njtLo + (njtHi - njtLo) * 0.3, njtLo + (njtHi - njtLo) * 0.3 + 0.5); // sub-metre span
-  addSlice(njtIndex, njtHi, njtLo); // reversed, whole part
-  addSlice(njtIndex, njtLo - 1e6, njtHi + 1e6); // clamped beyond both ends
+  // Preserve whole/sub-metre/reverse/clamped slice coverage on an existing
+  // supported-region part, using its actual built stroke and measure ruler.
+  const trunkIndex = findCase("jp jp-東日本旅客鉄道-山手線 part 0 at z12");
+  const trunkMeasures = cases[trunkIndex].expected.measures;
+  const trunkLo = trunkMeasures[0];
+  const trunkHi = trunkMeasures[trunkMeasures.length - 1];
+  addSlice(trunkIndex, trunkLo, trunkHi); // whole part
+  addSlice(trunkIndex, trunkLo + (trunkHi - trunkLo) * 0.3, trunkLo + (trunkHi - trunkLo) * 0.3 + 0.5); // sub-metre span
+  addSlice(trunkIndex, trunkHi, trunkLo); // reversed, whole part
+  addSlice(trunkIndex, trunkLo - 1e6, trunkHi + 1e6); // clamped beyond both ends
 
   const filletIndex = findCase("right angle on a station anchor: rounded through the anchor by an arc, the bead stays on the line");
   const filletMeasures = cases[filletIndex].expected.measures;

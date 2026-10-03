@@ -93,6 +93,7 @@ struct RideEditorView: View {
     @State private var routeInferenceTask: Task<Void, Never>?
     @State private var isInferringRoute = false
     @State private var routeInferenceFailed = false
+    @State private var acceptedRouteStopCodes: [String?]?
     @State private var pendingRouteCommit: RouteCommit?
     @State private var routeEditUndo: RailwayRouteEditing.Undo?
     @State private var routeEditSummary: String?
@@ -110,7 +111,7 @@ struct RideEditorView: View {
         var train: Train
         var package: CompactPackage
         var excludedCodes: Set<String> = []
-        var inferredChoice: RailwayRouteChoices.Choice?
+        var inferredChoices: [RailwayRouteChoices.Choice]?
     }
 
     /// Cross-border journeys can carry station codes from more than one
@@ -160,6 +161,7 @@ struct RideEditorView: View {
         self.suggestionTrains = suggestionTrains
         var initialDraft = train
         if isNew && (initialDraft.trainType?.isEmpty != false) { initialDraft.trainType = "local" }
+        if isNew && initialDraft.routeConfirmation == nil { initialDraft.routeConfirmation = .pending }
         _draft = State(initialValue: initialDraft)
         _stopIDs = State(initialValue: train.stops.map { $0.routeEditing?.visitID ?? UUID() })
         _generatedStopIDs = State(initialValue: Set(train.stops.compactMap {
@@ -172,181 +174,52 @@ struct RideEditorView: View {
     }
 
     var body: some View {
+        editorRoutePresentations
+        .sheet(isPresented: $showsAICompletion) {
+            JourneyCompletionView(
+                trains: [draft],
+                context: limitedExpressName.isEmpty ? ""
+                    : "Limited express service name: \(limitedExpressName)",
+                allowsRawImport: true,
+                onApply: { completed in
+                    guard var train = completed.first else { return }
+                    if train.stops != draft.stops || train.routeSections != draft.routeSections {
+                        train.routeConfirmation = .pending
+                    }
+                    applyCompletedDraft(train)
+                })
+        }
+        .confirmationDialog(
+            localization.editorText("ios.editor.replaceExistingStopsTitle"),
+            isPresented: $showsReplaceStopsConfirmation, titleVisibility: .visible
+        ) {
+            Button(localization.editorText("ios.editor.replaceExistingStops"), role: .destructive) {
+                if let trip = pendingTimetableTrip {
+                    pendingTimetableTrip = nil
+                    applyTimetableTrip(trip)
+                } else {
+                    showsServicePatternPicker = true
+                }
+            }
+            .accessibilityIdentifier("rideEditorReplaceStops")
+            Button(localization.text("ios.cancel", fallback: "Cancel"), role: .cancel) {
+                pendingTimetableTrip = nil
+            }
+            .accessibilityIdentifier("rideEditorKeepStops")
+        }
+        .onChange(of: showsReplaceStopsConfirmation) { _, presented in
+            if !presented { pendingTimetableTrip = nil }
+        }
+        .sheet(isPresented: $showsServicePatternPicker) {
+            servicePatternPicker
+        }
+        .interactiveDismissDisabled(draft != original)
+    }
+
+    private var editorNavigation: some View {
         NavigationStack {
             ScrollViewReader { proxy in
-                VStack(spacing: 0) {
-                Form {
-                    if isNew {
-                        wizardHeader
-                        switch step {
-                        case .region:
-                            Section { regionPicker; trainTypePicker }
-                        case .route:
-                            routeSelectionSection
-                            stopsSection
-                        case .service:
-                            Section { numberFields }
-                            localLineServicesSection
-                            searchableDetailsSection
-                            serviceSectionsSection
-                            Section {
-                                DisclosureGroup(localization.editorText("ios.editor.optionalDetails"),
-                                                isExpanded: $showsOptionalDetails) { serviceDetails }
-                            }
-                        case .date:
-                            Section {
-                                dateFields
-                                if Region.resolved(draft) == .jp { timetableBrowseButton }
-                            }
-                            journeyStatusSection
-                            journeyGroupSection
-                            localLineServicesSection
-                            if Region.resolved(draft) == .jp {
-                                TimetableQuickMatchView(
-                                    train: JourneyCompletion.resolvingUniqueStationNames(
-                                        in: draft, catalogs: editorCatalogs),
-                                    serviceName: limitedExpressName) { trip in
-                                    pendingTimetableTrip = trip
-                                    showsReplaceStopsConfirmation = true
-                                }
-                                routeSelectionSection
-                            }
-                        case .confirm:
-                            confirmationSections
-                        }
-                        if step != .region { completionSection }
-                        if (showsValidation || step == .confirm) && !presentedBlocking.isEmpty { problemSummary(proxy) }
-                    } else {
-                        if !blocking.isEmpty { problemSummary(proxy) }
-                        basicsSection
-                        stationsSection
-                        routeSelectionSection
-                        stopsSection
-                        localLineServicesSection
-                        searchableDetailsSection
-                        serviceSectionsSection
-                        journeyStatusSection
-                        journeyGroupSection
-                        routingSection
-                        styleSection
-                        recordSection
-                        completionSection
-                    }
-                }
-                .accessibilityIdentifier("rideEditorForm")
-                // Inline, and short. §14.5 forbids a fixed English-width
-                // assumption, and the large title fought both toolbar buttons
-                // for the same row and lost — 「乗車記録を編集」 came back as
-                // 「乗車記録…」, a heading truncated to a stub. The specific
-                // verb the spec asks for is on the SAVE button, which is where
-                // it does work; this row only has to say which surface this is.
-                    if isNew { wizardNavigation(proxy) }
-                }
-                .onChange(of: step) { _, _ in
-                    focused = nil
-                    stopEditMode = .inactive
-                    showsValidation = false
-                    proxy.scrollTo("wizardTop", anchor: .top)
-                }
-                .navigationTitle(title)
-                .navigationBarTitleDisplayMode(.inline)
-                .scrollDismissesKeyboard(.interactively)
-                .task(id: Region.resolved(draft)) { network.ensure(Region.resolved(draft)) }
-                .navigationDestination(item: $addedStopID) { stopID in
-                    if let index = stopIDs.firstIndex(of: stopID) {
-                        StopEditorView(stop: editableStop(stopID), journeyDate: $draft.date,
-                                       index: index, isNew: isNew,
-                                       region: Region.resolved(draft), allowsEndpointRoles: !isNew,
-                                       selectedLineIDs: isNew && (index == 0 || index == draft.stops.count - 1)
-                                        ? [] : selectedCatalogLineIDs,
-                                       onRiddenChange: { riddenIsTheReaders = true })
-                    }
-                }
-                .onChange(of: draft.stops) { _, stops in
-                    guard isNew else { return }
-                    draft.origin = stops.first?.name ?? ""
-                    draft.destination = stops.last?.name ?? ""
-                    normalizeEndpointRoles()
-                }
-                .environment(\.editMode, $stopEditMode)
-                .onChange(of: draft, initial: true) { _, _ in
-                    routeInferenceFailed = false
-                    revalidate()
-                }
-                .onChange(of: draft.stops, initial: true) { _, _ in publishDraftMap() }
-                .onChange(of: draft.date) { _, _ in publishDraftMap() }
-                .onChange(of: stopIDs) { _, _ in publishDraftMap() }
-                .onChange(of: highlightedStopID.wrappedValue) { _, id in
-                    guard let id, stopIDs.contains(id) else { return }
-                    addedStopID = id
-                    highlightedStopID.wrappedValue = nil
-                }
-                .task(id: officialNameQuery) {
-                    officialEnglishName = .loading
-                    let train: Train = {
-                        var value = draft
-                        value.region = Region.resolved(draft).code
-                        return value
-                    }()
-                    let result = await Task.detached(priority: .userInitiated) {
-                        guard TrainTimetableDatabase.accepts(train),
-                              let database = TrainTimetableDatabase.bundled(country: train.region ?? "jp") else { return String?.none }
-                        return try? JourneyEnglishName.official(for: train, database: database)
-                    }.value
-                    guard !Task.isCancelled else { return }
-                    officialEnglishName = result.map(OfficialEnglishName.available) ?? .unavailable
-                }
-                .task(id: routeChoiceTaskID) { await loadRouteChoices() }
-                .onDisappear {
-                    routeInferenceTask?.cancel()
-                    routeInferenceTask = nil
-                    isInferringRoute = false
-                }
-                .task(id: catalogTaskID) {
-                    let region = Region.resolved(draft)
-                    let loaded = try? await Task.detached(priority: .userInitiated) {
-                        try loadCatalog(for: region)
-                    }.value
-                    guard !Task.isCancelled else { return }
-                    editorCatalog = loaded
-                    if let loaded {
-                        editorCatalogs[region.code] = loaded
-                        let matched = CatalogLinePreferenceMapping.matching(
-                            lineNames: draft.routePolicy?.preferredLineNames ?? [],
-                            operatorNames: draft.routePolicy?.preferredOperatorNames ?? [],
-                            regionCode: region.code,
-                            catalog: loaded)
-                        selectedCatalogLineIDs = selectedRouteChoice.map { Set($0.lineIDs) } ?? Set(matched.lineIDs)
-                    } else {
-                        selectedCatalogLineIDs = []
-                    }
-                    for regionCode in draftPinRegionCodes where editorCatalogs[regionCode] == nil {
-                        guard let pinRegion = Region(rawValue: regionCode) else { continue }
-                        let pinCatalog = try? await Task.detached(priority: .utility) {
-                            try loadCatalog(for: pinRegion)
-                        }.value
-                        guard !Task.isCancelled else { return }
-                        if let pinCatalog { editorCatalogs[regionCode] = pinCatalog }
-                    }
-                    revalidate()
-                    publishDraftMap()
-                }
-                // Keyed on the date alone, so that editing any other field —
-                // including the ride switch itself — cannot re-run it.
-                .onChange(of: draft.date, initial: true) { _, date in
-                    prefillRidden(forDate: date)
-                }
-#if DEBUG
-                // Scroll straight to a named section, for the same reason the
-                // other `RAILMAP_UI_TEST_*` hooks exist: a screenshot harness
-                // cannot scroll a form, so anything below the first screen —
-                // the region row, the route sections and their messages —
-                // would never be reviewed outside a hand session.
-                .task {
-                    await scrollToRequestedSection(proxy)
-                }
-#endif
-                .onChange(of: publishedIDs, initial: true) { _, _ in revalidate() }
+                editorLoadingEvents(proxy)
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
                         Button(localization.text("ios.cancel", fallback: "Cancel")) {
@@ -398,6 +271,244 @@ struct RideEditorView: View {
                 Text(localization.editorText("ios.editor.discardDetail"))
             }
         }
+    }
+
+    private func editorForm(_ proxy: ScrollViewProxy) -> some View {
+        VStack(spacing: 0) {
+        Form {
+            if isNew {
+                wizardHeader
+                switch step {
+                case .region:
+                    Section { regionPicker; trainTypePicker }
+                case .route:
+                    routeSelectionSection
+                    stopsSection
+                case .service:
+                    Section { numberFields }
+                    localLineServicesSection
+                    searchableDetailsSection
+                    serviceSectionsSection
+                    Section {
+                        DisclosureGroup(localization.editorText("ios.editor.optionalDetails"),
+                                        isExpanded: $showsOptionalDetails) { serviceDetails }
+                    }
+                case .date:
+                    Section {
+                        dateFields
+                        if Region.resolved(draft) == .jp { timetableBrowseButton }
+                    }
+                    journeyStatusSection
+                    journeyGroupSection
+                    localLineServicesSection
+                    if Region.resolved(draft) == .jp {
+                        TimetableQuickMatchView(
+                            train: JourneyCompletion.resolvingUniqueStationNames(
+                                in: draft, catalogs: editorCatalogs),
+                            serviceName: limitedExpressName) { trip in
+                            pendingTimetableTrip = trip
+                            showsReplaceStopsConfirmation = true
+                        }
+                        routeSelectionSection
+                    }
+                case .confirm:
+                    confirmationSections
+                }
+                if step != .region { completionSection }
+                if (showsValidation || step == .confirm) && !presentedBlocking.isEmpty { problemSummary(proxy) }
+            } else {
+                if !blocking.isEmpty { problemSummary(proxy) }
+                basicsSection
+                stationsSection
+                routeSelectionSection
+                stopsSection
+                localLineServicesSection
+                searchableDetailsSection
+                serviceSectionsSection
+                journeyStatusSection
+                journeyGroupSection
+                routingSection
+                styleSection
+                recordSection
+                completionSection
+            }
+        }
+        .accessibilityIdentifier("rideEditorForm")
+        // Inline, and short. §14.5 forbids a fixed English-width
+        // assumption, and the large title fought both toolbar buttons
+        // for the same row and lost — 「乗車記録を編集」 came back as
+        // 「乗車記録…」, a heading truncated to a stub. The specific
+        // verb the spec asks for is on the SAVE button, which is where
+        // it does work; this row only has to say which surface this is.
+            if isNew { wizardNavigation(proxy) }
+        }
+    }
+
+    private func editorDraftEvents(_ proxy: ScrollViewProxy) -> some View {
+        editorForm(proxy)
+        .onChange(of: step) { _, _ in
+            focused = nil
+            stopEditMode = .inactive
+            showsValidation = false
+            proxy.scrollTo("wizardTop", anchor: .top)
+        }
+        .navigationTitle(title)
+        .navigationBarTitleDisplayMode(.inline)
+        .scrollDismissesKeyboard(.interactively)
+        .task(id: Region.resolved(draft)) { network.ensure(Region.resolved(draft)) }
+        .navigationDestination(item: $addedStopID) { stopID in
+            if let index = stopIDs.firstIndex(of: stopID) {
+                StopEditorView(stop: editableStop(stopID), journeyDate: $draft.date,
+                               index: index, isNew: isNew,
+                               region: Region.resolved(draft), allowsEndpointRoles: !isNew,
+                               selectedLineIDs: isNew && (index == 0 || index == draft.stops.count - 1)
+                                ? [] : selectedCatalogLineIDs,
+                               onRiddenChange: { riddenIsTheReaders = true })
+            }
+        }
+        .onChange(of: draft.stops) { _, stops in
+            guard isNew else { return }
+            draft.origin = stops.first?.name ?? ""
+            draft.destination = stops.last?.name ?? ""
+            normalizeEndpointRoles()
+        }
+        .environment(\.editMode, $stopEditMode)
+        .onChange(of: draft, initial: true) { before, after in
+            if before.stops != after.stops || before.routePolicy != after.routePolicy {
+                routeInferenceFailed = false
+            }
+            let visitsChanged = before.stops.map(\.n02StationCode) != after.stops.map(\.n02StationCode)
+            if visitsChanged && before.routeSections == after.routeSections
+                && after.routeConfirmation == .confirmed
+                && acceptedRouteStopCodes != after.stops.map(\.n02StationCode) {
+                draft.routeConfirmation = .pending
+            }
+            acceptedRouteStopCodes = nil
+            revalidate()
+        }
+        .onChange(of: draft.stops, initial: true) { _, _ in publishDraftMap() }
+        .onChange(of: draft.date) { _, _ in publishDraftMap() }
+        .onChange(of: stopIDs) { _, _ in publishDraftMap() }
+        .onChange(of: highlightedStopID.wrappedValue) { _, id in
+            guard let id, stopIDs.contains(id) else { return }
+            addedStopID = id
+            highlightedStopID.wrappedValue = nil
+        }
+    }
+
+    private func editorLoadingEvents(_ proxy: ScrollViewProxy) -> some View {
+        editorDraftEvents(proxy)
+        .task(id: officialNameQuery) {
+            officialEnglishName = .loading
+            let train: Train = {
+                var value = draft
+                value.region = Region.resolved(draft).code
+                return value
+            }()
+            let result = await Task.detached(priority: .userInitiated) {
+                guard TrainTimetableDatabase.accepts(train),
+                      let database = TrainTimetableDatabase.bundled(country: train.region ?? "jp") else { return String?.none }
+                return try? JourneyEnglishName.official(for: train, database: database)
+            }.value
+            guard !Task.isCancelled else { return }
+            officialEnglishName = result.map(OfficialEnglishName.available) ?? .unavailable
+        }
+        .task(id: routeChoiceTaskID) { await loadRouteChoices() }
+        .onDisappear {
+            routeInferenceTask?.cancel()
+            routeInferenceTask = nil
+            isInferringRoute = false
+        }
+        .task(id: catalogTaskID) {
+            let region = Region.resolved(draft)
+            let loaded = try? await Task.detached(priority: .userInitiated) {
+                try loadCatalog(for: region)
+            }.value
+            guard !Task.isCancelled else { return }
+            editorCatalog = loaded
+            if let loaded {
+                editorCatalogs[region.code] = loaded
+                let matched = CatalogLinePreferenceMapping.matching(
+                    lineNames: draft.routePolicy?.preferredLineNames ?? [],
+                    operatorNames: draft.routePolicy?.preferredOperatorNames ?? [],
+                    regionCode: region.code,
+                    catalog: loaded)
+                selectedCatalogLineIDs = selectedRouteChoice.map { Set($0.lineIDs) } ?? Set(matched.lineIDs)
+            } else {
+                selectedCatalogLineIDs = []
+            }
+            for regionCode in draftPinRegionCodes where editorCatalogs[regionCode] == nil {
+                guard let pinRegion = Region(rawValue: regionCode) else { continue }
+                let pinCatalog = try? await Task.detached(priority: .utility) {
+                    try loadCatalog(for: pinRegion)
+                }.value
+                guard !Task.isCancelled else { return }
+                if let pinCatalog { editorCatalogs[regionCode] = pinCatalog }
+            }
+            revalidate()
+            publishDraftMap()
+        }
+        // Keyed on the date alone, so that editing any other field —
+        // including the ride switch itself — cannot re-run it.
+        .onChange(of: draft.date, initial: true) { _, date in
+            prefillRidden(forDate: date)
+        }
+#if DEBUG
+        // Scroll straight to a named section, for the same reason the
+        // other `RAILMAP_UI_TEST_*` hooks exist: a screenshot harness
+        // cannot scroll a form, so anything below the first screen —
+        // the region row, the route sections and their messages —
+        // would never be reviewed outside a hand session.
+        .task {
+            await scrollToRequestedSection(proxy)
+        }
+#endif
+        .onChange(of: publishedIDs, initial: true) { _, _ in revalidate() }
+    }
+
+    private func routeGuideSheet(_ request: RouteGuideRequest) -> some View {
+        NavigationStack {
+            if let choices = request.inferredChoices,
+               let fromID = request.train.stops.first?.routeEditing?.visitID,
+               let toID = request.train.stops.last?.routeEditing?.visitID {
+                RailwayRouteGuideView(train: request.train, package: request.package,
+                    choices: choices, embeddedInNavigationStack: true,
+                    onPending: markRoutePending, isInferred: true) { selected in
+                    proposeRouteChoice(selected, fromID: fromID, toID: toID)
+                }
+            } else {
+                RailwayRouteCorrectionView(
+                    train: request.train, package: request.package,
+                    excludedStationCodes: request.excludedCodes, onPending: markRoutePending
+                ) { choice, fromID, toID in
+                    proposeRouteChoice(choice, fromID: fromID, toID: toID)
+                }
+            }
+        }
+        .alert(localization.editorText("ios.routeGuide.routeUnavailable"), isPresented: $routeGuideError) {
+            Button(localization.text("ios.done"), role: .cancel) {}
+        }
+        .confirmationDialog(
+            localization.editorText("ios.routeGuide.removalTitle"),
+            isPresented: Binding(get: { pendingRouteCommit != nil }, set: {
+                if !$0 { pendingRouteCommit = nil }
+            }), titleVisibility: .visible, presenting: pendingRouteCommit
+        ) { commit in
+            Button(localization.editorText("ios.routeGuide.removeAndApply"), role: .destructive) {
+                commitRoutePlan(commit.plan, choice: commit.choice)
+            }
+            Button(localization.editorText("ios.editor.keepEditing"), role: .cancel) {
+                pendingRouteCommit = nil
+            }
+        } message: { commit in
+            Text(localization.editorText("ios.routeGuide.removalDetail", [
+                "stations": .string(commit.plan.conflictingStops.map(\.name).joined(separator: " · "))
+            ]))
+        }
+    }
+
+    private var editorRoutePresentations: some View {
+        editorNavigation
         .confirmationDialog(localization.editorText("ios.editor.changeRegion"),
             isPresented: Binding(get: { pendingRegion != nil }, set: { if !$0 { pendingRegion = nil } }),
             titleVisibility: .visible, presenting: pendingRegion) { region in
@@ -423,87 +534,19 @@ struct RideEditorView: View {
             } message: { _ in Text(localization.editorText("ios.editor.changeRegionNote")) }
         .sheet(isPresented: $showsLocalJourneyFill, onDismiss: finishLocalJourneyFill) {
             if let package = routePackage {
-                LocalJourneyFillView(train: routeEditingDraft, package: package) { proposal in
+                LocalJourneyFillView(train: routeEditingDraft, package: package, onPending: { pending in
+                    applyCompletedDraft(pending)
+                    markRoutePending()
+                    showsLocalJourneyFill = false
+                }) { proposal in
                     localJourneyCommit = proposal
                     showsLocalJourneyFill = false
                 }
             }
         }
         .sheet(item: $routeGuideRequest, onDismiss: finishRouteGuide) { request in
-            NavigationStack {
-                if let choice = request.inferredChoice,
-                   let fromID = request.train.stops.first?.routeEditing?.visitID,
-                   let toID = request.train.stops.last?.routeEditing?.visitID {
-                    RailwayRouteGuideView(train: request.train, package: request.package,
-                        choices: [choice], embeddedInNavigationStack: true, isInferred: true) { selected in
-                        proposeRouteChoice(selected, fromID: fromID, toID: toID)
-                    }
-                } else {
-                    RailwayRouteCorrectionView(
-                        train: request.train, package: request.package,
-                        excludedStationCodes: request.excludedCodes
-                    ) { choice, fromID, toID in
-                        proposeRouteChoice(choice, fromID: fromID, toID: toID)
-                    }
-                }
-            }
-            .alert(localization.editorText("ios.routeGuide.routeUnavailable"), isPresented: $routeGuideError) {
-                Button(localization.text("ios.done"), role: .cancel) {}
-            }
-            .confirmationDialog(
-                localization.editorText("ios.routeGuide.removalTitle"),
-                isPresented: Binding(get: { pendingRouteCommit != nil }, set: {
-                    if !$0 { pendingRouteCommit = nil }
-                }), titleVisibility: .visible, presenting: pendingRouteCommit
-            ) { commit in
-                Button(localization.editorText("ios.routeGuide.removeAndApply"), role: .destructive) {
-                    commitRoutePlan(commit.plan, choice: commit.choice)
-                }
-                Button(localization.editorText("ios.editor.keepEditing"), role: .cancel) {
-                    pendingRouteCommit = nil
-                }
-            } message: { commit in
-                Text(localization.editorText("ios.routeGuide.removalDetail", [
-                    "stations": .string(commit.plan.conflictingStops.map(\.name).joined(separator: " · "))
-                ]))
-            }
+            routeGuideSheet(request)
         }
-        .sheet(isPresented: $showsAICompletion) {
-            JourneyCompletionView(
-                trains: [draft],
-                context: limitedExpressName.isEmpty ? ""
-                    : "Limited express service name: \(limitedExpressName)",
-                allowsRawImport: true,
-                onApply: { completed in
-                    guard let train = completed.first else { return }
-                    applyCompletedDraft(train)
-                })
-        }
-        .confirmationDialog(
-            localization.editorText("ios.editor.replaceExistingStopsTitle"),
-            isPresented: $showsReplaceStopsConfirmation, titleVisibility: .visible
-        ) {
-            Button(localization.editorText("ios.editor.replaceExistingStops"), role: .destructive) {
-                if let trip = pendingTimetableTrip {
-                    pendingTimetableTrip = nil
-                    applyTimetableTrip(trip)
-                } else {
-                    showsServicePatternPicker = true
-                }
-            }
-            .accessibilityIdentifier("rideEditorReplaceStops")
-            Button(localization.text("ios.cancel", fallback: "Cancel"), role: .cancel) {
-                pendingTimetableTrip = nil
-            }
-            .accessibilityIdentifier("rideEditorKeepStops")
-        }
-        .onChange(of: showsReplaceStopsConfirmation) { _, presented in
-            if !presented { pendingTimetableTrip = nil }
-        }
-        .sheet(isPresented: $showsServicePatternPicker) {
-            servicePatternPicker
-        }
-        .interactiveDismissDisabled(draft != original)
     }
 
     private var timetableBrowseButton: some View {
@@ -595,6 +638,9 @@ struct RideEditorView: View {
             guard let id = updated.stops[index].routeEditing?.visitID,
                   let oldStop = previous[id], updated.stops[index] != oldStop else { continue }
             updated.stops[index].routeEditing?.generatedBy = nil
+        }
+        if updated.routeConfirmation == .confirmed {
+            acceptedRouteStopCodes = updated.stops.map(\.n02StationCode)
         }
         draft = updated
         if sameVisits {
@@ -759,6 +805,17 @@ struct RideEditorView: View {
     }
 
     /// Inference only proposes a route; the existing preview owns confirmation.
+    private func markRoutePending() {
+        routeInferenceTask?.cancel()
+        routeInferenceTask = nil
+        isInferringRoute = false
+        draft.routeConfirmation = .pending
+        routeCommitAfterDismiss = nil
+        pendingRouteCommit = nil
+        routeGuideRequest = nil
+        routeInferenceFailed = false
+    }
+
     private func inferRoute() {
         guard let package = routePackage, !isInferringRoute else { return }
         let snapshot = draft
@@ -767,17 +824,24 @@ struct RideEditorView: View {
         isInferringRoute = true
         routeInferenceTask = Task {
             let worker = Task.detached(priority: .userInitiated) {
-                RailwayRouteInference.choice(in: prepared, package: package)
+                RailwayRouteInference.search(in: prepared, package: package)
             }
-            let choice = await withTaskCancellationHandler {
+            let result = await withTaskCancellationHandler {
                 await worker.value
             } onCancel: { worker.cancel() }
             guard !Task.isCancelled else { return }
             isInferringRoute = false
             guard draft == snapshot else { return }
-            guard let choice else { routeInferenceFailed = true; return }
+            if let choice = result.uniqueChoice,
+               let plan = RailwayRouteEditing.plan(train: prepared, choice: choice),
+               !plan.requiresConfirmation {
+                applyRoutePlan(plan, choice: choice)
+                return
+            }
+            draft.routeConfirmation = .pending
+            guard !result.choices.isEmpty else { routeInferenceFailed = true; return }
             pendingRouteCommit = nil
-            routeGuideRequest = RouteGuideRequest(train: prepared, package: package, inferredChoice: choice)
+            routeGuideRequest = RouteGuideRequest(train: prepared, package: package, inferredChoices: result.choices)
         }
     }
 
@@ -836,6 +900,7 @@ struct RideEditorView: View {
         routeEditUndo = plan.undo
         withAnimation(reduceMotion ? .easeOut(duration: 0.16)
             : .timingCurve(0.77, 0, 0.175, 1, duration: 0.24)) {
+            acceptedRouteStopCodes = plan.updatedTrain.stops.map(\.n02StationCode)
             draft = plan.updatedTrain
             synchronizeStopIdentity()
             selectedRouteChoice = choice
@@ -1392,6 +1457,13 @@ struct RideEditorView: View {
                 || draft.stops.contains { $0.n02StationCode == nil })
             .accessibilityIdentifier("rideEditorInferRoute")
             guidedLineSelectionRow
+            Button(localization.editorText("ios.routeGuide.keepPending"), action: markRoutePending)
+                .accessibilityIdentifier("rideEditorPendingRoute")
+            if draft.requiresRouteConfirmation {
+                Label(localization.editorText("ios.routeGuide.pending"), systemImage: "questionmark.circle")
+                Text(localization.editorText("ios.routeGuide.pendingNote"))
+                    .font(.footnote).foregroundStyle(.secondary)
+            }
             if routeInferenceFailed {
                 Text(localization.editorText("ios.routeGuide.inferenceFailed"))
                     .font(.footnote).foregroundStyle(.secondary)
@@ -2563,7 +2635,7 @@ private struct StopEditorView: View {
     @State private var catalog: EditorCatalog?
     @State private var stationMatches: [CatalogStation] = []
     @State private var retiredStationMatches: [RetiredStation] = []
-    @State private var openRetiredStations: [RetiredStation] = []
+    @State private var retiredOpenStations: [RetiredStation] = []
 
     private var selectedLines: [CatalogLine] {
         guard let catalog else { return [] }
@@ -2644,14 +2716,7 @@ private struct StopEditorView: View {
                             stop.n02StationCode = station.certifiedCode
                             stationNameFocused = false
                         } label: {
-                            VStack(alignment: .leading, spacing: 3) {
-                                Text(station.name)
-                                Label(
-                                    localization.editorText("ios.editor.retiredStation"),
-                                    systemImage: "clock.arrow.circlepath")
-                                    .font(.caption).foregroundStyle(.secondary)
-                            }
-                            .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                            RetiredStationLabel(station: station, rideDate: journeyDate)
                         }
                         .buttonStyle(.borderless)
                         .accessibilityIdentifier("stationPickerRetired-\(station.id)")
@@ -2662,9 +2727,11 @@ private struct StopEditorView: View {
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                 } else if stop.n02StationCode?.isEmpty != false {
-                    if openRetiredStations.contains(where: { $0.name == stop.name }) {
+                    if let matchedRetired = retiredOpenStations.first(where: { $0.name == stop.name }) {
                         Label(
-                            localization.editorText("ios.editor.retiredStationNote"),
+                            localization.editorText(
+                                matchedRetired.certifiedCode != nil
+                                    ? "ios.editor.renamedStationNote" : "ios.editor.retiredStationNote"),
                             systemImage: "clock.arrow.circlepath")
                             .font(.footnote)
                             .foregroundStyle(.secondary)
@@ -2885,7 +2952,7 @@ private struct StopEditorView: View {
             // Cheap empty check: an undated/current-date ride never has an
             // open retired station, so skip the overlay decode entirely.
             guard let journeyDate, !journeyDate.isEmpty else {
-                openRetiredStations = []
+                retiredOpenStations = []
                 return
             }
             let regionCode = region.code
@@ -2897,15 +2964,15 @@ private struct StopEditorView: View {
                     rideDate: journeyDate)
             }.value
             guard !Task.isCancelled else { return }
-            openRetiredStations = open
+            retiredOpenStations = open
         }
-        .task(id: "\(stop.name)|\(openRetiredStations.map(\.id).joined(separator: ","))") {
+        .task(id: "\(stop.name)|\(retiredOpenStations.map(\.id).joined(separator: ","))") {
             let query = stop.name.trimmingCharacters(in: .whitespacesAndNewlines)
-            guard !query.isEmpty, !openRetiredStations.isEmpty else {
+            guard !query.isEmpty, !retiredOpenStations.isEmpty else {
                 retiredStationMatches = []
                 return
             }
-            retiredStationMatches = openRetiredStations.filter {
+            retiredStationMatches = retiredOpenStations.filter {
                 $0.name.localizedStandardContains(query)
             }
         }
@@ -2933,12 +3000,6 @@ private struct StopEditorView: View {
             }
         )
     }
-}
-
-private struct CatalogStationRow: Identifiable, Hashable, Sendable {
-    var station: CatalogStation
-    var subtitle: String
-    var id: String { station.key.sourceCode }
 }
 
 private enum StationCatalogText {
@@ -3025,16 +3086,19 @@ private struct StationPickerView: View {
     var rideDate: String? = nil
     var onSelectRetired: ((RetiredStation) -> Void)? = nil
     @State private var query = ""
-    @State private var prepared: [CatalogStationRow] = []
+    @State private var search = StationPickerSearchController()
     @State private var preparedLineGroups: [CatalogStationLineGroup] = []
-    @State private var matches: [CatalogStationRow] = []
-    @State private var retired: [RetiredStation] = []
-    @State private var matchedRetired: [RetiredStation] = []
     @State private var didLoad = false
     @State private var loadError: String?
-    @State private var filterTask: Task<Void, Never>?
 
-    private static let debounce = Duration.milliseconds(120)
+
+    private var matches: [CatalogStationRow] { search.matches }
+    private var retired: [RetiredStation] { search.retired }
+    private var matchedRetired: [RetiredStation] { search.matchedRetired }
+    private var loadIdentity: StationPickerSearchController.LoadIdentity {
+        .init(regionCode: regionCode, selectedLineIDs: selectedLineIDs,
+            rideDate: rideDate, includesRetired: onSelectRetired != nil)
+    }
 
     private var companyGroups: [CatalogStationCompanyGroup] {
         Dictionary(grouping: preparedLineGroups, by: \.operatorID).map { operatorID, lines in
@@ -3124,41 +3188,45 @@ private struct StationPickerView: View {
         .searchable(
             text: $query, placement: .navigationBarDrawer(displayMode: .always),
             prompt: Text(localization.editorText("ios.editor.stationSearch")))
-        .task(id: regionCode) {
-            guard let region = Region(rawValue: regionCode) else {
-                loadError = EditorCatalogLoadError.missingResource(regionCode).localizedDescription
+        .task(id: loadIdentity) {
+            let input = loadIdentity
+            let loadID = search.beginLoad()
+            didLoad = false
+            loadError = nil
+            preparedLineGroups = []
+            guard let region = Region(rawValue: input.regionCode) else {
+                loadError = EditorCatalogLoadError.missingResource(input.regionCode).localizedDescription
                 return
             }
             do {
                 let catalog = try await Task.detached(priority: .userInitiated) {
                     try loadCatalog(for: region)
                 }.value
-                guard !Task.isCancelled else { return }
-                let lineIDs = selectedLineIDs
+                guard !Task.isCancelled, search.acceptsLoad(loadID) else { return }
                 let result = await Task.detached(priority: .userInitiated) {
-                    Self.prepare(
-                        catalog: catalog, regionCode: regionCode, selectedLineIDs: lineIDs)
+                    Self.prepare(catalog: catalog, regionCode: input.regionCode,
+                        selectedLineIDs: input.selectedLineIDs)
                 }.value
-                prepared = result.rows
-                preparedLineGroups = result.groups
-                if onSelectRetired != nil {
-                    let date = rideDate
+                guard !Task.isCancelled, search.acceptsLoad(loadID) else { return }
+                var retired: [RetiredStation] = []
+                if input.includesRetired {
                     retired = await Task.detached(priority: .userInitiated) {
-                        openRetiredStations(
-                            catalog: catalog, regionCode: regionCode, selectedLineIDs: lineIDs,
-                            rideDate: date)
+                        openRetiredStations(catalog: catalog, regionCode: input.regionCode,
+                            selectedLineIDs: input.selectedLineIDs, rideDate: input.rideDate)
                     }.value
+                    guard !Task.isCancelled, search.acceptsLoad(loadID) else { return }
                 }
+                guard search.install(rows: result.rows, retired: retired, loadID: loadID, query: query)
+                else { return }
+                preparedLineGroups = result.groups
                 didLoad = true
-                apply(query: query)
             } catch {
+                guard !Task.isCancelled, search.acceptsLoad(loadID) else { return }
                 loadError = error.localizedDescription
             }
         }
-        .onChange(of: query) { _, needle in
-            apply(query: needle)
-        }
-        .onDisappear { filterTask?.cancel() }
+        .onChange(of: query) { _, needle in search.apply(query: needle) }
+        .onDisappear { search.cancel() }
     }
 
     @ViewBuilder
@@ -3219,49 +3287,6 @@ private struct StationPickerView: View {
         return (allRows.filter { keys.contains($0.station.key) }, groups)
     }
 
-    private nonisolated static func filter(
-        _ rows: [CatalogStationRow], needle: String
-    ) -> [CatalogStationRow] {
-        rows.filter {
-            $0.station.name.localizedStandardContains(needle)
-                || $0.station.aliases.contains { $0.localizedStandardContains(needle) }
-                || $0.station.key.sourceCode.localizedStandardContains(needle)
-        }
-    }
-
-    /// ADR 0011 overlay stations open on `rideDate`, restricted to
-    /// `selectedLineIDs` when non-empty. `[]` for an undated/current-date
-    /// ride, matching ``RetiredStation/period(on:)``'s own guard.
-    private nonisolated static func filterRetired(
-        _ stations: [RetiredStation], needle: String
-    ) -> [RetiredStation] {
-        stations.filter { $0.name.localizedStandardContains(needle) }
-    }
-
-    private func apply(query: String) {
-        filterTask?.cancel()
-        let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !needle.isEmpty else {
-            matches = prepared
-            matchedRetired = retired
-            return
-        }
-        let source = prepared
-        let retiredSource = retired
-        filterTask = Task { @MainActor in
-            try? await Task.sleep(for: Self.debounce)
-            guard !Task.isCancelled else { return }
-            let found = await Task.detached(priority: .userInitiated) {
-                Self.filter(source, needle: needle)
-            }.value
-            let foundRetired = await Task.detached(priority: .userInitiated) {
-                Self.filterRetired(retiredSource, needle: needle)
-            }.value
-            guard !Task.isCancelled else { return }
-            matches = found
-            matchedRetired = foundRetired
-        }
-    }
 }
 
 private struct RetiredStationLabel: View {
@@ -3283,9 +3308,14 @@ private struct RetiredStationLabel: View {
     }
 
     private var closedText: String {
-        let marker = localization.editorText("ios.editor.retiredStation")
+        // A `certifiedCode` means this entry is an old name for a station
+        // that still exists today (builder-certified same code + geometry),
+        // not a closed station.
+        let marker = localization.editorText(
+            station.certifiedCode != nil ? "ios.editor.renamedStation" : "ios.editor.retiredStation")
         guard let validTo = station.period(on: rideDate)?.validTo else { return marker }
-        return "\(marker) · \(localization.editorText("ios.editor.retiredOn", ["date": .string(validTo)]))"
+        let onKey = station.certifiedCode != nil ? "ios.editor.renamedOn" : "ios.editor.retiredOn"
+        return "\(marker) · \(localization.editorText(onKey, ["date": .string(validTo)]))"
     }
 }
 

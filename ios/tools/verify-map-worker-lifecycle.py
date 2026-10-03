@@ -205,12 +205,13 @@ installer_doubles = r'''
         for overlay in overlays { if let key = overlay.title ?? nil { values[key] = nil } }
     }
     func presentedAlpha(forKey key: String) -> CGFloat { values[key]?.alpha ?? 1 }
+    func hasRenderer(forKey key: String) -> Bool { false } // This stub never creates renderers.
     func rekey(from old: String, to new: String) { values[new] = values.removeValue(forKey: old) }
     func forgetRenderer(forKey key: String) {}
     func forgetStyle(forKey key: String) { values[key] = nil }
     func animateOpacity(forKey key: String, duration: TimeInterval,
                         fromAlpha: CGFloat? = nil, completion: (() -> Void)? = nil) {}
-    func rescale(to scale: CGFloat) {}
+    func rescale(to scale: CGFloat, alphaTransitionDuration: TimeInterval?) {}
 }
 @MainActor final class TestMapView {
     var mounted: [MKOverlay] = []

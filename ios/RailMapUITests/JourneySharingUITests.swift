@@ -1,3 +1,4 @@
+import Foundation
 import XCTest
 
 @MainActor
@@ -8,10 +9,10 @@ final class JourneySharingUITests: XCTestCase {
     }
 
     func testLongJourneyCardPreviewsOneImageForBothKindsAndReturnsToSameJourney() {
-        // The bundled Sunrise journey has 217 stops. It exercises a natural
-        // tall image rather than allowing a short route to hide truncation.
+        // A clearly synthetic pending record exercises a 217-row tall image.
+        // It is neither production sample data nor railway/timetable evidence.
         let id = "20260729_05_sunrise_izumo"
-        let app = launch(journeyID: id)
+        let app = launch(journeyID: id, syntheticLongRecord: true)
         let row = element("journeyRow-\(id)", in: app)
         XCTAssertTrue(row.waitForExistence(timeout: 60), app.debugDescription)
         row.tap()
@@ -87,7 +88,8 @@ final class JourneySharingUITests: XCTestCase {
     }
 
     private func validateSunriseContent(_ text: String, full: Bool) {
-        // These are every stopping station in the bundled 217-stop record.
+        // These passenger-call labels are deliberately retained in the synthetic
+        // fixture; its passing rows test rendering, not inferred rail topology.
         let stoppingStations = ["沼津", "富士", "静岡", "浜松", "姫路", "岡山", "倉敷",
                                 "備中高梁", "新見", "米子", "安来", "松江", "宍道", "出雲市"]
         for station in stoppingStations {
@@ -125,16 +127,54 @@ final class JourneySharingUITests: XCTestCase {
         XCTAssertTrue(close.waitForNonExistence(timeout: 10))
     }
 
-    private func launch(journeyID: String) -> XCUIApplication {
+    private func launch(journeyID: String, syntheticLongRecord: Bool = false) -> XCUIApplication {
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-interface-language", "en"]
         app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
+        if syntheticLongRecord {
+            app.launchEnvironment["RAILMAP_UI_TEST_STORE_BASE64"] = syntheticLongJourney()
+        }
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "search"
         app.launchEnvironment["RAILMAP_UI_TEST_QUERY"] = journeyID
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
         app.launch()
         return app
+    }
+
+    private func syntheticLongJourney() -> String {
+        let calls = ["沼津", "富士", "静岡", "浜松", "姫路", "岡山", "倉敷",
+                     "備中高梁", "新見", "米子", "安来", "松江", "宍道", "出雲市"]
+        var stops: [[String: Any]] = []
+        for (index, name) in calls.enumerated() {
+            var stop: [String: Any] = [
+                "name": name, "ride_segment": true,
+                "stop_type": index == 0 ? "origin" : index == calls.count - 1 ? "destination" : "passenger_stop",
+            ]
+            if index == 0 { stop["departure"] = "23:16" }
+            if index == calls.count - 1 { stop["arrival"] = "34:00" }
+            stops.append(stop)
+            if index == 0 {
+                for row in 0..<203 {
+                    stops.append([
+                        "name": row == 0 ? "片浜" : String(format: "UI合成通過%03d", row),
+                        "stop_type": "pass_through", "ride_segment": true,
+                    ])
+                }
+            }
+        }
+        XCTAssertEqual(stops.count, 217, "The rendering stress input must remain tall.")
+        let train: [String: Any] = [
+            "id": "20260729_05_sunrise_izumo", "date": "2026-07-29",
+            "number": "サンライズ出雲（UI合成記録）（5031M/4031M）", "train_type": "寝台特急",
+            "company": "JR東海/JR西日本", "origin": "沼津", "destination": "出雲市",
+            "direction": "unknown", "visible": true, "stops": stops,
+            "route_confirmation": "pending",
+            "notes": "UI-only synthetic rendering fixture; no timetable or physical railway evidence. 岡山まで5031M",
+        ]
+        let store: [String: Any] = ["schema_version": "1.3", "trains": [train]]
+        return try! JSONSerialization.data(withJSONObject: store, options: [.sortedKeys]).base64EncodedString()
     }
 
     private func element(_ identifier: String, in app: XCUIApplication) -> XCUIElement {

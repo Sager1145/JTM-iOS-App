@@ -8,10 +8,12 @@ final class MapLargeDatasetTests: XCTestCase {
     func testAll287SampleJourneysWithJapanNetworkLoadingPanAndToggle() throws {
         XCUIDevice.shared.orientation = .portrait
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "medium"
         app.launchEnvironment["RAILMAP_UI_TEST_GESTURE_TARGET"] = "1"
+        app.launchEnvironment["RAILMAP_UI_TEST_JOURNEY_INVENTORY"] = "1"
         app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = "37,138,24"
         app.launch()
         defer { app.terminate() }
@@ -75,11 +77,24 @@ final class MapLargeDatasetTests: XCTestCase {
             }, object: nil)
             XCTAssertEqual(XCTWaiter.wait(for: [rendered], timeout: 90), .completed)
         }
+        let inventory = app.staticTexts["journeyLoadInventory"]
+        XCTAssertTrue(inventory.waitForExistence(timeout: 10))
+        func inventoryFields() -> [String: String] {
+            Dictionary(inventory.label.split(separator: ";").compactMap { field in
+                let pair = field.split(separator: ":", maxSplits: 1)
+                return pair.count == 2 ? (String(pair[0]), String(pair[1])) : nil
+            }, uniquingKeysWith: { _, last in last })
+        }
+        // Every record must persist and finish processing. A record without
+        // physical proof must not be forced into a drawable railway route.
         let allRides = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
-            fields()["rides"] == "287"
+            let state = inventoryFields()
+            return state["registered"] == "287" && state["phase"] == "loaded"
+                && state["drawable"] == fields()["rides"]
         }, object: nil)
         XCTAssertEqual(XCTWaiter.wait(for: [allRides], timeout: 180), .completed,
-                       "All seven samples must resolve into 287 map rides.")
+                       "All 287 records must finish processing: \(inventory.label); \(status.label)")
+        XCTAssertGreaterThan(Int(fields()["rides"] ?? "") ?? 0, 0)
         record("all-287-imported")
         // Imports deliberately focus their region. Relaunch the persisted
         // complete store to apply the Japan camera before testing its network.
@@ -91,7 +106,9 @@ final class MapLargeDatasetTests: XCTestCase {
             let lat = Double(state["centerLat"] ?? "") ?? 0
             let lon = Double(state["centerLon"] ?? "") ?? 0
             return (36...38).contains(lat) && (137...139).contains(lon)
-                && state["rides"] == "287"
+                && inventoryFields()["registered"] == "287"
+                && inventoryFields()["phase"] == "loaded"
+                && state["rides"] == inventoryFields()["drawable"]
         }, object: nil)
         XCTAssertEqual(XCTWaiter.wait(for: [japanCamera], timeout: 180), .completed)
         let target = app.otherElements["railMapGestureTarget"]
@@ -111,7 +128,24 @@ final class MapLargeDatasetTests: XCTestCase {
         record("all-287-japan-loading-pan")
         waitForNetwork()
         record("all-287-network-rendered")
+        XCTAssertFalse(app.navigationBars["Overlapping lines"].exists,
+                       "A map drag must not also select overlapping journeys.")
         func setNetwork(_ enabled: Bool) {
+            let beforeToggle = XCUIScreen.main.screenshot()
+            let screen = XCTAttachment(screenshot: beforeToggle)
+            screen.name = "all-287-before-network-toggle"
+            screen.lifetime = .keepAlways
+            add(screen)
+            // Keep the current view available when Xcode stalls while
+            // collecting a failed simulator result bundle.
+            try? beforeToggle.pngRepresentation.write(to: URL(
+                fileURLWithPath: NSTemporaryDirectory())
+                .appendingPathComponent("all-287-before-network-toggle.png"))
+            let layout = XCTAttachment(string:
+                "network=\(toggle.frame); target=\(target.frame); status=\(status.label)")
+            layout.name = "all-287-control-layout"
+            layout.lifetime = .keepAlways
+            add(layout)
             let hittable = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
                 toggle.exists && toggle.isHittable
             }, object: nil)
@@ -129,7 +163,8 @@ final class MapLargeDatasetTests: XCTestCase {
             pan(index.isMultiple(of: 2))
             waitForNetwork()
             record("all-287-toggle-pan-\(index)")
-            XCTAssertEqual(fields()["rides"], "287")
+            XCTAssertEqual(inventoryFields()["registered"], "287")
+            XCTAssertEqual(fields()["rides"], inventoryFields()["drawable"])
             XCTAssertTrue((30...45).contains(Double(fields()["centerLat"] ?? "") ?? 0))
             XCTAssertTrue((125...150).contains(Double(fields()["centerLon"] ?? "") ?? 0))
         }
@@ -143,10 +178,45 @@ final class MapLargeDatasetTests: XCTestCase {
             record("all-287-residence")
             Thread.sleep(forTimeInterval: 5)
         }
-        XCTAssertEqual(fields()["rides"], "287")
+        XCTAssertEqual(inventoryFields()["registered"], "287")
+        XCTAssertEqual(fields()["rides"], inventoryFields()["drawable"])
         let screen = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
         screen.name = "all-287-final-japan-network"
         screen.lifetime = .keepAlways
         add(screen)
+    }
+}
+
+/// Import through the product controls into each test's isolated store.
+@MainActor
+enum MapSampleUITestSupport {
+    static func importAllSamples(in app: XCUIApplication) {
+        let menu = app.buttons["utilityMenuButton"]
+        XCTAssertTrue(menu.waitForExistence(timeout: 15))
+        menu.tap()
+        let data = app.buttons["utilityDataButton"]
+        XCTAssertTrue(data.waitForExistence(timeout: 10))
+        data.tap()
+        for name in ["Load Macao Sample Data", "Load Hong Kong Sample Data",
+                     "Load Taiwan Sample Data", "Load South Korea Sample Data",
+                     "Load Full Sample Data", "Load New Year Grand Loop",
+                     "Load Tokyo Limited-Express Loop"] {
+            let button = app.buttons[name].firstMatch
+            for _ in 0..<15 where !button.isHittable {
+                app.collectionViews.firstMatch.swipeUp()
+            }
+            XCTAssertTrue(button.exists, "Missing sample: \(name)")
+            XCTAssertTrue(button.isHittable, "Sample not reachable: \(name)")
+            let enabled = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+                button.exists && button.isEnabled
+            }, object: nil)
+            XCTAssertEqual(XCTWaiter.wait(for: [enabled], timeout: 30), .completed)
+            button.tap()
+            let imported = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+                button.exists && button.isEnabled
+            }, object: nil)
+            XCTAssertEqual(XCTWaiter.wait(for: [imported], timeout: 30), .completed)
+        }
+        app.buttons["utilityCloseButton"].tap()
     }
 }

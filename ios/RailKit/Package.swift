@@ -25,6 +25,11 @@ import PackageDescription
 //             at once: the compiler keeps it free of MapKit and SwiftUI, and
 //             `swift test` can run it.
 //
+//   RailApplication
+//             snapshot-based use cases that depend on RailCore. It owns no
+//             app stores or platform side effects and is independent of
+//             RailPresentation.
+//
 // The app target (RailMap.xcodeproj) sits above this package and owns the
 // things that cannot be shared: Apple Maps, SwiftUI, storage.
 let package = Package(
@@ -33,6 +38,7 @@ let package = Package(
     products: [
         .library(name: "RailCore", targets: ["RailCore"]),
         .library(name: "RailPresentation", targets: ["RailPresentation"]),
+        .library(name: "RailApplication", targets: ["RailApplication"]),
     ],
     targets: [
         .target(
@@ -41,7 +47,9 @@ let package = Package(
             linkerSettings: [.linkedLibrary("sqlite3")]
         ),
         .target(name: "RailPresentation", dependencies: ["RailCore"]),
+        .target(name: "RailApplication", dependencies: ["RailCore"]),
         .testTarget(name: "RailCoreTests", dependencies: ["RailCore"]),
         .testTarget(name: "RailPresentationTests", dependencies: ["RailPresentation"]),
+        .testTarget(name: "RailApplicationTests", dependencies: ["RailApplication", "RailCore"]),
     ]
 )

@@ -1183,5 +1183,19 @@ enum EditorStrings {
             .ja: "廃止駅です。経路は乗車日の路線で描かれます。",
             .en: "Former station. The route is drawn on the railway as it was on the ride date.",
         ],
+        "ios.editor.renamedStation": [
+            .zhHans: "旧站名", .zhHant: "舊站名",
+            .ja: "旧駅名", .en: "Former name",
+        ],
+        "ios.editor.renamedOn": [
+            .zhHans: "{date} 更名", .zhHant: "{date} 更名",
+            .ja: "{date} 改称", .en: "Renamed {date}",
+        ],
+        "ios.editor.renamedStationNote": [
+            .zhHans: "旧站名。路线按乘车日期的线路绘制。",
+            .zhHant: "舊站名。路線按乘車日期的路線繪製。",
+            .ja: "旧駅名です。経路は乗車日の路線で描かれます。",
+            .en: "Former station name. The route is drawn on the railway as it was on the ride date.",
+        ],
     ]
 }

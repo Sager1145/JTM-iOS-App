@@ -247,6 +247,12 @@ struct StatisticsDashboardContent: View {
                         // whole screen waiting for the slower half.
                         let passport = statistics.passport.flatMap { $0.isEmpty ? nil : $0 }
                         passportDataPage(loaded, stats.overall)
+                        if loaded.trains.contains(where: \.requiresRouteConfirmation) {
+                            Text(localization.editorText("ios.routeGuide.pendingMileageNote"))
+                                .font(.footnote)
+                                .foregroundStyle(.secondary)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
                         if !ticketOnly {
                             // 本日乗車 — the day in scope, issued as a ticket of
                             // its own directly under the record it is one entry
@@ -260,7 +266,7 @@ struct StatisticsDashboardContent: View {
                             // stock. So it is a second piece of stock — same
                             // stock, same typesetting, its own 券種.
                             if let daily = stats.daily {
-                                dailyTicket(daily)
+                                dailyTicket(daily, trains: loaded.trains)
                             }
                             // §5.7's order, with the reference's own sections
                             // folded into it: what the shape of the travelling was,
@@ -268,11 +274,11 @@ struct StatisticsDashboardContent: View {
                             // then coverage and 車種, then who and where.
                             if let passport {
                                 rhythmCard(passport)
-                                distanceCard(passport)
+                                distanceCard(passport, distancePending: passport.measuredJourneys == 0)
                                 timeCard(passport)
                             }
                             coverageCard(stats)
-                            serviceCard(stats.overall)
+                            serviceCard(stats.overall, distancePending: loaded.trains.allSatisfy(\.requiresRouteConfirmation))
                             if let passport {
                                 stationsCard(passport)
                                 operatorsCard(passport)
@@ -367,13 +373,17 @@ struct StatisticsDashboardContent: View {
     /// so "no day is in scope" is stated by the control that owns the scope,
     /// and no ticket is issued. A card of dashes would say the same thing a
     /// second time, in the one register §13.1 rules out.
-    private func dailyTicket(_ daily: Statistics.DailyStats) -> some View {
+    private func dailyTicket(_ daily: Statistics.DailyStats, trains: [Train]) -> some View {
         // The same mutually-exclusive ride groups the block carried, and the
         // same accumulating figure as its headline: the day is part of the
         // total on the card above, and a part measured on the other convention
         // is not a part of it.
         let groups = serviceRows(daily.stats.services)
-        let distance = StatisticsFormat.km(daily.stats.services.km)
+        let dayTrains = trains.filter { Dates.trainDate(Dates.Train(id: $0.id, date: $0.date)) == daily.date }
+        let pending = dayTrains.contains(where: \.requiresRouteConfirmation)
+        let allPending = !dayTrains.isEmpty && dayTrains.allSatisfy(\.requiresRouteConfirmation)
+        let distance = allPending ? localization.editorText("ios.routeGuide.unknownDistance")
+            : StatisticsFormat.km(daily.stats.services.km)
         let rides = daily.trainCount.formatted()
         let ridesUnit = localization.statsText("ios.ticket.unit.rides")
         return TicketFaceCard(
@@ -381,10 +391,11 @@ struct StatisticsDashboardContent: View {
             scope: ticketScope,
             displays: [
                 .figure(
-                    label: localization.statsText("ios.ticket.label.distance"),
+                    label: pending ? localization.editorText("ios.routeGuide.confirmedDistance")
+                        : localization.statsText("ios.ticket.label.distance"),
                     value: distance,
-                    unit: "KM",
-                    spoken: dailySpoken(daily)),
+                    unit: allPending ? "" : "KM",
+                    spoken: allPending ? distance : dailySpoken(daily)),
                 ticketRideTime(daily.stats.rideMinutes),
             ],
             // 車種 in the three fields the four-cell block has left, which is
@@ -403,9 +414,9 @@ struct StatisticsDashboardContent: View {
                     let km = StatisticsFormat.km(row.group.km)
                     return TicketField(
                         label: localization.statsCategoryText(row.key),
-                        value: km,
-                        unit: "KM",
-                        spoken: "\(km) km · \(serviceDetail(row.group))")
+                        value: allPending ? distance : km,
+                        unit: allPending ? "" : "KM",
+                        spoken: allPending ? distance : "\(km) km · \(serviceDetail(row.group))")
                 },
             span: localization.statsText(
                 "ios.ticket.spanDay", params: ["date": .string(spelledDate(daily.date))]),
@@ -583,7 +594,10 @@ struct StatisticsDashboardContent: View {
         // it is a fraction of the classified network, and the distance that
         // reached none of it cannot raise the share of it said to be covered.
         let pct = total > 0 ? 100 * stats.networkKm / total : 0
-        let distance = StatisticsFormat.km(stats.riddenAll)
+        let pending = loaded.trains.contains(where: \.requiresRouteConfirmation)
+        let allPending = !loaded.trains.isEmpty && loaded.trains.allSatisfy(\.requiresRouteConfirmation)
+        let distance = allPending ? localization.editorText("ios.routeGuide.unknownDistance")
+            : StatisticsFormat.km(stats.riddenAll)
         let rides = loaded.trains.count.formatted()
         let stops = stopCount(loaded.trains).formatted()
         let coverage = StatisticsFormat.percent(pct)
@@ -596,10 +610,11 @@ struct StatisticsDashboardContent: View {
             scope: ticketScope,
             displays: [
                 .figure(
-                    label: localization.statsText("ios.ticket.label.distance"),
+                    label: pending ? localization.editorText("ios.routeGuide.confirmedDistance")
+                        : localization.statsText("ios.ticket.label.distance"),
                     value: distance,
-                    unit: "KM",
-                    spoken: "\(distance) km"),
+                    unit: allPending ? "" : "KM",
+                    spoken: allPending ? distance : "\(distance) km"),
                 ticketRideTime(stats.rideMinutes),
             ],
             fields: [
@@ -615,9 +630,9 @@ struct StatisticsDashboardContent: View {
                     spoken: ticketSpoken(stops, stopsUnit)),
                 TicketField(
                     label: localization.statsText("ios.ticket.label.coverage"),
-                    value: coverage,
-                    unit: localization.statsText("ios.ticket.unit.percent"),
-                    spoken: coverageSpoken(ridden: stats.networkKm, total: total)),
+                    value: allPending ? distance : coverage,
+                    unit: allPending ? "" : localization.statsText("ios.ticket.unit.percent"),
+                    spoken: allPending ? distance : coverageSpoken(ridden: stats.networkKm, total: total)),
                 TicketField(
                     label: localization.statsText("ios.stats.operatorsLabel"),
                     value: operators,
@@ -750,7 +765,7 @@ struct StatisticsDashboardContent: View {
     /// share of the ride distance the three groups add up to, which is a ratio
     /// of numbers the aggregate already carries, and every figure it draws is
     /// spelled out beside it (§10.2).
-    private func serviceCard(_ stats: Statistics.MileageStats) -> some View {
+    private func serviceCard(_ stats: Statistics.MileageStats, distancePending: Bool = false) -> some View {
         let groups = serviceRows(stats.services)
         let totalKm = groups.reduce(0) { $0 + $1.group.km }
         return VStack(alignment: .leading, spacing: 16) {
@@ -760,11 +775,13 @@ struct StatisticsDashboardContent: View {
             ForEach(groups) { row in
                 StatisticsBar(
                     label: localization.statsCategoryText(row.key),
-                    value: "\(StatisticsFormat.km(row.group.km)) km",
+                    value: distancePending ? localization.editorText("ios.routeGuide.unknownDistance")
+                        : "\(StatisticsFormat.km(row.group.km)) km",
                     detail: serviceDetail(row.group),
                     fraction: totalKm > 0 ? row.group.km / totalKm : 0,
                     spoken:
-                        "\(StatisticsFormat.km(row.group.km)) km · \(serviceDetail(row.group))")
+                        distancePending ? localization.editorText("ios.routeGuide.unknownDistance")
+                        : "\(StatisticsFormat.km(row.group.km)) km · \(serviceDetail(row.group))")
             }
             // `PassportRule`, not `Divider`: the system separator is a grey
             // line, and every other hairline on these cards follows the paper
@@ -1168,7 +1185,7 @@ struct StatisticsDashboardContent: View {
     /// headline, three cards up. What this card adds is the three things the
     /// reference adds: the mean, the scale comparisons, and the two journeys
     /// at the ends of the range.
-    private func distanceCard(_ passport: PassportStatistics) -> some View {
+    private func distanceCard(_ passport: PassportStatistics, distancePending: Bool = false) -> some View {
         let scales = scaleRows(passport.totalKm)
         let longest = passport.longestByDistance
         let shortest = passport.shortestByDistance
@@ -1178,7 +1195,8 @@ struct StatisticsDashboardContent: View {
                 systemImage: "ruler")
             StatisticsMetricRow(
                 label: localization.statsText("ios.stats.perJourney"),
-                value: "\(StatisticsFormat.km(passport.averageKm)) km")
+                value: distancePending ? localization.editorText("ios.routeGuide.unknownDistance")
+                    : "\(StatisticsFormat.km(passport.averageKm)) km")
             if !scales.isEmpty {
                 VStack(spacing: 10) { ForEach(scales) { row in row.view } }
             }
@@ -1502,8 +1520,6 @@ struct StatisticsDashboardContent: View {
         case .hk: "🇭🇰"
         case .mo: "🇲🇴"
         case .kr: "🇰🇷"
-        case .us: "🇺🇸"
-        case .ca: "🇨🇦"
         }
     }
 

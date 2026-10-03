@@ -30,6 +30,7 @@ final class PlaybackVideoExportTests: XCTestCase {
         }
 
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = [
             "-AppleLanguages", "(en)", "-AppleLocale", "en_US",
             "-playback-video-v1", "{ shape = native; quality = q540; bitrate = small; }",
@@ -38,6 +39,10 @@ final class PlaybackVideoExportTests: XCTestCase {
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "compact"
         app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
         app.launchEnvironment["RAILMAP_UI_TEST_PLAYBACK"] = "1"
+        // One bundled, single-source-line journey; asynchronous route arrival
+        // must not silently select a different sample for another test.
+        app.launchEnvironment["RAILMAP_UI_TEST_PLAYBACK_TRAIN_ID"] =
+            "20260703_02_tokaido_shinkansen_hikari_kodama"
         app.launch()
 
         let pauseResume = element("playbackPauseResume", in: app)
@@ -45,10 +50,7 @@ final class PlaybackVideoExportTests: XCTestCase {
         waitForLabel("Pause", on: pauseResume)
         pauseResume.tap()
         waitForLabel("Play", on: pauseResume)
-        let surface = element("playbackTransportSurface", in: app)
-        XCTAssertTrue(surface.staticTexts.matching(
-            NSPredicate(format: "label CONTAINS %@", "はるか38号")).firstMatch.exists,
-            "The export must use the same Haruka sample as the partial-recording tests.")
+        assertRecordingJourney(in: app)
 
         let video = element("playbackVideoButton", in: app)
         XCTAssertTrue(video.waitForExistence(timeout: 8))
@@ -98,6 +100,7 @@ final class PlaybackVideoExportTests: XCTestCase {
         }
 
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = [
             "-AppleLanguages", "(en)", "-AppleLocale", "en_US",
             // VideoExportSettings reads one persisted preferences dictionary.
@@ -107,6 +110,10 @@ final class PlaybackVideoExportTests: XCTestCase {
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "compact"
         app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
         app.launchEnvironment["RAILMAP_UI_TEST_PLAYBACK"] = "1"
+        // One bundled, single-source-line journey; asynchronous route arrival
+        // must not silently select a different sample for another test.
+        app.launchEnvironment["RAILMAP_UI_TEST_PLAYBACK_TRAIN_ID"] =
+            "20260703_02_tokaido_shinkansen_hikari_kodama"
         app.launch()
 
         let pauseResume = element("playbackPauseResume", in: app)
@@ -114,6 +121,7 @@ final class PlaybackVideoExportTests: XCTestCase {
         waitForLabel("Pause", on: pauseResume)
         pauseResume.tap()
         waitForLabel("Play", on: pauseResume)
+        assertRecordingJourney(in: app)
 
         let video = element("playbackVideoButton", in: app)
         XCTAssertTrue(video.waitForExistence(timeout: 8))
@@ -167,6 +175,13 @@ final class PlaybackVideoExportTests: XCTestCase {
         attachScreen(named: "partial-video-export-ready-to-share")
         // Leave the native ShareLink unopened: the file stays in the app's
         // temporary directory for AVAssetReader verification by the harness.
+    }
+
+    private func assertRecordingJourney(in app: XCUIApplication) {
+        let surface = element("playbackTransportSurface", in: app)
+        XCTAssertTrue(surface.staticTexts.matching(
+            NSPredicate(format: "label CONTAINS %@", "こだま号")).firstMatch.exists,
+            "Every export case must record the explicitly selected Kodama sample.")
     }
 
     private func element(_ identifier: String, in app: XCUIApplication) -> XCUIElement {

@@ -52,7 +52,6 @@ struct RailWorkspaceView: View {
     /// Read for one reason: `PanelHeader` drops its subtitle in a short
     /// window at an accessibility text size, and the compact stop must not
     /// reserve a row for a line that is not drawn. See ``compactHeaderRows``.
-    @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(AppLocalization.self) private var localization
 
     @Bindable var store: RailNetworkStore
@@ -230,12 +229,8 @@ struct RailWorkspaceView: View {
     /// Compact reserves the same ordinary title bar used at every other stop.
     /// Every tab reserves the same subtitle slot, even when it is empty.
     private var compactHeaderRows: CGFloat {
-        let stacked = dynamicTypeSize.isAccessibilitySize && verticalSizeClass != .compact
-        let drawsSubtitle = BottomChromeMetrics.drawsSubtitle(
-            isAccessibilitySize: dynamicTypeSize.isAccessibilitySize,
-            verticalSizeClass: verticalSizeClass)
         let row = WorkspaceMenuMetrics.headerContentHeight(
-            titleRow: headerTitleRow, stacked: stacked, drawsSubtitle: drawsSubtitle)
+            titleRow: headerTitleRow, stacked: false, drawsSubtitle: true)
         return row + WorkspaceMenuMetrics.topInset + WorkspaceMenuMetrics.bottomInset
     }
 
@@ -518,8 +513,16 @@ struct RailWorkspaceView: View {
             sheet = .chooseRide(Array(trains.prefix(count)))
         }
         .task(id: "\(itineraries.loaded?.trains.count ?? -1)") {
-            guard itineraries.loaded != nil,
-                  let wanted = ProcessInfo.processInfo.environment["RAILMAP_UI_TEST_SAMPLE"],
+            guard itineraries.loaded != nil else { return }
+            // Explicit synthetic UI input is isolated from production samples.
+            // Pending records exercise rendering without claiming rail evidence.
+            if let encoded = ProcessInfo.processInfo.environment["RAILMAP_UI_TEST_STORE_BASE64"],
+               let data = Data(base64Encoded: encoded),
+               let incoming = try? JSONDecoder().decode(TrainStore.self, from: data) {
+                await itineraries.merge(incoming, into: library)
+                return
+            }
+            guard let wanted = ProcessInfo.processInfo.environment["RAILMAP_UI_TEST_SAMPLE"],
                   let sample = RideLibrary.Sample.all.first(where: { $0.resource == wanted }),
                   let incoming = try? await library.sample(sample.resource) else { return }
             await itineraries.merge(incoming, into: library)
@@ -544,7 +547,10 @@ struct RailWorkspaceView: View {
                   ProcessInfo.processInfo.environment["RAILMAP_UI_TEST_PLAYBACK"] == "1",
                   controller.isMapReady, !riddenRoutes.rides.isEmpty,
                   let train = itineraries.loaded?.trains.first(where: {
-                      rideIDs.contains($0.id)
+                      let requestedID = ProcessInfo.processInfo
+                          .environment["RAILMAP_UI_TEST_PLAYBACK_TRAIN_ID"]
+                      return rideIDs.contains($0.id)
+                          && (requestedID == nil || requestedID == $0.id)
                   }) else { return }
             didRunDebugPlayback = true
             try? await Task.sleep(for: .milliseconds(500))
@@ -656,7 +662,7 @@ struct RailWorkspaceView: View {
                 switch editing.replace(edited, replacing: originalID) {
                 case .saved, .savedKeepingID:
                     sheet = nil
-                case .refusedImportRunning, .notFound:
+                case .refusedImportRunning, .notFound, .unsupportedRegion:
                     break
                 }
             },
@@ -841,7 +847,7 @@ struct RailWorkspaceView: View {
                 journeyEditorRecordID = train.id
             case let .savedKeepingID(keptID, _):
                 journeyEditorRecordID = keptID
-            case .refusedImportRunning, .notFound:
+            case .refusedImportRunning, .notFound, .unsupportedRegion:
                 return
             }
             persistence = task
@@ -860,7 +866,7 @@ struct RailWorkspaceView: View {
                 journeyEditorRecordID = train.id
             case let .savedKeepingID(keptID, _):
                 journeyEditorRecordID = keptID
-            case .refusedImportRunning, .notFound:
+            case .refusedImportRunning, .notFound, .unsupportedRegion:
                 return
             }
             persistence = task
@@ -1020,7 +1026,7 @@ struct RailWorkspaceView: View {
         }
     }
 
-    @State private var statisticsShareRequest: StatisticsShareRequest?
+    @State private var statisticsShare = ShareRequestController<StatisticsShareRequest>()
     @State private var statisticsScopePresented = false
     @State private var statisticsImage: StatisticsPoster.File?
 
@@ -1317,13 +1323,13 @@ struct RailWorkspaceView: View {
         Menu {
             Menu {
                 Button {
-                    statisticsShareRequest = .map(.light)
+                    statisticsShare.begin(.map(.light))
                 } label: {
                     Label(localization.statsText("ios.stats.shareLight"), systemImage: "sun.max")
                 }
                 .accessibilityIdentifier("mapShareLightButton")
                 Button {
-                    statisticsShareRequest = .map(.dark)
+                    statisticsShare.begin(.map(.dark))
                 } label: {
                     Label(localization.statsText("ios.stats.shareDark"), systemImage: "moon")
                 }
@@ -1334,13 +1340,13 @@ struct RailWorkspaceView: View {
             .accessibilityIdentifier("mapShareOption")
             Menu {
                 Button {
-                    statisticsShareRequest = .statistics(.light)
+                    statisticsShare.begin(.statistics(.light))
                 } label: {
                     Label(localization.statsText("ios.stats.shareLight"), systemImage: "sun.max")
                 }
                 .accessibilityIdentifier("statisticsShareLightButton")
                 Button {
-                    statisticsShareRequest = .statistics(.dark)
+                    statisticsShare.begin(.statistics(.dark))
                 } label: {
                     Label(localization.statsText("ios.stats.shareDark"), systemImage: "moon")
                 }
@@ -1353,32 +1359,41 @@ struct RailWorkspaceView: View {
             SheetIconLabel(systemImage: "square.and.arrow.up")
         }
         .accessibilityLabel(Text(localization.statsText("ios.stats.shareImage")))
-        .disabled(statistics.view == nil || statisticsShareRequest != nil)
-        .overlay { if statisticsShareRequest != nil { ProgressView().allowsHitTesting(false) } }
-        .task(id: statisticsShareRequest) {
-            guard let request = statisticsShareRequest else { return }
-            defer { statisticsShareRequest = nil }
+        .disabled(statistics.view == nil || statisticsShare.request != nil)
+        .overlay { if statisticsShare.request != nil { ProgressView().allowsHitTesting(false) } }
+        .task(id: statisticsShare.request?.id) {
+            guard let ticket = statisticsShare.request else { return }
+            let request = ticket.input
             let year = statistics.selectedYear
             let date = statistics.selectedDate
             let dates = statistics.dateSelection
             let groupID = statistics.selectedJourneyGroupID
             let region = regionScope
-            let mapImage = request.includesMap
-                ? await StatisticsMapSnapshot.render(
-                    rides: mapRides,
-                    fallback: regionScope?.networkExtent ?? controller.mapView?.region,
-                    colorScheme: request.colorScheme)
-                : nil
-            if request.includesMap && mapImage == nil { return }
-            guard statistics.selectedYear == year, statistics.selectedDate == date,
-                  statistics.dateSelection == dates, statistics.selectedJourneyGroupID == groupID,
-                  regionScope == region, statistics.view != nil, !Task.isCancelled else { return }
-            guard let file = await renderStatisticsImage(
-                colorScheme: request.colorScheme, mapImage: mapImage), !Task.isCancelled else {
-                return
+            let storeGeneration = itineraries.storeGeneration
+            let isCurrent: @MainActor @Sendable () -> Bool = {
+                statistics.selectedYear == year && statistics.selectedDate == date
+                    && statistics.dateSelection == dates && statistics.selectedJourneyGroupID == groupID
+                    && regionScope == region && statistics.view != nil
+                    && itineraries.storeGeneration == storeGeneration
             }
-            PresentationHost.afterTeardown { statisticsImage = file }
+            let file: StatisticsPoster.File? = await statisticsShare.perform(ticket, isCurrent: isCurrent, operation: {
+                let mapImage = request.includesMap
+                    ? await StatisticsMapSnapshot.render(
+                        rides: mapRides,
+                        fallback: regionScope?.networkExtent ?? controller.mapView?.region,
+                        colorScheme: request.colorScheme)
+                    : nil
+                guard isCurrent(), !Task.isCancelled else { return nil }
+                if request.includesMap && mapImage == nil { return nil }
+                return await renderStatisticsImage(colorScheme: request.colorScheme, mapImage: mapImage)
+            })
+            guard let file else { return }
+            PresentationHost.afterTeardown {
+                guard statisticsShare.isLatest(ticket), isCurrent() else { return }
+                statisticsImage = file
+            }
         }
+        .onDisappear { statisticsShare.cancel() }
         .accessibilityIdentifier("statisticsShareButton")
     }
 
@@ -2644,7 +2659,35 @@ struct RailWorkspaceView: View {
         .onChange(of: reduceMotion, initial: true) { _, reduced in
             controller.reduceMotion = reduced
         }
+#if DEBUG
+        .overlay(alignment: .topLeading) {
+            if ProcessInfo.processInfo.environment["RAILMAP_UI_TEST_JOURNEY_INVENTORY"] == "1" {
+                Text(debugJourneyInventory)
+                    .font(.caption)
+                    .foregroundStyle(.clear)
+                    .frame(width: 1, height: 1)
+                    .clipped()
+                    .allowsHitTesting(false)
+                    .accessibilityIdentifier("journeyLoadInventory")
+            }
+        }
+#endif
     }
+
+#if DEBUG
+    private var debugJourneyInventory: String {
+        let phase: String
+        switch riddenRoutes.state {
+        case .idle: phase = "idle"
+        case .loading: phase = "loading"
+        case .loaded: phase = "loaded"
+        case .failed: phase = "failed"
+        }
+        let registered = itineraries.loaded?.trains.count ?? 0
+        let drawable = mapRides.count
+        return "registered:\(registered);phase:\(phase);drawable:\(drawable)"
+    }
+#endif
 
     /// §4.4: a tap on empty map clears the journey selection, and nothing else.
     ///

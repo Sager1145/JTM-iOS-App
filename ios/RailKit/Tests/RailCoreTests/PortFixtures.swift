@@ -66,7 +66,7 @@ enum PortFixtures {
     ///
     /// Keep this as the single test-side inventory so a newly shipped package
     /// cannot remain invisible to suites that promise whole-package parity.
-    static let countries = ["mo", "hk", "tw", "kr", "jp", "us", "ca"]
+    static let countries = ["mo", "hk", "tw", "kr", "jp"]
 
     /// Locked, not bare `nonisolated(unsafe)`.
     ///

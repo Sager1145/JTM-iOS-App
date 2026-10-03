@@ -15,11 +15,11 @@ from pathlib import Path
 import sqlite3
 import tempfile
 
-REGIONS = ("jp", "tw", "hk", "mo", "kr", "us", "ca")
+REGIONS = ("jp", "tw", "hk", "mo", "kr")
 MANIFEST_NAME = "rail-resource-revisions.json"
 SHARED_DISPLAY_INPUTS = (
     "shared-corridors.json", "display-lanes.json", "display-hubs.json",
-    "jp-render-groups.json", "na-render-groups.json",
+    "jp-render-groups.json",
 )
 
 
@@ -87,10 +87,10 @@ def build_manifest(repo: Path, bundle: Path) -> dict:
         "build-display-network.py", "lib/display_identity.py", "lib/na_geo.py",
     )]
     # Legacy matched routes may cover any region; changes invalidate every region.
-    shared += [(name, bundle / name) for name in ("matched-routes.json", "matched-stops.json")]
+    shared += [(name, bundle / name) for name in ("matched-routes.json", "matched-stops.json", "physical-rail-junctions.json")]
     regions = {}
     source_hashes = {name: file_digest(bundle / name) for name in
-                     ("matched-routes.json", "matched-stops.json")
+                     ("matched-routes.json", "matched-stops.json", "physical-rail-junctions.json")
                      if (bundle / name).is_file()}
     for region in REGIONS:
         suffix = "" if region == "jp" else f"-{region}"

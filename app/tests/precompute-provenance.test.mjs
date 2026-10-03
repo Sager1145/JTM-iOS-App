@@ -188,15 +188,7 @@ test("published sample manifest must carry the current overlay revision", () => 
 });
 
 
-test("North American manifests combine domestic and cross-border provenance", () => {
-  const domestic = context({history_revisions: {us: "none"}, history_hashes: undefined});
-  const border = context({history_revisions: {ca: "none", us: "none"}, history_hashes: undefined});
-  const expected = {solver_version: "22", history_revisions: {ca: "none", us: "none"}};
-  assert.deepEqual(deriveManifestSolverContext([domestic, border]), expected);
-  assert.deepEqual(deriveManifestSolverContext([border, domestic]), expected);
-  assert.deepEqual(deriveManifestSolverContext([domestic], expected), expected);
-  assert.throws(() => deriveManifestSolverContext([border,
-    context({history_revisions: {ca: "changed"}, history_hashes: {ca: EXAMPLE_HISTORY_HASH}})]), /disagrees/);
+test("retired precompute countries are rejected", () => {
   for (const country of ["us", "ca"])
-    assert.deepEqual(currentPrecomputeSolverContext({country}).history_revisions, {ca: "none", us: "none"});
+    assert.throws(() => currentPrecomputeSolverContext({country}), /Unsupported precompute country/);
 });

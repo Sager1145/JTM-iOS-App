@@ -14,19 +14,7 @@ final class RailwayRouteEntryUITests: XCTestCase {
         XCTAssertTrue(next.waitForExistence(timeout: 30), "The new journey editor must show its first step.")
         next.tap()
 
-        for (index, name, code) in [(0, "Tokyo", "003766"), (1, "Shinagawa", "004095")] {
-            let row = app.descendants(matching: .any)["rideEditorStop-\(index)"].firstMatch
-            reveal(row, in: app)
-            row.tap()
-            let field = app.otherElements["rideEditorStopName"].textFields.firstMatch
-            XCTAssertTrue(field.waitForExistence(timeout: 8), "Stop \(index) must expose its station name field.")
-            field.tap()
-            field.typeText(name)
-            let suggestion = app.buttons["rideEditorStationSuggestion-\(code)"]
-            XCTAssertTrue(suggestion.waitForExistence(timeout: 8), "Station search must resolve \(name) to \(code).")
-            suggestion.tap()
-            app.navigationBars.buttons.firstMatch.tap()
-        }
+        fillEndpoints(in: app)
 
         openAndCancelGuide(in: app)
         XCTAssertTrue(app.descendants(matching: .any)["rideEditorStop-0"].firstMatch.exists,
@@ -46,8 +34,81 @@ final class RailwayRouteEntryUITests: XCTestCase {
                       "Cancelling the railway guide must keep the saved journey editor open.")
     }
 
+    func testRouteCanBeKeptPendingWithoutChoosingACandidate() {
+        let app = launchEditor(sheet: "edit")
+        XCTAssertTrue(app.descendants(matching: .any)["rideEditorForm"].firstMatch.waitForExistence(timeout: 30))
+        let lines = app.buttons["rideEditorLines"]
+        reveal(lines, in: app)
+        lines.tap()
+        let pending = app.buttons["routeCorrectionPending"]
+        XCTAssertTrue(pending.waitForExistence(timeout: 10))
+        pending.tap()
+        XCTAssertTrue(pending.waitForNonExistence(timeout: 8))
+        let state = app.staticTexts["Route pending confirmation"]
+        reveal(state, in: app)
+        XCTAssertTrue(state.exists)
+        XCTAssertTrue(app.buttons["rideEditorSave"].isEnabled,
+                      "Pending physical geometry must not prevent saving the journey.")
+    }
+
+    func testMapSelectionMatchesAccessibleCandidateCard() {
+        let app = launchEditor(sheet: "new")
+        let next = app.buttons["rideEditorNext"]
+        XCTAssertTrue(next.waitForExistence(timeout: 30))
+        next.tap()
+        fillEndpoints(in: app)
+        let lines = app.buttons["rideEditorLines"]
+        reveal(lines, in: app)
+        lines.tap()
+        let compare = app.buttons["routeCorrectionCompare"]
+        let ready = XCTNSPredicateExpectation(predicate: NSPredicate(format: "enabled == true"), object: compare)
+        XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 20), .completed)
+        compare.tap()
+        let marker = app.buttons["routeGuideMapOption-1"]
+        XCTAssertTrue(marker.waitForExistence(timeout: 10))
+        marker.tap()
+        let firstCard = app.buttons["routeGuideOption1"]
+        XCTAssertTrue(firstCard.isSelected, "Map selection must select the same VoiceOver card.")
+        let secondCard = app.buttons["routeGuideOption2"]
+        for _ in 0..<6 {
+            if secondCard.exists && secondCard.isHittable { break }
+            let scroll = app.scrollViews["routeGuideScroll"]
+            scroll.coordinate(withNormalizedOffset: CGVector(dx: 0.97, dy: 0.8))
+                .press(forDuration: 0.05, thenDragTo: scroll.coordinate(withNormalizedOffset: CGVector(dx: 0.97, dy: 0.3)))
+        }
+        XCTAssertTrue(secondCard.isHittable)
+        secondCard.tap()
+        let secondMarker = app.buttons["routeGuideMapOption-2"]
+        for _ in 0..<6 {
+            if secondMarker.exists && secondMarker.isHittable { break }
+            let scroll = app.scrollViews["routeGuideScroll"]
+            scroll.coordinate(withNormalizedOffset: CGVector(dx: 0.97, dy: 0.3))
+                .press(forDuration: 0.05, thenDragTo: scroll.coordinate(withNormalizedOffset: CGVector(dx: 0.97, dy: 0.8)))
+        }
+        XCTAssertTrue(secondMarker.isSelected,
+                      "Card selection must select the same map candidate.")
+    }
+
+    private func fillEndpoints(in app: XCUIApplication) {
+        for (index, name, code) in [(0, "Tokyo", "003766"), (1, "Shinagawa", "004095")] {
+            let row = app.descendants(matching: .any)["rideEditorStop-\(index)"].firstMatch
+            reveal(row, in: app)
+            row.tap()
+            let field = app.otherElements["rideEditorStopName"].textFields.firstMatch
+            XCTAssertTrue(field.waitForExistence(timeout: 8), "Stop \(index) must expose its station name field.")
+            field.tap()
+            field.typeText(name)
+            let suggestion = app.buttons["rideEditorStationSuggestion-\(code)"]
+            XCTAssertTrue(suggestion.waitForExistence(timeout: 8), "Station search must resolve \(name) to \(code).")
+            suggestion.tap()
+            app.navigationBars.buttons.firstMatch.tap()
+        }
+
+    }
+
     private func launchEditor(sheet: String) -> XCUIApplication {
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-interface-language", "en"]
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"

@@ -3101,7 +3101,7 @@
   // reviewed rings in display-loops.json fixing each loop's seam and winding.
   // Keep this set in step with build-display-network.py's
   // CONTINUOUS_STROKE_REGIONS and build-display-lanes.mjs's own copy.
-  const CONTINUOUS_STROKE_COUNTRIES = new Set(["us", "ca", "jp"]);
+  const CONTINUOUS_STROKE_COUNTRIES = new Set(["jp"]);
 
   function drawsContinuousStroke(compactLine, pkg) {
     const country = String(compactLine.country || pkg.country || "")

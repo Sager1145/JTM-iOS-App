@@ -24,8 +24,8 @@ struct JourneyCompletionView: View {
     @State private var service: ChatGPTSubscriptionService?
     @State private var models: [ChatGPTSubscriptionProtocol.Model] = []
     @State private var selectedModel = ""
-    @State private var operation: Task<Void, Never>?
-    @State private var isWorking = false
+    @State private var request = JourneyCompletionRequest()
+    private var isWorking: Bool { request.isWorking }
     @State private var ownsLogin = false
     @State private var previewResponse = ""
     @State private var remarks = ""
@@ -100,7 +100,7 @@ struct JourneyCompletionView: View {
                 refreshPrompt(reportFailure: false)
             }
             .onDisappear {
-                operation?.cancel()
+                request.cancel()
                 if ownsLogin { auth.cancelLogin() }
             }
         }
@@ -355,7 +355,7 @@ struct JourneyCompletionView: View {
                     Text(text(auth.isSigningIn ? "waitingLogin" : "working"))
                 }
                 Button(text("cancelRequest")) {
-                    operation?.cancel()
+                    request.cancel()
                     if ownsLogin { auth.cancelLogin() }
                 }
             }
@@ -363,16 +363,8 @@ struct JourneyCompletionView: View {
     }
 
     private func run(_ action: @escaping @MainActor () async throws -> Void) {
-        guard !isWorking else { return }
-        isWorking = true
-        failure = nil
-        operation = Task { @MainActor in
-            defer { isWorking = false; operation = nil }
-            do { try await action() }
-            catch is CancellationError { }
-            catch {
-                if !Task.isCancelled { failure = error.localizedDescription }
-            }
+        if request.start(action, onFailure: { failure = $0 }) {
+            failure = nil
         }
     }
 

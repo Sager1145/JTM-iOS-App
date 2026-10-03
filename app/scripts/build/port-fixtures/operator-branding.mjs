@@ -9,7 +9,7 @@
 //  the ones whose label is a key in a *different* table, and the ones whose
 //  answer depends on JavaScript's UTF-16 string semantics.
 //
-//  Hence: every distinct operator string and every line in all seven shipped
+//  Hence: every distinct operator string and every line in all five shipped
 //  packages, plus a block of inputs written to break a port rather than to
 //  pass one.
 // =========================================================================
@@ -34,7 +34,7 @@ function loadOperatorBranding(APP_DIR) {
   return new Function("window", `${source}\nreturn RailOperatorBranding;`)({});
 }
 
-const COUNTRIES = ["mo", "hk", "tw", "kr", "jp", "us", "ca"];
+const COUNTRIES = ["mo", "hk", "tw", "kr", "jp"];
 
 // ── inputs designed to fail a port ───────────────────────────────────────
 //

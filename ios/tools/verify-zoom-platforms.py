@@ -20,9 +20,8 @@ import tempfile
 
 SMOKE_TESTS = (
     "testAllRailwaysRepeatedZoomAcrossJapanDefersRebuildsUntilSettle",
-    "testDenseHobokenNewportParallelBranchesRemainVisibleAcrossZoom",
-    "testDenseBundleRemainsVisibleAfterRotation",
-    "testOrangeBendRemainsVisibleInLandscape",
+    "testAllRailwaysRepeatedZoomOverDenseTokyoKeepsCallbacksResponsive",
+    "testTokyoNetworkRemainsVisibleAfterDeviceRotation",
     "testTwoFingerMapRotationThenZoomDefersGeometryBuilds",
 )
 

@@ -59,9 +59,8 @@ const OUT_DIR = process.env.PRECOMPUTE_OUT_DIR
 // Which country's store is being precomputed. The solver datasets are
 // per-country and MUST match the store: feeding Taiwanese stops to the
 // Japanese network would bake wrong-country geometry into published parts.
-// US and CA intentionally share the browser's cross-border scope. Japan stays
-// the default so every existing invocation is unchanged.
-const SUPPORTED_COUNTRIES = new Set(["jp", "tw", "hk", "mo", "kr", "us", "ca"]);
+// Japan stays the default.
+const SUPPORTED_COUNTRIES = new Set(["jp", "tw", "hk", "mo", "kr"]);
 const requestedCountry = process.env.PRECOMPUTE_COUNTRY || "jp";
 if (!SUPPORTED_COUNTRIES.has(requestedCountry)) throw new Error(`Unsupported precompute country: ${requestedCountry}`);
 const COUNTRY = requestedCountry;
@@ -69,7 +68,8 @@ const suffix = COUNTRY === "jp" ? "" : `-${COUNTRY}`;
 const RAIL_SECTIONS_FILE = `rail-sections${suffix}.json`;
 const STATIONS_FILE = `stations${suffix}.json`;
 export function precomputeScopeCountries(country) {
-  return country === "us" || country === "ca" ? ["us", "ca"] : [country];
+  if (!SUPPORTED_COUNTRIES.has(country)) throw new Error(`Unsupported precompute country: ${country}`);
+  return [country];
 }
 const SCOPE_COUNTRIES = precomputeScopeCountries(COUNTRY);
 
@@ -655,11 +655,6 @@ async function main() {
   context.__host = {
     ...baseHost,
     onTrainSolved({ index, id, raw, route, featureCount, ms }) {
-      if ((COUNTRY === "us" || COUNTRY === "ca") && route && !route.unsolvable &&
-          !precomputedRouteCoversSections(raw.route_sections || [], route.features || [])) {
-        console.warn(`Incomplete route for ${id}; publishing an explicit unsolvable cache entry.`);
-        route = {cache_key: route.cache_key, solver_context: route.solver_context, unsolvable: true};
-      }
       const name = `part-${String(sliceStart + index).padStart(3, "0")}`;
       partNames.push(name);
       partTrainIDs[name] = requirePartTrainID(raw, name);

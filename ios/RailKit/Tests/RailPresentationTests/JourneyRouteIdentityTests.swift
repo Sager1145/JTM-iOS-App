@@ -3,6 +3,16 @@ import RailCore
 @testable import RailPresentation
 
 struct JourneyRouteIdentityTests {
+    @Test func pendingPhysicalHintsAndStaleDetectionDoNotClaimTraversedLines() {
+        var pending = train(type: "普通", lines: ["東海道線"])
+        pending.routeConfirmation = .pending
+        let stale = [Statistics.TraversedLine(name: "総武線", operatorName: "JR東日本", km: 8,
+                                             selectedLineID: "sourced-line")]
+        #expect(JourneyRouteIdentity.recordedLineNames(of: pending).isEmpty)
+        #expect(JourneyRouteIdentity.lineNames(of: pending, detected: stale).isEmpty)
+        #expect(!JourneyRouteIdentity.detectedApplies(pending, detected: stale))
+        #expect(JourneyRouteIdentity.operatorNames(of: pending, detected: stale) == ["JR東日本"])
+    }
     private func train(type: String?, lines: [String]) -> Train {
         Train(id: "service", number: "テスト123号", trainType: type, company: "JR東日本",
               origin: "A", destination: "B",

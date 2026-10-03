@@ -10,6 +10,7 @@ struct LocalJourneyAutofillTests {
         train.stops[0].departure = "09:00"
         train.stops[1].arrival = "10:00"
         train.notes = "Preserve me"
+        train.routeConfirmation = .pending
         let proposal = try #require(LocalJourneyAutofill.proposal(train: train, choice: choice(["A", "B", "C", "D"])))
         #expect(!proposal.requiresConfirmation)
         #expect(proposal.train.stops.map(\.n02StationCode) == ["A", "B", "C", "D"])
@@ -21,6 +22,8 @@ struct LocalJourneyAutofillTests {
         #expect(proposal.train.routeSections?.count == 3)
         #expect(proposal.train.date == train.date)
         #expect(proposal.train.notes == train.notes)
+        #expect(proposal.train.routeConfirmation == .confirmed)
+        #expect(!proposal.train.requiresRouteConfirmation)
     }
 
     @Test("A new blank draft can select both endpoints without authoring visits first")

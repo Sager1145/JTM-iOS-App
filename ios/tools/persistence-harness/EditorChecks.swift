@@ -2,18 +2,15 @@ import Foundation
 import RailCore
 
 enum Region: String, Sendable {
-    case jp, tw, hk, mo, kr, us, ca
+    case jp, tw, hk, mo, kr
 
     var code: String { rawValue }
-    nonisolated static var northAmericaEnabled: Bool { false }
 
     static func resolved(_ train: Train) -> Region {
         Region(rawValue: train.region ?? "jp") ?? .jp
     }
 
-    static func isNorthAmerica(_ train: Train) -> Bool {
-        resolved(train) == .us || resolved(train) == .ca
-    }
+
 }
 
 extension Train {
@@ -41,6 +38,7 @@ enum MergedStore {
 final class RideStatusCenter {
     static let shared = RideStatusCenter()
     func publish(trainIDs: Set<String>) {}
+    func publish(pendingConfirmationIDs: Set<String>) {}
     func resolveAgain(_ train: Train) -> Bool { false }
 }
 

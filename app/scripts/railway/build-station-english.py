@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the seven-region English catalog without treating attribution as verification."""
+"""Build the five-region English catalog without treating attribution as verification."""
 import argparse
 from collections import Counter, defaultdict
 import hashlib
@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 
 APP = Path(__file__).resolve().parents[2]
-REGIONS = ("jp", "tw", "hk", "mo", "kr", "us", "ca")
+REGIONS = ("jp", "tw", "hk", "mo", "kr")
 VERIFIED_STATUSES = {"official_verified", "multiple_official_names"}
 
 
@@ -30,7 +30,7 @@ def resolve_reading(readings, line_id, code):
     return None, None
 
 
-def build_region(region, package, readings, jp_catalog=None, overrides=None, feeds=None, member_overrides=None):
+def build_region(region, package, readings, jp_catalog=None, overrides=None, member_overrides=None):
     grouped = {}
     for line in package["lines"]:
         for seq, station in enumerate(line["stations"]):
@@ -91,11 +91,6 @@ def build_region(region, package, readings, jp_catalog=None, overrides=None, fee
                       "source": source, "readingKey": reading_key}
             if evidence:
                 member["identityEvidence"] = evidence
-            if line.get("sourceFeed"):
-                feed = (feeds or {}).get(line["sourceFeed"], {})
-                member["datasetEvidence"] = {"feed": line["sourceFeed"],
-                    "url": feed.get("url"), "field": "stops.txt:stop_name",
-                    "note": "Retained builder output; original stop label and identity require source verification."}
             grouped.setdefault(code, []).append(member)
     result = {}
     unknown_overrides = set(overrides or {}) - set(grouped)
@@ -139,12 +134,10 @@ def build(app=APP):
                      "jp-station-english-metro-source.json", "jp-station-english-jre-source.json",
                      "jp-station-english-kyushu-source.json", "jp-station-english-manual.json"):
         tracked(f"data/{filename}")
-    registry = tracked("scripts/railway/na-feeds.json")
-    feeds = {row["slug"]: row for row in registry["feeds"]}
     overrides = {region: {} for region in REGIONS}
     member_overrides = {region: {} for region in REGIONS}
     review_reasons = {}
-    for suffix in ("na", "tw", "tw-afr", "kr", "jp", "jp-private", "jp-east", "jp-west", "jp-nankai", "jp-private-extra", "jp-shikoku", "jp-fukuoka", "next-official", "kr-second-pass"):
+    for suffix in ("tw", "tw-afr", "kr", "jp", "jp-private", "jp-east", "jp-west", "jp-nankai", "jp-private-extra", "jp-shikoku", "jp-fukuoka", "next-official", "kr-second-pass"):
         relative = f"data/station-english-verified-{suffix}.json"
         if not (app / relative).exists():
             continue
@@ -180,7 +173,7 @@ def build(app=APP):
         readings = tracked(f"data/station-readings{'-' + region if region != 'jp' else ''}.json")
         if region == "jp" and jp["packageVersion"] != package["version"]:
             raise ValueError("Japan English catalog is stale")
-        by_country[region] = build_region(region, package, readings, jp, overrides[region], feeds, member_overrides[region])
+        by_country[region] = build_region(region, package, readings, jp, overrides[region], member_overrides[region])
     catalog = {"schema": "station-english/1", "note":
         "All shipped station groups and line memberships. official_verified and multiple_official_names have reviewed station-specific official evidence for every membership. Multiple official names retain the operator-specific spellings. Dataset attribution and English coverage alone do not prove official correctness.",
         "inputSha256": inputs, "byCountry": by_country}

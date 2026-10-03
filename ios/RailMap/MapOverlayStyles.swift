@@ -202,6 +202,10 @@ final class MapOverlayStyles {
             ?? styles[key]?.alpha
     }
 
+    func hasRenderer(forKey key: String) -> Bool {
+        renderers[key] != nil
+    }
+
     /// Give an exiting batch its own key so a returning tier can mount while
     /// the old renderer finishes its fade.
     func rekey(from oldKey: String, to newKey: String) {

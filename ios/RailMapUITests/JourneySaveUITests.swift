@@ -23,7 +23,7 @@ final class JourneySaveUITests: XCTestCase {
         numberField.typeText(number + "\n")
 
         let vehicle = app.otherElements["rideEditorVehicleType"].textFields.firstMatch
-        vehicle.tap()
+        EditorUITestSupport.tap(vehicle, in: app)
         vehicle.typeText("E235")
 
         app.buttons["rideEditorNext"].tap()
@@ -106,10 +106,11 @@ final class JourneySaveUITests: XCTestCase {
         app.buttons["rideEditorNext"].tap()
         XCTAssertTrue(app.buttons["rideEditorSave"].waitForExistence(timeout: 8))
         app.buttons["rideEditorPrevious"].tap()
-        for _ in 0..<5 where !name.isHittable { app.swipeUp() }
+        XCTAssertTrue(revealNewGroupName(name, in: app), app.debugDescription)
         XCTAssertTrue(name.waitForExistence(timeout: 5))
         XCTAssertEqual(name.value as? String, "Rail holiday")
-        name.tap()
+        // Put the insertion point after the final character before replacing it.
+        name.coordinate(withNormalizedOffset: CGVector(dx: 0.98, dy: 0.5)).tap()
         name.typeText(XCUIKeyboardKey.delete.rawValue + "s\n")
         XCTAssertEqual(name.value as? String, "Rail holidas")
         app.buttons["rideEditorNext"].tap()
@@ -178,6 +179,8 @@ final class JourneySaveUITests: XCTestCase {
         let next = app.buttons["rideEditorNext"]
         XCTAssertTrue(next.waitForExistence(timeout: 30))
         next.tap()
+        let stop = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
+        XCTAssertTrue(EditorUITestSupport.reveal(stop, in: app), app.debugDescription)
         XCTAssertTrue(app.descendants(matching: .any)["rideEditorStop-0"]
             .waitForExistence(timeout: 8))
     }
@@ -196,6 +199,7 @@ final class JourneySaveUITests: XCTestCase {
 
     private func launchNewJourney() -> XCUIApplication {
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = [
             "-AppleLanguages", "(en)",
             "-AppleLocale", "en_US",

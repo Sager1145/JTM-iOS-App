@@ -47,15 +47,7 @@ public struct NetworkVisibilityPolicy: Equatable, Sendable {
     /// MapKit camera distance, including the globe overview.
     public static let overviewMinZoomMapLibre = -30
 
-    /// Operators whose every line stays in the overview regardless of rank:
-    /// the intercity networks a reader zoomed out to a whole continent still
-    /// expects to see, the way every Shinkansen and the THSR (rank 0) already
-    /// do. Amtrak's 36 rank-1 corridors and VIA Rail's four are the reason
-    /// this table exists — without it North America was empty below z4.
-    public static let overviewOperatorsByRegion: [String: Set<String>] = [
-        "us": ["Amtrak"],
-        "ca": ["Amtrak", "Via Rail Canada"],
-    ]
+    public static let overviewOperatorsByRegion: [String: Set<String>] = [:]
 
     /// Shipped packages use rank 0 for high-speed rail except Korea, whose
     /// three dedicated high-speed lines use rank 1. Restrict that compatibility

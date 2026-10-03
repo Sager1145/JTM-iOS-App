@@ -110,7 +110,7 @@ struct NetworkVisibilityPolicyTests {
         var root = URL(fileURLWithPath: #filePath)
         for _ in 0..<5 { root.deleteLastPathComponent() }
         var backboneCounts: [String: Int] = [:]
-        for region in ["jp", "tw", "hk", "mo", "kr", "us", "ca"] {
+        for region in ["jp", "tw", "hk", "mo", "kr"] {
             let package = try CompactPackage.load(contentsOf:
                 root.appendingPathComponent("app/public/rail/\(region)-2025.json"))
             let lengths = Visibility.groupLengthByLineId(package)
@@ -130,22 +130,15 @@ struct NetworkVisibilityPolicyTests {
             }
             #expect(previous == Set(package.lines.map(\.id)))
         }
-        // jp: nine Shinkansen; tw: THSR; kr: three 고속선; us: Acela, Brightline
-        // and Amtrak's current corridors; ca: VIA Rail and Amtrak corridors.
-        #expect(backboneCounts == ["jp": 9, "tw": 1, "kr": 3, "us": 41, "hk": 0, "mo": 0, "ca": 7])
+        // Japan's nine Shinkansen, Taiwan's THSR and Korea's three 고속선.
+        #expect(backboneCounts == ["jp": 9, "tw": 1, "kr": 3, "hk": 0, "mo": 0])
     }
 
-    @Test("Intercity operators stay in the overview regardless of rank; other rank-1 lines do not")
+    @Test("Japanese high-speed backbones stay in overview while ordinary rank-1 lines do not")
     func operatorBackbones() {
-        #expect(NetworkVisibilityPolicy.isOverviewBackbone(rank: 1, region: "us", operator: "Amtrak"))
-        #expect(NetworkVisibilityPolicy.isOverviewBackbone(rank: 1, region: "ca", operator: "Via Rail Canada"))
-        #expect(NetworkVisibilityPolicy.isOverviewBackbone(rank: 1, region: "ca", operator: "Amtrak"))
-        #expect(!NetworkVisibilityPolicy.isOverviewBackbone(rank: 1, region: "us", operator: "MBTA"))
         #expect(!NetworkVisibilityPolicy.isOverviewBackbone(rank: 1, region: "jp", operator: "Amtrak"))
         #expect(NetworkVisibilityPolicy.isOverviewBackbone(rank: 2, region: "jp", name: "山形新幹線"))
         #expect(!NetworkVisibilityPolicy.isOverviewBackbone(rank: 1, region: "jp", name: "東海道線"))
-        #expect(lineFloor(rank: 1, km: 350, region: "us", operator: "Amtrak") < -8)
-        #expect(lineFloor(rank: 1, km: 350, region: "us", operator: "Metra") == 3)
     }
 
     private func lineFloor(

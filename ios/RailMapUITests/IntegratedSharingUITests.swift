@@ -6,6 +6,7 @@ final class IntegratedSharingUITests: XCTestCase {
 
     func testBothPosterKindsPreviewInLightAndDarkWithSelectedScope() {
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-interface-language", "en"]
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "stats"
@@ -15,26 +16,46 @@ final class IntegratedSharingUITests: XCTestCase {
 
         let share = element("statisticsShareButton", in: app)
         XCTAssertTrue(share.waitForExistence(timeout: 120))
-        waitUntilEnabled(share)
+        // Select the scope under test before waiting for its figures. The
+        // initial all-region load is unrelated to these Japan/day posters.
         let region = element("regionScopeButton", in: app)
         region.tap()
         let japan = app.buttons["Japan"]
         XCTAssertTrue(japan.waitForExistence(timeout: 5), app.debugDescription)
         japan.tap()
         XCTAssertEqual(region.value as? String, "Japan")
+        waitUntilEnabled(share)
         let date = element("statisticsDateButton", in: app)
         date.tap()
-        let day = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "2026-07-03")).firstMatch
+        let day = app.buttons["statisticsCalendarDay-2026-07-03"]
+        // The calendar opens on its own month, independently of sample import.
+        // Reach the intended recorded day using the native calendar controls.
+        for _ in 0..<12 where !day.exists {
+            let month = element("statisticsCalendarMonth", in: app)
+            XCTAssertTrue(month.waitForExistence(timeout: 5))
+            let previous = app.buttons["statisticsCalendarPrevious"]
+            XCTAssertTrue(previous.exists)
+            previous.tap()
+        }
         XCTAssertTrue(day.waitForExistence(timeout: 5), app.debugDescription)
         day.tap()
+        let done = app.buttons["Done"]
+        XCTAssertTrue(done.waitForExistence(timeout: 5))
+        done.tap()
+        let picker = element("statisticsScopePicker", in: app)
+        let dismissed = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "exists == false"), object: picker)
+        XCTAssertEqual(XCTWaiter.wait(for: [dismissed], timeout: 8), .completed)
         XCTAssertTrue((date.value as? String ?? "").contains("2026-07-03"))
 
         for kind in ["map", "statistics"] {
             for appearance in ["Light", "Dark"] {
                 waitUntilEnabled(share)
                 share.tap()
-                let option = element(kind + "ShareOption", in: app)
-                XCTAssertTrue(option.waitForExistence(timeout: 5))
+                // UIKit's native menu exposes the submenu's visible label.
+                let option = app.buttons[kind == "map"
+                    ? "Ticket + railway map" : "Ticket + statistics"]
+                XCTAssertTrue(option.waitForExistence(timeout: 5), app.debugDescription)
                 option.tap()
                 // UIKit's nested menu carries the parent menu identifier on
                 // its actions. Select the visible appearance label instead.

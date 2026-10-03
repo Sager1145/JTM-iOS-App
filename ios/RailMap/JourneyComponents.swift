@@ -636,40 +636,8 @@ struct QuietActionGroup: View {
             }
             if !more.isEmpty { journeyRowMoreMenu(more) }
         }
-        // Optical centring, not layout centring — see `trailingHitSlack`.
-        .padding(.leading, trailingHitSlack(quiet, more: more,
-                                            labelsQuietActions: labelsQuietActions))
-        // Centred, not leading. These four controls are a group that sizes to
-        // its own content, so a leading row left a ragged strip of empty card
-        // to the right of More that read as a fifth control missing from the
-        // line. The row's own width is the same either way — only where the
-        // slack goes changes — and splitting it evenly makes the group read as
-        // one unit belonging to the card rather than one edge of it.
+        // All circular commands occupy their actual 40-point visual bounds.
         .frame(maxWidth: .infinity, alignment: .center)
-    }
-
-    /// The transparent slack the row's LAST control carries outside its own
-    /// ink, when that control is one of the circles.
-    ///
-    /// `journeyRowIcon` draws a 40-point circle inside a 44-point hit frame,
-    /// so a row ending in one is 5 points wider than it looks while the filled
-    /// pill that starts it is exactly as wide as its ink. Centring the layout
-    /// box therefore lands the visible group 2.5 points left of the card's
-    /// middle — measured, not assumed: 31 points of card to the left of the
-    /// pill against 38 to the right of More. Padding the leading edge by the
-    /// same slack moves the centre back by half of it and the ink is centred.
-    ///
-    /// Returned as 0 when the row ends in a labelled button, which states its
-    /// true width: the compensation exists for the circles, and applying it
-    /// unconditionally would push those rows off-centre in the other
-    /// direction.
-    private func trailingHitSlack(
-        _ quiet: [SecondaryAction], more: [SecondaryAction], labelsQuietActions: Bool
-    ) -> CGFloat {
-        let endsInCircle =
-            !more.isEmpty || quiet.last.map { $0 == .edit || !labelsQuietActions } == true
-        guard endsInCircle else { return 0 }
-        return (44 - SheetIconButton<Image>.visualSide) / 2
     }
 
     private func primaryButton(
@@ -800,8 +768,7 @@ struct QuietActionGroup: View {
             Text(localization.journeyText("ios.journey.moreActions", fallback: "More")))
     }
 
-    /// Icon-only controls share the text buttons' 40-point visual height and
-    /// the row's 44-point hit height. Accent-coloured glyphs match the quiet
+    /// Icon-only menu controls share one 40-point visual and layout size. Accent-coloured glyphs match the quiet
     /// playback button while the neutral fill keeps the primary action unique.
     private func journeyRowIcon(_ systemImage: String) -> some View {
         Image(systemName: systemImage)
@@ -809,7 +776,7 @@ struct QuietActionGroup: View {
             // Dynamic Type and this glyph lives in a 40-point circle that does
             // not, so at an accessibility size the icon grew straight out of
             // its own shape. `MapControlBar.ControlButton` fixes its glyph for
-            // exactly this reason: a control's meaning and its 44-point target
+            // exactly this reason: a control's meaning and its 40-point frame
             // do not get clearer by doubling the mark inside it.
             .font(.system(size: 15, weight: .semibold))
             .foregroundStyle(.tint)
@@ -817,7 +784,6 @@ struct QuietActionGroup: View {
                 width: SheetIconButton<Image>.visualSide,
                 height: SheetIconButton<Image>.visualSide)
             .railMenuControlSurface(in: Circle())
-            .frame(width: 44, height: 44)
             .contentShape(.rect)
     }
 
@@ -825,18 +791,9 @@ struct QuietActionGroup: View {
         Menu {
             menuItems(actions)
         } label: {
-            Label(
-                localization.journeyText("ios.journey.moreActions", fallback: "More"),
-                systemImage: "ellipsis"
-            )
-            .labelStyle(.iconOnly)
-            .font(.footnote.weight(.semibold))
-            .foregroundStyle(.tint)
-            .frame(minWidth: 44)
+            SheetIconLabel(systemImage: "ellipsis")
         }
-        .buttonStyle(RailCapsuleButtonStyle(visualHeight: actionButtonHeight))
-        .railMenuButtonStyle()
-        .railMinimumTouchTarget()
+        .buttonStyle(RailPressStyle())
         .accessibilityLabel(
             Text(localization.journeyText("ios.journey.moreActions", fallback: "More")))
     }

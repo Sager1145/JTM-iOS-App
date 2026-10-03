@@ -72,22 +72,14 @@ struct RailwayRouteChoicesTests {
             package: package, originCode: "A", destinationCode: "D").isEmpty)
     }
 
-    @Test("Connected split rows complete the same physical family at its shared station")
+    @Test("Same-family split rows still require verified junction evidence")
     func splitFamily() throws {
         let package = try fixture([
             line("first", stations: ["A", "B", "C"]),
             line("second", stations: ["C", "D", "E"]),
         ])
-        let route = try #require(RailwayRouteChoices.choices(
-            package: package, originCode: "A", destinationCode: "E").first)
-        #expect(route.stations.map(\.code) == ["A", "B", "C", "D", "E"])
-        #expect(route.lineIDs == ["first", "second"])
-        #expect(route.routeSections.count == 4)
-        #expect(route.routeSections.map { $0.lineIDs ?? [] } == [
-            ["first"], ["first"], ["second"], ["second"]])
         #expect(RailwayRouteChoices.choices(
-            package: package, originCode: "A", destinationCode: "E",
-            excludingStationCodes: ["C"]).isEmpty)
+            package: package, originCode: "A", destinationCode: "E").isEmpty)
     }
 
     @Test("Both loop directions include the closing physical interval")
@@ -98,80 +90,37 @@ struct RailwayRouteChoicesTests {
         #expect(choices.contains { $0.sectionCodes == ["loop@A:C"] })
     }
 
-    @Test("A branch can rejoin the trunk without revisiting a station")
+    @Test("An unverified branch cannot leave and rejoin a known trunk")
     func rejoiningBranch() throws {
         let package = try fixture([
             line("trunk", stations: ["A", "B", "C", "D", "E"]),
             line("branch", stations: ["D", "X", "B"]),
         ])
         let choices = RailwayRouteChoices.choices(package: package, originCode: "A", destinationCode: "E")
-        #expect(Set(choices.map { $0.stations.map(\.code) }) == Set([
-            ["A", "B", "C", "D", "E"], ["A", "B", "X", "D", "E"],
-        ]))
-        let branch = try #require(choices.first { $0.stations.contains { $0.code == "X" } })
-        #expect(branch.lineIDs == ["trunk", "branch", "trunk"])
-        #expect(branch.routeSections.map { $0.lineIDs ?? [] } == [
-            ["trunk"], ["branch"], ["branch"], ["trunk"],
-        ])
-        #expect(choices.allSatisfy { Set($0.stations.map(\.code)).count == $0.stations.count })
+        #expect(choices.map { $0.stations.map(\.code) } == [["A", "B", "C", "D", "E"]])
     }
 
-    @Test("A connected family may span more than three package rows")
+    @Test("A common family name cannot establish a chain of cross-row junctions")
     func longSplitFamily() throws {
         let package = try fixture([
             line("first", stations: ["A", "B"]), line("second", stations: ["B", "C"]),
             line("third", stations: ["C", "D"]), line("fourth", stations: ["D", "E"]),
         ])
-        let route = try #require(RailwayRouteChoices.choices(
-            package: package, originCode: "A", destinationCode: "E").first)
-        #expect(route.stations.map(\.code) == ["A", "B", "C", "D", "E"])
-        #expect(route.lineIDs == ["first", "second", "third", "fourth"])
+        #expect(RailwayRouteChoices.choices(
+            package: package, originCode: "A", destinationCode: "E").isEmpty)
     }
 
-    @Test("Hakodate trunk, Sawara branch and Nanae bypass form complete physical choices")
+    @Test("Hakodate candidates cannot claim complete branch topology from common station IDs")
     func hakodateConnections() throws {
         let package = try PortFixtures.package(country: "jp")
         let main = "jp-北海道旅客鉄道-函館線"
-        let sawara = main + "-2"
-        let bypass = main + "-p1"
         let choices = RailwayRouteChoices.choices(
             package: package, originCode: "000455", destinationCode: "000412")
-        #expect(choices.count == 4)
-        #expect(Set(choices.map(\.lineIDs)) == Set([
-            [main], [main, sawara, main], [main, bypass, main],
-            [main, bypass, sawara, main],
-        ]))
-        for choice in choices {
-            #expect(choice.stations.first?.name == "函館")
-            #expect(choice.stations.last?.name == "八雲")
-            #expect(Set(choice.stations.map(\.code)).count == choice.stations.count)
-            #expect(choice.routeSections.count == choice.stations.count - 1)
-            #expect(choice.routeSections.flatMap { $0.sectionCodes ?? [] } == choice.sectionCodes)
-            let reverseChoices = RailwayRouteChoices.choices(
-                package: package, originCode: "000412", destinationCode: "000455")
-            #expect(reverseChoices.count == 2)
-            #expect(reverseChoices.allSatisfy { !$0.lineIDs.contains(bypass) })
-            if !choice.lineIDs.contains(bypass) {
-                let reverse = try #require(reverseChoices
-                    .first { $0.sectionCodes == Array(choice.sectionCodes.reversed()) })
-                #expect(reverse.stations == Array(choice.stations.reversed()))
-                #expect(reverse.lineIDs == Array(choice.lineIDs.reversed()))
-            }
-        }
-        let branch = try #require(choices.first { $0.lineIDs == [main, sawara, main] })
-        let onuma = try #require(branch.stations.firstIndex { $0.code == "000427" })
-        let mori = try #require(branch.stations.firstIndex { $0.code == "000420" })
-        #expect(branch.stations[onuma...mori].map(\.name) == [
-            "大沼", "鹿部", "渡島沼尻", "渡島砂原", "掛澗", "尾白内", "東森", "森",
-        ])
-        let withoutMainStations = RailwayRouteChoices.choices(
-            package: package, originCode: "000455", destinationCode: "000412",
-            excludingStationCodes: ["000429", "000426"])
-        #expect(withoutMainStations.count == 1)
-        #expect(withoutMainStations.first?.lineIDs == [main, bypass, sawara, main])
+        #expect(choices.count == 1)
+        #expect(choices.first?.lineIDs == [main])
         #expect(RailwayRouteChoices.choices(
             package: package, originCode: "000455", destinationCode: "000412",
-            excludingStationCodes: ["000427"]).isEmpty)
+            excludingStationCodes: ["000429", "000426"]).isEmpty)
     }
 
     @Test("Every generated physical interval survives save/import/export and reaches AI input",
@@ -260,31 +209,22 @@ struct RailwayRouteChoicesTests {
         #expect(RailwayRouteChoices.choices(package: package, originCode: "A", destinationCode: "C").isEmpty)
     }
 
-    @Test("Explicit choices preserve paired alignments and separate platform geometry")
+    @Test("Paired direction metadata does not itself prove a junction to its parent line")
     func explicitSelectionPolicy() throws {
         var paired = line("paired", stations: ["B", "C"])
         paired["alignmentOf"] = "trunk"
         paired["alignmentDirection"] = "down"
         paired["stationOrderDirection"] = "down"
         let package = try fixture([line("trunk", stations: ["A", "B"]), paired])
-        let choice = try #require(RailwayRouteChoices.choices(
-            package: package, originCode: "A", destinationCode: "C").first)
-        #expect(choice.lineIDs == ["trunk", "paired"])
-        let network = RouteNetwork(lines: package.lines.map {
-            RouteNetwork.Line(lineId: $0.id, name: $0.name, operator: $0.operator,
-                isLoop: $0.isLoop, alignmentDirection: $0.alignmentDirection, parts: [],
-                intervals: RailIntervalCodes.intervals(for: $0), compactLine: $0)
-        })
-        let hints = RouteHints(requiredLineIDs: choice.lineIDs, sectionCodes: choice.sectionCodes,
-            fromStationCode: "A", toStationCode: "C")
-        #expect(network.sourceGeometry(for: hints)?.lines.count == 2)
-        #expect(network.directedIntervals(sectionCodes: choice.sectionCodes,
-            fromStationCode: "A", toStationCode: "C")?.map(\.direction) == [1, 1])
         #expect(RailwayRouteChoices.choices(
-            package: package, originCode: "C", destinationCode: "A").isEmpty)
+            package: package, originCode: "A", destinationCode: "C").isEmpty)
+        #expect(RailwayRouteChoices.choices(
+            package: package, originCode: "C", destinationCode: "B").isEmpty)
+        #expect(RailwayRouteChoices.choices(
+            package: package, originCode: "B", destinationCode: "C").count == 1)
     }
 
-    @Test("Deep split families enumerate the complete path without recursive station calls")
+    @Test("Deep row slices enumerate their intervals without recursive station calls")
     func deepSplitFamily() throws {
         let codes = (0...2048).map { "deep-\($0)" }
         func point(_ code: String) -> [Double] {
@@ -298,7 +238,7 @@ struct RailwayRouteChoicesTests {
              }]
         }
         let package = try fixture([
-            row("first", Array(codes[0...1024])), row("second", Array(codes[1024...2048])),
+            row("whole", codes),
         ])
         let choices = RailwayRouteChoices.choices(
             package: package, originCode: codes[0], destinationCode: codes[2048])
@@ -306,9 +246,9 @@ struct RailwayRouteChoicesTests {
         let choice = try #require(choices.first)
         #expect(choice.stations.map(\.code) == codes)
         #expect(choice.sectionCodes.count == 2048)
-        #expect(choice.lineIDs == ["first", "second"])
+        #expect(choice.lineIDs == ["whole"])
         #expect(choice.routeSections.map { $0.lineIDs ?? [] } ==
-            Array(repeating: ["first"], count: 1024) + Array(repeating: ["second"], count: 1024))
+            Array(repeating: ["whole"], count: 2048))
     }
 
     private func line(_ id: String, stations: [String], loop: Bool = false) -> [String: Any] {

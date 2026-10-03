@@ -9,21 +9,18 @@ struct RailwayRouteInferenceTests {
             line("direct", ["A", "D"], [1]),
             line("anchored", ["A", "B", "C", "D"], [1, 1, 3]),
         ])
-        let choice = try #require(RailwayRouteInference.choice(in: train(["A", "C", "D"]), package: package))
+        let choice = try #require(RailwayRouteInference.search(in: train(["A", "C", "D"]), package: package).choices.first)
         #expect(choice.stations.map(\.code) == ["A", "B", "C", "D"])
         #expect(choice.routeSections.count == 3)
         #expect(choice.sectionCodes == ["anchored@A:B", "anchored@B:C", "anchored@C:D"])
     }
 
-    @Test("Different line families connect only through identical station codes")
+    @Test("Different line families do not connect solely through identical station codes")
     func differentFamilies() throws {
         let package = try fixture([
             line("first", ["A", "B"], [2]), line("second", ["B", "C"], [3]),
         ])
-        let choice = try #require(RailwayRouteInference.choice(in: train(["A", "C"]), package: package))
-        #expect(choice.lineIDs == ["first", "second"])
-        #expect(choice.stations.map(\.code) == ["A", "B", "C"])
-        #expect(choice.routeSections.map { $0.lineIDs ?? [] } == [["first"], ["second"]])
+        #expect(RailwayRouteInference.search(in: train(["A", "C"]), package: package).choices.isEmpty)
     }
 
     @Test("Physical segment mileage chooses the shortest competing alignment deterministically")
@@ -31,7 +28,7 @@ struct RailwayRouteInferenceTests {
         let short = line("z-short", ["A", "X", "D"], [1, 1])
         let long = line("a-long", ["A", "Y", "D"], [3, 3])
         for rows in [[short, long], [long, short]] {
-            let choice = try #require(RailwayRouteInference.choice(in: train(["A", "D"]), package: fixture(rows)))
+            let choice = try #require(RailwayRouteInference.search(in: train(["A", "D"]), package: fixture(rows)).choices.first)
             #expect(choice.lineIDs == ["z-short"])
             #expect(choice.stations.map(\.code) == ["A", "X", "D"])
         }
@@ -40,11 +37,11 @@ struct RailwayRouteInferenceTests {
     @Test("Unresolved and disconnected stops do not produce proposals or proximity transfers")
     func unresolved() throws {
         let package = try fixture([line("a", ["A", "B"], [1]), line("b", ["X", "D"], [1])])
-        #expect(RailwayRouteInference.choice(in: train(["A", "D"]), package: package) == nil)
-        #expect(RailwayRouteInference.choice(in: train(["A", "missing"]), package: package) == nil)
+        #expect(RailwayRouteInference.search(in: train(["A", "D"]), package: package).choices.first == nil)
+        #expect(RailwayRouteInference.search(in: train(["A", "missing"]), package: package).choices.first == nil)
         var draft = train(["A", "B"])
         draft.stops[1].n02StationCode = nil
-        #expect(RailwayRouteInference.choice(in: draft, package: package) == nil)
+        #expect(RailwayRouteInference.search(in: draft, package: package).choices.first == nil)
     }
 
     @Test("Source traversal direction is enforced")
@@ -52,8 +49,8 @@ struct RailwayRouteInferenceTests {
         var forward = line("forward", ["A", "B", "C"], [1, 1])
         forward["permittedTraversal"] = "forward"
         let package = try fixture([forward])
-        #expect(RailwayRouteInference.choice(in: train(["A", "C"]), package: package)?.stations.map(\.code) == ["A", "B", "C"])
-        #expect(RailwayRouteInference.choice(in: train(["C", "A"]), package: package) == nil)
+        #expect(RailwayRouteInference.search(in: train(["A", "C"]), package: package).choices.first?.stations.map(\.code) == ["A", "B", "C"])
+        #expect(RailwayRouteInference.search(in: train(["C", "A"]), package: package).choices.first == nil)
     }
 
     @Test("Repeated station occurrences cannot skip physical intervals")
@@ -62,7 +59,7 @@ struct RailwayRouteInferenceTests {
         forward["permittedTraversal"] = "forward"
         var branch = line("branch", ["B", "X"], [10])
         branch["permittedTraversal"] = "forward"
-        let choice = try #require(RailwayRouteInference.choice(in: train(["A", "B", "D"]), package: fixture([forward, branch])))
+        let choice = try #require(RailwayRouteInference.search(in: train(["A", "B", "D"]), package: fixture([forward, branch])).choices.first)
         #expect(choice.stations.map(\.code) == ["A", "B", "C", "B", "D"])
         #expect(choice.sectionCodes == ["repeat@A:B", "repeat@B:C~1", "repeat@B:C~2", "repeat@B:D"])
     }
@@ -75,15 +72,16 @@ struct RailwayRouteInferenceTests {
         ])
         var draft = train(["A", "D"])
         draft.routePolicy = RoutePolicy(preferredLineNames: ["preferred"])
-        #expect(RailwayRouteInference.choice(in: draft, package: package)?.lineIDs == ["preferred"])
+        #expect(RailwayRouteInference.search(in: draft, package: package).choices.count == 2)
+        #expect(RailwayRouteInference.choice(in: draft, package: package) == nil)
         draft.routePolicy = nil
         draft.routeSections = [RouteSection(fromN02StationCode: "A", toN02StationCode: "D", lineIDs: ["preferred"])]
-        #expect(RailwayRouteInference.choice(in: draft, package: package)?.lineIDs == ["preferred"])
+        #expect(RailwayRouteInference.search(in: draft, package: package).choices.first?.lineIDs == ["preferred"])
         draft.routeSections?[0].lineIDs = ["missing"]
-        #expect(RailwayRouteInference.choice(in: draft, package: package) == nil)
+        #expect(RailwayRouteInference.search(in: draft, package: package).choices.first == nil)
     }
 
-    @Test("Source line boundaries absent from passenger calls remain ordered route constraints")
+    @Test("Authored cross-line boundaries cannot manufacture an unverified physical junction")
     func nonCallBoundary() throws {
         let package = try fixture([
             line("first", ["A", "P", "X"], [2, 2]),
@@ -95,13 +93,7 @@ struct RailwayRouteInferenceTests {
             RouteSection(fromN02StationCode: "A", toN02StationCode: "X", lineIDs: ["first"]),
             RouteSection(fromN02StationCode: "X", toN02StationCode: "B", lineIDs: ["second"]),
         ]
-        let before = draft
-        let choice = try #require(RailwayRouteInference.choice(in: draft, package: package))
-        #expect(choice.lineIDs == ["first", "second"])
-        #expect(choice.stations.map(\.code) == ["A", "P", "X", "Q", "B"])
-        #expect(choice.sectionCodes == ["first@A:P", "first@P:X", "second@Q:X", "second@B:Q"])
-        #expect(draft == before)
-        #expect(draft.stops.map(\.n02StationCode) == ["A", "P", "B"])
+        #expect(RailwayRouteInference.search(in: draft, package: package).choices.isEmpty)
     }
 
     @Test("Non-call boundaries cannot discard an authored stop or relax a known line chain")
@@ -115,7 +107,7 @@ struct RailwayRouteInferenceTests {
             RouteSection(fromN02StationCode: "A", toN02StationCode: "X", lineIDs: ["first"]),
             RouteSection(fromN02StationCode: "X", toN02StationCode: "B", lineIDs: ["second"]),
         ]
-        #expect(RailwayRouteInference.choice(in: draft, package: package) == nil)
+        #expect(RailwayRouteInference.search(in: draft, package: package).choices.first == nil)
     }
 
     @Test("High speed eligibility and service exceptions prevent incompatible physical proposals")
@@ -125,17 +117,16 @@ struct RailwayRouteInferenceTests {
         var suspended = line("suspended", ["A", "D"], [0.1])
         suspended["serviceStatus"] = "suspended"
         let package = try fixture([high, suspended, line("ordinary", ["A", "B", "D"], [2, 2])])
-        #expect(RailwayRouteInference.choice(in: train(["A", "D"]), package: package)?.lineIDs == ["ordinary"])
+        #expect(RailwayRouteInference.search(in: train(["A", "D"]), package: package).choices.first?.lineIDs == ["ordinary"])
         var draft = train(["A", "D"])
         draft.trainType = "shinkansen"
-        #expect(RailwayRouteInference.choice(in: draft, package: package)?.lineIDs == ["high"])
+        #expect(RailwayRouteInference.search(in: draft, package: package).choices.first?.lineIDs == ["high"])
     }
 
     @Test("Applying and undoing an inferred route restores exact non-call source boundaries and clocks")
     func boundaryUndo() throws {
         let package = try fixture([
-            line("first", ["A", "P", "X"], [1, 1]),
-            line("second", ["X", "Q", "B"], [1, 1]),
+            line("whole", ["A", "P", "X", "Q", "B"], [1, 1, 1, 1]),
         ])
         var draft = train(["A", "P", "B"])
         draft.stops[0].departure = "10:00"
@@ -143,11 +134,11 @@ struct RailwayRouteInferenceTests {
         draft.stops[1].departure = "10:12"
         draft.stops[2].arrival = "10:30"
         draft.routeSections = [
-            RouteSection(fromN02StationCode: "A", toN02StationCode: "X", lineIDs: ["first"]),
-            RouteSection(fromN02StationCode: "X", toN02StationCode: "B", lineIDs: ["second"]),
+            RouteSection(fromN02StationCode: "A", toN02StationCode: "X", lineIDs: ["whole"]),
+            RouteSection(fromN02StationCode: "X", toN02StationCode: "B", lineIDs: ["whole"]),
         ]
         let original = RailwayRouteEditing.preparing(draft)
-        let choice = try #require(RailwayRouteInference.choice(in: original, package: package))
+        let choice = try #require(RailwayRouteInference.search(in: original, package: package).choices.first)
         let plan = try #require(RailwayRouteEditing.plan(train: original, choice: choice,
             fromVisitID: original.stops.first?.routeEditing?.visitID,
             toVisitID: original.stops.last?.routeEditing?.visitID))
@@ -169,9 +160,20 @@ struct RailwayRouteInferenceTests {
         draft.routeSections = [RouteSection(fromN02StationCode: "A", toN02StationCode: "B",
             operatorNames: ["JR東日本"], lineIDs: ["joban"])]
         draft.routePolicy = RoutePolicy(preferredOperatorNames: ["JR東日本"])
-        #expect(RailwayRouteInference.choice(in: draft, package: package)?.stations.map(\.code) == ["A", "X", "B"])
+        #expect(RailwayRouteInference.search(in: draft, package: package).choices.first?.stations.map(\.code) == ["A", "X", "B"])
         draft.routeSections?[0].operatorNames = ["JR東海"]
-        #expect(RailwayRouteInference.choice(in: draft, package: package) == nil)
+        #expect(RailwayRouteInference.search(in: draft, package: package).choices.first == nil)
+    }
+
+    @Test("A single available row cannot prove complete network uniqueness")
+    func incompleteTopology() throws {
+        let package = try fixture([line("single", ["A", "B", "D"], [1, 1])])
+        let result = RailwayRouteInference.search(in: train(["A", "D"]), package: package)
+        #expect(result.choices.count == 1)
+        #expect(!result.isTruncated)
+        #expect(!result.topologyIsComplete)
+        #expect(result.uniqueChoice == nil)
+        #expect(RailwayRouteInference.choice(in: train(["A", "D"]), package: package) == nil)
     }
 
     private func train(_ codes: [String]) -> Train {

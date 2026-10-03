@@ -7,10 +7,6 @@ corridors and screen-space lanes already applied — the two rules the Web
 renderer applies at runtime in `rail-network.js` and which the native app has
 no second implementation of.
 
-The native-only St Clair West schematic below is an explicit presentation
-exception: the user requested a straight 512 and a separate on-line platform,
-while keeping the Line 1 platform and the canonical survey unchanged.
-
 Geometry is NOT cut up.  One blob per region holds every line's display parts
 whole as an independently decodable JSON chunk per line (manifest.json records
 each line's byte range), so a railway crossing the viewport is one continuous
@@ -28,7 +24,7 @@ fetch alongside it).
 Usage:
     python3 app/scripts/railway/build-display-network.py \
         --rail-dir app/public/rail \
-        --output app/data/raw/na-rail/display-network
+        --output /tmp/jtm-display-network
 """
 
 from __future__ import annotations
@@ -144,7 +140,7 @@ RENDER_GROUP_POLICY_FORMATS = frozenset({
 # simply never gets a family palette, the same tolerance the single-file
 # reader always had.
 RENDER_GROUP_POLICY_FILENAMES = ("na-render-groups.json", "jp-render-groups.json")
-REGIONS = ("jp", "tw", "hk", "mo", "kr", "us", "ca")
+REGIONS = ("jp", "tw", "hk", "mo", "kr")
 # Regions whose railways the native map draws as ONE continuous stroke per
 # chain of intervals, with the screen-space lane offset and corner rounding
 # baked into the geometry on device (RailCore ContinuousStroke, the port of
@@ -152,7 +148,7 @@ REGIONS = ("jp", "tw", "hk", "mo", "kr", "us", "ca")
 # each platform carries the vertex it sits on, instead of the geometry being
 # cut into per-lane pieces here. Must agree with rail-network.js's
 # CONTINUOUS_STROKE_COUNTRIES.
-CONTINUOUS_STROKE_REGIONS = frozenset({"us", "ca", "jp"})
+CONTINUOUS_STROKE_REGIONS = frozenset({"jp"})
 # Slot 8 of a `partsByRegion` row (build-display-lanes.mjs): that display
 # part's withheld spans, measured by rail-network.js on the part's own final
 # vertices. Read rather than re-derived — see `web_withheld_spans`.
@@ -873,22 +869,7 @@ def chains_from_parts_rows(
     for row in rows:
         part_index = int(row[1])
         first_interval, last_interval = int(row[2]), int(row[3])
-        # The reviewed native-only 512 schematic replaces its two station
-        # loop intervals before this step. A freshly groomed web row embeds
-        # the original loop, so reconstruct this one full-line part from the
-        # already transformed intervals, as the former plain row did.
-        native_st_clair = (
-            region == "ca" and line_id == "ttc-512" and len(rows) == 1
-            and part_index == 0 and len(row) > 6
-            and row[6] == "station-approach/groomed"
-            and len(stations) > 9
-            and stations[8][0] == "ca-official-st-clair-west"
-            and len(intervals[7]) == len(intervals[8]) == 2
-            and intervals[7][-1] == intervals[8][0] == stations[8][2:4]
-        )
-        if native_st_clair:
-            chain = chain_from_interval_range(intervals, 0, len(intervals) - 1, withheld)
-        elif first_interval < 0:
+        if first_interval < 0:
             if len(row) < 8 or not row[7]:
                 raise RuntimeError(
                     f"{region}|{line_id}: partsByRegion part {part_index} "
@@ -1193,68 +1174,6 @@ def terminal_path(
     if side == "end":
         return [list(point) for point in reversed(points[cut_index:])]
     raise RuntimeError(f"shared corridor side must be 'start' or 'end', got {side!r}")
-
-
-def straighten_st_clair_west_display(
-    region: str, package: dict, intervals_by_line: dict,
-    follow_rows: list[list],
-) -> None:
-    """User-requested native schematic: 512 goes straight through St Clair West.
-
-    This is a display choice, not a correction to surveyed track. Keep the
-    canonical package (including the streetcar station loop) and Line 1 intact.
-    The streetcar platform alone moves onto the Tweedsmuir–Bathurst chord.
-    Followers of 512 need the shortened display ruler, including its western
-    branch; otherwise a remote branch would follow the wrong stretch of track.
-    """
-    if region != "ca":
-        return
-    line_id = "ttc-512"
-    line = next((line for line in package["lines"] if line["id"] == line_id), None)
-    if line is None:
-        return
-    codes = [row[0] for row in line["stations"]]
-    station_code = "ca-official-st-clair-west"
-    index = codes.index(station_code)
-    if codes[index - 1:index + 2] != [
-        "ca-official-st-clair-ave-west-at-tweedsmuir-ave", station_code,
-        "ca-official-st-clair-ave-west-at-bathurst-st",
-    ]:
-        raise RuntimeError("ttc-512: St Clair West display neighbours changed")
-    intervals = intervals_by_line[line_id]
-    a, b = intervals[index - 1][0], intervals[index][-1]
-    station = line["stations"][index][2:4]
-    # Local metric projection; longitude degrees are shorter at this latitude.
-    longitude_scale = math.cos(math.radians((a[1] + b[1]) / 2))
-    dx, dy = (b[0] - a[0]) * longitude_scale, b[1] - a[1]
-    fraction = (((station[0] - a[0]) * longitude_scale * dx
-                 + (station[1] - a[1]) * dy) / (dx * dx + dy * dy))
-    if not 0 < fraction < 1:
-        raise RuntimeError("ttc-512: St Clair West no longer projects inside its display span")
-    projected = [a[0] + fraction * (b[0] - a[0]), a[1] + fraction * (b[1] - a[1])]
-    before = sum(line_length_metres(part) for part in intervals[:index - 1])
-    old_station = before + line_length_metres(intervals[index - 1])
-    old_end = old_station + line_length_metres(intervals[index])
-    intervals[index - 1] = _retain_source_interval(intervals[index - 1], [list(a), projected])
-    intervals[index] = _retain_source_interval(intervals[index], [projected, list(b)])
-    set_station_point(line, intervals, station_code, projected)
-    new_station = before + line_length_metres(intervals[index - 1])
-    new_end = new_station + line_length_metres(intervals[index])
-
-    def remap(measure: float) -> float:
-        if measure <= before:
-            return measure
-        if measure < old_station:
-            return before + (measure - before) * (new_station - before) / (old_station - before)
-        if measure < old_end:
-            return new_station + (measure - old_station) * (new_end - new_station) / (old_end - old_station)
-        return measure + new_end - old_end
-
-    for row in follow_rows:
-        if row[0] == line_id and row[1] == 0:
-            row[2], row[3] = remap(float(row[2])), remap(float(row[3]))
-        if row[4] == line_id and row[5] == 0:
-            row[6], row[7] = remap(float(row[6])), remap(float(row[7]))
 
 
 def apply_shared_corridors(
@@ -2926,8 +2845,6 @@ def build(
         released_intervals: set[tuple[str, int]] = set()
         corridor_counts = apply_shared_corridors(
             region, package, intervals_by_line, corridors, released_intervals)
-        straighten_st_clair_west_display(
-            region, package, intervals_by_line, follow_rows_by_region.get(region, []))
         # The reviewed alignment releases (display-releases.json, copied into
         # the lane artefact) open exactly the intervals they name, the same
         # way a reviewed corridor replacement does.

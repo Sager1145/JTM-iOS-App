@@ -49,12 +49,9 @@ public enum ContinuousStroke {
     /// follower is coincident with, which is invisible. At the vertex two
     /// parts of one line SHARE it is fatal: the neighbour has its own
     /// correspondence, or none at all, and the two answers cannot agree — the
-    /// shipped US/CA packages separated mta-…-city-terminal-zone by 9.5 px at
-    /// Jamaica (the two alignments are coincident to 0.0 m there; the whole
-    /// gap is 8.6 m of along-track slack in `canonTo`) and ttc-509 by 37.3 px
-    /// at Exhibition Loop (where the follow over-reaches by 270 m onto a loop
-    /// track ttc-511 does not share). So each follow's WEIGHT is held back one
-    /// blend width from a joint — the correspondence itself is untouched — and
+    /// correspondence can otherwise move one shared surveyed endpoint to
+    /// two different positions. Each follow's WEIGHT is held back one blend
+    /// width from a joint — the correspondence itself is untouched — and
     /// the shared vertex is drawn where the survey put it, which is the one
     /// answer both parts can reach. See
     /// ``substituteFollows(_:measures:anchors:follows:jointStart:jointEnd:)``.

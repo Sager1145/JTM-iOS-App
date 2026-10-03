@@ -7,7 +7,6 @@ import sys
 
 HERE = Path(__file__).resolve().parent
 CHECKERS = (
-    "verify-na-station-english.py",
     "verify-tw-station-english.py",
     "verify-tw-afr-transfer-station-english.py",
     "verify-kr-station-english.py",

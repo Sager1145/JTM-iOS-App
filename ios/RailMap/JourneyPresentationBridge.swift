@@ -68,6 +68,8 @@ enum JourneyBridge {
         for status: RideRouteStatus, _ localization: AppLocalization
     ) -> String {
         switch status {
+        case .pendingConfirmation:
+            return localization.editorText("ios.routeGuide.pending")
         case .needsReview(_, _, let gaps):
             return gapReason(gaps, localization)
         case .noRoute:

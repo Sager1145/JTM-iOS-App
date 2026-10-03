@@ -88,8 +88,23 @@ struct ContentView: View {
         // still `nil` (see `ItineraryStore.attach`), and a write during a view
         // update is one SwiftUI may answer with another update.
         let itineraries = ItineraryStore()
-        let library = RideLibrary()
-        itineraries.attach(library)
+        let storage: RideStorage
+#if DEBUG
+        if let value = ProcessInfo.processInfo.environment["RAILMAP_UI_TEST_STORAGE_ID"],
+            let id = UUID(uuidString: value)
+        {
+            // A UI case owns this store across its relaunches. Sample loading
+            // uses the real merge/save path without inheriting another case.
+            let directory = URL.applicationSupportDirectory
+                .appending(path: "UITestStores/\(id.uuidString)/Rides", directoryHint: .isDirectory)
+            storage = RideStorage(directory: directory)
+        } else {
+            storage = .shared
+        }
+#else
+        storage = .shared
+#endif
+        let library = RideLibrary(storage: storage)
         _itineraries = State(initialValue: itineraries)
         _library = State(initialValue: library)
     }
@@ -245,8 +260,7 @@ struct ContentView: View {
                 // build does not know is a stale preference, not a request for
                 // every network at once.
                 let region = Region(rawValue: regionScopeCode) ?? .jp
-                // A scope the North America switch now hides is 全部, not an
-                // empty log that looks like the rides were deleted.
+                // An unavailable scope falls back to the combined log.
                 return region.isEnabled ? region : nil
             },
             set: { regionScopeCode = $0?.rawValue ?? Self.allRegionsCode })

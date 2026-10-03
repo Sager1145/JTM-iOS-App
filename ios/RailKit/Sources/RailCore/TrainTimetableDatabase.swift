@@ -648,7 +648,7 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
                 [$0.fromN02StationCode, $0.toN02StationCode].compactMap { $0 }
             }
         return codes.filter { !$0.isEmpty }.allSatisfy { code in
-            if ["tw", "hk", "mo", "kr", "us", "ca"].contains(where: { code.lowercased().hasPrefix($0 + "-") }) {
+            if ["tw", "hk", "mo", "kr"].contains(where: { code.lowercased().hasPrefix($0 + "-") }) {
                 return false
             }
             return train.region == "jp" || code.hasPrefix("jp-official-")

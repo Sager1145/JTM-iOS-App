@@ -1,0 +1,424 @@
+{
+  "format": "jtm-physical-rail-junctions-v1",
+  "policy": "Only evidenced existing physical endpoints connect; passenger transfers and display seams do not add rail edges.",
+  "junctions": [
+    {
+      "id": "oshiage-tobu-hanzomon",
+      "region": "jp",
+      "station": "押上",
+      "stationCode": "003526",
+      "lineIDs": [
+        "jp-東武鉄道-伊勢崎線-2",
+        "jp-東京地下鉄-11号線半蔵門線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "東武鉄道",
+          "lineName": "伊勢崎線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          139.81374,
+          35.70843
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東京地下鉄",
+          "lineName": "11号線半蔵門線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          139.81374,
+          35.70843
+        ]
+      },
+      "evidence": [
+        "https://www.tobu.co.jp/railway/guide/station/info/1120.html",
+        "https://www.tokyometro.jp/station/oshiage/yardmap/index_print.html",
+        "https://www.tobu.co.jp/corporation/history/fhistory07.html"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json: identical existing surveyed vertex on both named railway identities",
+      "reviewedAt": "2026-10-03",
+      "validFrom": "2003-03-19",
+      "validTo": null,
+      "temporalEvidence": "Official opening/through-operation start establishes earliest accepted connection date; absence of a closing date is not a future timetable guarantee."
+    },
+    {
+      "id": "oshiage-keisei-asakusa",
+      "region": "jp",
+      "station": "押上",
+      "stationCode": "003526",
+      "lineIDs": [
+        "jp-京成電鉄-押上線",
+        "jp-東京都-1号線浅草線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "京成電鉄",
+          "lineName": "押上線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          139.81324,
+          35.71072
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東京都",
+          "lineName": "1号線浅草線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          139.81324,
+          35.71072
+        ]
+      },
+      "evidence": [
+        "https://www.keisei.co.jp/keisei/tetudou/accessj/oshiage.php",
+        "https://www.keisei.co.jp/keisei/tetudou/accessj/assets/pdf/sta_oshiage.pdf",
+        "https://www.kotsu.metro.tokyo.jp/about/ayumi/subway.html"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json: identical existing surveyed vertex on both named railway identities",
+      "reviewedAt": "2026-10-03",
+      "validFrom": "1960-12-04",
+      "validTo": null,
+      "temporalEvidence": "Official opening/through-operation start establishes earliest accepted connection date; absence of a closing date is not a future timetable guarantee."
+    },
+    {
+      "id": "shibuya-denentoshi-hanzomon",
+      "region": "jp",
+      "station": "渋谷",
+      "stationCode": "003922",
+      "lineIDs": [
+        "jp-東急電鉄-田園都市線",
+        "jp-東京地下鉄-11号線半蔵門線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "東急電鉄",
+          "lineName": "田園都市線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          139.69997,
+          35.65945
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東京地下鉄",
+          "lineName": "11号線半蔵門線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          139.69997,
+          35.65945
+        ]
+      },
+      "evidence": [
+        "https://www.tokyometro.jp/news/2023/214826.html",
+        "https://www.tokyu.co.jp/history/chapter05_2_1/"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json: identical existing surveyed vertex on both named railway identities",
+      "reviewedAt": "2026-10-03",
+      "validFrom": "1978-08-01",
+      "validTo": null,
+      "temporalEvidence": "Official opening/through-operation start establishes earliest accepted connection date; absence of a closing date is not a future timetable guarantee."
+    },
+    {
+      "id": "shibuya-toyoko-fukutoshin",
+      "region": "jp",
+      "station": "渋谷",
+      "stationCode": "003922",
+      "lineIDs": [
+        "jp-東急電鉄-東横線",
+        "jp-東京地下鉄-13号線副都心線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "東急電鉄",
+          "lineName": "東横線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          139.70252,
+          35.65908
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東京地下鉄",
+          "lineName": "13号線副都心線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          139.70252,
+          35.65908
+        ]
+      },
+      "evidence": [
+        "https://www.tokyu.co.jp/railway/train-history/ty/",
+        "https://www.tokyu.co.jp/history/chapter08_2_1/",
+        "https://www.tokyometro.jp/news/2012/pdf/20120724metronews_soutyoku.pdf"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json: identical existing surveyed vertex on both named railway identities",
+      "reviewedAt": "2026-10-03",
+      "validFrom": "2013-03-16",
+      "validTo": null,
+      "temporalEvidence": "Official opening/through-operation start establishes earliest accepted connection date; absence of a closing date is not a future timetable guarantee."
+    },
+    {
+      "id": "chayamachi-uno-honshi-bisan",
+      "region": "jp",
+      "station": "茶屋町",
+      "stationCode": "007662",
+      "lineIDs": [
+        "jp-西日本旅客鉄道-宇野線",
+        "jp-西日本旅客鉄道-本四備讃線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "西日本旅客鉄道",
+          "lineName": "宇野線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          133.82593,
+          34.57818
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "西日本旅客鉄道",
+          "lineName": "本四備讃線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          133.82593,
+          34.57818
+        ]
+      },
+      "evidence": [
+        "https://www.jb-honshi.co.jp/corp_index/company/integrated_report/pdf/2022_booklet_disclosure_03.pdf",
+        "https://www.westjr.co.jp/press/article/2013/02/page_3318.html",
+        "https://www.jehdra.go.jp/torikumi/tetudousisetu.html"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json features 7068/9679 share the existing north station survey vertex; stations 007662/007663 use the identical surveyed station segment. This is a named-line centerline boundary, not an individual platform or surveyed turnout location. No other shared vertices or operator boundaries are connected.",
+      "reviewedAt": "2026-10-03",
+      "validFrom": "1988-03-20",
+      "validTo": null,
+      "temporalEvidence": "JB Honshi 2022 management booklet PDF page 5 (printed 42), railway rows 5/6: actual Chayamachi–Kojima opening on 1988-03-20 and physical connection with Uno Line at Chayamachi. Date establishes the named connection, not historical fidelity of every current survey vertex."
+    },
+    {
+      "id": "kojima-honshi-bisan-operator-boundary",
+      "region": "jp",
+      "station": "児島",
+      "stationCode": "007919",
+      "lineIDs": [
+        "jp-西日本旅客鉄道-本四備讃線",
+        "jp-四国旅客鉄道-本四備讃線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "西日本旅客鉄道",
+          "lineName": "本四備讃線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          133.8079,
+          34.4638
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "四国旅客鉄道",
+          "lineName": "本四備讃線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          133.8079,
+          34.4638
+        ]
+      },
+      "evidence": [
+        "https://www.jb-honshi.co.jp/corp_index/company/integrated_report/pdf/2022_booklet_disclosure_03.pdf",
+        "https://www.jehdra.go.jp/torikumi/tetudousisetu.html"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json features 9682/5502 share this existing station survey endpoint. The reviewed continuous Chayamachi–Utazu physical railway changes operator at Kojima; this source identity boundary is not a georeferenced legal meterpost or an individual turnout, and does not connect every platform. No new geometric segment is introduced.",
+      "reviewedAt": "2026-10-03",
+      "validFrom": "1988-04-10",
+      "validTo": null,
+      "temporalEvidence": "JB Honshi 2022 booklet PDF page 5 (printed 42), row 2 names JR West Chayamachi–Kojima and JR Shikoku Kojima–Utazu within the same full Chayamachi–Utazu railway; row 6 specifies conventional double track; row 5 records actual Kojima–Utazu opening 1988-04-10. This establishes named physical continuity, not historical fidelity of every present survey vertex."
+    },
+    {
+      "id": "shiojiri-chuo-shinonoi",
+      "region": "jp",
+      "station": "塩尻",
+      "stationCode": "002616",
+      "lineIDs": [
+        "jp-東日本旅客鉄道-中央線",
+        "jp-東日本旅客鉄道-篠ノ井線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "中央線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          137.94792,
+          36.11571
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "篠ノ井線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          137.94792,
+          36.11571
+        ]
+      },
+      "evidence": [
+        "https://dl.ndl.go.jp/view/prepareDownload?contentNo=1&itemId=info%3Andljp%2Fpid%2F10432303",
+        "https://www.jreast.co.jp/estation/stations/img/floormap/0774_1f-2f.png",
+        "https://crd.ndl.go.jp/reference/entry/reference/show?id=1000323964"
+      ],
+      "geometryEvidence": "Existing JR East Chuo feature 16037 and Shinonoi feature 14543 share the station segment; this north endpoint joins the Shinonoi continuation feature 14537. JNR engineering figure 1 shows the current Enrei Chuo East approach physically continuing through Shiojiri into the Shinonoi line toward Matsumoto; JR East station diagram corroborates the named-line rail continuity. One source centerline identity transition, not a georeferenced turnout or every-platform connection. JR Central remains independent.",
+      "reviewedAt": "2026-10-03",
+      "validFrom": "1983-07-05",
+      "validTo": null,
+      "temporalEvidence": "JNR structural design office author Nagayama, Soil and Foundation 31-9 (308), printed page20, 1983: actual Enrei-route operation began July5; manuscript received1983-07-26. This conservative date covers the current approach geometry, rather than applying the1902 station opening or1982 relocation to every current vertex. Current operator names identify inherited railway abstractions, not historical corporate existence."
+    },
+    {
+      "id": "iwanuma-joban-tohoku",
+      "region": "jp",
+      "station": "岩沼",
+      "stationCode": "001228",
+      "lineIDs": [
+        "jp-東日本旅客鉄道-常磐線",
+        "jp-東日本旅客鉄道-東北線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "常磐線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          140.86437,
+          38.11279
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "東北線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          140.86437,
+          38.11279
+        ]
+      },
+      "evidence": [
+        "https://wwwtb.mlit.go.jp/tohoku/content/000175092.pdf",
+        "https://www.city.iwanuma.miyagi.jp/shisei/gaiyo/gaiyo/index.html",
+        "https://www.jreast.co.jp/estation/stations/img/floormap/0191_1f-2f.png"
+      ],
+      "geometryEvidence": "Original features 14770/16476 share the station segment and this north endpoint continues into Tohoku feature16501. MLIT reconstruction Fig1.3.6 Sendai inset depicts actual restored Joban branch joining Tohoku at Iwanuma. Official city description identifies the physical railway junction. This is one source line-identity boundary, not a georeferenced turnout or connection of all24 shared vertices. Nippori remains separate.",
+      "reviewedAt": "2026-10-03",
+      "validFrom": "2011-04-21",
+      "validTo": null,
+      "temporalEvidence": "Conservative documented-existing window, not original opening: MLIT Tohoku Sept2012 reconstruction record PDFp46/printed44 restored railway map dated2011-04-21; JR East engineering chapter PDFp119/printed117 records completed Watari–Iwanuma restoration2011-04-12. Original1897 opening unverified from primary evidence. Earlier physical continuity is not disproven, but is not authorized by this reviewed interval. Every traversed source edge retains its own separate history validity."
+    },
+    {
+      "id": "utazu-honshi-bisan-yosan-eastern-bypass",
+      "region": "jp",
+      "station": "宇多津",
+      "stationCode": "008252",
+      "lineIDs": [
+        "jp-四国旅客鉄道-本四備讃線",
+        "jp-四国旅客鉄道-予讃線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "四国旅客鉄道",
+          "lineName": "本四備讃線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          133.82565,
+          34.31357
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "四国旅客鉄道",
+          "lineName": "予讃線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          133.82565,
+          34.31357
+        ]
+      },
+      "evidence": [
+        "https://www.town.utazu.lg.jp/uploaded/attachment/2792.pdf",
+        "https://www.jb-honshi.co.jp/corp_index/company/integrated_report/pdf/2022_booklet_disclosure_03.pdf",
+        "https://www.jr-shikoku.co.jp/04_company/information/shikoku_trainnetwork/5-1.pdf"
+      ],
+      "geometryEvidence": "Existing Honshi Bisan feature 5506 eastern bypass meets Yosan features 5601/5602 at this exact surveyed vertex. The municipal aerial photograph and three-arm description identify the physical Kojima–Sakaide bypass separately from the Utazu station arm. Only this named source centerline identity boundary is accepted; it does not join every shared vertex, platform, or parallel track, or certify individual turnout locations and permitted switch movements.",
+      "reviewedAt": "2026-10-03",
+      "validFrom": "2019-10-18",
+      "validTo": null,
+      "temporalEvidence": "Conservative verified-existing facility evidence window, not an arm opening date: JR Shikoku document dated 2019-10-18, PDF page 27 (printed 25), describes maintained Shikoku-side railway facilities including the short-cut line. Municipal guide PDF page 1 (right printed 8) physically documents all three triangle arms. JB 2022 facility booklet PDF page 5 (printed 42), row 6, records the physical Yosan connection at Utazu; row 5 records actual Kojima–Utazu opening 1988-04-10, which is not used to infer precise individual-arm commissioning or historical fidelity of every current survey vertex. Earlier physical continuity is not disproven; every traversed source edge retains its separate history validity."
+    },
+    {
+      "id": "utazu-honshi-bisan-yosan-station-arm",
+      "region": "jp",
+      "station": "宇多津",
+      "stationCode": "008252",
+      "lineIDs": [
+        "jp-四国旅客鉄道-本四備讃線",
+        "jp-四国旅客鉄道-予讃線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "四国旅客鉄道",
+          "lineName": "本四備讃線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          133.81426,
+          34.30712
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "四国旅客鉄道",
+          "lineName": "予讃線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          133.81426,
+          34.30712
+        ]
+      },
+      "evidence": [
+        "https://www.town.utazu.lg.jp/uploaded/attachment/2792.pdf",
+        "https://www.jb-honshi.co.jp/corp_index/company/integrated_report/pdf/2022_booklet_disclosure_03.pdf",
+        "https://www.jr-shikoku.co.jp/04_company/information/shikoku_trainnetwork/5-1.pdf"
+      ],
+      "geometryEvidence": "Existing Honshi Bisan approach 5500 and station segment 5501 meet Yosan approach 5603 and station segment 5606 at this exact surveyed north station endpoint. Bridge feature 5504 continues through western arm 5505 and approach 5500 onto Yosan station segment 5606 and westward feature 5614 toward Marugame. The reviewed municipal Utazu–Kojima arm and JB facility connection at Utazu establish one named source centerline identity boundary, not every platform or shared vertex, a surveyed turnout/legal meterpost, or permitted switch movements.",
+      "reviewedAt": "2026-10-03",
+      "validFrom": "2019-10-18",
+      "validTo": null,
+      "temporalEvidence": "Conservative verified-existing facility evidence window, not an arm opening date: JR Shikoku document dated 2019-10-18, PDF page 27 (printed 25), describes maintained Shikoku-side railway facilities including the short-cut line. Municipal guide PDF page 1 (right printed 8) physically documents all three triangle arms. JB 2022 facility booklet PDF page 5 (printed 42), row 6, records the physical Yosan connection at Utazu; row 5 records actual Kojima–Utazu opening 1988-04-10, which is not used to infer precise individual-arm commissioning or historical fidelity of every current survey vertex. Earlier physical continuity is not disproven; every traversed source edge retains its separate history validity."
+    }
+  ]
+}

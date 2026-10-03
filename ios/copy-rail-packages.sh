@@ -21,15 +21,23 @@ else
     target_dir="${1:?usage: copy-rail-packages.sh <destination>}"
 fi
 
-# Canonical normalized facts are authoritative. Rebuild a stale derived
-# timetable before copying it, then refuse a mismatched solver/network snapshot.
-# This also refreshes RailKit's resource for package tests without touching facts.
-if ! python3 "$here/tools/verify-train-timetable-artifact.py" >/dev/null; then
-    python3 "$here/tools/build-train-timetable-db.py"
-    python3 "$here/tools/verify-train-timetable-artifact.py"
+# Resource generation is an explicit maintenance step. A build consumes one
+# verified snapshot and never rewrites source-tree artifacts behind SwiftPM.
+if ! python3 "$here/tools/verify-train-timetable-artifact.py"; then
+    echo "error: stale timetable — run python3 ios/tools/build-train-timetable-db.py, review the generated artifacts, then rebuild" >&2
+    exit 1
 fi
 
 mkdir -p "$target_dir"
+cp -p "$here/../app/data/physical-rail-junctions.json" "$target_dir/physical-rail-junctions.json"
+# Retired resources must disappear from incremental bundles as well.
+for country in us ca; do
+    for family in stations rail-sections station-readings station-names rail-history train-store; do
+        rm -f "$target_dir/$family-$country.json"
+    done
+    rm -f "$target_dir/$country-2025.json"
+done
+rm -rf "$target_dir/rail/operator-logos/na"
 
 # Guard for directories this script fully owns: it deletes them before a
 # `ditto` merge so resources removed from the source do not linger in the
@@ -49,7 +57,7 @@ prune_owned_dir() {
     esac
 }
 
-for country in jp tw hk mo kr us ca; do
+for country in jp tw hk mo kr; do
     package="$source_dir/$country-2025.json"
     if [ ! -f "$package" ]; then
         echo "error: missing $package — is the repository complete?" >&2
@@ -79,7 +87,7 @@ python3 "$source_dir/../../scripts/railway/build-display-network.py" \
 # The route pipeline reads three additional country-scoped datasets. They are
 # copied under the web app's own resource names so the native loader can apply
 # the same `countrySuffixed` rule without maintaining a second manifest.
-for country in jp tw hk mo kr us ca; do
+for country in jp tw hk mo kr; do
     if [ "$country" = "jp" ]; then
         suffix=""
     else
@@ -87,9 +95,7 @@ for country in jp tw hk mo kr us ca; do
     fi
 
     families="stations rail-sections station-readings"
-    if [ "$country" != "us" ] && [ "$country" != "ca" ]; then
-        families="$families station-names"
-    fi
+    families="$families station-names"
     for family in $families; do
         resource="$here/../app/data/$family$suffix.json"
         if [ ! -f "$resource" ]; then
@@ -186,7 +192,6 @@ done
 
 for dataset in \
     sample-data sample-data-tw sample-data-hk sample-data-mo sample-data-kr \
-    sample-data-us sample-data-ca \
     new-year-grand-loop-data tokyo-limited-express-loop-data
 do
     source="$here/../app/data/$dataset"
@@ -222,7 +227,7 @@ cp -p "$catalog" "$target_dir/Localizable.json"
 # The five country stores plus the two special itineraries are exactly the set
 # behind index.html's 載入*示例資料 buttons.
 for store in train-store train-store-tw train-store-hk train-store-mo \
-    train-store-kr train-store-us train-store-ca
+    train-store-kr
 do
     file="$here/../app/data/$store.json"
     if [ -f "$file" ]; then

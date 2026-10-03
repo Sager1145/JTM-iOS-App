@@ -17,7 +17,10 @@ phase. There are no remote dependencies.
         NetworkLOD           what is drawn at a zoom — ours, not a port
         GlassStyle           Liquid Glass on 26+, material below
       RailKit/               local package
-        Sources/RailCore/    the ported pure tier (Foundation only)
+        Sources/RailCore/    domain algorithms (Foundation; scoped read-only SQLite)
+        Sources/RailPresentation/ platform-free display rules
+        Sources/RailApplication/ snapshot use cases, independent of presentation
+        Tests/RailApplicationTests/ import, editing and mileage contracts
         Tests/RailCoreTests/ parity against the JavaScript, via port-fixtures/
       PORTING.md             how a function gets ported
       verify.sh              the gate
@@ -43,9 +46,10 @@ DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer \
 
 ## The rule this whole directory exists to enforce
 
-`RailCore` imports Foundation and nothing else. No MapKit, no SwiftUI, no
-storage. That is not tidiness — it is what makes the port checkable. Because
-`RailCore` has no platform underneath it, the same functions can be run against
+`RailCore` imports Foundation, with SQLite3 restricted to the read-only
+`TrainTimetableDatabase`. It has no MapKit, SwiftUI or app-owned persistence.
+`RailPresentation` and `RailApplication` depend on Core independently; neither
+imports the other. The domain functions can be run against
 the same inputs as the JavaScript, and `port-fixtures/` at the repository root
 holds those inputs and the answers the JavaScript gives.
 
@@ -95,11 +99,10 @@ bead diameter in `railmap-style.js` are measured against macOS 「地圖」→
 大眾運輸 at 東京駅. Putting the railway back over the reference it was designed
 against is the shorter distance.
 
-The standard basemap uses MapKit's default emphasis normally and muted emphasis
-when a journey is selected. Roads and terrain remain visible at normal
-brightness; Apple's place names become less prominent, while the
-app's station names remain available. MapKit's muted style still shows some
-geographic labels. Only the railway is tiered by zoom (see `NetworkLOD`). Points
+The standard basemap always uses MapKit's default emphasis, including while a
+journey is selected. Highlighting changes railway styling without changing the
+basemap configuration or triggering a muted-cartography transition. Only the
+railway is tiered by zoom (see `NetworkLOD`). Points
 of interest are excluded so Apple's station pins do not compete with our own
 station marks. Picking a journey frames its complete route even from an overview;
 its highlight fades in and out, and another pick retargets the running fade.
@@ -154,6 +157,32 @@ annotation layouts until settling; playback defers installation.
 Network overlay preparation and overlay installation remain separate steps;
 style-only updates retain their independent path. Playback, ride markers and layer
 styles remain in `MapPlaybackLayer`, `MapRideMarkers` and `MapLayers`.
+
+`RailApplication` owns import preflight/staging, typed draft validation and
+cached mileage matching. App stores retain cancellation acceptance, generation
+checks and publication. `RideLibrary` owns save coalescing and visible status;
+`RidePersistenceQueue` orders operations and `RideStorage` performs disk access.
+Debug UI tests can set `RAILMAP_UI_TEST_STORAGE_ID` to a UUID. AppShell injects
+an isolated RideStorage directory for that case, preserved across its relaunches.
+This prevents sample merges in one test from changing another test's statistics;
+normal launches and release builds keep the historical store location.
+
+Map interaction indexes, label scheduling/election caches and debug diagnostics
+belong to `MapInteractionCoordinator`, `MapStationLabelCoordinator` and
+`MapRenderDiagnostics`. The map, player and authoritative stores retain their
+existing AppShell lifetimes.
+
+Every active Swift source has an explicit responsibility in `source-ownership.json`.
+Run `ios/verify.sh --boundaries` for the fast ownership/import check.
+`ios/verify.sh --native` builds the packages and runs native lifecycle/source
+contracts; the full package suite remains in `--core` and the default gate. Adding a
+source requires assigning its owner and verification entry, not extending a
+catch-all directory glob. See `FULL_CODEBASE_REFACTOR_PLAN.md` and
+`REFACTOR_FEATURE_MATRIX.md` for the migration scope and remaining acceptance.
+
+Resource assembly consumes verified inputs. If a timetable is stale, run
+`python3 ios/tools/build-train-timetable-db.py` explicitly and review its outputs;
+Xcode no longer rewrites source-tree artifacts during a build.
 
 Run `ios/verify.sh` for fixture parity, Swift tests, app compilation and source
 contracts. This does not execute UI tests. Run
@@ -319,7 +348,7 @@ Native offsets also derive tangents from significant alignment vertices and
 interpolate their miter vectors along each segment. This retains every station
 and lane-ramp sample without letting a near-collinear follow sample reverse the
 offset edge beside a bend. Previously, fold cleanup could delete both points
-and turn the Highland Avenue–Orange curve into a 760 m chord at app zoom 13.
+and turn a surveyed bend into a long chord at app zoom 13.
 Cleanup protects the surveyed alignment's significant vertices at the existing
 0.0625 pt tolerance, including moderate bends made sharper by lane offsets. It
 removes redundant folded samples one at a time and rechecks their neighbours.
@@ -333,13 +362,12 @@ Run the production geometry sweep with:
 
 ```sh
 python3 ios/tools/audit-zoom-chords.py \
-  --json /tmp/jtm-zoom-chords.json --check-orange --fail-on-candidates
+  --json /tmp/jtm-zoom-chords.json --fail-on-candidates
 ```
 
-The tool loads all seven shipped display models, compiles the actual Swift
-stroke/LOD/simplifier code, and checks the follow, offset, fillet and final
-simplification stages at app zooms 10–16. The Orange regression additionally
-uses 33 zooms from 12–16 in 0.125 increments. Each is a cold build; camera-history
+The tool loads all five supported regional display models, compiles the actual
+Swift stroke/LOD/simplifier code, and checks the follow, offset, fillet and final
+simplification stages at app zooms 10–16. Each is a cold build; camera-history
 hysteresis is exercised by the simulator tests instead. Findings are geometric
 review candidates, not evidence that a surveyed alignment is wrong.
 Self-intersection diagnostics are reported separately: source loops, repeated
@@ -347,30 +375,21 @@ vertices and grade-separated crossings require review. `--fail-on-candidates`
 gates visible skipped bends; `--fail-on-crossings` additionally gates those raw
 intersection warnings.
 
-`MapZoomPerformanceTests` exercises five zooms each over Japan, Tokyo,
-Hoboken/Newport, the Hudson/Penn Station corridor and two Orange bend cameras. It checks
-camera progress, covered nonempty overlays, no gesture-time rebuild and gross
-display-link delivery stalls; these main-run-loop measurements do not measure GPU presentation.
-The two dense US cameras also require visible green, blue and orange railway pixels
-after every zoom and zero lines dropped by the vertex budget. Initial and settled
-screenshots are retained for branch/curve inspection; overlay submission alone
-does not establish that MapKit has finished drawing. Orange screenshots similarly
-wait for visible green railway ink.
-The suite also covers landscape launch, portrait-to-landscape resizing and
-two-finger map rotation followed by zoom. Rotation uses the same rebuild
-deferral as pan and pinch. When SwiftUI replaces a map, dismantling cancels its
-camera, resize, matching and geometry tasks and releases only the controller
-hooks that still belong to that map.
-The map controller copies the outgoing camera and restores it before publishing
-the replacement map as ready. A phone switching between tall and docked layouts
-therefore keeps its center, distance, heading and pitch. Camera callbacks defer
-style changes until the same 120 ms quiet period as geometry, including mouse
-wheel and inertial motion that may not activate touch recognizers; playback
-continues to apply its own frame's style directly.
-Small landscape windows dock from 632 pt wide with a 300 pt minimum map
-allowance. This keeps the map exposed on a 667 × 375 pt iPhone SE; a resident
-system sheet at that height otherwise covers the whole map. Other windows
-retain the existing 692 pt breakpoint and 360 pt map allowance.
+`MapZoomPerformanceTests` exercises repeated zooms across Japan and dense Tokyo,
+with ordinary and all-287-journey inputs. It checks camera progress, covered
+nonempty overlays, no gesture-time rebuilds and display-link delivery stalls;
+these main-run-loop measurements do not measure GPU presentation. Initial and
+settled screenshots are retained for inspection; overlay submission alone does
+not establish that MapKit has finished drawing.
+
+The suite also covers iPhone portrait locking, iPad device rotation, and
+in-map two-finger rotation followed by zoom. Rotation uses the same rebuild
+deferral as pan and pinch. Dismantling cancels camera, resize, matching and
+geometry tasks and releases only the controller hooks owned by that map. The
+controller copies the outgoing camera and restores it before publishing a
+replacement map as ready. Camera callbacks defer style changes until the same
+120 ms quiet period as geometry; playback applies its own frame's style directly.
+iPhone remains portrait-only; wide iPad windows use the docked layout.
 
 Run the representative cases serially across explicitly chosen simulators:
 

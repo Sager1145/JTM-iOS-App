@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 /// The panel's layout boundary. The header stays top-aligned at the compact
 /// stop. Content stays mounted in the remaining viewport, preserving scroll
@@ -21,21 +22,159 @@ struct WorkspacePanelPage<Header: View, Content: View>: View {
 /// of a compact sheet. Measuring only here does not feed back into detents.
 /// The system tab bar supplies the bottom edge: transparent glass over the
 /// menu on iOS 26+, and a solid bar with the page laid out above it earlier.
-/// Another inset or clip would leave a margin the system did not ask for.
+/// The viewport still draws under that glass. Only scroll content receives
+/// the measured obstruction, so its final row can move clear of the bar.
 private struct WorkspacePanelViewport<Content: View>: View {
     let content: Content
+    @State private var tabBarOcclusion: CGFloat = 0
 
     var body: some View {
         GeometryReader { geometry in
+            // Visibility follows the space actually above the system bar,
+            // rather than a sheet-stage estimate from a different coordinate
+            // space. Keep the page mounted throughout resizing.
+            let showsContent = geometry.size.height - tabBarOcclusion > 1
             content
                 .frame(
                     width: geometry.size.width,
                     height: geometry.size.height,
                     alignment: .top)
+                .modifier(SystemTabBarScrollClearance(occlusion: tabBarOcclusion))
+                // Keep the content mounted, including its scroll position.
+                // Compact leaves this viewport under the system tab bar.
+                .allowsHitTesting(showsContent)
+                .accessibilityHidden(!showsContent)
                 .accessibilityElement(children: .contain)
                 .accessibilityIdentifier("workspaceMenuViewport")
+                .modifier(TabClearanceDiagnostic(occlusion: tabBarOcclusion))
+                .background {
+                    if #available(iOS 26.0, *) {
+                        SystemTabBarOcclusionReader { value in
+                            if abs(value - tabBarOcclusion) > 0.5 { tabBarOcclusion = value }
+                        }
+                        .frame(width: geometry.size.width, height: geometry.size.height)
+                    }
+                }
         }
         .modifier(SystemTabBarContentEdge())
+    }
+}
+
+/// Content margins change the scrollable extent, not the viewport or the
+/// header. Older solid tab bars already provide their own safe-area edge.
+private struct SystemTabBarScrollClearance: ViewModifier {
+    let occlusion: CGFloat
+
+    func body(content: Content) -> some View {
+        if #available(iOS 26.0, *) {
+            // The 12-point content gap is separate from the measured bar;
+            // it lets the final card's full edge clear the floating glass.
+            content.contentMargins(.bottom, occlusion + 12, for: .scrollContent)
+        } else {
+            content
+        }
+    }
+}
+
+/// Measures the public system tab bar in the viewport's coordinate space.
+/// No detent depends on this value; only descendant scroll content reads it.
+private struct SystemTabBarOcclusionReader: UIViewControllerRepresentable {
+    let report: @MainActor (CGFloat) -> Void
+
+    func makeUIViewController(context: Context) -> Probe { Probe(report: report) }
+
+    func updateUIViewController(_ controller: Probe, context: Context) {
+        controller.report = report
+        controller.requestMeasurement()
+    }
+
+    @MainActor
+    final class Probe: UIViewController {
+        var report: @MainActor (CGFloat) -> Void
+        private var measurementScheduled = false
+        private var lastReported: CGFloat?
+
+        init(report: @escaping @MainActor (CGFloat) -> Void) {
+            self.report = report
+            super.init(nibName: nil, bundle: nil)
+        }
+
+        required init?(coder: NSCoder) { nil }
+
+        override func loadView() {
+            let measurementView = MeasurementView()
+            measurementView.requestMeasurement = { [weak self] in self?.requestMeasurement() }
+            view = measurementView
+            view.backgroundColor = .clear
+            view.isUserInteractionEnabled = false
+            view.isAccessibilityElement = false
+        }
+
+        override func didMove(toParent parent: UIViewController?) {
+            super.didMove(toParent: parent)
+            requestMeasurement()
+        }
+
+        override func viewDidAppear(_ animated: Bool) {
+            super.viewDidAppear(animated)
+            requestMeasurement()
+        }
+
+        override func viewDidLayoutSubviews() {
+            super.viewDidLayoutSubviews()
+            requestMeasurement()
+        }
+
+        override func viewSafeAreaInsetsDidChange() {
+            super.viewSafeAreaInsetsDidChange()
+            requestMeasurement()
+        }
+
+        private final class MeasurementView: UIView {
+            var requestMeasurement: (() -> Void)?
+            override func didMoveToWindow() {
+                super.didMoveToWindow()
+                requestMeasurement?()
+            }
+            override func layoutSubviews() {
+                super.layoutSubviews()
+                requestMeasurement?()
+            }
+        }
+
+        func requestMeasurement() {
+            guard !measurementScheduled else { return }
+            measurementScheduled = true
+            // Read after UIKit finishes this layout pass. The weak capture
+            // leaves no pending callback retaining a removed tab page.
+            Task { @MainActor [weak self] in
+                await Task.yield()
+                guard let self else { return }
+                self.measurementScheduled = false
+                self.measure()
+            }
+        }
+
+        private func measure() {
+            guard let window = view.window, view.bounds.height > 0 else { return }
+            guard let tabBar = tabBarController?.tabBar, tabBar.window === window else { return }
+            let barFrame = view.convert(tabBar.bounds, from: tabBar)
+            #if DEBUG
+            if ProcessInfo.processInfo.environment["RAILMAP_UI_TEST_TAB_BAR_PROBE"] == "1" {
+                let url = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
+                    .appendingPathComponent("tab-bar-probe.txt")
+                let detail = "viewport=\(view.bounds) windowRect=\(view.convert(view.bounds, to: window)) controller=\(String(describing: tabBarController)) bar=\(barFrame)\n"
+                try? detail.write(to: url, atomically: true, encoding: .utf8)
+            }
+            #endif
+            let overlapsHorizontally = barFrame.maxX > view.bounds.minX
+                && barFrame.minX < view.bounds.maxX
+            let occlusion = tabBar.isHidden || !overlapsHorizontally ? 0
+                : min(view.bounds.height, max(0, view.bounds.maxY - barFrame.minY))
+            guard lastReported.map({ abs($0 - occlusion) > 0.5 }) ?? true else { return }
+            lastReported = occlusion
+            report(occlusion)
+        }
     }
 }
 
@@ -72,5 +211,18 @@ private struct TabHostTransparency: UIViewRepresentable {
                 view = current.superview
             }
         }
+    }
+}
+
+private struct TabClearanceDiagnostic: ViewModifier {
+    let occlusion: CGFloat
+    @ViewBuilder func body(content: Content) -> some View {
+        #if DEBUG
+        if ProcessInfo.processInfo.environment["RAILMAP_UI_TEST_TAB_BAR_PROBE"] == "1" {
+            content.accessibilityValue(Text(verbatim: "tabBarOcclusion:\(occlusion)"))
+        } else { content }
+        #else
+        content
+        #endif
     }
 }

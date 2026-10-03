@@ -12,6 +12,7 @@ final class TrainServicePatternUITests: XCTestCase {
 
     func testPartialExactTripShowsSourceTimesWithoutOfferingRouteApplication() {
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
@@ -21,7 +22,7 @@ final class TrainServicePatternUITests: XCTestCase {
         let next = app.buttons["rideEditorNext"]
         XCTAssertTrue(next.waitForExistence(timeout: 30))
         next.tap()
-        app.buttons["rideEditorServicePattern"].tap()
+        EditorUITestSupport.tap(app.buttons["rideEditorServicePattern"], in: app)
         let initialSearch = app.searchFields.firstMatch
         XCTAssertTrue(initialSearch.waitForExistence(timeout: 8))
         initialSearch.tap()
@@ -91,6 +92,7 @@ final class TrainServicePatternUITests: XCTestCase {
 
     func testSelectedPatternRechecksChangedDateWithoutReplacingStops() {
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
@@ -102,6 +104,7 @@ final class TrainServicePatternUITests: XCTestCase {
         next.tap()
 
         let picker = app.buttons["rideEditorServicePattern"]
+        XCTAssertTrue(EditorUITestSupport.reveal(picker, in: app), app.debugDescription)
         XCTAssertTrue(picker.waitForExistence(timeout: 8))
         picker.tap()
         let search = app.searchFields.firstMatch

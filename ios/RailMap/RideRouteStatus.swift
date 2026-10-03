@@ -56,6 +56,7 @@ final class RideStatusCenter {
     /// overwrite another record, and the editor can only warn about a
     /// collision it can see.
     private(set) var trainIDs: Set<String> = []
+    private(set) var pendingConfirmationIDs: Set<String> = []
     /// The live route store, for the one thing a status reader has to be able
     /// to ask for: solve this journey again. Weak, and ignored by observation
     /// — it is a wire, not state.
@@ -68,7 +69,8 @@ final class RideStatusCenter {
     /// they are asserted there rather than here.
     func status(forTrainID id: String) -> RideRouteStatus {
         RouteStatusResolver.status(
-            id: id, resolvingIDs: resolvingIDs, entries: entries, phase: phase)
+            id: id, resolvingIDs: resolvingIDs, entries: entries, phase: phase,
+            pendingConfirmationIDs: pendingConfirmationIDs)
     }
 
     // MARK: - Writing (stores only)
@@ -88,6 +90,15 @@ final class RideStatusCenter {
         self.trainIDs = trainIDs
     }
 
+    func publish(pendingConfirmationIDs: Set<String>) {
+        self.pendingConfirmationIDs = pendingConfirmationIDs
+    }
+
+    func publish(routeConfirmationFor train: Train) {
+        if train.requiresRouteConfirmation { pendingConfirmationIDs.insert(train.id) }
+        else { pendingConfirmationIDs.remove(train.id) }
+    }
+
     func publish(traversedLines: [String: [Statistics.TraversedLine]]) {
         self.traversedLines = traversedLines
     }
@@ -95,7 +106,7 @@ final class RideStatusCenter {
     /// The detected railways for one journey, or empty when none have
     /// landed — the caller's cue to fall back to the recorded names.
     func traversedLines(forTrainID id: String) -> [Statistics.TraversedLine] {
-        traversedLines[id] ?? []
+        pendingConfirmationIDs.contains(id) ? [] : traversedLines[id] ?? []
     }
 
     func beginResolving(_ id: String) { resolvingIDs.insert(id) }
@@ -114,6 +125,7 @@ final class RideStatusCenter {
         entries.removeAll()
         resolvingIDs.removeAll()
         traversedLines.removeAll()
+        pendingConfirmationIDs.removeAll()
     }
 
     /// §8.4: solve one journey again and let the map update.

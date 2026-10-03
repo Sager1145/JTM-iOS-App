@@ -418,11 +418,11 @@ struct RideCard: View {
     ///
     /// An alignment cannot be interpolated, so the row is `.top` at every stop
     /// and this is what keeps the collapsed form READING as centred: half the
-    /// difference between the text block and the 44-point button, going to
+    /// difference between the text block and the 40-point button, going to
     /// zero as the card opens and the block grows past it.
     private var actionsTopInset: CGFloat {
         let block = compactNumberSize * 1.2 + 2 + collapsedIdentityHeight
-        return max(0, (block - 44) / 2) * (1 - progress)
+        return max(0, (block - WorkspaceMenuMetrics.buttonSide) / 2) * (1 - progress)
     }
 
     private func dateChip(_ date: String) -> some View {

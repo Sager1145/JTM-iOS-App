@@ -772,6 +772,9 @@ extension StoreOperations {
                 ("id", .string(group.id)), ("name", .string(group.name)),
             ]))))
         }
+        if let confirmation = train.routeConfirmation {
+            pairs.append(("route_confirmation", .string(confirmation.rawValue)))
+        }
         return .object(TrainValidation.JSON.Object(pairs))
     }
 

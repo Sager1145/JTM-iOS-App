@@ -35,6 +35,13 @@ import Foundation
 
 // MARK: - the canonical model
 
+/// Whether the reader has confirmed the physical railway used by this ride.
+/// An absent value preserves the solving behavior of legacy archives.
+public enum RouteConfirmation: String, Codable, Equatable, Sendable {
+    case pending
+    case confirmed
+}
+
 /// `{ "schema_version": "1.3", "trains": [...] }` — jsonspec §2.1.
 ///
 /// The top level is an object and never an array, and it carries exactly
@@ -107,6 +114,10 @@ public struct Train: Codable, Equatable, Sendable {
     public var style: TrainStyle?
     public var routePolicy: RoutePolicy?
     public var routeSections: [RouteSection]?
+    /// Pending rides retain their recorded calls and hints, but those hints
+    /// must not produce a drawn railway or precise mileage until confirmed.
+    public var routeConfirmation: RouteConfirmation?
+    public var requiresRouteConfirmation: Bool { routeConfirmation == .pending }
     public var stops: [Stop]
     /// Which regional package this itinerary belongs to — `"jp"`, `"tw"`,
     /// `"hk"`, `"mo"` or `"kr"`.
@@ -149,7 +160,8 @@ public struct Train: Codable, Equatable, Sendable {
         stops: [Stop],
         region: String? = nil,
         notes: String? = nil,
-        journeyGroup: JourneyGroup? = nil
+        journeyGroup: JourneyGroup? = nil,
+        routeConfirmation: RouteConfirmation? = nil
     ) {
         self.id = id
         self.date = date
@@ -169,6 +181,7 @@ public struct Train: Codable, Equatable, Sendable {
         self.region = region
         self.notes = notes
         self.journeyGroup = journeyGroup
+        self.routeConfirmation = routeConfirmation
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -181,6 +194,7 @@ public struct Train: Codable, Equatable, Sendable {
         case routeSections = "route_sections"
         case region, notes
         case journeyGroup = "journey_group"
+        case routeConfirmation = "route_confirmation"
     }
 
     // Written out only when present, so that a store which omits a field
@@ -212,6 +226,7 @@ public struct Train: Codable, Equatable, Sendable {
         try container.encodeIfPresent(region, forKey: .region)
         try container.encodeIfPresent(notes, forKey: .notes)
         try container.encodeIfPresent(journeyGroup, forKey: .journeyGroup)
+        try container.encodeIfPresent(routeConfirmation, forKey: .routeConfirmation)
     }
 }
 
@@ -773,6 +788,57 @@ public enum TrainValidation {
         stop["name"]?.isTruthy ?? false
     }
 
+    /// Reject retired regions before import, storage, or route construction.
+    /// Untagged records remain valid only when their station/section identities
+    /// do not name a region that this application no longer supports.
+    public static func validateSupportedRegions(_ train: JSON) throws {
+        if let region = train["region"]?.stringOrNilIfFalsy,
+           !["jp", "tw", "hk", "mo", "kr"].contains(region.lowercased()) {
+            throw fail("Unsupported journey region: \(region).")
+        }
+        func inspect(_ value: JSON) throws {
+            switch value {
+            case .string(let text):
+                let code = text.lowercased()
+                if code.hasPrefix("us-") || code.hasPrefix("ca-") {
+                    throw fail("Unsupported railway identity: \(text).")
+                }
+            case .array(let values):
+                for item in values { try inspect(item) }
+            case .object(let values):
+                for key in values.keys where key != "name" && key != "number"
+                    && key != "number_en" && key != "notes" && key != "company"
+                    && key != "origin" && key != "destination" && key != "id" {
+                    if let item = values[key] { try inspect(item) }
+                }
+            default: break
+            }
+        }
+        try inspect(train)
+    }
+
+    public static func validateSupportedRegions(_ train: Train) throws {
+        if let region = train.region,
+           !["jp", "tw", "hk", "mo", "kr"].contains(region.lowercased()) {
+            throw fail("Unsupported journey region: \(region).")
+        }
+        func check(_ identity: String?) throws {
+            guard let identity else { return }
+            let code = identity.lowercased()
+            if code.hasPrefix("us-") || code.hasPrefix("ca-") {
+                throw fail("Unsupported railway identity: \(identity).")
+            }
+        }
+        for stop in train.stops { try check(stop.n02StationCode) }
+        for section in train.routeSections ?? [] {
+            try check(section.fromN02StationCode)
+            try check(section.toN02StationCode)
+            for identity in (section.lineIDs ?? []) + (section.sectionCodes ?? []) {
+                try check(identity)
+            }
+        }
+    }
+
     // MARK: - assertOnlyKeys
 
     /// `assertOnlyKeys` — the strict inbound whitelist of §19.
@@ -842,6 +908,7 @@ public enum TrainValidation {
     /// rather than as the schema error the import UI catches and shows. It is
     /// reachable from any hand-written or machine-generated file.
     public static func validateTrain(_ train: JSON, index: Int, ids: inout Set<String>) throws {
+        try validateSupportedRegions(train)
         let prefix = "Train \(index + 1)"
 
         for key in ["id", "number", "origin", "destination"] {
@@ -860,6 +927,7 @@ public enum TrainValidation {
                 throw fail("\(prefix): \(key) must be a string when present.")
             }
         }
+        _ = try normalizeImportedRouteConfirmation(train["route_confirmation"])
         guard case .string(let id)? = train["id"] else {
             // Unreachable — the loop above already required a truthy string.
             throw fail("\(prefix): id is required.")
@@ -1183,6 +1251,10 @@ public enum TrainValidation {
         guard train.isTruthy, case .object = train else {
             throw fail("Each train must be an object.")
         }
+        guard ["jp", "tw", "hk", "mo", "kr"].contains(country.lowercased()) else {
+            throw fail("Unsupported journey region: \(country).")
+        }
+        try validateSupportedRegions(train)
         // The JavaScript's fourteen keys, plus this app's own train metadata.
         //
         // `region` is shared with the web import/export path. It has to be
@@ -1196,7 +1268,7 @@ public enum TrainValidation {
             [
                 "id", "date", "number", "number_en", "train_type", "vehicle_type", "company", "origin",
                 "destination", "direction", "visible", "style", "route_policy",
-                "route_sections", "stops", "region", "notes", "journey_group",
+                "route_sections", "stops", "region", "notes", "journey_group", "route_confirmation",
             ],
             "Train")
 
@@ -1255,7 +1327,16 @@ public enum TrainValidation {
             // store on the launch that loaded it.
             region: (train["region"] ?? .null).stringOrNilIfFalsy,
             notes: (train["notes"] ?? .null).stringOrNilIfNotString.map(jsTrim),
-            journeyGroup: try normalizeImportedJourneyGroup(train["journey_group"]))
+            journeyGroup: try normalizeImportedJourneyGroup(train["journey_group"]),
+            routeConfirmation: try normalizeImportedRouteConfirmation(train["route_confirmation"]))
+    }
+
+    private static func normalizeImportedRouteConfirmation(_ value: JSON?) throws -> RouteConfirmation? {
+        guard let value, value != .null else { return nil }
+        guard let raw = value.stringOrNilIfNotString, let confirmation = RouteConfirmation(rawValue: raw) else {
+            throw fail("Route confirmation must be pending or confirmed.")
+        }
+        return confirmation
     }
 
     private static func normalizeImportedJourneyGroup(_ value: JSON?) throws -> JourneyGroup? {
@@ -1463,7 +1544,9 @@ public enum TrainValidation {
             visible: train.visible != false,
             style: canonicalStyle(train.style.map { .object(JSON.Object([("color", $0.color.map(JSON.string) ?? .null)])) }),
             routePolicy: canonicalRoutePolicy(routePolicyJSON(train.routePolicy)),
-            routeSections: rideRouteSections(for: train, stations: stations)
+            routeSections: (train.requiresRouteConfirmation
+                ? (train.routeSections ?? []).map(normalizeExportRouteSection)
+                : rideRouteSections(for: train, stations: stations))
                 .map { leanExportSection($0, stations: stations) },
             stops: train.stops.map(canonicalStopShape),
             // Carried, not derived. `region` is this app's own field (see
@@ -1472,7 +1555,17 @@ public enum TrainValidation {
             // every load re-derive it.
             region: train.region,
             notes: train.notes,
-            journeyGroup: train.journeyGroup)
+            journeyGroup: train.journeyGroup,
+            routeConfirmation: train.routeConfirmation)
+    }
+
+    /// Route inputs for solving and geometry display. Pending hints are
+    /// archived without being promoted to a physical route.
+    public static func routeSectionsForSolving(
+        for train: Train, stations: StationTable = .empty
+    ) -> [RouteSection] {
+        guard !train.requiresRouteConfirmation else { return [] }
+        return rideRouteSections(for: train, stations: stations)
     }
 
     /// Restore the endpoint names that the browser import path resolves from

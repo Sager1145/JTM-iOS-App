@@ -69,7 +69,7 @@ final class TemporalRouteFastPathTests: XCTestCase {
     }
 
     private func connectorGraph(_ stations: [Stations.Feature]) -> RouteGraph.Graph {
-        let graph = RouteGraph.build(from: [section()])
+        let graph = RouteGraph.build(from: [section()], policy: .coordinateParity)
         graph.adjacency = [:]
         RouteSolver.addStationTransferConnectorEdges(graph: graph, stations: stations)
         return graph
@@ -83,7 +83,15 @@ final class TemporalRouteFastPathTests: XCTestCase {
             let source = try XCTUnwrap(graph.nodes.first { $0.value == a }?.key)
             let target = try XCTUnwrap(graph.nodes.first { $0.value == b }?.key)
             for date: String? in ["2019-12-31", "2020-01-01", nil] {
+                // This graph contains walking transfers only. Preserve the
+                // temporal passenger contract without authorizing train track.
                 XCTAssertFalse(RouteSolver.dijkstra(
+                    graph: graph, sourceCandidates: [.init(key: source, distance: 0)],
+                    targetKeys: [target], train: .init(rideDate: date), allowedCodes: [],
+                    traversalPolicy: .passengerTransfers).isEmpty)
+                // The production default must reject the same graph in every
+                // era, regardless of current/retired membership input order.
+                XCTAssertTrue(RouteSolver.dijkstra(
                     graph: graph, sourceCandidates: [.init(key: source, distance: 0)],
                     targetKeys: [target], train: .init(rideDate: date), allowedCodes: []).isEmpty)
             }

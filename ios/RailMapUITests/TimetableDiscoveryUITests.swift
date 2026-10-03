@@ -9,7 +9,7 @@ final class TimetableDiscoveryUITests: XCTestCase {
         let next = app.buttons["rideEditorNext"]
         XCTAssertTrue(next.waitForExistence(timeout: 30))
         next.tap()
-        app.buttons["rideEditorServicePattern"].tap()
+        EditorUITestSupport.tap(app.buttons["rideEditorServicePattern"], in: app)
         let dateEditor = app.descendants(matching: .any)["servicePatternDateEditor"].firstMatch
         XCTAssertTrue(dateEditor.waitForExistence(timeout: 8))
         dateEditor.tap()
@@ -68,7 +68,7 @@ final class TimetableDiscoveryUITests: XCTestCase {
         let next = app.buttons["rideEditorNext"]
         XCTAssertTrue(next.waitForExistence(timeout: 30))
         next.tap()
-        app.buttons["rideEditorServicePattern"].tap()
+        EditorUITestSupport.tap(app.buttons["rideEditorServicePattern"], in: app)
         app.descendants(matching: .any)["servicePatternDateEditor"].firstMatch.tap()
         let date = app.textFields["servicePatternDateInput"]
         XCTAssertTrue(date.waitForExistence(timeout: 8), app.debugDescription)
@@ -76,12 +76,13 @@ final class TimetableDiscoveryUITests: XCTestCase {
         date.typeText("2026-09-30\n")
         app.buttons["キャンセル"].tap()
         // With no selection, the local picker must leave the draft untouched.
-        app.buttons["rideEditorServicePattern"].tap()
+        EditorUITestSupport.tap(app.buttons["rideEditorServicePattern"], in: app)
         XCTAssertFalse(app.switches["servicePatternHistoryFilter"].exists)
     }
 
     private func newJourney() -> XCUIApplication {
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"

@@ -44,13 +44,9 @@ import RailCore
 /// from end to end. A journey inside any of them therefore cannot be ambiguous
 /// about its day, and no stop time can land in a skipped or repeated hour.
 ///
-/// The United States and Canada are neither. Between them they span nine
-/// zones, most of which move an hour twice a year, and a single train crosses
-/// them: the *Empire Builder* leaves Chicago on Central time and arrives in
-/// Seattle on Pacific, and the *Adirondack* crosses an international border
-/// without changing its clock at all. So a region no longer names a clock —
-/// it names a DEFAULT one, and the clock a journey is actually read on is
-/// per stop (``JourneyClock``).
+/// Each supported region supplies a default clock. JourneyClock centralizes
+/// per-stop clock calculations without treating a display relationship or a
+/// region change as evidence of a physical railway connection.
 ///
 /// None of that is written down here as arithmetic. Which offset a zone has on
 /// a given day, and whether that day had 23 hours in it, are facts about the
@@ -119,31 +115,9 @@ public struct RegionClock: Sendable, Hashable {
         regionCode: "kr", identifier: "Asia/Seoul", fixedOffsetSeconds: 9 * 3600,
         nameKey: "ios.clock.zoneKorea", fallbackName: "Korea Standard Time")
 
-    /// The United States — the clock a US journey is read on when nothing in
-    /// it says otherwise.
-    ///
-    /// Eastern, and it is a default rather than a fact about the country: the
-    /// Northeast Corridor is where most of the network's passenger journeys
-    /// are, so it is the least often wrong answer to "what time is it on this
-    /// train" for a record that names no station this build can place. Every
-    /// record that DOES name one is read on that station's own zone — see
-    /// ``JourneyClock``.
-    public static let unitedStates = RegionClock(
-        regionCode: "us", identifier: "America/New_York",
-        fixedOffsetSeconds: -5 * 3600,
-        nameKey: "ios.clock.zoneEastern", fallbackName: "Eastern Time")
-
-    /// Canada — Eastern, and a default for the same reason: the Québec City –
-    /// Windsor corridor carries the great majority of the country's passenger
-    /// rail.
-    public static let canada = RegionClock(
-        regionCode: "ca", identifier: "America/Toronto",
-        fixedOffsetSeconds: -5 * 3600,
-        nameKey: "ios.clock.zoneEastern", fallbackName: "Eastern Time")
-
     /// Every clock the app can be asked for, in the region catalog's order.
     public static let all: [RegionClock] = [
-        japan, taiwan, hongKong, macao, korea, unitedStates, canada,
+        japan, taiwan, hongKong, macao, korea,
     ]
 
     /// The clock a region code names.
@@ -162,63 +136,6 @@ public struct RegionClock: Sendable, Hashable {
 
     // MARK: - a clock named by a zone rather than by a region
 
-    /// The clocks a North American package's stations can be on, and what to
-    /// call each of them.
-    ///
-    /// A table of NAMES, not of offsets: what a zone's offset is on a given
-    /// day comes from the database, and what a reader should be told the zone
-    /// is called does not. The identifiers are the ones the operators publish
-    /// in their own feeds (GTFS `stop_timezone` / `agency_timezone`), which is
-    /// where the packages take them from, so this covers what can actually
-    /// appear rather than every zone in the Americas.
-    ///
-    /// `fixedOffsetSeconds` is the STANDARD offset. Every zone here except
-    /// Phoenix and Regina observes summer time, so the parachute is an hour
-    /// out for half the year — which is what a parachute for a device with no
-    /// time-zone database is worth, and why nothing consults it while there is
-    /// a database.
-    private static let northAmericanZones: [(String, String, Int, String)] = [
-        ("America/New_York", "ios.clock.zoneEastern", -5, "Eastern Time"),
-        ("America/Toronto", "ios.clock.zoneEastern", -5, "Eastern Time"),
-        ("America/Detroit", "ios.clock.zoneEastern", -5, "Eastern Time"),
-        // Indiana is on Eastern time and has been since 2006; the identifier
-        // is separate because it was not always, and the South Shore Line's
-        // Indiana stations are published under it.
-        ("America/Indiana/Indianapolis", "ios.clock.zoneEastern", -5, "Eastern Time"),
-        ("America/Montreal", "ios.clock.zoneEastern", -5, "Eastern Time"),
-        ("America/Chicago", "ios.clock.zoneCentral", -6, "Central Time"),
-        ("America/Winnipeg", "ios.clock.zoneCentral", -6, "Central Time"),
-        ("America/Regina", "ios.clock.zoneSaskatchewan", -6,
-         "Central Standard Time (Saskatchewan)"),
-        ("America/Denver", "ios.clock.zoneMountain", -7, "Mountain Time"),
-        ("America/Edmonton", "ios.clock.zoneMountain", -7, "Mountain Time"),
-        ("America/Phoenix", "ios.clock.zoneArizona", -7,
-         "Mountain Standard Time (Arizona)"),
-        ("America/Los_Angeles", "ios.clock.zonePacific", -8, "Pacific Time"),
-        ("America/Vancouver", "ios.clock.zonePacific", -8, "Pacific Time"),
-        ("America/Anchorage", "ios.clock.zoneAlaska", -9, "Alaska Time"),
-        ("America/Juneau", "ios.clock.zoneAlaska", -9, "Alaska Time"),
-        ("America/Halifax", "ios.clock.zoneAtlantic", -4, "Atlantic Time"),
-        ("America/Moncton", "ios.clock.zoneAtlantic", -4, "Atlantic Time"),
-        ("America/St_Johns", "ios.clock.zoneNewfoundland", -3 * 3600 - 1800,
-         "Newfoundland Time"),
-        ("Pacific/Honolulu", "ios.clock.zoneHawaii", -10, "Hawaii–Aleutian Time"),
-        ("America/Puerto_Rico", "ios.clock.zoneAtlantic", -4, "Atlantic Time"),
-    ]
-
-    private static let zoneTable: [String: RegionClock] = {
-        var table: [String: RegionClock] = [:]
-        for (identifier, key, hours, name) in northAmericanZones {
-            // St John's is the one half-hour offset in the table and is
-            // written in seconds; everything else is written in hours.
-            let seconds = abs(hours) < 24 ? hours * 3600 : hours
-            table[identifier] = RegionClock(
-                regionCode: "", identifier: identifier,
-                fixedOffsetSeconds: seconds, nameKey: key, fallbackName: name)
-        }
-        return table
-    }()
-
     /// The clock one station is on, from the zone identifier its package
     /// carries — falling back to the region's default when the identifier is
     /// missing or is one this build has no name for.
@@ -234,7 +151,6 @@ public struct RegionClock: Sendable, Hashable {
         guard let identifier, !identifier.isEmpty else {
             return forRegionCode(regionCode)
         }
-        if let known = zoneTable[identifier] { return known }
         guard TimeZone(identifier: identifier) != nil else {
             return forRegionCode(regionCode)
         }
@@ -378,20 +294,8 @@ public struct RegionClock: Sendable, Hashable {
 /// The five Asian networks do not touch each other and each is one zone from
 /// end to end, so a ride in any of them has one clock and ``stops`` is empty.
 ///
-/// North America is where that stops being true, in two different ways that
-/// have to be kept apart:
-///
-/// * **A journey crosses zones without crossing a border.** The *Empire
-///   Builder* leaves Chicago on Central time and arrives in Seattle on
-///   Pacific. Its stops are all in one package and one region; only the clock
-///   moves.
-/// * **A journey crosses a border without changing clock.** The *Maple Leaf*
-///   runs Toronto to New York, two packages and two regions, on the same
-///   Eastern time all the way.
-///
-/// So neither question answers the other: ``crossesTimeZones`` is about the
-/// clock and `Region.regionsTouched` is about the packages, and a journey can
-/// be either, both or neither.
+/// Clock offsets and region package membership are separate questions.
+/// The app only loads the five supported regional packages.
 ///
 /// ## What the table changes, and what it deliberately does not
 ///
@@ -421,7 +325,7 @@ public struct JourneyClock: Sendable, Hashable {
     /// The clock each stop prints its times on, in stop order.
     ///
     /// Empty for a journey that has one clock, which is every journey in the
-    /// five Asian packages and most in the two North American ones. Empty
+    /// five supported regional packages. Empty
     /// rather than "filled with copies of `home`" so that ``crossesTimeZones``
     /// costs nothing to ask and so that a caller cannot tell a
     /// single-clock journey apart by the size of an array.
@@ -440,34 +344,12 @@ public struct JourneyClock: Sendable, Hashable {
     ///
     /// ## Two identifiers can be one clock, and here they are
     ///
-    /// This used to collapse on the zone IDENTIFIER, and that is not the same
-    /// question. Amtrak publishes Rouses Point, New York as
-    /// `America/New_York` and the North American build files the Canadian half
-    /// of the same border crossing — Rouses Point, Québec — under
-    /// `America/Toronto`, because that is what the Canadian feed says. Both
-    /// are Eastern time, all year, to the second. So the *Adirondack* and the
-    /// *Maple Leaf*, the two cross-border journeys that ship as samples, both
-    /// came back `crossesTimeZones` and the note under their stop lists read
-    /// "this journey crosses time zones (departs Eastern Time, arrives Eastern
-    /// Time)" — a sentence that names the same clock twice, which is exactly
-    /// what collapsing was supposed to prevent.
+    /// Clock equivalence compares the printed name and offset on the
+    /// journey's own day, rather than the database zone identifier alone.
     ///
-    /// So what is compared is what a READER can tell apart: the offset each
-    /// stop is on, on the journey's own day, and what that zone is called. Two
-    /// stops that read the same and are named the same are one clock. Two that
-    /// differ in either are two, and the note names both — Phoenix and Denver
-    /// keep the same offset in January and are still 山區標準時間（亞利桑那）
-    /// and 山區時間, which a reader comparing two printed times deserves to be
-    /// told.
-    ///
-    /// - Parameter date: the journey's own day, `YYYY-MM-DD`. Seven of the
-    ///   nine North American zones move an hour twice a year, so "are these
-    ///   two stops on the same clock" has no answer that is not asked on a
-    ///   particular day. A record with no usable date is answered on
-    ///   ``undatedReference``, which is the same instant
-    ///   ``offsetMinutes(fromStopIndex:toStopIndex:on:)`` falls back to — the
-    ///   two must agree, or a journey could report that it crosses zones and
-    ///   then that the crossing is worth nothing.
+    /// - Parameter date: the journey's own day, `YYYY-MM-DD`. A record with
+    ///   no usable date uses ``undatedReference``, consistently with
+    ///   ``offsetMinutes(fromStopIndex:toStopIndex:on:)``.
     public init(stops: [RegionClock], fallback: RegionClock, on date: String? = nil) {
         let home = stops.first ?? fallback
         self.home = home
@@ -478,8 +360,7 @@ public struct JourneyClock: Sendable, Hashable {
 
     /// The instant a journey with no usable date is read on.
     ///
-    /// 1970-01-01T00:00Z: standard time everywhere in North America, which is
-    /// the best a question with no day in it can be answered on.
+    /// 1970-01-01T00:00Z supplies a deterministic fallback for an undated record.
     static let undatedReference = Date(timeIntervalSince1970: 0)
 
     /// What a reader can tell one stop's clock from another's — the offset it
@@ -518,12 +399,8 @@ public struct JourneyClock: Sendable, Hashable {
     /// The minutes that must be ADDED to a time printed at `fromStopIndex`
     /// before it can be compared with one printed at `toStopIndex`.
     ///
-    /// `date` is the journey's own day, and it is required rather than
-    /// convenient: seven of the nine North American zones move an hour twice
-    /// a year, so "what is the difference between Chicago and Seattle" has no
-    /// answer that is not asked on a particular day. A record with no usable
-    /// date is answered on the two zones' standard offsets, which is the only
-    /// thing left to answer with.
+    /// `date` is the journey's own day. Undated records use the same
+    /// deterministic reference as the clock-equivalence calculation.
     public func offsetMinutes(
         fromStopIndex: Int, toStopIndex: Int, on date: String?
     ) -> Int {

@@ -7,6 +7,17 @@ import Foundation
 /// keeping this kernel pure lets the JavaScript and Swift implementations run
 /// over exactly the same graph and compare every chosen node and cost.
 public enum RouteSolver {
+    /// Passenger transfers describe walking between platforms, not track a
+    /// train can traverse. Physical rail is the default for every solver entry.
+    public enum TraversalPolicy: Sendable, Equatable {
+        case physicalRail
+        case passengerTransfers
+
+        public func permits(_ edge: RouteGraph.Edge) -> Bool {
+            self == .passengerTransfers || edge.connector == nil
+        }
+    }
+
     public static let stationSnapCostFactor = 4.0
     public static let nonPreferredInstitutionLengthFactor = 180.0
     public static let nonPreferredInstitutionEdgePenalty = 5_000.0
@@ -218,6 +229,9 @@ public enum RouteSolver {
         _ edge: RouteGraph.Edge, allowed: Set<String>
     ) -> Bool {
         if allowed.isEmpty { return true }
+        if let junction = edge.physicalJunction {
+            return junction.institutionTypeCodes.allSatisfy { $0.isEmpty || allowed.contains($0) }
+        }
         if let connector = edge.connector {
             if connector.institutionTypeCodes.isEmpty { return true }
             return connector.institutionTypeCodes.allSatisfy {
@@ -801,11 +815,17 @@ public enum RouteSolver {
             ? allCommonOperators : preferredCommonOperators
         preferredLines.formUnion(commonLines)
         preferredOperators.formUnion(commonOperators)
-        if preferredLines.isEmpty, fromPreferredLines.count == 1 {
-            preferredLines.formUnion(fromPreferredLines)
-        }
-        if preferredLines.isEmpty, toPreferredLines.count == 1 {
-            preferredLines.formUnion(toPreferredLines)
+        if preferredLines.isEmpty {
+            // A section spanning two lines must not penalize its destination
+            // line simply because the origin was considered first. Infer
+            // both unambiguous endpoint memberships before routing so the
+            // same physical corridor is preferred in either direction.
+            if fromPreferredLines.count == 1 {
+                preferredLines.formUnion(fromPreferredLines)
+            }
+            if toPreferredLines.count == 1 {
+                preferredLines.formUnion(toPreferredLines)
+            }
         }
         if preferredOperators.isEmpty,
            fromPreferredOperators.count == 1, toPreferredOperators.count == 1,
@@ -935,6 +955,109 @@ public enum RouteSolver {
         public var validFrom: String? = nil
         public var validTo: String? = nil
         public var temporalKind: RouteGraph.TemporalKind = .current
+    }
+
+    /// The only cross-identity continuation admitted before a section's own
+    /// line hints: reviewed, service-valid, zero-length physical junctions.
+    /// A coordinate match or a passenger connector cannot establish this path.
+    public static func physicalContinuationPath(
+        from key: String, to target: String, graph: RouteGraph.Graph,
+        rideDate: String?
+    ) -> [String]? {
+        guard graph.nodes[key] != nil, graph.nodes[target] != nil else { return nil }
+        var previous: [String: String] = [:]
+        var visited: Set<String> = [key]
+        var pending = [key]
+        var offset = 0
+        while offset < pending.count {
+            guard !Task.isCancelled else { return nil }
+            let current = pending[offset]
+            offset += 1
+            if current == target {
+                var path = [target]
+                while let parent = previous[path.last!] { path.append(parent) }
+                return path.reversed()
+            }
+            for edge in graph.adjacency[current] ?? [] {
+                guard edge.connector == nil, edge.length == 0,
+                      let boundary = edge.physicalJunction?.junction,
+                      !boundary.evidence.isEmpty,
+                      boundary.from.coordinate == boundary.to.coordinate,
+                      graph.nodes[current] == graph.nodes[edge.to],
+                      RouteGraph.RailValidity.isValid(
+                        validFrom: edge.validFrom, validTo: edge.validTo, on: rideDate),
+                      visited.insert(edge.to).inserted else { continue }
+                let from = RouteGraph.physicalNodeKey(boundary.from.coordinate, identity: boundary.from.identity)
+                let to = RouteGraph.physicalNodeKey(boundary.to.coordinate, identity: boundary.to.identity)
+                guard (current == from && edge.to == to) || (current == to && edge.to == from) else { continue }
+                previous[edge.to] = current
+                pending.append(edge.to)
+            }
+        }
+        return nil
+    }
+
+    /// Certify an already selected source polyline without replacing its rail
+    /// choice with a newly solved route. Every step must be a surveyed edge;
+    /// only reviewed zero junctions may change identity at a shared vertex.
+    public static func verifiedPhysicalPathKeys(
+        _ coordinates: [Coordinate], graph: RouteGraph.Graph, rideDate: String?,
+        requiredLines: Set<String> = [], requiredOperators: Set<String> = []
+    ) -> [String]? {
+        guard coordinates.count >= 2, let first = coordinates.first else { return nil }
+        struct Step { let key: String; let parent: Int? }
+        var steps: [Step] = []
+        var frontier: [String: Int] = [:]
+        let firstCoordinate = Grid.normalizeGraphCoord(first)
+        for candidate in RouteGraph.nearbyNodes(firstCoordinate, in: graph, radiusDeg: 0, limit: Int.max)
+            where graph.nodes[candidate.key] == firstCoordinate {
+            frontier[candidate.key] = steps.count
+            steps.append(Step(key: candidate.key, parent: nil))
+        }
+        let hints = SegmentHints(requiredLines: requiredLines, requiredOperators: requiredOperators)
+        for coordinate in coordinates.dropFirst() {
+            guard !Task.isCancelled else { return nil }
+            let nextCoordinate = Grid.normalizeGraphCoord(coordinate)
+            var next: [String: Int] = [:]
+            for (key, parent) in frontier {
+                guard let currentCoordinate = graph.nodes[key] else { continue }
+                for candidate in RouteGraph.nearbyNodes(currentCoordinate, in: graph, radiusDeg: 0, limit: Int.max)
+                    where graph.nodes[candidate.key] == currentCoordinate {
+                    guard let prefix = physicalContinuationPath(
+                        from: key, to: candidate.key, graph: graph, rideDate: rideDate) else { continue }
+                    var prefixParent = parent
+                    for prefixKey in prefix.dropFirst() {
+                        steps.append(Step(key: prefixKey, parent: prefixParent))
+                        prefixParent = steps.count - 1
+                    }
+                    if currentCoordinate == nextCoordinate {
+                        next[candidate.key] = prefixParent
+                        continue
+                    }
+                    for edge in graph.adjacency[candidate.key] ?? [] {
+                        guard edge.connector == nil, edge.physicalJunction == nil,
+                              graph.nodes[edge.to] == nextCoordinate,
+                              edgeMatchesRequiredHints(edge, hints: hints),
+                              RouteGraph.RailValidity.isValid(
+                                validFrom: edge.validFrom, validTo: edge.validTo, on: rideDate) else { continue }
+                        steps.append(Step(key: edge.to, parent: prefixParent))
+                        next[edge.to] = steps.count - 1
+                    }
+                }
+            }
+            guard !next.isEmpty else { return nil }
+            frontier = next
+        }
+        // Ambiguous identities remain unconfirmed rather than selecting one
+        // merely because its coordinates coincide with the recorded path.
+        guard frontier.count == 1, var index = frontier.values.first else { return nil }
+        var path: [String] = []
+        while true {
+            path.append(steps[index].key)
+            guard let parent = steps[index].parent else { break }
+            index = parent
+        }
+        return path.reversed()
     }
 
     public struct OfficialIntervalIndex: Sendable {
@@ -1113,7 +1236,9 @@ public enum RouteSolver {
         country: String,
         graph: RouteGraph.Graph,
         stations: Stations.Index,
-        continuityAnchor: Coordinate? = nil
+        continuityAnchor: Coordinate? = nil,
+        physicalContinuationKey: String? = nil,
+        traversalPolicy: TraversalPolicy = .physicalRail
     ) -> SolvedSection? {
         var section = rawSection
         if section.from?.isEmpty != false {
@@ -1215,7 +1340,7 @@ public enum RouteSolver {
                 stationIndices: fromStations, stations: stations, graph: graph,
                 hints: hints, allowedCodes: allowedCodes).prefix(12))
             var fromAnchored = false
-            if let continuityAnchor {
+            if let continuityAnchor, physicalContinuationKey == nil {
                 let continuous = fromCandidates.filter {
                     guard let stationCoordinate = coordinate(Stations.displayCoordinate(
                         stations.features[$0.stationIndex])) else { return false }
@@ -1225,6 +1350,33 @@ public enum RouteSolver {
                     fromCandidates = continuous
                     fromAnchored = true
                 }
+            }
+            var continuationPaths: [String: [String]] = [:]
+            if let physicalContinuationKey {
+                guard let coordinate = graph.nodes[physicalContinuationKey],
+                      let stationIndex = fromStations.first else { return (nil, nil) }
+                // The preceding leg already selected a surveyed endpoint.
+                // Resnapping its station can discard that vertex through the
+                // visual-anchor filter or nearest-candidate limits. Start at
+                // the exact node instead; only reviewed zero boundaries can
+                // change identity before this section's line constraints.
+                let possibleKeys = [physicalContinuationKey] + RouteGraph.nearbyNodes(
+                    coordinate, in: graph, radiusDeg: 0, limit: Int.max).map(\.key)
+                    .filter { $0 != physicalContinuationKey }
+                fromCandidates = possibleKeys.compactMap { key in
+                    guard graph.nodes[key] == coordinate,
+                          let path = physicalContinuationPath(
+                            from: physicalContinuationKey, to: key,
+                            graph: graph, rideDate: train.rideDate) else { return nil }
+                    continuationPaths[key] = path
+                    let codes = graph.nodeMeta[key]?.institutionTypeCodes ?? []
+                    return StationNodeCandidate(
+                        key: key, distance: 0, score: 0,
+                        hasPreferredInstitution: allowedCodes.isEmpty
+                            || !codes.isDisjoint(with: Set(allowedCodes)),
+                        stationIndex: stationIndex)
+                }
+                fromAnchored = true
             }
             let toCandidates = Array(collectStationCandidateGraphNodes(
                 stationIndices: toStations, stations: stations, graph: graph,
@@ -1236,7 +1388,7 @@ public enum RouteSolver {
                 graph: graph,
                 sourceCandidates: fromCandidates.map { .init(key: $0.key, distance: $0.distance) },
                 targetKeys: Set(toByKey.keys), train: train.policy,
-                allowedCodes: allowedCodes, hints: hints)
+                allowedCodes: allowedCodes, hints: hints, traversalPolicy: traversalPolicy)
             var attemptBest: Best?
             var guardedBest: Best?
             for result in solved where result.pathKeys.count >= 2 {
@@ -1252,8 +1404,17 @@ public enum RouteSolver {
                 let totalCost = result.cost + snapPenalty
                 let scoredCost = totalCost + routeLineMismatchPenalty(
                     edges: result.edges, hints: hints)
+                let prefix = continuationPaths[result.sourceKey] ?? [result.sourceKey]
+                let prefixEdges = zip(prefix, prefix.dropFirst()).compactMap { from, to in
+                    graph.adjacency[from]?.first {
+                        $0.to == to && $0.physicalJunction != nil && $0.length == 0
+                            && RouteGraph.RailValidity.isValid(
+                                validFrom: $0.validFrom, validTo: $0.validTo, on: train.rideDate)
+                    }
+                }
                 let candidate = Best(
-                    pathKeys: result.pathKeys, edges: result.edges, scoredCost: scoredCost,
+                    pathKeys: Array(prefix.dropLast()) + result.pathKeys,
+                    edges: prefixEdges + result.edges, scoredCost: scoredCost,
                     totalCost: totalCost, physicalLength: physicalLength,
                     from: from, to: to, hints: hints, attemptIndex: attemptIndex)
                 if endpointIsImplausible(
@@ -1328,21 +1489,14 @@ public enum RouteSolver {
         let toIdentityIndex = fixedIdentityStationIndex(
             toStations, requestedCode: section.toN02StationCode,
             routingIndex: best.to.stationIndex)
+        // A passenger-graph result is never drawable railway geometry.
+        guard best.edges.allSatisfy({ $0.connector == nil }) else { return nil }
         let rawCoordinates = best.pathKeys.compactMap { graph.nodes[$0] }
         guard rawCoordinates.count == best.pathKeys.count else { return nil }
-        var coordinates = completeRouteEndpointCoordinates(
-            rawCoordinates,
-            fromStation: stations.features[best.from.stationIndex],
-            toStation: stations.features[best.to.stationIndex])
-        if let continuityAnchor, let first = coordinates.first,
-           Geometry.distanceMeters(continuityAnchor, first) <= 60
-        {
-            if coordinatesClose(continuityAnchor, first, toleranceMeters: 0.25) {
-                coordinates = [continuityAnchor] + coordinates.dropFirst()
-            } else {
-                coordinates.insert(continuityAnchor, at: 0)
-            }
-        }
+        // Only surveyed railway vertices belong in train geometry. Station
+        // display points and the previous section's visual anchor can sit off
+        // the track; connecting them here would invent runnable railway.
+        let coordinates = rawCoordinates
         let provenance = RouteGraph.TemporalProvenance.aggregate(edges: best.edges)
         return SolvedSection(
             segmentIndex: segmentIndex,
@@ -1368,7 +1522,9 @@ public enum RouteSolver {
         country: String,
         graphStore: RouteGraph.RouteGraphStore,
         stations: Stations.Index,
-        continuityAnchor: Coordinate? = nil
+        continuityAnchor: Coordinate? = nil,
+        physicalContinuationKey: String? = nil,
+        traversalPolicy: TraversalPolicy = .physicalRail
     ) -> SolvedSection? {
         guard !Task.isCancelled else { return nil }
         guard let bbox = sectionEndpointBBox(
@@ -1377,7 +1533,7 @@ public enum RouteSolver {
             return solveSection(
                 section, segmentIndex: segmentIndex, train: train, country: country,
                 graph: graphStore.fullGraph(), stations: stations,
-                continuityAnchor: continuityAnchor)
+                continuityAnchor: continuityAnchor, physicalContinuationKey: physicalContinuationKey, traversalPolicy: traversalPolicy)
         }
         let straight = RouteGraph.bboxDiagonalMeters(bbox)
         let margins = [max(30_000, straight * 0.6), max(90_000, straight * 1.5)]
@@ -1389,7 +1545,7 @@ public enum RouteSolver {
                 routeSolveInProgress: true)
             if let result = solveSection(
                 section, segmentIndex: segmentIndex, train: train, country: country,
-                graph: graph, stations: stations, continuityAnchor: continuityAnchor)
+                graph: graph, stations: stations, continuityAnchor: continuityAnchor, physicalContinuationKey: physicalContinuationKey, traversalPolicy: traversalPolicy)
             {
                 lastResult = result
                 // A regional result is only trustworthy without checking wider
@@ -1412,7 +1568,7 @@ public enum RouteSolver {
         return solveSection(
             section, segmentIndex: segmentIndex, train: train, country: country,
             graph: graphStore.fullGraph(), stations: stations,
-            continuityAnchor: continuityAnchor) ?? lastResult
+            continuityAnchor: continuityAnchor, physicalContinuationKey: physicalContinuationKey, traversalPolicy: traversalPolicy) ?? lastResult
     }
 
     public static func completeRouteEndpointCoordinates(
@@ -1467,9 +1623,17 @@ public enum RouteSolver {
     }
 
     public static func edgeMatchesRequiredHints(
-        _ edge: RouteGraph.Edge, hints: SegmentHints
+        _ edge: RouteGraph.Edge, hints: SegmentHints,
+        traversalPolicy: TraversalPolicy = .physicalRail
     ) -> Bool {
+        guard traversalPolicy.permits(edge) else { return false }
         if edge.connector != nil { return true }
+        if let junction = edge.physicalJunction {
+            return [junction.junction.from.identity, junction.junction.to.identity].allSatisfy {
+                (hints.requiredLines.isEmpty || hints.requiredLines.contains($0.lineName))
+                    && (hints.requiredOperators.isEmpty || hints.requiredOperators.contains($0.operatorName))
+            }
+        }
         if !hints.requiredLines.isEmpty && !hints.requiredLines.contains(edge.lineName) {
             return false
         }
@@ -1538,8 +1702,18 @@ public enum RouteSolver {
         targetKeys: Set<String>,
         train: TrainPolicy,
         allowedCodes: [String],
-        hints: SegmentHints = SegmentHints()
+        hints: SegmentHints = SegmentHints(),
+        traversalPolicy: TraversalPolicy = .physicalRail
     ) -> [SolvedTarget] {
+        guard !sourceCandidates.isEmpty, !targetKeys.isEmpty, !Task.isCancelled else { return [] }
+        if traversalPolicy == .physicalRail,
+           !sourceCandidates.contains(where: { targetKeys.contains($0.key) }) {
+            guard let components = graph.physicalRailComponents() else { return [] }
+            let sourceComponents = Set(sourceCandidates.compactMap { components[$0.key] })
+            guard targetKeys.contains(where: { key in
+                components[key].map { sourceComponents.contains($0) } ?? false
+            }) else { return [] }
+        }
         let preferredCodes = Set(allowedCodes.filter { !$0.isEmpty })
         let hardInstitutionFilter = train.institutionFilterMode == "hard"
             || hints.requirePreferredInstitution
@@ -1586,15 +1760,16 @@ public enum RouteSolver {
                 settled.append((current.state, current.priority))
             }
             for (edgeIndex, edge) in (graph.adjacency[current.state.key] ?? []).enumerated() {
-                guard !hardInstitutionFilter
+                guard traversalPolicy.permits(edge),
+                    !hardInstitutionFilter
                     || edgeHasPreferredInstitution(edge, allowed: preferredCodes),
-                    edgeMatchesRequiredHints(edge, hints: hints),
+                    edgeMatchesRequiredHints(edge, hints: hints, traversalPolicy: traversalPolicy),
                     RouteGraph.RailValidity.isValid(
                         validFrom: edge.validFrom, validTo: edge.validTo, onPlainDay: rideDate)
                 else { continue }
 
                 var weight = edge.length
-                if edge.connector == nil {
+                if edge.connector == nil && edge.physicalJunction == nil {
                     weight += institutionPreferencePenalty(
                         for: edge, preferred: preferredCodes, train: train)
                     weight += nonPreferredLineOperatorPenalty(
@@ -1605,7 +1780,7 @@ public enum RouteSolver {
                 let nextCost = current.priority + weight
                 let nextState = DijkstraState(
                     key: edge.to,
-                    usedRequiredRail: current.state.usedRequiredRail || edge.connector == nil)
+                    usedRequiredRail: current.state.usedRequiredRail || (edge.connector == nil && edge.physicalJunction == nil))
                 if nextCost < (distance[nextState] ?? .infinity) {
                     distance[nextState] = nextCost
                     previous[nextState] = current.state

@@ -15,7 +15,7 @@ import RailPresentation
 final class RiddenRouteStore {
     /// Native selection semantics, separate from the attested JS solver's
     /// version. Shared reference datasets are never relabeled with this value.
-    private nonisolated static let resolutionSemantics = "station-interval-v1"
+    private nonisolated static let resolutionSemantics = "physical-section-continuity-v2"
     struct PhysicalRouteSelection: Codable, Equatable, Sendable {
         enum Provenance: String, Codable, Sendable { case explicit, stationSequence, matchedGeometry }
         let fromStationCode: String
@@ -23,6 +23,13 @@ final class RiddenRouteStore {
         let intervals: [StationIntervalResolver.DirectedInterval]
         let lines: [ResolvedRailLine]
         let provenance: Provenance
+    }
+
+    struct PhysicalGap: Codable, Equatable, Sendable {
+        let segmentIndex: Int
+        /// A missing physical connection before this independently drawn leg.
+        /// False means the selected leg itself lacks dated graph provenance.
+        let isBoundary: Bool
     }
 
     struct DrawnSegment: Sendable {
@@ -149,6 +156,7 @@ final class RiddenRouteStore {
         /// Explicit display positions for network previews whose continuous
         /// geometry does not split at every platform. Recorded rides use endpoints.
         var markerPositions: [Int: Coordinate] = [:]
+        var physicalGaps: [PhysicalGap] = []
         /// The calendar days this itinerary touches and where it crosses them,
         /// so an overnight ride can draw the half that runs on the other day
         /// differently — `Dates.segmentDate(_:segmentIndex:)` maps a segment to
@@ -200,6 +208,8 @@ final class RiddenRouteStore {
     /// file, the station table, the package, the route cache — are loaded once
     /// per region that actually has rides rather than once per app.
     func load(trains: [Train], preferredTrainID: String? = nil) {
+        RideStatusCenter.shared.publish(pendingConfirmationIDs: Set(
+            trains.filter(\.requiresRouteConfirmation).map(\.id)))
         let wanted = Dictionary(trains.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
         let wantedIDs = trains.map(\.id)
         requestedOrder = wantedIDs
@@ -356,6 +366,7 @@ final class RiddenRouteStore {
     /// straight-lined: a journey whose new sections solve to nothing keeps its
     /// record and loses its strokes, which is what "unavailable" means.
     func resolve(_ train: Train) {
+        RideStatusCenter.shared.publish(routeConfirmationFor: train)
         let scope = RouteScope(train)
         let id = train.id
         let revision = loadRevision
@@ -433,6 +444,7 @@ final class RiddenRouteStore {
         _ train: Train, scope: RouteScope
     ) async throws -> DrawnRide? {
         try Task.checkCancellation()
+        guard !train.requiresRouteConfirmation else { return nil }
         let cached = loadCached([train], country: scope.code)
         if let ride = cached.rides.first { return ride }
         return try await solveMissing(cached.missing, scope: scope).first
@@ -501,23 +513,16 @@ final class RiddenRouteStore {
     ) async throws -> [DrawnRide] {
         var result: [DrawnRide] = primed.map { [$0] } ?? []
         var unresolved: [(scope: RouteScope, trains: [Train])] = []
-        let remaining = wanted.values.filter { $0.id != primed?.id }
+        let remaining = wanted.values.filter { $0.id != primed?.id && !$0.requiresRouteConfirmation }
         // Grouped by SCOPE rather than by region, which for every journey that
         // stays inside one country is the same grouping it always was. A
         // journey that crosses a border forms its own group, so the two
         // packages it needs are loaded once for all the journeys that cross it
         // the same way.
         //
-        // The same way, not the same border: a scope carries the order the
-        // ride reaches its regions, because `home` — which decides the route
-        // cache directory, the normalisation country and the institution
-        // filter — is the region the journey set out from. So the *Maple Leaf*
-        // (`ca, us`) and the *Adirondack* (`us, ca`) are two groups and each
-        // reads both countries' sections and stations. They still share the
-        // DRAWN network, which is the expensive half and is cached under
-        // `scope.key` for exactly that reason (``DisplayNetworkCache``); what
-        // is paid twice is the solver's own datasets, on a cold route cache,
-        // and the result of that solve is written to disk.
+        // Scope home selects the normalization rules and route-cache directory;
+        // the canonical key lets compatible scopes reuse the display network.
+        // A shared working set never supplies an unevidenced physical edge.
         let byScope = Dictionary(grouping: remaining, by: RouteScope.init)
         // In a fixed order — cheapest scopes first — rather than in the
         // dictionary's. See ``RouteScope/ordered(_:)``: the grouping's own
@@ -527,11 +532,6 @@ final class RiddenRouteStore {
         // over which.
         for scope in RouteScope.ordered(byScope.keys) {
             guard let trains = byScope[scope] else { continue }
-            // Which clock each of this scope's stations is on, before any of
-            // its journeys is asked. Only the two North American regions have
-            // an answer to load; for every other scope this returns without
-            // opening a file. See ``StationClockIndex``.
-            await StationClockIndex.shared.prime(regions: scope.regions)
             let cached = await loadCachedConcurrently(trains, country: scope.code)
             result += cached.rides
             if !cached.missing.isEmpty { unresolved.append((scope, cached.missing)) }
@@ -649,7 +649,8 @@ final class RiddenRouteStore {
             guard resourceRevisions?.acceptsPrecomputed(
                 manifestSourceHashes: manifest.sourceHashes,
                 partSourceHashes: part.sourceHashes, country: country) == true else { continue }
-            guard let train = wanted[part.train.id], !RouteScope(train).crossesBorder else { continue }
+            guard let train = wanted[part.train.id], !train.requiresRouteConfirmation,
+                  !RouteScope(train).crossesBorder else { continue }
             guard let precomputedRoute = part.route,
                   let precomputedFeatures = precomputedRoute.features else { continue }
             let trainCanonical = canonical(for: train)
@@ -693,6 +694,11 @@ final class RiddenRouteStore {
             // authoritative `segment_index` (so the count restarted per
             // feature), or two features shared a `segmentIndex`.
             let sections = canonicalSections(trainCanonical)
+            // Legacy precomputes have no qualified endpoint provenance. A
+            // continuous itinerary must be assembled by the physical solver.
+            if zip(sections, sections.dropFirst()).contains(where: {
+                routeSectionBoundarySharesExplicitStop($0.0, $0.1)
+            }) { continue }
             let usableStrokes = matchingFeatures.flatMap { feature in
                 feature.geometry.strokes.enumerated().compactMap { offset, coordinates
                     -> (segmentIndex: Int, from: String?, to: String?, source: [Coordinate],
@@ -771,31 +777,41 @@ final class RiddenRouteStore {
         country: String,
         segments: [DrawnSegment],
         expectedSections: [RouteSection],
-        indicesAreAuthoritative: Bool = true
+        indicesAreAuthoritative: Bool = true,
+        physicalGaps: [PhysicalGap] = []
     ) -> DrawnRide {
         let expected = expectedSections.count
         let solved = Set(segments.map(\.segmentIndex))
-        let unsolved: [SectionGap] = expectedSections.enumerated()
+        var unsolved: [SectionGap] = expectedSections.enumerated()
             .compactMap { index, section in
                 solved.contains(index)
                     ? nil
                     : SectionGap(segmentIndex: index, from: section.from, to: section.to)
             }
+        for gap in physicalGaps where expectedSections.indices.contains(gap.segmentIndex) {
+            let section = expectedSections[gap.segmentIndex]
+            if !unsolved.contains(where: { $0.segmentIndex == gap.segmentIndex }) {
+                unsolved.append(SectionGap(segmentIndex: gap.segmentIndex,
+                    from: section.from, to: gap.isBoundary ? section.from : section.to))
+            }
+        }
+        let certified = solved.subtracting(physicalGaps.map(\.segmentIndex))
         let outcome: RouteOutcome
-        if expected == 0 || unsolved.isEmpty || !indicesAreAuthoritative {
+        if expected == 0 || unsolved.isEmpty || (!indicesAreAuthoritative && physicalGaps.isEmpty) {
             // `indicesAreAuthoritative` is false for a precomputed part whose
             // features carry no `segment_index`: there the index is the
             // stroke's position, which says nothing about which SECTION it
             // came from, and comparing it against the canonical sections would
             // manufacture gaps that are not there.
             outcome = .resolved
-        } else if solved.isEmpty {
+        } else if segments.isEmpty {
             outcome = .unavailable(expected: expected)
         } else {
-            outcome = .partial(solved: solved.count, expected: expected, unsolved: unsolved)
+            outcome = .partial(solved: certified.count, expected: expected, unsolved: unsolved)
         }
         var geometryHasher = Hasher()
         geometryHasher.combine(segments.count)
+        for gap in physicalGaps { geometryHasher.combine(gap.segmentIndex); geometryHasher.combine(gap.isBoundary) }
         for segment in segments {
             geometryHasher.combine(segment.segmentIndex)
             geometryHasher.combine(segment.partIndex)
@@ -808,7 +824,7 @@ final class RiddenRouteStore {
                 geometryHasher.combine(line.km)
             }
         }
-        return DrawnRide(
+        var ride = DrawnRide(
             id: train.id,
             trainType: train.trainType,
             country: country,
@@ -819,6 +835,8 @@ final class RiddenRouteStore {
             stops: train.stops,
             daySpan: Dates.daySpan(train.forDates),
             geometryDigest: geometryHasher.finalize())
+        ride.physicalGaps = physicalGaps
+        return ride
     }
 
     /// The one normalisation the solver, the cache digest, and the template
@@ -841,7 +859,7 @@ final class RiddenRouteStore {
     private nonisolated static func canonicalSections(
         _ canonical: Train
     ) -> [RouteSection] {
-        canonical.routeSections ?? []
+        canonical.requiresRouteConfirmation ? [] : canonical.routeSections ?? []
     }
 
     /// Solve the journeys no cache and no dataset could answer for.
@@ -881,6 +899,7 @@ final class RiddenRouteStore {
         let stationCollection: Stations.FeatureCollection
         let stationIndex: Stations.Index
         let officialIntervals: RouteSolver.OfficialIntervalIndex
+        let physicalJunctions: [RouteGraph.PhysicalJunction]
     }
 
     /// Immutable source/history inputs are shared by edits and batch loads.
@@ -947,34 +966,21 @@ final class RiddenRouteStore {
         }
         let stationCollection = Stations.FeatureCollection(features: stationFeatures)
         let stationIndex = Stations.Index(stationCollection)
+        guard let registryURL = Bundle.main.url(forResource: "physical-rail-junctions", withExtension: "json") else {
+            throw LoadError.missingSolverResources("physical-rail-junctions")
+        }
+        let registry = try PhysicalRailJunctionRegistry(data: Data(contentsOf: registryURL))
+        let junctions = scope.regions.flatMap { registry.junctions(for: $0.code) }
         let officialIntervals = RouteSolver.OfficialIntervalIndex(sections: sections)
         return SolverInputs(sections: sections, stationCollection: stationCollection,
-                            stationIndex: stationIndex, officialIntervals: officialIntervals)
+                            stationIndex: stationIndex, officialIntervals: officialIntervals, physicalJunctions: junctions)
     }
 
     private nonisolated static func fallbackGraphStore(
         inputs: SolverInputs, displayNetwork: RouteNetwork?
     ) -> RouteGraph.RouteGraphStore {
         let sections = inputs.sections
-        let stationCollection = inputs.stationCollection
-        let graphStore = RouteGraph.RouteGraphStore(sections: sections)
-        graphStore.augment = { graph, bbox in
-            let features: [Stations.Feature]
-            if let bbox {
-                features = stationCollection.features.filter { feature in
-                    guard let pair = Stations.displayCoordinate(feature),
-                          let coordinate = Coordinate(pair: pair) else { return false }
-                    return coordinate.lon >= bbox.minX && coordinate.lon <= bbox.maxX
-                        && coordinate.lat >= bbox.minY && coordinate.lat <= bbox.maxY
-                }
-            } else {
-                features = stationCollection.features
-            }
-            RouteSolver.addStationTransferConnectorEdges(graph: graph, stations: features) { feature, point in
-                displayNetwork?.permitsStationConnectorNode(
-                    stationCode: Stations.stationCode(feature), point: point) ?? true
-            }
-        }
+        let graphStore = RouteGraph.RouteGraphStore(sections: sections, policy: .physicalRailway, junctions: inputs.physicalJunctions)
         return graphStore
     }
 
@@ -1097,12 +1103,54 @@ final class RiddenRouteStore {
                                       lines: lines, provenance: .matchedGeometry)
     }
 
+    /// Proofs inspect only source features covering the recorded path. Feature
+    /// vertices are not clipped, so their qualified keys match the full graph.
+    private nonisolated static func physicalProofGraph(
+        coordinates: [Coordinate], store: RouteGraph.RouteGraphStore
+    ) -> RouteGraph.Graph {
+        let bbox = RouteGraph.BBox(
+            minX: coordinates.map(\.lon).min()!, minY: coordinates.map(\.lat).min()!,
+            maxX: coordinates.map(\.lon).max()!, maxY: coordinates.map(\.lat).max()!)
+        return store.regionalGraph(for: RouteGraph.padBBoxMeters(bbox, meters: 1_000),
+            routeSolveInProgress: true)
+    }
+
+    private nonisolated static func physicalBoundaryIsProven(
+        from previous: String, to first: String, at coordinate: Coordinate,
+        store: RouteGraph.RouteGraphStore, rideDate: String?
+    ) -> Bool {
+        if previous == first { return true }
+        return RouteSolver.physicalContinuationPath(from: previous, to: first,
+            graph: physicalProofGraph(coordinates: [coordinate], store: store), rideDate: rideDate) != nil
+    }
+
+    private nonisolated static func verifiedSourcePath(
+        _ lines: [[Coordinate]], graph: RouteGraph.Graph,
+        context: RouteSolver.TrainContext, section: RouteSection
+    ) -> [String]? {
+        var result: [String] = []
+        for line in lines {
+            guard let keys = RouteSolver.verifiedPhysicalPathKeys(
+                line, graph: graph, rideDate: context.rideDate,
+                requiredLines: Set(section.lineNames ?? []),
+                requiredOperators: Set(section.operatorNames ?? [])) else { return nil }
+            if let previous = result.last, let first = keys.first {
+                guard let bridge = RouteSolver.physicalContinuationPath(
+                    from: previous, to: first, graph: graph, rideDate: context.rideDate) else { return nil }
+                result += bridge.dropFirst()
+            }
+            result += keys.dropFirst(result.isEmpty ? 0 : 1)
+        }
+        return result.isEmpty ? nil : result
+    }
+
     @concurrent private nonisolated static func solveMissingWithPermit(
         _ trains: [Train], scope: RouteScope,
         allowLegacy: Bool,
         rejectPrecomputed: @Sendable (String) async -> Void,
         publish: @Sendable ([DrawnRide]) async -> Void
     ) async throws -> [DrawnRide] {
+        guard trains.contains(where: { !$0.requiresRouteConfirmation }) else { return [] }
         let country = scope.code
         let displayNetwork = try? await DisplayNetworkCache.shared.network(scope: scope)
         let inputs = try await SolverInputCache.shared.inputs(scope: scope)
@@ -1117,8 +1165,9 @@ final class RiddenRouteStore {
         var rides: [DrawnRide] = []
         for train in trains {
             try Task.checkCancellation()
+            guard !train.requiresRouteConfirmation else { continue }
             let canonical = normalizedTrain(train, country: country)
-            let sections = canonical.routeSections ?? []
+            let sections = canonicalSections(canonical)
             guard !sections.isEmpty else { continue }
             let context = routeContext(train)
             let cacheTrain = RouteGraph.CacheKeyTrain(
@@ -1136,6 +1185,8 @@ final class RiddenRouteStore {
             var segments: [DrawnSegment] = []
             var unsupported = false
             var lastSolvedIndex: Int?
+            var physicalContinuationKey: String?
+            var physicalGaps: [PhysicalGap] = []
             var continuity: Coordinate?
             var displayContinuity: Coordinate?
             var projectionCache = RouteProjectionCache()
@@ -1145,10 +1196,12 @@ final class RiddenRouteStore {
                     && lastSolvedIndex == index - 1
                     && routeSectionBoundarySharesExplicitStop(sections[index - 1], section)
                 let anchor = sharesBoundary ? continuity : nil
+                let previousPhysicalKey = sharesBoundary ? physicalContinuationKey : nil
                 if inferred.ambiguous.contains(index) {
                     continuity = nil
                     displayContinuity = nil
                     lastSolvedIndex = nil
+                    physicalContinuationKey = nil
                     continue
                 }
                 if section.sectionCodes?.isEmpty == false || inferred.hints[index] != nil {
@@ -1173,6 +1226,23 @@ final class RiddenRouteStore {
                        let selection = physicalSelection(
                         hints: hints, network: displayNetwork,
                         provenance: inferred.hints[index] == nil ? .explicit : .stationSequence) {
+                        if graphStore == nil {
+                            graphStore = fallbackGraphStore(inputs: inputs, displayNetwork: displayNetwork)
+                        }
+                        let graph = physicalProofGraph(coordinates: source.lines.flatMap { $0 }, store: graphStore!)
+                        let recordedKeys = verifiedSourcePath(
+                            source.lines, graph: graph, context: context, section: section)
+                        let verified = recordedKeys != nil
+                        if !verified {
+                            physicalGaps.append(PhysicalGap(segmentIndex: index, isBoundary: false))
+                        }
+                        if sharesBoundary {
+                            if let previous = physicalContinuationKey, let first = recordedKeys?.first,
+                               RouteSolver.physicalContinuationPath(from: previous, to: first,
+                                   graph: graph, rideDate: context.rideDate) != nil { }
+                            else { physicalGaps.append(PhysicalGap(segmentIndex: index, isBoundary: true)) }
+                        }
+                        physicalContinuationKey = recordedKeys?.last
                         for (partIndex, coordinates) in exact.geometry.lines.enumerated() {
                             segments.append(DrawnSegment(
                                 segmentIndex: index, partIndex: partIndex,
@@ -1182,13 +1252,14 @@ final class RiddenRouteStore {
                                 country: country, physicalRoute: selection))
                         }
                         lastSolvedIndex = index
-                        continuity = exact.geometry.lines.last?.last
-                        displayContinuity = continuity
+                        continuity = source.lines.last?.last
+                        displayContinuity = exact.geometry.lines.last?.last
                         continue
                     }
                     continuity = nil
                     displayContinuity = nil
                     lastSolvedIndex = nil
+                    physicalContinuationKey = nil
                     // An authored physical choice must not silently change.
                     // A failed inferred materialization may use the dated solver.
                     if inferred.hints[index] == nil { continue }
@@ -1198,16 +1269,42 @@ final class RiddenRouteStore {
                 if graphStore == nil {
                     graphStore = fallbackGraphStore(inputs: inputs, displayNetwork: displayNetwork)
                 }
-                let solved = RouteSolver.solveOfficialInterval(
+                var solved = RouteSolver.solveOfficialInterval(
                     section, segmentIndex: index, train: context, country: country,
                     allowedCodes: allowedCodes, intervalIndex: officialIntervals,
                     stations: stationIndex, continuityAnchor: anchor)
                     ?? RouteSolver.solveSectionOnDemand(
                         section, segmentIndex: index, train: context, country: country,
                         graphStore: graphStore!, stations: stationIndex,
-                        continuityAnchor: anchor)
+                        continuityAnchor: anchor,
+                        physicalContinuationKey: sharesBoundary ? physicalContinuationKey : nil,
+                        traversalPolicy: .physicalRail)
+                if solved == nil, sharesBoundary {
+                    // Keep independently proven sections visible. Failure to
+                    // continue cannot certify a connected through journey.
+                    solved = RouteSolver.solveSectionOnDemand(
+                        section, segmentIndex: index, train: context, country: country,
+                        graphStore: graphStore!, stations: stationIndex, traversalPolicy: .physicalRail)
+                }
                 try Task.checkCancellation()
-                if let solved, solved.coordinates.count >= 2 {
+                if var solved, solved.coordinates.count >= 2 {
+                    if solved.rawPathKeys.first?.contains("@") != true {
+                        solved.rawPathKeys = RouteSolver.verifiedPhysicalPathKeys(
+                            solved.coordinates, graph: physicalProofGraph(coordinates: solved.coordinates, store: graphStore!), rideDate: context.rideDate,
+                            requiredLines: Set(section.lineNames ?? []),
+                            requiredOperators: Set(section.operatorNames ?? [])) ?? []
+                    }
+                    if solved.rawPathKeys.isEmpty {
+                        physicalGaps.append(PhysicalGap(segmentIndex: index, isBoundary: false))
+                    }
+                    if sharesBoundary {
+                        if let previous = physicalContinuationKey, let first = solved.rawPathKeys.first,
+                           physicalBoundaryIsProven(from: previous, to: first, at: solved.coordinates[0],
+                               store: graphStore!, rideDate: context.rideDate) { }
+                        else { physicalGaps.append(PhysicalGap(segmentIndex: index, isBoundary: true)) }
+                    }
+                    physicalContinuationKey = solved.rawPathKeys.last
+
                     let hints = RouteHints(
                         requiredLineNames: (section.lineNames ?? []).map(Optional.some),
                         preferredLineNames: context.preferredLineNames.map(Optional.some),
@@ -1240,6 +1337,22 @@ final class RiddenRouteStore {
                         matchedHints.sectionCodes = codes
                         matchedHints.requiredLineIDs = canonical?.displayLineIds ?? []
                         matchedSource = displayNetwork?.sourceGeometry(for: matchedHints)
+                    }
+                    if let matchedSource {
+                        let keys = verifiedSourcePath(matchedSource.lines,
+                            graph: physicalProofGraph(coordinates: matchedSource.lines.flatMap { $0 }, store: graphStore!),
+                            context: context, section: section)
+                        if keys == nil {
+                            physicalGaps.append(PhysicalGap(segmentIndex: index, isBoundary: false))
+                        }
+                        if sharesBoundary {
+                            if let previous = previousPhysicalKey, let first = keys?.first,
+                               let coordinate = matchedSource.lines.first?.first,
+                               physicalBoundaryIsProven(from: previous, to: first, at: coordinate,
+                                   store: graphStore!, rideDate: context.rideDate) { }
+                            else { physicalGaps.append(PhysicalGap(segmentIndex: index, isBoundary: true)) }
+                        }
+                        physicalContinuationKey = keys?.last
                     }
                     var sourceStart = 0
                     for (partIndex, drawnCoordinates) in drawnParts.enumerated() {
@@ -1274,7 +1387,7 @@ final class RiddenRouteStore {
                         temporalKind: solved.temporalKind, physicalRoute: selected))
                     }
                     lastSolvedIndex = index
-                    continuity = solved.coordinates.last
+                    continuity = matchedSource?.lines.last?.last ?? solved.coordinates.last
                     displayContinuity = drawnParts.last?.last
                 }
             }
@@ -1287,7 +1400,8 @@ final class RiddenRouteStore {
             // ride that is absent cannot be told from a ride that is still
             // being solved. It is reported as `unavailable` instead.
             let ride = drawnRide(
-                train, country: country, segments: segments, expectedSections: sections)
+                train, country: country, segments: segments, expectedSections: sections,
+                physicalGaps: physicalGaps)
             rides.append(ride)
             if !segments.isEmpty,
                let digest = routeCacheDigest(canonical, raw: train, country: country) {
@@ -1560,6 +1674,7 @@ final class RiddenRouteStore {
     private nonisolated static func readCached(
         _ train: Train, country: String
     ) -> DrawnRide? {
+        guard !train.requiresRouteConfirmation else { return nil }
         // Normalised once and reused for the digest and the expected
         // sections below, instead of each calling `normalizeExportTrain`
         // again for the same train.
@@ -1602,7 +1717,7 @@ final class RiddenRouteStore {
             train,
             country: country,
             segments: segments,
-            expectedSections: canonicalSections(canonical))
+            expectedSections: canonicalSections(canonical), physicalGaps: cache.physicalGaps)
     }
 
     /// Writes the route cache entry for an already-computed digest. The
@@ -1618,7 +1733,7 @@ final class RiddenRouteStore {
             at: directory, withIntermediateDirectories: true)
         let cache = RuntimeCache(
             version: RouteGraph.routeDrawnCacheVersion, resolutionSemantics: resolutionSemantics,
-            digest: digest, resourceRevision: revision,
+            digest: digest, resourceRevision: revision, physicalGaps: ride.physicalGaps,
             segments: ride.segments.map {
                 CachedSegment(
                     segmentIndex: $0.segmentIndex, from: $0.from, to: $0.to,
@@ -1812,6 +1927,7 @@ final class RiddenRouteStore {
         let resolutionSemantics: String
         let digest: String
         let resourceRevision: String?
+        let physicalGaps: [PhysicalGap]
         let segments: [CachedSegment]
     }
 

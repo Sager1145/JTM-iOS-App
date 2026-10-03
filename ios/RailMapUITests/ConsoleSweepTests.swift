@@ -288,7 +288,7 @@ final class ConsoleSweepTests: XCTestCase {
             cancelEditor.tap()
             settle()
         }
-        let closeMenu = element("journeyMenuClose", in: app)
+        let closeMenu = element("journeyBackToList", in: app)
         XCTAssertTrue(closeMenu.waitForExistence(timeout: 8))
         if closeMenu.exists, closeMenu.isHittable {
             closeMenu.tap()
@@ -372,6 +372,7 @@ final class ConsoleSweepTests: XCTestCase {
 
     private func launch(tab: String, stage: String) -> XCUIApplication {
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-interface-language", "en"]
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = tab

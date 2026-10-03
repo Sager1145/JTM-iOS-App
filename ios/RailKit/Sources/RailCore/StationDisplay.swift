@@ -78,9 +78,8 @@ public enum StationDisplay {
             /// terminals inherit.
             public let minZoom: Int
             /// The render group this line was collapsed into for colour and
-            /// lane purposes (`renderGroupByLineID` below) — North America's
-            /// operator-level grouping (LIRR, Metro-North, Metrolink), ported
-            /// from `na-render-groups.json` via the display-network manifest.
+            /// lane purposes (`renderGroupByLineID` below), supplied by the
+            /// reviewed display-network manifest.
             /// `nil` for a line the reviewed policy does not name, which keeps
             /// deciding railway identity from operator+name exactly as before.
             public let renderGroup: String?

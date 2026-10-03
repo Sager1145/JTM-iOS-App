@@ -417,7 +417,7 @@
   // the country in via I18N.setCountry (i18n.js loads before app-config.js).
   let uiCountry = "jp";
   function setCountry(country) {
-    uiCountry = ["jp", "tw", "hk", "mo", "kr", "us", "ca"].includes(country)
+    uiCountry = ["jp", "tw", "hk", "mo", "kr"].includes(country)
       ? country
       : "jp";
   }

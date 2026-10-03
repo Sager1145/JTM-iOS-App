@@ -8,10 +8,14 @@ struct LocalJourneyFillView: View {
     let train: Train
     let package: CompactPackage
     let onApply: (LocalJourneyAutofill.Proposal) -> Void
+    let onPending: ((Train) -> Void)?
 
     @State private var originCode: String?
     @State private var destinationCode: String?
     @State private var choices: [RailwayRouteChoices.Choice] = []
+    @State private var selectedChoiceID: String?
+    @State private var requiredStationCodes: [String] = []
+    @State private var pendingTrain: Train?
     @State private var searching = false
     @State private var searched = false
     @State private var pending: LocalJourneyAutofill.Proposal?
@@ -20,15 +24,18 @@ struct LocalJourneyFillView: View {
     @State private var throughPatterns: [JapanThroughServices.Pattern] = []
     @State private var operatingPatternID: String?
 
-    init(train: Train, package: CompactPackage, onApply: @escaping (LocalJourneyAutofill.Proposal) -> Void) {
+    init(train: Train, package: CompactPackage, onPending: ((Train) -> Void)? = nil, onApply: @escaping (LocalJourneyAutofill.Proposal) -> Void) {
         self.train = train
         self.package = package
         self.onApply = onApply
+        self.onPending = onPending
+        _requiredStationCodes = State(initialValue: train.stops.dropFirst().dropLast()
+            .filter { $0.routeEditing?.generatedBy == nil }.compactMap(\.n02StationCode))
         _originCode = State(initialValue: train.stops.first?.n02StationCode)
         _destinationCode = State(initialValue: train.stops.last?.n02StationCode)
     }
 
-    private var input: [String?] { [originCode, destinationCode, train.trainType, operatingPatternID] }
+    private var input: [String?] { [originCode, destinationCode, train.trainType, operatingPatternID] + requiredStationCodes.map(Optional.some) }
     private var allowsOperatingPatterns: Bool {
         let type = (train.trainType ?? "local").lowercased()
         return !["highspeed", "high speed", "high-speed", "shinkansen", "新幹線", "新干线", "高速"]
@@ -48,6 +55,25 @@ struct LocalJourneyFillView: View {
                     endpointRow(key: "ios.editor.fromStation", selection: $originCode)
                     endpointRow(key: "ios.editor.toStation", selection: $destinationCode)
                 } footer: { Text(text("note")) }
+                Section {
+                    ForEach(Array(requiredStationCodes.enumerated()), id: \.offset) { index, code in
+                        HStack {
+                            Text(stationName(code))
+                            Spacer()
+                            Button(role: .destructive) { requiredStationCodes.remove(at: index) } label: {
+                                Image(systemName: "minus.circle")
+                            }
+                            .accessibilityLabel(localization.text("ios.remove", fallback: "Remove") + " " + stationName(code))
+                        }
+                    }
+                    NavigationLink {
+                        LocalJourneyStationPicker(package: package) { code in
+                            if !requiredStationCodes.contains(code) { requiredStationCodes.append(code) }
+                        }
+                    } label: {
+                        Label(localization.editorText("ios.routeGuide.addVia"), systemImage: "plus")
+                    }
+                } header: { Text(localization.editorText("ios.routeGuide.via")) }
                 if package.country.lowercased() == "jp", allowsOperatingPatterns, !throughPatterns.isEmpty {
                     Section {
                         Picker(text("services"), selection: $operatingPatternID) {
@@ -68,10 +94,29 @@ struct LocalJourneyFillView: View {
                 }
                 Section {
                     if searching { ProgressView(text("searching")) }
-                    if searched && choices.isEmpty { Text(text("empty")).foregroundStyle(.secondary) }
+                    if searched && choices.isEmpty {
+                        Text(text("empty")).foregroundStyle(.secondary)
+                            .accessibilityIdentifier("localJourneySearchEmpty")
+                    }
+                    if searched {
+                        Text(localization.editorText("ios.routeGuide.incompleteSearch"))
+                            .font(.footnote).foregroundStyle(.secondary)
+                    }
+                    if !choices.isEmpty {
+                        RailwayGuideMap(choices: choices,
+                            geometry: RailwayGuideGeometry(package: package, choices: choices),
+                            selectedID: selectedChoiceID,
+                            geometryWarning: localization.editorText("ios.routeGuide.geometryUnavailable"),
+                            onSelect: { selectedChoiceID = $0 })
+                    }
                     ForEach(choices) { choice in
                         VStack(alignment: .leading, spacing: 8) {
-                            Text(choice.lineNames.joined(separator: " → ")).font(.headline)
+                            Button { selectedChoiceID = choice.id } label: {
+                                Label(choice.lineNames.joined(separator: " → "),
+                                      systemImage: selectedChoiceID == choice.id ? "checkmark.circle.fill" : "circle")
+                                    .font(.headline)
+                            }
+                            .accessibilityAddTraits(selectedChoiceID == choice.id ? .isSelected : [])
                             Text(choice.operatorNames.joined(separator: " / "))
                                 .font(.caption).foregroundStyle(.secondary)
                             DisclosureGroup {
@@ -92,11 +137,19 @@ struct LocalJourneyFillView: View {
                         }
                         .padding(.vertical, 4)
                     }
+                    if onPending != nil {
+                        Button(localization.editorText("ios.routeGuide.keepPending")) { proposePending() }
+                            .disabled(!ready)
+                            .accessibilityIdentifier("localJourneyKeepPending")
+                        Text(localization.editorText("ios.routeGuide.pendingNote"))
+                            .font(.footnote).foregroundStyle(.secondary)
+                    }
                     if catalogFailure {
                         Text(text("unknown")).font(.footnote).foregroundStyle(.secondary)
                     }
                 } header: { Text(text("route")) } footer: { Text(text("physical")) }
             }
+            .accessibilityIdentifier("localJourneyProposalForm")
             .navigationTitle(text("title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -115,6 +168,15 @@ struct LocalJourneyFillView: View {
                 } catch { catalogFailure = true }
             }
             .task(id: input) { await search() }
+            .confirmationDialog(text("replace"), isPresented: Binding(
+                get: { pendingTrain != nil }, set: { if !$0 { pendingTrain = nil } }),
+                titleVisibility: .visible) {
+                Button(localization.editorText("ios.routeGuide.keepPending"), role: .destructive) {
+                    if let pendingTrain { onPending?(pendingTrain); dismiss() }
+                    pendingTrain = nil
+                }
+                Button(localization.text("ios.cancel"), role: .cancel) { pendingTrain = nil }
+            }
             .confirmationDialog(text("replace"), isPresented: Binding(
                 get: { pending != nil }, set: { if !$0 { pending = nil } }),
                 titleVisibility: .visible, presenting: pending) { proposal in
@@ -153,26 +215,68 @@ struct LocalJourneyFillView: View {
 
     private func search() async {
         choices = []
+        selectedChoiceID = nil
         searched = false
         guard ready, let originCode, let destinationCode else { searching = false; return }
         searching = true
         let package = package
         let type = train.trainType
-        let pattern = throughPatterns.first { $0.id == operatingPatternID }
+        let required = [originCode] + requiredStationCodes + [destinationCode]
+        // Service labels are display metadata, never additional graph edges.
         let worker = Task.detached(priority: .userInitiated) {
-            if let pattern {
-                return pattern.choices(package: package, originCode: originCode, destinationCode: destinationCode)
-            }
-            return LocalJourneySearch.choices(package: package, originCode: originCode,
-                destinationCode: destinationCode, trainType: type)
+            LocalJourneySearch.search(package: package, originCode: originCode,
+                destinationCode: destinationCode, trainType: type, requiredStationCodes: required)
         }
         let result = await withTaskCancellationHandler {
             await worker.value
         } onCancel: { worker.cancel() }
         guard !Task.isCancelled else { return }
-        choices = result
+        choices = result.choices
         searching = false
         searched = true
+    }
+
+    private func proposePending() {
+        guard let originCode, let destinationCode else { return }
+        var value = train
+        let sameEndpoints = train.stops.first?.n02StationCode == originCode
+            && train.stops.last?.n02StationCode == destinationCode
+            && train.stops.dropFirst().dropLast().filter { $0.routeEditing?.generatedBy == nil }
+                .compactMap(\.n02StationCode) == requiredStationCodes
+        if !sameEndpoints {
+            let codes = [originCode] + requiredStationCodes + [destinationCode]
+            var cursor = 0
+            value.stops = codes.enumerated().map { index, code in
+                if let matched = train.stops.indices.dropFirst(cursor).first(where: { train.stops[$0].n02StationCode == code }) {
+                    var recorded = train.stops[matched]
+                    cursor = matched + 1
+                    if index == 0 { recorded.stopType = "origin" }
+                    else if index == codes.count - 1 { recorded.stopType = "destination" }
+                    else if ["origin", "destination"].contains(recorded.stopType) { recorded.stopType = "pass_through" }
+                    return recorded
+                }
+                let name = package.lines.lazy.flatMap(\.stations).first { $0.id == code }?.name ?? code
+                return Stop(name: name, n02StationCode: code,
+                    stopType: index == 0 ? "origin" : (index == codes.count - 1 ? "destination" : "pass_through"))
+            }
+            value.routeSections = nil
+            value.origin = value.stops.first?.name ?? ""
+            value.destination = value.stops.last?.name ?? ""
+        }
+        value.routeConfirmation = .pending
+        if let pattern = throughPatterns.first(where: { $0.id == operatingPatternID }) {
+            if value.routeSections?.isEmpty != false {
+                value.routeSections = [RouteSection(from: value.origin, to: value.destination,
+                    fromN02StationCode: originCode, toN02StationCode: destinationCode, name: pattern.name)]
+            } else {
+                for index in value.routeSections!.indices { value.routeSections?[index].name = pattern.name }
+            }
+        }
+        if value.number.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            value.number = value.origin + " → " + value.destination
+        }
+        if !sameEndpoints && !train.stops.isEmpty { pendingTrain = value }
+        else { onPending?(value); dismiss() }
     }
 
     private func propose(_ choice: RailwayRouteChoices.Choice) {

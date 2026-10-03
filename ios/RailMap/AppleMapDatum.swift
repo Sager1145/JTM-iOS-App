@@ -20,7 +20,7 @@ import RailCore
 /// MapKit's own answers and persisted here. The rail packages remain WGS84 —
 /// they are also consumed by the WebUI — so whichever datum wins is applied at
 /// the native presentation boundary rather than in the packages or `RailCore`.
-/// Japan and North America are never candidates.
+/// Japan is never a candidate.
 nonisolated enum AppleMapDatum {
     /// The regions whose Apple basemap can be served in GCJ-02.
     static let candidateCountries: Set<String> = ["tw", "hk", "mo", "kr"]

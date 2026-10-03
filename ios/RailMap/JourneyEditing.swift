@@ -78,7 +78,7 @@ struct JourneyEditing {
             switch outcome {
             case .saved: recordID = train.id
             case let .savedKeepingID(keptID, _): recordID = keptID
-            case .refusedImportRunning, .notFound: preconditionFailure("handled above")
+            case .refusedImportRunning, .notFound, .unsupportedRegion: preconditionFailure("handled above")
             }
             let committed = itineraries.store?.trains.first(where: { $0.id == recordID })
             let selectedAfter = itineraries.selectedTrainID
@@ -100,11 +100,11 @@ struct JourneyEditing {
                             itineraries.selectedTrainID = selectedBefore
                         }
                         return true
-                    case .savedKeepingID, .refusedImportRunning, .notFound:
+                    case .savedKeepingID, .refusedImportRunning, .notFound, .unsupportedRegion:
                         return false
                     }
                 })
-        case .refusedImportRunning, .notFound:
+        case .refusedImportRunning, .notFound, .unsupportedRegion:
             return Replaced(outcome: outcome, persistence: nil, rollback: nil)
         }
     }

@@ -79,7 +79,7 @@ final class RailNetworkStore {
         /// Signed screen-space corridor lane. Zero keeps canonical geometry;
         /// fractional values form the short entry/exit ramps.
         let lane: Double
-        /// A continuous stroke (North America): `intervals` is one uncut
+        /// A continuous stroke: `intervals` is one uncut
         /// chain, drawn as ONE polyline with the lane offset and corner
         /// rounding baked in on device from `laneRows` (metres along the
         /// chain) — see `RailCore.ContinuousStroke`.
@@ -116,8 +116,8 @@ final class RailNetworkStore {
         /// railway can be resident without a whole railway being drawn.
         ///
         /// The line's own rect answers "is any of this near the camera". Over
-        /// a 4,000 km corridor that is true from Vancouver to Halifax, and the
-        /// build would then decimate every interval of it to draw the six that
+        /// a long corridor that can be true far beyond the visible intervals,
+        /// so the build would then decimate every interval to draw the few that
         /// are on screen — which is exactly what tiling used to avoid by
         /// cutting the railway up in the bundle instead. One rect per
         /// interval, computed here beside the geometry so it cannot fall out
@@ -355,9 +355,7 @@ final class RailNetworkStore {
     /// the manifest extents of every country the most recent camera request
     /// touched. Countries, not resident lines, so a budget eviction cannot
     /// shrink it and a chunk that has not arrived yet cannot leave it out; the
-    /// camera's own countries, not every country ever visited, so a reader who
-    /// has looked at both Japan and North America is not framed on the
-    /// Atlantic — the long way round between them in map space. A request
+    /// camera's own countries, rather than every country visited. A request
     /// over open sea keeps the previous frame. See ``updateNetworkExtent(for:)``.
     private(set) var networkExtent: MKCoordinateRegion?
     /// How many lines are resident right now, how many have ever been
@@ -416,20 +414,9 @@ final class RailNetworkStore {
     /// which carries the reviewed corridors and lanes and no topology at all,
     /// and it reads a country's only when the camera reaches it.
     ///
-    /// ## The two large regions are indexed after the five compact ones
-    ///
-    /// Not throttling for its own sake — it is what makes the phase useful to
-    /// the reader it is for. The five compact packages come to 3 MB together
-    /// and Japan alone is 9.3 MB, so a task group holding all seven puts
-    /// Macao's 8 KB in a queue behind the two files that take an order of
-    /// magnitude longer than the rest of the app's launch. A reader whose
-    /// journeys are Taiwanese then waits on Japan and the United States for
-    /// marks that Taiwan's own package could have supplied in 12 ms.
-    ///
-    /// Compact first and concurrently, large after and concurrently with each
-    /// other: the ONLY thing the second phase can delay is a badge for a
-    /// journey in Japan or the United States, and it is the phase that has to
-    /// read 16 MB to produce one. See ``Region/DataWeight``.
+    /// Compact regions are indexed concurrently before Japan so small
+    /// networks can publish their journey badges without waiting for Japan's
+    /// larger package. See ``Region/DataWeight``.
     func loadAll() {
         if isIndexing { return }
         isIndexing = true
@@ -511,7 +498,7 @@ final class RailNetworkStore {
             }
         }
         // The complete network is context and starts hidden; route restoration
-        // and interaction work should outrank reading seven national packages.
+        // and interaction work should outrank reading five national packages.
         Task(priority: .utility) {
             await indexRegions(Region.ordered(.compact))
             await indexRegions(Region.ordered(.large))
@@ -622,40 +609,6 @@ final class RailNetworkStore {
         }.value
     }
 
-    /// Called when the reader flips the North America setting.
-    ///
-    /// Off: drops every resident US/CA line immediately and republishes, so
-    /// the map redraws with nothing there even though the camera has not
-    /// moved. On: re-indexes the two regions (skipped by ``loadAll()`` while
-    /// the setting was off) and re-asks for whatever the current camera
-    /// rect wants, exactly as a pan into them would.
-    func northAmericaEnabledChanged() {
-        if Region.northAmericaEnabled {
-            Task(priority: .utility) {
-                await indexRegions(Region.ordered(.compact).filter(\.isNorthAmerica))
-                await indexRegions(Region.ordered(.large).filter(\.isNorthAmerica))
-                if let lastDisplayRequest {
-                    activateDisplayLines(
-                        intersecting: lastDisplayRequest.rect,
-                        cameraZoom: lastDisplayRequest.cameraZoom)
-                }
-            }
-        } else {
-            // A batch already in flight for these two regions would otherwise
-            // land after the filter below has run and draw them right back
-            // in — `publishDisplayNetwork()`'s own region guard catches that
-            // case too, but there is no reason to let the decode finish at
-            // all once nothing here wants its result.
-            displayLoadTask?.cancel()
-            displayLoadTask = nil
-            loadedDisplayLines = loadedDisplayLines.filter {
-                Region(rawValue: $0.value.region)?.isNorthAmerica != true
-            }
-            if let index = displayIndex { evictIfNeeded(index: index) }
-            publishDisplayNetwork()
-        }
-    }
-
     // There is deliberately no `ensureAll()`.
     //
     // There was, and its one caller was the statistics screen, on the belief
@@ -664,7 +617,7 @@ final class RailNetworkStore {
     // `rail-sections*.json` by `EdgeIndexCache` and never touches this store.
     // What the call actually paid for was a camera rect, which
     // `Region.networkExtent` answers as a constant — so opening Passport
-    // decoded seven packages' geometry, the most expensive thing this type
+    // decoded all packages' geometry, the most expensive thing this type
     // does, for a bounding box that is written down.
     //
     // Every region at once is not a want any surface has. Ask for the one you
@@ -830,9 +783,7 @@ final class RailNetworkStore {
         guard let manifest = displayManifest, let index = displayIndex else { return }
         var needed = RailDisplayNetwork.lines(
             intersecting: rect, cameraZoom: cameraZoom, in: index)
-        // A reader with North America off never draws it, no matter what the
-        // camera intersects — see `Region.isEnabled`.
-        needed.removeAll { Region(rawValue: $0.region)?.isEnabled == false }
+        needed.removeAll { Region(rawValue: $0.region) == nil }
         // Whole-region strategy (builder A1): once any of a small region's
         // entries is needed, its whole blob becomes one batch rather than a
         // line at a time — see `RailDisplayNetworkIndex.wholeRegions`.
@@ -1095,11 +1046,7 @@ final class RailNetworkStore {
         var residentRegions: Set<String> = []
         var bytes = 0
         for region in index.orderedRegions {
-            // A disabled region's lines are filtered here too, not only on
-            // eviction: an NA chunk batch that finishes loading after the
-            // switch has gone off (see `northAmericaEnabledChanged()`) must
-            // not be drawn just because it is still resident.
-            guard Region(rawValue: region)?.isEnabled != false else { continue }
+            guard Region(rawValue: region) != nil else { continue }
             for entry in index.entriesByRegion[region] ?? [] {
                 guard let prepared = loadedDisplayLines[entry.id] else { continue }
                 nextLines.append(contentsOf: prepared.lines)
@@ -1568,9 +1515,7 @@ final class RailNetworkStore {
     /// railway and not one coordinate, so it goes through
     /// `CompactPackage.Headers` — one scan of the same file that stops at the
     /// geometry instead of materialising it. Measured on the shipped packages
-    /// that is 234.6 ms → 29.4 ms for Japan and 138.8 ms → 17.2 ms for the
-    /// United States, and across all seven regions the launch index falls from
-    /// ~454 ms to ~57 ms of host time.
+    /// it reduces Japan's indexing from 234.6 ms to 29.4 ms on the measured host.
     ///
     /// This is not the second decoder `verify.sh` refuses. That contract is
     /// about reading one file TWICE for two halves of one answer, which is why

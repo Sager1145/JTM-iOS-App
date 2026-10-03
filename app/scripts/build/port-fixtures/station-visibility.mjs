@@ -58,11 +58,11 @@ export function build({ RailNetwork, railPackage }) {
     });
   };
 
-  // ── every shipped line, all seven countries ───────────────────────────
+  // ── every shipped line, all five countries ───────────────────────────
   // Not a sample. This function decides what a reader sees, and the packages
   // are the only place the real spacing distribution lives: 255 m between
   // Hong Kong tram stops at one end, tens of km between Hokkaido stations at
-  // the other. The compact structural cases remain cheap even at seven regions.
+  // the other. The compact structural cases remain cheap even at five regions.
   //
   // The arguments come out of a real buildNetworkFromCompactPackage rather
   // than being re-derived, because the call site has an asymmetry that is the
@@ -71,7 +71,7 @@ export function build({ RailNetwork, railPackage }) {
   // one physical railway vanishes together — but `km` is the line's OWN
   // length, paired with its own station count. Building the network is how
   // the fixture states that pairing without restating the grouping rule.
-  for (const country of ["mo", "hk", "tw", "kr", "jp", "us", "ca"]) {
+  for (const country of ["mo", "hk", "tw", "kr", "jp"]) {
     const pkg = railPackage(country);
     const network = RailNetwork.buildNetworkFromCompactPackage(pkg);
     for (const line of pkg.lines) {

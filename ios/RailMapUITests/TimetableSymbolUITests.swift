@@ -10,6 +10,7 @@ final class TimetableSymbolUITests: XCTestCase {
             ("ハウステンボス", "timetableDetails-jr-kyushu.huis-ten-bosch.11.", "この列車は経由しません"),
         ] {
             let app = XCUIApplication()
+            app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
             app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                    "-interface-language", "en"]
             app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"

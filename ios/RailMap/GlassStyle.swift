@@ -57,26 +57,17 @@ extension View {
         }
     }
 
-    /// A menu's custom circular label, with the system's touch response.
-    /// Standard menu popups supply their own material independently of labels.
-    @ViewBuilder
+    /// One neutral surface for circular commands in popup menus. The menu
+    /// itself owns the material; each command shares the same fill and edge.
     func railMenuControlSurface(in shape: some Shape, isActive: Bool = false) -> some View {
-        if #available(iOS 26.0, *) {
-            glassEffect(
-                isActive ? .regular.tint(.accentColor.opacity(0.16)).interactive()
-                    : .regular.interactive(),
-                in: shape)
-        } else {
-            background(
-                isActive ? AnyShapeStyle(Color.accentColor.opacity(0.16))
-                    : AnyShapeStyle(.quaternary.opacity(0.5)),
-                in: shape)
-                .overlay {
-                    shape.stroke(
-                        isActive ? Color.accentColor.opacity(0.28) : Color.primary.opacity(0.06),
-                        lineWidth: 0.5)
-                }
-        }
+        background(
+            isActive ? AnyShapeStyle(Color.accentColor.opacity(0.16))
+                : AnyShapeStyle(.quaternary.opacity(0.5)), in: shape)
+            .overlay {
+                shape.stroke(
+                    isActive ? Color.accentColor.opacity(0.28) : Color.primary.opacity(0.06),
+                    lineWidth: 0.5)
+            }
     }
 
     /// Text menu labels use the native glass button style and its sizing.
@@ -209,5 +200,18 @@ extension EnvironmentValues {
     var railOnDockSurface: Bool {
         get { self[RailOnDockSurfaceKey.self] }
         set { self[RailOnDockSurfaceKey.self] = newValue }
+    }
+}
+
+/// Explicit 40-point menu controls supply their own circle rather than being
+/// wrapped in another native toolbar capsule.
+extension ToolbarContent {
+    @ToolbarContentBuilder
+    func railMenuToolbarControl() -> some ToolbarContent {
+        if #available(iOS 26.0, *) {
+            sharedBackgroundVisibility(.hidden)
+        } else {
+            self
+        }
     }
 }

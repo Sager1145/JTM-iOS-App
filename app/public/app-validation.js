@@ -127,7 +127,27 @@ function warnBranchLeak(train) {
   }
 }
 
+// Retired railway packages never enter the live store, including untagged imports.
+function validateSupportedJourneyRegions(train) {
+  if (typeof train?.region === "string" && train.region &&
+      !["jp", "tw", "hk", "mo", "kr"].includes(train.region.toLowerCase())) {
+    throw new Error(`Unsupported journey region: ${train.region}.`);
+  }
+  const freeText = new Set(["name", "number", "number_en", "notes", "company", "origin", "destination", "id"]);
+  function inspect(value) {
+    if (typeof value === "string" && /^(us|ca)-/i.test(value)) {
+      throw new Error(`Unsupported railway identity: ${value}.`);
+    }
+    if (Array.isArray(value)) value.forEach(inspect);
+    else if (value && typeof value === "object") {
+      Object.entries(value).forEach(([key, child]) => { if (!freeText.has(key)) inspect(child); });
+    }
+  }
+  inspect(train);
+}
+
 function validateTrain(train, index, ids) {
+  validateSupportedJourneyRegions(train);
   const prefix = `Train ${index + 1}`;
   ["id", "number", "origin", "destination"].forEach((key) => {
     if (!train[key] || typeof train[key] !== "string")

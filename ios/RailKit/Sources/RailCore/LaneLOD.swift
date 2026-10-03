@@ -1,7 +1,7 @@
 import Foundation
 
-/// Discrete, hysteretic lane-offset level of detail for the North America
-/// continuous strokes.
+/// Discrete, hysteretic lane-offset level of detail for reviewed continuous
+/// strokes.
 ///
 /// Ported from `app/public/railmap-style.js`'s `LANE_LOD_BUCKETS` /
 /// `laneScaleForZoom`. `laneGapPx` (railmap.js `_applyContinuousStrokes`,

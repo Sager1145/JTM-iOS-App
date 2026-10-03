@@ -5,6 +5,7 @@ final class JourneyCompletionUITests: XCTestCase {
     func testNewJourneyCanReachDateAndCompletionWithoutTrainNumber() {
         continueAfterFailure = false
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-interface-language", "en"]
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
@@ -16,6 +17,7 @@ final class JourneyCompletionUITests: XCTestCase {
         next.tap()
         for (index, name) in ["Tokyo", "Shinagawa"].enumerated() {
             let stop = app.descendants(matching: .any)["rideEditorStop-\(index)"].firstMatch
+            XCTAssertTrue(EditorUITestSupport.reveal(stop, in: app), app.debugDescription)
             XCTAssertTrue(stop.waitForExistence(timeout: 8))
             stop.tap()
             let field = app.otherElements["rideEditorStopName"].textFields.firstMatch
@@ -39,6 +41,7 @@ final class JourneyCompletionUITests: XCTestCase {
     func testInvalidReplyCannotApplyAndEmptyReplyIsANoOp() {
         continueAfterFailure = false
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-interface-language", "en"]
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
@@ -54,6 +57,7 @@ final class JourneyCompletionUITests: XCTestCase {
         // lazily, so reveal it on the date step before checking reachability.
         for (index, name) in ["Tokyo", "Shinagawa"].enumerated() {
             let stop = app.descendants(matching: .any)["rideEditorStop-\(index)"].firstMatch
+            XCTAssertTrue(EditorUITestSupport.reveal(stop, in: app), app.debugDescription)
             XCTAssertTrue(stop.waitForExistence(timeout: 8))
             stop.tap()
             let field = app.otherElements["rideEditorStopName"].textFields.firstMatch
@@ -121,6 +125,7 @@ final class JourneyCompletionUITests: XCTestCase {
     func testIntermediateStopsAreReviewedInOrderBeforeApplyingToDraft() {
         continueAfterFailure = false
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-interface-language", "en"]
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "search"
@@ -178,9 +183,9 @@ final class JourneyCompletionUITests: XCTestCase {
         let stop = app.buttons["rideEditorStop-1"]
         XCTAssertTrue(reveal(stop, in: editor, app: app, scrolling: .down))
         XCTAssertTrue(stop.label.contains("Review stop A"))
-        stop.tap()
+        tapVisible(stop, in: editor, app: app)
         let name = app.otherElements["rideEditorStopName"].textFields.firstMatch
-        XCTAssertTrue(name.waitForExistence(timeout: 8))
+        XCTAssertTrue(name.waitForExistence(timeout: 8), app.debugDescription)
         XCTAssertEqual(name.value as? String, "Review stop A")
     }
 
@@ -223,19 +228,24 @@ final class JourneyCompletionUITests: XCTestCase {
         file: StaticString = #filePath,
         line: UInt = #line
     ) {
-        let visibleForm = visibleBounds(of: form, in: app)
-        let frame = element.frame
-        guard element.exists, isUsable(frame), visibleForm.contains(frame) else {
-            XCTFail("The AI completion control is outside the visible Form bounds.",
-                    file: file, line: line)
+        // Keyboard and lazy Form layout can settle between reveal and tap.
+        // Recheck the same complete-visibility contract immediately before
+        // tapping, and scroll again if its viewport moved in the meantime.
+        for _ in 0..<4 {
+            guard reveal(element, in: form, app: app, scrolling: .up) else { break }
+            let visibleForm = visibleBounds(of: form, in: app)
+            let frame = element.frame
+            guard element.exists, isUsable(frame), visibleForm.contains(frame) else { continue }
+            let appFrame = app.frame
+            let center = CGPoint(x: frame.midX, y: frame.midY)
+            app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(
+                dx: center.x - appFrame.minX,
+                dy: center.y - appFrame.minY
+            )).tap()
             return
         }
-        let appFrame = app.frame
-        let center = CGPoint(x: frame.midX, y: frame.midY)
-        app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(
-            dx: center.x - appFrame.minX,
-            dy: center.y - appFrame.minY
-        )).tap()
+        XCTFail("The AI completion control is outside the visible Form bounds.\n\(app.debugDescription)",
+                file: file, line: line)
     }
 
     private func drag(
@@ -265,6 +275,20 @@ final class JourneyCompletionUITests: XCTestCase {
 
     private func visibleBounds(of form: XCUIElement, in app: XCUIApplication) -> CGRect {
         var bounds = form.frame.intersection(app.frame)
+        // Lazy Form rows can retain frames underneath the navigation bar.
+        // A tap there reaches the bar, even though the row exists in the tree.
+        for bar in app.navigationBars.allElementsBoundByIndex where bar.exists {
+            let covered = bar.frame.intersection(bounds)
+            if isUsable(covered), covered.minY <= bounds.minY + 1 {
+                let bottom = bounds.maxY
+                bounds.origin.y = covered.maxY
+                bounds.size.height = max(0, bottom - bounds.minY)
+            } else if isUsable(covered), bar.frame.maxY > bounds.minY {
+                let bottom = bounds.maxY
+                bounds.origin.y = bar.frame.maxY
+                bounds.size.height = max(0, bottom - bounds.minY)
+            }
+        }
         let keyboard = app.keyboards.firstMatch
         if keyboard.exists {
             let keyboardFrame = keyboard.frame.intersection(app.frame)

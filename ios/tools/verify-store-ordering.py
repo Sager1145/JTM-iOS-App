@@ -47,12 +47,14 @@ def compile_and_run(name: str, sources: list[Path], arguments: list[str] = [], e
 with tempfile.TemporaryDirectory(prefix="persistence-harness-", dir=scratch) as temporary:
     generated = Path(temporary)
     ride_library = (root / "ios/RailMap/RideLibrary.swift").read_text()
+    ride_storage = (root / "ios/RailMap/RideStorage.swift").read_text()
+    persistence_queue = (root / "ios/RailMap/RidePersistenceQueue.swift").read_text()
     merged_store = (root / "ios/RailMap/MergedStore.swift").read_text()
 
     # Compile the production RideLibrary definition unchanged. Its real
     # filesystem actor is replaced by a deterministic collaborator that can
     # suspend and fail writes on command.
-    queue_source = ride_library.split("actor RideStorage {", 1)[0]
+    queue_source = ride_library + "\n" + persistence_queue
     queue_source += merged_store.split("    /// Every train with its region", 1)[0] + "}\n"
     queue_production = generated / "QueueProduction.swift"
     queue_production.write_text(queue_source)
@@ -66,7 +68,7 @@ with tempfile.TemporaryDirectory(prefix="persistence-harness-", dir=scratch) as 
     # MergedStore. CFFIXED_USER_HOME moves Foundation's user-domain Application
     # Support into a fresh home so these checks cannot touch real journeys.
     disk_production = generated / "DiskProduction.swift"
-    disk_production.write_text(ride_library + "\n" + merged_store)
+    disk_production.write_text(ride_library + "\n" + ride_storage + "\n" + persistence_queue + "\n" + merged_store)
     fake_home = generated / "home"
     fake_home.mkdir()
     disk_environment = os.environ.copy()
@@ -83,7 +85,7 @@ with tempfile.TemporaryDirectory(prefix="persistence-harness-", dir=scratch) as 
     # working set and import lock; the mutations and persistence decisions are
     # copied verbatim from production.
     itinerary = (root / "ios/RailMap/ItineraryStore.swift").read_text()
-    itinerary = itinerary.replace("import RailPresentation\n", "")
+    itinerary = itinerary.replace("import RailPresentation\n", "").replace("import RailApplication\n", "")
     itinerary_prefix = itinerary.split("    /// One import's per-journey position", 1)[0]
     mutate = itinerary.split("    private func mutate(", 1)[1]
     mutate = "    private func mutate(" + mutate.split("    /// The reader's own rides", 1)[0]
@@ -126,7 +128,38 @@ func runContentViewSaveEdit(
         + (root / "ios/RailMap/JourneyEditing.swift").read_text()
         + content_view_helper
     )
+    # Exercise the real editor boundary with unsupported raw drafts before
+    # tagging can turn an unknown region into the default Japanese region.
+    editor_checks = (harnesses / "EditorChecks.swift").read_text()
+    retirement_checks = r'''
+        let beforeUnsupported = library.snapshots.count
+        let supportedSnapshot = itineraries.store
+        for region in ["us", "ca"] {
+            var unsupported = replacement
+            unsupported.region = region
+            let outcome = editing.replace(unsupported, replacing: "created")
+            guard case .unsupportedRegion = outcome else {
+                preconditionFailure("unsupported editor draft must be refused")
+            }
+            precondition(editing.add(unsupported) == nil)
+            precondition(itineraries.store == supportedSnapshot)
+            precondition(library.snapshots.count == beforeUnsupported)
+        }
+        var retiredIdentity = replacement
+        retiredIdentity.region = nil
+        retiredIdentity.stops = [Stop(name: "Legacy", n02StationCode: "CA-RETIRED")]
+        precondition(editing.add(retiredIdentity) == nil)
+        precondition(itineraries.store == supportedSnapshot)
+        precondition(library.snapshots.count == beforeUnsupported)
+        print("PASS unsupported drafts and untagged retired station identities cannot mutate or persist the editor store")
+'''
+    boundary = "        let beforeContentSave = library.snapshots.count"
+    if editor_checks.count(boundary) != 1:
+        raise SystemExit("EditorChecks supported draft boundary changed; update retirement checks.")
+    editor_checks = editor_checks.replace(boundary, retirement_checks + "\n" + boundary)
+    editor_fixture = generated / "EditorRetirementChecks.swift"
+    editor_fixture.write_text(editor_checks)
     compile_and_run(
         "editor-checks",
-        [editor_production, harnesses / "EditorChecks.swift"],
+        [editor_production, editor_fixture],
     )

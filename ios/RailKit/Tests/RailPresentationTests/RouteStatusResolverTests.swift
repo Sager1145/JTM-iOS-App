@@ -20,6 +20,17 @@ import Testing
 ///     區間" with nothing to name.
 struct RouteStatusResolverTests {
 
+    @Test func pendingConfirmationOutranksCachedRoutesAndStoreLoading() {
+        for phase in [RouteLoadPhase.idle, .loading, .loaded, .failed("load failed")] {
+            let status = RouteStatusResolver.status(id: "pending", resolvingIDs: ["pending"],
+                entries: ["pending": .init(outcome: .resolved, drawnSegments: 3)], phase: phase,
+                pendingConfirmationIDs: ["pending"])
+            #expect(status == .pendingConfirmation)
+            #expect(status.blocksPlayback)
+            #expect(status.journeyRouteState(reason: "Confirm route") == .needsReview(reason: "Confirm route"))
+        }
+    }
+
     static let gaps = [
         SectionGap(segmentIndex: 2, from: "新宿", to: "八王子"),
         SectionGap(segmentIndex: 5, from: "甲府", to: nil),

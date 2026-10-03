@@ -2,19 +2,16 @@ import Foundation
 import RailCore
 
 enum Region: String, CaseIterable, Sendable {
-    case jp, tw, hk, mo, kr, us, ca
+    case jp, tw, hk, mo, kr
 
     var code: String { rawValue }
-    static let ordered: [Region] = [.mo, .hk, .tw, .kr, .ca, .jp, .us]
-    nonisolated static var northAmericaEnabled: Bool { false }
+    static let ordered: [Region] = [.mo, .hk, .tw, .kr, .jp]
 
     static func resolved(_ train: Train) -> Region {
         Region(rawValue: train.region ?? "jp") ?? .jp
     }
 
-    static func isNorthAmerica(_ train: Train) -> Bool {
-        resolved(train) == .us || resolved(train) == .ca
-    }
+
 }
 
 extension Train {
@@ -41,7 +38,6 @@ actor RideStorage {
 
     private var events: [String] = []
     private var store: TrainStore?
-    private var northAmericaStore = TrainStore()
     private var recovery: TrainStore?
     private var meta: RideLibrary.Backup?
     private var failing = false
@@ -52,7 +48,6 @@ actor RideStorage {
     func reset() {
         events = []
         store = nil
-        northAmericaStore = TrainStore()
         recovery = nil
         meta = nil
         failing = false
@@ -69,14 +64,10 @@ actor RideStorage {
 
     func decodeSample(_ name: String) throws -> TrainStore { TrainStore() }
 
-    func decodeStore(includeNorthAmerica: Bool) throws -> (
-        store: TrainStore, includedNorthAmerica: Bool, naError: Error?
-    ) {
+    func decodeStore() throws -> TrainStore {
         events.append("read")
-        return (store ?? TrainStore(), includeNorthAmerica, nil)
+        return store ?? TrainStore()
     }
-
-    func decodeNorthAmericaStore() throws -> TrainStore { northAmericaStore }
 
     func savedState() -> SavedState {
         .init(hasStore: store != nil, storeDate: nil, backup: meta)
@@ -84,8 +75,8 @@ actor RideStorage {
 
     func recoverableBackup() -> RideLibrary.Backup? { meta }
 
-    func writeStore(_ next: TrainStore, includeNorthAmerica: Bool) async throws -> Date {
-        events.append("save:\(next.trains.first?.id ?? "empty"):\(includeNorthAmerica)")
+    func writeStore(_ next: TrainStore) async throws -> Date {
+        events.append("save:\(next.trains.first?.id ?? "empty")")
         if hold {
             hold = false
             entered = true
@@ -99,20 +90,14 @@ actor RideStorage {
         return Date()
     }
 
-    func mergeIntoNorthAmerica(_ trains: [Train], existingWins: Bool = false) throws -> Date? {
-        events.append("stash:\(trains.count)")
-        northAmericaStore = TrainStore(trains: trains)
-        return trains.isEmpty ? nil : Date()
-    }
-
     func writeBackup(_ next: TrainStore, meta: RideLibrary.Backup) throws {
         events.append("backup:\(next.trains.first?.id ?? "empty")")
         recovery = next
         self.meta = meta
     }
 
-    func restoreBackup(includeNorthAmerica: Bool) throws {
-        events.append("restore:\(includeNorthAmerica)")
+    func restoreBackup() throws {
+        events.append("restore")
         store = recovery
         recovery = nil
         meta = nil
@@ -124,13 +109,12 @@ actor RideStorage {
         meta = nil
     }
 
-    func removeStore(includeNorthAmerica: Bool) {
-        events.append("delete:\(includeNorthAmerica)")
+    func removeStore() {
+        events.append("delete")
         store = nil
     }
 
     func foldLegacyStores() throws -> Date? { nil }
-    func splitNorthAmericaFromMainStore() throws -> Date? { nil }
 }
 
 @main
@@ -143,8 +127,8 @@ struct QueueChecks {
             ])
         }
 
-        let storage = RideStorage.shared
-        let library = RideLibrary()
+        let storage = RideStorage()
+        let library = RideLibrary(storage: storage)
         let a = store("A")
         let b = store("B")
         let c = store("C")
@@ -155,7 +139,7 @@ struct QueueChecks {
         let secondSaved = await second.value
         let coalescedEvents = await storage.recorded()
         precondition(secondSaved)
-        precondition(coalescedEvents == ["save:B:false"])
+        precondition(coalescedEvents == ["save:B"])
         print("PASS queue coalesces consecutive unstarted saves to their latest snapshot")
 
         await storage.reset()
@@ -165,11 +149,11 @@ struct QueueChecks {
         let backupEvents = await storage.recorded()
         precondition(laterSaved)
         precondition(backupEvents == [
-            "save:A:false", "backup:A", "save:B:false",
+            "save:A", "backup:A", "save:B",
         ])
         _ = try await library.restoreBackup()
         let restored = try await library.savedStore()
-        precondition(restored.store == a && library.backup == nil)
+        precondition(restored == a && library.backup == nil)
         print("PASS backup, later save, and restore preserve queue order and the prior snapshot")
 
         await storage.reset()
@@ -181,9 +165,9 @@ struct QueueChecks {
         let deletionEvents = await storage.recorded()
         precondition(afterDeleteSaved)
         precondition(deletionEvents == [
-            "save:A:false", "delete:false", "save:C:false",
+            "save:A", "delete", "save:C",
         ])
-        let afterDeleteRead = try await library.savedStore().store
+        let afterDeleteRead = try await library.savedStore()
         precondition(afterDeleteRead == c)
         print("PASS deletion is a queue barrier and stale completion cannot resurrect its state")
 
@@ -198,7 +182,7 @@ struct QueueChecks {
         let latestSaved = await latest.value
         let inFlightEvents = await storage.recorded()
         precondition(latestSaved)
-        precondition(inFlightEvents == ["save:A:false", "save:C:false"])
+        precondition(inFlightEvents == ["save:A", "save:C"])
         print("PASS a started write keeps its snapshot while the following batch coalesces")
 
         await storage.reset()
@@ -208,12 +192,27 @@ struct QueueChecks {
         let recovered = library.save(b)
         let failedResult = await failed.value
         let recoveredResult = await recovered.value
-        let recoveredRead = try await library.savedStore().store
+        let recoveredRead = try await library.savedStore()
         precondition(failedResult == false)
         precondition(recoveredResult)
         precondition(recoveredRead == b)
         precondition(library.lastSaveError == nil)
         print("PASS a failed write does not cancel queued recovery work or a later successful save")
+
+        await storage.reset()
+        let acceptedBefore = library.save(a)
+        var retired = b
+        retired.trains[0].region = "us"
+        let rejected = library.save(retired)
+        let acceptedAfter = library.save(c)
+        let beforeResult = await acceptedBefore.value
+        let rejectedResult = await rejected.value
+        let afterResult = await acceptedAfter.value
+        let rejectionEvents = await storage.recorded()
+        precondition(beforeResult && !rejectedResult && afterResult)
+        precondition(rejectionEvents == ["save:A", "save:C"])
+        precondition(library.lastSaveError == nil)
+        print("PASS unsupported saves are refused without poisoning either accepted snapshot or queue recovery")
 
         var exportCache = MergedStore.ExportCache()
         func sameBytes(_ left: String, _ right: String) -> Bool {

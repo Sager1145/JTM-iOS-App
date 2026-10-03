@@ -4,18 +4,15 @@ import vm from "node:vm";
 import { readFileSync } from "node:fs";
 
 // Exercise the actual country resolver used by boot and country switches.
-// North American scopes retain their original tables for cross-border trips.
 test("station naming loads the joined tables for every country scope", () => {
   const context = vm.createContext({ console, window: {}, performance });
   context.window = context;
   context.RailMapStyle = { RAILWAY_STYLE: { riddenWidthPx: 4 } };
   for (const file of ["../shared/app-core.js", "../public/app-config.js"])
     vm.runInContext(readFileSync(new URL(file, import.meta.url), "utf8"), context);
-  for (const country of ["jp", "tw", "hk", "mo", "kr", "us", "ca"]) {
+  for (const country of ["jp", "tw", "hk", "mo", "kr"]) {
     const resources = vm.runInContext(`stationReadingsApisForCountry("${country}")`, context);
-    const expected = country === "us" || country === "ca"
-      ? ["station-readings-us", "station-readings-ca"]
-      : [country === "jp" ? "station-names" : `station-names-${country}`];
+    const expected = [country === "jp" ? "station-names" : `station-names-${country}`];
     assert.deepEqual(Array.from(resources), expected);
   }
 });

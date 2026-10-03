@@ -82,9 +82,7 @@ struct RailDisplayNetworkManifest: Decodable, Sendable {
         var vertexCount: Int?
         var chainCount: Int?
         var dependsOn: [String]?
-        /// `build-display-network.py`'s `renderGroup` — North America's
-        /// operator-level identity collapse (`na-render-groups.json`,
-        /// `renderGroupByRegion`), carried into the catalog next to the
+        /// The reviewed display group's identity, carried next to the
         /// colour override it usually travels with. Absent for a line the
         /// reviewed policy does not name, and absent entirely from a stale
         /// manifest built before this field existed — `Decodable`'s
@@ -210,7 +208,7 @@ struct RailDisplayNetworkManifest: Decodable, Sendable {
     var lines: [String: Line]
     var regions: [RegionRecord]
 
-    static let shippedRegions: Set<String> = ["jp", "tw", "hk", "mo", "kr", "us", "ca"]
+    static let shippedRegions: Set<String> = ["jp", "tw", "hk", "mo", "kr"]
 
     func validated() throws -> Self {
         guard format == Self.format else {
@@ -252,7 +250,7 @@ struct RailDisplayNetworkFile: Decodable, Sendable {
         /// a reviewed lane cuts one. The renderer culls at this granularity,
         /// so a part is both the unit of continuity and the unit of work.
         var parts: [[[Double]]]
-        /// A continuous-stroke fragment (North America): the parts are one
+        /// A reviewed continuous-stroke fragment: the parts are one
         /// uncut chain of intervals sharing their endpoints, the reviewed lane
         /// rows ride along in metres from the chain's start, and the device
         /// bakes the screen-space offset in (`RailCore.ContinuousStroke`).

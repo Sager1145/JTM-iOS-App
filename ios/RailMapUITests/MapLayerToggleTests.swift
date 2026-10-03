@@ -383,6 +383,7 @@ final class MapLayerToggleTests: XCTestCase {
 
     private func launch() -> XCUIApplication {
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
         app.launchEnvironment["RAILMAP_UI_TEST_STATS_REGION"] = "all"
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "medium"
@@ -409,6 +410,7 @@ final class MapLayerToggleTests: XCTestCase {
     /// Launch over ``tokyoCamera``, with `layers` switched off.
     private func launchOverTokyo(hiding layers: String? = nil, selectingMetro: Bool = false) -> XCUIApplication {
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         // The renderer fixture must not depend on a previous simulator session.
         app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"

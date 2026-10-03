@@ -65,3 +65,7 @@ app/public/rail/.na-rail.lock
 app/data/station-english-sources/
 app/data/station-english-verification-candidates/
 app/data/station-english-verification-review/
+
+# Explicitly requested offline North America repository backup.
+# App inputs and other raw downloads retain the exclusions above.
+!backups/north-america/2026-10-03/app/data/raw/**

@@ -58,35 +58,6 @@ struct CompactPackageLoopTests {
         #expect(tokaido.isLoop == false)
     }
 
-    /// The strict North American release includes only the loops whose
-    /// complete alignments have independent official geometry: Cincinnati's
-    /// Connector, Detroit People Mover, and — since the 2026-09-09
-    /// service-pattern repair (`na-service-pattern-repairs.json`) — the
-    /// Metromover Inner Loop and Portland Streetcar A Loop, which had shipped
-    /// as open lines with a duplicated seam station and an NS-Line lead-in
-    /// stop respectively. Atlanta Streetcar remains blocked for a
-    /// station/shape disagreement, and Galveston Rail remains blocked because
-    /// its OB/IB half-loop provenance is lost during cycle building.
-    @Test("the strict North American packages include only verified loops")
-    func northAmericanStrictRelease() throws {
-        let unitedStates = try PortFixtures.package(country: "us")
-        let loopIDs = Set(unitedStates.lines.filter(\.isLoop).map(\.id))
-        #expect(loopIDs == Set([
-            "cincinnati-metro-100",
-            "detroit-people-mover-dpm",
-            "miami-dade-transit-mmi",
-            "trimet-portland-streetcar-a",
-        ]))
-        #expect(!unitedStates.lines.contains {
-            $0.id == "metropolitan-atlanta-rapid-t-atlsc"
-                || $0.id == "galveston-island-transit-rail"
-        })
-
-        let canada = try PortFixtures.package(country: "ca")
-        #expect(canada.lines.contains { !$0.isLoop })
-        #expect(canada.lines.allSatisfy { !$0.isLoop }, "no Canadian line closes on itself")
-    }
-
     /// `true`, which is what the port fixtures' synthetic packages write. The
     /// `loop` case in `station-display.json` exists for exactly this field,
     /// and it is the spelling a strict `Bool`-only decoder passes and a strict

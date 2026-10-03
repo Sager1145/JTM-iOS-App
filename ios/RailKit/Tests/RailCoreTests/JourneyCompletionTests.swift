@@ -593,37 +593,6 @@ struct JourneyCompletionTests {
         #expect(JourneyCompletion.requestDenial(train: train, catalog: catalog) == .timeNotOnThatStation)
     }
 
-    @Test("catalog request eligibility accepts a station from another catalog region")
-    func requestEligibilitySearchesCatalogRegions() {
-        let catalog = EditorCatalogBuilder.build([
-            EditorCatalogLineSource(
-                regionCode: "us", lineID: "maple-us", name: "Maple Leaf", stations: [
-                    EditorCatalogStationSource(
-                        sourceCode: "NYP", name: "New York", longitude: -73.993, latitude: 40.750),
-                ]),
-            EditorCatalogLineSource(
-                regionCode: "ca", lineID: "maple-ca", name: "Maple Leaf", stations: [
-                    EditorCatalogStationSource(
-                        sourceCode: "TWO", name: "Toronto", longitude: -79.380, latitude: 43.645),
-                ]),
-        ])
-        let train = Train(
-            id: "cross-border", number: "", origin: "New York", destination: "Toronto",
-            visible: true,
-            stops: [
-                Stop(
-                    name: "New York", n02StationCode: "NYP", departure: "7:15",
-                    stopType: "origin", rideSegment: true),
-                Stop(
-                    name: "Toronto", n02StationCode: "TWO", arrival: nil,
-                    stopType: "destination", rideSegment: true),
-            ],
-            region: "ca")
-
-        #expect(JourneyCompletion.requestDenial(train: train, catalog: catalog) == nil)
-        #expect(JourneyCompletion.isRequestEligible(train, catalog: catalog))
-    }
-
     @Test("pasted text is locally extracted and only catalog-confirmed stations build a train")
     func pastedTextBuildsConfirmedStructuredDraft() throws {
         let catalog = Self.catalog()

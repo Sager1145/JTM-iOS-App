@@ -76,12 +76,16 @@ final class MapDetailLevelTests: XCTestCase {
 
     private func launch(camera: String) -> XCUIApplication {
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-AppleInterfaceStyle", "Light", "-appearance", "light"]
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "compact"
         app.launchEnvironment["RAILMAP_UI_TEST_LAYERS"] = "network,routes"
         app.launchEnvironment["RAILMAP_UI_TEST_GESTURE_TARGET"] = "1"
+        // A far-limit pinch must target the viewport center. An off-center
+        // globe pinch also changes latitude and therefore camera distance.
+        app.launchEnvironment["RAILMAP_UI_TEST_CENTERED_GESTURE_TARGET"] = "1"
         app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = camera
         app.launch()
         return app

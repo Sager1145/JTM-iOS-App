@@ -56,21 +56,26 @@ class ResourceRevisionTests(unittest.TestCase):
                     path.write_bytes(path.read_bytes() + b"changed" if path.exists() else b"added")
                     self.assertEqual(self.changed_regions(before), {region})
 
+    def test_physical_connection_evidence_invalidates_all_route_caches(self):
+        before = self.manifest()
+        (self.bundle / "physical-rail-junctions.json").write_text('{"junctions":[]}')
+        self.assertEqual(self.changed_regions(before), set(resources.REGIONS))
+
     def test_removed_optional_history_invalidates_revision(self):
-        history = self.bundle / "rail-history-ca.json"
+        history = self.bundle / "rail-history-tw.json"
         history.write_text("history")
         before = self.manifest()
         history.unlink()
-        self.assertEqual(self.changed_regions(before), {"ca"})
+        self.assertEqual(self.changed_regions(before), {"tw"})
         self.assertIn(history.name, before["sourceHashes"])
         self.assertNotIn(history.name, self.manifest()["sourceHashes"])
 
     def test_source_hashes_are_raw_bytes_for_precompute_attestations(self):
-        path = self.bundle / "rail-sections-ca.json"
+        path = self.bundle / "rail-sections-tw.json"
         path.write_bytes(b'{"sections":[]}\n')
         hashes = self.manifest()["sourceHashes"]
         self.assertEqual(hashes[path.name], hashlib.sha256(path.read_bytes()).hexdigest())
-        self.assertEqual(hashes["ca-2025.json"], hashlib.sha256(b"ca").hexdigest())
+        self.assertEqual(hashes["tw-2025.json"], hashlib.sha256(b"tw").hexdigest())
 
     def test_shared_render_inputs_invalidate_all_regions(self):
         for name in resources.SHARED_DISPLAY_INPUTS:
@@ -86,9 +91,9 @@ class ResourceRevisionTests(unittest.TestCase):
             "format": "jtm-display-network-v2", "version": "1",
             "generatedAt": "first build", "built": {"vertices": 100},
             "lines": {"jp|line": {"region": "jp", "color": "blue"},
-                      "ca|line": {"region": "ca", "color": "red"}},
+                      "tw|line": {"region": "tw", "color": "red"}},
             "regions": [{"region": "jp", "sha256": "jp"},
-                        {"region": "ca", "sha256": "ca"}],
+                        {"region": "tw", "sha256": "tw"}],
         }
         def write():
             path.write_text(json.dumps(manifest))

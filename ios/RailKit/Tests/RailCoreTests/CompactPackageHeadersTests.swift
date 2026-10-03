@@ -22,7 +22,7 @@ struct CompactPackageHeadersTests {
     /// Every country, every line, every field.
     @Test(
         "the header decode equals the full decode",
-        arguments: ["mo", "hk", "tw", "kr", "ca", "jp", "us"])
+        arguments: ["mo", "hk", "tw", "kr", "jp"])
     func matchesTheFullDecode(country: String) throws {
         let url = try PortFixtures.repositoryRoot()
             .appending(path: "app/public/rail/\(country)-2025.json")

@@ -54,6 +54,9 @@ public enum LocalJourneyAutofill {
         var result = plan.updatedTrain
         result.origin = origin.name
         result.destination = destination.name
+        // This proposal spans the selected ride endpoints; the caller applies
+        // it only after the user explicitly selects the physical candidate.
+        result.routeConfirmation = .confirmed
         return Proposal(train: result, choice: choice,
             conflictingStops: removed + plan.conflictingStops)
     }

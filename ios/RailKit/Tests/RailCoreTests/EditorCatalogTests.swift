@@ -25,7 +25,7 @@ struct EditorCatalogTests {
         let catalog = EditorCatalogBuilder.build([
             sourceLine("line-b", name: "本線", operatorName: "Tokyo Metro"),
             sourceLine("line-a", name: "本線", operatorName: "JR East"),
-            sourceLine("other", region: "us", name: "本線", operatorName: "Metro"),
+            sourceLine("other", region: "tw", name: "本線", operatorName: "Metro"),
         ])
 
         let lines = catalog.lines(in: "jp")
@@ -79,22 +79,22 @@ struct EditorCatalogTests {
             sourceLine("yamanote", region: "jp", operatorName: "JR East", stations: [
                 station("S1", name: "Central", nameRoma: "Sentoraru"),
             ]),
-            sourceLine("red", region: "us", operatorName: "Metro", stations: [
+            sourceLine("red", region: "tw", operatorName: "Metro", stations: [
                 station("S1", name: "Central"),
             ]),
         ])
 
         let japan = StationKey(regionCode: "jp", sourceCode: "S1")
-        let states = StationKey(regionCode: "us", sourceCode: "S1")
-        #expect(japan != states)
+        let taiwan = StationKey(regionCode: "tw", sourceCode: "S1")
+        #expect(japan != taiwan)
         #expect(catalog.station(japan)?.key.sourceCode == "S1")
-        #expect(catalog.station(states)?.key.sourceCode == "S1")
+        #expect(catalog.station(taiwan)?.key.sourceCode == "S1")
 
         let both = catalog.candidates(named: "  central ", regionCode: nil)
-        #expect(both.map(\.key) == [japan, states])
+        #expect(both.map(\.key) == [japan, taiwan])
         #expect(catalog.candidates(named: "Central", regionCode: "jp").map(\.key) == [japan])
         #expect(catalog.candidates(named: "Sentoraru", regionCode: nil).map(\.key) == [japan])
-        #expect(catalog.candidates(named: "Central", regionCode: "us").map(\.key) == [states])
+        #expect(catalog.candidates(named: "Central", regionCode: "tw").map(\.key) == [taiwan])
     }
 
     @Test func indexesHaveNoDanglingReferencesAndBuildIsStable() {
@@ -106,8 +106,8 @@ struct EditorCatalogTests {
             sourceLine("line-b", name: "南北線", operatorName: "Tokyo Metro", stations: [
                 station("S1", name: "東京", longitude: 139.8, latitude: 35.7),
             ]),
-            sourceLine("red", region: "us", operatorName: "Metro", stations: [
-                station("S9", name: "Union", longitude: -122.0, latitude: 47.0),
+            sourceLine("red", region: "tw", operatorName: "Metro", stations: [
+                station("S9", name: "Union", longitude: 121.0, latitude: 25.0),
             ]),
         ]
         let catalog = EditorCatalogBuilder.build(sources)
@@ -115,7 +115,7 @@ struct EditorCatalogTests {
 
         #expect(catalog.issues.isEmpty)
         #expect(!catalog.issues.contains(.dangling))
-        let regions = ["jp", "us"]
+        let regions = ["jp", "tw"]
         #expect(identity(catalog, regions: regions) == identity(again, regions: regions))
 
         var membershipIDs: [String] = []

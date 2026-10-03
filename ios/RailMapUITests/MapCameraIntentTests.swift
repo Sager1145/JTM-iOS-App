@@ -49,8 +49,11 @@ final class MapCameraIntentTests: XCTestCase {
         let before = status.label
         assertCameraStays(status, equalTo: before, for: 2)
         XCUIDevice.shared.orientation = .landscapeLeft
+        let keepsPortrait = UIDevice.current.userInterfaceIdiom == .phone
         try waitFor(status) {
-            self.number("viewportWidth", $0) > self.number("viewportHeight", $0)
+            keepsPortrait
+                ? self.number("viewportHeight", $0) > self.number("viewportWidth", $0)
+                : self.number("viewportWidth", $0) > self.number("viewportHeight", $0)
         }
         assertSameCamera(status.label, before)
 
@@ -103,7 +106,7 @@ final class MapCameraIntentTests: XCTestCase {
         XCTAssertTrue(origin.waitForExistence(timeout: 15), app.debugDescription)
         try waitFor(status) { self.number("basemapMuted", $0) == 0 }
         // Close the independent menu to restore the source map selection.
-        let back = app.buttons["journeyMenuClose"].firstMatch
+        let back = app.buttons["journeyBackToList"].firstMatch
         XCTAssertTrue(back.waitForExistence(timeout: 10))
         back.tap()
         try waitFor(status) { self.number("basemapMuted", $0) == 0 }
@@ -169,6 +172,7 @@ final class MapCameraIntentTests: XCTestCase {
                         camera: String = "40.735,-74.027,0.016", region: String? = nil,
                         layers: String = "routes,focus") -> XCUIApplication {
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-auto-focus-zoom", autoFocus ? "YES" : "NO"]
         if let region {

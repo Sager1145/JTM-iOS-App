@@ -17,7 +17,7 @@ import sys
 import tempfile
 
 
-REGIONS = ("jp", "tw", "hk", "mo", "kr", "us", "ca")
+REGIONS = ("jp", "tw", "hk", "mo", "kr")
 DEFAULT_ZOOMS = (10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0)
 
 
@@ -47,8 +47,6 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--json", type=Path, help="write the complete machine-readable report")
     parser.add_argument("--limit", type=int, default=30, help="maximum candidate locations printed")
     parser.add_argument("--legacy", action="store_true", help="use legacy non-strict ContinuousStroke mode")
-    parser.add_argument("--check-orange", action="store_true",
-                        help="fail if the Highland Avenue–Orange regression is present")
     parser.add_argument("--fail-on-candidates", action="store_true",
                         help="fail after reporting when any visible skipped-bend candidate remains")
     parser.add_argument("--fail-on-crossings", action="store_true",
@@ -66,8 +64,6 @@ def main() -> int:
     zooms = tuple(float(value) for value in args.zooms.split(",") if value.strip())
     if not zooms:
         raise SystemExit("--zooms must contain at least one value")
-    if args.check_orange and "us" not in regions:
-        raise SystemExit("--check-orange requires --regions to include us")
 
     env = dict(os.environ)
     developer = env.get("DEVELOPER_DIR", "/Applications/Xcode.app/Contents/Developer")
@@ -88,7 +84,6 @@ def main() -> int:
         probe = scratch / "audit-zoom-chords"
         compile_probe(repo, probe, env)
         reports = []
-        orange_fine = None
         for region in regions:
             source = scratch / f"{region}-stroke-model.json"
             with source.open("w") as output:
@@ -100,15 +95,6 @@ def main() -> int:
             completed = subprocess.run(command, cwd=repo, env=env, check=True,
                                        stdout=subprocess.PIPE, text=True)
             reports.append(json.loads(completed.stdout))
-            if args.check_orange and region == "us":
-                fine_zooms = tuple(12 + step / 8 for step in range(33))
-                fine_command = [str(probe), str(source), *(f"{zoom:g}" for zoom in fine_zooms),
-                                "--line=new-jersey-transit-nj-transi-mneg"]
-                if args.legacy:
-                    fine_command.append("--legacy")
-                fine = subprocess.run(fine_command, cwd=repo, env=env, check=True,
-                                      stdout=subprocess.PIPE, text=True)
-                orange_fine = json.loads(fine.stdout)
 
     candidates = [candidate for report in reports for candidate in report["candidates"]]
     candidates.sort(key=lambda row: (-row["excessPx"], row["region"], row["lineId"], row["appZoom"]))
@@ -130,7 +116,6 @@ def main() -> int:
         "candidates": candidates,
         "crossingCandidateCount": len(crossing_candidates),
         "crossingCandidates": crossing_candidates,
-        "orangeFineSweep": orange_fine,
         "interpretation": "Chord and newly introduced self-intersection candidates are review locations, not source-data verdicts.",
         "laneLOD": "Each zoom is a cold build (previousBucket=nil); camera-history hysteresis is not enumerated.",
     }
@@ -179,21 +164,6 @@ def main() -> int:
             f'@ {row["latitude"]:.6f},{row["longitude"]:.6f}'
         )
 
-    if args.check_orange:
-        if orange_fine is None or orange_fine["continuousBuilds"] == 0:
-            print("ERROR Highland Avenue–Orange target line was not audited", file=sys.stderr)
-            return 1
-        orange = [row for row in orange_fine["candidates"]
-                  if row["lineId"] == "new-jersey-transit-nj-transi-mneg"
-                  and row["stage"] == "lane_offset_or_fold"
-                  and row["fromMeasure"] < 19_000 < row["toMeasure"]]
-        orange_crossings = orange_fine["crossingCandidates"]
-        if orange or orange_crossings:
-            print(f"ERROR Highland Avenue–Orange regression present: {len(orange)} chord(s), "
-                  f"{len(orange_crossings)} new crossing(s)", file=sys.stderr)
-            return 1
-        print("PASS Highland Avenue–Orange focused regression "
-              "(app z12..16 in 0.125 increments; 33 cold-build zooms)")
     if args.fail_on_candidates and candidates:
         print(f"ERROR {len(candidates)} zoom-chord candidate(s) remain", file=sys.stderr)
         return 1

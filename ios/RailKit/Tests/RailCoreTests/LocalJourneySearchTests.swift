@@ -3,23 +3,18 @@ import Testing
 @testable import RailCore
 
 struct LocalJourneySearchTests {
-    @Test("Transfers cross different operators only at the exact shared station code")
+    @Test("Shared station identity and transfer relations do not prove connected track")
     func transfer() throws {
         let package = try fixture([
             line("first", ["A", "B"], operatorName: "One"),
             line("second", ["B", "C"], operatorName: "Two"),
             line("nearby", ["B-other", "D"]),
         ])
-        let choice = try #require(LocalJourneySearch.choices(
-            package: package, originCode: "A", destinationCode: "C").first)
-        #expect(choice.stations.map(\.code) == ["A", "B", "C"])
-        #expect(choice.lineIDs == ["first", "second"])
-        #expect(choice.operatorNames == ["One", "Two"])
-        #expect(choice.routeSections.count == 2)
-        #expect(choice.routeSections.flatMap { $0.sectionCodes ?? [] } == choice.sectionCodes)
+        let result = LocalJourneySearch.search(package: package, originCode: "A", destinationCode: "C")
+        #expect(result.choices.isEmpty)
+        #expect(!result.topologyIsComplete)
+        #expect(result.uniqueChoice == nil)
         #expect(LocalJourneySearch.choices(package: package, originCode: "A", destinationCode: "D").isEmpty)
-        #expect(LocalJourneySearch.choices(package: package, originCode: "A", destinationCode: "C",
-                                           excludingStationCodes: ["B"]).isEmpty)
     }
 
     @Test("Directed row continuations preserve repeated physical station occurrences", arguments: [false, true])
@@ -57,10 +52,9 @@ struct LocalJourneySearchTests {
         let first = LocalJourneySearch.choices(package: try fixture(rows), originCode: "A", destinationCode: "D")
         let reordered = LocalJourneySearch.choices(package: try fixture(Array(rows.reversed())), originCode: "A", destinationCode: "D")
         #expect(first == reordered)
-        #expect(first.count == 3)
+        #expect(first.count == 2)
         #expect(first[0].lineIDs == ["equal"])
-        #expect(first[1].lineIDs == ["first", "second"])
-        #expect(first[2].lineIDs == ["direct"])
+        #expect(first[1].lineIDs == ["direct"])
     }
 
     @Test("High speed policy and physical geometry restrict offline search")
@@ -77,29 +71,50 @@ struct LocalJourneySearchTests {
         #expect(LocalJourneySearch.choices(package: package, originCode: "A", destinationCode: "Z").isEmpty)
     }
 
-    @Test("Exponential diamond graph has bounded choices and obeys the expansion budget")
+    @Test("Choice and expansion limits expose incomplete searches")
     func boundedGraph() throws {
-        var rows: [[String: Any]] = []
-        for layer in 0..<30 {
-            for branch in 0..<2 {
-                var row = line("\(layer)-\(branch)", ["S\(layer)", "V\(layer)-\(branch)", "S\(layer + 1)"])
-                row["permittedTraversal"] = "forward"
-                rows.append(row)
-            }
-        }
-        // Thirty diamonds admit more than one billion routes.
-        let package = try fixture(rows)
-        let choices = LocalJourneySearch.choices(package: package, originCode: "S0", destinationCode: "S30")
-        #expect(choices.count == 3)
-        #expect(Set(choices.map(\.id)).count == 3)
-        #expect(choices.allSatisfy { $0.routeSections.count == 60 })
-        #expect(LocalJourneySearch.choices(package: package, originCode: "S0", destinationCode: "S30",
-                                           maximumExpansions: 1).isEmpty)
-        #expect(LocalJourneySearch.choices(package: package, originCode: "S0", destinationCode: "S30",
-                                           maximumChoices: 1).count == 1)
+        let package = try fixture([
+            line("first", ["A", "B", "D"]),
+            line("second", ["A", "C", "D"]),
+        ])
+        let complete = LocalJourneySearch.search(package: package, originCode: "A", destinationCode: "D")
+        #expect(complete.choices.count == 2)
+        #expect(complete.hasAmbiguity)
+        #expect(!complete.isTruncated)
+        let limited = LocalJourneySearch.search(package: package, originCode: "A", destinationCode: "D",
+                                               maximumChoices: 1)
+        #expect(limited.choices.count == 1)
+        #expect(limited.isTruncated)
+        #expect(limited.uniqueChoice == nil)
+        let unfinished = LocalJourneySearch.search(package: package, originCode: "A", destinationCode: "D",
+                                                  maximumExpansions: 1)
+        #expect(unfinished.choices.isEmpty)
+        #expect(unfinished.isTruncated)
+        #expect(unfinished.uniqueChoice == nil)
     }
 
-    @Test("Audited Keisei–Asakusa–Keikyu intervals connect Aoto to Haneda physically")
+    @Test("An exhausted single-row search is still incomplete network coverage")
+    func coverage() throws {
+        let result = LocalJourneySearch.search(package: try fixture([line("one", ["A", "B", "D"])]),
+                                               originCode: "A", destinationCode: "D")
+        #expect(result.choices.count == 1)
+        #expect(!result.isTruncated)
+        #expect(!result.hasAmbiguity)
+        #expect(!result.topologyIsComplete)
+        #expect(result.uniqueChoice == nil)
+    }
+
+    @Test("Ordered authored anchors cannot be bypassed by the shorter row")
+    func anchors() throws {
+        let package = try fixture([line("short", ["A", "D"]), line("long", ["A", "B", "C", "D"])])
+        let result = LocalJourneySearch.search(package: package, originCode: "A", destinationCode: "D",
+                                               requiredStationCodes: ["A", "C", "D"])
+        #expect(result.choices.map { $0.stations.map(\.code) } == [["A", "B", "C", "D"]])
+        #expect(LocalJourneySearch.search(package: package, originCode: "A", destinationCode: "D",
+                requiredStationCodes: ["A", "C", "B", "D"]).choices.isEmpty)
+    }
+
+    @Test("A through-network label cannot supply missing physical junction evidence")
     func japaneseThroughNetwork() throws {
         let source = try PortFixtures.package(country: "jp")
         let corridorIDs = ["jp-京成電鉄-押上線", "jp-東京都-1号線浅草線",
@@ -107,18 +122,9 @@ struct LocalJourneySearchTests {
         let package = CompactPackage(format: source.format, version: source.version,
                                      country: source.country,
                                      lines: source.lines.filter { corridorIDs.contains($0.id) })
-        let route = try #require(LocalJourneySearch.choices(
-            package: package, originCode: "003280", destinationCode: "004368").first)
-        #expect(route.lineIDs == corridorIDs)
-        #expect(route.stations.contains { $0.code == "003526" }) // Oshiage
-        #expect(route.stations.contains { $0.code == "004042" }) // Sengakuji
-        #expect(route.stations.last?.name == "羽田空港第1・第2ターミナル")
-        #expect(route.routeSections.count == route.stations.count - 1)
-        #expect(route.routeSections.allSatisfy { $0.sectionCodes?.count == 1 })
-        // Physical connectivity does not assert a dated single-seat service.
-        let reverse = try #require(LocalJourneySearch.choices(
-            package: package, originCode: "004368", destinationCode: "003280").first)
-        #expect(reverse.sectionCodes == Array(route.sectionCodes.reversed()))
+        let result = LocalJourneySearch.search(package: package, originCode: "003280", destinationCode: "004368")
+        #expect(result.choices.isEmpty)
+        #expect(!result.topologyIsComplete)
     }
 
     private func line(_ id: String, _ codes: [String], distance: Double = 1,

@@ -6,20 +6,15 @@ import Testing
 
 /// Which packages a journey is solved against.
 ///
-/// Everything here is checked against the codes the shipped stores actually
-/// carry. The two cross-border samples are real records —
-/// `app/data/train-store-us.json`'s *Adirondack 69* and
-/// `app/data/train-store-ca.json`'s *Maple Leaf 64* — and their border hop is
-/// the pair `US-AMTRAK-RSP` → `CA-AMTRAK-RSP`, Rouses Point on each side of
-/// the line, which is what makes the crossing visible to a rule that reads
-/// nothing but the strings.
+/// Supported station-code prefixes and generic scope ordering stay independent
+/// of the order in which a caller requests packages.
 struct RegionScopeRuleTests {
 
     /// The catalog this app ships, spelled the way `Region.scopeRule` spells
     /// it: `allCases` order, Japan's six-digit N02 codes, Japan as the
     /// fallback for a ride that names nothing.
     private let rule = RegionScopeRule(
-        regionCodes: ["jp", "tw", "hk", "mo", "kr", "us", "ca"],
+        regionCodes: ["jp", "tw", "hk", "mo", "kr"],
         numericCodeRegion: "jp",
         fallback: "jp")
 
@@ -48,10 +43,10 @@ struct RegionScopeRuleTests {
     @Test("a station code names its region, or nothing")
     func stationCodes() {
         #expect(rule.regionCode(forStationCode: "005853") == "jp")
-        #expect(rule.regionCode(forStationCode: "us-official-chicago-union") == "us")
-        #expect(rule.regionCode(forStationCode: "US-AMTRAK-RSP") == "us")
-        #expect(rule.regionCode(forStationCode: "CA-AMTRAK-RSP") == "ca")
-        #expect(rule.regionCode(forStationCode: "CA-GO-TRANSIT-AD") == "ca")
+        #expect(rule.regionCode(forStationCode: "tw-official-taipei") == "tw")
+        #expect(rule.regionCode(forStationCode: "TW-OFFICIAL-TAIPEI") == "tw")
+        #expect(rule.regionCode(forStationCode: "HK-OFFICIAL-CENTRAL") == "hk")
+        #expect(rule.regionCode(forStationCode: "MO-OFFICIAL-BARRA") == "mo")
         #expect(rule.regionCode(forStationCode: "kr-official-busan") == "kr")
         // An operator code that merely begins with its own region's letters.
         #expect(rule.regionCode(forStationCode: "KR-GYEONGBUSEON-BUSAN") == "kr")
@@ -83,59 +78,25 @@ struct RegionScopeRuleTests {
 
     @Test("a journey inside one country names one region")
     func singleRegion() {
-        let acela = train(region: "us", stops: ["US-AMTRAK-NYP", "US-AMTRAK-BOS"])
-        #expect(rule.regionCodesTouched(acela) == ["us"])
-        #expect(rule.matched(acela) == "us")
-        #expect(rule.scopeKey(rule.regionCodesTouched(acela)) == "us")
+        let regional = train(region: "kr", stops: ["KR-OFFICIAL-SEOUL", "KR-OFFICIAL-BUSAN"])
+        #expect(rule.regionCodesTouched(regional) == ["kr"])
+        #expect(rule.matched(regional) == "kr")
+        #expect(rule.scopeKey(rule.regionCodesTouched(regional)) == "kr")
     }
 
-    /// *Adirondack 69*, New York to Montréal. The record is filed under `us`
-    /// and its last three stops are Canadian, which is the whole case this
-    /// type exists for: asking the United States' graph to find Montréal is
-    /// how a journey comes back 無法繪製路線.
-    @Test("the Adirondack reaches two packages, starting in its own")
-    func adirondackCrossesSouthToNorth() {
-        let adirondack = train(
-            region: "us",
-            stops: [
-                "US-AMTRAK-NYP", "US-AMTRAK-ALB", "US-AMTRAK-PLB", "US-AMTRAK-RSP",
-                "CA-AMTRAK-RSP", "CA-AMTRAK-SLQ", "CA-AMTRAK-MTR",
-            ],
-            sections: [("US-AMTRAK-RSP", "CA-AMTRAK-RSP")])
-        #expect(rule.regionCodesTouched(adirondack) == ["us", "ca"])
-        #expect(rule.matched(adirondack) == "us")
-    }
-
-    /// *Maple Leaf 64*, Toronto to New York — the same border the other way.
-    @Test("the Maple Leaf reaches the same two, starting in the other one")
-    func mapleLeafCrossesNorthToSouth() {
-        let mapleLeaf = train(
-            region: "ca",
-            stops: ["CA-VIA-TRTO", "CA-AMTRAK-NIAG", "US-AMTRAK-NFL", "US-AMTRAK-NYP"])
-        #expect(rule.regionCodesTouched(mapleLeaf) == ["ca", "us"])
-        #expect(rule.matched(mapleLeaf) == "ca")
-    }
-
-    /// The two directions of one crossing share a graph. This is the property
-    /// `DisplayNetworkCache` files its merged network under, and the reason
-    /// the key is sorted by the catalog rather than by the ride.
-    @Test("both directions of a crossing key the same working set")
-    func crossingsShareOneKey() {
-        #expect(rule.scopeKey(["us", "ca"]) == "us+ca")
-        #expect(rule.scopeKey(["ca", "us"]) == "us+ca")
-        // …and the CONTENT of that working set is laid down in one order too,
-        // whichever direction asked for it first. A `RouteNetwork`'s name
-        // index is insertion-ordered, and the four cross-border services are
-        // one name over two lines.
-        #expect(rule.canonicalOrder(["us", "ca"]) == ["us", "ca"])
-        #expect(rule.canonicalOrder(["ca", "us"]) == ["us", "ca"])
+    @Test("requested region order does not change the scope key or content order")
+    func requestedOrdersShareOneKey() {
+        #expect(rule.scopeKey(["hk", "mo"]) == "hk+mo")
+        #expect(rule.scopeKey(["mo", "hk"]) == "hk+mo")
+        #expect(rule.canonicalOrder(["hk", "mo"]) == ["hk", "mo"])
+        #expect(rule.canonicalOrder(["mo", "hk"]) == ["hk", "mo"])
     }
 
     /// The catalog's order, not the alphabet's and not the ride's.
     @Test("the canonical order is the catalog's")
     func canonicalOrderIsTheCatalogs() {
-        #expect(rule.canonicalOrder(["ca", "jp", "kr"]) == ["jp", "kr", "ca"])
-        #expect(rule.canonicalOrder(["mx", "us"]) == ["us"])
+        #expect(rule.canonicalOrder(["mo", "jp", "kr"]) == ["jp", "mo", "kr"])
+        #expect(rule.canonicalOrder(["mx", "tw"]) == ["tw"])
         #expect(rule.canonicalOrder([]).isEmpty)
         #expect(rule.scopeKey(["kr", "hk", "tw"]) == "tw+hk+kr")
     }
@@ -155,9 +116,9 @@ struct RegionScopeRuleTests {
     /// it may not stand in front of codes that actually say something.
     @Test("an unknown declared region is ignored, not trusted")
     func unknownDeclaredRegion() {
-        let mislabelled = train(region: "xx", stops: ["US-AMTRAK-NYP"])
-        #expect(rule.matched(mislabelled) == "us")
-        #expect(rule.regionCodesTouched(mislabelled) == ["us"])
+        let mislabelled = train(region: "xx", stops: ["TW-OFFICIAL-TAIPEI"])
+        #expect(rule.matched(mislabelled) == "tw")
+        #expect(rule.regionCodesTouched(mislabelled) == ["tw"])
     }
 
     /// The sections are consulted after the stops, and they are what answers
@@ -166,17 +127,17 @@ struct RegionScopeRuleTests {
     func sectionsAnswerWhenStopsDoNot() {
         let sectionsOnly = train(
             stops: [nil, nil],
-            sections: [("US-AMTRAK-RSP", "CA-AMTRAK-RSP")])
-        #expect(rule.matched(sectionsOnly) == "us")
-        #expect(rule.regionCodesTouched(sectionsOnly) == ["us", "ca"])
+            sections: [("TW-OFFICIAL-TAIPEI", "HK-OFFICIAL-CENTRAL")])
+        #expect(rule.matched(sectionsOnly) == "tw")
+        #expect(rule.regionCodesTouched(sectionsOnly) == ["tw", "hk"])
     }
 
     /// A rule handed no catalog claims nothing. It exists so a caller can be
     /// built before it has one, not so that one can be skipped.
     @Test("an empty catalog recognises no code")
     func emptyCatalog() {
-        #expect(RegionScopeRule.empty.regionCode(forStationCode: "US-AMTRAK-NYP") == nil)
+        #expect(RegionScopeRule.empty.regionCode(forStationCode: "TW-OFFICIAL-TAIPEI") == nil)
         #expect(RegionScopeRule.empty.regionCode(forStationCode: "005853") == nil)
-        #expect(RegionScopeRule.empty.scopeKey(["us", "ca"]) == "")
+        #expect(RegionScopeRule.empty.scopeKey(["tw", "hk"]) == "")
     }
 }

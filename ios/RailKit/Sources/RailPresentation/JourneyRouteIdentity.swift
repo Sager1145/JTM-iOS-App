@@ -4,18 +4,20 @@ import RailCore
 /// Service identity is independent of the railways a train travels over.
 public enum JourneyRouteIdentity {
     public static func recordedLineNames(of train: Train) -> [String] {
+        guard !train.requiresRouteConfirmation else { return [] }
         let sections = unique((train.routeSections ?? []).flatMap { $0.lineNames ?? [] })
         // Policy hints can include alternative corridors that were never ridden.
         return sections.isEmpty ? unique(train.routePolicy?.preferredLineNames ?? []) : sections
     }
 
     public static func detectedApplies(_ train: Train, detected: [Statistics.TraversedLine]) -> Bool {
-        !detected.isEmpty
+        !train.requiresRouteConfirmation && !detected.isEmpty
             && (detected.contains { $0.selectedLineID != nil }
                 || TrainServiceBranding.usesDetectedLines(train) || recordedLineNames(of: train).isEmpty)
     }
 
     public static func lineNames(of train: Train, detected: [Statistics.TraversedLine]) -> [String] {
+        guard !train.requiresRouteConfirmation else { return [] }
         if detected.contains(where: { $0.selectedLineID != nil }) {
             return unique(detected.map(\.name))
         }
@@ -37,6 +39,7 @@ public enum JourneyRouteIdentity {
     }
 
     public static func operatorNames(of train: Train, detected: [Statistics.TraversedLine]) -> [String] {
+        guard !train.requiresRouteConfirmation else { return unique([train.company].compactMap { $0 }) }
         if detected.contains(where: { $0.selectedLineID != nil }) {
             return unique(detected.compactMap(\.operatorName))
         }

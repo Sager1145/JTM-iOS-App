@@ -27,6 +27,7 @@ import RailCore
     enum Phase { case idle, loading, loaded, failed(String) }
     var routeStore: RiddenRouteStore?
     func publish(entries: [String: Int], phase: Phase) {}
+    func publish(pendingConfirmationIDs: Set<String>) {}
     func clear() {}
 }
 @MainActor final class RiddenRouteStore {
@@ -102,7 +103,11 @@ struct StrokeRef { let chainID: String }
     var strokeBuildCache: [String: Int] = [:]
     var lineBuildCache: [String: Int] = [:]
     var ridePolylineCache: [String: Int] = [:]
+    // The production coordinator invalidates through its interaction owner.
+    // Keep this cache observable so the existing geometry checks can inspect it.
     var cachedTapIndex: Int?
+    var interaction: Coordinator { self }
+    func invalidateRideGeometry() { cachedTapIndex = nil }
     var linesGeneration = 1
     var strokeRefCache: [String: (geometryKey: String, linesGeneration: Int, refs: [String: StrokeRef])] = [:]
     var networkGeometry: Coordinator { self }

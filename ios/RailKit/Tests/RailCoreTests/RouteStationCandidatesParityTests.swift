@@ -85,7 +85,7 @@ struct RouteStationCandidatesParityTests {
             let stationCollection = try Stations.FeatureCollection.load(
                 contentsOf: Self.dataURL("stations", item.country))
             let stations = Stations.Index(stationCollection)
-            let graph = RouteGraph.build(from: sections)
+            let graph = RouteGraph.build(from: sections, policy: .coordinateParity)
             #expect(graph.nodeCount == item.graphNodeCount)
 
             for probe in item.probes {

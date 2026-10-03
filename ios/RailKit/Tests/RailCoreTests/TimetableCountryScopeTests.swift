@@ -6,7 +6,7 @@ struct TimetableCountryScopeTests {
     @Test func foreignDraftsCannotReceiveJapaneseTimetableFacts() throws {
         let database = try #require(TrainTimetableDatabase.bundled())
         let trip = try #require(try database.trips(on: "2026-09-30").first { $0.passengerStops.count >= 2 })
-        for region in ["tw", "hk", "mo", "kr", "us", "ca", "unknown"] {
+        for region in ["tw", "hk", "mo", "kr", "unknown"] {
             let draft = Train(id: region, number: "", origin: "", destination: "", stops: [], region: region)
             #expect(TrainTimetableDatabase.bundled(country: region) == nil)
             #expect(!TrainTimetableDatabase.accepts(draft))
@@ -14,7 +14,7 @@ struct TimetableCountryScopeTests {
             #expect(trip.applying(to: draft) == nil)
             #expect(try JourneyEnglishName.official(for: draft, database: database) == nil)
         }
-        for code in ["tw-official-1", "hk-mtr-1", "TRA-1000", "us-official-1", "ca-official-1"] {
+        for code in ["tw-official-1", "hk-mtr-1", "TRA-1000", "kr-official-1", "mo-official-1"] {
             let legacy = Train(id: code, number: "", origin: "", destination: "",
                                stops: [Stop(name: "", n02StationCode: code)])
             #expect(!TrainTimetableDatabase.accepts(legacy))
@@ -22,7 +22,7 @@ struct TimetableCountryScopeTests {
             #expect(TimetableTripMatch.candidates(for: legacy, among: [trip]).isEmpty)
         }
         let mislabeled = Train(id: "mislabeled", number: "", origin: "", destination: "",
-                               stops: [Stop(name: "", n02StationCode: "US-AMTRAK-WAS")], region: "jp")
+                               stops: [Stop(name: "", n02StationCode: "KR-GYEONGBUSEON-BUSAN")], region: "jp")
         #expect(!TrainTimetableDatabase.accepts(mislabeled))
         #expect(trip.publishedStopsDraft(to: mislabeled) == nil)
         let blank = Train(id: "legacy-jp", number: "", origin: "", destination: "", stops: [])

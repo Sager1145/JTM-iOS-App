@@ -12,6 +12,7 @@ final class BasemapRenderingTests: XCTestCase {
         XCUIDevice.shared.orientation = .portrait
         defer { XCUIDevice.shared.orientation = .portrait }
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-AppleInterfaceStyle", "Light", "-appearance", "light",
                                "-interface-language", "en",
@@ -56,11 +57,15 @@ final class BasemapRenderingTests: XCTestCase {
         }
 
         XCUIDevice.shared.orientation = .landscapeLeft
+        let keepsPortrait = UIDevice.current.userInterfaceIdiom == .phone
         try waitForStatus(status) {
-            self.number("viewportWidth", $0) > self.number("viewportHeight", $0)
+            (keepsPortrait
+                ? self.number("viewportHeight", $0) > self.number("viewportWidth", $0)
+                : self.number("viewportWidth", $0) > self.number("viewportHeight", $0))
                 && self.number("covered", $0) == 1
         }
-        _ = try waitForImage(app, target: target, name: "basemap-landscape") {
+        _ = try waitForImage(app, target: target,
+                             name: keepsPortrait ? "basemap-portrait-locked" : "basemap-landscape") {
             $0.hasTexture && !$0.hasBlackBlock
         }
         XCUIDevice.shared.orientation = .portrait

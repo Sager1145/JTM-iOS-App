@@ -7,7 +7,7 @@ import Testing
 /// Resolution is the step that decides which feature a written name means, so
 /// a disagreement here is not a rendering difference — it is a train calling at
 /// a different station. The fixture therefore carries every station name in all
-/// seven shipped packages, every stop name in the five established train stores,
+/// five shipped packages, every stop name in the five established train stores,
 /// and every station code, each resolved against the country index that has to
 /// answer it.
 ///
@@ -873,11 +873,9 @@ struct StationsParityTests {
             }
             storeNames += summary.storeNames
         }
-        // The original five packages contributed 10,361 names. North America
-        // must increase that census, while store-only coverage intentionally
-        // remains on the five established itinerary corpora.
-        #expect(packageNames > 10_361)
-        #expect(fixture.sharedNames.count >= 33)
+        // The supported five-package name census stays exact.
+        #expect(packageNames == 10_363)
+        #expect(fixture.sharedNames.count == 33)
 
         // Every bare-name query in the fixture is one of those names, one of
         // the shared ones against a country that does not have it, or an
@@ -890,7 +888,7 @@ struct StationsParityTests {
 
     @Test(
         "the JSONSerialization reader answers what the Decodable conformance answers",
-        arguments: ["jp", "tw", "hk", "mo", "kr", "us", "ca"])
+        arguments: ["jp", "tw", "hk", "mo", "kr"])
     func loadMatchesTheDecodableConformance(country: String) throws {
         // `FeatureCollection.load` reads through `JSONSerialization` because
         // the `Decodable` path spends most of its time throwing and discarding

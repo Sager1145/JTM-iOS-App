@@ -23,8 +23,6 @@ const COUNTRIES = [
   { code: "HK", slug: "hk", readingsFile: "station-readings-hk.json" },
   { code: "KR", slug: "kr", readingsFile: "station-readings-kr.json" },
   { code: "MO", slug: "mo", readingsFile: "station-readings-mo.json" },
-  { code: "US", slug: "us", readingsFile: "station-readings-us.json" },
-  { code: "CA", slug: "ca", readingsFile: "station-readings-ca.json" },
 ];
 
 // N02_002 事業者種別. The four non-Japanese builders assign the same code
@@ -230,10 +228,8 @@ export function readSources() {
       packageFile,
       sourcesDoc: fs.existsSync(path.join(railDir, sourcesDoc)) ? sourcesDoc : null,
       pkg: readJson(path.join(railDir, packageFile)),
-      readingsFile: ["us", "ca"].includes(country.slug) ? country.readingsFile
-        : country.readingsFile.replace("station-readings", "station-names"),
-      readings: readJson(path.join(dataDir, ["us", "ca"].includes(country.slug) ? country.readingsFile
-        : country.readingsFile.replace("station-readings", "station-names"))),
+      readingsFile: country.readingsFile.replace("station-readings", "station-names"),
+      readings: readJson(path.join(dataDir, country.readingsFile.replace("station-readings", "station-names"))),
       englishCatalog: country.slug === "jp"
         ? readJson(path.join(dataDir, "station-english-jp.json")) : null,
       allRegionEnglishCatalog: english.byCountry[country.slug],
@@ -628,8 +624,7 @@ export function buildDatabase({ outFile, geometry = true, log = () => {} } = {})
       readingByNameNorm.set(normalizeStationName(rawKey), entry);
     }
     for (const [rawKey, entry] of Object.entries(readingByCode)) {
-      const keyType = ["us", "ca"].includes(slug) ? "line_station"
-        : rawKey.includes(":") ? "line_station" : "code";
+      const keyType = rawKey.includes(":") ? "line_station" : "code";
       for (const field of NAME_FIELD_KEYS) {
         const value = entry[field];
         if (!value) continue;
@@ -763,12 +758,11 @@ export function buildDatabase({ outFile, geometry = true, log = () => {} } = {})
 
         // Resolve this line-station's names through the frontend's own order.
         const lineStationKey = `${line.id}:${row[0]}`;
-        const frozen = ["us", "ca"].includes(slug);
-        let entry = readingByCode[frozen ? row[0] : lineStationKey];
-        let source = frozen ? "readings:code" : "readings:line_station";
+        let entry = readingByCode[lineStationKey];
+        let source = "readings:line_station";
         if (!entry) {
-          entry = readingByCode[frozen ? lineStationKey : row[0]];
-          source = frozen ? "readings:line_station" : "readings:code";
+          entry = readingByCode[row[0]];
+          source = "readings:code";
         }
         if (!entry) {
           entry = readingByNameNorm.get(normalizeStationName(row[1]));

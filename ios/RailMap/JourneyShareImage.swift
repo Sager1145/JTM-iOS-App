@@ -130,6 +130,7 @@ enum JourneyPoster {
             train.visible == false ? "state.hidden" : "state.shown", fallback: train.visible == false ? "Hidden" : "Shown"))
         let status = RideStatusCenter.shared.status(forTrainID: train.id)
         let stateKey: String = switch status {
+        case .pendingConfirmation: "ios.routeGuide.pending"
         case .unknown: "ios.route.preparing"
         case .resolving: "ios.route.resolving"
         case .resolved: "ios.route.resolved"
@@ -137,7 +138,8 @@ enum JourneyPoster {
         case .unavailable: "ios.route.unavailable"
         case .noRoute: "ios.journey.noRiddenSection"
         }
-        result.append(Block(text: stateKey.hasPrefix("ios.route.") ? l.editorText(stateKey) : l.journeyText(stateKey), style: .heading))
+        result.append(Block(text: status == .pendingConfirmation ? l.editorText(stateKey)
+            : stateKey.hasPrefix("ios.route.") ? l.editorText(stateKey) : l.journeyText(stateKey), style: .heading))
         if case .needsReview(_, _, let gaps) = status {
             for gap in gaps { result.append(Block(text: (gap.from ?? "?") + " → " + (gap.to ?? "?"))) }
         }

@@ -8,7 +8,7 @@ evaluateAppScripts(context);
 const run = (expression) => vm.runInContext(expression, context);
 run("stationCandidatesIndex = new Map();");
 
-for (const country of ["jp", "tw", "hk", "mo", "kr", "us", "ca"]) {
+for (const country of ["jp", "tw", "hk", "mo", "kr"]) {
   test(`${country} keeps its country and timetable fields through import/export`, () => {
     context.__train = {id: "region_01", date: "2026-09-30", number: "Service 1", region: country,
       number_en: "Service 1", vehicle_type: "Vehicle", train_type: "Express", company: "Operator",
@@ -27,10 +27,14 @@ for (const country of ["jp", "tw", "hk", "mo", "kr", "us", "ca"]) {
   });
 }
 
-test("North American precompute manifests attest both countries in the shared scope", () => {
+test("retired regions and untagged railway identities are rejected", () => {
   for (const country of ["us", "ca"]) {
-    context.__country = country;
-    const result = JSON.parse(run("JSON.stringify(precomputeManifestSolverContext({country: __country, historyHashes: {}}))"));
-    assert.deepEqual(result.history_revisions, {ca: "none", us: "none"});
+    context.__train = {region: country};
+    assert.throws(() => run("normalizeImportedTrain(__train)"), /Unsupported journey region/);
+    context.__train = {stops: [{n02_station_code: `${country.toUpperCase()}-RETIRED`}]};
+    assert.throws(() => run("normalizeImportedTrain(__train)"), /Unsupported railway identity/);
+    context.__train = {route_sections: [{line_ids: [`${country}-retired`]}]};
+    assert.throws(() => run("normalizeImportedTrain(__train)"), /Unsupported railway identity/);
+    assert.throws(() => run(`railScopeCountriesForCountry("${country}")`), /Unsupported railway region/);
   }
 });

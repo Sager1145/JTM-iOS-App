@@ -2,7 +2,7 @@
 """Run the production editor validator against focused valid/invalid drafts.
 
 Usage: python3 ios/tools/verify-editor-validation.py <RailKit swift-test scratch>
-Compiles the actual application source and links existing RailCore objects.
+Compiles the localized application adapter and links RailApplication/RailCore.
 No application data or simulator is modified.
 """
 from pathlib import Path
@@ -20,9 +20,16 @@ if modules is None:
 objects = [library] if library else sorted((modules.parent / "RailCore.build").glob("*.swift.o"))
 if not objects:
     raise SystemExit("RailCore build objects are missing")
+application_library = next(scratch.rglob("libRailApplication.a"), None)
+application_objects = ([application_library] if application_library else
+                       sorted((modules.parent / "RailApplication.build").glob("*.swift.o")))
+if not application_objects:
+    raise SystemExit("RailApplication build objects are missing; rebuild RailKit first")
+objects = application_objects + objects
 
 harness = r'''
 import Foundation
+import RailApplication
 import RailCore
 
 @main struct Checks {
@@ -83,6 +90,7 @@ import RailCore
         rejects("invalid station code", field: .stop(0)) { $0.stops[0].n02StationCode = "?" }
         rejects("negative platform", field: .stop(0)) { $0.stops[0].platformNumber = -1 }
         rejects("invalid departure time", field: .stop(0)) { $0.stops[0].departure = "09:99" }
+        rejects("invalid arrival time", field: .stop(1)) { $0.stops[1].arrival = "10:99" }
         rejects("origin both times", field: .stop(0)) { $0.stops[0].arrival = "23:49" }
         rejects("destination both times", field: .stop(1)) { $0.stops[1].departure = "00:11+1" }
         rejects("incomplete route section", field: .routeSection(0)) { $0.routeSections = [RouteSection(from: "Tokyo")] }
@@ -118,5 +126,5 @@ with tempfile.TemporaryDirectory(prefix="jtm-editor-validation-") as temporary:
     subprocess.run(["xcrun", "swiftc", "-swift-version", "6", "-parse-as-library",
                     "-sdk", sdk, "-I", str(modules),
                     str(root / "ios/RailMap/EditorValidation.swift"), str(checks),
-                    *map(str, objects), "-o", str(executable)], check=True, env=environment)
+                    *map(str, objects), "-lsqlite3", "-o", str(executable)], check=True, env=environment)
     subprocess.run([str(executable)], check=True)

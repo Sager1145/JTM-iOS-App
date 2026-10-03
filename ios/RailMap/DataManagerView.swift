@@ -379,10 +379,7 @@ struct DataManagerView: View {
     ///
     /// The web app's 重置示例 — "this sample IS the store" — survives as the
     /// long-press action, where it has an unambiguous subject.
-    /// The last enabled region that actually ships a sample — `us`/`ca` have
-    /// none, and comparing against `Region.enabledOrdered.last` hid the
-    /// footnote entirely once North America was enabled, because it sorts
-    /// after every region this section draws a `Section` for.
+    /// Place the footnote after the last supported region that has samples.
     private var lastRegionWithSamples: Region? {
         Region.enabledOrdered.last { !RideLibrary.Sample.forRegion($0).isEmpty }
     }

@@ -77,8 +77,9 @@ final class ThroughServiceUITests: XCTestCase {
         XCTAssertTrue(next.waitForExistence(timeout: 40))
         next.tap()
         let pattern = app.buttons["rideEditorServicePattern"]
+        XCTAssertTrue(EditorUITestSupport.reveal(pattern, in: app), app.debugDescription)
         XCTAssertTrue(pattern.waitForExistence(timeout: 8))
-        pattern.tap()
+        EditorUITestSupport.tap(pattern, in: app)
         let search = app.searchFields.firstMatch
         XCTAssertTrue(search.waitForExistence(timeout: 8))
         search.tap()
@@ -124,6 +125,7 @@ final class ThroughServiceUITests: XCTestCase {
 
     private func launchNewEditor() -> XCUIApplication {
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-interface-language", "en"]
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
@@ -201,7 +203,8 @@ final class ThroughServiceUITests: XCTestCase {
             XCTFail(reason)
         }
         let routePicker = app.buttons["rideEditorServicePattern"]
-        guard routePicker.waitForExistence(timeout: 8), routePicker.isHittable else {
+        guard EditorUITestSupport.reveal(routePicker, in: app),
+              routePicker.waitForExistence(timeout: 8), routePicker.isHittable else {
             stop("Route-picker action is not reachable; no tap attempted.")
             return
         }

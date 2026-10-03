@@ -68,6 +68,7 @@ final class LongJourneyDetailUITests: XCTestCase {
 
     private func launch(mode: String) -> XCUIApplication {
         let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launchEnvironment["RAILMAP_UI_TEST_LONG_DETAIL"] = mode
         app.launch()

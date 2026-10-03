@@ -17,7 +17,7 @@ clear = method('    func clear()', '    /// The railways every current ride')
 resolve = method('    func resolve(_ train:', '    /// One journey through the same cache-then-solve path')
 harness = r'''
 import Foundation
-struct Train: Sendable, Equatable { let id: String; let number: String }
+struct Train: Sendable, Equatable { let id: String; let number: String; var requiresRouteConfirmation: Bool { false } }
 struct RouteScope: Sendable { init(_ train: Train) {} }
 actor Probe {
     static let shared = Probe()
@@ -38,6 +38,8 @@ actor Probe {
     var resolving = Set<String>()
     var finished: [String] = []
     func publish(entries: [String: Entry], phase: Phase) { resolving.removeAll() }
+    func publish(pendingConfirmationIDs: Set<String>) {}
+    func publish(routeConfirmationFor train: Train) {}
     func beginResolving(_ id: String) { resolving.insert(id) }
     func finishResolving(_ id: String, entry: Entry?) { resolving.remove(id); finished.append(id) }
     func clear() { resolving.removeAll() }

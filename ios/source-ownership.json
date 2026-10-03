@@ -1,0 +1,504 @@
+{
+  "version": 1,
+  "groups": [
+    {
+      "id": "app",
+      "responsibility": "App lifecycle and dependency composition; single shared map, player and stores",
+      "validation": [
+        {
+          "id": "workspace-ui",
+          "command": "xcodebuild -project ios/RailMap.xcodeproj -scheme RailMap -destination \"platform=iOS Simulator,name=iPhone 17 Pro\" test -only-testing:RailMapUITests/RailMapUITests"
+        }
+      ],
+      "sources": [
+        "ios/RailMap/AppShell.swift",
+        "ios/RailMap/RailMapApp.swift"
+      ]
+    },
+    {
+      "id": "workspace",
+      "responsibility": "Workspace navigation, presentation and local filter/draft state",
+      "validation": [
+        {
+          "id": "workspace-ui",
+          "command": "xcodebuild -project ios/RailMap.xcodeproj -scheme RailMap -destination \"platform=iOS Simulator,name=iPhone 17 Pro\" test -only-testing:RailMapUITests/WorkspaceEditingTests"
+        }
+      ],
+      "sources": [
+        "ios/RailMap/AddDateAlert.swift",
+        "ios/RailMap/BottomChrome.swift",
+        "ios/RailMap/ContentView.swift",
+        "ios/RailMap/JourneyMenuTransition.swift",
+        "ios/RailMap/JourneyWorkspaceStates.swift",
+        "ios/RailMap/ManualDates.swift",
+        "ios/RailMap/PanelMorph.swift",
+        "ios/RailMap/PresentationHost.swift",
+        "ios/RailMap/ResidentMapChrome.swift",
+        "ios/RailMap/UtilityDestination.swift",
+        "ios/RailMap/WorkspaceDerived.swift",
+        "ios/RailMap/WorkspaceLayout.swift",
+        "ios/RailMap/WorkspacePanelActions.swift",
+        "ios/RailMap/WorkspacePanelPage.swift",
+        "ios/RailMap/WorkspacePresentations.swift",
+        "ios/RailMap/WorkspaceSheetContent.swift",
+        "ios/RailMap/WorkspaceTabs.swift",
+        "ios/RailMap/WorkspaceUtilityMenuItems.swift"
+      ]
+    },
+    {
+      "id": "journeys",
+      "responsibility": "Journey presentation, lists, search and identity bridges; authoritative records remain ItineraryStore",
+      "validation": [
+        {
+          "id": "persistence",
+          "command": "./ios/verify.sh --native"
+        },
+        {
+          "id": "journey-ui",
+          "command": "xcodebuild -project ios/RailMap.xcodeproj -scheme RailMap -destination \"platform=iOS Simulator,name=iPhone 17 Pro\" test -only-testing:RailMapUITests/JourneySaveUITests"
+        }
+      ],
+      "sources": [
+        "ios/RailMap/ItineraryStore.swift",
+        "ios/RailMap/JourneyCardInformation.swift",
+        "ios/RailMap/JourneyComponents.swift",
+        "ios/RailMap/JourneyGroupPicker.swift",
+        "ios/RailMap/JourneyListRow.swift",
+        "ios/RailMap/JourneyMenuView.swift",
+        "ios/RailMap/JourneyPresentationBridge.swift",
+        "ios/RailMap/JourneySearch.swift",
+        "ios/RailMap/JourneySearchField.swift",
+        "ios/RailMap/LongJourneyDetailTestView.swift",
+        "ios/RailMap/RecordDate.swift",
+        "ios/RailMap/RideCard.swift",
+        "ios/RailMap/RideChooserView.swift",
+        "ios/RailMap/RideDetailView.swift",
+        "ios/RailMap/RideRouteStatus.swift",
+        "ios/RailMap/RideSheet.swift",
+        "ios/RailMap/RouteGlyph.swift",
+        "ios/RailMap/StopTimingStatus.swift",
+        "ios/RailMap/TrainDateBridge.swift"
+      ]
+    },
+    {
+      "id": "editing",
+      "responsibility": "Editor drafts, service/station selection and AI candidate application; committed mutations through JourneyEditing",
+      "validation": [
+        {
+          "id": "editor-and-request-lifecycle",
+          "command": "./ios/verify.sh --native"
+        },
+        {
+          "id": "editor-ui",
+          "command": "xcodebuild -project ios/RailMap.xcodeproj -scheme RailMap -destination \"platform=iOS Simulator,name=iPhone 17 Pro\" test -only-testing:RailMapUITests/WorkspaceEditingTests"
+        },
+        {
+          "id": "station-picker-search",
+          "command": "python3 ios/tools/verify-station-picker-search-lifecycle.py /tmp/jtm-verify"
+        }
+      ],
+      "sources": [
+        "ios/RailMap/EditorDateTimeFields.swift",
+        "ios/RailMap/EditorValidation.swift",
+        "ios/RailMap/JourneyCompletionRequest.swift",
+        "ios/RailMap/JourneyCompletionView.swift",
+        "ios/RailMap/JourneyEditing.swift",
+        "ios/RailMap/LocalJourneyFillView.swift",
+        "ios/RailMap/RailwayRouteGuideView.swift",
+        "ios/RailMap/RideEditorView.swift",
+        "ios/RailMap/StationPickerSearchController.swift"
+      ]
+    },
+    {
+      "id": "statistics-passport",
+      "responsibility": "Mileage loading and scope, Passport views and statistics share rendering",
+      "validation": [
+        {
+          "id": "matching",
+          "command": "swift test --package-path ios/RailKit --filter MileageMatchingTests"
+        },
+        {
+          "id": "passport-ui",
+          "command": "xcodebuild -project ios/RailMap.xcodeproj -scheme RailMap -destination \"platform=iOS Simulator,name=iPhone 17 Pro\" test -only-testing:RailMapUITests/StatisticsCalendarUITests"
+        }
+      ],
+      "sources": [
+        "ios/RailMap/CategoryIndexes.swift",
+        "ios/RailMap/MileageStatisticsStore.swift",
+        "ios/RailMap/PassportCardStyle.swift",
+        "ios/RailMap/PassportStatistics.swift",
+        "ios/RailMap/PassportTicketFace.swift",
+        "ios/RailMap/PassportWorkspaceView.swift",
+        "ios/RailMap/StatisticsComponents.swift",
+        "ios/RailMap/StatisticsFormatting.swift",
+        "ios/RailMap/StatisticsScopePicker.swift",
+        "ios/RailMap/StatisticsShareImage.swift",
+        "ios/RailMap/StatisticsView.swift",
+        "ios/RailMap/StatisticsYearBar.swift",
+        "ios/RailMap/TicketJimon.swift",
+        "ios/RailMap/TicketPalette.swift"
+      ]
+    },
+    {
+      "id": "timetable",
+      "responsibility": "Timetable discovery, local candidate lookup and source presentation",
+      "validation": [
+        {
+          "id": "lookup-lifecycle",
+          "command": "./ios/verify.sh --native"
+        },
+        {
+          "id": "lookup-ui",
+          "command": "xcodebuild -project ios/RailMap.xcodeproj -scheme RailMap -destination \"platform=iOS Simulator,name=iPhone 17 Pro\" test -only-testing:RailMapUITests/TimetableQuickMatchUITests"
+        }
+      ],
+      "sources": [
+        "ios/RailMap/ServicePatternPickerView.swift",
+        "ios/RailMap/ServiceSectionSummary.swift",
+        "ios/RailMap/TimetableQuickMatchController.swift",
+        "ios/RailMap/TimetableQuickMatchView.swift"
+      ]
+    },
+    {
+      "id": "import-data",
+      "responsibility": "Import staging UI, preflight presentation, backups and external document adapters",
+      "validation": [
+        {
+          "id": "import",
+          "command": "swift test --package-path ios/RailKit --filter Import"
+        },
+        {
+          "id": "persistence",
+          "command": "./ios/verify.sh --native"
+        }
+      ],
+      "sources": [
+        "ios/RailMap/DataImportView.swift",
+        "ios/RailMap/DataManagerView.swift",
+        "ios/RailMap/ImportFileReader.swift",
+        "ios/RailMap/ImportFlow.swift",
+        "ios/RailMap/ImportPreflight.swift",
+        "ios/RailMap/TrainStoreDocument.swift",
+        "ios/RailMap/TransferGuideImport.swift",
+        "ios/RailMap/TransferGuideImportView.swift",
+        "ios/RailMap/TransferGuideOCR.swift"
+      ]
+    },
+    {
+      "id": "playback-export",
+      "responsibility": "Playback ownership, recording lifecycle and platform image/video sharing",
+      "validation": [
+        {
+          "id": "playback-ui",
+          "command": "xcodebuild -project ios/RailMap.xcodeproj -scheme RailMap -destination \"platform=iOS Simulator,name=iPhone 17 Pro\" test -only-testing:RailMapUITests/PlaybackLayoutTests"
+        },
+        {
+          "id": "export-ui",
+          "command": "xcodebuild -project ios/RailMap.xcodeproj -scheme RailMap -destination \"platform=iOS Simulator,name=iPhone 17 Pro\" test -only-testing:RailMapUITests/PlaybackVideoExportTests"
+        },
+        {
+          "id": "share-lifecycle",
+          "command": "python3 ios/tools/verify-share-request.py"
+        }
+      ],
+      "sources": [
+        "ios/RailMap/JourneyShareImage.swift",
+        "ios/RailMap/PlaybackController.swift",
+        "ios/RailMap/PlaybackTransportBar.swift",
+        "ios/RailMap/PlaybackVideoExporter.swift",
+        "ios/RailMap/ShareRequestController.swift",
+        "ios/RailMap/VideoExportFlow.swift",
+        "ios/RailMap/VideoExportOptionsView.swift",
+        "ios/RailMap/VideoExportSettings.swift"
+      ]
+    },
+    {
+      "id": "map",
+      "responsibility": "MapKit mounting, camera, rendering, interaction indexes, annotations and label lifetimes",
+      "validation": [
+        {
+          "id": "map-lifecycle",
+          "command": "./ios/verify.sh --native"
+        },
+        {
+          "id": "camera-ui",
+          "command": "xcodebuild -project ios/RailMap.xcodeproj -scheme RailMap -destination \"platform=iOS Simulator,name=iPhone 17 Pro\" test -only-testing:RailMapUITests/MapCameraIntentTests"
+        }
+      ],
+      "sources": [
+        "ios/RailMap/AppleMapDatum.swift",
+        "ios/RailMap/AppleMapDatumProbe.swift",
+        "ios/RailMap/MapControlBar.swift",
+        "ios/RailMap/MapDateScope.swift",
+        "ios/RailMap/MapEndpointLabels.swift",
+        "ios/RailMap/MapIndependentRailPrototype.swift",
+        "ios/RailMap/MapInfoView.swift",
+        "ios/RailMap/MapInteractionCoordinator.swift",
+        "ios/RailMap/MapLabelStyle.swift",
+        "ios/RailMap/MapLayers.swift",
+        "ios/RailMap/MapLayersView.swift",
+        "ios/RailMap/MapLineGeometry.swift",
+        "ios/RailMap/MapNaming.swift",
+        "ios/RailMap/MapNetworkRendering.swift",
+        "ios/RailMap/MapOverlayStyles.swift",
+        "ios/RailMap/MapPlaybackLayer.swift",
+        "ios/RailMap/MapProjectedRailScene.swift",
+        "ios/RailMap/MapProjection.swift",
+        "ios/RailMap/MapRailHomography.swift",
+        "ios/RailMap/MapRenderDiagnostics.swift",
+        "ios/RailMap/MapRideMarkers.swift",
+        "ios/RailMap/MapRideStationImportance.swift",
+        "ios/RailMap/MapStationLabelCoordinator.swift",
+        "ios/RailMap/NetworkLOD.swift",
+        "ios/RailMap/RailMapAnnotations.swift",
+        "ios/RailMap/RailMapController.swift",
+        "ios/RailMap/RailMapView.swift",
+        "ios/RailMap/RailwayLineCardView.swift",
+        "ios/RailMap/RideTapIndex.swift",
+        "ios/RailMap/RouteStressHarness.swift",
+        "ios/RailMap/StationCardView.swift"
+      ]
+    },
+    {
+      "id": "infrastructure",
+      "responsibility": "Disk, resource/cache, network/authentication and diagnostics adapters; canonical record and route identities",
+      "validation": [
+        {
+          "id": "native-lifecycle",
+          "command": "./ios/verify.sh --native"
+        },
+        {
+          "id": "resource-revisions",
+          "command": "python3 -m unittest discover -s ios/tools/tests -p test_rail_resource_revisions.py"
+        }
+      ],
+      "sources": [
+        "ios/RailMap/ChatGPTSubscriptionAuth.swift",
+        "ios/RailMap/ChatGPTSubscriptionService.swift",
+        "ios/RailMap/DisplayNetworkCache.swift",
+        "ios/RailMap/EdgeIndexCache.swift",
+        "ios/RailMap/EditorCatalogLoading.swift",
+        "ios/RailMap/MergedStore.swift",
+        "ios/RailMap/RailDisplayNetwork.swift",
+        "ios/RailMap/RailNetworkStore.swift",
+        "ios/RailMap/RailSignpost.swift",
+        "ios/RailMap/RegionCatalog.swift",
+        "ios/RailMap/RegionToday.swift",
+        "ios/RailMap/RiddenRouteStore.swift",
+        "ios/RailMap/RideLibrary.swift",
+        "ios/RailMap/RidePersistenceQueue.swift",
+        "ios/RailMap/RideStorage.swift",
+        "ios/RailMap/StationPlaceStore.swift",
+        "ios/RailMap/StationReadingsStore.swift",
+        "ios/RailMap/TraversedLineDetector.swift"
+      ]
+    },
+    {
+      "id": "localization",
+      "responsibility": "Display text, localized names and formatting; never owns record identity",
+      "validation": [
+        {
+          "id": "localization",
+          "command": "swift test --package-path ios/RailKit --filter Localization"
+        }
+      ],
+      "sources": [
+        "ios/RailMap/AppLocalization.swift",
+        "ios/RailMap/AppStrings.swift",
+        "ios/RailMap/ClockStrings.swift",
+        "ios/RailMap/DataStrings.swift",
+        "ios/RailMap/EditorStrings.swift",
+        "ios/RailMap/JourneyCompletionStrings.swift",
+        "ios/RailMap/JourneyGroupStrings.swift",
+        "ios/RailMap/JourneyShareStrings.swift",
+        "ios/RailMap/JourneyStrings.swift",
+        "ios/RailMap/LocalJourneyStrings.swift",
+        "ios/RailMap/RouteGuideStrings.swift",
+        "ios/RailMap/ShellStrings.swift",
+        "ios/RailMap/StationCardStrings.swift",
+        "ios/RailMap/StationNaming.swift",
+        "ios/RailMap/TransferGuideStrings.swift"
+      ]
+    },
+    {
+      "id": "settings",
+      "responsibility": "Display preferences plus North America data-scope command delegated to ItineraryStore",
+      "validation": [
+        {
+          "id": "storage-scope",
+          "command": "./ios/verify.sh --native"
+        },
+        {
+          "id": "settings-ui",
+          "command": "xcodebuild -project ios/RailMap.xcodeproj -scheme RailMap -destination \"platform=iOS Simulator,name=iPhone 17 Pro\" test -only-testing:RailMapUITests/MapLayerToggleTests"
+        }
+      ],
+      "sources": [
+        "ios/RailMap/DisplaySettings.swift",
+        "ios/RailMap/SettingsView.swift"
+      ]
+    },
+    {
+      "id": "shared-design",
+      "responsibility": "Shared native visual styles, motion, badges and sizing primitives",
+      "validation": [
+        {
+          "id": "platform-build",
+          "command": "xcodebuild -project ios/RailMap.xcodeproj -scheme RailMap -sdk iphonesimulator -destination \"generic/platform=iOS Simulator\" CODE_SIGNING_ALLOWED=NO build"
+        }
+      ],
+      "sources": [
+        "ios/RailMap/ControlSizing.swift",
+        "ios/RailMap/DockedCard.swift",
+        "ios/RailMap/GlassStyle.swift",
+        "ios/RailMap/HexColor.swift",
+        "ios/RailMap/OperatorBadge.swift",
+        "ios/RailMap/RailMotion.swift",
+        "ios/RailMap/RailStyle.swift",
+        "ios/RailMap/RailType.swift",
+        "ios/RailMap/RouteLogoSquare.swift"
+      ]
+    },
+    {
+      "id": "RailCore",
+      "responsibility": "Domain data, canonical serialization, route/statistics algorithms and read-only timetable SQLite.",
+      "validation": [
+        {
+          "id": "package-tests",
+          "command": "swift test --package-path ios/RailKit"
+        }
+      ],
+      "sources": [
+        "ios/RailKit/Sources/RailCore/ChatGPTSubscriptionProtocol.swift",
+        "ios/RailKit/Sources/RailCore/CompactPackage.swift",
+        "ios/RailKit/Sources/RailCore/ContinuousStroke.swift",
+        "ios/RailKit/Sources/RailCore/Coordinates.swift",
+        "ios/RailKit/Sources/RailCore/DatasetManifestIndex.swift",
+        "ios/RailKit/Sources/RailCore/Dates.swift",
+        "ios/RailKit/Sources/RailCore/DisplayChunkReader.swift",
+        "ios/RailKit/Sources/RailCore/DisplayParts.swift",
+        "ios/RailKit/Sources/RailCore/EditorCatalog.swift",
+        "ios/RailKit/Sources/RailCore/EditorTime.swift",
+        "ios/RailKit/Sources/RailCore/Geometry.swift",
+        "ios/RailKit/Sources/RailCore/Grooming.swift",
+        "ios/RailKit/Sources/RailCore/Import.swift",
+        "ios/RailKit/Sources/RailCore/JREastGuide.swift",
+        "ios/RailKit/Sources/RailCore/JSMath.swift",
+        "ios/RailKit/Sources/RailCore/JSNumber.swift",
+        "ios/RailKit/Sources/RailCore/JSString.swift",
+        "ios/RailKit/Sources/RailCore/JapanThroughServices.swift",
+        "ios/RailKit/Sources/RailCore/JourneyCompletion.swift",
+        "ios/RailKit/Sources/RailCore/JourneyEnglishName.swift",
+        "ios/RailKit/Sources/RailCore/JourneyGroup.swift",
+        "ios/RailKit/Sources/RailCore/JourneyTextImport.swift",
+        "ios/RailKit/Sources/RailCore/LaneLOD.swift",
+        "ios/RailKit/Sources/RailCore/LineServiceCatalog.swift",
+        "ios/RailKit/Sources/RailCore/LocalJourneyAutofill.swift",
+        "ios/RailKit/Sources/RailCore/LocalJourneySearch.swift",
+        "ios/RailKit/Sources/RailCore/Localization.swift",
+        "ios/RailKit/Sources/RailCore/OperatorBranding.swift",
+        "ios/RailKit/Sources/RailCore/OverlapLanes.swift",
+        "ios/RailKit/Sources/RailCore/PhysicalRailJunctionRegistry.swift",
+        "ios/RailKit/Sources/RailCore/PhysicalRouteMatcher.swift",
+        "ios/RailKit/Sources/RailCore/Playback.swift",
+        "ios/RailKit/Sources/RailCore/PrecomputedRouteDisplay.swift",
+        "ios/RailKit/Sources/RailCore/RailHistory.swift",
+        "ios/RailKit/Sources/RailCore/RailHistoryStations.swift",
+        "ios/RailKit/Sources/RailCore/RailIntervalCodes.swift",
+        "ios/RailKit/Sources/RailCore/RailResourceRevisions.swift",
+        "ios/RailKit/Sources/RailCore/RailwayDirection.swift",
+        "ios/RailKit/Sources/RailCore/RailwayRouteChoices.swift",
+        "ios/RailKit/Sources/RailCore/RailwayRouteEditing.swift",
+        "ios/RailKit/Sources/RailCore/RailwayRouteInference.swift",
+        "ios/RailKit/Sources/RailCore/ResolvedRailRoute.swift",
+        "ios/RailKit/Sources/RailCore/RideMarkerVisibility.swift",
+        "ios/RailKit/Sources/RailCore/RouteFeature.swift",
+        "ios/RailKit/Sources/RailCore/RouteGraph.swift",
+        "ios/RailKit/Sources/RailCore/RouteSectionServiceEditing.swift",
+        "ios/RailKit/Sources/RailCore/RouteSolveLimiter.swift",
+        "ios/RailKit/Sources/RailCore/RouteSolver.swift",
+        "ios/RailKit/Sources/RailCore/ServiceCaption.swift",
+        "ios/RailKit/Sources/RailCore/StationCodeAliases.swift",
+        "ios/RailKit/Sources/RailCore/StationDisplay.swift",
+        "ios/RailKit/Sources/RailCore/StationIndex.swift",
+        "ios/RailKit/Sources/RailCore/StationIntervalResolver.swift",
+        "ios/RailKit/Sources/RailCore/StationJoinSmoothing.swift",
+        "ios/RailKit/Sources/RailCore/StationRouteEligibility.swift",
+        "ios/RailKit/Sources/RailCore/StationVisibility.swift",
+        "ios/RailKit/Sources/RailCore/Stations.swift",
+        "ios/RailKit/Sources/RailCore/Statistics.swift",
+        "ios/RailKit/Sources/RailCore/StoreOperations.swift",
+        "ios/RailKit/Sources/RailCore/StrokeRide.swift",
+        "ios/RailKit/Sources/RailCore/TimetableSearch.swift",
+        "ios/RailKit/Sources/RailCore/TimetableServiceDayContext.swift",
+        "ios/RailKit/Sources/RailCore/TimetableTripMatch.swift",
+        "ios/RailKit/Sources/RailCore/TokyoConventionalRouteInference.swift",
+        "ios/RailKit/Sources/RailCore/Train.swift",
+        "ios/RailKit/Sources/RailCore/TrainServiceBranding.swift",
+        "ios/RailKit/Sources/RailCore/TrainServicePatterns.swift",
+        "ios/RailKit/Sources/RailCore/TrainTimetableDatabase.swift",
+        "ios/RailKit/Sources/RailCore/TransferGuide.swift",
+        "ios/RailKit/Sources/RailCore/TransferGuideText.swift",
+        "ios/RailKit/Sources/RailCore/TransferGuideTrains.swift",
+        "ios/RailKit/Sources/RailCore/Visibility.swift"
+      ]
+    },
+    {
+      "id": "RailPresentation",
+      "responsibility": "Platform-free display decisions and workspace policies; depends on Core only.",
+      "validation": [
+        {
+          "id": "package-tests",
+          "command": "swift test --package-path ios/RailKit"
+        }
+      ],
+      "sources": [
+        "ios/RailKit/Sources/RailPresentation/DisplayNetworkEra.swift",
+        "ios/RailKit/Sources/RailPresentation/DraftMapSnapshot.swift",
+        "ios/RailKit/Sources/RailPresentation/JourneyDetailSnapshot.swift",
+        "ios/RailKit/Sources/RailPresentation/JourneyHeroIdentity.swift",
+        "ios/RailKit/Sources/RailPresentation/JourneyPresentation.swift",
+        "ios/RailKit/Sources/RailPresentation/JourneyPresentationResolver.swift",
+        "ios/RailKit/Sources/RailPresentation/JourneyRouteIdentity.swift",
+        "ios/RailKit/Sources/RailPresentation/JourneySearchMatcher.swift",
+        "ios/RailKit/Sources/RailPresentation/JourneyServiceSections.swift",
+        "ios/RailKit/Sources/RailPresentation/JourneyTitle.swift",
+        "ios/RailKit/Sources/RailPresentation/LaunchJourneySelector.swift",
+        "ios/RailKit/Sources/RailPresentation/LongitudeArc.swift",
+        "ios/RailKit/Sources/RailPresentation/MapCameraPolicy.swift",
+        "ios/RailKit/Sources/RailPresentation/MapRebuildPolicy.swift",
+        "ios/RailKit/Sources/RailPresentation/MapUpdatePlan.swift",
+        "ios/RailKit/Sources/RailPresentation/NetworkVisibilityPolicy.swift",
+        "ios/RailKit/Sources/RailPresentation/PanelDetentResolver.swift",
+        "ios/RailKit/Sources/RailPresentation/PickDuringRunRule.swift",
+        "ios/RailKit/Sources/RailPresentation/RegionClock.swift",
+        "ios/RailKit/Sources/RailPresentation/RegionScope.swift",
+        "ios/RailKit/Sources/RailPresentation/RideLedger.swift",
+        "ios/RailKit/Sources/RailPresentation/RideTapResolver.swift",
+        "ios/RailKit/Sources/RailPresentation/RouteStatusResolver.swift",
+        "ios/RailKit/Sources/RailPresentation/StationLabelVisibility.swift",
+        "ios/RailKit/Sources/RailPresentation/StationLineSelection.swift",
+        "ios/RailKit/Sources/RailPresentation/StationPlaceLink.swift",
+        "ios/RailKit/Sources/RailPresentation/StatisticsDateSelection.swift",
+        "ios/RailKit/Sources/RailPresentation/WorkspaceJourneyRules.swift",
+        "ios/RailKit/Sources/RailPresentation/WorkspaceLayoutPolicy.swift"
+      ]
+    },
+    {
+      "id": "RailApplication",
+      "responsibility": "Snapshot import, editing validation and mileage use cases; app owns acceptance and publication.",
+      "validation": [
+        {
+          "id": "package-tests",
+          "command": "swift test --package-path ios/RailKit"
+        }
+      ],
+      "sources": [
+        "ios/RailKit/Sources/RailApplication/ImportPreflight.swift",
+        "ios/RailKit/Sources/RailApplication/ImportStaging.swift",
+        "ios/RailKit/Sources/RailApplication/MileageMatching.swift",
+        "ios/RailKit/Sources/RailApplication/RideDraftValidation.swift"
+      ]
+    }
+  ]
+}

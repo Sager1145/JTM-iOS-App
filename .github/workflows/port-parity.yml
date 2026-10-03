@@ -27,6 +27,15 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  boundaries:
+    name: iOS source ownership and dependency boundaries
+    runs-on: xcode-27
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - name: Verify responsibility manifest and module imports
+        run: ./ios/verify.sh --boundaries
+
   fixtures:
     name: Fixtures still describe the JavaScript
     # overlap-lanes and station-join-smoothing pin bit-exact geometry. The V8
@@ -101,10 +110,10 @@ jobs:
       - name: Show toolchain
         run: swift --version && xcodebuild -version
 
-      # --core: RailCore, the parity suite, and the rule that RailCore may
-      # import Foundation and nothing else. The simulator app build is left to
-      # the machine doing the work; it is the slowest step and it cannot fail
-      # for a reason the parity suite would not already have caught.
+      # --core verifies all three package targets, their tests and native
+      # behavior harnesses. RailCore has a scoped SQLite exception; Application
+      # and Presentation are separate consumers. Simulator/UI builds run in
+      # the dedicated app workflow and remain a separate integration gate.
       - name: Parity suite
         working-directory: ios
         run: SCRATCH="${RUNNER_TEMP}/railkit" ./verify.sh --core

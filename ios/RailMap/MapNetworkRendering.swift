@@ -209,6 +209,7 @@ final class MapOverlayInstaller {
         let overlay: MKMultiPolyline
     }
     private var retiring: [String: RetiringBatch] = [:]
+    private var handoffs: [String: RetiringBatch] = [:]
 
     init(styles: MapOverlayStyles) {
         self.styles = styles
@@ -216,16 +217,18 @@ final class MapOverlayInstaller {
 
     func reconciliation(on mapView: MKMapView) -> MapOverlayReconciliation {
         let retiringIDs = Set(retiring.values.map { ObjectIdentifier($0.overlay) })
+        let handoffIDs = Set(handoffs.values.map { ObjectIdentifier($0.overlay) })
         return MapOverlayReconciliation(overlays: mapView.overlays(in: .aboveLabels).filter {
-            !retiringIDs.contains(ObjectIdentifier($0))
+            !retiringIDs.contains(ObjectIdentifier($0)) && !handoffIDs.contains(ObjectIdentifier($0))
         })
     }
 
     func removeRetiring(on mapView: MKMapView) {
-        let overlays = retiring.values.map(\.overlay)
+        let overlays = retiring.values.map(\.overlay) + handoffs.values.map(\.overlay)
         styles.forget(overlays)
         mapView.removeOverlays(overlays)
         retiring.removeAll()
+        handoffs.removeAll()
     }
 
     func networkOverlays(
@@ -297,6 +300,12 @@ final class MapOverlayInstaller {
         detailTransitionDuration: TimeInterval? = nil,
         alphaTransitionDuration: TimeInterval? = nil
     ) {
+        // A newer install supersedes any replacement still waiting to render.
+        for (key, batch) in handoffs {
+            mapView.removeOverlay(batch.overlay)
+            styles.forget([batch.overlay])
+            handoffs.removeValue(forKey: key)
+        }
         let oldOverlays = reconciliation.oldOverlays
         let desiredIDs = Set(desiredOverlays.map { ObjectIdentifier($0) })
         let oldIDs = Set(oldOverlays.map { ObjectIdentifier($0) })
@@ -313,6 +322,7 @@ final class MapOverlayInstaller {
             retiring.removeValue(forKey: key)
         }
         var immediateRemovals: [MKOverlay] = []
+        var createdHandoffKeys: [String] = []
         for overlay in removed {
             guard let key = overlay.title ?? nil else {
                 immediateRemovals.append(overlay)
@@ -334,6 +344,18 @@ final class MapOverlayInstaller {
                     mapView?.removeOverlay(batch.overlay)
                     self.styles.forget([batch.overlay])
                 }
+                continue
+            }
+            if alphaTransitionDuration != 0,
+               (key.hasPrefix("ride|") || key.hasPrefix("ride-xday|")
+                || key.hasPrefix("ride-casing|") || key.hasPrefix("ride-xday-casing|")),
+               desiredKeys.contains(key), let multi = overlay as? MKMultiPolyline {
+                let exitKey = "handoff|\(UUID().uuidString)"
+                styles.rekey(from: key, to: exitKey)
+                styles[key] = styles[exitKey]
+                multi.title = exitKey
+                handoffs[exitKey] = RetiringBatch(originalKey: key, overlay: multi)
+                createdHandoffKeys.append(exitKey)
                 continue
             }
             immediateRemovals.append(overlay)
@@ -362,6 +384,11 @@ final class MapOverlayInstaller {
         let networkEnd = stack.lastIndex { ($0.title ?? nil)?.hasPrefix("network") == true }
             .map { $0 + 1 } ?? 0
         stack.insert(contentsOf: retiring.keys.sorted().compactMap { retiring[$0]?.overlay }, at: networkEnd)
+        for key in handoffs.keys.sorted() {
+            guard let batch = handoffs[key] else { continue }
+            let position = stack.firstIndex { ($0.title ?? nil) == batch.originalKey } ?? networkEnd
+            stack.insert(batch.overlay, at: position)
+        }
         // Selection changes stacking without changing geometry.
         var installed = mapView.overlays(in: .aboveLabels)
         let mountedIDs = Set(installed.map(ObjectIdentifier.init))
@@ -385,6 +412,26 @@ final class MapOverlayInstaller {
             installed.swapAt(position, other)
         }
         styles.rescale(to: scale, alphaTransitionDuration: alphaTransitionDuration)
+        for key in createdHandoffKeys {
+            checkHandoff(key, on: mapView, deadline: CACurrentMediaTime() + 0.3)
+        }
+    }
+
+    private func checkHandoff(
+        _ key: String, on mapView: MKMapView, deadline: CFTimeInterval,
+        rendererWasReady: Bool = false
+    ) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0 / 60.0) { [weak self, weak mapView] in
+            guard let self, let mapView, let batch = self.handoffs[key] else { return }
+            let rendererIsReady = self.styles.hasRenderer(forKey: batch.originalKey)
+            if rendererWasReady || (!rendererIsReady && CACurrentMediaTime() >= deadline) {
+                mapView.removeOverlay(batch.overlay)
+                self.styles.forget([batch.overlay])
+                self.handoffs.removeValue(forKey: key)
+                return
+            }
+            self.checkHandoff(key, on: mapView, deadline: deadline, rendererWasReady: rendererIsReady)
+        }
     }
 }
 
