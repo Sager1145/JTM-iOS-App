@@ -112,20 +112,43 @@ final class WorkspaceEditingTests: XCTestCase {
         information.tap()
         XCTAssertTrue(selected.waitForExistence(timeout: 8))
         XCTAssertTrue(edit.waitForExistence(timeout: 8))
-        let detailScroll = app.scrollViews.containing(.button, identifier: "journeyMenuEdit").firstMatch
+        // Resolve the foreground scroll once by its Edit action, then retain
+        // its position in the scroll query. A descendant predicate stops
+        // resolving when that action is lazily unmounted during scrolling.
+        guard let detailScrollIndex = app.scrollViews.allElementsBoundByIndex.firstIndex(where: {
+            $0.buttons["journeyMenuEdit"].exists
+        }) else {
+            XCTFail("The foreground journey detail ScrollView must contain Edit.")
+            return
+        }
+        let detailScroll = app.scrollViews.element(boundBy: detailScrollIndex)
         XCTAssertTrue(detailScroll.waitForExistence(timeout: 5))
         let more = detailScroll.buttons["More journey actions"].firstMatch
         XCTAssertTrue(more.waitForExistence(timeout: 5))
         // More shares the native action row with Edit. Require the actual
         // foreground ScrollView to contain its complete tappable bounds.
+        var scrollTowardStart = false
         for _ in 0..<4 {
-            if detailScroll.frame.intersection(app.frame).contains(more.frame) { break }
-            detailScroll.swipeUp()
+            let bounds = detailScroll.frame.intersection(app.frame)
+            XCTAssertFalse(bounds.isEmpty)
+            if more.exists {
+                if bounds.contains(more.frame) { break }
+                scrollTowardStart = more.frame.minY < bounds.minY
+            }
+            let origin = app.coordinate(withNormalizedOffset: .zero)
+            let start = origin.withOffset(CGVector(
+                dx: bounds.minX + 8 - app.frame.minX,
+                dy: bounds.minY + bounds.height * (scrollTowardStart ? 0.25 : 0.75) - app.frame.minY))
+            let end = origin.withOffset(CGVector(
+                dx: bounds.minX + 8 - app.frame.minX,
+                dy: bounds.minY + bounds.height * (scrollTowardStart ? 0.75 : 0.25) - app.frame.minY))
+            start.press(forDuration: 0.05, thenDragTo: end)
         }
         XCTAssertTrue(more.isHittable)
         XCTAssertTrue(detailScroll.frame.intersection(app.frame).contains(more.frame), app.debugDescription)
         more.tap()
         let hide = app.buttons["Hide from map"]
+        attachDiagnostics(app, named: "Detail More menu before visibility action")
         XCTAssertTrue(hide.waitForExistence(timeout: 5))
         XCTAssertTrue(hide.isHittable)
         hide.tap()
@@ -185,10 +208,25 @@ final class WorkspaceEditingTests: XCTestCase {
                 !frame.isEmpty && [frame.minX, frame.minY, frame.maxX, frame.maxY].allSatisfy { $0.isFinite }
             }
             func usableFrame() -> CGRect {
-                let formFrame = form.frame
+                let rawFormFrame = form.frame
+                // AX can report 72 + 802 as 874.0000000000001. Snap only
+                // machine-roundoff at the exact window edges; real clipping
+                // continues to fail the complete containment assertion.
+                func snap(_ value: CGFloat, to edge: CGFloat) -> CGFloat {
+                    abs(value - edge) <= max(value.ulp, edge.ulp) * 4 ? edge : value
+                }
+                let minX = snap(rawFormFrame.minX, to: app.frame.minX)
+                let minY = snap(rawFormFrame.minY, to: app.frame.minY)
+                let maxX = snap(rawFormFrame.maxX, to: app.frame.maxX)
+                let maxY = snap(rawFormFrame.maxY, to: app.frame.maxY)
+                let formFrame = CGRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
                 let barFrame = scrollbar.frame
+                if !finiteNonempty(formFrame) || !app.frame.contains(formFrame) {
+                    attachDiagnostics(app, named: "Import Form geometry")
+                }
                 XCTAssertTrue(finiteNonempty(app.frame))
-                XCTAssertTrue(finiteNonempty(formFrame) && app.frame.contains(formFrame))
+                XCTAssertTrue(finiteNonempty(formFrame) && app.frame.contains(formFrame),
+                              "Import geometry: app=\(app.frame), rawForm=\(rawFormFrame), form=\(formFrame), scrollbar=\(barFrame)")
                 XCTAssertTrue(finiteNonempty(barFrame) && formFrame.contains(barFrame))
                 XCTAssertTrue(finiteNonempty(navigation.frame) && app.frame.contains(navigation.frame))
                 var bottom = min(formFrame.maxY, barFrame.maxY)
@@ -268,88 +306,6 @@ final class WorkspaceEditingTests: XCTestCase {
         XCTAssertTrue(reopenedRegion.label.contains("Taiwan"), reopenedRegion.debugDescription)
 
         XCTAssertTrue(commit.isEnabled)
-    }
-
-    func testNewJourneyStartsEmptyAndRequiresStops() {
-        let app = launch(sheet: "new")
-        let next = app.buttons["rideEditorNext"]
-        let save = app.buttons["rideEditorSave"]
-        XCTAssertTrue(next.waitForExistence(timeout: 30))
-        XCTAssertFalse(app.buttons["rideEditorPrevious"].exists)
-        XCTAssertFalse(save.exists)
-
-        next.tap()
-        let firstStop = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
-        XCTAssertTrue(EditorUITestSupport.reveal(firstStop, in: app), app.debugDescription)
-        XCTAssertTrue(firstStop.waitForExistence(timeout: 8))
-
-        next.tap()
-        XCTAssertTrue(firstStop.waitForExistence(timeout: 5),
-                      "The stops step must reject an unnamed origin and destination.")
-        XCTAssertFalse(app.otherElements["rideEditorNumber"].exists)
-
-        fillRequiredStops(in: app)
-        next.tap()
-        let number = app.otherElements["rideEditorNumber"].textFields.firstMatch
-        XCTAssertTrue(number.waitForExistence(timeout: 8))
-        let emptyNumberValue = number.value as? String
-
-        next.tap()
-        XCTAssertTrue(app.switches["Include a date"].waitForExistence(timeout: 8),
-                      "An empty train number must allow the date and completion step.")
-        XCTAssertFalse(save.exists)
-        app.buttons["rideEditorPrevious"].tap()
-        XCTAssertTrue(number.waitForExistence(timeout: 8))
-        XCTAssertEqual(number.value as? String, emptyNumberValue,
-                       "Returning from the date step must retain the empty service field.")
-        number.tap()
-        number.typeText("My journey\n")
-        next.tap()
-        XCTAssertTrue(app.switches["Include a date"].waitForExistence(timeout: 8))
-        XCTAssertFalse(save.exists)
-
-        next.tap()
-        XCTAssertTrue(save.waitForExistence(timeout: 8))
-        XCTAssertTrue(save.isEnabled)
-        save.tap()
-        XCTAssertTrue(save.waitForNonExistence(timeout: 8))
-    }
-
-    func testAddingStopOpensItsEditorAndCancelProtectsDraft() {
-        let app = launch(sheet: "new")
-        advanceToStopsStep(in: app)
-        let add = app.buttons["rideEditorAddStop"]
-        EditorUITestSupport.tap(add, in: app)
-        XCTAssertTrue(app.otherElements["rideEditorStopName"].waitForExistence(timeout: 5))
-        app.navigationBars.buttons.element(boundBy: 0).tap()
-        app.buttons["rideEditorCancel"].tap()
-        XCTAssertTrue(app.buttons["Discard changes"].waitForExistence(timeout: 5))
-    }
-
-    func testStationTypingOffersCanonicalMatches() {
-        let app = launch(sheet: "new")
-        advanceToStopsStep(in: app)
-        let departure = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
-        for _ in 0..<6 where !departure.isHittable { app.swipeUp() }
-        departure.tap()
-        let name = app.otherElements["rideEditorStopName"].textFields.firstMatch
-        XCTAssertTrue(name.waitForExistence(timeout: 8))
-        name.tap()
-        name.typeText("Tokyo")
-        let unmatched = app.staticTexts["This station is not matched to the catalog"]
-        XCTAssertTrue(unmatched.waitForExistence(timeout: 5),
-                      "Typing alone must not assign a canonical station code.")
-        let suggestion = app.buttons.matching(NSPredicate(
-            format: "identifier BEGINSWITH %@", "rideEditorStationSuggestion-")).firstMatch
-        XCTAssertTrue(suggestion.waitForExistence(timeout: 30))
-        let suggestionCode = suggestion.identifier.replacingOccurrences(
-            of: "rideEditorStationSuggestion-", with: "")
-        XCTAssertFalse(suggestionCode.isEmpty,
-                       "A catalog suggestion must carry its canonical station code.")
-        suggestion.tap()
-        XCTAssertEqual(name.value as? String, "東京", "Exact romanized matches should precede partial station names.")
-        XCTAssertTrue(unmatched.waitForNonExistence(timeout: 5),
-                      "Choosing the catalog match must assign its station code to the draft.")
     }
 
     func testServiceTypeSuggestionsAndCustomVehicleInput() {
@@ -504,12 +460,30 @@ final class WorkspaceEditingTests: XCTestCase {
     }
 
     func testTypedDateAndLineSearch() {
-        let app = launch(sheet: "new")
-        advanceToStopsStep(in: app)
-        fillRequiredStops(in: app)
-        let lines = app.descendants(matching: .any)["rideEditorLines"].firstMatch
-        for _ in 0..<10 where !lines.isHittable { app.swipeUp() }
-        lines.tap()
+        // The new wizard's route control opens the physical route guide.
+        // Line preferences are edited through the saved journey's catalog.
+        let fixtureID = "20260727_08_narita_express"
+        let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
+                               "-interface-language", "en"]
+        app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
+        app.launchEnvironment["RAILMAP_UI_TEST_STATS_REGION"] = "all"
+        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "search"
+        app.launchEnvironment["RAILMAP_UI_TEST_QUERY"] = fixtureID
+        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
+        app.launch()
+        let row = app.buttons["journeyRow-\(fixtureID)"]
+        XCTAssertTrue(row.waitForExistence(timeout: 30))
+        row.tap()
+        XCTAssertTrue(app.descendants(matching: .any)["selectedJourney-\(fixtureID)"]
+            .firstMatch.waitForExistence(timeout: 8))
+        let edit = app.buttons["journeyMenuEdit"]
+        XCTAssertTrue(edit.waitForExistence(timeout: 30))
+        XCTAssertTrue(edit.isHittable)
+        edit.tap()
+        let lines = app.descendants(matching: .any)["rideEditorPreferredLines"].firstMatch
+        EditorUITestSupport.tap(lines, in: app)
         let search = app.searchFields.firstMatch
         XCTAssertTrue(search.waitForExistence(timeout: 5))
         search.tap()
@@ -524,200 +498,36 @@ final class WorkspaceEditingTests: XCTestCase {
         XCTAssertTrue(lines.waitForExistence(timeout: 5))
         XCTAssertTrue(lines.label.contains("山手"))
 
-        app.buttons["rideEditorNext"].tap()
-        let number = app.otherElements["rideEditorNumber"].textFields.firstMatch
-        XCTAssertTrue(number.waitForExistence(timeout: 8))
-        number.tap()
-        number.typeText("Date test\n")
-        app.buttons["rideEditorNext"].tap()
-
-        let includeDate = app.switches["Include a date"]
-        XCTAssertTrue(includeDate.waitForExistence(timeout: 8))
-        includeDate.switches.firstMatch.tap()
         let date = app.textFields["rideEditorDateInput"]
+        XCTAssertTrue(EditorUITestSupport.reveal(date, in: app, unmountedRowIsAbove: true), app.debugDescription)
         XCTAssertTrue(date.waitForExistence(timeout: 5))
-        let previous = date.value as? String ?? ""
-        date.tap()
-        date.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: previous.count) + "2026-10-12")
+        replaceText(in: date, with: "2026-10-12", app: app)
         XCTAssertEqual(date.value as? String, "2026-10-12")
     }
 
-    func testNewJourneyWizardPreservesDraftAcrossEveryBackStep() {
-        let app = launch(sheet: "new")
-        let next = app.buttons["rideEditorNext"]
-        let previous = app.buttons["rideEditorPrevious"]
-        let save = app.buttons["rideEditorSave"]
 
-        XCTAssertTrue(next.waitForExistence(timeout: 30))
-        XCTAssertFalse(previous.exists)
-        XCTAssertFalse(save.exists)
 
-        next.tap()
-        let firstStop = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
-        XCTAssertTrue(EditorUITestSupport.reveal(firstStop, in: app), app.debugDescription)
-        XCTAssertTrue(firstStop.waitForExistence(timeout: 8))
-        XCTAssertFalse(save.exists)
-        fillRequiredStops(in: app, names: ["Tokyo", "Shinagawa"])
-
-        next.tap()
-        let number = app.otherElements["rideEditorNumber"].textFields.firstMatch
-        XCTAssertTrue(number.waitForExistence(timeout: 8))
-        XCTAssertFalse(save.exists)
-        number.tap()
-        number.typeText("Wizard 42\n")
-        let vehicle = app.otherElements["rideEditorVehicleType"].textFields.firstMatch
-        vehicle.tap()
-        vehicle.typeText("E235")
-
-        next.tap()
-        let includeDate = app.switches["Include a date"]
-        XCTAssertTrue(includeDate.waitForExistence(timeout: 8))
-        XCTAssertFalse(save.exists)
-        includeDate.switches.firstMatch.tap()
-        let date = app.textFields["rideEditorDateInput"]
-        XCTAssertTrue(date.waitForExistence(timeout: 5))
-        let initialDate = date.value as? String ?? ""
-        date.tap()
-        date.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue,
-                             count: initialDate.count) + "2026-10-12")
-        XCTAssertEqual(date.value as? String, "2026-10-12")
-
-        next.tap()
-        XCTAssertTrue(save.waitForExistence(timeout: 8))
-        XCTAssertTrue(save.isEnabled)
-        XCTAssertFalse(next.exists)
-        XCTAssertFalse(app.otherElements["rideEditorNumber"].exists,
-                       "Confirmation must present the draft read-only.")
-        for value in ["Tokyo", "Shinagawa", "Wizard 42", "E235", "2026-10-12"] {
-            let summaryValue = app.staticTexts.matching(NSPredicate(
-                format: "label ENDSWITH %@", ", " + value)).firstMatch
-            for _ in 0..<8 where !summaryValue.exists { app.swipeUp() }
-            XCTAssertTrue(summaryValue.waitForExistence(timeout: 5),
-                          "Confirmation must summarize \(value).")
-        }
-
-        previous.tap()
-        XCTAssertTrue(date.waitForExistence(timeout: 8))
-        XCTAssertEqual(date.value as? String, "2026-10-12")
-        XCTAssertFalse(save.exists)
-
-        previous.tap()
-        XCTAssertTrue(number.waitForExistence(timeout: 8))
-        XCTAssertEqual(number.value as? String, "Wizard 42")
-        XCTAssertEqual(vehicle.value as? String, "E235")
-        XCTAssertFalse(save.exists)
-
-        previous.tap()
-        let origin = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
-        let destination = app.descendants(matching: .any)["rideEditorStop-1"].firstMatch
-        XCTAssertTrue(origin.waitForExistence(timeout: 8))
-        XCTAssertTrue(origin.label.contains("Tokyo"))
-        XCTAssertTrue(destination.label.contains("Shinagawa"))
-        XCTAssertFalse(save.exists)
-
-        previous.tap()
-        XCTAssertTrue(next.waitForExistence(timeout: 8))
-        XCTAssertFalse(previous.exists)
-        XCTAssertFalse(save.exists)
-
-        next.tap()
-        XCTAssertTrue(origin.waitForExistence(timeout: 8))
-        XCTAssertTrue(origin.label.contains("Tokyo"))
-        XCTAssertTrue(destination.label.contains("Shinagawa"))
-        next.tap()
-        XCTAssertTrue(number.waitForExistence(timeout: 8))
-        XCTAssertEqual(number.value as? String, "Wizard 42")
-        XCTAssertEqual(vehicle.value as? String, "E235")
-        next.tap()
-        XCTAssertTrue(date.waitForExistence(timeout: 8))
-        XCTAssertEqual(date.value as? String, "2026-10-12")
-        next.tap()
-        XCTAssertTrue(save.waitForExistence(timeout: 8))
-        save.tap()
-        XCTAssertTrue(save.waitForNonExistence(timeout: 8))
-    }
-
-    func testConfirmationSurvivesPhoneRotation() throws {
-        try XCTSkipUnless(UIDevice.current.userInterfaceIdiom == .phone)
-        XCUIDevice.shared.orientation = .portrait
-        defer { XCUIDevice.shared.orientation = .portrait }
-
-        let app = launch(sheet: "new")
-        advanceToServiceStep(in: app)
-        let number = app.otherElements["rideEditorNumber"].textFields.firstMatch
-        number.tap()
-        number.typeText("Rotate 42\n")
-        let vehicle = app.otherElements["rideEditorVehicleType"].textFields.firstMatch
-        vehicle.tap()
-        vehicle.typeText("E235")
-
-        app.buttons["rideEditorNext"].tap()
-        XCTAssertTrue(app.switches["Include a date"].waitForExistence(timeout: 8))
-        app.buttons["rideEditorNext"].tap()
-        let save = app.buttons["rideEditorSave"]
-        XCTAssertTrue(save.waitForExistence(timeout: 8))
-
-        XCUIDevice.shared.orientation = .landscapeLeft
-        let portraitLock = XCTNSPredicateExpectation(
-            predicate: NSPredicate { object, _ in
-                guard let window = object as? XCUIElement else { return false }
-                return window.frame.height > window.frame.width
-            },
-            object: app.windows.firstMatch)
-        XCTAssertEqual(XCTWaiter().wait(for: [portraitLock], timeout: 8), .completed,
-                       "The iPhone confirmation must stay in portrait after a rotation request.")
-        XCTAssertTrue(save.waitForExistence(timeout: 8),
-                      "Rotation must retain the confirmation step.")
-        let editorForm = app.descendants(matching: .any)["rideEditorForm"].firstMatch
-        XCTAssertTrue(editorForm.waitForExistence(timeout: 5))
-        for value in ["Tokyo", "Shinagawa", "Rotate 42", "E235"] {
-            let summaryValue = app.staticTexts.matching(NSPredicate(
-                format: "label ENDSWITH %@", ", " + value)).firstMatch
-            for _ in 0..<12 where !summaryValue.exists {
-                let start = editorForm.coordinate(
-                    withNormalizedOffset: CGVector(dx: 0.5, dy: 0.62))
-                let end = editorForm.coordinate(
-                    withNormalizedOffset: CGVector(dx: 0.5, dy: 0.44))
-                start.press(forDuration: 0.05, thenDragTo: end)
-            }
-            XCTAssertTrue(summaryValue.waitForExistence(timeout: 5),
-                          "Rotation must retain the draft value \(value).")
-        }
-        attach(app, named: "new-journey-confirmation-portrait-locked")
-    }
-
-    func testClearedEnabledDateStaysOnDateStepUntilRepaired() {
-        let app = launch(sheet: "new")
-        advanceToDateStep(in: app, number: "Date repair")
-        let includeDate = app.switches["Include a date"]
-        includeDate.switches.firstMatch.tap()
-        let date = app.textFields["rideEditorDateInput"]
-        XCTAssertTrue(date.waitForExistence(timeout: 5))
-        replaceText(in: date, with: "")
-
-        app.buttons["rideEditorNext"].tap()
-        XCTAssertTrue(date.waitForExistence(timeout: 5),
-                      "An enabled empty date must remain on the date step.")
-        let dateError = app.descendants(matching: .any).matching(NSPredicate(
-            format: "label CONTAINS %@",
-            "Enter a valid date in YYYY-MM-DD format.")).firstMatch
-        XCTAssertTrue(dateError.waitForExistence(timeout: 5))
-        XCTAssertFalse(app.buttons["rideEditorSave"].exists)
-        attach(app, named: "new-journey-empty-enabled-date-error")
-
-        date.tap()
-        date.typeText("2026-10-12")
-        app.buttons["rideEditorNext"].tap()
-        XCTAssertTrue(app.buttons["rideEditorSave"].waitForExistence(timeout: 8),
-                      "Repairing the date must allow confirmation.")
+    func testAddingStopOpensItsEditorAndCancelProtectsDraft() {
+        let app = XCUIApplication()
+        EditorLaunchSupport.launchEditing(app, journey: seededJourney(number: "Add stop"))
+        let add = app.buttons["rideEditorAddStop"]
+        XCTAssertTrue(app.buttons["rideEditorCancel"].waitForExistence(timeout: 30))
+        EditorUITestSupport.tap(add, in: app)
+        XCTAssertTrue(app.otherElements["rideEditorStopName"].waitForExistence(timeout: 8))
+        let added = app.navigationBars["Stop 3"]
+        XCTAssertTrue(added.waitForExistence(timeout: 5))
+        added.buttons.firstMatch.tap()
+        app.buttons["rideEditorCancel"].tap()
+        XCTAssertTrue(app.buttons["Discard changes"].waitForExistence(timeout: 5))
     }
 
     func testExplicitUnriddenStopSurvivesChoosingToday() {
-        let app = launch(sheet: "new")
-        advanceToStopsStep(in: app)
-        fillRequiredStops(in: app)
+        let app = XCUIApplication()
+        EditorLaunchSupport.launchEditing(
+            app, journey: seededJourney(number: "Ridden choice", date: "2026-12-01"))
         let origin = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
-        origin.tap()
+        XCTAssertTrue(app.buttons["rideEditorCancel"].waitForExistence(timeout: 30))
+        EditorUITestSupport.tap(origin, in: app)
 
         func revealRiddenControl() -> XCUIElement {
             // StopEditor places this toggle after the date and both time
@@ -742,67 +552,32 @@ final class WorkspaceEditingTests: XCTestCase {
         XCTAssertEqual(riddenControl.value as? String, "0")
         app.navigationBars["Tokyo"].buttons.firstMatch.tap()
 
-        app.buttons["rideEditorNext"].tap()
-        let number = app.otherElements["rideEditorNumber"].textFields.firstMatch
-        XCTAssertTrue(number.waitForExistence(timeout: 8))
-        number.tap()
-        number.typeText("Ridden choice\n")
-        app.buttons["rideEditorNext"].tap()
-        let includeDate = app.switches["Include a date"]
-        XCTAssertTrue(includeDate.waitForExistence(timeout: 8))
-        EditorUITestSupport.enableDate(in: app)
+        let date = app.textFields["rideEditorDateInput"]
+        XCTAssertTrue(EditorUITestSupport.reveal(date, in: app, unmountedRowIsAbove: true), app.debugDescription)
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.calendar = Calendar(identifier: .gregorian)
+        formatter.dateFormat = "yyyy-MM-dd"
+        replaceText(in: date, with: formatter.string(from: Date()), app: app)
+        date.typeText("\n")
+        XCTAssertTrue(app.keyboards.firstMatch.waitForNonExistence(timeout: 5))
 
-        app.buttons["rideEditorPrevious"].tap()
-        XCTAssertTrue(number.waitForExistence(timeout: 8),
-                      "The date step must return to service before returning to stops.")
-        app.buttons["rideEditorPrevious"].tap()
-        XCTAssertTrue(origin.waitForExistence(timeout: 8))
-        origin.tap()
+        XCTAssertTrue(EditorUITestSupport.reveal(origin, in: app, unmountedRowIsAbove: false),
+                      app.debugDescription)
+        EditorUITestSupport.tap(origin, in: app)
         let riddenAfterDate = revealRiddenControl()
         XCTAssertEqual(riddenAfterDate.value as? String, "0",
                        "Choosing today's date must not overwrite an explicit stop choice.")
     }
 
-    func testChineseAccessibilityXXXLWizardFooterButtonsStayTappable() {
-        let app = launch(
-            sheet: "new",
-            language: "zh-Hans",
-            locale: "zh_CN",
-            launchArguments: [
-                "-UIPreferredContentSizeCategoryName",
-                "UICTContentSizeCategoryAccessibilityXXXL",
-            ])
-        let next = app.buttons["rideEditorNext"]
-        XCTAssertTrue(next.waitForExistence(timeout: 30))
-        next.tap()
-
-        let previous = app.buttons["rideEditorPrevious"]
-        XCTAssertTrue(previous.waitForExistence(timeout: 8))
-        XCTAssertEqual(previous.label, "上一步")
-        XCTAssertLessThanOrEqual(previous.frame.height, 100)
-        XCTAssertLessThanOrEqual(next.frame.height, 100)
-        XCTAssertTrue(app.frame.contains(previous.frame))
-        XCTAssertTrue(app.frame.contains(next.frame))
-        EditorUITestSupport.tap(previous, in: app)
-        XCTAssertTrue(previous.waitForNonExistence(timeout: 8),
-                      "Previous must return the wizard to step 1.")
-        EditorUITestSupport.tap(next, in: app)
-        XCTAssertTrue(previous.waitForExistence(timeout: 8),
-                      "Next must advance the wizard to step 2 again.")
-        attach(app, named: "new-journey-zh-hans-accessibility-xxxl-footer")
-    }
-
     func testStopDeleteUndoRestoresEndpointRolesAndRegionClearsUndo() {
-        let app = launch(sheet: "new")
-        advanceToStopsStep(in: app)
-        fillRequiredStops(in: app)
+        let app = XCUIApplication()
+        EditorLaunchSupport.launchEditing(app, journey: seededJourney(number: "Undo stops"))
 
         func revealRole(_ role: String) -> XCUIElement {
             let form = app.collectionViews.firstMatch
             XCTAssertTrue(form.waitForExistence(timeout: 8))
             let picker = app.buttons["Stop type, \(role)"]
-            // The derived endpoint picker is disabled, so use its visible
-            // frame rather than hittability to reveal this final Form section.
             for _ in 0..<8 {
                 if picker.exists, app.frame.contains(picker.frame) { break }
                 form.swipeUp()
@@ -815,91 +590,64 @@ final class WorkspaceEditingTests: XCTestCase {
         deleteFirstStop(in: app)
         EditorUITestSupport.tap(app.buttons["rideEditorReorderStops"], in: app)
         let remaining = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
+        XCTAssertTrue(remaining.waitForExistence(timeout: 8))
         remaining.tap()
-        let promotedRole = revealRole("Origin")
-        XCTAssertFalse(promotedRole.isEnabled,
-                       "Deleting the origin must promote the new first stop.")
+        // Existing records keep the authored role. Promoting the new first
+        // stop to Origin, and disabling that picker, happens only for a new
+        // journey.
+        let remainingRole = revealRole("Destination")
+        XCTAssertTrue(remainingRole.isEnabled,
+                      "Edit mode keeps the authored destination role and allows changing it.")
         app.navigationBars["Shinagawa"].buttons.firstMatch.tap()
 
         let undo = app.buttons["rideEditorUndoStops"]
         EditorUITestSupport.tap(undo, in: app)
 
         let origin = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
-        origin.tap()
+        EditorUITestSupport.tap(origin, in: app)
         let originRole = revealRole("Origin")
-        XCTAssertFalse(originRole.isEnabled,
-                       "A restored first stop must retain its derived origin role.")
+        XCTAssertTrue(originRole.isEnabled,
+                      "Undo must restore the first stop's authored origin role.")
         app.navigationBars["Tokyo"].buttons.firstMatch.tap()
 
         let destination = app.descendants(matching: .any)["rideEditorStop-1"].firstMatch
-        destination.tap()
+        EditorUITestSupport.tap(destination, in: app)
         let destinationRole = revealRole("Destination")
-        XCTAssertFalse(destinationRole.isEnabled,
-                       "A restored last stop must retain its derived destination role.")
-        let destinationName = app.otherElements["rideEditorStopName"].textFields.firstMatch
-        let stopForm = app.collectionViews.firstMatch
-        for _ in 0..<8 {
-            if destinationName.exists, destinationName.isHittable,
-               app.frame.contains(destinationName.frame) { break }
-            stopForm.swipeDown()
-        }
-        XCTAssertTrue(destinationName.waitForExistence(timeout: 8))
-        XCTAssertTrue(destinationName.isHittable)
-        XCTAssertTrue(app.frame.contains(destinationName.frame))
-        replaceText(in: destinationName, with: "")
-        let unnamedStopBar = app.navigationBars["Stop 2"]
-        XCTAssertTrue(unnamedStopBar.waitForExistence(timeout: 5))
-        unnamedStopBar.buttons.firstMatch.tap()
+        XCTAssertTrue(destinationRole.isEnabled,
+                      "Undo must restore the last stop's authored destination role.")
+        app.navigationBars["Shinagawa"].buttons.firstMatch.tap()
 
         deleteFirstStop(in: app)
-        EditorUITestSupport.tap(app.buttons["rideEditorReorderStops"], in: app)
-        app.buttons["rideEditorPrevious"].tap()
+        XCTAssertTrue(undo.waitForExistence(timeout: 5))
         let region = app.descendants(matching: .any)["rideEditorRegion"].firstMatch
-        XCTAssertTrue(region.waitForExistence(timeout: 5))
+        XCTAssertTrue(EditorUITestSupport.reveal(region, in: app, unmountedRowIsAbove: false),
+                      app.debugDescription)
         region.tap()
         app.buttons["Taiwan"].firstMatch.tap()
-        XCTAssertFalse(app.buttons["Reset route"].exists,
-                       "A blank remaining route should change region directly.")
-        app.buttons["rideEditorNext"].tap()
-        let firstStop = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
-        XCTAssertTrue(EditorUITestSupport.reveal(firstStop, in: app), app.debugDescription)
-        XCTAssertTrue(firstStop.waitForExistence(timeout: 8))
-        XCTAssertFalse(undo.exists,
-                       "Changing region must not offer an undo from the previous route.")
+        XCTAssertTrue(undo.waitForNonExistence(timeout: 5),
+                      "Changing region must clear the stop-deletion undo.")
     }
 
-    private func advanceToStopsStep(in app: XCUIApplication) {
-        let next = app.buttons["rideEditorNext"]
-        XCTAssertTrue(next.waitForExistence(timeout: 30))
-        XCTAssertFalse(app.buttons["rideEditorPrevious"].exists)
-        next.tap()
-        let firstStop = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
-        XCTAssertTrue(EditorUITestSupport.reveal(firstStop, in: app), app.debugDescription)
-        XCTAssertTrue(firstStop.waitForExistence(timeout: 8))
-    }
-
-    private func advanceToServiceStep(in app: XCUIApplication) {
-        advanceToStopsStep(in: app)
-        fillRequiredStops(in: app)
-        app.buttons["rideEditorNext"].tap()
-        XCTAssertTrue(app.otherElements["rideEditorNumber"].textFields.firstMatch
-            .waitForExistence(timeout: 8))
-    }
-
-    private func advanceToDateStep(in app: XCUIApplication, number value: String) {
-        advanceToServiceStep(in: app)
-        let number = app.otherElements["rideEditorNumber"].textFields.firstMatch
-        number.tap()
-        number.typeText(value + "\n")
-        app.buttons["rideEditorNext"].tap()
-        XCTAssertTrue(app.switches["Include a date"].waitForExistence(timeout: 8))
-    }
-
-    private func replaceText(in field: XCUIElement, with replacement: String) {
+    private func replaceText(in field: XCUIElement, with replacement: String, app: XCUIApplication) {
         let current = field.value as? String ?? ""
         field.tap()
-        field.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue,
-                              count: current.count) + replacement)
+        if !current.isEmpty && current != field.placeholderValue {
+            field.press(forDuration: 1.1)
+            let selectAll = app.buttons["Select All"].firstMatch
+            let selectAllMenuItem = app.menuItems["Select All"].firstMatch
+            if selectAll.waitForExistence(timeout: 3) {
+                selectAll.tap()
+            } else {
+                XCTAssertTrue(selectAllMenuItem.waitForExistence(timeout: 2))
+                selectAllMenuItem.tap()
+            }
+            field.typeText(XCUIKeyboardKey.delete.rawValue + replacement)
+        } else if !replacement.isEmpty {
+            field.typeText(replacement)
+        }
+        let value = field.value as? String ?? ""
+        XCTAssertTrue(value == replacement || (replacement.isEmpty && value == field.placeholderValue),
+                      "Replacing text must change the entire native value, not only the tapped cursor prefix.")
     }
 
     private func attach(_: XCUIApplication, named name: String) {
@@ -907,6 +655,14 @@ final class WorkspaceEditingTests: XCTestCase {
         attachment.name = name
         attachment.lifetime = .keepAlways
         add(attachment)
+    }
+
+    private func attachDiagnostics(_ app: XCUIApplication, named name: String) {
+        attach(app, named: name)
+        let hierarchy = XCTAttachment(string: app.debugDescription)
+        hierarchy.name = name + " accessibility hierarchy"
+        hierarchy.lifetime = .keepAlways
+        add(hierarchy)
     }
 
     private func deleteFirstStop(in app: XCUIApplication) {
@@ -921,21 +677,20 @@ final class WorkspaceEditingTests: XCTestCase {
                        "The row's minus must delete without navigating into the stop editor.")
     }
 
-    private func fillRequiredStops(
-        in app: XCUIApplication,
-        names: [String] = ["Tokyo", "Shinagawa"]
-    ) {
-        for (index, name) in names.enumerated() {
-            let stop = app.descendants(matching: .any)["rideEditorStop-\(index)"].firstMatch
-            for _ in 0..<6 where !stop.isHittable { app.swipeUp() }
-            XCTAssertTrue(stop.waitForExistence(timeout: 5))
-            stop.tap()
-            let field = app.otherElements["rideEditorStopName"].textFields.firstMatch
-            XCTAssertTrue(field.waitForExistence(timeout: 5))
-            field.tap()
-            field.typeText(name)
-            app.navigationBars[name].buttons.firstMatch.tap()
-        }
+    private func seededJourney(number: String, date: String = "2026-10-12") -> [String: Any] {
+        let compact = UUID().uuidString.replacingOccurrences(of: "-", with: "")
+        return [
+            "id": "uitest_\(compact.prefix(12))",
+            "date": date,
+            "number": number,
+            "origin": "Tokyo",
+            "destination": "Shinagawa",
+            "region": "jp",
+            "stops": [
+                EditorLaunchSupport.stop("Tokyo", code: "003768", type: "origin", departure: "09:00"),
+                EditorLaunchSupport.stop("Shinagawa", code: "004092", type: "destination", arrival: "09:20"),
+            ],
+        ]
     }
 
     private func launch(
@@ -968,12 +723,16 @@ final class WorkspaceEditingTests: XCTestCase {
         }
         return app
     }
+
 }
 
 @MainActor
 enum EditorUITestSupport {
     /// A lazy Form row must be brought into the viewport before querying it.
-    static func reveal(_ element: XCUIElement, in app: XCUIApplication) -> Bool {
+    static func reveal(
+        _ element: XCUIElement, in app: XCUIApplication,
+        maxDrags: Int = 8, unmountedRowIsAbove: Bool? = nil
+    ) -> Bool {
         if element.exists, element.isHittable, isUsable(element.frame),
            app.frame.contains(element.frame) { return true }
         let form = app.descendants(matching: .any)["rideEditorForm"].firstMatch
@@ -983,7 +742,7 @@ enum EditorUITestSupport {
             screenshot.lifetime = .keepAlways
             activity.add(screenshot)
         }
-        for attempt in 0..<8 {
+        for attempt in 0..<maxDrags {
             let viewport = form.frame.intersection(app.frame)
             guard isUsable(viewport) else { return false }
             if element.exists, isUsable(element.frame), viewport.contains(element.frame) {
@@ -992,7 +751,8 @@ enum EditorUITestSupport {
             // An unmounted row can be above or below the current position.
             // Search both directions within the same eight-drag budget.
             let downward = element.exists
-                ? element.frame.minY < viewport.minY : attempt >= 4
+                ? element.frame.minY < viewport.minY
+                : unmountedRowIsAbove ?? (attempt >= maxDrags / 2)
             let gutter = viewport.width > 20 ? viewport.minX + 8 : viewport.midX
             let start = CGPoint(x: gutter,
                 y: viewport.midY + (downward ? -1 : 1) * viewport.height * 0.275)

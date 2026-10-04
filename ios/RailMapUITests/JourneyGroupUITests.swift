@@ -5,39 +5,27 @@ final class JourneyGroupUITests: XCTestCase {
     func testDraftGroupNameRemainsEditableWhenReselectedAndAfterConfirmation() {
         continueAfterFailure = false
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
-        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
-                               "-interface-language", "en"]
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
-        app.launchEnvironment["RAILMAP_UI_TEST_SHEET"] = "new"
-        app.launch()
-        let next = app.buttons["rideEditorNext"]
-        XCTAssertTrue(next.waitForExistence(timeout: 30))
-        next.tap()
-        for (index, stationName) in ["Tokyo", "Shinagawa"].enumerated() {
-            let stop = app.descendants(matching: .any)["rideEditorStop-\(index)"].firstMatch
-            EditorUITestSupport.tap(stop, in: app)
-            let field = app.otherElements["rideEditorStopName"].textFields.firstMatch
-            XCTAssertTrue(field.waitForExistence(timeout: 5))
-            field.tap()
-            field.typeText(stationName)
-            app.navigationBars[stationName].buttons.firstMatch.tap()
-        }
-        next.tap()
-        let number = app.otherElements["rideEditorNumber"].textFields.firstMatch
-        XCTAssertTrue(number.waitForExistence(timeout: 8))
-        number.tap()
-        number.typeText("Group draft\n")
-        next.tap()
+        let compact = UUID().uuidString.replacingOccurrences(of: "-", with: "")
+        EditorLaunchSupport.launchEditing(app, journey: [
+            "id": "uitest_\(compact.prefix(12))",
+            "date": "2026-10-12",
+            "number": "Group draft",
+            "origin": "Tokyo",
+            "destination": "Shinagawa",
+            "region": "jp",
+            "stops": [
+                EditorLaunchSupport.stop("Tokyo", code: "003768", type: "origin", departure: "09:00"),
+                EditorLaunchSupport.stop("Shinagawa", code: "004092", type: "destination", arrival: "09:20"),
+            ],
+        ])
         let create = app.buttons["createJourneyGroup"]
-        for _ in 0..<5 where !create.isHittable { app.swipeUp() }
+        XCTAssertTrue(EditorUITestSupport.reveal(create, in: app), app.debugDescription)
         XCTAssertTrue(create.waitForExistence(timeout: 8))
         create.tap()
         let name = app.textFields["journeyGroupName"]
-        XCTAssertFalse(app.buttons["rideEditorNext"].isEnabled,
+        XCTAssertTrue(EditorUITestSupport.reveal(name, in: app))
+        XCTAssertFalse(app.buttons["rideEditorSave"].isEnabled,
                        "Creating the empty group must select its unfinished draft.")
-        XCTAssertTrue(revealNewGroupName(name, in: app))
         XCTAssertTrue(name.waitForExistence(timeout: 5))
         name.tap()
         name.typeText("Rail holiday\n")
@@ -48,19 +36,23 @@ final class JourneyGroupUITests: XCTestCase {
         choice.tap()
         XCTAssertTrue(name.waitForExistence(timeout: 5),
                       "Reselecting the new draft group must keep its name editable.")
-        next.tap()
-        XCTAssertTrue(app.buttons["rideEditorSave"].waitForExistence(timeout: 8))
-        app.buttons["rideEditorPrevious"].tap()
-        for _ in 0..<5 where !name.isHittable { app.swipeUp() }
+        XCTAssertEqual(name.value as? String, "Rail holiday")
+        // Edit mode has no confirmation step. A stop round-trip is the draft
+        // leaving the form and coming back.
+        let origin = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
+        EditorUITestSupport.tap(origin, in: app)
+        XCTAssertTrue(app.otherElements["rideEditorStopName"].waitForExistence(timeout: 8))
+        app.navigationBars["Tokyo"].buttons.firstMatch.tap()
+        XCTAssertTrue(EditorUITestSupport.reveal(name, in: app))
         XCTAssertTrue(name.waitForExistence(timeout: 5))
         XCTAssertEqual(name.value as? String, "Rail holiday")
         // Put the insertion point after the final character before replacing it.
         name.coordinate(withNormalizedOffset: CGVector(dx: 0.98, dy: 0.5)).tap()
         name.typeText(XCUIKeyboardKey.delete.rawValue + "s\n")
         XCTAssertEqual(name.value as? String, "Rail holidas")
-        next.tap()
         let save = app.buttons["rideEditorSave"]
         XCTAssertTrue(save.waitForExistence(timeout: 8))
+        XCTAssertTrue(save.isEnabled)
         save.tap()
         XCTAssertTrue(save.waitForNonExistence(timeout: 15))
     }
@@ -118,31 +110,6 @@ final class JourneyGroupUITests: XCTestCase {
         screenshot.name = "JourneyGroup-12-character-ticket"
         screenshot.lifetime = .keepAlways
         add(screenshot)
-    }
-    private func revealNewGroupName(_ name: XCUIElement, in app: XCUIApplication) -> Bool {
-        let form = app.descendants(matching: .any)["rideEditorForm"].firstMatch
-        guard form.waitForExistence(timeout: 5) else { return false }
-        for _ in 0..<8 {
-            var bounds = form.frame.intersection(app.frame)
-            let next = app.buttons["rideEditorNext"]
-            if next.exists && next.frame.intersects(bounds) {
-                bounds.size.height = max(0, next.frame.minY - bounds.minY)
-            }
-            let keyboard = app.keyboards.firstMatch
-            if keyboard.exists && keyboard.frame.intersects(bounds) {
-                bounds.size.height = max(0, keyboard.frame.minY - bounds.minY)
-            }
-            bounds = bounds.insetBy(dx: 8, dy: 8)
-            guard bounds.height > 40 else { return false }
-            if name.exists && name.isHittable && bounds.contains(name.frame) { return true }
-            let origin = app.coordinate(withNormalizedOffset: .zero)
-            origin.withOffset(CGVector(dx: bounds.midX - app.frame.minX,
-                dy: bounds.minY + bounds.height * 0.65 - app.frame.minY))
-                .press(forDuration: 0.05, thenDragTo: origin.withOffset(CGVector(
-                    dx: bounds.midX - app.frame.minX,
-                    dy: bounds.minY + bounds.height * 0.35 - app.frame.minY)))
-        }
-        return false
     }
 
 }

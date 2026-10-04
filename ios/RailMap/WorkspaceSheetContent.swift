@@ -125,11 +125,9 @@ struct WorkspaceSheetContent: View {
         Group {
             switch sheet {
             case .newJourney(let draft):
-                RideEditorView(
+                NewTripView(
                     train: draft,
                     title: localization.text("ios.editorTitleNew", fallback: "New"),
-                    isNew: true,
-                    suggestionTrains: itineraries.loaded?.trains ?? [],
                     onCancel: onDismiss,
                     onSave: onSaveNew)
             case .edit(let train):

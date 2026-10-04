@@ -9,14 +9,16 @@ final class ThroughServiceUITests: XCTestCase {
     }
 
     func testSectionServiceApplyPreservesDraftNotes() {
-        let app = launchNewEditor()
-        let next = app.buttons["rideEditorNext"]
-        XCTAssertTrue(next.waitForExistence(timeout: 40))
-        next.tap()
-        selectNamedRouteAndAdvance(in: app, next: next)
-        XCTAssertTrue(app.otherElements["rideEditorNumber"].waitForExistence(timeout: 8))
-
+        let app = launchEditing(hachiojiJourney())
         let form = app.collectionViews["rideEditorForm"].firstMatch
+        XCTAssertTrue(form.waitForExistence(timeout: 30))
+        let origin = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
+        let destination = app.descendants(matching: .any)["rideEditorStop-3"].firstMatch
+        XCTAssertTrue(EditorUITestSupport.reveal(origin, in: app))
+        XCTAssertTrue(origin.label.contains("東京"))
+        XCTAssertTrue(EditorUITestSupport.reveal(destination, in: app))
+        XCTAssertTrue(destination.label.contains("八王子"))
+
         let notes = app.textFields["rideEditorNotes"]
         sectionEnter("Keep this through-service draft note", into: notes, in: form, app: app)
         let add = app.buttons["rideEditorAddServiceLeg"]
@@ -72,10 +74,8 @@ final class ThroughServiceUITests: XCTestCase {
     /// Run on a clean, signed-out test simulator. No login or query action is
     /// tapped, and no stored subscription credentials are created or deleted.
     func testStandaloneChatGPTQueryRequiresDateAndSignedInAccount() {
-        let app = launchNewEditor()
-        let next = app.buttons["rideEditorNext"]
-        XCTAssertTrue(next.waitForExistence(timeout: 40))
-        next.tap()
+        let app = launchEditing(blankJapanJourney())
+        XCTAssertTrue(app.descendants(matching: .any)["rideEditorForm"].firstMatch.waitForExistence(timeout: 40))
         let pattern = app.buttons["rideEditorServicePattern"]
         XCTAssertTrue(EditorUITestSupport.reveal(pattern, in: app), app.debugDescription)
         XCTAssertTrue(pattern.waitForExistence(timeout: 8))
@@ -123,16 +123,48 @@ final class ThroughServiceUITests: XCTestCase {
         XCTAssertEqual(remarks.value as? String, "Show the official operator source for this date")
     }
 
-    private func launchNewEditor() -> XCUIApplication {
+    private func launchEditing(_ journey: [String: Any]) -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-interface-language", "en"]
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
-        app.launchEnvironment["RAILMAP_UI_TEST_SHEET"] = "new"
-        app.launch()
+        EditorLaunchSupport.launchEditing(app, journey: journey)
         return app
+    }
+
+    private func hachiojiJourney() -> [String: Any] {
+        [
+            "id": "ui-hachioji",
+            "number": "",
+            "origin": "東京",
+            "destination": "八王子",
+            "region": "jp",
+            "visible": true,
+            "stops": hachiojiStops(),
+        ]
+    }
+
+    private func blankJapanJourney() -> [String: Any] {
+        [
+            "id": "ui-blank-jp",
+            "number": "",
+            "origin": "",
+            "destination": "",
+            "region": "jp",
+            "visible": true,
+            "stops": [
+                EditorLaunchSupport.stop("", code: nil, type: "origin"),
+                EditorLaunchSupport.stop("", code: nil, type: "destination"),
+            ],
+        ]
+    }
+
+    private func hachiojiStops() -> [[String: Any]] {
+        [
+            EditorLaunchSupport.stop("東京", code: "003766", type: "origin"),
+            EditorLaunchSupport.stop("新宿", code: "003700", type: "passenger_stop"),
+            EditorLaunchSupport.stop("立川", code: "003634", type: "passenger_stop"),
+            EditorLaunchSupport.stop("八王子", code: "003947", type: "destination"),
+        ]
     }
 
     private func assertCannotRunWithoutAccount(in app: XCUIApplication,
@@ -189,72 +221,6 @@ final class ThroughServiceUITests: XCTestCase {
                     dx: end.x - app.frame.minX, dy: end.y - app.frame.minY)))
         }
         return false
-    }
-    private func selectNamedRouteAndAdvance(in app: XCUIApplication, next: XCUIElement) {
-        func stop(_ reason: String) {
-            let tree = XCTAttachment(string: reason + "\n" + app.debugDescription)
-            tree.name = "through-service-route-to-next-guard"
-            tree.lifetime = .keepAlways
-            self.add(tree)
-            let screen = XCTAttachment(screenshot: app.screenshot())
-            screen.name = "through-service-route-to-next-guard"
-            screen.lifetime = .keepAlways
-            self.add(screen)
-            XCTFail(reason)
-        }
-        let routePicker = app.buttons["rideEditorServicePattern"]
-        guard EditorUITestSupport.reveal(routePicker, in: app),
-              routePicker.waitForExistence(timeout: 8), routePicker.isHittable else {
-            stop("Route-picker action is not reachable; no tap attempted.")
-            return
-        }
-        EditorUITestSupport.tap(routePicker, in: app)
-        let search = app.searchFields.firstMatch
-        guard search.waitForExistence(timeout: 8), search.isHittable else {
-            stop("Actual route search is not reachable.")
-            return
-        }
-        EditorUITestSupport.tap(search, in: app)
-        // The observed route result overlaps the active keyboard assistant.
-        // Submit the real searchable field before attempting its result row.
-        search.typeText("はちおうじ\n")
-        guard app.keyboards.firstMatch.waitForNonExistence(timeout: 8) else {
-            stop("Route search keyboard remains in front; no route/Next tap attempted.")
-            return
-        }
-        let picker = app.collectionViews["servicePatternList"].firstMatch
-        let route = picker.buttons.matching(NSPredicate(
-            format: "label CONTAINS %@", "東京〜八王子")).firstMatch
-        guard route.waitForExistence(timeout: 8), route.isEnabled, route.isHittable,
-              picker.frame.intersection(app.frame).contains(route.frame) else {
-            stop("Named route row is not fully reachable; no blind tap or reveal retry.")
-            return
-        }
-        EditorUITestSupport.tap(route, in: app)
-        guard picker.waitForNonExistence(timeout: 8) else {
-            stop("Route picker did not dismiss after selection; underlying Next must not be tapped.")
-            return
-        }
-        let form = app.collectionViews["rideEditorForm"].firstMatch
-        let origin = form.buttons["rideEditorStop-0"].firstMatch
-        let destination = form.buttons["rideEditorStop-3"].firstMatch
-        guard origin.waitForExistence(timeout: 8), destination.waitForExistence(timeout: 8),
-              !origin.label.contains("Choose departure station"),
-              !destination.label.contains("Choose arrival station") else {
-            stop("Selected four-station named route is not present in the actual draft.")
-            return
-        }
-        var visible = app.frame
-        if app.keyboards.firstMatch.exists {
-            visible.size.height = max(0, min(visible.maxY, app.keyboards.firstMatch.frame.minY) - visible.minY)
-        }
-        guard next.exists, next.isEnabled, next.isHittable,
-              next.frame.width > 1, next.frame.height > 1, visible.contains(next.frame) else {
-            stop("Foreground wizard Next is not reachable; refusing invalid/background hit point.")
-            return
-        }
-        // A single validated coordinate tap uses the repository's proven helper.
-        EditorUITestSupport.tap(next, in: app)
     }
 
     private func foregroundSectionForm(in app: XCUIApplication) -> XCUIElement {

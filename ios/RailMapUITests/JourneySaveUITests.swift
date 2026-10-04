@@ -12,28 +12,21 @@ final class JourneySaveUITests: XCTestCase {
 
     func testSavedJourneyIsStillPresentAfterRelaunch() {
         let number = "Persist \(UUID().uuidString.prefix(8))"
-        let app = launchNewJourney()
-        advanceToRoute(in: app)
-        fillRequiredStops(in: app)
+        let app = XCUIApplication()
+        EditorLaunchSupport.launchNewTrip(app)
+        pickStation(field: "newTripOrigin", query: "品川", code: "004095",
+                    lineID: "jp-東日本旅客鉄道-山手線", in: app)
+        pickStation(field: "newTripDestination", query: "大崎", code: "004135",
+                    lineID: "jp-東日本旅客鉄道-山手線", in: app)
+        let numberField = app.textFields["newTripNumber"]
+        XCTAssertTrue(showNumber(numberField, in: app))
+        typeNumber(number, into: numberField, in: app)
 
-        app.buttons["rideEditorNext"].tap()
-        let numberField = app.otherElements["rideEditorNumber"].textFields.firstMatch
-        XCTAssertTrue(numberField.waitForExistence(timeout: 8))
-        numberField.tap()
-        numberField.typeText(number + "\n")
-
-        let vehicle = app.otherElements["rideEditorVehicleType"].textFields.firstMatch
-        EditorUITestSupport.tap(vehicle, in: app)
-        vehicle.typeText("E235")
-
-        app.buttons["rideEditorNext"].tap()
-        XCTAssertTrue(app.switches["Include a date"].waitForExistence(timeout: 8))
-        app.buttons["rideEditorNext"].tap()
-
-        let save = app.buttons["rideEditorSave"]
-        XCTAssertTrue(save.waitForExistence(timeout: 8))
+        let save = app.buttons["newTripSave"]
+        XCTAssertTrue(waitUntilSavable(save, in: app),
+                      "Save must enable once the route is planned.")
         save.tap()
-        XCTAssertTrue(save.waitForNonExistence(timeout: 8))
+        XCTAssertTrue(save.waitForNonExistence(timeout: 20))
 
         app.tabBars.firstMatch.buttons.element(boundBy: 3).tap()
         let savedSearch = app.textFields["journeySearchField"]
@@ -73,66 +66,69 @@ final class JourneySaveUITests: XCTestCase {
             return
         }
         XCTAssertTrue(detailScroll.waitForExistence(timeout: 5))
-        for value in ["Tokyo", "Shinagawa", "E235"] {
+        // The typed number already matched the relaunched row above (it sits in
+        // the detail header, outside this scroll view). NewTripView stores the
+        // catalog's station names, so the stops keep their Japanese names.
+        for value in ["品川", "大崎"] {
             let persistedValue = detailScroll.descendants(matching: .any).matching(
                 NSPredicate(format: "label CONTAINS %@", value)).firstMatch
             for _ in 0..<6 where !persistedValue.exists { detailScroll.swipeUp() }
             XCTAssertTrue(persistedValue.waitForExistence(timeout: 5),
-                          "The saved detail must retain \(value) after relaunch.")
+                          "The saved detail must retain \(value) after relaunch. \(detailScroll.debugDescription)")
         }
     }
 
     func testNewJourneyGroupNameCanBeEditedAfterReturningFromConfirmation() {
-        let app = launchNewJourney()
-        advanceToRoute(in: app)
-        fillRequiredStops(in: app)
-        app.buttons["rideEditorNext"].tap()
-        let number = app.otherElements["rideEditorNumber"].textFields.firstMatch
-        XCTAssertTrue(number.waitForExistence(timeout: 8))
-        number.tap()
-        number.typeText("Group test\n")
-        app.buttons["rideEditorNext"].tap()
+        let app = XCUIApplication()
+        EditorLaunchSupport.launchEditing(app, journey: seededJourney(number: "Group test"))
         let create = app.buttons["createJourneyGroup"]
-        for _ in 0..<5 where !create.isHittable { app.swipeUp() }
+        XCTAssertTrue(EditorUITestSupport.reveal(create, in: app), app.debugDescription)
         XCTAssertTrue(create.waitForExistence(timeout: 8))
         create.tap()
         let name = app.textFields["journeyGroupName"]
-        XCTAssertFalse(app.buttons["rideEditorNext"].isEnabled,
+        XCTAssertTrue(EditorUITestSupport.reveal(name, in: app))
+        XCTAssertFalse(app.buttons["rideEditorSave"].isEnabled,
                        "Creating the empty group must select its unfinished draft.")
-        XCTAssertTrue(revealNewGroupName(name, in: app))
         XCTAssertTrue(name.waitForExistence(timeout: 5))
         name.tap()
         name.typeText("Rail holiday\n")
-        app.buttons["rideEditorNext"].tap()
-        XCTAssertTrue(app.buttons["rideEditorSave"].waitForExistence(timeout: 8))
-        app.buttons["rideEditorPrevious"].tap()
-        XCTAssertTrue(revealNewGroupName(name, in: app), app.debugDescription)
+        XCTAssertEqual(name.value as? String, "Rail holiday")
+
+        // Edit mode has no confirmation step. Leaving for a stop and coming
+        // back is the same draft the confirmation screen used to round-trip.
+        let origin = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
+        EditorUITestSupport.tap(origin, in: app)
+        XCTAssertTrue(app.otherElements["rideEditorStopName"].waitForExistence(timeout: 8))
+        app.navigationBars["Tokyo"].buttons.firstMatch.tap()
+
+        XCTAssertTrue(EditorUITestSupport.reveal(name, in: app), app.debugDescription)
         XCTAssertTrue(name.waitForExistence(timeout: 5))
         XCTAssertEqual(name.value as? String, "Rail holiday")
-        // Put the insertion point after the final character before replacing it.
         name.coordinate(withNormalizedOffset: CGVector(dx: 0.98, dy: 0.5)).tap()
         name.typeText(XCUIKeyboardKey.delete.rawValue + "s\n")
         XCTAssertEqual(name.value as? String, "Rail holidas")
-        app.buttons["rideEditorNext"].tap()
         let save = app.buttons["rideEditorSave"]
         XCTAssertTrue(save.waitForExistence(timeout: 8))
+        XCTAssertTrue(save.isEnabled)
         save.tap()
         XCTAssertTrue(save.waitForNonExistence(timeout: 15))
     }
 
     func testDirtyCancelCanKeepEditingThenDiscardDraft() {
         let unsavedName = "Unsaved \(UUID().uuidString.prefix(8))"
-        let app = launchNewJourney()
-        advanceToRoute(in: app)
+        let app = XCUIApplication()
+        EditorLaunchSupport.launchEditing(app, journey: seededJourney(number: "Dirty cancel"))
 
         let origin = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
-        XCTAssertTrue(origin.waitForExistence(timeout: 8))
-        origin.tap()
+        XCTAssertTrue(app.buttons["rideEditorCancel"].waitForExistence(timeout: 30))
+        EditorUITestSupport.tap(origin, in: app)
         let name = app.otherElements["rideEditorStopName"].textFields.firstMatch
         XCTAssertTrue(name.waitForExistence(timeout: 5))
-        name.tap()
-        name.typeText(unsavedName)
-        app.navigationBars[unsavedName].buttons.firstMatch.tap()
+        replaceText(in: name, with: unsavedName, app: app)
+        XCTAssertEqual(name.value as? String, unsavedName, app.debugDescription)
+        let stopNavigation = app.navigationBars[unsavedName]
+        XCTAssertTrue(stopNavigation.waitForExistence(timeout: 5), app.debugDescription)
+        stopNavigation.buttons.firstMatch.tap()
 
         let cancel = app.buttons["rideEditorCancel"]
         cancel.tap()
@@ -175,66 +171,211 @@ final class JourneySaveUITests: XCTestCase {
                        "A discarded draft must not appear after process relaunch.")
     }
 
-    private func advanceToRoute(in app: XCUIApplication) {
-        let next = app.buttons["rideEditorNext"]
-        XCTAssertTrue(next.waitForExistence(timeout: 30))
-        next.tap()
-        let stop = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
-        XCTAssertTrue(EditorUITestSupport.reveal(stop, in: app), app.debugDescription)
-        XCTAssertTrue(app.descendants(matching: .any)["rideEditorStop-0"]
-            .waitForExistence(timeout: 8))
-    }
-
-    private func fillRequiredStops(in app: XCUIApplication) {
-        for (index, name) in ["Tokyo", "Shinagawa"].enumerated() {
-            let stop = app.descendants(matching: .any)["rideEditorStop-\(index)"].firstMatch
-            EditorUITestSupport.tap(stop, in: app)
-            let field = app.otherElements["rideEditorStopName"].textFields.firstMatch
-            XCTAssertTrue(field.waitForExistence(timeout: 5))
-            field.tap()
-            field.typeText(name)
-            app.navigationBars[name].buttons.firstMatch.tap()
-        }
-    }
-
-    private func launchNewJourney() -> XCUIApplication {
-        let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
-        app.launchArguments = [
-            "-AppleLanguages", "(en)",
-            "-AppleLocale", "en_US",
-            "-interface-language", "en",
+    private func seededJourney(number: String) -> [String: Any] {
+        let compact = UUID().uuidString.replacingOccurrences(of: "-", with: "")
+        return [
+            "id": "uitest_\(compact.prefix(12))",
+            "date": "2026-10-12",
+            "number": number,
+            "origin": "Tokyo",
+            "destination": "Shinagawa",
+            "region": "jp",
+            "stops": [
+                EditorLaunchSupport.stop("Tokyo", code: "003768", type: "origin", departure: "09:00"),
+                EditorLaunchSupport.stop("Shinagawa", code: "004092", type: "destination", arrival: "09:20"),
+            ],
         ]
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
-        app.launchEnvironment["RAILMAP_UI_TEST_SHEET"] = "new"
-        app.launch()
-        return app
-    }
-    private func revealNewGroupName(_ name: XCUIElement, in app: XCUIApplication) -> Bool {
-        let form = app.descendants(matching: .any)["rideEditorForm"].firstMatch
-        guard form.waitForExistence(timeout: 5) else { return false }
-        for _ in 0..<8 {
-            var bounds = form.frame.intersection(app.frame)
-            let next = app.buttons["rideEditorNext"]
-            if next.exists && next.frame.intersects(bounds) {
-                bounds.size.height = max(0, next.frame.minY - bounds.minY)
-            }
-            let keyboard = app.keyboards.firstMatch
-            if keyboard.exists && keyboard.frame.intersects(bounds) {
-                bounds.size.height = max(0, keyboard.frame.minY - bounds.minY)
-            }
-            bounds = bounds.insetBy(dx: 8, dy: 8)
-            guard bounds.height > 40 else { return false }
-            if name.exists && name.isHittable && bounds.contains(name.frame) { return true }
-            let origin = app.coordinate(withNormalizedOffset: .zero)
-            origin.withOffset(CGVector(dx: bounds.midX - app.frame.minX,
-                dy: bounds.minY + bounds.height * 0.65 - app.frame.minY))
-                .press(forDuration: 0.05, thenDragTo: origin.withOffset(CGVector(
-                    dx: bounds.midX - app.frame.minX,
-                    dy: bounds.minY + bounds.height * 0.35 - app.frame.minY)))
-        }
-        return false
     }
 
+    private func pickStation(
+        field: String, query: String, code: String, lineID: String, in app: XCUIApplication
+    ) {
+        let button = app.buttons[field]
+        XCTAssertTrue(button.waitForExistence(timeout: 20))
+        XCTAssertTrue(waitForEnabled(button, timeout: 20))
+        button.tap()
+        let search = app.searchFields.firstMatch
+        XCTAssertTrue(search.waitForExistence(timeout: 20))
+        search.tap()
+        search.typeText(query)
+        let row = app.buttons["newTripStation-\(lineID)-\(code)"]
+        // Name search lists one row per line. A shared name can still sit below
+        // earlier sections, so scroll the lazy list until that line's row exists.
+        var swipes = 0
+        while !row.waitForExistence(timeout: swipes == 0 ? 3 : 0.4), swipes < 12 {
+            app.swipeUp()
+            swipes += 1
+        }
+        XCTAssertTrue(row.exists, "No newTripStation-\(lineID)-\(code) for \(query). \(app.debugDescription)")
+        let previousLabel = button.label
+        dismissSearchKeyboard(in: app)
+        row.tap()
+        if app.searchFields.firstMatch.exists {
+            dismissSearchKeyboard(in: app)
+            if row.waitForExistence(timeout: 2) { row.tap() }
+        }
+        XCTAssertTrue(
+            app.searchFields.firstMatch.waitForNonExistence(timeout: 5),
+            "Choosing \(query) must close station search.")
+        let chosen = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "label != %@", previousLabel),
+            object: button)
+        XCTAssertEqual(XCTWaiter.wait(for: [chosen], timeout: 8), .completed, button.label)
+    }
+
+    /// Resign the station-search keyboard without leaving the sheet up.
+    private func dismissSearchKeyboard(in app: XCUIApplication) {
+        let keyboard = app.keyboards.firstMatch
+        guard keyboard.exists else { return }
+        for label in ["Search", "検索"] {
+            let key = keyboard.buttons[label]
+            if key.exists {
+                key.tap()
+                break
+            }
+        }
+        _ = keyboard.waitForNonExistence(timeout: 2)
+    }
+
+    private func replaceText(in field: XCUIElement, with replacement: String, app: XCUIApplication) {
+        let current = field.value as? String ?? ""
+        field.tap()
+        if !current.isEmpty && current != field.placeholderValue {
+            field.press(forDuration: 1.1)
+            let selectAll = app.buttons["Select All"].firstMatch
+            let selectAllMenuItem = app.menuItems["Select All"].firstMatch
+            if selectAll.waitForExistence(timeout: 3) {
+                selectAll.tap()
+            } else {
+                XCTAssertTrue(selectAllMenuItem.waitForExistence(timeout: 2))
+                selectAllMenuItem.tap()
+            }
+            field.typeText(XCUIKeyboardKey.delete.rawValue + replacement)
+        } else if !replacement.isEmpty {
+            field.typeText(replacement)
+        }
+    }
+
+    @discardableResult
+    private func waitForEnabled(_ element: XCUIElement, timeout: TimeInterval) -> Bool {
+        let enabled = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "enabled == true"), object: element)
+        return XCTWaiter.wait(for: [enabled], timeout: timeout) == .completed
+    }
+
+    /// Used only by the relaunch test. Form text fields report a frame but
+    /// `isHittable` stays false, and `tap()` never takes keyboard focus.
+    private func showNumber(_ field: XCUIElement, in app: XCUIApplication) -> Bool {
+        guard app.collectionViews.firstMatch.waitForExistence(timeout: 8) else { return false }
+        for _ in 0..<8 {
+            if field.exists, frameInBand(field, in: app) { return true }
+            let up = field.exists && field.frame.midY < app.frame.midY
+            nudgeForm(in: app, up: up)
+        }
+        return field.exists && frameInBand(field, in: app)
+    }
+
+    private func nudgeForm(in app: XCUIApplication, up: Bool, span: CGFloat = 0.40) {
+        let save = app.buttons["newTripSave"]
+        if save.exists, save.frame.minY > 180 {
+            let handle = app.coordinate(withNormalizedOffset: CGVector(
+                dx: 0.5, dy: max(0.1, (save.frame.midY - 8) / app.frame.height)))
+            handle.press(forDuration: 0.05,
+                         thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.12)))
+        }
+        let lists = app.collectionViews.allElementsBoundByIndex.filter {
+            $0.frame.height > 160 && !$0.searchFields.firstMatch.exists
+        }
+        guard let form = lists.max(by: { $0.frame.height < $1.frame.height }) ?? app.collectionViews.allElementsBoundByIndex.first,
+              form.frame.height > 80 else { return }
+        let travel = min(0.40, max(0.12, span))
+        let startY: CGFloat = up ? 0.42 : 0.78
+        let endY: CGFloat = up ? 0.42 + travel : 0.78 - travel
+        let start = form.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: startY))
+        let end = form.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: endY))
+        start.press(forDuration: 0.05, thenDragTo: end)
+    }
+
+    private func frameInBand(_ element: XCUIElement, in app: XCUIApplication) -> Bool {
+        let frame = element.frame
+        guard frame.width > 1, frame.height > 1 else { return false }
+        return app.frame.insetBy(dx: 0, dy: 120).contains(frame)
+    }
+
+    private func typeNumber(_ value: String, into field: XCUIElement, in app: XCUIApplication) {
+        closeStationSearch(in: app)
+        var focused = false
+        for step in 0..<10 {
+            if field.exists, field.isHittable, clearOfKeyboard(field, in: app) {
+                field.tap()
+                let ready = XCTNSPredicateExpectation(
+                    predicate: NSPredicate(format: "hasKeyboardFocus == true"), object: field)
+                if XCTWaiter.wait(for: [ready], timeout: 2) == .completed {
+                    focused = true
+                    break
+                }
+            } else if field.exists {
+                // At its resting y≈560 the field has a frame but is not hittable.
+                // The same field accepts a tap near y≈330. Move it up into that band.
+                let keyboard = app.keyboards.firstMatch
+                let ceiling: CGFloat = keyboard.exists ? keyboard.frame.minY - 40 : 430
+                if field.frame.midY > ceiling {
+                    nudgeForm(in: app, up: false, span: 0.28)
+                } else if field.frame.midY < 200 {
+                    nudgeForm(in: app, up: true, span: 0.18)
+                } else {
+                    nudgeForm(in: app, up: false, span: 0.12)
+                }
+            } else {
+                nudgeForm(in: app, up: step < 5)
+            }
+        }
+        XCTAssertTrue(focused, "The train number field must take keyboard focus. "
+            + "frame=\(field.frame) hittable=\(field.isHittable) "
+            + "keyboard=\(app.keyboards.firstMatch.exists)")
+        field.typeText(value + "\n")
+    }
+
+    /// The station sheet is already closed. A leftover keyboard still covers the form.
+    private func closeStationSearch(in app: XCUIApplication) {
+        guard !app.searchFields.firstMatch.exists else { return }
+        let keyboard = app.keyboards.firstMatch
+        guard keyboard.exists else { return }
+        for label in ["Return", "Done", "Search", "検索"] {
+            let key = keyboard.buttons[label]
+            if key.exists {
+                key.tap()
+                break
+            }
+        }
+        _ = keyboard.waitForNonExistence(timeout: 2)
+    }
+
+    private func clearOfKeyboard(_ element: XCUIElement, in app: XCUIApplication) -> Bool {
+        let frame = element.frame
+        guard frame.width > 1, frame.height > 1 else { return false }
+        var band = app.frame.insetBy(dx: 8, dy: 0)
+        band.origin.y = 140
+        let keyboard = app.keyboards.firstMatch
+        let limit = keyboard.exists ? keyboard.frame.minY - 12 : app.frame.maxY - 40
+        band.size.height = limit - band.origin.y
+        guard band.height > 40 else { return false }
+        return band.contains(frame)
+    }
+
+    /// 山手線 keeps both directions. Save stays disabled until corridor 0 is tapped.
+    private func waitUntilSavable(_ save: XCUIElement, in app: XCUIApplication) -> Bool {
+        if waitForEnabled(save, timeout: 5) { return true }
+        let first = app.buttons["newTripCorridor-0"]
+        let deadline = Date().addingTimeInterval(35)
+        while Date() < deadline {
+            if save.isEnabled { return true }
+            if first.exists, first.isHittable {
+                if !save.isEnabled { first.tap() }
+                if waitForEnabled(save, timeout: 6) { return true }
+            }
+            nudgeForm(in: app, up: false)
+        }
+        return save.isEnabled
+    }
 }

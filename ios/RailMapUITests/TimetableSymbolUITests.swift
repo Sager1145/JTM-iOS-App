@@ -10,29 +10,16 @@ final class TimetableSymbolUITests: XCTestCase {
             ("ハウステンボス", "timetableDetails-jr-kyushu.huis-ten-bosch.11.", "この列車は経由しません"),
         ] {
             let app = XCUIApplication()
-            app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
             app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                    "-interface-language", "en"]
-            app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
-            app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
-            app.launchEnvironment["RAILMAP_UI_TEST_SHEET"] = "new"
-            app.launch()
-            let next = app.buttons["rideEditorNext"]
-            XCTAssertTrue(next.waitForExistence(timeout: 40))
-            next.tap()
-            EditorUITestSupport.seedNamedRoute(in: app)
-            next.tap()
-            next.tap()
-            EditorUITestSupport.enableDate(in: app)
-            let date = app.textFields["rideEditorDateInput"]
-            XCTAssertTrue(date.waitForExistence(timeout: 8))
-            date.tap()
-            date.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue,
-                                 count: (date.value as? String ?? "").count) + "2026-09-30")
-            app.buttons["rideEditorPrevious"].tap()
-            app.buttons["rideEditorPrevious"].tap()
-            app.buttons["rideEditorServicePattern"].tap()
-            app.buttons["rideEditorReplaceStops"].firstMatch.tap()
+            EditorLaunchSupport.launchEditing(app, journey: hachiojiJourney(date: "2026-09-30"))
+            XCTAssertTrue(app.descendants(matching: .any)["rideEditorForm"].firstMatch.waitForExistence(timeout: 40))
+            let picker = app.buttons["rideEditorServicePattern"]
+            XCTAssertTrue(EditorUITestSupport.reveal(picker, in: app), app.debugDescription)
+            picker.tap()
+            let replace = app.buttons["rideEditorReplaceStops"].firstMatch
+            XCTAssertTrue(replace.waitForExistence(timeout: 8))
+            replace.tap()
             let search = app.searchFields.firstMatch
             XCTAssertTrue(search.waitForExistence(timeout: 10))
             search.tap()
@@ -70,5 +57,23 @@ final class TimetableSymbolUITests: XCTestCase {
             add(screenshot)
             app.terminate()
         }
+    }
+
+    private func hachiojiJourney(date: String) -> [String: Any] {
+        [
+            "id": "ui-hachioji",
+            "number": "",
+            "origin": "東京",
+            "destination": "八王子",
+            "region": "jp",
+            "date": date,
+            "visible": true,
+            "stops": [
+                EditorLaunchSupport.stop("東京", code: "003766", type: "origin"),
+                EditorLaunchSupport.stop("新宿", code: "003700", type: "passenger_stop"),
+                EditorLaunchSupport.stop("立川", code: "003634", type: "passenger_stop"),
+                EditorLaunchSupport.stop("八王子", code: "003947", type: "destination"),
+            ],
+        ]
     }
 }

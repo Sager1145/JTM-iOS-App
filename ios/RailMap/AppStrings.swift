@@ -41,6 +41,7 @@ enum AppStrings {
         ("ShellStrings", ShellStrings.table),
         ("DataStrings", DataStrings.table),
         ("EditorStrings", EditorStrings.table),
+        ("NewTripStrings", NewTripStrings.table),
         ("RouteGuideStrings", RouteGuideStrings.table),
         ("JourneyStrings", JourneyStrings.table),
         ("StatisticsStrings", StatisticsStrings.table),

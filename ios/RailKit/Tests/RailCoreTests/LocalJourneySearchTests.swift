@@ -224,3 +224,29 @@ struct LocalJourneySearchTests {
         return try JSONDecoder().decode(CompactPackage.self, from: data)
     }
 }
+
+
+extension LocalJourneySearchTests {
+    @Test("Endpoint hints constrain first and last edges within the bounded search")
+    func endpointHints() throws {
+        let package = try fixture([
+            line("start", ["O", "J"]), line("wrong-start", ["O", "K"]),
+            line("wrong-end", ["J", "D"]), line("finish", ["K", "D"], distance: 5),
+            line("beyond", ["D", "K"])])
+        let baseline = LocalJourneySearch.search(package: package, originCode: "O", destinationCode: "D")
+        let explicitNil = LocalJourneySearch.search(package: package, originCode: "O", destinationCode: "D",
+            originLineIDs: nil, destinationLineIDs: nil)
+        #expect(explicitNil.choices == baseline.choices)
+        #expect(explicitNil.isTruncated == baseline.isTruncated)
+        let hinted = LocalJourneySearch.search(package: package, originCode: "O", destinationCode: "D",
+            maximumChoices: 1, originLineIDs: ["start"], destinationLineIDs: ["finish"])
+        #expect(hinted.choices.first?.lineIDs == ["start", "wrong-end", "beyond", "finish"])
+        #expect(hinted.choices.first?.stations.map(\.code) == ["O", "J", "D", "K", "D"])
+        #expect(LocalJourneySearch.choices(package: package, originCode: "O", destinationCode: "D",
+            maximumChoices: 1, originLineIDs: ["start"], destinationLineIDs: ["finish"]) == hinted.choices)
+        #expect(LocalJourneySearch.choices(package: package, originCode: "O", destinationCode: "D",
+            originLineIDs: []).isEmpty)
+        #expect(LocalJourneySearch.choices(package: package, originCode: "O", destinationCode: "D",
+            destinationLineIDs: []).isEmpty)
+    }
+}

@@ -5,28 +5,12 @@ final class OrdinaryPhysicalRouteUITests: XCTestCase {
     func testGuidedCorrectionPreviewsBeforeApplyingAndCanUndo() {
         continueAfterFailure = false
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-interface-language", "en"]
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
-        app.launchEnvironment["RAILMAP_UI_TEST_SHEET"] = "new"
-        app.launch()
-        let next = app.buttons["rideEditorNext"]
-        XCTAssertTrue(next.waitForExistence(timeout: 30))
-        XCTAssertTrue(app.descendants(matching: .any)["rideEditorTrainType"].firstMatch.exists)
-        next.tap()
-        for (index, station, code) in [(0, "東京", "003766"), (1, "品川", "004095")] {
-            let row = app.descendants(matching: .any)["rideEditorStop-\(index)"].firstMatch
-            EditorUITestSupport.tap(row, in: app)
-            let input = app.otherElements["rideEditorStopName"].textFields.firstMatch
-            XCTAssertTrue(input.waitForExistence(timeout: 8))
-            input.tap()
-            input.typeText(station)
-            let suggestion = app.buttons["rideEditorStationSuggestion-\(code)"]
-            XCTAssertTrue(suggestion.waitForExistence(timeout: 8))
-            suggestion.tap()
-            app.navigationBars.buttons.firstMatch.tap()
-        }
+        EditorLaunchSupport.launchEditing(app, journey: tokyoShinagawaJourney())
+        XCTAssertTrue(app.descendants(matching: .any)["rideEditorForm"].firstMatch.waitForExistence(timeout: 30))
+        let trainType = app.descendants(matching: .any)["rideEditorTrainType"].firstMatch
+        XCTAssertTrue(EditorUITestSupport.reveal(trainType, in: app))
+        XCTAssertTrue(trainType.exists)
         openRouteGuide(in: app)
         comparePaths(in: app)
         confirmChoices(preferring: "東海道線", in: app)
@@ -95,8 +79,15 @@ final class OrdinaryPhysicalRouteUITests: XCTestCase {
         XCTAssertTrue(guideScroll.waitForExistence(timeout: 8))
         for _ in 0..<8 {
             if protectedStation.exists && protectedStation.isHittable { break }
-            guideScroll.swipeUp()
+            let bounds = usableBounds(of: guideScroll, in: app)
+            let origin = app.coordinate(withNormalizedOffset: .zero)
+            let start = origin.withOffset(CGVector(dx: bounds.minX + 2 - app.frame.minX,
+                dy: bounds.minY + bounds.height * 0.75 - app.frame.minY))
+            let end = origin.withOffset(CGVector(dx: bounds.minX + 2 - app.frame.minX,
+                dy: bounds.minY + bounds.height * 0.25 - app.frame.minY))
+            start.press(forDuration: 0.05, thenDragTo: end)
         }
+        recordFailure("protected-exact-JR-Yurakucho-projected-visit", app: app)
         XCTAssertTrue(protectedStation.exists,
                       "The ordinary physical route must still visit the exact JR Yurakucho identity.")
         XCTAssertTrue(protectedStation.isHittable)
@@ -159,7 +150,7 @@ final class OrdinaryPhysicalRouteUITests: XCTestCase {
         saveAndReopenTunnel(in: app)
     }
 
-    /// Save the final protected-stop-approved tunnel through the normal wizard.
+    /// Save the final protected-stop-approved tunnel from the single edit form.
     private func saveAndReopenTunnel(in app: XCUIApplication) {
         let number = "RoutePersist-\(UUID().uuidString.prefix(8))"
         let editor = app.descendants(matching: .any)["rideEditorForm"].firstMatch
@@ -173,11 +164,8 @@ final class OrdinaryPhysicalRouteUITests: XCTestCase {
         }
         XCTAssertFalse(app.descendants(matching: .any)["rideEditorStop-3"].firstMatch.exists)
 
-        let next = app.buttons["rideEditorNext"]
-        XCTAssertTrue(next.isEnabled)
-        next.tap()
         let numberField = app.otherElements["rideEditorNumber"].textFields.firstMatch
-        XCTAssertTrue(numberField.waitForExistence(timeout: 8))
+        XCTAssertTrue(EditorUITestSupport.reveal(numberField, in: app), app.debugDescription)
         EditorUITestSupport.tap(numberField, in: app)
         numberField.typeText(number + "\n")
         XCTAssertEqual(numberField.value as? String, number)
@@ -187,16 +175,20 @@ final class OrdinaryPhysicalRouteUITests: XCTestCase {
                       "The selected physical tunnel line must be recorded before Save.")
         let serviceLabel = tunnelService.label
 
-        next.tap()
-        EditorUITestSupport.enableDate(in: app)
         let dateInput = app.textFields["rideEditorDateInput"]
-        XCTAssertTrue(dateInput.waitForExistence(timeout: 8))
+        XCTAssertTrue(EditorUITestSupport.reveal(dateInput, in: app), app.debugDescription)
+        EditorUITestSupport.tap(dateInput, in: app)
+        let existingDate = dateInput.value as? String ?? ""
+        let datePlaceholder = dateInput.placeholderValue ?? ""
+        if !existingDate.isEmpty && existingDate != datePlaceholder {
+            dateInput.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: existingDate.count))
+        }
+        dateInput.typeText("2026-09-27")
         let date = dateInput.value as? String ?? ""
         XCTAssertNotNil(date.range(of: #"^\d{4}-\d{2}-\d{2}$"#, options: .regularExpression))
-        next.tap()
         let save = app.buttons["rideEditorSave"]
         XCTAssertTrue(save.waitForExistence(timeout: 8))
-        XCTAssertTrue(save.isEnabled, "The normal completion step must permit this complete draft.")
+        XCTAssertTrue(save.isEnabled, "The complete draft must remain saveable.")
         save.tap()
         XCTAssertTrue(save.waitForNonExistence(timeout: 15))
 
@@ -223,6 +215,7 @@ final class OrdinaryPhysicalRouteUITests: XCTestCase {
         Thread.sleep(forTimeInterval: 1)
         app.terminate()
         app.launchEnvironment["RAILMAP_UI_TEST_SHEET"] = ""
+        app.launchEnvironment.removeValue(forKey: "RAILMAP_UI_TEST_STORE_BASE64")
         app.launchEnvironment.removeValue(forKey: "RAILMAP_UI_TEST_SAMPLE")
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "search"
         app.launchEnvironment["RAILMAP_UI_TEST_QUERY"] = number
@@ -324,9 +317,41 @@ final class OrdinaryPhysicalRouteUITests: XCTestCase {
     }
 
     private func revealEditorStop(_ stop: XCUIElement, in app: XCUIApplication) {
-        let form = app.descendants(matching: .any)["rideEditorForm"].firstMatch
-        XCTAssertTrue(reveal(stop, in: form, app: app),
-                      "The requested indexed stop must materialize inside usable Form content.")
+        let form = app.collectionViews["rideEditorForm"]
+        XCTAssertTrue(form.waitForExistence(timeout: 5))
+        var seen: [String] = []
+        func noteMountedStops() {
+            for index in 0..<8 {
+                let row = app.buttons["rideEditorStop-\(index)"]
+                guard row.exists else { continue }
+                let label = "\(index)=\(row.label)"
+                if !seen.contains(label) { seen.append(label) }
+            }
+        }
+        func nudge(_ up: Bool) {
+            // Short gutter drags. A long drag jumps the whole stop list
+            // between existence checks, so a lazy row never looks mounted.
+            let start = form.coordinate(withNormalizedOffset: CGVector(dx: 0.08, dy: up ? 0.70 : 0.40))
+            let end = form.coordinate(withNormalizedOffset: CGVector(dx: 0.08, dy: up ? 0.48 : 0.62))
+            start.press(forDuration: 0.05, thenDragTo: end)
+        }
+        func arrived() -> Bool {
+            let bounds = usableBounds(of: form, in: app)
+            return stop.exists && stop.isHittable && bounds.contains(stop.frame)
+        }
+        for _ in 0..<18 {
+            noteMountedStops()
+            if arrived() { return }
+            nudge(true)
+        }
+        for _ in 0..<18 {
+            noteMountedStops()
+            if arrived() { return }
+            nudge(false)
+        }
+        noteMountedStops()
+        XCTAssertTrue(arrived(),
+                      "The requested indexed stop must materialize inside usable Form content. seen=\(seen.isEmpty ? "none" : seen.joined(separator: " | "))")
     }
 
     private func revealSurfaceDestination(_ stop: XCUIElement, in app: XCUIApplication) {
@@ -337,6 +362,9 @@ final class OrdinaryPhysicalRouteUITests: XCTestCase {
 
     private func openRouteGuide(in app: XCUIApplication) {
         let lines = app.buttons["rideEditorLines"]
+        // Train type lives below the stops, so the guide row — above them —
+        // is unmounted. Scroll back up before the stop-anchored reveal.
+        _ = EditorUITestSupport.reveal(lines, in: app, maxDrags: 18, unmountedRowIsAbove: true)
         guard revealRouteEntry(lines, in: app) else {
             recordFailure("route-guide-entry-outside-form", app: app)
             XCTFail("Route guide entry must be inside usable Form content before tapping.")
@@ -368,8 +396,29 @@ final class OrdinaryPhysicalRouteUITests: XCTestCase {
         for attempt in 0...4 {
             let bounds = usableBounds(of: form, in: app)
             if entry.exists && entry.isHittable && bounds.contains(entry.frame) { return true }
-            guard attempt < 4, bounds.height > 40, let candidate = visibleStops().first else {
-                return false
+            guard attempt < 4, bounds.height > 40 else { return false }
+            guard let candidate = visibleStops().first else {
+                // Scrolled past the stops into later sections: drag the form
+                // gutter downward so earlier rows, including the guide, mount.
+                let beforeEntry = entry.exists ? entry.frame : .null
+                let beforeForm = form.frame
+                let origin = app.coordinate(withNormalizedOffset: .zero)
+                let start = origin.withOffset(CGVector(
+                    dx: bounds.minX + 2 - app.frame.minX,
+                    dy: bounds.minY + bounds.height * 0.3 - app.frame.minY))
+                let end = origin.withOffset(CGVector(
+                    dx: bounds.minX + 2 - app.frame.minX,
+                    dy: bounds.minY + bounds.height * 0.75 - app.frame.minY))
+                start.press(forDuration: 0.05, thenDragTo: end)
+                let afterBounds = usableBounds(of: form, in: app)
+                let entryRevealed = entry.exists && entry.isHittable && afterBounds.contains(entry.frame)
+                let movedDown = entry.exists && beforeEntry != .null && entry.frame.minY > beforeEntry.minY + 1
+                let formStayed = abs(form.frame.minY - beforeForm.minY) < 2
+                    && abs(form.frame.height - beforeForm.height) < 2
+                guard formStayed && (entryRevealed || movedDown || visibleStops().first != nil) else {
+                    return false
+                }
+                continue
             }
             // Resolve by stable accessibility identifier, not a changing query index.
             let anchor = app.buttons[candidate.identifier]
@@ -534,9 +583,11 @@ final class OrdinaryPhysicalRouteUITests: XCTestCase {
         let bounds = usableBounds(of: container, in: app)
         guard bounds.width > 20, bounds.height > 40 else { return false }
         let origin = app.coordinate(withNormalizedOffset: .zero)
-        let start = origin.withOffset(CGVector(dx: bounds.midX - app.frame.minX,
+        // The form center lands on the route map and swallows the drag.
+        let x = bounds.minX + 2 - app.frame.minX
+        let start = origin.withOffset(CGVector(dx: x,
             dy: bounds.minY + bounds.height * (up ? 0.7 : 0.3) - app.frame.minY))
-        let end = origin.withOffset(CGVector(dx: bounds.midX - app.frame.minX,
+        let end = origin.withOffset(CGVector(dx: x,
             dy: bounds.minY + bounds.height * (up ? 0.3 : 0.7) - app.frame.minY))
         start.press(forDuration: 0.05, thenDragTo: end)
         return true
@@ -544,10 +595,17 @@ final class OrdinaryPhysicalRouteUITests: XCTestCase {
 
     private func reveal(_ element: XCUIElement, in container: XCUIElement, app: XCUIApplication) -> Bool {
         guard container.waitForExistence(timeout: 5) else { return false }
-        for _ in 0..<14 {
+        for attempt in 0..<16 {
             let bounds = usableBounds(of: container, in: app)
             if element.exists && element.isHittable && bounds.contains(element.frame) { return true }
-            let up = !element.exists || element.frame.maxY > bounds.maxY
+            let up: Bool
+            if element.exists {
+                up = element.frame.maxY > bounds.maxY
+            } else {
+                // Keep one direction for a full pass. Reversing when a section
+                // anchor appears jumps over the lazy stop rows between them.
+                up = attempt < 8
+            }
             guard drag(container, up: up, in: app) else { return false }
         }
         return false
@@ -562,6 +620,21 @@ final class OrdinaryPhysicalRouteUITests: XCTestCase {
         hierarchy.name = name + "-hierarchy"
         hierarchy.lifetime = .keepAlways
         add(hierarchy)
+    }
+
+    private func tokyoShinagawaJourney() -> [String: Any] {
+        [
+            "id": "ui-tokyo-shinagawa",
+            "number": "",
+            "origin": "東京",
+            "destination": "品川",
+            "region": "jp",
+            "visible": true,
+            "stops": [
+                EditorLaunchSupport.stop("東京", code: "003766", type: "origin"),
+                EditorLaunchSupport.stop("品川", code: "004095", type: "destination"),
+            ],
+        ]
     }
 
     private func deleteRow(_ index: Int, in app: XCUIApplication) {

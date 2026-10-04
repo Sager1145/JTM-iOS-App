@@ -22,12 +22,16 @@ public enum LocalJourneySearch {
         package: CompactPackage, originCode: String, destinationCode: String,
         trainType: String? = nil, excludingStationCodes: Set<String> = [],
         requiredStationCodes: [String] = [], stationAliases: [String: String] = [:],
-        maximumChoices: Int = 3, maximumExpansions: Int = 50_000
+        maximumChoices: Int = 3, maximumExpansions: Int = 50_000,
+        continuation: ((_ from: CompactPackage.Line, _ to: CompactPackage.Line, _ stationCode: String) -> Bool)? = nil,
+        originLineIDs: Set<String>? = nil, destinationLineIDs: Set<String>? = nil
     ) -> [RailwayRouteChoices.Choice] {
         search(package: package, originCode: originCode, destinationCode: destinationCode,
                trainType: trainType, excludingStationCodes: excludingStationCodes,
                requiredStationCodes: requiredStationCodes, stationAliases: stationAliases,
-               maximumChoices: maximumChoices, maximumExpansions: maximumExpansions).choices
+               maximumChoices: maximumChoices, maximumExpansions: maximumExpansions,
+               continuation: continuation, originLineIDs: originLineIDs,
+               destinationLineIDs: destinationLineIDs).choices
     }
 
     /// Keeps at most `maximumChoices` settled labels per station occurrence and anchor progress, and
@@ -39,7 +43,9 @@ public enum LocalJourneySearch {
         package: CompactPackage, originCode: String, destinationCode: String,
         trainType: String? = nil, excludingStationCodes: Set<String> = [],
         requiredStationCodes: [String] = [], stationAliases: [String: String] = [:],
-        maximumChoices: Int = 3, maximumExpansions: Int = 50_000
+        maximumChoices: Int = 3, maximumExpansions: Int = 50_000,
+        continuation: ((_ from: CompactPackage.Line, _ to: CompactPackage.Line, _ stationCode: String) -> Bool)? = nil,
+        originLineIDs: Set<String>? = nil, destinationLineIDs: Set<String>? = nil
     ) -> Result {
         let packageCodes = Set(package.lines.flatMap { $0.stations.map(\.id) })
         func canonical(_ code: String) -> String {
@@ -148,6 +154,7 @@ public enum LocalJourneySearch {
                             transfers: record.transfers, hops: record.hops))
         }
         for edge in outgoing[originCode] ?? [] where reachable.contains(nodes[edges[edge].to].station.id) {
+            guard originLineIDs?.contains(lines[edges[edge].row].id) ?? true else { continue }
             enqueue(edgeIndex: edge, parent: nil)
         }
         let operatorCodes = lines.map { line in
@@ -164,7 +171,8 @@ public enum LocalJourneySearch {
             settled[settledIndex] += 1
             expansions += 1
             let code = nodes[arrived.to].station.id
-            if code == destinationCode && record.anchorIndex == anchors.count - 1 {
+            if code == destinationCode && record.anchorIndex == anchors.count - 1,
+               destinationLineIDs?.contains(lines[arrived.row].id) ?? true {
                 var path: [Edge] = []
                 var cursor: Int? = entry.id
                 while let id = cursor {
@@ -183,7 +191,8 @@ public enum LocalJourneySearch {
                 if edge.row == arrived.row {
                     guard edge.from == arrived.to else { continue }
                 } else {
-                    guard transferAllowed(lines[arrived.row], lines[edge.row],
+                    guard continuation?(lines[arrived.row], lines[edge.row], code)
+                        ?? transferAllowed(lines[arrived.row], lines[edge.row],
                                            fromCodes: operatorCodes[arrived.row],
                                            toCodes: operatorCodes[edge.row]) else { continue }
                 }

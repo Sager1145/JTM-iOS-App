@@ -13,14 +13,33 @@ final class LocalJourneyAutofillUITests: XCTestCase {
         XCTAssertTrue(apply.waitForExistence(timeout: max(0, deadline.timeIntervalSinceNow)))
         XCTAssertTrue(apply.isHittable, "The physical route proposal must be reachable before applying it.")
         apply.tap()
+        let proposal = app.descendants(matching: .any)["localJourneyProposalForm"].firstMatch
+        if !proposal.waitForNonExistence(timeout: 8),
+           app.staticTexts["Replace authored visits?"].exists {
+            let confirm = app.sheets.buttons["Fill this route"]
+            if confirm.waitForExistence(timeout: 2) {
+                confirm.tap()
+            } else {
+                app.buttons["Fill this route"].tap()
+            }
+        }
+        XCTAssertTrue(proposal.waitForNonExistence(timeout: 8),
+                      "Applying a physical route must close the proposal sheet.")
+        // Undo sits in the route section. A dismissed sheet leaves that row
+        // unmounted until the editor form scrolls it back into view.
         let undo = app.buttons["rideEditorLocalAutofillUndo"]
+        XCTAssertTrue(EditorUITestSupport.reveal(undo, in: app, maxDrags: 16), app.debugDescription)
         XCTAssertTrue(undo.waitForExistence(timeout: 10))
         let form = app.collectionViews["rideEditorForm"]
         let added = app.descendants(matching: .any)["rideEditorStop-2"].firstMatch
         reveal(added, in: form)
         XCTAssertTrue(added.exists, "The local route inserts at least one physical intermediate visit.")
+        // Scrolling to the new stop slides Undo under the navigation bar.
+        // A coordinate tap then hits the bar and the draft stays filled.
+        revealBelowNavigationBar(undo, in: app)
         EditorUITestSupport.tap(undo, in: app)
-        XCTAssertFalse(app.descendants(matching: .any)["rideEditorStop-2"].firstMatch.exists)
+        XCTAssertTrue(app.descendants(matching: .any)["rideEditorStop-2"].firstMatch
+            .waitForNonExistence(timeout: 8))
     }
 
     func testKeiseiThroughServiceCanExplicitlyKeepPendingWithReviewableCandidates() {
@@ -73,9 +92,8 @@ final class LocalJourneyAutofillUITests: XCTestCase {
         }
         XCTAssertFalse(app.descendants(matching: .any)["rideEditorStop-2"].firstMatch.exists,
                        "Pending endpoints must not acquire invented intermediate visits.")
-        let next = app.buttons["rideEditorNext"]
-        EditorUITestSupport.tap(next, in: app)
         let database = app.buttons["rideEditorLineServiceDatabase"]
+        XCTAssertTrue(EditorUITestSupport.reveal(database, in: app), app.debugDescription)
         XCTAssertTrue(database.waitForExistence(timeout: 10))
         let serviceLeg = app.buttons.matching(NSPredicate(
             format: "identifier BEGINSWITH %@ AND label CONTAINS %@",
@@ -91,6 +109,9 @@ final class LocalJourneyAutofillUITests: XCTestCase {
     ) {
         let number = "PendingService-\(UUID().uuidString.prefix(8))"
         let numberField = app.otherElements["rideEditorNumber"].textFields.firstMatch
+        // The number row is in Basics, above the service leg this test just revealed.
+        XCTAssertTrue(EditorUITestSupport.reveal(
+            numberField, in: app, maxDrags: 24, unmountedRowIsAbove: true), app.debugDescription)
         EditorUITestSupport.tap(numberField, in: app)
         guard let oldNumber = numberField.value as? String else {
             XCTFail("The pending journey must expose its editable train number.")
@@ -109,9 +130,6 @@ final class LocalJourneyAutofillUITests: XCTestCase {
         }
         numberField.typeText(number + "\n")
         XCTAssertEqual(numberField.value as? String, number)
-        app.buttons["rideEditorNext"].tap()
-        XCTAssertTrue(app.switches["Include a date"].waitForExistence(timeout: 8))
-        app.buttons["rideEditorNext"].tap()
         let save = app.buttons["rideEditorSave"]
         XCTAssertTrue(save.waitForExistence(timeout: 8))
         XCTAssertTrue(save.isEnabled, "The unresolved physical route must remain saveable as pending.")
@@ -131,6 +149,7 @@ final class LocalJourneyAutofillUITests: XCTestCase {
         Thread.sleep(forTimeInterval: 1)
         app.terminate()
         app.launchEnvironment["RAILMAP_UI_TEST_SHEET"] = ""
+        app.launchEnvironment.removeValue(forKey: "RAILMAP_UI_TEST_STORE_BASE64")
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "search"
         app.launchEnvironment["RAILMAP_UI_TEST_QUERY"] = number
         app.launch()
@@ -162,6 +181,22 @@ final class LocalJourneyAutofillUITests: XCTestCase {
                       "Save/reopen must retain the through-service display name independently of routing.")
     }
 
+    /// Keep a row's center clear of the inline navigation bar before a coordinate tap.
+    private func revealBelowNavigationBar(_ element: XCUIElement, in app: XCUIApplication) {
+        let form = app.collectionViews["rideEditorForm"]
+        let bar = app.navigationBars.firstMatch
+        for _ in 0..<8 {
+            let floor = bar.exists ? bar.frame.maxY + 8 : app.frame.minY + 100
+            if element.exists, element.isHittable, element.frame.minY >= floor,
+               element.frame.maxY <= app.frame.maxY - 8 { return }
+            if !element.exists || element.frame.midY < floor {
+                form.swipeDown()
+            } else {
+                form.swipeUp()
+            }
+        }
+    }
+
     private func reveal(_ element: XCUIElement, in form: XCUIElement) {
         for _ in 0..<8 {
             if element.exists && element.isHittable { return }
@@ -186,21 +221,32 @@ final class LocalJourneyAutofillUITests: XCTestCase {
 
     private func newEditor() -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-interface-language", "en"]
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
-        app.launchEnvironment["RAILMAP_UI_TEST_SHEET"] = "new"
-        app.launch()
-        let next = app.buttons["rideEditorNext"]
-        XCTAssertTrue(next.waitForExistence(timeout: 30))
-        next.tap()
+        EditorLaunchSupport.launchEditing(app, journey: blankJapanJourney())
+        XCTAssertTrue(app.descendants(matching: .any)["rideEditorForm"].firstMatch.waitForExistence(timeout: 30))
         let open = app.buttons["rideEditorLocalAutofill"]
+        XCTAssertTrue(EditorUITestSupport.reveal(open, in: app), app.debugDescription)
         XCTAssertTrue(open.waitForExistence(timeout: 30))
         let enabled = XCTNSPredicateExpectation(predicate: NSPredicate(format: "enabled == true"), object: open)
         XCTAssertEqual(XCTWaiter.wait(for: [enabled], timeout: 30), .completed)
         open.tap()
         return app
+    }
+
+    /// Edit mode has no wizard, so the autofill sheet still starts from an empty Japan draft.
+    private func blankJapanJourney() -> [String: Any] {
+        [
+            "id": "ui-local-autofill",
+            "number": "",
+            "origin": "",
+            "destination": "",
+            "region": "jp",
+            "visible": true,
+            "stops": [
+                EditorLaunchSupport.stop("", code: nil, type: "origin"),
+                EditorLaunchSupport.stop("", code: nil, type: "destination"),
+            ],
+        ]
     }
     private func selectEndpoints(in app: XCUIApplication, origin: String, destination: String) {
         for (identifier, code) in [("localJourneyOrigin", origin), ("localJourneyDestination", destination)] {

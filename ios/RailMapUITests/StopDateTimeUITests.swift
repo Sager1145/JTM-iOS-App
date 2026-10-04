@@ -6,27 +6,27 @@ final class StopDateTimeUITests: XCTestCase {
 
     func testJourneyDateIsSharedAndNextDayStopTimeShowsItsCivilDate() {
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
-        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
-        app.launchEnvironment["RAILMAP_UI_TEST_SHEET"] = "new"
-        app.launch()
+        let compact = UUID().uuidString.replacingOccurrences(of: "-", with: "")
+        EditorLaunchSupport.launchEditing(app, journey: [
+            "id": "uitest_\(compact.prefix(12))",
+            "date": "2026-01-01",
+            "number": "Date share",
+            "origin": "Tokyo",
+            "destination": "Shinagawa",
+            "region": "jp",
+            "stops": [
+                EditorLaunchSupport.stop("Tokyo", code: "003768", type: "origin"),
+                EditorLaunchSupport.stop("Shinagawa", code: "004092", type: "destination"),
+            ],
+        ])
 
-        let next = app.buttons["rideEditorNext"]
-        XCTAssertTrue(next.waitForExistence(timeout: 30))
-        next.tap()
         let first = app.buttons["rideEditorStop-0"]
+        XCTAssertTrue(app.buttons["rideEditorCancel"].waitForExistence(timeout: 30))
         XCTAssertTrue(EditorUITestSupport.reveal(first, in: app), app.debugDescription)
-        XCTAssertTrue(first.waitForExistence(timeout: 8))
         EditorUITestSupport.tap(first, in: app)
 
-        let includeDate = app.switches["rideEditorStopIncludeDate"]
-        XCTAssertTrue(includeDate.waitForExistence(timeout: 8))
-        let control = includeDate.switches.firstMatch
-        XCTAssertTrue(control.waitForExistence(timeout: 5))
-        if includeDate.value as? String == "0" { control.tap() }
-        XCTAssertEqual(includeDate.value as? String, "1")
+        // Edit mode always shows the shared journey date. The new-journey
+        // include-date switch is not on this screen.
         let date = app.textFields["rideEditorStopJourneyDate"]
         for _ in 0..<8 where !date.exists { app.swipeUp() }
         XCTAssertTrue(date.waitForExistence(timeout: 8), app.debugDescription)
@@ -47,7 +47,7 @@ final class StopDateTimeUITests: XCTestCase {
         XCTAssertTrue(civilTime.waitForExistence(timeout: 8))
         XCTAssertTrue(civilTime.label.contains("2026-10-13 01:10"), civilTime.label)
 
-        app.navigationBars.buttons.element(boundBy: 0).tap()
+        app.navigationBars["Tokyo"].buttons.firstMatch.tap()
         let firstSummary = app.buttons["rideEditorStop-0"]
         XCTAssertTrue(EditorUITestSupport.reveal(firstSummary, in: app), app.debugDescription)
         XCTAssertTrue(firstSummary.waitForExistence(timeout: 8))

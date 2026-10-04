@@ -2,80 +2,29 @@ import XCTest
 
 @MainActor
 final class JourneyCompletionUITests: XCTestCase {
-    func testNewJourneyCanReachDateAndCompletionWithoutTrainNumber() {
-        continueAfterFailure = false
-        let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
-        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-interface-language", "en"]
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
-        app.launchEnvironment["RAILMAP_UI_TEST_SHEET"] = "new"
-        app.launch()
-
-        let next = app.buttons["rideEditorNext"]
-        XCTAssertTrue(next.waitForExistence(timeout: 40))
-        next.tap()
-        for (index, name) in ["Tokyo", "Shinagawa"].enumerated() {
-            let stop = app.descendants(matching: .any)["rideEditorStop-\(index)"].firstMatch
-            XCTAssertTrue(EditorUITestSupport.reveal(stop, in: app), app.debugDescription)
-            XCTAssertTrue(stop.waitForExistence(timeout: 8))
-            stop.tap()
-            let field = app.otherElements["rideEditorStopName"].textFields.firstMatch
-            XCTAssertTrue(field.waitForExistence(timeout: 5))
-            field.tap()
-            field.typeText(name)
-            app.navigationBars[name].buttons.firstMatch.tap()
-        }
-        next.tap()
-        XCTAssertTrue(app.otherElements["rideEditorNumber"].waitForExistence(timeout: 8))
-        next.tap()
-        XCTAssertTrue(app.switches["Include a date"].waitForExistence(timeout: 8))
-        let timetable = app.buttons["rideEditorTimetableMatch"]
-        let form = app.descendants(matching: .any)["rideEditorForm"].firstMatch
-        XCTAssertTrue(form.waitForExistence(timeout: 8))
-        XCTAssertTrue(reveal(timetable, in: form, app: app, scrolling: .up))
-        XCTAssertTrue(timetable.exists)
-        XCTAssertFalse(timetable.isEnabled)
-    }
-
     func testInvalidReplyCannotApplyAndEmptyReplyIsANoOp() {
         continueAfterFailure = false
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
-        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-interface-language", "en"]
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
-        app.launchEnvironment["RAILMAP_UI_TEST_SHEET"] = "new"
-        app.launch()
+        let compact = UUID().uuidString.replacingOccurrences(of: "-", with: "")
+        EditorLaunchSupport.launchEditing(app, journey: [
+            "id": "uitest_\(compact.prefix(12))",
+            "date": "2026-10-12",
+            "number": "Test 1",
+            "origin": "Tokyo",
+            "destination": "Shinagawa",
+            "region": "jp",
+            "stops": [
+                EditorLaunchSupport.stop("Tokyo", code: "003768", type: "origin", departure: "09:00"),
+                EditorLaunchSupport.stop("Shinagawa", code: "004092", type: "destination", arrival: "09:20"),
+            ],
+        ])
 
-        let next = app.buttons["rideEditorNext"]
-        XCTAssertTrue(next.waitForExistence(timeout: 40))
-        next.tap()
         let completion = app.buttons["rideEditorAICompletion"]
         // The sheet also accepts raw text imports, so it is reachable before
         // the draft is eligible for an AI request. The Form creates this row
-        // lazily, so reveal it on the date step before checking reachability.
-        for (index, name) in ["Tokyo", "Shinagawa"].enumerated() {
-            let stop = app.descendants(matching: .any)["rideEditorStop-\(index)"].firstMatch
-            XCTAssertTrue(EditorUITestSupport.reveal(stop, in: app), app.debugDescription)
-            XCTAssertTrue(stop.waitForExistence(timeout: 8))
-            stop.tap()
-            let field = app.otherElements["rideEditorStopName"].textFields.firstMatch
-            XCTAssertTrue(field.waitForExistence(timeout: 5))
-            field.tap()
-            field.typeText(name)
-            app.navigationBars[name].buttons.firstMatch.tap()
-        }
-        next.tap()
-        let number = app.otherElements["rideEditorNumber"].textFields.firstMatch
-        XCTAssertTrue(number.waitForExistence(timeout: 8))
-        number.tap()
-        number.typeText("Test 1\n")
-        next.tap()
-        EditorUITestSupport.enableDate(in: app)
-        XCTAssertTrue(app.textFields["rideEditorDateInput"].waitForExistence(timeout: 8))
+        // lazily, so reveal it before checking reachability.
         let editorForm = app.descendants(matching: .any)["rideEditorForm"].firstMatch
-        XCTAssertTrue(editorForm.waitForExistence(timeout: 8))
+        XCTAssertTrue(editorForm.waitForExistence(timeout: 30))
         XCTAssertTrue(reveal(completion, in: editorForm, app: app, scrolling: .up))
         XCTAssertTrue(completion.isEnabled)
         tapVisible(completion, in: editorForm, app: app)

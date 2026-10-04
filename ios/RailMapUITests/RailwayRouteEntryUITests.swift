@@ -9,18 +9,21 @@ final class RailwayRouteEntryUITests: XCTestCase {
     }
 
     func testNewJourneyCanOpenAndCancelRailwayRouteGuide() {
-        let app = launchEditor(sheet: "new")
-        let next = app.buttons["rideEditorNext"]
-        XCTAssertTrue(next.waitForExistence(timeout: 30), "The new journey editor must show its first step.")
-        next.tap()
-
-        fillEndpoints(in: app)
+        let app = launchSeededEditor()
+        XCTAssertTrue(app.descendants(matching: .any)["rideEditorForm"].firstMatch.waitForExistence(timeout: 30),
+                      "The seeded journey editor must open.")
 
         openAndCancelGuide(in: app)
-        XCTAssertTrue(app.descendants(matching: .any)["rideEditorStop-0"].firstMatch.exists,
+        let origin = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
+        let destination = app.descendants(matching: .any)["rideEditorStop-1"].firstMatch
+        XCTAssertTrue(EditorUITestSupport.reveal(origin, in: app),
                       "Cancelling must retain the origin stop.")
-        XCTAssertTrue(app.descendants(matching: .any)["rideEditorStop-1"].firstMatch.exists,
+        XCTAssertTrue(origin.exists, "Cancelling must retain the origin stop.")
+        // The destination row is the next lazy stop, below the route section
+        // the guide returns to. It is absent from the tree until scrolled in.
+        XCTAssertTrue(EditorUITestSupport.reveal(destination, in: app, unmountedRowIsAbove: false),
                       "Cancelling must retain the destination stop.")
+        XCTAssertTrue(destination.exists, "Cancelling must retain the destination stop.")
         XCTAssertFalse(app.descendants(matching: .any)["rideEditorStop-2"].firstMatch.exists,
                        "Opening and cancelling the guide must leave the draft with exactly two stops.")
     }
@@ -52,11 +55,8 @@ final class RailwayRouteEntryUITests: XCTestCase {
     }
 
     func testMapSelectionMatchesAccessibleCandidateCard() {
-        let app = launchEditor(sheet: "new")
-        let next = app.buttons["rideEditorNext"]
-        XCTAssertTrue(next.waitForExistence(timeout: 30))
-        next.tap()
-        fillEndpoints(in: app)
+        let app = launchSeededEditor()
+        XCTAssertTrue(app.descendants(matching: .any)["rideEditorForm"].firstMatch.waitForExistence(timeout: 30))
         let lines = app.buttons["rideEditorLines"]
         reveal(lines, in: app)
         lines.tap()
@@ -89,21 +89,23 @@ final class RailwayRouteEntryUITests: XCTestCase {
                       "Card selection must select the same map candidate.")
     }
 
-    private func fillEndpoints(in app: XCUIApplication) {
-        for (index, name, code) in [(0, "Tokyo", "003766"), (1, "Shinagawa", "004095")] {
-            let row = app.descendants(matching: .any)["rideEditorStop-\(index)"].firstMatch
-            reveal(row, in: app)
-            row.tap()
-            let field = app.otherElements["rideEditorStopName"].textFields.firstMatch
-            XCTAssertTrue(field.waitForExistence(timeout: 8), "Stop \(index) must expose its station name field.")
-            field.tap()
-            field.typeText(name)
-            let suggestion = app.buttons["rideEditorStationSuggestion-\(code)"]
-            XCTAssertTrue(suggestion.waitForExistence(timeout: 8), "Station search must resolve \(name) to \(code).")
-            suggestion.tap()
-            app.navigationBars.buttons.firstMatch.tap()
-        }
-
+    private func launchSeededEditor() -> XCUIApplication {
+        let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-interface-language", "en"]
+        let journey: [String: Any] = [
+            "id": "ui-tokyo-shinagawa",
+            "number": "",
+            "origin": "東京",
+            "destination": "品川",
+            "region": "jp",
+            "visible": true,
+            "stops": [
+                EditorLaunchSupport.stop("東京", code: "003766", type: "origin"),
+                EditorLaunchSupport.stop("品川", code: "004095", type: "destination"),
+            ],
+        ]
+        EditorLaunchSupport.launchEditing(app, journey: journey)
+        return app
     }
 
     private func launchEditor(sheet: String) -> XCUIApplication {

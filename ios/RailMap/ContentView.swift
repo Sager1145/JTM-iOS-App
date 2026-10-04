@@ -800,23 +800,37 @@ struct RailWorkspaceView: View {
     }
 
     private func journeyEditorPage(_ launch: JourneyEditorLaunch) -> some View {
-        RideEditorView(
-            train: launch.train,
-            title: localization.text(
-                launch.isNew ? "ios.editorTitleNew" : "ios.edit",
-                fallback: launch.isNew ? "New" : "Edit"),
-            isNew: launch.isNew,
-            suggestionTrains: itineraries.loaded?.trains ?? [],
-            onCancel: {
-                guard journeySaveAttemptID == nil else { return }
-                closeJourneyEditor()
-            },
-            onDraftMap: { snapshot in
-                guard controller.acceptsDraftMap else { return }
-                controller.draftMap = snapshot
-            },
-            highlightedStopID: $highlightedStopID,
-            onSave: { commitJourneyEditor($0, launch: launch) })
+        let title = localization.text(
+            launch.isNew ? "ios.editorTitleNew" : "ios.edit",
+            fallback: launch.isNew ? "New" : "Edit")
+        return Group {
+            if launch.isNew {
+                NewTripView(
+                    train: launch.train,
+                    title: title,
+                    onCancel: {
+                        guard journeySaveAttemptID == nil else { return }
+                        closeJourneyEditor()
+                    },
+                    onSave: { commitJourneyEditor($0, launch: launch) })
+            } else {
+                RideEditorView(
+                    train: launch.train,
+                    title: title,
+                    isNew: launch.isNew,
+                    suggestionTrains: itineraries.loaded?.trains ?? [],
+                    onCancel: {
+                        guard journeySaveAttemptID == nil else { return }
+                        closeJourneyEditor()
+                    },
+                    onDraftMap: { snapshot in
+                        guard controller.acceptsDraftMap else { return }
+                        controller.draftMap = snapshot
+                    },
+                    highlightedStopID: $highlightedStopID,
+                    onSave: { commitJourneyEditor($0, launch: launch) })
+            }
+        }
         .disabled(journeySaveAttemptID != nil)
         .alert(
             localization.journeyText(

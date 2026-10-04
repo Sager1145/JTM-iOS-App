@@ -2588,7 +2588,7 @@ private enum RideEditorAI {
 }
 
 /// Decoding geometry stays off the main actor and is reused across endpoint edits.
-private enum EditorRoutePackageCache {
+enum EditorRoutePackageCache {
     final class Store: @unchecked Sendable {
         static let shared = Store()
         let lock = NSLock()

@@ -6,41 +6,16 @@ final class TrainTimetableUsabilityUITests: XCTestCase {
 
     func testAzusaDateVariantIsVisibleWithFullStopsAndSource() {
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
-        app.launchEnvironment["RAILMAP_UI_TEST_SHEET"] = "new"
-        app.launch()
-        let next = app.buttons["rideEditorNext"]
-        XCTAssertTrue(next.waitForExistence(timeout: 30))
-        next.tap()
-        EditorUITestSupport.tap(app.buttons["rideEditorServicePattern"], in: app)
-        let search = app.searchFields.firstMatch
-        XCTAssertTrue(search.waitForExistence(timeout: 8))
-        search.tap()
-        search.typeText("はちおうじ")
-        let legacy = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "東京〜八王子")).firstMatch
-        XCTAssertTrue(legacy.waitForExistence(timeout: 8))
-        legacy.tap()
-        next.tap()
-        next.tap()
-        let includeDate = app.switches["Include a date"]
-        XCTAssertTrue(includeDate.waitForExistence(timeout: 8))
-        includeDate.switches.firstMatch.tap()
-        let date = app.textFields["rideEditorDateInput"]
-        XCTAssertTrue(date.waitForExistence(timeout: 8))
-        let previous = date.value as? String ?? ""
-        date.tap()
-        date.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: previous.count) + "2026-09-27")
-        app.buttons["rideEditorPrevious"].tap()
-        XCTAssertTrue(app.otherElements["rideEditorNumber"].textFields.firstMatch.waitForExistence(timeout: 8))
-        app.buttons["rideEditorPrevious"].tap()
+        EditorLaunchSupport.launchEditing(app, journey: hachiojiJourney(date: "2026-09-27"))
+        XCTAssertTrue(app.descendants(matching: .any)["rideEditorForm"].firstMatch.waitForExistence(timeout: 30))
         let picker = app.buttons["rideEditorServicePattern"]
         XCTAssertTrue(EditorUITestSupport.reveal(picker, in: app), app.debugDescription)
         XCTAssertTrue(picker.waitForExistence(timeout: 8))
         picker.tap()
-        app.buttons["rideEditorReplaceStops"].firstMatch.tap()
+        let replace = app.buttons["rideEditorReplaceStops"].firstMatch
+        XCTAssertTrue(replace.waitForExistence(timeout: 8))
+        replace.tap()
         let datedSearch = app.searchFields.firstMatch
         XCTAssertTrue(datedSearch.waitForExistence(timeout: 8))
         datedSearch.tap()
@@ -75,5 +50,23 @@ final class TrainTimetableUsabilityUITests: XCTestCase {
         let source = app.links.matching(NSPredicate(format: "label CONTAINS %@", "あずさ")).firstMatch
         for _ in 0..<12 where !source.exists { scrollDetailListUp() }
         XCTAssertTrue(source.waitForExistence(timeout: 8), app.debugDescription)
+    }
+
+    private func hachiojiJourney(date: String) -> [String: Any] {
+        [
+            "id": "ui-hachioji",
+            "number": "",
+            "origin": "東京",
+            "destination": "八王子",
+            "region": "jp",
+            "date": date,
+            "visible": true,
+            "stops": [
+                EditorLaunchSupport.stop("東京", code: "003766", type: "origin"),
+                EditorLaunchSupport.stop("新宿", code: "003700", type: "passenger_stop"),
+                EditorLaunchSupport.stop("立川", code: "003634", type: "passenger_stop"),
+                EditorLaunchSupport.stop("八王子", code: "003947", type: "destination"),
+            ],
+        ]
     }
 }
