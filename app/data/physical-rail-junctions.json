@@ -419,6 +419,46 @@
       "validFrom": "2019-10-18",
       "validTo": null,
       "temporalEvidence": "Conservative verified-existing facility evidence window, not an arm opening date: JR Shikoku document dated 2019-10-18, PDF page 27 (printed 25), describes maintained Shikoku-side railway facilities including the short-cut line. Municipal guide PDF page 1 (right printed 8) physically documents all three triangle arms. JB 2022 facility booklet PDF page 5 (printed 42), row 6, records the physical Yosan connection at Utazu; row 5 records actual Kojima–Utazu opening 1988-04-10, which is not used to infer precise individual-arm commissioning or historical fidelity of every current survey vertex. Earlier physical continuity is not disproven; every traversed source edge retains its separate history validity."
+    },
+    {
+      "id": "west-kobe",
+      "region": "jp",
+      "station": "神戸",
+      "stationCode": "007224",
+      "lineIDs": [
+        "jp-西日本旅客鉄道-東海道線",
+        "jp-西日本旅客鉄道-山陽線-3"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "西日本旅客鉄道",
+          "lineName": "東海道線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          135.17838,
+          34.68057
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "西日本旅客鉄道",
+          "lineName": "山陽線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          135.17838,
+          34.68057
+        ]
+      },
+      "evidence": [
+        "https://timetable.jr-odekake.net/train-timetable/238531?date=20261003"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json: identical existing five-decimal vertex on both identities; 2 shared vertices within 3 km. Selected overlap boundary/branch vertex on identity-agnostic shortest path 元町 → 兵庫 (3109.1 m), with approach edges on from identity and departure edges on to identity. Along-track distance to projected N02 station display point: 150.8 m. Reproduce with west/geometry.py; see geometry.json.",
+      "reviewedAt": "2026-10-04",
+      "validFrom": "2026-10-03",
+      "validTo": null,
+      "temporalEvidence": "Earliest dated official through-train timetable verified in this batch; conservative documented-existing date, not a claim about original opening. Hamakaze 1 runs 大阪–神戸–姫路."
     }
   ]
 }
