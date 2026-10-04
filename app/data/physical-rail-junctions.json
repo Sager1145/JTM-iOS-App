@@ -4240,13 +4240,14 @@
         ]
       },
       "evidence": [
-        "https://timetable.jr-odekake.net/train-timetable/238531?date=20261003"
+        "https://timetable.jr-odekake.net/train-timetable/238531?date=20261003",
+        "https://www.westjr.co.jp/company/info/history/"
       ],
       "geometryEvidence": "app/data/rail-sections.json: identical existing five-decimal vertex on both identities; 2 shared vertices within 3 km. Selected overlap boundary/branch vertex on identity-agnostic shortest path 元町 → 兵庫 (3109.1 m), with approach edges on from identity and departure edges on to identity. Along-track distance to projected N02 station display point: 150.8 m. Reproduce with west/geometry.py; see geometry.json.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2026-10-03",
+      "validFrom": "1987-04-01",
       "validTo": null,
-      "temporalEvidence": "Earliest dated official through-train timetable verified in this batch; conservative documented-existing date, not a claim about original opening. Hamakaze 1 runs 大阪–神戸–姫路."
+      "temporalEvidence": "Same-company pair. JR West's official 沿革 page (https://www.westjr.co.jp/company/info/history/) gives 1987-04-01 西日本旅客鉄道株式会社発足; validFrom is capped at that JR West identity founding, as for yamashina-tokaido-kosei. The connection itself is older, but no exact earlier official date was secured, so none is asserted. Current through running: Hamakaze 1 runs 大阪–神戸–姫路."
     },
     {
       "id": "west-wadayama",

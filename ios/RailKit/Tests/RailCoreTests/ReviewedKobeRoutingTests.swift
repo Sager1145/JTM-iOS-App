@@ -3,8 +3,8 @@ import Testing
 @testable import RailCore
 
 struct ReviewedKobeRoutingTests {
-    @Test("The reviewed Kobe boundary joins the Tokaido and San'yo lines for through trains")
-    func tokaidoSanyoThroughKobe() throws {
+    @Test("The reviewed Kobe boundary joins the Tokaido and San'yo lines for through trains", arguments: ["2026-10-03", "1990-07-01"])
+    func tokaidoSanyoThroughKobe(rideDate: String) throws {
         let data = try PortFixtures.repositoryRoot().appendingPathComponent("app/data")
         var sourceSections = try RouteGraph.SectionFeatureCollection.load(
             contentsOf: data.appendingPathComponent("rail-sections.json")).features
@@ -33,6 +33,7 @@ struct ReviewedKobeRoutingTests {
         #expect(kobe.from.coordinate == Coordinate(lon: 135.17838, lat: 34.68057))
         #expect(kobe.from.coordinate == kobe.to.coordinate)
         #expect(!kobe.evidence.isEmpty)
+        #expect(kobe.validFrom == "1987-04-01")
 
         let independent = RouteGraph.build(from: sections, policy: .physicalRailway)
         let joined = RouteGraph.build(from: sections, policy: .physicalRailway, junctions: junctions)
@@ -40,7 +41,7 @@ struct ReviewedKobeRoutingTests {
 
         func solve(_ graph: RouteGraph.Graph, _ section: RouteSection) -> RouteSolver.SolvedSection? {
             RouteSolver.solveSection(section, segmentIndex: 0,
-                train: .init(company: "西日本旅客鉄道", rideDate: "2026-10-03"),
+                train: .init(company: "西日本旅客鉄道", rideDate: rideDate),
                 country: "jp", graph: graph, stations: stations)
         }
         // 元町 → 兵庫 and 三ノ宮 → 新長田 pass 神戸, where 東海道線 ends and
