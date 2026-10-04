@@ -7816,6 +7816,159 @@
       "validFrom": "1991-06-20",
       "validTo": null,
       "temporalEvidence": "JR East 会社要覧2012-2013 group chronology (https://www.jreast.co.jp/youran/pdf/jre_youran_group_p30_35.pdf, PDF /Author 東日本旅客鉄道株式会社, /Title JR東日本会社要覧2012-2013): 「1991. 6.20（木）（平成3年） 新幹線東京開業 ・東北・上越新幹線201本中、193本が東京発着となる」. The same PDF's 新幹線の概要 lists 東北新幹線 「上野開業 1985年3月14日、東京開業 1991年6月20日」. Live fetch of the PDF URL returned Akamai 403; the saved bytes are the 2024-07-13 Internet Archive capture of that URL (sha256 875b51e402348db1f7823e78ba82b96548567d0584e49f140389cc09bed02bfb). A JR East interview PDF that says 1991年7月1日 is not this chronology and is not used."
+    },
+    {
+      "id": "west-himeji-sanyo-bantan",
+      "kind": "osmConnector",
+      "path": [
+        [
+          134.6932604,
+          34.8266067
+        ],
+        [
+          134.6940523,
+          34.8264733
+        ],
+        [
+          134.6950963,
+          34.8262969
+        ],
+        [
+          134.6956265,
+          34.8262794
+        ],
+        [
+          134.6962184,
+          34.8262592
+        ],
+        [
+          134.6965536,
+          34.8262686
+        ],
+        [
+          134.6968809,
+          34.8262912
+        ],
+        [
+          134.6972262,
+          34.8263396
+        ],
+        [
+          134.6974663,
+          34.8263759
+        ],
+        [
+          134.6977244,
+          34.8264398
+        ],
+        [
+          134.6979578,
+          34.8265103
+        ],
+        [
+          134.6981851,
+          34.8265851
+        ],
+        [
+          134.6984855,
+          34.8266996
+        ],
+        [
+          134.6987101,
+          34.8267943
+        ],
+        [
+          134.6989368,
+          34.8269126
+        ],
+        [
+          134.6990863,
+          34.8269908
+        ],
+        [
+          134.6992962,
+          34.8271289
+        ],
+        [
+          134.6995115,
+          34.8272699
+        ],
+        [
+          134.6997039,
+          34.827424
+        ],
+        [
+          134.6998481,
+          34.827539
+        ],
+        [
+          134.7000325,
+          34.8276832
+        ],
+        [
+          134.7005334,
+          34.8281142
+        ]
+      ],
+      "source": {
+        "provider": "OpenStreetMap",
+        "license": "ODbL-1.0",
+        "ways": [
+          264563422,
+          880276154,
+          264563418,
+          205350490,
+          1077661683,
+          1077661684,
+          205350488
+        ],
+        "retrieved": "2026-08-18",
+        "cache": "Japan-Train-Map/outputs/osm-basemap-cache"
+      },
+      "attachMeters": {
+        "from": 38.5,
+        "to": 1.86
+      },
+      "region": "jp",
+      "station": "姫路",
+      "stationCode": "006509",
+      "lineIDs": [
+        "jp-西日本旅客鉄道-山陽線",
+        "jp-西日本旅客鉄道-播但線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "西日本旅客鉄道",
+          "lineName": "山陽線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          134.692862,
+          34.826493
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "西日本旅客鉄道",
+          "lineName": "播但線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          134.70054,
+          34.82813
+        ]
+      },
+      "evidence": [
+        "https://timetable.jr-odekake.net/train-timetable/238531?date=20261003",
+        "https://www.westjr.co.jp/company/info/history/",
+        "https://www.openstreetmap.org/way/264563418",
+        "https://www.openstreetmap.org/way/205350490"
+      ],
+      "geometryEvidence": "rail-sections.json has no identical 山陽線/播但線 vertex at 姫路 (nearest pair 83 m apart), and the 山陽線 N02 vertices here are ~900 m apart. OSM cache cell E134N34 (fetchedAt 2026-08-18T10:29:35.337Z) chains ways 264563422 + 880276154 (山陽本線 main) → 264563418 (siding, the turnout from 山陽本線 onto the 播但線 tracks) → 205350490, 1077661683, 1077661684 (JR播但線 branch) → 205350488 (JR播但線 main); path vertices are cache geometry in traversal order, trimmed to the vertices nearest the attach points. from attach 38.50 m to existing 山陽線 vertex [134.692862, 34.826493]; to attach 1.86 m to existing 播但線 vertex [134.70054, 34.82813]. path 734.15 m, total stubs+path 774.51 m. Haversine R=6371000.",
+      "reviewedAt": "2026-10-04",
+      "validFrom": "1987-04-01",
+      "validTo": null,
+      "temporalEvidence": "Same-company pair. JR West's official 沿革 page (https://www.westjr.co.jp/company/info/history/) gives 1987-04-01 西日本旅客鉄道株式会社発足; validFrom is capped at that JR West identity founding, as for yamashina-tokaido-kosei. The connection itself is older, but no exact earlier official date was secured, so none is asserted. Current through running: はまかぜ1号 (2026-10-03 page) lists 東姫路 (山陽線) → 姫路 08:52/08:58 → 京口 (播但線) as one train."
     }
   ]
 }

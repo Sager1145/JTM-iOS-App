@@ -169,8 +169,8 @@ struct JunctionApproachTests {
         }
 
         #expect(baselineJunctions.count == 10)
-        #expect(addedRecords.count == 149)
-        #expect(Set(addedRecords.map(\.station)).count == 131)
+        #expect(addedRecords.count == 150)
+        #expect(Set(addedRecords.map(\.station)).count == 132)
 
         try assertRegistryAccepted(dataRoot: dataRoot, junctions: fullJunctions)
 
