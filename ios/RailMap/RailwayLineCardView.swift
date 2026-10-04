@@ -5,19 +5,30 @@ import SwiftUI
 
 /// A temporary renderer input, never a persisted journey or a passport record.
 nonisolated struct RailwayLinePreview: Sendable {
+    /// The map draws the preview through the ride pipeline, but a railway has
+    /// no origin, destination or calls: its ride id carries this prefix so the
+    /// renderer can drop the journey-only Start/End cards and stop tags.
+    static let rideIDPrefix = "network-line|"
+
+    static func isPreviewRide(_ id: String?) -> Bool {
+        id?.hasPrefix(rideIDPrefix) == true
+    }
+
     let metadata: RailDisplayNetworkManifest.Line
     let stations: [RailDisplayNetworkFile.Station]
     let ride: RiddenRouteStore.DrawnRide
     let bounds: MKMapRect
 
-    init(metadata: RailDisplayNetworkManifest.Line, file: RailDisplayNetworkFile,
+    /// `files` is the railway's family in order (main line, then its
+    /// branches); stations shared at a junction are listed once.
+    init(metadata: RailDisplayNetworkManifest.Line, files: [RailDisplayNetworkFile],
          history: RailDisplayHistoryFile?, region: Region, era: DisplayNetworkEra) {
         self.metadata = metadata
         let today = RecordDate.today(in: region.clock, at: Date())
         let partRows = history?.partRows ?? [:]
         let stamps = history?.stationStampRows ?? [:]
         var seen: Set<String> = []
-        stations = file.stations.filter {
+        stations = files.flatMap(\.stations).filter {
             era.shows(stamps[$0.id], today: today, rideDate: nil,
                                            isStation: true)
                 && seen.insert($0.stationCode).inserted
@@ -39,7 +50,7 @@ nonisolated struct RailwayLinePreview: Sendable {
         var stops: [Stop] = []
         var segments: [RiddenRouteStore.DrawnSegment] = []
         var hasher = Hasher()
-        for fragment in file.lines {
+        for fragment in files.flatMap(\.lines) {
             let drawID = fragment.continuous == true
                 ? "\(fragment.lineKey)#\(fragment.chain ?? 0)"
                 : "\(fragment.lineKey)@\(fragment.lane ?? 0)"
@@ -72,7 +83,7 @@ nonisolated struct RailwayLinePreview: Sendable {
             hasher.combine(station.lon)
             hasher.combine(station.lat)
         }
-        ride = .init(id: "network-line|\(region.code)|\(metadata.id)", trainType: nil,
+        ride = .init(id: "\(Self.rideIDPrefix)\(region.code)|\(metadata.id)", trainType: nil,
                      country: region.code, colorHex: metadata.color, visible: true,
                      segments: segments, route: .resolved, stops: stops, markerPositions: positions,
                      daySpan: Dates.daySpan(Train(id: "network-preview", number: "",

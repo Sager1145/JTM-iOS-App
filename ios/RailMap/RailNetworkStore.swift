@@ -601,16 +601,43 @@ final class RailNetworkStore {
               let record = index.recordsByRegion[region.code] else {
             throw RailDisplayNetworkError.unknownLine(region.code)
         }
+        // The source splits some branches into their own line (丸ノ内線 and
+        // 丸ノ内線分岐線, 2호선 and its 지선s); highlight the railway as one.
+        let entries = Self.branchFamilyLineIDs(of: metadata, in: manifest.lines)
+            .compactMap { $0 == lineID ? entry : index.entryByID[$0] }
+            .filter { $0.region == region.code }
         let cachedBlob = displayBlobs[region.code]
         let history = displayHistoryByRegion[region.code]
         return try await Task.detached(priority: .userInitiated) {
             let blob = try cachedBlob ?? RailDisplayNetwork.blob(record)
-            let file = try RailDisplayNetwork.chunk(
-                entry, blob: blob, detail: .full, catalog: manifest.lines,
-                families: record.families ?? [:])
+            let files = try entries.map {
+                try RailDisplayNetwork.chunk(
+                    $0, blob: blob, detail: .full, catalog: manifest.lines,
+                    families: record.families ?? [:])
+            }
             return RailwayLinePreview(
-                metadata: metadata, file: file, history: history, region: region, era: era)
+                metadata: metadata, files: files, history: history, region: region, era: era)
         }.value
+    }
+
+    /// `line`'s railway as the source splits it: the main line first, then
+    /// every same-operator line named `<main line><branch suffix>`. Answered
+    /// from either side, so a branch's own card also shows its main line.
+    nonisolated static func branchFamilyLineIDs(
+        of line: RailDisplayNetworkManifest.Line,
+        in catalog: [String: RailDisplayNetworkManifest.Line]
+    ) -> [String] {
+        let suffixes = ["分岐線", "支線", "지선"]
+        func isBranch(_ candidate: String, of main: String) -> Bool {
+            candidate.count > main.count && candidate.hasPrefix(main)
+                && suffixes.contains { candidate.hasSuffix($0) }
+        }
+        let peers = catalog.values.filter {
+            $0.region == line.region && $0.operator == line.operator
+        }
+        let main = peers.first { $0.id != line.id && isBranch(line.name, of: $0.name) } ?? line
+        let branches = peers.filter { isBranch($0.name, of: main.name) }.map(\.id).sorted()
+        return [main.id] + branches
     }
 
     // There is deliberately no `ensureAll()`.

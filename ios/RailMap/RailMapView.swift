@@ -2603,7 +2603,8 @@ struct RailMapView: View {
                     // reader's language.
                     let stationName = localized(
                         labelName, code: item.stationCode, region: item.region).display
-                    let roleTag = selected ? (feature.role == "pass" ? naming.passTag
+                    let roleTag = selected && !RailwayLinePreview.isPreviewRide(feature.tid)
+                        ? (feature.role == "pass" ? naming.passTag
                         : feature.role == "stop" ? naming.stopTag : "") : ""
                     let displayedName = roleTag.isEmpty
                         ? stationName : "\(stationName) · \(roleTag)"
@@ -3487,7 +3488,8 @@ struct RailMapView: View {
                     specs.append(spec)
                 }
                 if let ride = rides.first(where: { $0.id == selectedTrainID }) {
-                    guard ride.visible else { return [] }
+                    // A highlighted railway has no journey endpoints.
+                    guard ride.visible, !RailwayLinePreview.isPreviewRide(ride.id) else { return [] }
                     add(endpointSpec(for: ride, kind: .origin, strokeAnchors: strokeAnchors))
                     add(endpointSpec(for: ride, kind: .destination, strokeAnchors: strokeAnchors))
                     return specs

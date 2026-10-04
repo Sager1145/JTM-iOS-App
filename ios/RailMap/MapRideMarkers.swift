@@ -350,7 +350,9 @@ enum MapRideMarkers {
             // endpoint pair. Pass-throughs are excluded by construction —
             // a ride does not begin at a station it rolled through.
             let ridden = Statistics.effectivelyRiddenStopIndexes(flags)
-            let boundaries: Set<Int> = ridden.isEmpty
+            // A highlighted railway's stop order is its fragments', not a
+            // journey's, so it has no endpoint pair to enlarge.
+            let boundaries: Set<Int> = ridden.isEmpty || RailwayLinePreview.isPreviewRide(ride.id)
                 ? [] : [ridden[0], ridden[ridden.count - 1]]
             // Cross-day break stations (jsonspec §13.6): the last station of
             // each outgoing day gets ONE diamond instead of its ordinary dot —
