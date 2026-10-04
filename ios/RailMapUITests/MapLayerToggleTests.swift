@@ -229,6 +229,85 @@ final class MapLayerToggleTests: XCTestCase {
         attach(app, named: "11-all-railways-responsive")
     }
 
+    /// Turning 全部線路 off and on again must draw the network every time,
+    /// including when the reader flips it faster than a rebuild finishes.
+    func testAllRailwaysRepeatedToggleRendersEveryTime() throws {
+        try assertRepeatedToggleRenders(camera: nil)
+    }
+
+    /// The same at a regional span, where preparing the network's geometry
+    /// takes long enough for a flip to land inside it.
+    func testAllRailwaysRepeatedToggleRendersAtRegionalZoom() throws {
+        try assertRepeatedToggleRenders(camera: "35.9,139.75,4.0")
+    }
+
+    /// All of Japan, where most of the network is drawn from overview chunks.
+    func testAllRailwaysRepeatedToggleRendersAtNationalZoom() throws {
+        try assertRepeatedToggleRenders(camera: "36.5,139.75,18.0")
+    }
+
+    private func assertRepeatedToggleRenders(camera: String?) throws {
+        XCUIDevice.shared.orientation = .portrait
+        // The ready ride is a Tokyo metro line, too small to count as drawn
+        // at a national span.
+        let app = launchOverTokyo(camera: camera, waitsForReadyRide: camera == nil)
+        let renderStatus = app.staticTexts["railMapRenderStatus"]
+        XCTAssertTrue(renderStatus.waitForExistence(timeout: 12))
+        let network = app.buttons["mapNetworkToggle"]
+        XCTAssertTrue(network.waitForExistence(timeout: 12))
+        XCTAssertFalse(network.isSelected)
+        func rendered() -> Bool {
+            let label = renderStatus.label
+            return label.hasPrefix("network:rendered;") && !label.contains(";overlays:0;")
+        }
+        func off() -> Bool { renderStatus.label.hasPrefix("network:off;") }
+        var log: [String] = []
+        // Settled cycles, then flips that land inside a rebuild.
+        for cycle in 0..<3 {
+            network.tap()
+            XCTAssertTrue(
+                waitFor(timeout: cycle == 0 ? 60 : 20, rendered),
+                "cycle \(cycle): network did not render on: " + renderStatus.label)
+            log.append("on \(cycle): " + renderStatus.label)
+            network.tap()
+            XCTAssertTrue(
+                waitFor(timeout: 20, off), "cycle \(cycle): network did not turn off: " + renderStatus.label)
+            log.append("off \(cycle): " + renderStatus.label)
+        }
+        for pause in [0.0, 0.3, 0.8, 1.5] {
+            network.tap()
+            Thread.sleep(forTimeInterval: pause)
+            network.tap()
+            Thread.sleep(forTimeInterval: pause)
+        }
+        network.tap()
+        XCTAssertTrue(network.isSelected)
+        XCTAssertTrue(
+            waitFor(timeout: 20, rendered), "network did not render after rapid toggles: " + renderStatus.label)
+        log.append("rapid: " + renderStatus.label)
+        // Moved while hidden, and moving while it comes back.
+        let east = app.coordinate(withNormalizedOffset: CGVector(dx: 0.85, dy: 0.25))
+        let west = app.coordinate(withNormalizedOffset: CGVector(dx: 0.15, dy: 0.25))
+        for cycle in 0..<2 {
+            network.tap()
+            XCTAssertTrue(waitFor(timeout: 20, off))
+            east.press(forDuration: 0.05, thenDragTo: west)
+            Thread.sleep(forTimeInterval: 1.5)
+            network.tap()
+            west.press(forDuration: 0.05, thenDragTo: east, withVelocity: .fast, thenHoldForDuration: 0)
+            XCTAssertTrue(
+                waitFor(timeout: 20, rendered), "pan \(cycle): network did not render: " + renderStatus.label)
+            Thread.sleep(forTimeInterval: 2)
+            XCTAssertTrue(rendered(), "pan \(cycle): " + renderStatus.label)
+            log.append("pan \(cycle): " + renderStatus.label)
+        }
+        let attachment = XCTAttachment(string: log.joined(separator: "\n"))
+        attachment.name = "repeated-network-toggle"
+        attachment.lifetime = .keepAlways
+        add(attachment)
+        attach(app, named: "network-after-repeated-toggles")
+    }
+
     /// Checks the actual renderer independently of XCTest's tap timing.
     func testNetworkVisibilityUsesWindowDensity() throws {
         XCUIDevice.shared.orientation = .portrait
@@ -408,7 +487,10 @@ final class MapLayerToggleTests: XCTestCase {
     private static let riddenMetroLine = CGVector(dx: 0.5, dy: 0.5)
 
     /// Launch over ``tokyoCamera``, with `layers` switched off.
-    private func launchOverTokyo(hiding layers: String? = nil, selectingMetro: Bool = false) -> XCUIApplication {
+    private func launchOverTokyo(
+        hiding layers: String? = nil, selectingMetro: Bool = false, camera: String? = nil,
+        waitsForReadyRide: Bool = true
+    ) -> XCUIApplication {
         let app = XCUIApplication()
         app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
         // The renderer fixture must not depend on a previous simulator session.
@@ -420,15 +502,15 @@ final class MapLayerToggleTests: XCTestCase {
         // Start open, then collapse through the actual header gesture before
         // tapping the map and reopen it to inspect the selected card.
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "medium"
-        app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = selectingMetro
-            ? Self.metroSelectionCamera : Self.tokyoCamera
+        app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = camera ?? (selectingMetro
+            ? Self.metroSelectionCamera : Self.tokyoCamera)
         app.launchEnvironment["RAILMAP_UI_TEST_READY_RIDE"] = "20260704_06_marunouchi_line"
         if let layers { app.launchEnvironment["RAILMAP_UI_TEST_LAYERS"] = layers }
         app.launch()
         let status = app.staticTexts["railMapRenderStatus"]
         XCTAssertTrue(status.waitForExistence(timeout: 15))
         XCTAssertTrue(waitFor(timeout: 45) {
-            status.label.contains("targetRideReady:1")
+            (!waitsForReadyRide || status.label.contains("targetRideReady:1"))
                 && abs((Double(status.label.split(separator: ";").first {
                     $0.hasPrefix("centerLon:")
                 }?.dropFirst("centerLon:".count) ?? "") ?? 0) - (selectingMetro ? 139.73418 : 139.75)) < 0.01

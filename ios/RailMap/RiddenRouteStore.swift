@@ -255,6 +255,12 @@ final class RiddenRouteStore {
         state = .loading
         RideStatusCenter.shared.publish(
             entries: Self.statusEntries(for: rides, wanted: []), phase: .loading)
+        // A cold load publishes once per solved journey, and every publish
+        // rebuilt the whole map, the ride status list and line detection on
+        // the main thread: 284 journeys meant a 120–230 ms map rebuild every
+        // ~150 ms for the length of the load. Partial results are coalesced
+        // instead; the final result below still lands at once.
+        let partials = PartialRidePublication()
         loadTask = Task(priority: .userInitiated) {
             do {
                 let primed = await Self.loadPreferred(id: preferredTrainID, wanted: pending)
@@ -274,14 +280,18 @@ final class RiddenRouteStore {
                 ) { partial in
                     await MainActor.run {
                         guard !Task.isCancelled, self.loadRevision == revision else { return }
-                        self.rides = self.ordered(retained + partial)
-                        self.visibleRides = self.rides.filter(\.visible)
-                        for ride in partial { self.completedInputs[ride.id] = wanted[ride.id] }
-                        RideStatusCenter.shared.publish(
-                            entries: Self.statusEntries(for: self.rides, wanted: []), phase: .loading)
-                        TraversedLineDetector.shared.publishSelected(rides: self.rides)
+                        partials.submit(partial) { partial in
+                            guard self.loadRevision == revision else { return }
+                            self.rides = self.ordered(retained + partial)
+                            self.visibleRides = self.rides.filter(\.visible)
+                            for ride in partial { self.completedInputs[ride.id] = wanted[ride.id] }
+                            RideStatusCenter.shared.publish(
+                                entries: Self.statusEntries(for: self.rides, wanted: []), phase: .loading)
+                            TraversedLineDetector.shared.publishSelected(rides: self.rides)
+                        }
                     }
                 }
+                partials.cancel()
                 try Task.checkCancellation()
                 guard loadRevision == revision else { return }
                 rides = ordered(retained + decoded)
@@ -295,9 +305,12 @@ final class RiddenRouteStore {
                 detectTraversedLines()
                 Self.sweepRouteCacheOnce()
             } catch is CancellationError {
+                partials.cancel()
                 if loadRevision == revision { loadingInputs = nil; loadTask = nil }
                 return
             } catch {
+                // What was solved before the failure is still worth drawing.
+                partials.applyPending()
                 guard loadRevision == revision else { return }
                 loadingInputs = nil
                 loadTask = nil
@@ -2122,5 +2135,60 @@ private actor DatasetPartIndex {
         struct TrainIdentity: Decodable {
             let id: String
         }
+    }
+}
+
+/// The partial ride lists one route load publishes, coalesced so the map and
+/// the status list take at most one of them per ``interval``.
+///
+/// The first partial applies at once, so a cold launch still shows its first
+/// journeys immediately. Later ones within the interval replace each other
+/// and the newest is applied when it ends. ``cancel()`` drops a pending one:
+/// the load calls it before it applies its complete result, so a stale
+/// partial can never land on top of that.
+@MainActor
+private final class PartialRidePublication {
+    static let interval: Duration = .milliseconds(750)
+
+    private var lastApplied: ContinuousClock.Instant?
+    private var pending: [RiddenRouteStore.DrawnRide]?
+    private var pendingApply: (@MainActor ([RiddenRouteStore.DrawnRide]) -> Void)?
+    private var flush: Task<Void, Never>?
+
+    func submit(
+        _ partial: [RiddenRouteStore.DrawnRide],
+        apply: @escaping @MainActor ([RiddenRouteStore.DrawnRide]) -> Void
+    ) {
+        let now = ContinuousClock.now
+        if flush == nil, lastApplied.map({ now - $0 >= Self.interval }) ?? true {
+            lastApplied = now
+            apply(partial)
+            return
+        }
+        pending = partial
+        pendingApply = apply
+        guard flush == nil else { return }
+        let wait = Self.interval - (now - (lastApplied ?? now))
+        flush = Task { @MainActor [weak self] in
+            try? await Task.sleep(for: wait)
+            guard let self, !Task.isCancelled else { return }
+            self.applyPending()
+        }
+    }
+
+    /// Applies the newest held partial now, if there is one.
+    func applyPending() {
+        let partial = pending, apply = pendingApply
+        cancel()
+        guard let partial, let apply else { return }
+        lastApplied = .now
+        apply(partial)
+    }
+
+    func cancel() {
+        flush?.cancel()
+        flush = nil
+        pending = nil
+        pendingApply = nil
     }
 }
