@@ -121,6 +121,14 @@ public enum RouteSolver {
         public var fromPreferredOperators: Set<String>
         public var toPreferredOperators: Set<String>
         public var solveMode: String
+        /// Package geometry forbidden for this section's station order. Kept
+        /// in hints so every solve attempt retains it without mutating graphs.
+        /// Only edges whose operator and line name are in
+        /// `directionExcludedFamilies` are dropped for landing on one of these.
+        public var directionExcludedCoordinates: Set<Coordinate> = []
+        /// NUL-separated `operator` and line name of the direction-restricted
+        /// package line family. Empty when nothing is excluded.
+        public var directionExcludedFamilies: Set<String> = []
 
         public init(
             preferredLines: Set<String> = [],
@@ -958,14 +966,20 @@ public enum RouteSolver {
     }
 
     /// The only cross-identity continuation admitted before a section's own
-    /// line hints: reviewed, service-valid, zero-length physical junctions.
-    /// A coordinate match or a passenger connector cannot establish this path.
+    /// line hints: reviewed, service-valid physical junctions. That is a
+    /// zero-length junction at an identical vertex, a reviewed short link of
+    /// at most 30 m, or an `osmConnector` whose reviewed OpenStreetMap path
+    /// has stubs of at most 50 m. The connector's whole chain is one hop, and
+    /// its length is not an approach bound. A coordinate match or a passenger
+    /// connector cannot establish this path.
     public static func physicalContinuationPath(
         from key: String, to target: String, graph: RouteGraph.Graph,
         rideDate: String?
     ) -> [String]? {
         guard graph.nodes[key] != nil, graph.nodes[target] != nil else { return nil }
+        if key == target { return [key] }
         var previous: [String: String] = [:]
+        var osmHops: [String: [String]] = [:]
         var visited: Set<String> = [key]
         var pending = [key]
         var offset = 0
@@ -974,19 +988,37 @@ public enum RouteSolver {
             let current = pending[offset]
             offset += 1
             if current == target {
-                var path = [target]
-                while let parent = previous[path.last!] { path.append(parent) }
-                return path.reversed()
+                var hops = [target]
+                while let parent = previous[hops.last!] { hops.append(parent) }
+                hops.reverse()
+                var expanded = [hops[0]]
+                for index in hops.indices.dropFirst() {
+                    let node = hops[index]
+                    if let via = osmHops[node], via.first == hops[index - 1], via.last == node {
+                        expanded.append(contentsOf: via.dropFirst())
+                    } else {
+                        expanded.append(node)
+                    }
+                }
+                return expanded
             }
             for edge in graph.adjacency[current] ?? [] {
-                guard edge.connector == nil, edge.length == 0,
+                guard edge.connector == nil,
                       let boundary = edge.physicalJunction?.junction,
                       !boundary.evidence.isEmpty,
-                      boundary.from.coordinate == boundary.to.coordinate,
-                      graph.nodes[current] == graph.nodes[edge.to],
+                      junctionGeometryIsValid(boundary, edge: edge, current: current, graph: graph),
                       RouteGraph.RailValidity.isValid(
-                        validFrom: edge.validFrom, validTo: edge.validTo, on: rideDate),
-                      visited.insert(edge.to).inserted else { continue }
+                        validFrom: edge.validFrom, validTo: edge.validTo, on: rideDate) else { continue }
+                if boundary.kind == .osmConnector {
+                    guard let hop = osmConnectorHop(
+                        from: current, junction: boundary, graph: graph, rideDate: rideDate),
+                          visited.insert(hop.destination).inserted else { continue }
+                    previous[hop.destination] = current
+                    osmHops[hop.destination] = hop.keys
+                    pending.append(hop.destination)
+                    continue
+                }
+                guard visited.insert(edge.to).inserted else { continue }
                 let from = RouteGraph.physicalNodeKey(boundary.from.coordinate, identity: boundary.from.identity)
                 let to = RouteGraph.physicalNodeKey(boundary.to.coordinate, identity: boundary.to.identity)
                 guard (current == from && edge.to == to) || (current == to && edge.to == from) else { continue }
@@ -997,6 +1029,60 @@ public enum RouteSolver {
         return nil
     }
 
+    /// Zero-length junctions need identical vertices and length 0; a reviewed
+    /// short link needs distinct vertices within the 30 m bound and its real
+    /// length. An OSM connector is the whole reviewed chain, not one stub.
+    /// The link length counts toward no approach bound.
+    private static func junctionGeometryIsValid(
+        _ junction: RouteGraph.PhysicalJunction, edge: RouteGraph.Edge,
+        current: String, graph: RouteGraph.Graph
+    ) -> Bool {
+        guard let a = graph.nodes[current], let b = graph.nodes[edge.to] else { return false }
+        switch junction.kind {
+        case .zeroLength:
+            return edge.length == 0 && junction.from.coordinate == junction.to.coordinate && a == b
+        case .shortLink:
+            return a != b && edge.length > 0
+                && Geometry.distanceMeters(a, b) <= RouteGraph.PhysicalJunction.maximumReviewedLinkMeters
+        case .osmConnector:
+            guard edge.length > 0, a != b,
+                  let from = graph.nodes[RouteGraph.physicalNodeKey(
+                    junction.from.coordinate, identity: junction.from.identity)],
+                  let to = graph.nodes[RouteGraph.physicalNodeKey(
+                    junction.to.coordinate, identity: junction.to.identity)] else { return false }
+            return junction.osmRejection(fromCoordinate: from, toCoordinate: to) == nil
+        case .osmTrack:
+            return false
+        }
+    }
+
+    /// The far endpoint of an `osmConnector`, with every stub and path vertex
+    /// between. One call is one junction hop; the metres are not an approach.
+    private static func osmConnectorHop(
+        from current: String, junction: RouteGraph.PhysicalJunction,
+        graph: RouteGraph.Graph, rideDate: String?
+    ) -> (destination: String, keys: [String])? {
+        guard junction.kind == .osmConnector, let keys = junction.chainNodeKeys() else { return nil }
+        let ordered: [String]
+        if current == keys[0] {
+            ordered = keys
+        } else if current == keys[keys.count - 1] {
+            ordered = Array(keys.reversed())
+        } else {
+            return nil
+        }
+        for (start, end) in zip(ordered, ordered.dropFirst()) {
+            guard graph.adjacency[start]?.contains(where: { candidate in
+                candidate.to == end && candidate.connector == nil
+                    && candidate.physicalJunction?.junction.id == junction.id
+                    && RouteGraph.RailValidity.isValid(
+                        validFrom: candidate.validFrom, validTo: candidate.validTo, on: rideDate)
+            }) == true else { return nil }
+        }
+        guard let destination = ordered.last, destination != current else { return nil }
+        return (destination, ordered)
+    }
+
     /// Remove short station-marker bridges only at the ends of a source line.
     /// Interior vertices remain subject to exact surveyed-edge verification.
     public static func trimmedToGraphNodes(
@@ -1005,8 +1091,7 @@ public enum RouteSolver {
     ) -> [Coordinate]? {
         func isNode(_ coordinate: Coordinate) -> Bool {
             let normalized = Grid.normalizeGraphCoord(coordinate)
-            return RouteGraph.nearbyNodes(normalized, in: graph, radiusDeg: 0, limit: Int.max)
-                .contains { graph.nodes[$0.key] == normalized }
+            return !RouteGraph.exactNodeKeys(normalized, in: graph).isEmpty
         }
         guard let first = line.firstIndex(where: isNode),
               let last = line.lastIndex(where: isNode), first < last else { return nil }
@@ -1060,12 +1145,67 @@ public enum RouteSolver {
         return nil
     }
 
+    /// Station snaps can lie away from a reviewed branching vertex. Bound each
+    /// surveyed approach (including the span between two junctions) to 1.5 km.
+    public static let physicalJunctionMaxApproachMeters: Double = 1_500
+
     public static func physicalBoundaryIsProven(
         from previous: String, to first: String, graph: RouteGraph.Graph, rideDate: String?
     ) -> Bool {
-        previous == first
-            || physicalContinuationPath(from: previous, to: first, graph: graph, rideDate: rideDate) != nil
-            || sameIdentitySpan(from: previous, to: first, graph: graph, date: rideDate)
+        if previous == first
+            || sameIdentitySpan(from: previous, to: first, graph: graph, date: rideDate) { return true }
+        guard graph.nodes[previous] != nil, graph.nodes[first] != nil else { return false }
+        func identity(_ key: String) -> Substring {
+            guard let separator = key.lastIndex(of: "@") else { return key[...] }
+            return key[..<separator]
+        }
+        // Each layer is a multi-source bounded Dijkstra after exactly N reviewed
+        // junctions. Reset distance only across a junction, never along rail.
+        var sources: Set<String> = [previous]
+        for hops in 0...2 {
+            var pending = sources.map { (key: $0, length: 0.0) }
+            var best = Dictionary(uniqueKeysWithValues: sources.map { ($0, 0.0) })
+            var nextSources = Set<String>()
+            while let index = pending.indices.min(by: { pending[$0].length < pending[$1].length }) {
+                guard !Task.isCancelled else { return false }
+                let current = pending.remove(at: index)
+                guard current.length == best[current.key] else { continue }
+                if hops > 0, current.key == first { return true }
+                for edge in graph.adjacency[current.key] ?? [] {
+                    guard edge.connector == nil, graph.nodes[edge.to] != nil,
+                          RouteGraph.RailValidity.isValid(
+                            validFrom: edge.validFrom, validTo: edge.validTo, on: rideDate) else { continue }
+                    if let junction = edge.physicalJunction?.junction {
+                        guard hops < 2, !junction.evidence.isEmpty,
+                              junctionGeometryIsValid(junction, edge: edge, current: current.key, graph: graph),
+                              RouteGraph.RailValidity.isValid(validFrom: junction.validFrom,
+                                validTo: junction.validTo, on: rideDate) else { continue }
+                        if junction.kind == .osmConnector {
+                            guard let hop = osmConnectorHop(
+                                from: current.key, junction: junction, graph: graph, rideDate: rideDate)
+                            else { continue }
+                            nextSources.insert(hop.destination)
+                            continue
+                        }
+                        let from = RouteGraph.physicalNodeKey(junction.from.coordinate, identity: junction.from.identity)
+                        let to = RouteGraph.physicalNodeKey(junction.to.coordinate, identity: junction.to.identity)
+                        guard (current.key == from && edge.to == to)
+                            || (current.key == to && edge.to == from) else { continue }
+                        nextSources.insert(edge.to)
+                    } else {
+                        let length = current.length + edge.length
+                        guard identity(current.key) == identity(edge.to),
+                              length <= physicalJunctionMaxApproachMeters,
+                              length < best[edge.to, default: .infinity] else { continue }
+                        best[edge.to] = length
+                        pending.append((edge.to, length))
+                    }
+                }
+            }
+            sources = nextSources
+            if sources.isEmpty { break }
+        }
+        return false
     }
 
     public struct StationSectionInference: Sendable {
@@ -1166,8 +1306,11 @@ public enum RouteSolver {
     }
 
     /// Certify an already selected source polyline without replacing its rail
-    /// choice with a newly solved route. Every step must be a surveyed edge;
-    /// only reviewed zero junctions may change identity at a shared vertex.
+    /// choice with a newly solved route. Every step must be a surveyed edge
+    /// (including an `osmTrack` drawn on the line's own identity). Only
+    /// reviewed, service-valid physical junctions cross identities: zero-length
+    /// at an identical vertex, a reviewed short link of at most 30 m, or an
+    /// `osmConnector` with reviewed OpenStreetMap stubs of at most 50 m.
     public static func verifiedPhysicalPathKeys(
         _ coordinates: [Coordinate], graph: RouteGraph.Graph, rideDate: String?,
         requiredLines: Set<String> = [], requiredOperators: Set<String> = []
@@ -1177,45 +1320,93 @@ public enum RouteSolver {
         var steps: [Step] = []
         var frontier: [String: Int] = [:]
         let firstCoordinate = Grid.normalizeGraphCoord(first)
-        for candidate in RouteGraph.nearbyNodes(firstCoordinate, in: graph, radiusDeg: 0, limit: Int.max)
-            where graph.nodes[candidate.key] == firstCoordinate {
-            frontier[candidate.key] = steps.count
-            steps.append(Step(key: candidate.key, parent: nil))
+        for key in RouteGraph.exactNodeKeys(firstCoordinate, in: graph) {
+            frontier[key] = steps.count
+            steps.append(Step(key: key, parent: nil))
         }
+        // Measured off-grid error: max 0.7 m, p99 0.06 m; five-decimal
+        // coordinate rounding has a worst-case displacement of about 0.72 m.
+        let onEdgeToleranceMeters = 1.0
+        var pending: [Coordinate] = []
         let hints = SegmentHints(requiredLines: requiredLines, requiredOperators: requiredOperators)
+
+        func pendingPointsFollowEdge(from a: Coordinate, to b: Coordinate) -> Bool {
+            guard !pending.isEmpty else { return true }
+            let metersPerDegree = 6_371_000.0 * .pi / 180
+            let sx = metersPerDegree * cos((a.lat + b.lat) / 2 * .pi / 180)
+            let dx = (b.lon - a.lon) * sx
+            let dy = (b.lat - a.lat) * metersPerDegree
+            let lengthSquared = dx * dx + dy * dy
+            guard lengthSquared > 0 else { return false }
+            var previousProjection = 0.0
+            for point in pending {
+                let px = (point.lon - a.lon) * sx
+                let py = (point.lat - a.lat) * metersPerDegree
+                let projection = (px * dx + py * dy) / lengthSquared
+                guard projection >= previousProjection, projection <= 1,
+                      hypot(px - projection * dx, py - projection * dy)
+                        <= onEdgeToleranceMeters else { return false }
+                previousProjection = projection
+            }
+            return true
+        }
+
         for coordinate in coordinates.dropFirst() {
             guard !Task.isCancelled else { return nil }
             let nextCoordinate = Grid.normalizeGraphCoord(coordinate)
+            let isNode = !RouteGraph.exactNodeKeys(nextCoordinate, in: graph).isEmpty
+            let nearby = isNode ? []
+                : RouteGraph.nearbyNodes(nextCoordinate, in: graph, radiusDeg: 0, limit: Int.max)
+            // nearbyNodes measures from a normalized coordinate. Rounding must
+            // instead be bounded by the original source vertex.
+            let roundedKeys = isNode ? Set<String>() : Set(nearby.compactMap { candidate in
+                graph.nodes[candidate.key].flatMap {
+                    Geometry.distanceMeters(coordinate, $0) <= onEdgeToleranceMeters ? candidate.key : nil
+                }
+            })
             var next: [String: Int] = [:]
-            for (key, parent) in frontier {
+            // In step order, not dictionary order: when two co-located
+            // identities reach one vertex, the later visit wins `next`, and
+            // a seeded dictionary made that winner differ between launches.
+            for (key, parent) in frontier.sorted(by: { $0.value < $1.value }) {
                 guard let currentCoordinate = graph.nodes[key] else { continue }
-                for candidate in RouteGraph.nearbyNodes(currentCoordinate, in: graph, radiusDeg: 0, limit: Int.max)
-                    where graph.nodes[candidate.key] == currentCoordinate {
-                    guard let prefix = physicalContinuationPath(
-                        from: key, to: candidate.key, graph: graph, rideDate: rideDate) else { continue }
+                for candidateKey in RouteGraph.exactNodeKeys(currentCoordinate, in: graph) {
+                    // A buffered point can only be carried by one surveyed edge,
+                    // never by a connector or a reviewed junction transition.
+                    guard pending.isEmpty || candidateKey == key,
+                          let prefix = physicalContinuationPath(
+                            from: key, to: candidateKey, graph: graph, rideDate: rideDate) else { continue }
                     var prefixParent = parent
                     for prefixKey in prefix.dropFirst() {
                         steps.append(Step(key: prefixKey, parent: prefixParent))
                         prefixParent = steps.count - 1
                     }
-                    if currentCoordinate == nextCoordinate {
-                        next[candidate.key] = prefixParent
+                    if isNode && currentCoordinate == nextCoordinate && pending.isEmpty {
+                        next[candidateKey] = prefixParent
                         continue
                     }
-                    for edge in graph.adjacency[candidate.key] ?? [] {
+                    for edge in graph.adjacency[candidateKey] ?? [] {
                         guard edge.connector == nil, edge.physicalJunction == nil,
-                              graph.nodes[edge.to] == nextCoordinate,
+                              let destination = graph.nodes[edge.to],
+                              (isNode ? destination == nextCoordinate : roundedKeys.contains(edge.to)),
                               edgeMatchesRequiredHints(edge, hints: hints),
                               RouteGraph.RailValidity.isValid(
-                                validFrom: edge.validFrom, validTo: edge.validTo, on: rideDate) else { continue }
+                                validFrom: edge.validFrom, validTo: edge.validTo, on: rideDate),
+                              pendingPointsFollowEdge(from: currentCoordinate, to: destination) else { continue }
                         steps.append(Step(key: edge.to, parent: prefixParent))
                         next[edge.to] = steps.count - 1
                     }
                 }
             }
-            guard !next.isEmpty else { return nil }
-            frontier = next
+            if next.isEmpty {
+                guard !isNode else { return nil }
+                pending.append(coordinate)
+            } else {
+                frontier = next
+                pending.removeAll(keepingCapacity: true)
+            }
         }
+        guard pending.isEmpty else { return nil }
         // Ambiguous identities remain unconfirmed rather than selecting one
         // merely because its coordinates coincide with the recorded path.
         guard frontier.count == 1, var index = frontier.values.first else { return nil }
@@ -1393,6 +1584,216 @@ public enum RouteSolver {
             validTo: provenance.validTo, temporalKind: provenance.temporalKind)
     }
 
+    /// Operator and line-name spellings that identify one package line on a
+    /// graph edge. The family key uses `nameNorm`; rail-section edges use the
+    /// N02 line name, which is usually the same spelling.
+    private static func directionIdentityKeys(_ line: RouteNetwork.Line) -> Set<String> {
+        let op = line.operator ?? ""
+        var keys: Set<String> = [RouteNetwork.familyKey(line)]
+        for name in [line.name, line.compactLine?.name, line.compactLine?.nameNorm] {
+            if let name, !name.isEmpty { keys.insert(op + "\0" + name) }
+        }
+        return keys
+    }
+
+    private struct DirectionIntervalRecord: Sendable {
+        var identityKeys: Set<String>
+        var family: String
+        var allowedDirections: Set<Int>
+        var interior: Set<Coordinate>
+        var allPoints: Set<Coordinate>
+    }
+
+    /// One scan of a network's lines. Later solves reuse it. `stamp` is an
+    /// in-process content hash, not a persisted hash.
+    private struct PreparedDirectionExclusions: Sendable {
+        var records: [[DirectionIntervalRecord]]
+        /// Family → direction → coordinates of intervals that allow that direction.
+        var permittedPoints: [String: [Int: Set<Coordinate>]]
+    }
+
+    private final class DirectionExclusionCache: @unchecked Sendable {
+        let lock = NSLock()
+        var prepared: [Int: PreparedDirectionExclusions] = [:]
+        var perInterval: [IntervalDirectionKey: Set<Coordinate>] = [:]
+    }
+
+    private struct IntervalDirectionKey: Hashable, Sendable {
+        var stamp: Int
+        var lineID: String
+        var intervalIndex: Int
+        var direction: Int
+    }
+
+    private static let directionExclusionCache = DirectionExclusionCache()
+    /// Distinct networks kept in the direction caches. Past this, both maps
+    /// are dropped so a run cannot retain every network it built.
+    private static let directionCacheLimit = 32
+
+    /// Line ids, station order, and the direction fields the exclusion scan
+    /// reads. Counts collide when two networks differ in the middle.
+    /// `RouteNetwork` is a struct, so this is a content hash, not identity.
+    private static func directionNetworkStamp(_ network: RouteNetwork) -> Int {
+        var hasher = Hasher()
+        for line in network.lines {
+            hasher.combine(line.lineId)
+            hasher.combine(line.alignmentDirection)
+            hasher.combine(line.operator)
+            hasher.combine(line.name)
+            if let compact = line.compactLine {
+                hasher.combine(compact.id)
+                hasher.combine(compact.name)
+                hasher.combine(compact.nameNorm)
+                hasher.combine(compact.alignmentDirection)
+                hasher.combine(compact.stationOrderDirection)
+                hasher.combine(compact.permittedTraversal)
+                for station in compact.stations {
+                    hasher.combine(station.id)
+                    hasher.combine(station.name)
+                }
+                for pair in compact.alignmentPairs {
+                    hasher.combine(pair.with)
+                    hasher.combine(pair.from)
+                    hasher.combine(pair.to)
+                    hasher.combine(pair.direction)
+                }
+            }
+            for interval in line.intervals {
+                hasher.combine(interval.fromStationCode)
+                hasher.combine(interval.toStationCode)
+            }
+        }
+        return hasher.finalize()
+    }
+
+    private static func preparedDirectionExclusions(
+        _ network: RouteNetwork, stamp: Int
+    ) -> PreparedDirectionExclusions {
+        directionExclusionCache.lock.lock()
+        if let cached = directionExclusionCache.prepared[stamp] {
+            directionExclusionCache.lock.unlock()
+            return cached
+        }
+        directionExclusionCache.lock.unlock()
+        var records: [[DirectionIntervalRecord]] = []
+        records.reserveCapacity(network.lines.count)
+        var permitted: [String: [Int: Set<Coordinate>]] = [:]
+        for line in network.lines {
+            let family = RouteNetwork.familyKey(line)
+            let keys = directionIdentityKeys(line)
+            var row: [DirectionIntervalRecord] = []
+            row.reserveCapacity(line.intervals.count)
+            for (index, interval) in line.intervals.enumerated() {
+                let points = interval.coordinates.map(Grid.normalizeGraphCoord)
+                let allowed = Set(line.compactLine.map {
+                    RailwayDirection.allowedDirections(for: $0, intervalIndex: index)
+                } ?? [-1, 1])
+                row.append(DirectionIntervalRecord(
+                    identityKeys: keys, family: family, allowedDirections: allowed,
+                    interior: Set(points.dropFirst().dropLast()), allPoints: Set(points)))
+                for direction in allowed {
+                    var byDirection = permitted[family] ?? [:]
+                    var bucket = byDirection[direction] ?? []
+                    bucket.formUnion(points)
+                    byDirection[direction] = bucket
+                    permitted[family] = byDirection
+                }
+            }
+            records.append(row)
+        }
+        let prepared = PreparedDirectionExclusions(records: records, permittedPoints: permitted)
+        directionExclusionCache.lock.lock()
+        directionExclusionCache.prepared[stamp] = prepared
+        if directionExclusionCache.prepared.count > directionCacheLimit {
+            directionExclusionCache.prepared.removeAll(keepingCapacity: true)
+            directionExclusionCache.perInterval.removeAll(keepingCapacity: true)
+            directionExclusionCache.prepared[stamp] = prepared
+        }
+        directionExclusionCache.lock.unlock()
+        return prepared
+    }
+
+    /// Exclusive interior of one direction-restricted interval, minus geometry
+    /// of family intervals that allow the same direction. Computed once per
+    /// `(network, line, interval, direction)`.
+    private static func cachedIntervalExclusion(
+        stamp: Int, line: RouteNetwork.Line, lineIndex: Int, intervalIndex: Int,
+        direction: Int, prepared: PreparedDirectionExclusions
+    ) -> Set<Coordinate> {
+        let key = IntervalDirectionKey(
+            stamp: stamp, lineID: line.lineId, intervalIndex: intervalIndex, direction: direction)
+        directionExclusionCache.lock.lock()
+        if let cached = directionExclusionCache.perInterval[key] {
+            directionExclusionCache.lock.unlock()
+            return cached
+        }
+        directionExclusionCache.lock.unlock()
+        let record = prepared.records[lineIndex][intervalIndex]
+        let shared = prepared.permittedPoints[record.family]?[direction] ?? []
+        let value = record.interior.subtracting(shared)
+        directionExclusionCache.lock.lock()
+        directionExclusionCache.perInterval[key] = value
+        if directionExclusionCache.perInterval.count > directionCacheLimit {
+            directionExclusionCache.perInterval.removeAll(keepingCapacity: true)
+            directionExclusionCache.perInterval[key] = value
+        }
+        directionExclusionCache.lock.unlock()
+        return value
+    }
+
+    private struct DirectionExclusion: Sendable {
+        var coordinates: Set<Coordinate>
+        var families: Set<String>
+    }
+
+    /// Only station order on a sourced package row establishes direction here.
+    /// Exclude the forbidden interval's exclusive interior, and only on edges
+    /// of that package line family. Shared approaches that also belong to a
+    /// permitted sibling alignment stay. This is section-local: the physical
+    /// graph remains bidirectional.
+    private static func directionExclusion(
+        section: RouteSection, network: RouteNetwork?
+    ) -> DirectionExclusion {
+        guard let network, let from = section.fromN02StationCode,
+              let to = section.toN02StationCode, from != to else {
+            return DirectionExclusion(coordinates: [], families: [])
+        }
+        let stamp = directionNetworkStamp(network)
+        let prepared = preparedDirectionExclusions(network, stamp: stamp)
+        let candidates = (network.stationLineIndices[from] ?? [])
+            .intersection(network.stationLineIndices[to] ?? [])
+        var excluded: Set<Coordinate> = []
+        var families: Set<String> = []
+        for lineIndex in candidates {
+            guard prepared.records.indices.contains(lineIndex) else { continue }
+            let line = network.lines[lineIndex]
+            guard let compact = line.compactLine,
+                  let start = compact.stations.firstIndex(where: { $0.id == from }),
+                  let end = compact.stations.firstIndex(where: { $0.id == to }), start != end else { continue }
+            let direction = start < end ? 1 : -1
+            let row = prepared.records[lineIndex]
+            for index in min(start, end)..<max(start, end) where row.indices.contains(index) {
+                guard !row[index].allowedDirections.contains(direction) else { continue }
+                families.formUnion(row[index].identityKeys)
+                excluded.formUnion(cachedIntervalExclusion(
+                    stamp: stamp, line: line, lineIndex: lineIndex, intervalIndex: index,
+                    direction: direction, prepared: prepared))
+            }
+        }
+        return DirectionExclusion(coordinates: excluded, families: families)
+    }
+
+    /// A coordinate on restricted geometry blocks only an edge of that family.
+    /// Another identity that merely shares the coordinate stays traversable.
+    private static func directionPermits(
+        _ edge: RouteGraph.Edge, hints: SegmentHints, graph: RouteGraph.Graph
+    ) -> Bool {
+        guard !hints.directionExcludedCoordinates.isEmpty,
+              let destination = graph.nodes[edge.to],
+              hints.directionExcludedCoordinates.contains(destination) else { return true }
+        return !hints.directionExcludedFamilies.contains(edge.operator + "\0" + edge.lineName)
+    }
+
     /// Solve one itinerary section, including station expansion, candidate
     /// snapping, ordered hint fallbacks, detour rejection and endpoint
     /// completion. A nil result means no real rail geometry connected the two
@@ -1406,7 +1807,8 @@ public enum RouteSolver {
         stations: Stations.Index,
         continuityAnchor: Coordinate? = nil,
         physicalContinuationKey: String? = nil,
-        traversalPolicy: TraversalPolicy = .physicalRail
+        traversalPolicy: TraversalPolicy = .physicalRail,
+        directionNetwork: RouteNetwork? = nil
     ) -> SolvedSection? {
         var section = rawSection
         if section.from?.isEmpty != false {
@@ -1441,11 +1843,14 @@ public enum RouteSolver {
             in: stations, rideDate: train.rideDate)
         guard !fromStations.isEmpty, !toStations.isEmpty else { return nil }
 
-        let baseHints = buildSegmentRouteHints(
+        var baseHints = buildSegmentRouteHints(
             section: section,
             fromStationIndices: fromStations,
             toStationIndices: toStations,
             stations: stations, train: train, country: country)
+        let exclusion = directionExclusion(section: section, network: directionNetwork)
+        baseHints.directionExcludedCoordinates = exclusion.coordinates
+        baseHints.directionExcludedFamilies = exclusion.families
 
         struct Best {
             var pathKeys: [String]
@@ -1526,7 +1931,8 @@ public enum RouteSolver {
                 // The preceding leg already selected a surveyed endpoint.
                 // Resnapping its station can discard that vertex through the
                 // visual-anchor filter or nearest-candidate limits. Start at
-                // the exact node instead; only reviewed zero boundaries can
+                // the exact node instead; only reviewed junctions (zero-length,
+                // short-link ≤30 m, or osmConnector with reviewed OSM stubs ≤50 m) can
                 // change identity before this section's line constraints.
                 let possibleKeys = [physicalContinuationKey] + RouteGraph.nearbyNodes(
                     coordinate, in: graph, radiusDeg: 0, limit: Int.max).map(\.key)
@@ -1575,7 +1981,7 @@ public enum RouteSolver {
                 let prefix = continuationPaths[result.sourceKey] ?? [result.sourceKey]
                 let prefixEdges = zip(prefix, prefix.dropFirst()).compactMap { from, to in
                     graph.adjacency[from]?.first {
-                        $0.to == to && $0.physicalJunction != nil && $0.length == 0
+                        $0.to == to && $0.physicalJunction != nil
                             && RouteGraph.RailValidity.isValid(
                                 validFrom: $0.validFrom, validTo: $0.validTo, on: train.rideDate)
                     }
@@ -1692,7 +2098,8 @@ public enum RouteSolver {
         stations: Stations.Index,
         continuityAnchor: Coordinate? = nil,
         physicalContinuationKey: String? = nil,
-        traversalPolicy: TraversalPolicy = .physicalRail
+        traversalPolicy: TraversalPolicy = .physicalRail,
+        directionNetwork: RouteNetwork? = nil
     ) -> SolvedSection? {
         guard !Task.isCancelled else { return nil }
         guard let bbox = sectionEndpointBBox(
@@ -1701,7 +2108,7 @@ public enum RouteSolver {
             return solveSection(
                 section, segmentIndex: segmentIndex, train: train, country: country,
                 graph: graphStore.fullGraph(), stations: stations,
-                continuityAnchor: continuityAnchor, physicalContinuationKey: physicalContinuationKey, traversalPolicy: traversalPolicy)
+                continuityAnchor: continuityAnchor, physicalContinuationKey: physicalContinuationKey, traversalPolicy: traversalPolicy, directionNetwork: directionNetwork)
         }
         let straight = RouteGraph.bboxDiagonalMeters(bbox)
         let margins = [max(30_000, straight * 0.6), max(90_000, straight * 1.5)]
@@ -1713,7 +2120,7 @@ public enum RouteSolver {
                 routeSolveInProgress: true)
             if let result = solveSection(
                 section, segmentIndex: segmentIndex, train: train, country: country,
-                graph: graph, stations: stations, continuityAnchor: continuityAnchor, physicalContinuationKey: physicalContinuationKey, traversalPolicy: traversalPolicy)
+                graph: graph, stations: stations, continuityAnchor: continuityAnchor, physicalContinuationKey: physicalContinuationKey, traversalPolicy: traversalPolicy, directionNetwork: directionNetwork)
             {
                 lastResult = result
                 // A regional result is only trustworthy without checking wider
@@ -1736,7 +2143,7 @@ public enum RouteSolver {
         return solveSection(
             section, segmentIndex: segmentIndex, train: train, country: country,
             graph: graphStore.fullGraph(), stations: stations,
-            continuityAnchor: continuityAnchor, physicalContinuationKey: physicalContinuationKey, traversalPolicy: traversalPolicy) ?? lastResult
+            continuityAnchor: continuityAnchor, physicalContinuationKey: physicalContinuationKey, traversalPolicy: traversalPolicy, directionNetwork: directionNetwork) ?? lastResult
     }
 
     public static func completeRouteEndpointCoordinates(
@@ -1929,6 +2336,7 @@ public enum RouteSolver {
             }
             for (edgeIndex, edge) in (graph.adjacency[current.state.key] ?? []).enumerated() {
                 guard traversalPolicy.permits(edge),
+                    directionPermits(edge, hints: hints, graph: graph),
                     !hardInstitutionFilter
                     || edgeHasPreferredInstitution(edge, allowed: preferredCodes),
                     edgeMatchesRequiredHints(edge, hints: hints, traversalPolicy: traversalPolicy),

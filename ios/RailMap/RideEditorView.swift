@@ -98,15 +98,33 @@ struct RideEditorView: View {
     @State private var routeEditUndo: RailwayRouteEditing.Undo?
     @State private var routeEditSummary: String?
     @State private var routeGuideError = false
+    /// Last direction word written by inference. A matching field may be replaced.
+    @State private var autoInferredDirection: String?
+    @State private var directionBasisSeen = ""
+    /// Timetable apply owns `direction` for the draft change that follows.
+    @State private var holdOfficialDirection = false
+    /// The reader set Direction, including confirming the same word or clearing it.
+    @State private var userDirectionEdited = false
+    @State private var isRepairingRoute = false
+    @State private var routeRepairSummary: String?
+    @State private var routeRepairSnapshot: Train?
     @State private var routeCommitAfterDismiss: RouteCommit?
     @State private var routeUndoCatalogLineIDs: Set<String> = []
     /// The route choice in effect before the last apply. Undo restores it with
     /// the stops, so visits on the restored route still delete through the guide.
     @State private var routeUndoChoice: RailwayRouteChoices.Choice?
 
+    private struct RepairContinuation {
+        var remaining: [RouteRepairFlow.Step]
+        var repaired: Int
+        var gaps: [RouteRepairFlow.GapName]
+        var snapshot: Train
+    }
+
     private struct RouteCommit {
         let plan: RailwayRouteEditing.Plan
         let choice: RailwayRouteChoices.Choice
+        var continuation: RepairContinuation?
     }
 
     private struct RouteGuideRequest: Identifiable {
@@ -115,6 +133,8 @@ struct RideEditorView: View {
         var package: CompactPackage
         var excludedCodes: Set<String> = []
         var inferredChoices: [RailwayRouteChoices.Choice]?
+        var focus: (fromVisitID: UUID, toVisitID: UUID)?
+        var repairContinuation: RepairContinuation?
     }
 
     /// Cross-border journeys can carry station codes from more than one
@@ -238,7 +258,7 @@ struct RideEditorView: View {
                         // §5.4 uses the specific verb: 保存旅程, not 完成.
                         Button(localization.editorText("ios.editor.saveJourney")) {
                             guard blocking.isEmpty, draft.journeyGroup?.name.isEmpty != true else { return }
-                            onSave(draft)
+                            saveDraft()
                         }
                         .accessibilityIdentifier("rideEditorSave")
                         // §7.6: the primary action takes the one filled
@@ -387,6 +407,15 @@ struct RideEditorView: View {
             }
             acceptedRouteStopCodes = nil
             revalidate()
+            if holdOfficialDirection {
+                holdOfficialDirection = false
+                directionBasisSeen = directionBasis(after)
+            } else {
+                refreshAutoDirection()
+            }
+        }
+        .onChange(of: routeChoicesLoaded) { _, loaded in
+            if loaded { refreshAutoDirection(force: true) }
         }
         .onChange(of: draft.stops, initial: true) { _, _ in publishDraftMap() }
         .onChange(of: draft.date) { _, _ in publishDraftMap() }
@@ -471,17 +500,19 @@ struct RideEditorView: View {
     private func routeGuideSheet(_ request: RouteGuideRequest) -> some View {
         NavigationStack {
             if let choices = request.inferredChoices,
-               let fromID = request.train.stops.first?.routeEditing?.visitID,
-               let toID = request.train.stops.last?.routeEditing?.visitID {
+               let fromID = request.focus?.fromVisitID ?? request.train.stops.first?.routeEditing?.visitID,
+               let toID = request.focus?.toVisitID ?? request.train.stops.last?.routeEditing?.visitID {
                 RailwayRouteGuideView(train: request.train, package: request.package,
                     choices: choices, embeddedInNavigationStack: true,
-                    onPending: markRoutePending, isInferred: true) { selected in
+                    onPending: markRoutePending, isInferred: true,
+                    fromVisitID: fromID, toVisitID: toID) { selected in
                     proposeRouteChoice(selected, fromID: fromID, toID: toID)
                 }
             } else {
                 RailwayRouteCorrectionView(
                     train: request.train, package: request.package,
-                    excludedStationCodes: request.excludedCodes, onPending: markRoutePending
+                    excludedStationCodes: request.excludedCodes, focus: request.focus,
+                    onPending: markRoutePending
                 ) { choice, fromID, toID in
                     proposeRouteChoice(choice, fromID: fromID, toID: toID)
                 }
@@ -497,7 +528,7 @@ struct RideEditorView: View {
             }), titleVisibility: .visible, presenting: pendingRouteCommit
         ) { commit in
             Button(localization.editorText("ios.routeGuide.removeAndApply"), role: .destructive) {
-                commitRoutePlan(commit.plan, choice: commit.choice)
+                commitRoutePlan(commit.plan, choice: commit.choice, continuation: commit.continuation)
             }
             Button(localization.editorText("ios.editor.keepEditing"), role: .cancel) {
                 pendingRouteCommit = nil
@@ -591,6 +622,7 @@ struct RideEditorView: View {
             : trip.publishedStopsDraft(to: draft, ridden: ridden)
         else { return }
         resetRouteChoiceState()
+        holdOfficialDirection = true
         draft = applied
         selectedTimetableDate = trip.serviceDate
         limitedExpressName = trip.service.canonicalName
@@ -848,19 +880,23 @@ struct RideEditorView: View {
     }
 
     private func proposeRouteChoice(_ choice: RailwayRouteChoices.Choice, fromID: UUID, toID: UUID) {
+        let continuation = routeGuideRequest?.repairContinuation
         guard let plan = RailwayRouteEditing.plan(
             train: routeEditingDraft, choice: choice, fromVisitID: fromID, toVisitID: toID
         ) else { routeGuideError = true; return }
         if plan.requiresConfirmation {
-            pendingRouteCommit = RouteCommit(plan: plan, choice: choice)
+            pendingRouteCommit = RouteCommit(plan: plan, choice: choice, continuation: continuation)
         } else {
-            commitRoutePlan(plan, choice: choice)
+            commitRoutePlan(plan, choice: choice, continuation: continuation)
         }
     }
 
-    private func commitRoutePlan(_ plan: RailwayRouteEditing.Plan, choice: RailwayRouteChoices.Choice) {
+    private func commitRoutePlan(
+        _ plan: RailwayRouteEditing.Plan, choice: RailwayRouteChoices.Choice,
+        continuation: RepairContinuation? = nil
+    ) {
         // Let the guide leave first so the reader can see the list change.
-        routeCommitAfterDismiss = RouteCommit(plan: plan, choice: choice)
+        routeCommitAfterDismiss = RouteCommit(plan: plan, choice: choice, continuation: continuation)
         pendingRouteCommit = nil
         routeGuideRequest = nil
     }
@@ -895,6 +931,9 @@ struct RideEditorView: View {
         guard let commit = routeCommitAfterDismiss else { return }
         routeCommitAfterDismiss = nil
         applyRoutePlan(commit.plan, choice: commit.choice)
+        if let continuation = commit.continuation {
+            continueRepair(applied: 1, continuation)
+        }
     }
 
     private func applyRoutePlan(_ plan: RailwayRouteEditing.Plan, choice: RailwayRouteChoices.Choice) {
@@ -1013,7 +1052,7 @@ struct RideEditorView: View {
             } else {
                 Button {
                     guard blocking.isEmpty, draft.journeyGroup?.name.isEmpty != true else { return }
-                    onSave(draft)
+                    saveDraft()
                 } label: {
                     Text(dynamicTypeSize.isAccessibilitySize
                         ? localization.text("ios.save", fallback: "Save")
@@ -1336,8 +1375,14 @@ struct RideEditorView: View {
         Group {
             EditorTextField(
                 title: localization.countryText("field.direction", fallback: "Direction"),
-                text: optionalText(\.direction))
-
+                text: directionText,
+                onSubmit: { userDirectionEdited = true })
+            if showsAutoDirectionBadge, let word = localizedDirectionWord {
+                Text("\(word) · \(localization.editorText("ios.direction.auto"))")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .accessibilityIdentifier("rideEditorDirectionAuto")
+            }
         }
     }
 
@@ -1460,6 +1505,38 @@ struct RideEditorView: View {
             .disabled(isInferringRoute || routePackage == nil || draft.stops.count < 2
                 || draft.stops.contains { $0.n02StationCode == nil })
             .accessibilityIdentifier("rideEditorInferRoute")
+            if repairSpanCount > 0 {
+                Text(localization.editorText("ios.route.sectionsNeedRepair", [
+                    "n": .number(Double(repairSpanCount)),
+                ]))
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+                Button {
+                    repairRoute()
+                } label: {
+                    HStack {
+                        Label(localization.editorText("ios.route.repairRoute"), systemImage: "wrench.and.screwdriver")
+                        if isRepairingRoute { Spacer(); ProgressView() }
+                    }
+                }
+                .disabled(isRepairingRoute || routePackage == nil)
+                .accessibilityIdentifier("rideEditorRepairRoute")
+            }
+            if let routeRepairSummary {
+                Text(routeRepairSummary)
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .accessibilityIdentifier("rideEditorRepairSummary")
+            }
+            if let snapshot = routeRepairSnapshot, snapshot != draft {
+                Button(localization.editorText("ios.routeGuide.undo")) {
+                    draft = snapshot
+                    synchronizeStopIdentity()
+                    routeRepairSnapshot = nil
+                    routeRepairSummary = nil
+                }
+                .accessibilityIdentifier("rideEditorRepairUndo")
+            }
             guidedLineSelectionRow
             Button(localization.editorText("ios.routeGuide.keepPending"), action: markRoutePending)
                 .accessibilityIdentifier("rideEditorPendingRoute")
@@ -2172,10 +2249,178 @@ struct RideEditorView: View {
         draft.routeSections = sections
     }
 
+    private var showsAutoDirectionBadge: Bool {
+        let current = draft.direction?.trimmingCharacters(in: .whitespacesAndNewlines)
+        return current?.isEmpty == false && current == autoInferredDirection
+    }
+
+    private var localizedDirectionWord: String? {
+        switch draft.direction?.trimmingCharacters(in: .whitespacesAndNewlines) {
+        case "up": localization.editorText("ios.direction.up")
+        case "down": localization.editorText("ios.direction.down")
+        default: nil
+        }
+    }
+
+    private func directionBasis(_ train: Train) -> String {
+        var parts: [String] = []
+        for stop in train.stops {
+            parts.append("\(stop.n02StationCode ?? "")\u{1F}\(stop.name)")
+        }
+        parts.append("#")
+        for section in train.routeSections ?? [] {
+            let lines = (section.lineIDs ?? []).joined(separator: ",")
+            parts.append("\(section.fromN02StationCode ?? "")\u{1F}\(section.toN02StationCode ?? "")\u{1F}\(lines)")
+        }
+        return parts.joined(separator: "\u{1E}")
+    }
+
+    /// Writes an inferred word only when the field is empty or still the last
+    /// inferred word. A timetable apply sets `holdOfficialDirection` first.
+    /// A reader edit, including confirming the same word or clearing it, sticks.
+    private func refreshAutoDirection(force: Bool = false) {
+        guard !userDirectionEdited else { return }
+        guard let package = routePackage else { return }
+        let basis = directionBasis(draft)
+        if !force, basis == directionBasisSeen { return }
+        directionBasisSeen = basis
+        let inferred = TravelDirection.infer(train: draft, package: package)?.direction.rawValue
+        let current = draft.direction?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        guard current.isEmpty || current == autoInferredDirection else { return }
+        autoInferredDirection = inferred
+        if draft.direction != inferred {
+            draft.direction = inferred
+        }
+    }
+
+    private func saveDraft() {
+        if !userDirectionEdited {
+            let current = draft.direction?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+            if current.isEmpty, let package = routePackage,
+               let inferred = TravelDirection.infer(train: draft, package: package) {
+                draft.direction = inferred.direction.rawValue
+                autoInferredDirection = inferred.direction.rawValue
+            }
+        }
+        onSave(draft)
+    }
+
+    /// Stored gap indexes apply only when the draft still visits the same
+    /// stations, in order. A matching count is not the same ride.
+    private var repairStopsMatchOriginal: Bool {
+        draft.stops.count == original.stops.count
+            && zip(draft.stops, original.stops).allSatisfy { stop, stored in
+                stop.n02StationCode == stored.n02StationCode && stop.name == stored.name
+            }
+    }
+
+    private func repairGapMarks() -> [RouteRepair.Gap]? {
+        guard !isNew, repairStopsMatchOriginal,
+              case .needsReview(_, _, let gaps) = RideStatusCenter.shared.status(forTrainID: original.id)
+        else { return nil }
+        return gaps.map {
+            RouteRepair.Gap(segmentIndex: $0.segmentIndex, isBoundary: $0.isBoundary,
+                            station: $0.isBoundary ? $0.from : nil)
+        }
+    }
+
+    private var repairSpanCount: Int {
+        guard let marks = repairGapMarks() else { return 0 }
+        return RouteRepair.failingSpans(train: draft, gaps: marks).count
+    }
+
+    private func repairRoute() {
+        guard !isRepairingRoute, let package = routePackage, repairStopsMatchOriginal,
+              let marks = repairGapMarks(), !marks.isEmpty else { return }
+        let snapshot = draft
+        let prepared = routeEditingDraft
+        let stepped = RouteRepairFlow.steps(RouteRepair.failingSpans(train: prepared, gaps: marks), in: prepared)
+        isRepairingRoute = true
+        Task {
+            let codes = stepped.train.stops.compactMap(\.n02StationCode)
+            let aliases = await Task.detached(priority: .userInitiated) {
+                loadJourneyStationAliases(for: codes, package: package)
+            }.value
+            let advance = await Task.detached(priority: .userInitiated) {
+                RouteRepairFlow.advance(
+                    train: stepped.train, package: package, aliases: aliases, steps: stepped.steps)
+            }.value
+            isRepairingRoute = false
+            guard draft == snapshot else { return }
+            if advance.train != snapshot {
+                acceptedRouteStopCodes = advance.train.stops.map(\.n02StationCode)
+                draft = advance.train
+                synchronizeStopIdentity()
+            }
+            presentRepair(advance, repaired: advance.repaired, gaps: advance.gaps,
+                          snapshot: snapshot, package: package)
+        }
+    }
+
+    private func continueRepair(applied extra: Int, _ continuation: RepairContinuation) {
+        guard !isRepairingRoute, let package = routePackage else { return }
+        let snapshot = draft
+        let prepared = routeEditingDraft
+        let steps = continuation.remaining
+        let repairedBase = continuation.repaired + extra
+        let priorGaps = continuation.gaps
+        let repairSnapshot = continuation.snapshot
+        isRepairingRoute = true
+        Task {
+            let codes = prepared.stops.compactMap(\.n02StationCode)
+            let aliases = await Task.detached(priority: .userInitiated) {
+                loadJourneyStationAliases(for: codes, package: package)
+            }.value
+            let advance = await Task.detached(priority: .userInitiated) {
+                RouteRepairFlow.advance(
+                    train: prepared, package: package, aliases: aliases, steps: steps)
+            }.value
+            isRepairingRoute = false
+            guard draft == snapshot else { return }
+            if advance.train != prepared {
+                acceptedRouteStopCodes = advance.train.stops.map(\.n02StationCode)
+                draft = advance.train
+                synchronizeStopIdentity()
+            }
+            presentRepair(
+                advance, repaired: repairedBase + advance.repaired,
+                gaps: priorGaps + advance.gaps, snapshot: repairSnapshot, package: package)
+        }
+    }
+
+    private func presentRepair(
+        _ advance: RouteRepairFlow.Advance, repaired: Int, gaps: [RouteRepairFlow.GapName],
+        snapshot: Train, package: CompactPackage
+    ) {
+        routeRepairSnapshot = snapshot
+        routeRepairSummary = RouteRepairFlow.summary(
+            repaired: repaired, needsChoice: advance.pause == nil ? 0 : 1, gaps: gaps
+        ) { key, params in
+            localization.text(key, params: params)
+        }
+        guard let pause = advance.pause, !pause.choices.isEmpty else { return }
+        routeGuideRequest = RouteGuideRequest(
+            train: advance.train, package: package, inferredChoices: pause.choices,
+            focus: (pause.fromVisitID, pause.toVisitID),
+            repairContinuation: RepairContinuation(
+                remaining: pause.remaining, repaired: repaired, gaps: gaps, snapshot: snapshot))
+    }
+
     private func optionalText(_ keyPath: WritableKeyPath<Train, String?>) -> Binding<String> {
         Binding(
             get: { draft[keyPath: keyPath] ?? "" },
             set: { draft[keyPath: keyPath] = $0.isEmpty ? nil : $0 }
+        )
+    }
+
+    /// Any write counts, including the same word again or a clear.
+    private var directionText: Binding<String> {
+        Binding(
+            get: { draft.direction ?? "" },
+            set: { value in
+                userDirectionEdited = true
+                draft.direction = value.isEmpty ? nil : value
+            }
         )
     }
 }
@@ -3394,6 +3639,7 @@ private struct EditorTextField: View {
     var prompt: String?
     var focus: FocusState<RideDraftIssue.Field?>.Binding?
     var field: RideDraftIssue.Field?
+    var onSubmit: (() -> Void)? = nil
 
     var body: some View {
         EditorField(title: title) {
@@ -3408,6 +3654,7 @@ private struct EditorTextField: View {
     private var textField: some View {
         TextField(title, text: $text, prompt: Text(prompt ?? title))
             .labelsHidden()
+            .onSubmit { onSubmit?() }
     }
 }
 

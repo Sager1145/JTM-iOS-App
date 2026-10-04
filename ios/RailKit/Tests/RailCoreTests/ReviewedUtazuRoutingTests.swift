@@ -42,11 +42,15 @@ struct ReviewedUtazuRoutingTests {
             #expect(!junction.evidence.isEmpty)
             // This guard checks the reviewed evidence window only. It does
             // not claim either arm opened then or that earlier routes failed.
-            #expect(junction.validFrom == "2019-10-18")
+            // The eastern bypass keeps its reviewed 2019 evidence window; the
+            // station arm is dated from the JB Honshi opening of 児島–宇多津.
+            let start = junction.id == easternID ? "2019-10-18" : "1988-04-10"
+            let dayBefore = junction.id == easternID ? "2019-10-17" : "1988-04-09"
+            #expect(junction.validFrom == start)
             #expect(!RouteGraph.RailValidity.isValid(
-                validFrom: junction.validFrom, validTo: junction.validTo, on: "2019-10-17"))
+                validFrom: junction.validFrom, validTo: junction.validTo, on: dayBefore))
             #expect(RouteGraph.RailValidity.isValid(
-                validFrom: junction.validFrom, validTo: junction.validTo, on: "2019-10-18"))
+                validFrom: junction.validFrom, validTo: junction.validTo, on: start))
         }
         let independent = RouteGraph.build(from: sections, policy: .physicalRailway)
         let joined = RouteGraph.build(from: sections, policy: .physicalRailway, junctions: junctions)

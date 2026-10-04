@@ -8,8 +8,9 @@ import SwiftUI
 /// sheet, for the same two reasons the web app gives it: a reader cannot be
 /// expected to infer that a hollow ring means a train passed through without
 /// stopping, and the packages are used **under licences that require
-/// attribution** — MLIT's N02 under CC BY 4.0, Taiwan's open-data terms, the
-/// romaji under ODbL. A map that draws the data without naming it is not a
+/// attribution** — MLIT's N02 under CC BY 4.0, OpenStreetMap under ODbL,
+/// Taiwan's open-data terms, the romaji under ODbL. A map that draws the
+/// data without naming it is not a
 /// tidier map; it is one that has stopped meeting the condition it is drawn
 /// under.
 ///
@@ -110,11 +111,13 @@ struct MapInfoView: View {
     static let sources: [Source] = [
         Source(
             titleKey: "info.n02Title", titleFallback: "Japanese rail network",
-            bodyKey: "info.n02Body",
-            bodyFallback: "Processed from MLIT's National Land Numerical Information (N02).",
+            bodyKey: "ios.info.n02Body",
+            bodyFallback:
+                "Processed from MLIT's National Land Numerical Information (N02) and OpenStreetMap alignments.",
             links: [
                 .init(label: "MLIT N02", url: "https://nlftp.mlit.go.jp/ksj/"),
                 .init(label: "CC BY 4.0", url: "https://creativecommons.org/licenses/by/4.0/"),
+                .init(label: "OpenStreetMap (ODbL)", url: "https://www.openstreetmap.org/copyright"),
             ]),
         Source(
             titleKey: "info.twRailTitle", titleFallback: "Taiwanese rail network",

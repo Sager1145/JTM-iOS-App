@@ -1084,16 +1084,14 @@ final class RiddenRouteStore {
                                       lines: lines, provenance: .matchedGeometry)
     }
 
-    /// Proofs inspect only source features covering the recorded path. Feature
-    /// vertices are not clipped, so their qualified keys match the full graph.
+    /// Proofs inspect only source features within 1 km of the recorded path's
+    /// vertices — not the path's whole bbox, which for a long ride is most of
+    /// a country. Feature vertices are not clipped, so their qualified keys
+    /// match the full graph.
     private nonisolated static func physicalProofGraph(
         coordinates: [Coordinate], store: RouteGraph.RouteGraphStore
     ) -> RouteGraph.Graph {
-        let bbox = RouteGraph.BBox(
-            minX: coordinates.map(\.lon).min()!, minY: coordinates.map(\.lat).min()!,
-            maxX: coordinates.map(\.lon).max()!, maxY: coordinates.map(\.lat).max()!)
-        return store.regionalGraph(for: RouteGraph.padBBoxMeters(bbox, meters: 1_000),
-            routeSolveInProgress: true)
+        store.corridorGraph(for: coordinates, meters: 1_000)
     }
 
     private nonisolated static func physicalBoundaryIsProven(
@@ -1248,13 +1246,14 @@ final class RiddenRouteStore {
                         graphStore: graphStore!, stations: stationIndex,
                         continuityAnchor: anchor,
                         physicalContinuationKey: sharesBoundary ? physicalContinuationKey : nil,
-                        traversalPolicy: .physicalRail)
+                        traversalPolicy: .physicalRail, directionNetwork: displayNetwork)
                 if solved == nil, sharesBoundary {
                     // Keep independently proven sections visible. Failure to
                     // continue cannot certify a connected through journey.
                     solved = RouteSolver.solveSectionOnDemand(
                         section, segmentIndex: index, train: context, country: country,
-                        graphStore: graphStore!, stations: stationIndex, traversalPolicy: .physicalRail)
+                        graphStore: graphStore!, stations: stationIndex, traversalPolicy: .physicalRail,
+                        directionNetwork: displayNetwork)
                 }
                 try Task.checkCancellation()
                 if var solved, solved.coordinates.count >= 2 {

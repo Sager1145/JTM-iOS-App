@@ -108,6 +108,7 @@
         "ios/RailMap/NewTripView.swift",
         "ios/RailMap/RailwayRouteGuideView.swift",
         "ios/RailMap/RideEditorView.swift",
+        "ios/RailMap/RouteRepairFlow.swift",
         "ios/RailMap/StationPickerSearchController.swift",
         "ios/RailMap/TripStationSearchView.swift"
       ]
@@ -419,6 +420,7 @@
         "ios/RailKit/Sources/RailCore/RouteConfirmationRepair.swift",
         "ios/RailKit/Sources/RailCore/RouteFeature.swift",
         "ios/RailKit/Sources/RailCore/RouteGraph.swift",
+        "ios/RailKit/Sources/RailCore/RouteRepair.swift",
         "ios/RailKit/Sources/RailCore/RouteSectionServiceEditing.swift",
         "ios/RailKit/Sources/RailCore/RouteSolveLimiter.swift",
         "ios/RailKit/Sources/RailCore/RouteSolver.swift",
@@ -446,6 +448,7 @@
         "ios/RailKit/Sources/RailCore/TransferGuide.swift",
         "ios/RailKit/Sources/RailCore/TransferGuideText.swift",
         "ios/RailKit/Sources/RailCore/TransferGuideTrains.swift",
+        "ios/RailKit/Sources/RailCore/TravelDirection.swift",
         "ios/RailKit/Sources/RailCore/TripConnectivity.swift",
         "ios/RailKit/Sources/RailCore/TripRoutePlanner.swift",
         "ios/RailKit/Sources/RailCore/Visibility.swift"

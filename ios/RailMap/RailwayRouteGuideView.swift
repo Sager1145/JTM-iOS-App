@@ -14,6 +14,7 @@ struct RailwayRouteCorrectionView: View {
     private let train: Train
     private let package: CompactPackage
     private let excludedStationCodes: Set<String>
+    private let lockedFocus: Bool
     private let onApply: (Choice, UUID, UUID) -> Void
     private let onPending: (() -> Void)?
 
@@ -24,9 +25,11 @@ struct RailwayRouteCorrectionView: View {
     @State private var loadedSearch: SearchKey?
     @State private var session: Session?
     @State private var showingGuide = false
+    @State private var didAutoOpen = false
 
     init(
         train: Train, package: CompactPackage, excludedStationCodes: Set<String> = [],
+        focus: (fromVisitID: UUID, toVisitID: UUID)? = nil,
         onPending: (() -> Void)? = nil,
         onApply: @escaping (Choice, UUID, UUID) -> Void
     ) {
@@ -34,11 +37,12 @@ struct RailwayRouteCorrectionView: View {
         self.train = prepared
         self.package = package
         self.excludedStationCodes = excludedStationCodes
+        self.lockedFocus = focus != nil
         self.onPending = onPending
         self.onApply = onApply
         let mappedStops = prepared.stops.filter { $0.n02StationCode != nil }
-        _fromID = State(initialValue: mappedStops.first?.routeEditing?.visitID)
-        _toID = State(initialValue: mappedStops.last?.routeEditing?.visitID)
+        _fromID = State(initialValue: focus?.fromVisitID ?? mappedStops.first?.routeEditing?.visitID)
+        _toID = State(initialValue: focus?.toVisitID ?? mappedStops.last?.routeEditing?.visitID)
     }
 
     private var rows: [Endpoint] {
@@ -63,6 +67,7 @@ struct RailwayRouteCorrectionView: View {
 
     var body: some View {
         Form {
+            if !lockedFocus {
             Section {
                 Picker(localization.editorText("ios.editor.fromStation"), selection: $fromID) {
                     ForEach(rows.filter { $0.index < (rows.last?.index ?? 0) }) { row in
@@ -80,6 +85,7 @@ struct RailwayRouteCorrectionView: View {
                 Text(text("choosePortion"))
             } footer: {
                 Text(text(excludedStationCodes.isEmpty ? "portionHelp" : "avoidHelp"))
+            }
             }
 
             Section {
@@ -112,16 +118,23 @@ struct RailwayRouteCorrectionView: View {
             }
         }
         .onChange(of: fromID) { _, _ in
+            guard !lockedFocus else { return }
             if !destinationRows.contains(where: { $0.id == toID }) {
                 toID = destinationRows.last?.id
             }
+        }
+        .onChange(of: loadedSearch) { _, loaded in
+            guard lockedFocus, !didAutoOpen, loaded != nil, loaded == search, !foundChoices.isEmpty else { return }
+            didAutoOpen = true
+            openGuide()
         }
         .task(id: search) { await loadChoices() }
         .navigationDestination(isPresented: $showingGuide) {
             if let session {
                 RailwayRouteGuideView(
                     train: session.train, package: package, choices: session.choices,
-                    embeddedInNavigationStack: true, onCancel: { dismiss() }, onPending: onPending
+                    embeddedInNavigationStack: true, onCancel: { dismiss() }, onPending: onPending,
+                    fromVisitID: session.fromID, toVisitID: session.toID
                 ) { choice in
                     onApply(choice, session.fromID, session.toID)
                 }
@@ -283,6 +296,8 @@ struct RailwayRouteGuideView: View {
     private let onCancel: (() -> Void)?
     private let onPending: (() -> Void)?
     private let isInferred: Bool
+    private let fromVisitID: UUID?
+    private let toVisitID: UUID?
 
     @State private var step = 0
     @State private var confirmed: [String: String] = [:]
@@ -296,6 +311,8 @@ struct RailwayRouteGuideView: View {
         embeddedInNavigationStack: Bool = false, onCancel: (() -> Void)? = nil,
         onPending: (() -> Void)? = nil,
         isInferred: Bool = false,
+        fromVisitID: UUID? = nil,
+        toVisitID: UUID? = nil,
         onApply: @escaping (Choice) -> Void
     ) {
         // A single prepared snapshot gives every preview the same visit identity.
@@ -309,6 +326,8 @@ struct RailwayRouteGuideView: View {
         self.onCancel = onCancel
         self.onPending = onPending
         self.isInferred = isInferred
+        self.fromVisitID = fromVisitID
+        self.toVisitID = toVisitID
     }
 
     private var currentDecision: Decision? {
@@ -347,8 +366,8 @@ struct RailwayRouteGuideView: View {
         guard let choice = reviewChoice else { return nil }
         return RailwayRouteEditing.plan(
             train: train, choice: choice,
-            fromVisitID: train.stops.first?.routeEditing?.visitID,
-            toVisitID: train.stops.last?.routeEditing?.visitID)
+            fromVisitID: fromVisitID ?? train.stops.first?.routeEditing?.visitID,
+            toVisitID: toVisitID ?? train.stops.last?.routeEditing?.visitID)
     }
 
     var body: some View {

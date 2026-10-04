@@ -161,6 +161,9 @@ extension JourneyPresentation.PrimaryAction {
             .init(label: localization.journeyText(label),
                   systemImage: "arrow.triangle.2.circlepath",
                   short: localization.text("ios.journey.rebuildShort", fallback: "Rebuild"))
+        case .repairRoute:
+            .init(label: localization.journeyText(label),
+                  systemImage: "wrench.and.screwdriver")
         case .save:
             .init(label: localization.journeyText(label), systemImage: "checkmark")
         case .pause:

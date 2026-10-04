@@ -25,6 +25,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import { createRequire } from "node:module";
+import { fileURLToPath, pathToFileURL } from "node:url";
+import { spawnSync } from "node:child_process";
 
 export const name = "continuous-stroke.json";
 
@@ -970,6 +972,30 @@ export function build({ RailNetwork, railPackage, APP_DIR }) {
   for (const probe of SYNTHETIC)
     cases.push({ ...probe, expected: RailStroke.buildStroke(probe.points, probe) });
 
+  const arc = Array.from({length: 9}, (_, i) => [400 * Math.sin(i * 0.25), 400 * (1 - Math.cos(i * 0.25))]);
+  const probes = [
+    {note: "centripetal 400m radius / 100m chords", points: arc},
+    {note: "centripetal S curve", points: Array.from({length: 13}, (_, i) => [i * 100, 80 * Math.sin(i * Math.PI / 6)])},
+    {note: "hard Masuda-like reversal", points: [[0,0],[100,0],[200,0],[100,1],[0,1]]},
+    {note: "curved station by final measure", points: arc, anchors: [0,4,8]},
+    {note: "parallel lane on rounded centreline", points: arc, lane: 1},
+    {note: "tangent branch Hermite blend", points: [[0,0],[100,20],[200,45],[300,65],[500,100]],
+      joinStart: {lane:0,incoming:[1,0],outgoing:[1,0],mainTangent:[1,0],mainChain:[[-500,0],[0,0],[500,0]]}},
+    {note: "45 degree branch stays hard", points: [[0,0],[100,100],[200,200],[300,300]],
+      joinStart: {lane:0,incoming:[1,0],outgoing:[1,0],mainTangent:[1,0],mainChain:[[-500,0],[0,0],[500,0]]}},
+  ];
+  for (const probe of probes) {
+    const measures = [0];
+    for (let i = 1; i < probe.points.length; i++) measures.push(measures.at(-1) + Math.hypot(
+      probe.points[i][0] - probe.points[i-1][0], probe.points[i][1] - probe.points[i-1][1]));
+    const totalMetres = measures.at(-1);
+    const options = { ...probe, measures, totalMetres,
+      rows: probe.lane ? [{from:0,to:totalMetres,lane:probe.lane}] : [],
+      laneGapPx: 3, minRampPx: 24, cornerRadiusPx: 3.6, minCornerRadiusPx: 3,
+      enforceMinimumCornerRadius: true, anchors: probe.anchors || [0,probe.points.length-1] };
+    cases.push({...options, expected: RailStroke.buildStroke(probe.points, options)});
+  }
+
   // slices — RailStroke.sliceStroke() against a handful of the cases above,
   // chosen to cover: the whole part, a sub-metre span, a span inside a
   // fillet's curve, a span across a taper window, a span across a follow, a
@@ -1082,6 +1108,19 @@ export function build({ RailNetwork, railPackage, APP_DIR }) {
       "anchors are the offset of their own vertex and are never trimmed. " +
       "Pixel space in, pixel space out; the projection is pinned separately.",
     constants: {
+      CURVE_MERGE_LATERAL_PX: RailStroke.CURVE_MERGE_LATERAL_PX,
+      CURVE_PROTECT_PX: RailStroke.CURVE_PROTECT_PX,
+      CURVE_HARD_WINDOW_PX: RailStroke.CURVE_HARD_WINDOW_PX,
+      CURVE_FLATNESS_PX: RailStroke.CURVE_FLATNESS_PX,
+      CURVE_FACET_EDGE_PX: RailStroke.CURVE_FACET_EDGE_PX,
+      CURVE_MERGE_METRES: RailStroke.CURVE_MERGE_METRES,
+      CURVE_MERGE_LATERAL_METRES: RailStroke.CURVE_MERGE_LATERAL_METRES,
+      CURVE_MAX_STEP_DEGREES: RailStroke.CURVE_MAX_STEP_DEGREES,
+      CURVE_HARD_TURN_DEGREES: RailStroke.CURVE_HARD_TURN_DEGREES,
+      CURVE_MAX_DEVIATION_PX: RailStroke.CURVE_MAX_DEVIATION_PX,
+      CURVE_MAX_DEVIATION_METRES: RailStroke.CURVE_MAX_DEVIATION_METRES,
+      JOIN_MAX_TANGENT_DEGREES: RailStroke.JOIN_MAX_TANGENT_DEGREES,
+      JOIN_BLEND_METRES: RailStroke.JOIN_BLEND_METRES,
       LANE_RAMP_HALF_WIDTH_METRES: RailStroke.LANE_RAMP_HALF_WIDTH_METRES,
       LANE_PLATEAU_MIN_METRES: RailStroke.LANE_PLATEAU_MIN_METRES,
       LANE_JOIN_EXTENT_METRES: RailStroke.LANE_JOIN_EXTENT_METRES,
@@ -1109,4 +1148,11 @@ export function build({ RailNetwork, railPackage, APP_DIR }) {
     familyPartitions,
     clipsToComplement,
   };
+}
+
+// Direct CLI supports regeneration and --check for this fixture only.
+if (process.argv[1] && pathToFileURL(path.resolve(process.argv[1])).href === import.meta.url) {
+  const driver = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../build-port-fixtures.mjs");
+  const result = spawnSync(process.execPath, [driver, "--only=continuous-stroke.json", ...process.argv.slice(2)], {stdio: "inherit"});
+  process.exitCode = result.status ?? 1;
 }

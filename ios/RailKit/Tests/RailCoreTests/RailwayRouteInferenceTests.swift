@@ -135,7 +135,9 @@ struct RailwayRouteInferenceTests {
         let result = RailwayRouteInference.search(in: draft, package: package)
         #expect(result.choices.first?.lineIDs == ["Branch"])
         #expect(!result.topologyIsComplete)
+        #expect(result.relaxedLineConstraints)
         #expect(result.uniqueChoice == nil)
+        #expect(RailwayRouteInference.choice(in: draft, package: package) == nil)
         draft.routeSections?[0].operatorNames = ["Other"]
         #expect(RailwayRouteInference.search(in: draft, package: package).choices.isEmpty)
     }
@@ -203,8 +205,8 @@ struct RailwayRouteInferenceTests {
         #expect(result.choices.count == 1)
         #expect(!result.isTruncated)
         #expect(!result.topologyIsComplete)
-        #expect(result.uniqueChoice == nil)
-        #expect(RailwayRouteInference.choice(in: train(["A", "D"]), package: package) == nil)
+        #expect(result.uniqueChoice != nil)
+        #expect(RailwayRouteInference.choice(in: train(["A", "D"]), package: package) != nil)
     }
 
     @Test("Super Oki and Shirasagi infer routes using real N02 station-group aliases")
@@ -271,6 +273,8 @@ struct RailwayRouteInferenceTests {
             "20260704_08_shonan_shinjuku_line", "20260726_09_shonan_shinjuku_yokohama"]
         var checkedIDs: Set<String> = []
         var emptyIDs: [String] = []
+        var autoCompleteCount = 0
+        var guideCount = 0
         for train in store.trains where train.region == "jp"
             && train.stops.allSatisfy({ !($0.n02StationCode ?? "").isEmpty }) {
             let codes = train.stops.compactMap(\.n02StationCode)
@@ -281,6 +285,8 @@ struct RailwayRouteInferenceTests {
             let result = RailwayRouteInference.search(in: train, package: package, stationAliases: aliases,
                 maximumExpansions: 200_000)
             checkedIDs.insert(train.id)
+            if result.uniqueChoice != nil { autoCompleteCount += 1 }
+            else if !result.choices.isEmpty { guideCount += 1 }
             if result.choices.isEmpty {
                 emptyIDs.append(train.id)
                 print("Zero-choice \(train.id), truncated: \(result.isTruncated)")
@@ -290,6 +296,7 @@ struct RailwayRouteInferenceTests {
             }
         }
         #expect(requiredIDs.isSubset(of: checkedIDs))
+        print("Auto-complete: \(autoCompleteCount); guide: \(guideCount)")
         print("Japanese sample rides checked: \(checkedIDs.count); zero-choice rides: \(emptyIDs.sorted().joined(separator: ", "))")
     }
 

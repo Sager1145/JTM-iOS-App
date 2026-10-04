@@ -21,6 +21,20 @@ enum EditorStrings {
 
     static let table: [String: [Localization.Language: String]] = [
 
+        "ios.direction.up": [
+            .zhHans: "上行", .zhHant: "上行", .ja: "上り", .en: "Up",
+        ],
+        "ios.direction.down": [
+            .zhHans: "下行", .zhHant: "下行", .ja: "下り", .en: "Down",
+        ],
+        "ios.direction.auto": [
+            .zhHans: "自动", .zhHant: "自動", .ja: "自動", .en: "Auto",
+        ],
+        "ios.route.sectionsNeedRepair": [
+            .zhHans: "{n} 个区间需要修复", .zhHant: "{n} 個區間需要修復",
+            .ja: "修復が必要な区間が {n} あります", .en: "{n} sections need repair",
+        ],
+
         "ios.editor.generatedStation": [
             .zhHans: "自动填入", .zhHant: "自動填入",
             .ja: "自動入力", .en: "Automatically filled",

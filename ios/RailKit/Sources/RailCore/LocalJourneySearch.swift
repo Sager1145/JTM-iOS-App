@@ -11,10 +11,30 @@ public enum LocalJourneySearch {
         /// compact-v1 provides interval order but no audited network junctions
         /// or declaration that every possible physical route is represented.
         public let topologyIsComplete: Bool
+        /// Recorded stop order establishes the train's travel direction.
+        public let directionIsKnown: Bool
+        /// The choices exist only because recorded line names and ids were
+        /// dropped. They stay on the route guide and do not auto-complete.
+        public let relaxedLineConstraints: Bool
+        /// Uniqueness within the searched package graph, not complete real-world
+        /// topology. Applying a proposal remains undoable.
+        public var isUniqueWithinPackage: Bool { !isTruncated && choices.count == 1 }
         public var hasAmbiguity: Bool { choices.count > 1 }
         public var uniqueChoice: RailwayRouteChoices.Choice? {
-            guard topologyIsComplete, !isTruncated, choices.count == 1 else { return nil }
+            guard directionIsKnown, isUniqueWithinPackage, !relaxedLineConstraints else { return nil }
             return choices.first
+        }
+
+        public init(
+            choices: [RailwayRouteChoices.Choice], isTruncated: Bool,
+            topologyIsComplete: Bool, directionIsKnown: Bool,
+            relaxedLineConstraints: Bool = false
+        ) {
+            self.choices = choices
+            self.isTruncated = isTruncated
+            self.topologyIsComplete = topologyIsComplete
+            self.directionIsKnown = directionIsKnown
+            self.relaxedLineConstraints = relaxedLineConstraints
         }
     }
 
@@ -73,7 +93,7 @@ public enum LocalJourneySearch {
             return choice
         }
         func result(_ choices: [RailwayRouteChoices.Choice] = [], truncated: Bool = false) -> Result {
-            Result(choices: choices.map(restoreAnchors), isTruncated: truncated, topologyIsComplete: false)
+            Result(choices: choices.map(restoreAnchors), isTruncated: truncated, topologyIsComplete: false, directionIsKnown: false)
         }
         guard maximumChoices > 0, maximumExpansions > 0 else { return result(truncated: true) }
         guard originCode != destinationCode,
@@ -202,7 +222,16 @@ public enum LocalJourneySearch {
                 var cycle = false
                 while let id = cursor {
                     let prior = edges[records[id].edge]
-                    if prior.from == edge.to || prior.to == edge.to
+                    // A different row's origin occurrence must not permit an
+                    // unrequested loop back to the start before the next anchor.
+                    // Later anchored returns and repeated visits within a row
+                    // retain their occurrence-specific semantics.
+                    let crossRowOriginRevisit = prior.row != edge.row
+                        && record.anchorIndex == 0
+                        && nodes[edge.to].station.id == originCode
+                        && (nodes[prior.from].station.id == originCode
+                            || nodes[prior.to].station.id == originCode)
+                    if crossRowOriginRevisit || prior.from == edge.to || prior.to == edge.to
                         || (edge.row != arrived.row && (prior.from == edge.from || prior.to == edge.from)) {
                         cycle = true
                         break

@@ -556,10 +556,16 @@ public enum TrainServicePatterns {
             result.number = pattern.name
         }
         let trimmedTrainType = (result.trainType ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
-        if trimmedTrainType.isEmpty || trimmedTrainType == "特急" || trimmedTrainType == "寝台特急" {
-            result.trainType =
-                pattern.name.contains("サンライズ") || pattern.name.contains("瑞風")
-                ? "寝台特急" : "特急"
+        if trimmedTrainType.isEmpty || ["特急", "寝台特急", "新幹線"].contains(trimmedTrainType) {
+            // Route metadata distinguishes shared historical service names such as はくたか.
+            // Mini-shinkansen retain conventional-track access through the default soft filter.
+            if pattern.lines.contains(where: { $0.contains("新幹線") }) {
+                result.trainType = "新幹線"
+            } else {
+                result.trainType =
+                    pattern.name.contains("サンライズ") || pattern.name.contains("瑞風")
+                    ? "寝台特急" : "特急"
+            }
         }
         let trimmedCompany = (result.company ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
         if pattern.id.hasPrefix("timetable:")

@@ -35,6 +35,8 @@ struct ContinuousStrokeParityTests {
             let lane: Double
             let incoming: [Double]
             let outgoing: [Double]
+            let mainTangent: [Double]?
+            let mainChain: [[Double]]?
         }
         struct Case: Decodable {
             let note: String
@@ -84,6 +86,19 @@ struct ContinuousStrokeParityTests {
             let expected: [[Double]]
         }
         struct Constants: Decodable {
+            let CURVE_MERGE_LATERAL_PX: Double
+            let CURVE_PROTECT_PX: Double
+            let CURVE_HARD_WINDOW_PX: Double
+            let CURVE_FLATNESS_PX: Double
+            let CURVE_FACET_EDGE_PX: Double
+            let CURVE_MERGE_METRES: Double
+            let CURVE_MERGE_LATERAL_METRES: Double
+            let CURVE_MAX_STEP_DEGREES: Double
+            let CURVE_HARD_TURN_DEGREES: Double
+            let CURVE_MAX_DEVIATION_PX: Double
+            let CURVE_MAX_DEVIATION_METRES: Double
+            let JOIN_MAX_TANGENT_DEGREES: Double
+            let JOIN_BLEND_METRES: Double
             let LANE_RAMP_HALF_WIDTH_METRES: Double
             let LANE_PLATEAU_MIN_METRES: Double
             let FOLLOW_BLEND_METRES: Double
@@ -158,7 +173,9 @@ struct ContinuousStrokeParityTests {
         return ContinuousStroke.Join(
             lane: join.lane,
             incoming: ContinuousStroke.Point(x: join.incoming[0], y: join.incoming[1]),
-            outgoing: ContinuousStroke.Point(x: join.outgoing[0], y: join.outgoing[1]))
+            outgoing: ContinuousStroke.Point(x: join.outgoing[0], y: join.outgoing[1]),
+            mainTangent: join.mainTangent.map { .init(x: $0[0], y: $0[1]) },
+            mainChain: (join.mainChain ?? []).map { .init(x: $0[0], y: $0[1]) })
     }
 
     /// The options one fixture case asks for, in one place: every test below
@@ -403,6 +420,19 @@ struct ContinuousStrokeParityTests {
             ContinuousStroke.strokeSimplifyTolerancePx == c.STROKE_SIMPLIFY_TOLERANCE_PX)
         #expect(ContinuousStroke.miterLimit == c.MITER_LIMIT)
         #expect(ContinuousStroke.laneJoinExtentMetres == c.LANE_JOIN_EXTENT_METRES)
+        #expect(ContinuousStroke.curveMergeLateralPx == c.CURVE_MERGE_LATERAL_PX)
+        #expect(ContinuousStroke.curveProtectPx == c.CURVE_PROTECT_PX)
+        #expect(ContinuousStroke.curveHardWindowPx == c.CURVE_HARD_WINDOW_PX)
+        #expect(ContinuousStroke.curveFlatnessPx == c.CURVE_FLATNESS_PX)
+        #expect(ContinuousStroke.curveFacetEdgePx == c.CURVE_FACET_EDGE_PX)
+        #expect(ContinuousStroke.curveMergeMetres == c.CURVE_MERGE_METRES)
+        #expect(ContinuousStroke.curveMergeLateralMetres == c.CURVE_MERGE_LATERAL_METRES)
+        #expect(ContinuousStroke.curveMaxStepDegrees == c.CURVE_MAX_STEP_DEGREES)
+        #expect(ContinuousStroke.curveHardTurnDegrees == c.CURVE_HARD_TURN_DEGREES)
+        #expect(ContinuousStroke.curveMaxDeviationPx == c.CURVE_MAX_DEVIATION_PX)
+        #expect(ContinuousStroke.curveMaxDeviationMetres == c.CURVE_MAX_DEVIATION_METRES)
+        #expect(ContinuousStroke.joinMaxTangentDegrees == c.JOIN_MAX_TANGENT_DEGREES)
+        #expect(ContinuousStroke.joinBlendMetres == c.JOIN_BLEND_METRES)
     }
 
     @Test func projectionRoundTrips() throws {

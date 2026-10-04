@@ -169,6 +169,19 @@
   // Offsetting a vertex along its bisector scales the offset by 1/cos(θ/2).
   // Past this factor the corner is sharp enough that a mitre would spike;
   // the offset is clamped and the fillet pass rounds what is left.
+  const CURVE_MAX_STEP_DEGREES = 2;
+  const CURVE_FLATNESS_PX = 0.1;
+  const CURVE_FACET_EDGE_PX = 2;
+  const CURVE_HARD_TURN_DEGREES = 60;
+  const CURVE_MAX_DEVIATION_PX = 1;
+  const CURVE_MAX_DEVIATION_METRES = 8;
+  const CURVE_MERGE_METRES = 5;
+  const CURVE_MERGE_LATERAL_METRES = 1;
+  const JOIN_MAX_TANGENT_DEGREES = 30;
+  const JOIN_BLEND_METRES = 300;
+  const JOIN_BLEND_INTERVAL_FRACTION = 0.4;
+  const JOIN_BLEND_DEVIATION_PX = 1;
+  const JOIN_BLEND_DEVIATION_METRES = 10;
   const MITER_LIMIT = 2.5;
   // Two vertices closer than this, in pixels, are one vertex.
   const DEGENERATE_EDGE_PX = 1e-6;
@@ -1643,6 +1656,34 @@
   // searching the whole line) also keeps this from snapping to an
   // unrelated, nearer part of a line that loops back on itself. Returns
   // null only if `polyline` has fewer than two points.
+  function nextUp(x) { const b = new Float64Array([x]), u = new BigUint64Array(b.buffer); u[0] += x >= 0 ? 1n : -1n; return b[0]; }
+  function nextDown(x) { const b = new Float64Array([x]), u = new BigUint64Array(b.buffer); u[0] += x > 0 ? -1n : 1n; return b[0]; }
+  // A point on the nearest segment that distanceToPolyline reads as exactly 0
+  // (projection arithmetic is not idempotent); paired with RailCore.
+  function exactlyOnPolyline(target, polyline) {
+    let bestIndex = -1, bestT = 0, bestDistance = Infinity;
+    for (let index = 0; index + 1 < polyline.length; index++) {
+      const a = polyline[index], b = polyline[index + 1];
+      const dx = b[0] - a[0], dy = b[1] - a[1], square = dx * dx + dy * dy;
+      let t = square > 0 ? ((target[0] - a[0]) * dx + (target[1] - a[1]) * dy) / square : 0;
+      t = Math.max(0, Math.min(1, t));
+      const held = Math.hypot(target[0] - a[0] - dx * t, target[1] - a[1] - dy * t);
+      if (held < bestDistance) { bestDistance = held; bestIndex = index; bestT = t; }
+    }
+    if (bestIndex < 0) return target;
+    const a = polyline[bestIndex], b = polyline[bestIndex + 1];
+    const at = (t) => { const c = Math.min(1, Math.max(0, t)); return [a[0] + (b[0] - a[0]) * c, a[1] + (b[1] - a[1]) * c]; };
+    let fallback = at(bestT), fallbackDistance = distanceToPolyline(fallback, polyline);
+    let up = bestT, down = bestT;
+    for (let k = 0; k < 64 && fallbackDistance > 0; k++) {
+      for (const t of [nextUp(up), nextDown(down)]) {
+        const q = at(t), d = distanceToPolyline(q, polyline);
+        if (d < fallbackDistance) { fallback = q; fallbackDistance = d; }
+      }
+      up = nextUp(up); down = nextDown(down);
+    }
+    return fallback;
+  }
   function nearestOnMeasureSpan(target, polyline, measures, mLo, mHi) {
     const lo = Math.min(mLo, mHi);
     const hi = Math.max(mLo, mHi);
@@ -1706,6 +1747,180 @@
    *                no borrowed alignment can move it. See laneProfile(),
    *                offsetPolyline() and substituteFollows().
    */
+  function tangentJoin(points, mainChain, atEnd, lane) {
+    if (points.length < 2 || mainChain.length < 3) return null;
+    const endpoint = atEnd ? points.at(-1) : points[0];
+    const index = mainChain.findIndex(p => p[0] === endpoint[0] && p[1] === endpoint[1]);
+    if (index <= 0 || index + 1 >= mainChain.length) return null;
+    const a = mainChain[index - 1], b = mainChain[index + 1];
+    const size = Math.hypot(b[0] - a[0], b[1] - a[1]);
+    if (!(size > DEGENERATE_EDGE_PX)) return null;
+    const tangent = [(b[0] - a[0]) / size, (b[1] - a[1]) / size];
+    const branch = atEnd ? [endpoint[0] - points.at(-2)[0], endpoint[1] - points.at(-2)[1]]
+      : [points[1][0] - endpoint[0], points[1][1] - endpoint[1]];
+    if (vectorAngle(branch, tangent) > JOIN_MAX_TANGENT_DEGREES) return null;
+    return {lane, incoming: tangent, outgoing: tangent, mainTangent: tangent, mainChain};
+  }
+  const CURVE_HARD_WINDOW_PX = 3;
+  const CURVE_PROTECT_PX = 12;
+  // Vertices within CURVE_PROTECT_PX of a hard turn (and at least two on each
+  // side) stay out of the pre-fillet simplification.
+  function protectAround(points, i, out) {
+    for (const dir of [-1, 1]) {
+      let used = 0, count = 0;
+      for (let j = i; j >= 0 && j < points.length; j += dir) {
+        out.add(j);
+        const k = j + dir;
+        if (k < 0 || k >= points.length) break;
+        used += Math.hypot(points[k][0] - points[j][0], points[k][1] - points[j][1]);
+        if (++count >= 2 && used > CURVE_PROTECT_PX) break;
+      }
+    }
+  }
+  const CURVE_MERGE_LATERAL_PX = 0.1;
+  function windowedTurn(p, i) {
+    let sum = turnAt(p, i);
+    let lo = i - 1, used = Math.hypot(p[i][0] - p[i - 1][0], p[i][1] - p[i - 1][1]);
+    while (lo >= 1 && used < CURVE_HARD_WINDOW_PX) {
+      sum += turnAt(p, lo);
+      used += Math.hypot(p[lo][0] - p[lo - 1][0], p[lo][1] - p[lo - 1][1]); lo--;
+    }
+    let hi = i + 1; used = Math.hypot(p[i + 1][0] - p[i][0], p[i + 1][1] - p[i][1]);
+    while (hi + 1 < p.length && used < CURVE_HARD_WINDOW_PX) {
+      sum += turnAt(p, hi);
+      used += Math.hypot(p[hi + 1][0] - p[hi][0], p[hi + 1][1] - p[hi][1]); hi++;
+    }
+    return sum;
+  }
+  // Rendering-only centripetal (alpha=0.5) centreline, paired with RailCore.
+  function smoothCentreline(points, measures, anchorMeasures = []) {
+    if (points.length < 4 || measures.length !== points.length) return { points, measures };
+    const length = cumulativeLengths(points).at(-1) || 0;
+    const metres = measures.at(-1) - measures[0];
+    const metresPerPx = length > 0 && metres > 0 ? metres / length : 1;
+    const kept = [0];
+    for (let i = 1; i + 1 < points.length; i++) {
+      const previous = kept.at(-1);
+      const short = Math.min(measures[i] - measures[previous], measures[i + 1] - measures[i]) < CURVE_MERGE_METRES;
+      const lateral = distanceToPolyline(points[i], [points[previous], points[i + 1]]) * metresPerPx;
+      let nearHard = false;
+      for (let j = Math.max(1, i - 2); j <= Math.min(points.length - 2, i + 2); j++)
+        if (Math.abs(windowedTurn(points, j)) > Math.PI * CURVE_HARD_TURN_DEGREES / 180) nearHard = true;
+      const isAnchor = anchorMeasures.some(a => Math.abs(a - measures[i]) < 1e-9);
+      if (short && lateral <= CURVE_MERGE_LATERAL_METRES && lateral / metresPerPx <= CURVE_MERGE_LATERAL_PX && !nearHard && !isAnchor) continue;
+      kept.push(i);
+    }
+    kept.push(points.length - 1);
+    const p = kept.map(i => points[i]), m = kept.map(i => measures[i]);
+    if (p.length < 4) return { points, measures };
+    const hard = p.map((_, i) => i === 0 || i === p.length - 1 || Math.abs(windowedTurn(p, i)) > CURVE_HARD_TURN_DEGREES * Math.PI / 180);
+    const out = [p[0]], outMeasures = [m[0]];
+    let runStart = 0;
+    while (runStart + 1 < p.length) {
+      let runEnd = runStart + 1;
+      while (runEnd + 1 < p.length && !hard[runEnd]) runEnd++;
+      for (let i = runStart; i < runEnd; i++) {
+        const a = p[i], b = p[i + 1];
+        if (runEnd - runStart < 3 || (runStart > 0 && i === runStart) || (runEnd + 1 < p.length && i + 1 === runEnd)) { out.push(b); outMeasures.push(m[i + 1]); continue; }
+        const before = i > runStart ? p[i - 1] : [2 * a[0] - b[0], 2 * a[1] - b[1]];
+        const after = i + 1 < runEnd ? p[i + 2] : [2 * b[0] - a[0], 2 * b[1] - a[1]];
+        const d0 = Math.sqrt(Math.hypot(a[0] - before[0], a[1] - before[1]));
+        const d1 = Math.sqrt(Math.hypot(b[0] - a[0], b[1] - a[1]));
+        const d2 = Math.sqrt(Math.hypot(after[0] - b[0], after[1] - b[1]));
+        if (!(Math.min(d0, d1, d2) > DEGENERATE_EDGE_PX)) { out.push(b); outMeasures.push(m[i + 1]); continue; }
+        const tangent = (v0, v1, v2, left, right) => (v1 - v0) / left - (v2 - v0) / (left + right) + (v2 - v1) / right;
+        const t0 = [d1 * tangent(before[0], a[0], b[0], d0, d1), d1 * tangent(before[1], a[1], b[1], d0, d1)];
+        const t1 = [d1 * tangent(a[0], b[0], after[0], d1, d2), d1 * tangent(a[1], b[1], after[1], d1, d2)];
+        const edge = Math.hypot(b[0] - a[0], b[1] - a[1]);
+        const curve = sampleCubic(a, b, t0, t1);
+        const allowance = Math.max(CURVE_MAX_DEVIATION_PX, CURVE_MAX_DEVIATION_METRES / metresPerPx);
+        const survey = points.slice(kept[i], kept[i + 1] + 1);
+        if (curve.some(p => distanceToPolyline(p, survey) > allowance)) { out.push(b); outMeasures.push(m[i + 1]); continue; }
+        for (let j = 1; j < curve.length; j++) {
+          out.push(curve[j]); outMeasures.push(m[i] + (m[i + 1] - m[i]) * j / (curve.length - 1));
+        }
+      }
+      runStart = runEnd;
+    }
+    return { points: out, measures: outMeasures };
+  }
+  function cubicPoint(a, b, ta, tb, u) {
+    const u2 = u * u, u3 = u2 * u;
+    const h1 = u3 - 2 * u2 + u, h2 = -2 * u3 + 3 * u2, h3 = u3 - u2;
+    return [a[0] + h2 * (b[0] - a[0]) + h1 * ta[0] + h3 * tb[0],
+      a[1] + h2 * (b[1] - a[1]) + h1 * ta[1] + h3 * tb[1]];
+  }
+  function vectorAngle(a, b) {
+    const size = Math.hypot(...a) * Math.hypot(...b);
+    return size > 1e-18 ? Math.acos(Math.max(-1, Math.min(1, (a[0] * b[0] + a[1] * b[1]) / size))) * 180 / Math.PI : 0;
+  }
+  function sampleCubic(a, b, ta, tb) {
+    let samples = 1;
+    for (;;) {
+      const curve = Array.from({ length: samples + 1 }, (_, k) => cubicPoint(a, b, ta, tb, k / samples));
+      curve[0] = a; curve[samples] = b;
+      let visible = false;
+      for (let k = 0; k < samples && !visible; k++) {
+        const mid = cubicPoint(a, b, ta, tb, (k + 0.5) / samples);
+        if (distanceToPolyline(mid, [curve[k], curve[k + 1]]) > CURVE_FLATNESS_PX) visible = true;
+      }
+      if (!visible) {
+        const edge = (i) => Math.hypot(curve[i + 1][0] - curve[i][0], curve[i + 1][1] - curve[i][1]);
+        const startTurn = 2 * vectorAngle(ta, [curve[1][0] - a[0], curve[1][1] - a[1]]);
+        const endTurn = 2 * vectorAngle(tb, [b[0] - curve[samples - 1][0], b[1] - curve[samples - 1][1]]);
+        if ((startTurn > CURVE_MAX_STEP_DEGREES && edge(0) > CURVE_FACET_EDGE_PX)
+          || (endTurn > CURVE_MAX_STEP_DEGREES && edge(samples - 1) > CURVE_FACET_EDGE_PX)) visible = true;
+        for (let i = 1; i < samples && !visible; i++)
+          if (Math.abs(turnAt(curve, i)) * 180 / Math.PI > CURVE_MAX_STEP_DEGREES
+            && edge(i - 1) > CURVE_FACET_EDGE_PX && edge(i) > CURVE_FACET_EDGE_PX) visible = true;
+      }
+      if (!visible || samples >= 256) return curve;
+      samples *= 2;
+    }
+  }
+  function pointAtMeasure(points, measures, measure) {
+    if (points.length < 2) return points[0] || [0, 0];
+    if (measure <= measures[0]) return points[0];
+    if (measure >= measures.at(-1)) return points.at(-1);
+    let lo = 0, hi = points.length - 1;
+    while (lo + 1 < hi) { const mid = Math.floor((lo + hi) / 2); if (measures[mid] <= measure) lo = mid; else hi = mid; }
+    const span = measures[hi] - measures[lo], u = span > 0 ? (measure - measures[lo]) / span : 0;
+    return [points[lo][0] + (points[hi][0] - points[lo][0]) * u, points[lo][1] + (points[hi][1] - points[lo][1]) * u];
+  }
+  function blendJunction(points, measures, join, atEnd, intervalMetres, gap) {
+    if (!join?.mainTangent || points.length < 2) return { points, measures };
+    const p = atEnd ? points.slice().reverse() : points;
+    const base = measures[0], end = measures.at(-1);
+    const m = atEnd ? measures.slice().reverse().map(v => end - v) : measures.map(v => v - base);
+    const direction = atEnd ? join.mainTangent.map(v => -v) : join.mainTangent;
+    if (vectorAngle(direction, [p[1][0] - p[0][0], p[1][1] - p[0][1]]) > JOIN_MAX_TANGENT_DEGREES) return { points, measures };
+    const length = cumulativeLengths(p).at(-1) || 0, metresPerPx = length > 0 ? m.at(-1) / length : 1;
+    let d = Math.min(JOIN_BLEND_METRES, JOIN_BLEND_INTERVAL_FRACTION * intervalMetres);
+    if (join.mainChain?.length >= 2) for (let i = 1; i < p.length && m[i] <= d; i++) {
+      if (distanceToPolyline(p[i], join.mainChain) > Math.max(Math.abs(gap), DEGENERATE_EDGE_PX)) { d = Math.min(d, m[i]); break; }
+    }
+    const allowance = Math.max(JOIN_BLEND_DEVIATION_PX, JOIN_BLEND_DEVIATION_METRES / Math.max(metresPerPx, DEGENERATE_EDGE_PX));
+    while (d > 0.01) {
+      const finish = pointAtMeasure(p, m, d);
+      const before = pointAtMeasure(p, m, Math.max(0, d - Math.min(1, d * 0.01)));
+      const after = pointAtMeasure(p, m, Math.min(m.at(-1), d + Math.min(1, d * 0.01)));
+      const delta = [after[0] - before[0], after[1] - before[1]], norm = Math.hypot(...delta), mainNorm = Math.hypot(...direction);
+      if (!(norm > DEGENERATE_EDGE_PX && mainNorm > DEGENERATE_EDGE_PX)) break;
+      const scale = d / Math.max(metresPerPx, DEGENERATE_EDGE_PX);
+      const ta = direction.map(v => v / mainNorm * scale), tb = delta.map(v => v / norm * scale);
+      const curve = sampleCubic(p[0], finish, ta, tb);
+      const source = sliceStroke(p, m, 0, d);
+      if (source.length >= 2 && curve.every(p => distanceToPolyline(p, source) <= allowance)) {
+        const out = curve.slice(), outM = curve.map((_, i) => d * i / (curve.length - 1));
+        for (let i = 0; i < p.length; i++) if (m[i] > d) { out.push(p[i]); outM.push(m[i]); }
+        return atEnd ? { points: out.reverse(), measures: outM.reverse().map(v => end - v) }
+          : { points: out, measures: outM.map(v => base + v) };
+      }
+      d *= 0.5;
+    }
+    return { points, measures };
+  }
+
   function buildStroke(points, options) {
     const opts = options || {};
     if (!Array.isArray(points) || points.length < 2) {
@@ -1760,11 +1975,16 @@
     // The one global ratio still used: for the pixel floors of the taper
     // windows and the lane ramp, where a tenth either way is nothing.
     const metresPerPx = cleanTotalPx > 0 && totalMetres > 0 ? totalMetres / cleanTotalPx : 0;
+    const curvedFollows = (opts.follows || []).map(follow => {
+      if (opts.curveCentreline === false || !(Number(opts.cornerRadiusPx) > 0)) return follow;
+      const simplified = simplifyForFillet(follow.points, follow.measures, new Set(), STROKE_SIMPLIFY_TOLERANCE_PX);
+      return { ...follow, ...smoothCentreline(simplified.points, simplified.measures) };
+    });
     const substituted = substituteFollows(
       clean,
       cleanMeasures,
       anchorSet,
-      opts.follows,
+      curvedFollows,
       !!opts.joinStart,
       !!opts.joinEnd,
     );
@@ -1791,6 +2011,23 @@
           .sort((a, b) => a[0] - b[0]).map(([, index]) => substituted.measures[index]),
         map: substituted.map.map((at) => (at < 0 ? -1 : unfolded.map[at])),
       };
+    }
+    const curveEnabled = opts.curveCentreline !== false && Number(opts.cornerRadiusPx) > 0;
+    if (curveEnabled) {
+      // anchorSet indexes `clean`; carry each anchor onto followed.points by its map.
+      const protectedVertices = new Set();
+      for (const index of anchorSet) if (followed.map[index] >= 0) protectedVertices.add(followed.map[index]);
+      if (followed.points.length >= 3) for (let i = 1; i + 1 < followed.points.length; i++) if (Math.abs(turnAt(followed.points, i)) > CURVE_HARD_TURN_DEGREES * Math.PI / 180)
+        protectAround(followed.points, i, protectedVertices);
+      const simplified = simplifyForFillet(followed.points, followed.measures, protectedVertices, STROKE_SIMPLIFY_TOLERANCE_PX);
+      let curved = smoothCentreline(simplified.points, simplified.measures, anchorMeasures);
+      const startCandidates = anchorMeasures.filter(m => m > cleanMeasures[0]);
+      const endCandidates = anchorMeasures.filter(m => m < cleanMeasures.at(-1));
+      const startInterval = startCandidates.length ? Math.min(...startCandidates) - cleanMeasures[0] : totalMetres;
+      const endInterval = endCandidates.length ? cleanMeasures.at(-1) - Math.max(...endCandidates) : totalMetres;
+      curved = blendJunction(curved.points, curved.measures, opts.joinStart, false, startInterval, gap);
+      curved = blendJunction(curved.points, curved.measures, opts.joinEnd, true, endInterval, gap);
+      followed = { ...curved, map: new Array(clean.length).fill(-1) };
     }
     const followedAnchors = new Set();
     for (const index of anchorSet) if (followed.map[index] >= 0) followedAnchors.add(followed.map[index]);
@@ -1871,12 +2108,10 @@
     // STROKE_SIMPLIFY_TOLERANCE_PX. Both the anchor set and the measures are
     // carried across; the anchors, the two ends, and nothing else, are forced
     // to survive.
-    const drawn = simplifyForFillet(
-      cleaned.points,
-      cleanedMeasures,
-      finalAnchors,
-      STROKE_SIMPLIFY_TOLERANCE_PX,
-    );
+    const drawn = curveEnabled
+      ? { points: cleaned.points, measures: cleanedMeasures,
+          anchors: new Set(cleanedMeasures.map((_, i) => i).filter(i => anchorMeasures.some(a => Math.abs(a - cleanedMeasures[i]) < 1e-9))) }
+      : simplifyForFillet(cleaned.points, cleanedMeasures, finalAnchors, STROKE_SIMPLIFY_TOLERANCE_PX);
     const filleted = filletPolyline(
       drawn.points,
       Number(opts.cornerRadiusPx) || 0,
@@ -1885,7 +2120,14 @@
       drawn.measures,
       enforceMinimumCornerRadius,
     );
-    const anchors = (opts.anchors || []).map((index) => {
+    const anchors = (opts.anchors || []).map((index, anchorIndex) => {
+      if (curveEnabled) {
+        const exact = drawn.points.findIndex((_, i) => drawn.anchors.has(i) && Math.abs(drawn.measures[i] - anchorMeasures[anchorIndex]) < 1e-9 && filleted.points.some(q => q[0] === drawn.points[i][0] && q[1] === drawn.points[i][1]) && distanceToPolyline(drawn.points[i], filleted.points) === 0);
+        if (exact >= 0) return drawn.points[exact];
+        const at = anchorMeasures[anchorIndex];
+        const read = pointAtMeasure(filleted.points, filleted.measures, at);
+        return exactlyOnPolyline(read, filleted.points);
+      }
       const at = anchorMap[index];
       const moved = at == null ? -1 : tapered.map[at];
       if (moved < 0) {
@@ -2075,6 +2317,24 @@
   }
 
   return Object.freeze({
+    CURVE_MAX_STEP_DEGREES,
+    CURVE_FLATNESS_PX,
+    CURVE_FACET_EDGE_PX,
+    CURVE_HARD_TURN_DEGREES,
+    CURVE_MAX_DEVIATION_PX,
+    CURVE_MAX_DEVIATION_METRES,
+    CURVE_MERGE_METRES,
+    CURVE_HARD_WINDOW_PX,
+    CURVE_PROTECT_PX,
+    CURVE_MERGE_LATERAL_PX,
+    CURVE_MERGE_LATERAL_METRES,
+    JOIN_MAX_TANGENT_DEGREES,
+    JOIN_BLEND_METRES,
+    JOIN_BLEND_INTERVAL_FRACTION,
+    JOIN_BLEND_DEVIATION_PX,
+    JOIN_BLEND_DEVIATION_METRES,
+    smoothCentreline,
+    tangentJoin,
     LANE_RAMP_HALF_WIDTH_METRES,
     LANE_PLATEAU_MIN_METRES,
     LANE_JOIN_EXTENT_METRES,

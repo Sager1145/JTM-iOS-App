@@ -145,9 +145,9 @@ public enum JourneyPresentationResolver {
                         Keys.routePartial,
                         fallback: "Some sections could not be drawn. No straight line was used."),
                     tone: .caution),
-                primaryAction: .rebuildRoute,
+                primaryAction: .repairRoute,
                 // §8.4: "优先给「编辑停站」而不是「重试」死循环" — so editing the
-                // stops leads the quiet group even though the primary rebuilds.
+                // stops leads the quiet group even though the primary repairs.
                 secondaryActions: [.edit, .inspectDetails],
                 blocksPlayback: true)
 
@@ -492,6 +492,7 @@ extension JourneyPresentation.PrimaryAction {
         case .locate: .key("btn.fit", fallback: "Locate")
         case .showOnMap: .key("ios.showOnMap", fallback: "Show on map")
         case .rebuildRoute: .key("btn.rebuildRoute", fallback: "Rebuild Route from Stops")
+        case .repairRoute: .key("ios.route.repairRoute", fallback: "Repair route")
         case .save: .key("ios.save", fallback: "Save")
         case .pause: .key("play.pause", fallback: "Pause")
         case .resume: .key("play.resume", fallback: "Play")

@@ -1,0 +1,22 @@
+{
+  "jp-九州旅客鉄道-久大線": {
+    "agreement": 1.0,
+    "downSign": -1,
+    "votes": 52
+  },
+  "jp-四国旅客鉄道-予讃線": {
+    "agreement": 1.0,
+    "downSign": 1,
+    "votes": 339
+  },
+  "jp-東日本旅客鉄道-中央線": {
+    "agreement": 1.0,
+    "downSign": -1,
+    "votes": 157
+  },
+  "jp-東海旅客鉄道-中央線": {
+    "agreement": 1.0,
+    "downSign": -1,
+    "votes": 134
+  }
+}

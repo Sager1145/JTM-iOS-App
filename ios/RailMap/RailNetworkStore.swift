@@ -581,6 +581,10 @@ final class RailNetworkStore {
     func ensure(regionsIntersecting rect: MKMapRect, cameraZoom: Double) {
         lastDisplayRequest = (rect, cameraZoom)
         guard displayManifest != nil else { return }
+        // Crossing the overview zoom does not change residency. A full chunk
+        // stays until eviction, and an overview chunk is replaced only when
+        // its full batch lands and `publishDisplayNetwork()` runs. Publishing
+        // here would redraw the same lines.
         requestSerial += 1
         activateDisplayLines(intersecting: rect, cameraZoom: cameraZoom)
     }
@@ -948,7 +952,7 @@ final class RailNetworkStore {
                 return "\(entries.count) \(label)/\(bytes / 1024) KB"
             }.joined(separator: ", ")
             Logger(subsystem: "com.JRM.RailMap", category: "display").info(
-                "display batch \(String(describing: wave), privacy: .public) \(batch.count) lines [\(detailBreakdown, privacy: .public)] in \(milliseconds) ms (\(result.items.count) ok, \(result.failures.count) failed)")
+                "display batch \(String(describing: wave), privacy: .public) z=\(cameraZoom, privacy: .public) \(batch.count) lines [\(detailBreakdown, privacy: .public)] in \(milliseconds) ms (\(result.items.count) ok, \(result.failures.count) failed)")
             #endif
             // Cancellation first: a cancelled batch belongs to a store that
             // has already been reset, and clearing the handle here would clear
@@ -1049,10 +1053,14 @@ final class RailNetworkStore {
             guard Region(rawValue: region) != nil else { continue }
             for entry in index.entriesByRegion[region] ?? [] {
                 guard let prepared = loadedDisplayLines[entry.id] else { continue }
-                nextLines.append(contentsOf: prepared.lines)
-                nextStations.append(contentsOf: prepared.stations)
                 residentRegions.insert(region)
                 bytes += prepared.bytes
+                // One slot per line: a resident overview keeps drawing above
+                // `overviewDetailMaxZoom` only until its full replacement lands
+                // in the same slot (fresh contentIDs), so the line never blanks
+                // while it loads and the overview is never drawn over full.
+                nextLines.append(contentsOf: prepared.lines)
+                nextStations.append(contentsOf: prepared.stations)
             }
         }
         // Overlay geometry is not in the blob and is not a continuous stroke.

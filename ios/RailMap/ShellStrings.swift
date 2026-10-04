@@ -166,6 +166,13 @@ enum ShellStrings {
             .zhHans: "依 data.go.kr 官方车站数据与 OpenStreetMap 线形加工制作。",
             .zhHant: "依 data.go.kr 官方車站資料與 OpenStreetMap 線形加工製作。",
         ],
+        "ios.info.n02Body": [
+            .en:
+                "Processed from MLIT's National Land Numerical Information (N02) and OpenStreetMap alignments.",
+            .ja: "国土交通省の国土数値情報（N02）と OpenStreetMap の線形をもとに作成しています。",
+            .zhHans: "依国土交通省国土数值信息（N02）与 OpenStreetMap 线形加工制作。",
+            .zhHant: "依國土交通省國土數值情報（N02）與 OpenStreetMap 線形加工製作。",
+        ],
         "ios.info.basemapBody": [
             .en: "Apple Maps. Its own attribution is shown on the map itself.",
             .ja: "Apple マップ。帰属表示は地図上に表示されます。",

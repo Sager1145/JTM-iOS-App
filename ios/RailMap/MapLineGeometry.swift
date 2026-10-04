@@ -208,6 +208,31 @@ final class ChainPixelCache {
     }
 }
 
+/// Lines that could carry a tangent junction, keyed by the surveyed vertex they
+/// pass through (plus region and operator). Built once per prepare pass in id
+/// order, so `continuousJoin` examines only lines that actually touch the
+/// endpoint instead of every line in the network.
+struct JunctionCandidateIndex {
+    private struct Key: Hashable {
+        var region: String
+        var operatorName: String?
+        var coordinate: Coordinate
+    }
+    private var byVertex: [Key: [RailNetworkStore.DrawnLine]] = [:]
+    init() {}
+    init(_ lines: [String: RailNetworkStore.DrawnLine]) {
+        for line in lines.values.sorted(by: { $0.id < $1.id }) {
+            var seen = Set<Coordinate>()
+            for coordinate in joinedChainCoordinates(of: line).points where seen.insert(coordinate).inserted {
+                byVertex[Key(region: line.region.rawValue, operatorName: line.operatorName, coordinate: coordinate), default: []].append(line)
+            }
+        }
+    }
+    func lines(sharing coordinate: Coordinate, region: Region, operatorName: String?) -> [RailNetworkStore.DrawnLine] {
+        byVertex[Key(region: region.rawValue, operatorName: operatorName, coordinate: coordinate)] ?? []
+    }
+}
+
 /// The joint one chain of a continuous line shares with the chain before or
 /// after it, when the two meet at the same surveyed vertex.
 ///
@@ -220,8 +245,21 @@ final class ChainPixelCache {
 /// them land on the same point; see `ContinuousStroke.Join`.
 func continuousJoin(
     of line: RailNetworkStore.DrawnLine, at end: Bool,
-    neighbour: (String) -> RailNetworkStore.DrawnLine?, chains: ChainPixelCache
+    neighbour: (String) -> RailNetworkStore.DrawnLine?, chains: ChainPixelCache,
+    junctionCandidates: JunctionCandidateIndex = JunctionCandidateIndex()
 ) -> ContinuousStroke.Join? {
+    let branch = chains.chain(of: line)
+    let terminal = ContinuousStroke.terminalLanes(rows: line.laneRows, total: line.totalMetres)
+    let endpointCoordinate = joinedChainCoordinates(of: line).points
+    let probe = end ? endpointCoordinate.last : endpointCoordinate.first
+    let candidates = probe.map { junctionCandidates.lines(sharing: $0, region: line.region, operatorName: line.operatorName) } ?? []
+    for main in candidates where main.id != line.id {
+        guard main.mapRect.intersects(line.mapRect) else { continue }
+        if let join = ContinuousStroke.tangentJoin(branch.points, mainChain: chains.chain(of: main).points,
+                                                  atEnd: end, lane: end ? terminal.end : terminal.start) {
+            return join
+        }
+    }
     // The chain index is the tail of a continuous stroke's id, `lineKey#n`.
     guard line.continuous, let hash = line.id.lastIndex(of: "#"),
           let index = Int(line.id[line.id.index(after: hash)...])
@@ -268,7 +306,7 @@ func continuousStrokeBuild(
     canonical: (String) -> RailNetworkStore.DrawnLine?,
     chains: ChainPixelCache,
     mapPointsPerScreenPoint: Double, scale: CGFloat,
-    laneScale: Double = 1
+    laneScale: Double = 1, junctionCandidates: JunctionCandidateIndex = JunctionCandidateIndex()
 ) -> ContinuousStrokeBuild {
     // `Stroke` has no public initializer of its own (`ContinuousStroke.swift`
     // is not this file's to extend), so an empty one is built the same way
@@ -312,9 +350,9 @@ func continuousStrokeBuild(
             minCornerRadiusPx: Double(RailStyle.minimumCornerRadius(atScale: scale)),
             anchors: anchors, follows: follows,
             joinStart: continuousJoin(
-                of: line, at: false, neighbour: canonical, chains: chains),
+                of: line, at: false, neighbour: canonical, chains: chains, junctionCandidates: junctionCandidates),
             joinEnd: continuousJoin(
-                of: line, at: true, neighbour: canonical, chains: chains),
+                of: line, at: true, neighbour: canonical, chains: chains, junctionCandidates: junctionCandidates),
             enforceMinimumCornerRadius: true))
     func mapPoint(_ point: ContinuousStroke.Point) -> MKMapPoint {
         MKMapPoint(x: point.x * mapPointsPerScreenPoint, y: point.y * mapPointsPerScreenPoint)
@@ -456,9 +494,9 @@ func continuousStrokeBuild(
 /// shifted, by the same point token the Web renderer applies with line-offset.
 func parallelLaneCoordinates(
     _ coordinates: [CLLocationCoordinate2D], lane: Double,
-    mapPointsPerScreenPoint: Double, scale: CGFloat
+    mapPointsPerScreenPoint: Double, scale: CGFloat, alreadyCurved: Bool = false
 ) -> [CLLocationCoordinate2D] {
-    guard lane != 0, coordinates.count >= 2 else { return coordinates }
+    guard coordinates.count >= 2, mapPointsPerScreenPoint > 0, !alreadyCurved || lane != 0 else { return coordinates }
     let pixels = coordinates.map { coordinate in
         let point = MKMapPoint(coordinate)
         return ContinuousStroke.Point(x: point.x / mapPointsPerScreenPoint,
@@ -476,7 +514,7 @@ func parallelLaneCoordinates(
         minRampPx: RailStyle.strokeMinRamp,
         cornerRadiusPx: Double(RailStyle.strokeCornerRadius * scale),
         minCornerRadiusPx: Double(RailStyle.minimumCornerRadius(atScale: scale)),
-        anchors: [0, pixels.count - 1], enforceMinimumCornerRadius: true))
+        anchors: [0, pixels.count - 1], enforceMinimumCornerRadius: true, curveCentreline: !alreadyCurved))
     return stroke.points.map {
         MKMapPoint(x: $0.x * mapPointsPerScreenPoint, y: $0.y * mapPointsPerScreenPoint).coordinate
     }
@@ -510,19 +548,20 @@ enum MapLineGeometry {
         defer { RailSignpost.map.end("map.geometry.prepare", interval) }
         let chains = ChainPixelCache(mapPointsPerScreenPoint: mapScale)
         var result = PreparedGeometry()
+        let junctionCandidates = JunctionCandidateIndex(allLines)
         for line in strokes {
             try Task.checkCancellation()
             result.strokes[line.id] = continuousStrokeBuild(
                 for: line, anchors: anchors[line.id] ?? [], canonical: { allLines[$0] },
                 chains: chains, mapPointsPerScreenPoint: mapScale, scale: scale,
-                laneScale: laneScale)
+                laneScale: laneScale, junctionCandidates: junctionCandidates)
         }
         for line in lines {
             try Task.checkCancellation()
             let stroke = result.strokes[line.id] ?? cachedStrokes[line.id]
             let today = todayByRegion[line.region.rawValue] ?? ""
-            let latitude = MKMapPoint(x: line.mapRect.midX, y: line.mapRect.midY).coordinate.latitude
-            let epsilon = line.continuous ? 0 : MKMetersPerMapPointAtLatitude(latitude)
+            let epsilon = MKMetersPerMapPointAtLatitude(
+                MKMapPoint(x: line.mapRect.midX, y: line.mapRect.midY).coordinate.latitude)
                 * mapScale * RailStyle.simplifyTolerance
             func coordinateChunks(
                 _ runs: [[Coordinate]], preservingPattern: Bool = false
@@ -536,7 +575,8 @@ enum MapLineGeometry {
                         : Geometry.douglasPeuckerIndices(interval, epsilonMeters: epsilon)
                             .map { interval[$0].clLocation }
                     let points = parallelLaneCoordinates(
-                        coordinates, lane: line.lane, mapPointsPerScreenPoint: mapScale, scale: scale)
+                        coordinates, lane: line.lane,
+                        mapPointsPerScreenPoint: mapScale, scale: scale, alreadyCurved: line.continuous)
                     result.append(contentsOf: mapCoordinateChunks(points, preservingPattern: preservingPattern))
                 }
                 return result

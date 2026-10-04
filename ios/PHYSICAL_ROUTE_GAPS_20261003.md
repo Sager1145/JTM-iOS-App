@@ -176,3 +176,176 @@ The follow-up Nippori primary-source review did not approve a boundary. The cand
 The isolated current-source replay reproduces four Nanpu boundary failures at its catalog seed `1988-04-10`. At `2026-10-03`, both Utazu legs solve with the same qualified physical continuation; both Tadotsu legs remain unresolved. Each leg solves independently. This separates conservative reviewed-evidence windows from a missing accepted identity boundary; neither is permission to replace a dated proof with proximity.
 
 At Tadotsu, the forward seed is JR Shikoku 予讃線 / class 11 at `[133.75762,34.27184]`, followed by 多度津→善通寺 on 土讃線. The reverse seed is 土讃線 at `[133.75696,34.27065]`, followed by 多度津→丸亀 on 予讃線. A bounded primary-source review found no qualifying turnout/interlocking plan independently selecting a surveyed vertex for this identity transition. JTSB RI2007-2-2 Appendix 1 is network-scale branch evidence; its local incident diagram is at Inohana tunnel, not Tadotsu. No new edge or earlier validity date was added. Logs and review: `/tmp/jtm-na-retirement/nanpu-diagnosis-build/probe.log`, `/tmp/jtm-na-retirement/tadotsu-physical-evidence.md`.
+
+
+## Reviewed junction batch — 2026-10-03
+
+Evidence standard: an official per-train timetable showing stops on both named lines, or an official chronology explicitly documenting the connection/through-operation date. Each entry selects the candidate's nearest identical existing surveyed vertex on both exact railway identities; both station-key approaches are at most 1,500 m. This accepts one named source-identity boundary, not every platform or turnout. Timetable dates establish documented-existing evidence windows, not opening dates; earlier continuity is not inferred from an ignored date query. The original ten entries remain unchanged.
+
+All 30 additions satisfy the approach bound (largest: 小倉 1,410.345 m; 新大阪 1,093.393 m). 大阪 is excluded because the identity transition is at 西九条; its candidate approach is 8,171.211 m. Rounded candidate coordinates at 上越妙高, 新青森 and 広電西広島（己斐） are stored at the exact shared raw survey precision. Where one railway identity has multiple packaged display line IDs, the candidate's matching IDs are retained; those display labels do not create graph edges.
+
+| Station | Lines | validFrom | Kind | Evidence URL |
+|---|---|---|---|---|
+| 泉岳寺 | 京浜急行電鉄 本線 / 東京都 1号線浅草線 | 1968-06-21 | opening | [official source](https://www.keikyu.co.jp/history/chronology05.html) |
+| 赤羽 | 赤羽線 / 東北線 | 1885-03-01 | opening | [official source](https://www.soumu.metro.tokyo.lg.jp/01soumu-archives/06kanko_butsu/0601sisiko/0601shigai/0601shigai69) |
+| 池袋 | 赤羽線 / 山手線 | 1903-04-01 | opening | [official source](https://www.city.toshima.lg.jp/499/bunka/bunka/shiryokan/showaretro/2310081541.html) |
+| 大崎 | 山手線 / 東海道線 | 2001-12-01 | opening | [official source](https://www.city.shinjuku.lg.jp/kusei/70kinenshi/h13.html); [official source](https://www.city.shinagawa.tokyo.jp/PC/kuseizyoho/kuseizyoho-siryo/kuseizyoho-siryo-youkososhinagawa/kuseizyoho-siryo-youkososhinagawa-kuseigaiyou/hpg000000616.html) |
+| 田端 | 山手線 / 東北線 | 1903-04-01 | opening | [official source](https://www.city.toshima.lg.jp/499/bunka/bunka/shiryokan/showaretro/2310081541.html); [official source](https://www.city.toshima.lg.jp/129/bunka/bunka/shiryokan/kankobutu/005971.html) |
+| 新発田 | 羽越線 / 白新線 | 1952-12-23 | opening | [official source](https://www.city.niigata.lg.jp/kita/shisetsu/yoka/bunka/kyodo/webhakubutukan/setumeiban2.files/kantenkiti_p.pdf); [official source](https://www.city.niigata.lg.jp/kita/about/rekishi/rekishi_nenpyo3.html) |
+| 上越妙高 | 東日本旅客鉄道 北陸新幹線 / 西日本旅客鉄道 北陸新幹線 | 2015-03-14 | opening | [official source](https://www.jrtt.go.jp/construction/achievement/hokuriku2.html); [official source](https://www.jrtt.go.jp/settlement/history.html) |
+| 高崎 | 上越新幹線 / 北陸新幹線 | 1997-10-01 | opening | [official source](https://www.jrtt.go.jp/construction/achievement/hokuriku1.html) |
+| 西所沢 | 狭山線 / 池袋線 | 1929-05-01 | opening | [official source](https://www.seiburailway.jp/company/history/chronology/) |
+| 新青森 | 東日本旅客鉄道 東北新幹線 / 北海道旅客鉄道 北海道新幹線 | 2016-03-26 | opening | [official source](https://www.jrhokkaido.co.jp/corporate/company/com_02.html); [official source](https://www.jrhokkaido.co.jp/corporate/company/comtop.html); [official source](https://www.jrtt.go.jp/settlement/history.html) |
+| 長万部 | 函館線 / 室蘭線 | 1928-09-10 | opening | [official source](https://www.jrhokkaido.co.jp/corporate/company/com_02.html); [official source](https://www.town.oshamambe.lg.jp/soshiki/3/116.html) |
+| 南千歳 | 千歳線 / 石勝線 | 1981-10-01 | opening | [official source](https://www.jrhokkaido.co.jp/corporate/company/com_02.html) |
+| 新得 | 石勝線 / 根室線 | 1981-10-01 | opening | [official source](https://www.jrhokkaido.co.jp/corporate/company/com_02.html) |
+| 旭川 | 函館線 / 宗谷線 | 1898-08-12 | opening | [official source](https://www.jrhokkaido.co.jp/CM/Info/press/pdf/20180710_AS_120thAnniversary.pdf) |
+| 西4丁目 | 都心線 / 1条線 | 2015-12-20 | opening | [official source](https://www.city.sapporo.jp/sogokotsu/shisaku/romen/loopka-jigyougaiyou.html) |
+| 松風町 | 湯の川線 / 大森線 | 1913-10-31 | opening | [official source](https://archives.c.fun.ac.jp/hakodateshishi/tsuusetsu_03/shishi_05-02/shishi_05-02-04-07-04-01.htm) |
+| 新大阪 | 東海旅客鉄道 東海道新幹線 / 西日本旅客鉄道 山陽新幹線 | 1987-04-01 | opening | [official source](https://www.westjr.co.jp/press/article/2012/02/page_1458.html); [official source](https://www.westjr.co.jp/company/info/history/); [official source](https://company.jr-central.co.jp/company/business-history/) |
+| 倉敷 | 山陽線 / 伯備線 | 1928-10-25 | opening | [official source](https://www.westjr.co.jp/company/info/issue/data/pdf/data2026_25.pdf) |
+| 益田 | 山陰線 / 山口線 | 1933-02-24 | opening | [official source](https://www.city.masuda.lg.jp/material/files/group/2/2023-6-P7.pdf); [official source](https://www.westjr.co.jp/company/info/issue/data/pdf/data2026_25.pdf) |
+| 紙屋町東 | 本線 / 宇品線 | 1912-11-23 | opening | [official source](https://www.hiroden.co.jp/company/outline/history01.html) |
+| 広電西広島（己斐） | 本線 / 宮島線 | 1958-06-20 | opening | [official source](https://www.hiroden.co.jp/company/outline/history05.html) |
+| 江北 | 長崎線 / 佐世保線 | 1930-11-30 | opening | [official source](https://www.city.saga-kashima.lg.jp/site_files/file/gikai/kaigiroku/2014/20140324_ippanshitsumon.pdf) |
+| 早岐 | 佐世保線 / 大村線 | 1898-01-20 | opening | [official source](https://www.city.sasebo.lg.jp/kyouiku/bunzai/sasebo120histoy.html) |
+| 諫早 | 大村線 / 長崎線 | 1934-12-01 | opening | [official source](https://www.city.isahaya.nagasaki.jp/uploaded/attachment/7604.pdf) |
+| 鹿児島 | 鹿児島線 / 日豊線 | 1913-10-11 | opening | [official source](https://www.city.kagoshima.lg.jp/kyoiku/kanri/bunkazai/tiikikeikaku/r6workshop/documents/tyuuoustory.pdf); [official source](https://www.jrkyushu.co.jp/news/__icsFiles/afieldfile/2023/09/29/230929_110year_anniversary_ticket.pdf) |
+| 小倉 | 日豊線 / 鹿児島線 | 1923-12-15 | documented-existing | [official source](https://www.jrkyushu.co.jp/news/__icsFiles/afieldfile/2023/11/21/231121_885kei_tokubetsu_nippou100nen.pdf) |
+| 城野 | 日田彦山線 / 日豊線 | 1960-04-01 | documented-existing | [official source](https://www.hitahiko.jp/rekishi.php) |
+| 多度津 | 予讃線 / 土讃線 | 1913-12-20 | opening | [official source](https://www.library.pref.kagawa.lg.jp/know/local/local_2033-19) |
+| 熱海 | 東日本旅客鉄道 東海道線 / 東海旅客鉄道 東海道線 | 1987-04-01 | opening | [official source](https://www.city.atami.lg.jp/shisei/atamishi/1001244/1001251.html); [official source](https://www.jrtt.go.jp/settlement/history.html) |
+| 泉佐野 | 南海本線 / 空港線 | 1994-06-15 | opening | [official source](https://www.nankai.co.jp/company/history/chronicle/brief/period_03.html) |
+
+Census of all 201 JP sample rides (train-store IDs resolved through the sample manifest, normalized and replayed through the endpoint-trim pipeline): original ten junctions → expanded registry yields 131 → 140 zero-gap rides, 137 → 117 boundary gaps, and 88 → 87 non-boundary failures. Super Oki `20260719_03_super_oki5` has zero gaps. Remaining boundary gaps comprise 25 before the 18 conservative evidence windows, one date-qualified gap at 南千歳 on `20260716_07_hokuto20`, and 91 at other stations. Non-boundary causes are source verification (36), matched-source verification (38), unresolved legacy sections (12), and ambiguous inference (1). The date-qualified station assertion remains enabled and exposes the 南千歳 gap; the full ride-level list is printed by `JunctionApproachTests.realDataJunctionCensus`.
+
+Validation: the requested `JunctionApproach|PhysicalEndpointTrim|PhysicalSectionContinuity|PhysicalTopologyRouting|Reviewed|RailHistory` filter completed 73 tests across 11 suites (72 passed, one retained census failure). All 40 registry junctions were accepted. The remaining 南千歳 failure is normalized section index 2, 南千歳→苫小牧, following 新札幌→南千歳; Hokuto does not use 石勝線, so the reviewed 千歳線–石勝線 edge cannot prove this other continuation. No production routing code was changed to conceal the failure.
+
+## Junction batch 2 — 2026-10-04
+
+Appended 78 validated junctions (35 east, 24 central, 19 west); the existing 40 records are unchanged. All 118 IDs are unique. Dates retain each fragment’s reviewed evidence window.
+
+| id | Station | Lines | validFrom | First evidence URL |
+|---|---|---|---|---|
+| tobu-dobutsu-koen-east-00 | 東武動物公園 | jp-東武鉄道-伊勢崎線 / jp-東武鉄道-日光線 | 2026-03-14 | https://www.tobu.co.jp/pdf/timetable/time-table_01_kudari.pdf?202603 |
+| shimo-imaichi-east-01 | 下今市 | jp-東武鉄道-日光線 / jp-東武鉄道-鬼怒川線 | 2026-03-14 | https://www.tobu.co.jp/pdf/timetable/time-table_01_kudari.pdf?202603 |
+| shin-fujiwara-east-02 | 新藤原 | jp-東武鉄道-鬼怒川線 / jp-野岩鉄道-会津鬼怒川線 | 1986-10-09 | https://www.tobu.co.jp/pdf/timetable/time-table_01_kudari.pdf?202603 |
+| aizukogen-ozeguchi-east-03 | 会津高原尾瀬口 | jp-野岩鉄道-会津鬼怒川線 / jp-会津鉄道-会津線 | 1990-10-12 | https://www.tobu.co.jp/pdf/timetable/time-table_01_kudari.pdf?202603 |
+| ota-east-04 | 太田 | jp-東武鉄道-伊勢崎線 / jp-東武鉄道-桐生線 | 2026-03-14 | https://www.tobu.co.jp/pdf/timetable/time-table_02_kudari.pdf?202603 |
+| keisei-takasago-east-08 | 京成高砂 | jp-京成電鉄-本線 / jp-京成電鉄-成田空港線 | 2010-07-17 | https://www.keisei.co.jp/keisei/keisei_museum/history/index5.html |
+| yoyogi-uehara-east-12 | 代々木上原 | jp-東京地下鉄-9号線千代田線 / jp-小田急電鉄-小田原線 | 1978-03-31 | https://www.odakyu.jp/company/history/ |
+| sagami-ono-east-13 | 相模大野 | jp-小田急電鉄-小田原線 / jp-小田急電鉄-江ノ島線 | 1929-04-01 | https://www.odakyu.jp/company/history/ |
+| odawara-east-14 | 小田原 | jp-小田急電鉄-小田原線 / jp-小田急箱根-鉄道線 | 1950-08-01 | https://www.odakyu.jp/company/history/ |
+| matsuda-east-15 | 松田 | jp-小田急電鉄-小田原線 / jp-東海旅客鉄道-御殿場線 | 1987-04-01 | https://www.odakyu.jp/company/history/ |
+| atami-east-16 | 熱海 | jp-東日本旅客鉄道-東海道線 / jp-東日本旅客鉄道-伊東線 | 2026-09-18 | https://timetables.jreast.co.jp/2610/train/095/098901.html |
+| ito-east-17 | 伊東 | jp-東日本旅客鉄道-伊東線 / jp-伊豆急行-伊豆急行線 | 1961-12-10 | https://www.izukyu.co.jp/company/history.php |
+| fujisan-east-19 | 富士山 | jp-富士山麓電気鉄道-大月線 / jp-富士山麓電気鉄道-河口湖線 | 2026-03-14 | https://www.fujikyu-railway.jp/fujikaiyuu/ |
+| tokyo-east-20 | 東京 | jp-東日本旅客鉄道-東海道線 / jp-東日本旅客鉄道-東北線-2 | 2026-09-18 | https://timetables.jreast.co.jp/2610/train/065/069941.html |
+| tokyo-east-21 | 東京 | jp-東日本旅客鉄道-東海道線 / jp-東日本旅客鉄道-総武線 / jp-東日本旅客鉄道-総武線-3 | 2026-09-18 | https://timetables.jreast.co.jp/2610/train/060/063411.html |
+| kanda-east-23 | 神田 | jp-東日本旅客鉄道-東北線-2 / jp-東日本旅客鉄道-中央線 | 2026-09-18 | https://timetables.jreast.co.jp/2610/train/155/155641.html |
+| nippori-east-25 | 日暮里 | jp-東日本旅客鉄道-東北線-2 / jp-東日本旅客鉄道-東北線-4 / jp-東日本旅客鉄道-常磐線 | 2026-09-18 | https://timetables.jreast.co.jp/2610/train/045/048451.html |
+| sakura-east-27 | 佐倉 | jp-東日本旅客鉄道-総武線 / jp-東日本旅客鉄道-成田線-2 | 2026-09-18 | https://timetables.jreast.co.jp/2610/train/060/063411.html |
+| soga-east-29 | 蘇我 | jp-東日本旅客鉄道-京葉線 / jp-東日本旅客鉄道-内房線 | 2026-09-18 | https://timetables.jreast.co.jp/2610/train/045/049711.html |
+| soga-east-30 | 蘇我 | jp-東日本旅客鉄道-京葉線 / jp-東日本旅客鉄道-外房線 | 2026-09-18 | https://timetables.jreast.co.jp/2610/train/095/098781.html |
+| tachikawa-east-33 | 立川 | jp-東日本旅客鉄道-中央線 / jp-東日本旅客鉄道-青梅線 | 2026-09-18 | https://timetables.jreast.co.jp/2610/train/155/155641.html |
+| takasaki-east-34 | 高崎 | jp-東日本旅客鉄道-高崎線 / jp-東日本旅客鉄道-上越線 | 2026-10-03 | https://timetables.jreast.co.jp/2610/timetable-v/238u2p.html |
+| shin-maebashi-east-35 | 新前橋 | jp-東日本旅客鉄道-両毛線 / jp-東日本旅客鉄道-上越線 | 2026-10-03 | https://timetables.jreast.co.jp/2610/timetable-v/238u2p.html |
+| omagari-east-38 | 大曲 | jp-東日本旅客鉄道-田沢湖線 / jp-東日本旅客鉄道-奥羽線 | 2026-09-18 | https://timetables.jreast.co.jp/2610/train/060/064581.html |
+| fukushima-east-39 | 福島 | jp-東日本旅客鉄道-東北新幹線 / jp-東日本旅客鉄道-奥羽線 | 2026-10-01 | https://timetables.jreast.co.jp/2610/timetable-v/003d1p.html |
+| morioka-east-40 | 盛岡 | jp-東日本旅客鉄道-東北新幹線 / jp-東日本旅客鉄道-田沢湖線 | 2026-09-18 | https://timetables.jreast.co.jp/2610/train/060/064581.html |
+| goryokaku-east-48 | 五稜郭 | jp-道南いさりび鉄道-道南いさりび鉄道線 / jp-北海道旅客鉄道-函館線 | 2016-03-26 | https://www.shr-isaribi.jp/wp-content/uploads/2015/10/businessreport02.pdf |
+| numanohata-east-49 | 沼ノ端 | jp-北海道旅客鉄道-室蘭線 / jp-北海道旅客鉄道-千歳線 | 2014-08-01 | https://www.jrhokkaido.co.jp/press/2014/140627-1.pdf |
+| shiroishi-east-51 | 白石 | jp-北海道旅客鉄道-千歳線 / jp-北海道旅客鉄道-函館線 | 2014-08-01 | https://www.jrhokkaido.co.jp/press/2014/140627-1.pdf |
+| shin-asahikawa-east-54 | 新旭川 | jp-北海道旅客鉄道-宗谷線 / jp-北海道旅客鉄道-石北線 | 2025-03-15 | https://www.jrhokkaido.co.jp/CM/Info/press/pdf/20241213_KO_kaisei.pdf |
+| shinonoi-east-55 | 篠ノ井 | jp-東日本旅客鉄道-篠ノ井線 / jp-東日本旅客鉄道-信越線-3 | 2026-09-18 | https://timetables.jreast.co.jp/2610/train/000/000241.html |
+| matsumoto-east-56 | 松本 | jp-東日本旅客鉄道-篠ノ井線 / jp-東日本旅客鉄道-大糸線 | 2026-09-18 | https://timetables.jreast.co.jp/2610/train/110/111361.html |
+| shiojiri-east-57 | 塩尻 | jp-東海旅客鉄道-中央線 / jp-東日本旅客鉄道-篠ノ井線 | 1987-04-01 | https://timetables.jreast.co.jp/2610/train/000/000241.html |
+| naoetsu-east-59 | 直江津 | jp-東日本旅客鉄道-信越線 / jp-えちごトキめき鉄道-妙高はねうまライン | 2026-09-18 | https://timetables.jreast.co.jp/2610/train/060/063961.html |
+| saigata-east-60 | 犀潟 | jp-北越急行-ほくほく線 / jp-東日本旅客鉄道-信越線 | 2026-03-14 | https://hokuhoku.co.jp/pdf/jikoku/jikoku20260314.pdf |
+| isenakagawa-osaka-nagoya | 伊勢中川 | jp-近畿日本鉄道-大阪線 / jp-近畿日本鉄道-名古屋線 | 1961-03-29 | https://www.kintetsu.co.jp/senden/hinotori/ |
+| isenakagawa-osaka-yamada | 伊勢中川 | jp-近畿日本鉄道-大阪線 / jp-近畿日本鉄道-山田線 | 1948-07-18 | https://www.kintetsu.co.jp/senden/shimakaze/ |
+| isenakagawa-nagoya-yamada | 伊勢中川 | jp-近畿日本鉄道-名古屋線 / jp-近畿日本鉄道-山田線 | 1970-03-01 | https://www.kintetsu.co.jp/senden/shimakaze/ |
+| ujiyamada-yamada-toba | 宇治山田 | jp-近畿日本鉄道-山田線 / jp-近畿日本鉄道-鳥羽線 | 1969-12-15 | https://www.kintetsu.co.jp/senden/shimakaze/ |
+| toba-toba-shima | 鳥羽 | jp-近畿日本鉄道-鳥羽線 / jp-近畿日本鉄道-志摩線 | 1970-03-01 | https://www.kintetsu.co.jp/senden/shimakaze/ |
+| saidaiji-kyoto-kashihara | 大和西大寺 | jp-近畿日本鉄道-京都線 / jp-近畿日本鉄道-橿原線 | 1964-10-01 | https://www.kintetsu.co.jp/senden/shimakaze/ |
+| saidaiji-kyoto-nara | 大和西大寺 | jp-近畿日本鉄道-京都線 / jp-近畿日本鉄道-奈良線 | 1964-12-01 | https://www.kintetsu.co.jp/senden/aoniyoshi/ |
+| yagi-kashihara-osaka | 大和八木 | jp-近畿日本鉄道-橿原線 / jp-近畿日本鉄道-大阪線 | 1967-12-20 | https://www.kintetsu.co.jp/senden/shimakaze/ |
+| uehommachi-namba-osaka | 大阪上本町 | jp-近畿日本鉄道-難波線 / jp-近畿日本鉄道-大阪線 | 1970-03-21 | https://www.kintetsu.co.jp/senden/shimakaze/ |
+| kashiharajingu-minamiosaka-yoshino | 橿原神宮前 | jp-近畿日本鉄道-南大阪線 / jp-近畿日本鉄道-吉野線 | 1965-03-18 | https://www.kintetsu.co.jp/senden/blue_symphony/index.html |
+| juso-takarazuka-kyoto | 十三 | jp-阪急電鉄-宝塚線 / jp-阪急電鉄-京都線 | 2019-03-23 | https://www.hankyu.co.jp/kyotrain-garaku/service/ |
+| jingumae-nagoya-tokoname | 神宮前 | jp-名古屋鉄道-名古屋本線 / jp-名古屋鉄道-常滑線 | 2005-01-29 | https://www.meitetsu.co.jp/library/exp_history/index.html |
+| wakayama-hanwa-kisei | 和歌山 | jp-西日本旅客鉄道-阪和線 / jp-西日本旅客鉄道-紀勢線 | 2011-08-04 | https://www.jr-odekake.net/railroad/train/kuroshio/ |
+| hineno-hanwa-airport | 日根野 | jp-西日本旅客鉄道-阪和線 / jp-西日本旅客鉄道-関西空港線 | 1994-06-15 | https://www.jr-odekake.net/railroad/train/haruka/ |
+| kyuhoji-osakahigashi-kansai | 久宝寺 | jp-西日本旅客鉄道-おおさか東線 / jp-西日本旅客鉄道-関西線 | 2008-03-15 | https://www.jr-odekake.net/railroad/train/mahoroba/ |
+| amagasaki-tokaido-fukuchiyama | 尼崎 | jp-西日本旅客鉄道-東海道線 / jp-西日本旅客鉄道-福知山線 | 2011-03-12 | https://www.jr-odekake.net/railroad/train/kounotori/ |
+| miyazu-miyafuku-miyazu | 宮津 | jp-WILLER　TRAINS-宮福線 / jp-WILLER　TRAINS-宮津線 | 2015-04-01 | https://www.jr-odekake.net/railroad/train/hashidate/ |
+| yamashina-tokaido-kosei | 山科 | jp-西日本旅客鉄道-東海道線 / jp-西日本旅客鉄道-湖西線 | 1987-04-01 | https://www.jr-odekake.net/railroad/train/thunderbird/ |
+| omishiotsu-kosei-hokuriku | 近江塩津 | jp-西日本旅客鉄道-湖西線 / jp-西日本旅客鉄道-北陸線 | 1987-04-01 | https://www.jr-odekake.net/railroad/train/thunderbird/ |
+| maibara-tokaido-boundary | 米原 | jp-東海旅客鉄道-東海道線-2 / jp-西日本旅客鉄道-東海道線 | 1987-04-01 | https://www.jr-odekake.net/railroad/train/sunriseseto_izumo/ |
+| inotani-takayama-boundary | 猪谷 | jp-東海旅客鉄道-高山線 / jp-西日本旅客鉄道-高山線 | 1987-04-01 | https://www.jr-odekake.net/railroad/train/hida/ |
+| shingu-kisei-boundary | 新宮 | jp-東海旅客鉄道-紀勢線 / jp-西日本旅客鉄道-紀勢線 | 1987-04-01 | https://www.jr-odekake.net/railroad/train/nanki/ |
+| tsu-ise-kisei | 津 | jp-伊勢鉄道-伊勢線 / jp-東海旅客鉄道-紀勢線 | 2024-03-16 | https://isetetu.co.jp/pdf/up_timetable/file/1 |
+| tsubata-ir-nanao | 津幡 | jp-IRいしかわ鉄道-IRいしかわ鉄道線 / jp-西日本旅客鉄道-七尾線 | 2015-03-14 | https://www.jr-odekake.net/railroad/train/notokagaribi/ |
+| west-kamigori | 上郡 | jp-西日本旅客鉄道-山陽線 / jp-智頭急行-智頭線 | 1994-12-03 | https://timetable.jr-odekake.net/train-timetable/67481?date=20261003 |
+| west-chizu | 智頭 | jp-智頭急行-智頭線 / jp-西日本旅客鉄道-因美線 | 1994-12-03 | https://timetable.jr-odekake.net/train-timetable/67481?date=20261003 |
+| west-tottori | 鳥取 | jp-西日本旅客鉄道-因美線 / jp-西日本旅客鉄道-山陰線 | 2026-10-03 | https://timetable.jr-odekake.net/train-timetable/67481?date=20261003 |
+| west-kobe | 神戸 | jp-西日本旅客鉄道-東海道線 / jp-西日本旅客鉄道-山陽線-3 | 2026-10-03 | https://timetable.jr-odekake.net/train-timetable/238531?date=20261003 |
+| west-wadayama | 和田山 | jp-西日本旅客鉄道-播但線 / jp-西日本旅客鉄道-山陰線 | 2026-10-03 | https://timetable.jr-odekake.net/train-timetable/238531?date=20261003 |
+| west-hokidaisen | 伯耆大山 | jp-西日本旅客鉄道-伯備線 / jp-西日本旅客鉄道-山陰線 | 2026-10-03 | https://timetable.jr-odekake.net/train-timetable/76231?date=20261003 |
+| west-moji | 門司 | jp-九州旅客鉄道-山陽線 / jp-九州旅客鉄道-鹿児島線 | 2026-10-03 | https://timetable.jr-odekake.net/train-timetable/82781?date=20261003 |
+| west-hakata | 博多 | jp-西日本旅客鉄道-山陽新幹線 / jp-九州旅客鉄道-九州新幹線 | 2011-03-12 | https://timetable.jr-odekake.net/train-timetable/91071?date=20261003 |
+| west-takamatsu | 高松 | jp-四国旅客鉄道-予讃線 / jp-四国旅客鉄道-高徳線 | 2024-12-13 | https://www.jr-shikoku.co.jp/03_news/press/assets/2025/03/07/2024%2012%2013%2003.pdf |
+| west-kubokawa | 窪川 | jp-四国旅客鉄道-土讃線 / jp-土佐くろしお鉄道-中村線 | 1988-04-01 | https://timetable.jr-odekake.net/train-timetable/103931?date=20261003 |
+| west-nakamura | 中村 | jp-土佐くろしお鉄道-中村線 / jp-土佐くろしお鉄道-宿毛線 | 1997-10-01 | https://timetable.jr-odekake.net/train-timetable/78011?date=20261003 |
+| west-yatsushiro | 八代 | jp-九州旅客鉄道-鹿児島線 / jp-九州旅客鉄道-肥薩線 | 2009-04-25 | https://www.jrkyushu.co.jp/trains/sllastyear/index.html |
+| west-hayato | 隼人 | jp-九州旅客鉄道-肥薩線 / jp-九州旅客鉄道-日豊線 | 2004-03-13 | https://www.jrkyushu.co.jp/news/__icsFiles/afieldfile/2022/03/02/220302_hayatonokaze_lastrun_final.pdf |
+| west-oita-kyudai | 大分 | jp-九州旅客鉄道-久大線 / jp-九州旅客鉄道-日豊線 | 2026-09-30 | https://www.jrkyushu-timetable.jp/sp/2610/0016/00167201.html?t=2828302e&d=20260930 |
+| west-oita-hohi | 大分 | jp-九州旅客鉄道-豊肥線 / jp-九州旅客鉄道-日豊線 | 2026-09-30 | https://www.jrkyushu-timetable.jp/jr-k_time/2610/0030/00308301.html?c=28742&d=30&ym=202609 |
+| west-yoshizuka | 吉塚 | jp-九州旅客鉄道-篠栗線 / jp-九州旅客鉄道-鹿児島線 | 2026-10-03 | https://www.jrkyushu-timetable.jp/sp/2610/0035/00350501.html?d=20261003&t=2806201 |
+| west-keisen | 桂川 | jp-九州旅客鉄道-筑豊線 / jp-九州旅客鉄道-篠栗線 | 2026-10-03 | https://www.jrkyushu-timetable.jp/sp/2610/0035/00350501.html?d=20261003&t=2806201 |
+| west-minamimiyazaki | 南宮崎 | jp-九州旅客鉄道-日豊線 / jp-九州旅客鉄道-日南線 | 2026-09-30 | https://www.jrkyushu-timetable.jp/sp/2610/0008/00087001.html?t=2887001&d=20260930 |
+| west-tayoshi | 田吉 | jp-九州旅客鉄道-日南線 / jp-九州旅客鉄道-宮崎空港線 | 1996-07-18 | https://www.jrkyushu-timetable.jp/sp/2610/0008/00087001.html?t=2887001&d=20260930 |
+
+Rejected/skipped pairs (missing evidence does not establish absence of a physical connection):
+
+- east rejection details (session working notes, not committed): 浅草橋 JR–Toei is a crossing; 大月, 東京 東北–総武, 八王子 and 木古内 Shinkansen–conventional lack shared vertices; 海峡線 pairs lack package identity, compatible gauge evidence, or dated operator evidence; 植苗/平和 are unproven additional transitions; 押上/上越妙高 already exist. Other listed pairs lack complete official through-train/date evidence.
+- central rejection details (session working notes, not committed): 十三 神戸–京都, 天王寺 環状–阪和, both 福知山–宮福 pairs and 福井 Shinkansen–Hapi lack shared vertices; 西九条 candidates do not prove the actual Haruka approach; 岸里玉出, 天王寺 環状–関西 and 綾部 lack complete dated evidence; historical 金沢/津幡 北陸 pairs lack dated service/closing evidence.
+- west rejection details (session working notes, not committed): 姫路 山陽–播但 and 岡山 山陽–宇野 lack shared vertices; 下関 operator boundary and 熊本 豊肥–鹿児島 lack official same-train evidence; 武雄温泉 is a conventional/Shinkansen transfer without a shared vertex.
+
+Validation: the requested `JunctionApproach|PhysicalTopologyRouting|Reviewed|RailHistory|OnEdgeCertification|PhysicalEndpointTrim|TrainServicePatterns` filter passed all 102 tests across 12 suites. The real-registry graph assertion accepted all 118 junctions with no rejected IDs. The sample-ride census reports 169/201 zero-gap rides, 35 boundary gaps, and 30 non-boundary failures.
+
+## OSM survey junctions — 2026-10-04
+
+The 1500 m cap applies to `osmConnector` only. `osmTrack` is same-identity survey geometry: attach stubs stay ≤ 50 m and there is no total-length cap. `rail-sections.json` and the rail-history overlay set no start date on these identities, so `validFrom` is the earliest official date of the segment (総武快速線 東京–錦糸町 1972-07-15; 東京駅 passenger opening 1914-12-20; 新橋–横浜 1872-10-14; 神田–上野 1925-11-01). Hachioji stays the historical one-day window.
+
+| id | kind | ways | stubs (m) | validFrom |
+| --- | --- | --- | --- | --- |
+| otsuki-chuo-otsuki | osmConnector | 243609295 | 16.69 / 2.07 | 2026-03-14 |
+| fukuchiyama-sanin-miyafuku | osmConnector | 734217342 | 27.22 / 43.76 | 2026-07-30 |
+| hachioji-yokohama-chuo | osmConnector | 249149440, 638441264, 638441265 | 26.94 / 17.33 | 2008-09-23 (validTo 2008-09-24) |
+| tokyo-tohoku-kanda | osmTrack | 348681062, 348681077, 362230881, 362230888, 34282732, 896850007, 896850005, 896850010, 273056373 | 12.30 / 21.41 | 1925-11-01 |
+| tokyo-sobu-shin-nihonbashi | osmTrack | 759433002, 759432998 | 33.69 / 22.76 | 1972-07-15 |
+| tokyo-tokaido-shimbashi | osmTrack | 759433005, 210358354 | 33.69 / 9.34 | 1914-12-20 |
+| shimbashi-tokaido-shinagawa | osmTrack | 210358354, 210358355, 244134593, 852774337, 1313812927 | 33.92 / 13.06 | 1872-10-14 |
+| tokyo-tokaido-yurakucho | osmTrack | 365230218, 1381338053, 846477081, 23630772, 203301431, 203301434, 203301430, 203301433 | 12.30 / 31.19 | 1914-12-20 |
+
+Rejected (broken way chain and a stub over 50 m; length is not the reason):
+
+- tokyo-tokaido-shinkansen-shinagawa — 39 ways plus disconnected 74446959; stubs 65.45 / 32.02 m
+- tokyo-tohoku-shinkansen-ueno — 19 ways plus disconnected 1215817087; stubs 92.44 / 6.88 m. Platform-patch ways 34282734, 670515796, 362230918, 670515794 stay in that rejected chain.
+
+## Junction dates and missing seams — 2026-10-04
+
+Registry is 158 entries (148 zeroLength, 2 shortLink, 3 osmConnector, 5 osmTrack). Applied the four jn5 `validFrom` improvements (新栃木 1931-08-11, 宇多津 station arm 1988-04-10, 十三 1921-04-01, 宮津 1988-07-16) and appended the 10-id fragment. The eastern 宇多津 bypass stays 2019-10-18. Backdates with saved official bytes are in `jn6/backdate.md`. Year-only sources use `YYYY-12-31` and the phrase `conservative year-end bound` (佐倉 1897, 大分豊肥 1914, 大分久大 1915, 渋川 1945, 佃 1914).
+
+New geometry junctions:
+
+| id | kind | pair | validFrom | validTo |
+| --- | --- | --- | --- | --- |
+| tokoname-tokoname-airport | zeroLength | 常滑線↔空港線 [136.83544, 34.89075] | 2005-01-29 | |
+| agano-ikebukuro-seibu-chichibu | zeroLength | 池袋線↔西武秩父線 [139.22592, 35.90829] | 1969-10-14 | |
+| tsukuda-tokushima-dosan | zeroLength | 徳島線↔土讃線 [133.85699, 34.03245] | 1914-12-31 | |
+| naka-oguni-tsugaru-kaikyo | zeroLength | 津軽線↔海峡線 [140.59738, 41.05138] | 1988-03-13 | 2016-03-26 |
+| kaifu-mugi-asato | shortLink 13.6 m | 牟岐線 [134.35076, 33.60587]↔阿佐東線 [134.35086, 33.60596] | 1992-03-26 | 2019-03-16 |
+
+`naka-oguni-tsugaru-kaikyo` omits a 海峡線 catalog id. `line-service-catalog.json` has no `jp-北海道旅客鉄道-海峡線`. The loader does not decode `lineIDs`; the graph match is 北海道旅客鉄道 / 海峡線 / class 11. 佃’s 1914-12-31 is the JR Shikoku 2014 「徳島線全線開通100周年」 year-end bound. That page does not name 佃, and no 土讃線 opening day was in the saved bytes. 63 entries remain with `validFrom` ≥ 2000-01-01: post-2000 openings and through-service starts, dated service windows, and junctions whose earlier official year or day was not in saved operator/municipal bytes (JR East history PDFs returned HTTP 403; JR West databook 開業 cells are CID-garbled). 大宮 stays 2026-10-01 for that 403. 日暮里 was not set to 1896-12-25 because that press is 田端. 高崎 was not set to 1884-05-01 because that is the 高崎線 station opening, not 上越線.

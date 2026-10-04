@@ -5,6 +5,25 @@ import RailPresentation
 import SwiftUI
 import UIKit
 
+/// A repair that stopped on the first span the package cannot decide alone.
+struct RouteRepairGuide: Identifiable {
+    let id = UUID()
+    var train: Train
+    var package: CompactPackage
+    var fromVisitID: UUID
+    var toVisitID: UUID
+    var choices: [RailwayRouteChoices.Choice]
+    var remaining: [RouteRepairFlow.Step]
+    var repaired: Int
+    var gaps: [RouteRepairFlow.GapName]
+    var snapshot: Train
+    var summary: String
+    /// The stored ride when this guide opened. A later replace is dropped
+    /// when the store no longer equals it. `train` can carry visit ids that
+    /// were not written; this is the record the continuation started from.
+    var storedAtOpen: Train
+}
+
 /// Seed for the resident journey editor. Edit keeps the id `replace` must target.
 struct JourneyEditorLaunch {
     var train: Train
@@ -107,6 +126,10 @@ struct RailWorkspaceView: View {
     @State private var journeySaveFailureDetail: String?
     /// A draft-pin tap asks the editor to open that stop. Cleared after it is consumed.
     @State private var highlightedStopID: UUID?
+    @State private var routeRepairInFlight = false
+    @State private var routeRepairSummary: String?
+    @State private var routeRepairUndo: Train?
+    @State private var routeRepairGuide: RouteRepairGuide?
     /// The composition that owns an active workspace sheet.
     ///
     /// Compact and docked layouts deliberately attach presentations to
@@ -395,13 +418,26 @@ struct RailWorkspaceView: View {
                 guard !didApplyDebugCamera else { return }
                 let values = camera.split(separator: ",").compactMap { Double($0) }
                 if values.count == 3 {
-                    do { try await Task.sleep(for: .milliseconds(700)) }
+                    let productionMove = ProcessInfo.processInfo.environment["RAILMAP_UI_TEST_CAMERA_PRODUCTION"] == "1"
+                    if productionMove {
+                        controller.frameForUITest(MKCoordinateRegion(
+                            center: CLLocationCoordinate2D(latitude: values[0], longitude: values[1]),
+                            span: MKCoordinateSpan(latitudeDelta: 20, longitudeDelta: 20)
+                        ))
+                    }
+                    do { try await Task.sleep(for: .milliseconds(productionMove ? 5000 : 700)) }
                     catch { return }
                     didApplyDebugCamera = true
-                    controller.frameForUITest(MKCoordinateRegion(
+                    let region = MKCoordinateRegion(
                         center: CLLocationCoordinate2D(latitude: values[0], longitude: values[1]),
                         span: MKCoordinateSpan(latitudeDelta: values[2], longitudeDelta: values[2])
-                    ))
+                    )
+                    // Exercise the ordinary camera command after cold-launch LOD loads.
+                    if productionMove {
+                        controller.fit(region, animated: false)
+                    } else {
+                        controller.frameForUITest(region)
+                    }
                     return
                 }
             }
@@ -642,6 +678,42 @@ struct RailWorkspaceView: View {
         // §13.2's harmony rule: the tap has to arrive with the change, so it is
         // driven by the same state the view is drawn from rather than by a
         // timer alongside it.
+        .sheet(item: $routeRepairGuide) { guide in
+            NavigationStack {
+                RailwayRouteGuideView(
+                    train: guide.train, package: guide.package, choices: guide.choices,
+                    embeddedInNavigationStack: true, isInferred: true,
+                    fromVisitID: guide.fromVisitID, toVisitID: guide.toVisitID
+                ) { choice in
+                    continueCardRepair(choice, guide: guide)
+                }
+                .safeAreaInset(edge: .bottom) {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(guide.summary)
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+                        Button(localization.editorText("ios.routeGuide.undo"), action: undoRouteRepair)
+                            .accessibilityIdentifier("routeRepairUndo")
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding()
+                    .background(.bar)
+                }
+            }
+        }
+        .alert(
+            localization.editorText("ios.route.repairRoute"),
+            isPresented: Binding(
+                get: { routeRepairSummary != nil },
+                set: { if !$0 { routeRepairSummary = nil } })
+        ) {
+            if routeRepairUndo != nil {
+                Button(localization.editorText("ios.routeGuide.undo"), action: undoRouteRepair)
+            }
+            Button(localization.text("ios.done", fallback: "Done"), role: .cancel) {}
+        } message: {
+            Text(routeRepairSummary ?? "")
+        }
         .sensoryFeedback(trigger: feedback) { _, value in
             switch value?.kind {
             case .saved: .success
@@ -2285,6 +2357,9 @@ struct RailWorkspaceView: View {
         case .rebuildRoute:
             guard let train else { return }
             _ = rebuildRoute(train)
+        case .repairRoute:
+            guard let train else { return }
+            repairReviewedRoute(train)
         case .save:
             // §8.3: the draft and its atomic commit belong to the editor.
             if let train {
@@ -2343,6 +2418,168 @@ struct RailWorkspaceView: View {
     @discardableResult
     private func rebuildRoute(_ train: Train) -> Int? {
         editing.rebuildRouteSections(train.id)
+    }
+
+    /// Rebuilds a needs-review ride, then repairs each failing span. A unique
+    /// surveyed path is applied. The first choice pauses the rest.
+    private func repairReviewedRoute(_ train: Train) {
+        guard !routeRepairInFlight else { return }
+        routeRepairInFlight = true
+        let snapshot = train
+        let outcome = itineraries.rebuildRoute(train.id)
+        Task {
+            if outcome?.solving == true {
+                await waitUntilRouteSettles(train.id)
+            }
+            let current = itineraries.store?.trains.first { $0.id == train.id } ?? snapshot
+            await applyAutomaticRepair(to: current, snapshot: snapshot)
+            routeRepairInFlight = false
+        }
+    }
+
+    private func waitUntilRouteSettles(_ id: String) async {
+        for _ in 0..<150 {
+            if case .resolving = RideStatusCenter.shared.status(forTrainID: id) {
+                try? await Task.sleep(for: .milliseconds(100))
+                continue
+            }
+            return
+        }
+    }
+
+    private func applyAutomaticRepair(to train: Train, snapshot: Train) async {
+        let region = Region.resolved(train)
+        let package: CompactPackage
+        do {
+            package = try await Task.detached {
+                try EditorRoutePackageCache.load(region: region)
+            }.value
+        } catch {
+            routeRepairUndo = snapshot
+            routeRepairSummary = localization.journeyText(
+                "ios.journey.routeUnavailable", fallback: "Route unavailable")
+            return
+        }
+        let marks = repairMarks(for: train.id)
+        let stepped = RouteRepairFlow.steps(
+            RouteRepair.failingSpans(train: train, gaps: marks), in: train)
+        let advance = await searchRepair(
+            train: stepped.train, package: package, steps: stepped.steps)
+        if storedTrain(id: train.id) != train {
+            noteRepairInterrupted()
+            return
+        }
+        if advance.train != stepped.train {
+            _ = itineraries.replace(advance.train, replacing: train.id)
+            _ = RideStatusCenter.shared.resolveAgain(advance.train)
+        }
+        routeRepairUndo = snapshot
+        publishRepair(
+            advance, repaired: advance.repaired, gaps: advance.gaps,
+            snapshot: snapshot, package: package)
+    }
+
+    private func continueCardRepair(_ choice: RailwayRouteChoices.Choice, guide: RouteRepairGuide) {
+        routeRepairGuide = nil
+        let prepared = RailwayRouteEditing.preparing(guide.train)
+        let plan = RailwayRouteEditing.plan(
+            train: prepared, choice: choice,
+            fromVisitID: guide.fromVisitID, toVisitID: guide.toVisitID)
+        let train = plan?.updatedTrain ?? prepared
+        var gaps = guide.gaps
+        var repaired = guide.repaired
+        if plan != nil {
+            repaired += 1
+        } else {
+            gaps.append(RouteRepairFlow.GapName(
+                from: prepared.stops.first { $0.routeEditing?.visitID == guide.fromVisitID }?.name ?? "",
+                to: prepared.stops.first { $0.routeEditing?.visitID == guide.toVisitID }?.name ?? ""))
+        }
+        let package = guide.package
+        let remaining = guide.remaining
+        let snapshot = guide.snapshot
+        // `guide.train` is the in-memory ride the guide opened on. The stored
+        // copy at that moment is the Equatable baseline: visit ids on
+        // `guide.train` are not always written back.
+        let started = guide.storedAtOpen
+        Task {
+            let advance = await searchRepair(train: train, package: package, steps: remaining)
+            if storedTrain(id: started.id) != started {
+                noteRepairInterrupted()
+                return
+            }
+            _ = itineraries.replace(advance.train, replacing: snapshot.id)
+            _ = RideStatusCenter.shared.resolveAgain(advance.train)
+            routeRepairUndo = snapshot
+            publishRepair(
+                advance, repaired: repaired + advance.repaired, gaps: gaps + advance.gaps,
+                snapshot: snapshot, package: package)
+        }
+    }
+
+    private func storedTrain(id: String) -> Train? {
+        itineraries.store?.trains.first { $0.id == id }
+    }
+
+    private func noteRepairInterrupted() {
+        routeRepairUndo = nil
+        routeRepairGuide = nil
+        routeRepairSummary = localization.journeyText(
+            "ios.journey.repairInterrupted",
+            fallback: "Ride changed while repairing; run Repair again")
+    }
+
+    private func searchRepair(
+        train: Train, package: CompactPackage, steps: [RouteRepairFlow.Step]
+    ) async -> RouteRepairFlow.Advance {
+        let codes = train.stops.compactMap(\.n02StationCode)
+        let aliases = await Task.detached {
+            loadJourneyStationAliases(for: codes, package: package)
+        }.value
+        return await Task.detached {
+            RouteRepairFlow.advance(train: train, package: package, aliases: aliases, steps: steps)
+        }.value
+    }
+
+    private func repairMarks(for trainID: String) -> [RouteRepair.Gap] {
+        guard case .needsReview(_, _, let gaps) = RideStatusCenter.shared.status(forTrainID: trainID)
+        else { return [] }
+        return gaps.map {
+            RouteRepair.Gap(
+                segmentIndex: $0.segmentIndex, isBoundary: $0.isBoundary,
+                station: $0.isBoundary ? $0.from : nil)
+        }
+    }
+
+    private func publishRepair(
+        _ advance: RouteRepairFlow.Advance, repaired: Int, gaps: [RouteRepairFlow.GapName],
+        snapshot: Train, package: CompactPackage
+    ) {
+        let summary = RouteRepairFlow.summary(
+            repaired: repaired, needsChoice: advance.pause == nil ? 0 : 1, gaps: gaps
+        ) { key, params in
+            localization.text(key, params: params)
+        }
+        if let pause = advance.pause, !pause.choices.isEmpty {
+            let storedAtOpen = storedTrain(id: advance.train.id) ?? snapshot
+            routeRepairGuide = RouteRepairGuide(
+                train: advance.train, package: package,
+                fromVisitID: pause.fromVisitID, toVisitID: pause.toVisitID,
+                choices: pause.choices, remaining: pause.remaining,
+                repaired: repaired, gaps: gaps, snapshot: snapshot, summary: summary,
+                storedAtOpen: storedAtOpen)
+        } else {
+            routeRepairSummary = summary
+        }
+    }
+
+    private func undoRouteRepair() {
+        guard let snapshot = routeRepairUndo else { return }
+        _ = itineraries.replace(snapshot, replacing: snapshot.id)
+        _ = RideStatusCenter.shared.resolveAgain(snapshot)
+        routeRepairUndo = nil
+        routeRepairSummary = nil
+        routeRepairGuide = nil
     }
 
     /// The journeys the list shows, after every filter the header applies.

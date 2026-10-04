@@ -153,6 +153,51 @@ struct TrainServicePatternsTests {
         #expect(unchanged.company == "私鉄想定運行会社")
     }
 
+    @Test("apply derives shinkansen type from route metadata, including mini-shinkansen")
+    func applyShinkansenType() throws {
+        for serviceID in ["nozomi", "kodama", "kagayaki", "komachi", "tsubasa"] {
+            let patterns = TrainServicePatterns.patterns(for: serviceID)
+            #expect(!patterns.isEmpty)
+            for pattern in patterns {
+                let train = TrainServicePatterns.apply(
+                    pattern, to: Train(id: "type-check", number: "", origin: "", destination: "", stops: []))
+                #expect(train.trainType == "新幹線", "\(pattern.id)")
+                #expect(RouteGraph.derivedInstitutionTypeCodes(
+                    trainType: train.trainType ?? "", company: train.company ?? "", country: "jp") == ["1"])
+                #expect(RouteSolver.TrainContext(
+                    id: train.id, number: train.number, trainType: train.trainType ?? "",
+                    company: train.company ?? "", origin: train.origin,
+                    destination: train.destination).institutionFilterMode == "soft")
+            }
+        }
+    }
+
+    @Test("conventional names remain express and user-edited types survive re-picking")
+    func applyConventionalAndUserTypes() throws {
+        let empty = Train(id: "type-check", number: "", origin: "", destination: "", stops: [])
+        let nozomi = try #require(TrainServicePatterns.patterns(for: "nozomi").first)
+        let shinkansen = TrainServicePatterns.apply(nozomi, to: empty)
+        for id in ["tokiwa-shinagawa-katsuta", "sakura-liner-abenobashi-yoshino",
+                   "hakutaka-echigoyuzawa-kanazawa"] {
+            let pattern = try #require(TrainServicePatterns.patterns.first { $0.id == id })
+            #expect(TrainServicePatterns.apply(pattern, to: empty).trainType == "特急")
+            #expect(TrainServicePatterns.apply(pattern, to: shinkansen).trainType == "特急")
+        }
+        // The catalog currently has only shinkansen たにがわ. Model its conventional
+        // namesake explicitly to guard against classifying by a name or service ID.
+        let conventional = TrainServicePatterns.Pattern(
+            id: "conventional-tanigawa", serviceId: "tanigawa", name: "たにがわ",
+            company: "東日本旅客鉄道", label: "上野〜水上", origin: "上野", destination: "水上",
+            stopRefs: [.init(name: "上野", sourceCode: "A"), .init(name: "水上", sourceCode: "B")],
+            optionalStopRefs: [], via: [], confidence: nil, source: nil,
+            lines: ["東北本線", "高崎線", "上越線"])
+        #expect(TrainServicePatterns.apply(conventional, to: empty).trainType == "特急")
+        var edited = shinkansen
+        edited.trainType = "快速"
+        #expect(TrainServicePatterns.apply(conventional, to: edited).trainType == "快速")
+        #expect(TrainServicePatterns.apply(nozomi, to: edited).trainType == "快速")
+    }
+
     @Test("apply output passes validateTrain")
     func applyPassesValidation() throws {
         let pattern = try #require(

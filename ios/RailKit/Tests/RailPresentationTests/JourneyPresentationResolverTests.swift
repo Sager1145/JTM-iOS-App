@@ -272,7 +272,7 @@ struct JourneyPresentationResolverTests {
         #expect(primary(.resolved, .playing(progress: 0, isPaused: false)) == .pause)
         #expect(primary(.resolved, .playing(progress: 0, isPaused: true)) == .resume)
         #expect(primary(.resolved, nil, visible: false) == .showOnMap)
-        #expect(primary(.needsReview(reason: "x"), nil) == .rebuildRoute)
+        #expect(primary(.needsReview(reason: "x"), nil) == .repairRoute)
         #expect(primary(.unavailable(reason: "x"), nil) == .rebuildRoute)
         #expect(primary(.resolved, .editing(isDirty: true, isValid: true)) == .save)
         // "编辑草稿无效 → 无 Prominent 按钮；保存禁用"
@@ -319,7 +319,9 @@ struct JourneyPresentationResolverTests {
             #expect(presentation.status?.title.key == "ios.journey.recordUnchanged", "\(route)")
             #expect(presentation.status?.detail != nil, "\(route) said nothing about the geometry")
             #expect(presentation.subtitle == .value("大船 → 藤沢"), "\(route)")
-            #expect(presentation.primaryAction == .rebuildRoute, "\(route)")
+            let expected: JourneyPresentation.PrimaryAction
+            if case .needsReview = route { expected = .repairRoute } else { expected = .rebuildRoute }
+            #expect(presentation.primaryAction == expected, "\(route)")
             // §8.4: editing the stops leads the quiet group, ahead of a retry loop.
             #expect(presentation.secondaryActions.first == .edit, "\(route)")
         }

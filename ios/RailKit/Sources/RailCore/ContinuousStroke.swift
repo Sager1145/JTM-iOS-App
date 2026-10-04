@@ -111,6 +111,38 @@ public enum ContinuousStroke {
     /// `tolerance: 0` on the web, epsilon 0 in `RailMapView`).
     public static let strokeSimplifyTolerancePx: Double = 0.0625
 
+    /// Centripetal Catmull-Rom sampling. A surviving vertex may turn by at
+    /// most this many degrees, and by at most ``curveFineStepDegrees`` when
+    /// either adjacent edge is longer than ``curveFineEdgePx``.
+    public static let curveMaxStepDegrees: Double = 2
+    /// Screen-space sampling: subdivide while the curve strays more than this
+    /// from its emitted chord, or while a vertex turns more than
+    /// ``curveMaxStepDegrees`` between two edges longer than ``curveFacetEdgePx``.
+    public static let curveFlatnessPx: Double = 0.1
+    public static let curveFacetEdgePx: Double = 2
+    /// A surveyed turn sharper than this is a corner or a reversal. The
+    /// spline stops at it; ``filletMaxTurnDegrees`` still decides whether
+    /// the existing fillet may round it.
+    public static let curveHardTurnDegrees: Double = 60
+    /// The drawn curve must stay this close to the surveyed polyline.
+    /// A span that cannot is left as its chords for the fillet.
+    public static let curveMaxDeviationPx: Double = 1
+    public static let curveMaxDeviationMetres: Double = 8
+    /// Edges shorter than this are N02 rounding, not a second bend, and
+    /// collapse before the spline. A vertex that stands more than
+    /// ``curveMergeLateralMetres`` off the chord it would be merged into
+    /// is real geometry and stays.
+    public static let curveMergeMetres: Double = 5
+    public static let curveMergeLateralMetres: Double = 1
+    /// A branch may take the through-line's tangent only when it already
+    /// leaves within this angle of that tangent. Steeper junctions, and
+    /// every reversal, stay hard.
+    public static let joinMaxTangentDegrees: Double = 30
+    public static let joinBlendMetres: Double = 300
+    public static let joinBlendIntervalFraction: Double = 0.4
+    public static let joinBlendDeviationPx: Double = 1
+    public static let joinBlendDeviationMetres: Double = 10
+
     static let worldPixelsAtZoomZero: Double = 512
 
     // MARK: - types
@@ -178,10 +210,23 @@ public enum ContinuousStroke {
         public var lane: Double
         public var incoming: Point
         public var outgoing: Point
-        public init(lane: Double, incoming: Point, outgoing: Point) {
+        /// Unit tangent of a through-route whose interior vertex this end
+        /// shares. Nil for an ordinary chain-to-chain joint. The blend
+        /// itself is decided in ``buildStroke``: only a departure within
+        /// ``joinMaxTangentDegrees`` is replaced.
+        public var mainTangent: Point?
+        /// Through-route vertices in this part's pixel space. Used to stop
+        /// the blend once the surveyed tracks are a lane apart.
+        public var mainChain: [Point]
+        public init(
+            lane: Double, incoming: Point, outgoing: Point,
+            mainTangent: Point? = nil, mainChain: [Point] = []
+        ) {
             self.lane = lane
             self.incoming = incoming
             self.outgoing = outgoing
+            self.mainTangent = mainTangent
+            self.mainChain = mainChain
         }
     }
 
@@ -214,12 +259,17 @@ public enum ContinuousStroke {
         /// ``followBlendMetres``.
         public var joinStart: Join?
         public var joinEnd: Join?
+        /// When false, the centreline is not splined. The second offset of
+        /// an already curved continuous stroke uses this so the curve is
+        /// not sampled twice.
+        public var curveCentreline: Bool
         public init(
             measures: [Double] = [], rows: [LaneRow], totalMetres: Double, laneGapPx: Double,
             minRampPx: Double, cornerRadiusPx: Double, minCornerRadiusPx: Double = 0,
             anchors: [Int], follows: [Follow] = [],
             joinStart: Join? = nil, joinEnd: Join? = nil,
-            enforceMinimumCornerRadius: Bool = false
+            enforceMinimumCornerRadius: Bool = false,
+            curveCentreline: Bool = true
         ) {
             self.measures = measures
             self.rows = rows
@@ -233,6 +283,7 @@ public enum ContinuousStroke {
             self.follows = follows
             self.joinStart = joinStart
             self.joinEnd = joinEnd
+            self.curveCentreline = curveCentreline
         }
     }
 
@@ -465,6 +516,239 @@ public enum ContinuousStroke {
         return (out, outMeasures, map)
     }
 
+    /// Display-only tangent inheritance at an exact shared survey vertex.
+    /// Coordinate coincidence here changes ink, never route connectivity.
+    public static func tangentJoin(
+        _ points: [Point], mainChain: [Point], atEnd: Bool, lane: Double
+    ) -> Join? {
+        guard points.count >= 2, mainChain.count >= 3 else { return nil }
+        let endpoint = atEnd ? points.last! : points[0]
+        guard let index = mainChain.firstIndex(of: endpoint), index > 0, index + 1 < mainChain.count else { return nil }
+        let a = mainChain[index - 1], b = mainChain[index + 1]
+        let size = hypot(b.x - a.x, b.y - a.y)
+        guard size > degenerateEdge else { return nil }
+        let tangent = Point(x: (b.x - a.x) / size, y: (b.y - a.y) / size)
+        let branch = atEnd ? Point(x: endpoint.x - points[points.count - 2].x, y: endpoint.y - points[points.count - 2].y)
+            : Point(x: points[1].x - endpoint.x, y: points[1].y - endpoint.y)
+        guard vectorAngle(branch, tangent) <= joinMaxTangentDegrees else { return nil }
+        return Join(lane: lane, incoming: tangent, outgoing: tangent,
+                    mainTangent: tangent, mainChain: mainChain)
+    }
+
+    /// Net turn over the vertices within ``curveHardWindowPx`` of vertex `i`:
+    /// a corner split into sub-pixel facets is one hard corner, not a curve.
+    static func windowedTurn(_ p: [Point], _ i: Int) -> Double {
+        var sum = turnAt(p, i)
+        var lo = i - 1, used = hypot(p[i].x - p[i - 1].x, p[i].y - p[i - 1].y)
+        while lo >= 1 && used < curveHardWindowPx {
+            sum += turnAt(p, lo)
+            used += hypot(p[lo].x - p[lo - 1].x, p[lo].y - p[lo - 1].y); lo -= 1
+        }
+        var hi = i + 1; used = hypot(p[i + 1].x - p[i].x, p[i + 1].y - p[i].y)
+        while hi + 1 < p.count && used < curveHardWindowPx {
+            sum += turnAt(p, hi)
+            used += hypot(p[hi + 1].x - p[hi].x, p[hi + 1].y - p[hi].y); hi += 1
+        }
+        return sum
+    }
+    public static let curveHardWindowPx: Double = 3
+    public static let curveProtectPx: Double = 12
+    /// Vertices within ``curveProtectPx`` of a hard turn (and at least two on
+    /// each side) stay out of the pre-fillet simplification.
+    static func protectAround(_ points: [Point], _ i: Int, _ out: inout Set<Int>) {
+        for dir in [-1, 1] {
+            var used = 0.0, count = 0, j = i
+            while j >= 0 && j < points.count {
+                out.insert(j)
+                let k = j + dir
+                if k < 0 || k >= points.count { break }
+                used += hypot(points[k].x - points[j].x, points[k].y - points[j].y)
+                count += 1
+                if count >= 2 && used > curveProtectPx { break }
+                j = k
+            }
+        }
+    }
+    /// A merge must also stay sub-visible on screen, whatever the zoom.
+    public static let curveMergeLateralPx: Double = 0.1
+
+    /// Rendering-only centreline interpolation; the input metre ruler remains
+    /// unchanged, including across adaptive samples and ride slices.
+    public static func smoothCentreline(
+        _ points: [Point], measures: [Double], anchorMeasures: [Double] = []
+    ) -> (points: [Point], measures: [Double]) {
+        guard points.count >= 4, measures.count == points.count else { return (points, measures) }
+        let length = cumulativeLengths(points).last ?? 0
+        let metres = (measures.last ?? 0) - measures[0]
+        let metresPerPx = length > 0 && metres > 0 ? metres / length : 1
+        var kept = [0]
+        for i in 1..<(points.count - 1) {
+            let previous = kept.last!
+            let short = min(measures[i] - measures[previous], measures[i + 1] - measures[i]) < curveMergeMetres
+            let lateral = sqrt(segmentDistanceSquared(points[i], points[previous], points[i + 1])) * metresPerPx
+            let nearHard = (max(1, i - 2)...min(points.count - 2, i + 2)).contains {
+                abs(windowedTurn(points, $0)) > .pi * curveHardTurnDegrees / 180
+            }
+            let isAnchor = anchorMeasures.contains { abs($0 - measures[i]) < 1e-9 }
+            if short && lateral <= curveMergeLateralMetres && lateral / metresPerPx <= curveMergeLateralPx && !nearHard && !isAnchor { continue }
+            kept.append(i)
+        }
+        kept.append(points.count - 1)
+        let p = kept.map { points[$0] }, m = kept.map { measures[$0] }
+        guard p.count >= 4 else { return (points, measures) }
+        var hard = [Bool](repeating: false, count: p.count)
+        hard[0] = true; hard[p.count - 1] = true
+        for i in 1..<(p.count - 1) { hard[i] = abs(windowedTurn(p, i)) > curveHardTurnDegrees * .pi / 180 }
+        var out = [p[0]], outMeasures = [m[0]]
+        var runStart = 0
+        while runStart + 1 < p.count {
+            var runEnd = runStart + 1
+            while runEnd + 1 < p.count && !hard[runEnd] { runEnd += 1 }
+            for i in runStart..<runEnd {
+                let a = p[i], b = p[i + 1]
+                if runEnd - runStart < 3 || (runStart > 0 && i == runStart) || (runEnd + 1 < p.count && i + 1 == runEnd) {
+                    out.append(b); outMeasures.append(m[i + 1]); continue
+                }
+                let before = i > runStart ? p[i - 1] : Point(x: 2 * a.x - b.x, y: 2 * a.y - b.y)
+                let after = i + 1 < runEnd ? p[i + 2] : Point(x: 2 * b.x - a.x, y: 2 * b.y - a.y)
+                let d0 = sqrt(hypot(a.x - before.x, a.y - before.y))
+                let d1 = sqrt(hypot(b.x - a.x, b.y - a.y))
+                let d2 = sqrt(hypot(after.x - b.x, after.y - b.y))
+                guard min(d0, d1, d2) > degenerateEdge else {
+                    out.append(b); outMeasures.append(m[i + 1]); continue
+                }
+                // Non-uniform Catmull-Rom expressed as a cubic Hermite;
+                // knot spacing sqrt(chord length) is alpha=0.5.
+                func tangent(_ v0: Double, _ v1: Double, _ v2: Double, _ left: Double, _ right: Double) -> Double {
+                    (v1 - v0) / left - (v2 - v0) / (left + right) + (v2 - v1) / right
+                }
+                let t0 = Point(x: d1 * tangent(before.x, a.x, b.x, d0, d1),
+                               y: d1 * tangent(before.y, a.y, b.y, d0, d1))
+                let t1 = Point(x: d1 * tangent(a.x, b.x, after.x, d1, d2),
+                               y: d1 * tangent(a.y, b.y, after.y, d1, d2))
+                let edge = hypot(b.x - a.x, b.y - a.y)
+                let curve = sampleCubic(a, b, t0, t1)
+                let allowance = max(curveMaxDeviationPx, curveMaxDeviationMetres / metresPerPx)
+                // Check against the original surveyed span, including tiny
+                // edges merged above, rather than just the surviving chord.
+                let survey = Array(points[kept[i]...kept[i + 1]])
+                if curve.contains(where: { distanceToPolyline($0, survey) > allowance }) {
+                    out.append(b); outMeasures.append(m[i + 1]); continue
+                }
+                for j in 1..<curve.count {
+                    out.append(curve[j])
+                    outMeasures.append(m[i] + (m[i + 1] - m[i]) * Double(j) / Double(curve.count - 1))
+                }
+            }
+            runStart = runEnd
+        }
+        return (out, outMeasures)
+    }
+
+    static func cubicPoint(_ a: Point, _ b: Point, _ ta: Point, _ tb: Point, _ u: Double) -> Point {
+        let u2 = u * u, u3 = u2 * u
+        let h1 = u3 - 2 * u2 + u
+        let h2 = -2 * u3 + 3 * u2, h3 = u3 - u2
+        // Relative coordinates avoid cancellation in world-pixel space.
+        return Point(x: a.x + h2 * (b.x - a.x) + h1 * ta.x + h3 * tb.x,
+                     y: a.y + h2 * (b.y - a.y) + h1 * ta.y + h3 * tb.y)
+    }
+
+    static func vectorAngle(_ a: Point, _ b: Point) -> Double {
+        let size = hypot(a.x, a.y) * hypot(b.x, b.y)
+        guard size > 1e-18 else { return 0 }
+        return acos(max(-1, min(1, (a.x * b.x + a.y * b.y) / size))) * 180 / .pi
+    }
+
+    static func sampleCubic(_ a: Point, _ b: Point, _ ta: Point, _ tb: Point) -> [Point] {
+        var samples = 1
+        while true {
+            var curve = (0...samples).map { cubicPoint(a, b, ta, tb, Double($0) / Double(samples)) }
+            curve[0] = a; curve[samples] = b
+            var visible = false
+            for k in 0..<samples {
+                let mid = cubicPoint(a, b, ta, tb, (Double(k) + 0.5) / Double(samples))
+                if sqrt(segmentDistanceSquared(mid, curve[k], curve[k + 1])) > curveFlatnessPx { visible = true; break }
+            }
+            if !visible {
+                func edge(_ i: Int) -> Double { hypot(curve[i + 1].x - curve[i].x, curve[i + 1].y - curve[i].y) }
+                // End vertices: tangent-to-chord angle, doubled, is the turn the neighbour span sees.
+                let startTurn = 2 * vectorAngle(ta, Point(x: curve[1].x - a.x, y: curve[1].y - a.y))
+                let endTurn = 2 * vectorAngle(tb, Point(x: b.x - curve[samples - 1].x, y: b.y - curve[samples - 1].y))
+                if (startTurn > curveMaxStepDegrees && edge(0) > curveFacetEdgePx)
+                    || (endTurn > curveMaxStepDegrees && edge(samples - 1) > curveFacetEdgePx) { visible = true }
+                if !visible && samples > 1 {
+                    for i in 1..<samples
+                    where abs(turnAt(curve, i)) * 180 / .pi > curveMaxStepDegrees
+                        && edge(i - 1) > curveFacetEdgePx && edge(i) > curveFacetEdgePx { visible = true; break }
+                }
+            }
+            if !visible || samples >= 256 { return curve }
+            samples *= 2
+        }
+    }
+
+    static func pointAtMeasure(_ points: [Point], _ measures: [Double], _ measure: Double) -> Point {
+        guard points.count > 1 else { return points.first ?? Point(x: 0, y: 0) }
+        if measure <= measures[0] { return points[0] }
+        if measure >= measures.last! { return points.last! }
+        var lo = 0, hi = points.count - 1
+        while lo + 1 < hi {
+            let mid = (lo + hi) / 2
+            if measures[mid] <= measure { lo = mid } else { hi = mid }
+        }
+        let span = measures[hi] - measures[lo]
+        let u = span > 0 ? (measure - measures[lo]) / span : 0
+        return Point(x: points[lo].x + (points[hi].x - points[lo].x) * u,
+                     y: points[lo].y + (points[hi].y - points[lo].y) * u)
+    }
+
+    /// Blend only an already tangent departure. The terminal metre ruler and
+    /// endpoints are preserved; steep junctions and reversals are untouched.
+    static func blendJunction(
+        _ points: [Point], measures: [Double], join: Join?, atEnd: Bool,
+        intervalMetres: Double, gap: Double
+    ) -> (points: [Point], measures: [Double]) {
+        guard let join, let main = join.mainTangent, points.count >= 2 else { return (points, measures) }
+        let p = atEnd ? Array(points.reversed()) : points
+        let base = measures[0], end = measures.last!
+        let m = atEnd ? measures.reversed().map { end - $0 } : measures.map { $0 - base }
+        let direction = atEnd ? Point(x: -main.x, y: -main.y) : main
+        let first = Point(x: p[1].x - p[0].x, y: p[1].y - p[0].y)
+        guard vectorAngle(direction, first) <= joinMaxTangentDegrees else { return (points, measures) }
+        let length = cumulativeLengths(p).last ?? 0
+        let metresPerPx = length > 0 ? (m.last ?? 0) / length : 1
+        var d = min(joinBlendMetres, joinBlendIntervalFraction * intervalMetres)
+        if join.mainChain.count >= 2 {
+            for i in 1..<p.count where m[i] <= d {
+                if distanceToPolyline(p[i], join.mainChain) > max(abs(gap), degenerateEdge) { d = min(d, m[i]); break }
+            }
+        }
+        let allowance = max(joinBlendDeviationPx, joinBlendDeviationMetres / max(metresPerPx, degenerateEdge))
+        while d > 0.01 {
+            let finish = pointAtMeasure(p, m, d)
+            let before = pointAtMeasure(p, m, max(0, d - min(1, d * 0.01)))
+            let after = pointAtMeasure(p, m, min(m.last!, d + min(1, d * 0.01)))
+            let delta = Point(x: after.x - before.x, y: after.y - before.y)
+            let norm = hypot(delta.x, delta.y), mainNorm = hypot(direction.x, direction.y)
+            guard norm > degenerateEdge, mainNorm > degenerateEdge else { break }
+            let scale = d / max(metresPerPx, degenerateEdge)
+            let ta = Point(x: direction.x / mainNorm * scale, y: direction.y / mainNorm * scale)
+            let tb = Point(x: delta.x / norm * scale, y: delta.y / norm * scale)
+            let curve = sampleCubic(p[0], finish, ta, tb)
+            let source = slice(points: p, measures: m, from: 0, to: d)
+            if source.count >= 2 && curve.allSatisfy({ distanceToPolyline($0, source) <= allowance }) {
+                var out = curve
+                var outM = curve.indices.map { d * Double($0) / Double(curve.count - 1) }
+                for i in p.indices where m[i] > d { out.append(p[i]); outM.append(m[i]) }
+                return atEnd ? (Array(out.reversed()), outM.reversed().map { end - $0 })
+                    : (out, outM.map { base + $0 })
+            }
+            d *= 0.5
+        }
+        return (points, measures)
+    }
+
     // MARK: - the stroke
 
     public static func buildStroke(_ points: [Point], options: Options) -> Stroke {
@@ -505,8 +789,17 @@ public enum ContinuousStroke {
         let cleanTotalPx = cleanCumulative[cleanCumulative.count - 1]
         let totalMetres = cleanMeasures[cleanMeasures.count - 1] - cleanMeasures[0]
         let metresPerPx = cleanTotalPx > 0 && totalMetres > 0 ? totalMetres / cleanTotalPx : 0
+        let curvedFollows = options.follows.map { follow -> Follow in
+            guard options.curveCentreline && options.cornerRadiusPx > 0 else { return follow }
+            let simplified = simplifyForFillet(follow.points, measures: follow.measures,
+                anchors: [], tolerance: strokeSimplifyTolerancePx)
+            let curved = smoothCentreline(simplified.points, measures: simplified.measures)
+            var result = follow
+            result.points = curved.points; result.measures = curved.measures
+            return result
+        }
         let substituted = substituteFollows(
-            clean, measures: cleanMeasures, anchors: anchorSet, follows: options.follows,
+            clean, measures: cleanMeasures, anchors: anchorSet, follows: curvedFollows,
             jointStart: options.joinStart != nil, jointEnd: options.joinEnd != nil)
         var followed = substituted
         if substituted.points.count != clean.count || substituted.points != clean {
@@ -531,10 +824,32 @@ public enum ContinuousStroke {
                 measures: measures,
                 map: substituted.map.map { $0 < 0 ? -1 : unfolded.map[$0] })
         }
-        var followedAnchors = Set<Int>()
-        for index in anchorSet where followed.map[index] >= 0 {
-            followedAnchors.insert(followed.map[index])
+        let curveEnabled = options.curveCentreline && options.cornerRadiusPx > 0
+        if curveEnabled {
+            // `anchorSet` indexes `clean`; the curve pass works on
+            // `followed.points`, so carry each anchor across by its map.
+            var protected = Set<Int>()
+            for index in anchorSet where followed.map[index] >= 0 { protected.insert(followed.map[index]) }
+            if followed.points.count >= 3 {
+              for i in 1..<(followed.points.count - 1) where abs(turnAt(followed.points, i)) > curveHardTurnDegrees * .pi / 180 {
+                protectAround(followed.points, i, &protected)
+              }
+            }
+            let simplified = simplifyForFillet(followed.points, measures: followed.measures,
+                anchors: protected, tolerance: strokeSimplifyTolerancePx)
+            var curved = smoothCentreline(simplified.points, measures: simplified.measures, anchorMeasures: anchorMeasures)
+            let startInterval = anchorMeasures.filter { $0 > cleanMeasures[0] }.min().map { $0 - cleanMeasures[0] } ?? totalMetres
+            let endInterval = anchorMeasures.filter { $0 < cleanMeasures.last! }.max().map { cleanMeasures.last! - $0 } ?? totalMetres
+            curved = blendJunction(curved.points, measures: curved.measures, join: options.joinStart,
+                                   atEnd: false, intervalMetres: startInterval, gap: gap)
+            curved = blendJunction(curved.points, measures: curved.measures, join: options.joinEnd,
+                                   atEnd: true, intervalMetres: endInterval, gap: gap)
+            // Stations are read by measure from final ink below; they are
+            // deliberately not hard vertices of the spline or jog passes.
+            followed = (curved.points, curved.measures, Array(repeating: -1, count: clean.count))
         }
+        var followedAnchors = Set<Int>()
+        for index in anchorSet where followed.map[index] >= 0 { followedAnchors.insert(followed.map[index]) }
         let taperedStep = taperJogs(
             followed.points, measures: followed.measures, anchors: followedAnchors,
             metresPerPx: metresPerPx)
@@ -602,14 +917,29 @@ public enum ContinuousStroke {
         // ``strokeSimplifyTolerancePx``. Both the anchor set and the measures
         // are carried across; the anchors, the two ends, and nothing else,
         // are forced to survive.
-        let drawn = simplifyForFillet(
-            cleaned.points, measures: cleanedMeasures, anchors: finalAnchors,
-            tolerance: strokeSimplifyTolerancePx)
+        let drawn = curveEnabled
+            ? (points: cleaned.points, measures: cleanedMeasures,
+               // Anchors that survived as exact vertices keep the through-anchor fillet.
+               anchors: Set(cleanedMeasures.indices.filter { index in
+                   anchorMeasures.contains { abs($0 - cleanedMeasures[index]) < 1e-9 }
+               }))
+            : simplifyForFillet(cleaned.points, measures: cleanedMeasures, anchors: finalAnchors,
+                                tolerance: strokeSimplifyTolerancePx)
         let filleted = fillet(
             drawn.points, radius: options.cornerRadiusPx,
             floorRadius: options.minCornerRadiusPx, anchors: drawn.anchors,
             measures: drawn.measures, enforceMinimumRadius: options.enforceMinimumCornerRadius)
-        let anchors = options.anchors.map { index -> Point in
+        let anchors = options.anchors.enumerated().map { anchorIndex, index -> Point in
+            if curveEnabled {
+                // A surviving anchor vertex is returned exactly (the fillet keeps it as an apex).
+                if let exact = drawn.points.indices.first(where: { drawn.anchors.contains($0) && abs(drawn.measures[$0] - anchorMeasures[anchorIndex]) < 1e-9 && filleted.points.contains(drawn.points[$0]) && distanceToPolyline(drawn.points[$0], filleted.points) == 0 }) {
+                    return drawn.points[exact]
+                }
+                let at = anchorMeasures[anchorIndex]
+                let read = pointAtMeasure(filleted.points, filleted.measures, at)
+                // Re-project so the bead is exactly on the drawn segment.
+                return exactlyOnPolyline(read, filleted.points)
+            }
             guard index >= 0, index < anchorMap.count else { return offset[offset.count - 1] }
             let moved = tapered.map[anchorMap[index]]
             if moved < 0 { return offset[offset.count - 1] }
@@ -2051,6 +2381,36 @@ public enum ContinuousStroke {
     /// measure (rather than searching the whole line) also keeps this from
     /// snapping to an unrelated, nearer part of a line that loops back on
     /// itself. Returns nil only if `polyline` has fewer than two points.
+    /// A point on the nearest segment that `distanceToPolyline` reads as exactly
+    /// zero: projection arithmetic is not idempotent, so step the parameter by
+    /// ulps until the re-measured distance is 0 (else keep the nearest).
+    static func exactlyOnPolyline(_ target: Point, _ polyline: [Point]) -> Point {
+        var bestIndex = -1, bestT = 0.0, bestDistance = Double.infinity
+        for index in 0..<(polyline.count - 1) {
+            let a = polyline[index], b = polyline[index + 1]
+            let dx = b.x - a.x, dy = b.y - a.y
+            let square = dx * dx + dy * dy
+            var t = square > 0 ? ((target.x - a.x) * dx + (target.y - a.y) * dy) / square : 0
+            t = max(0, min(1, t))
+            let held = hypot(target.x - a.x - dx * t, target.y - a.y - dy * t)
+            if held < bestDistance { bestDistance = held; bestIndex = index; bestT = t }
+        }
+        guard bestIndex >= 0 else { return target }
+        let a = polyline[bestIndex], b = polyline[bestIndex + 1]
+        var fallback = Point(x: a.x + (b.x - a.x) * bestT, y: a.y + (b.y - a.y) * bestT)
+        var fallbackDistance = distanceToPolyline(fallback, polyline)
+        var up = bestT, down = bestT
+        for _ in 0..<64 where fallbackDistance > 0 {
+            for t in [up.nextUp, down.nextDown] {
+                let q = Point(x: a.x + (b.x - a.x) * min(1, max(0, t)), y: a.y + (b.y - a.y) * min(1, max(0, t)))
+                let d = distanceToPolyline(q, polyline)
+                if d < fallbackDistance { fallback = q; fallbackDistance = d }
+            }
+            up = up.nextUp; down = down.nextDown
+        }
+        return fallback
+    }
+
     static func nearestOnMeasureSpan(
         _ target: Point, polyline: [Point], measures: [Double], mLo: Double, mHi: Double
     ) -> Point? {

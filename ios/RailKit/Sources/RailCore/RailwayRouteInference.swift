@@ -10,7 +10,7 @@ public enum RailwayRouteInference {
         let codes = train.stops.compactMap(\.n02StationCode)
         guard train.stops.count >= 2, codes.count == train.stops.count,
               codes.allSatisfy({ !$0.isEmpty }), let first = codes.first, let last = codes.last else {
-            return .init(choices: [], isTruncated: false, topologyIsComplete: false)
+            return .init(choices: [], isTruncated: false, topologyIsComplete: false, directionIsKnown: false)
         }
         func attempt(relaxLineConstraints: Bool) -> LocalJourneySearch.Result {
             // Shared station groups permit reviewable transfer candidates, not
@@ -38,17 +38,25 @@ public enum RailwayRouteInference {
                 respectsSections($0, train: train, package: package, stationAliases: stationAliases,
                                  relaxLineConstraints: relaxLineConstraints)
             }
-            return .init(choices: choices, isTruncated: result.isTruncated, topologyIsComplete: false)
+            return .init(choices: choices, isTruncated: result.isTruncated, topologyIsComplete: false,
+                         directionIsKnown: true)
         }
         let constrained = attempt(relaxLineConstraints: false)
         guard constrained.choices.isEmpty else { return constrained }
-        // Legal/service line labels can differ from physical package rows. Relaxed
-        // results remain reviewable candidates only; topologyIsComplete stays false.
-        return attempt(relaxLineConstraints: true)
+        // Legal/service line labels can differ from physical package rows. A
+        // match that appears only after dropping those labels is route-guide
+        // material: it does not auto-complete. topologyIsComplete stays false.
+        let relaxed = attempt(relaxLineConstraints: true)
+        return .init(choices: relaxed.choices, isTruncated: relaxed.isTruncated,
+                     topologyIsComplete: false, directionIsKnown: relaxed.directionIsKnown,
+                     relaxedLineConstraints: !relaxed.choices.isEmpty)
     }
 
-    /// Automatic completion requires demonstrated uniqueness and complete
-    /// topology coverage. Current compact packages do not assert that coverage.
+    /// Recorded stop order supplies direction. An untruncated, single package
+    /// route found under the recorded line constraints can auto-complete; it
+    /// remains an undoable inference, not proof of complete real-world topology.
+    /// A route found only by relaxing those constraints is not a unique choice
+    /// and stays on the route guide.
     public static func choice(in train: Train, package: CompactPackage, stationAliases: [String: String] = [:]) -> RailwayRouteChoices.Choice? {
         search(in: train, package: package, stationAliases: stationAliases).uniqueChoice
     }

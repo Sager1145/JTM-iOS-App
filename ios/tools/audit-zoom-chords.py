@@ -18,15 +18,15 @@ import tempfile
 
 
 REGIONS = ("jp", "tw", "hk", "mo", "kr")
-DEFAULT_ZOOMS = (10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0)
+DEFAULT_ZOOMS = (10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0)
 
 
 def run(command: list[str], *, cwd: Path, env: dict[str, str], stdout=None) -> subprocess.CompletedProcess:
     return subprocess.run(command, cwd=cwd, env=env, stdout=stdout, check=True, text=stdout is None)
 
 
-def compile_probe(repo: Path, output: Path, env: dict[str, str]) -> None:
-    core = repo / "ios/RailKit/Sources/RailCore"
+def compile_probe(repo: Path, output: Path, env: dict[str, str], core_override: Path | None = None) -> None:
+    core = core_override or repo / "ios/RailKit/Sources/RailCore"
     run([
         "xcrun", "swiftc", "-O",
         str(core / "JSNumber.swift"),
@@ -46,6 +46,8 @@ def parse_args() -> argparse.Namespace:
                         help="native/app zooms; projection uses the equivalent MapLibre zoom minus one")
     parser.add_argument("--json", type=Path, help="write the complete machine-readable report")
     parser.add_argument("--limit", type=int, default=30, help="maximum candidate locations printed")
+    parser.add_argument("--core-source", type=Path, help="alternate RailCore sources for a before/after audit")
+    parser.add_argument("--baseline-plain", action="store_true", help="audit the old lane-zero DP path")
     parser.add_argument("--legacy", action="store_true", help="use legacy non-strict ContinuousStroke mode")
     parser.add_argument("--fail-on-candidates", action="store_true",
                         help="fail after reporting when any visible skipped-bend candidate remains")
@@ -82,7 +84,7 @@ def main() -> int:
         env["CLANG_MODULE_CACHE_PATH"] = str(scratch / "module-cache")
         env["SWIFT_MODULECACHE_PATH"] = str(scratch / "module-cache")
         probe = scratch / "audit-zoom-chords"
-        compile_probe(repo, probe, env)
+        compile_probe(repo, probe, env, args.core_source)
         reports = []
         for region in regions:
             source = scratch / f"{region}-stroke-model.json"
@@ -90,11 +92,17 @@ def main() -> int:
                 run(["node", str(repo / "ios/tools/audit-zoom-chords.mjs"), region],
                     cwd=repo, env=env, stdout=output)
             command = [str(probe), str(source), *(f"{zoom:g}" for zoom in zooms)]
+            if args.baseline_plain:
+                command.append("--baseline-plain")
             if args.legacy:
                 command.append("--legacy")
             completed = subprocess.run(command, cwd=repo, env=env, check=True,
                                        stdout=subprocess.PIPE, text=True)
-            reports.append(json.loads(completed.stdout))
+            held_report = json.loads(completed.stdout)
+            extracted = json.loads(source.read_text())
+            held_report["junctions"] = extracted.get("junctions", [])
+            held_report["graphJunctions"] = extracted.get("graphJunctions", [])
+            reports.append(held_report)
 
     candidates = [candidate for report in reports for candidate in report["candidates"]]
     candidates.sort(key=lambda row: (-row["excessPx"], row["region"], row["lineId"], row["appZoom"]))
@@ -135,6 +143,21 @@ def main() -> int:
             count = sum(1 for row in held["candidates"] if row["appZoom"] == zoom)
             crossing_count = sum(1 for row in held["crossingCandidates"] if row["appZoom"] == zoom)
             print(held["region"], f"{zoom:g}", count, crossing_count)
+    print("\nregion zoom facets max-deviation-px centreline-deviation-px all-vertices viewport-upper-bound budget")
+    for held in reports:
+        for row in held["curveMetrics"]:
+            print(held["region"], f'{row["appZoom"]:g}', row["facets"],
+                  f'{row["maxDeviationPx"]:.4f}', f'{row["maxCentrelineDeviationPx"]:.4f}', row["drawnVertices"],
+                  row["worstViewportVertices"], row["vertexBudget"])
+    print("Viewport bound: 129-vertex chunk bounds, 1366x1024 points, padding 0.5; before visibility and budget shedding.")
+    print("Deviation includes lane offsets and junction/jog displacement from the pre-lane survey.")
+    for held in reports:
+        for junction in held.get("graphJunctions", []):
+            turns = ",".join(f"{angle:.3f}" for angle in junction["pathDeflectionsDegrees"])
+            splits = [angle for split in junction.get("sharedRunDivergences", [])
+                      for angle in split["divergenceAnglesDegrees"]]
+            split_text = ",".join(f"{angle:.3f}" for angle in splits) or "not-resolved"
+            print(f'junction {junction["name"]} path-deflections={turns} shared-run-divergences={split_text}')
     print("\nnonzero stage breakdown")
     counts: dict[tuple[str, float, str], int] = {}
     for row in candidates:

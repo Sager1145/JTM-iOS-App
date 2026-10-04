@@ -8,6 +8,7 @@ private struct FollowInput: Decodable {
 private struct StrokePartInput: Decodable {
     let lineId: String; let partIndex: Int; let coordinates: [[Double]]; let measures: [Double]
     let totalMetres: Double; let rows: [LaneRowInput]; let anchors: [Int]; let follows: [FollowInput]
+    var joinPrevious: Bool? = nil
 }
 private struct PlainPartInput: Decodable {
     let lineId: String; let partIndex: Int; let lane: Double; let coordinates: [[Double]]
@@ -39,6 +40,88 @@ private struct AuditOutput: Encodable {
     let zooms: [Double]; let continuousBuilds: Int; let plainSimplifierBuilds: Int
     let plainLaneBuilds: Int; let candidates: [Candidate]
     let crossingCandidates: [CrossingCandidate]
+    let curveMetrics: [CurveMetrics]
+}
+
+/// Counts final ink, excluding source hard turns by their preserved measure.
+private struct CurveMetrics: Encodable {
+    let appZoom: Double
+    let facets: Int
+    let maxDeviationPx: Double
+    let maxCentrelineDeviationPx: Double
+    let drawnVertices: Int
+    let worstViewportVertices: Int
+    let vertexBudget: Int
+    let viewportWidth: Double
+    let viewportHeight: Double
+}
+private struct Bounds {
+    let minX: Double; let maxX: Double; let minY: Double; let maxY: Double; let count: Int
+}
+/// Exact rectangle sweep over 129-vertex production chunk bounds, before importance filtering or
+/// budget shedding. 1366×1024 points plus NetworkLOD.padding=0.5 on each side.
+/// Thus this is a conservative workload bound, not a claim of actual submission.
+private func worstViewport(_ boxes: [Bounds]) -> Int {
+    struct Event { let x: Double; let index: Int; let entering: Bool }
+    var events: [Event] = []
+    for (i, b) in boxes.enumerated() {
+        events.append(Event(x: b.minX - 1366, index: i, entering: true))
+        events.append(Event(x: b.maxX + 1366, index: i, entering: false))
+    }
+    events.sort { $0.x == $1.x ? ($0.entering && !$1.entering) : $0.x < $1.x }
+    var active = Set<Int>(), best = 0
+    for event in events {
+        if !event.entering { active.remove(event.index); continue }
+        active.insert(event.index)
+        var ys: [(Double, Int)] = []
+        for i in active {
+            ys.append((boxes[i].minY - 1024, boxes[i].count))
+            ys.append((boxes[i].maxY + 1024, -boxes[i].count))
+        }
+        ys.sort { $0.0 == $1.0 ? $0.1 > $1.1 : $0.0 < $1.0 }
+        var total = 0
+        for (_, delta) in ys { total += delta; best = max(best, total) }
+    }
+    return best
+}
+private func curveMetrics(_ final: Stage, source: Stage, report: ((Int, Double, Double, Double) -> Void)? = nil) -> (facets: Int, deviation: Double, bounds: [Bounds]) {
+    guard final.points.count >= 2, source.points.count >= 2 else { return (0, 0, []) }
+    var hard: [Double] = []
+    if source.points.count > 2 {
+        for i in 1..<(source.points.count - 1)
+        where abs(ContinuousStroke.turnAt(source.points, i)) * 180 / .pi > 60 {
+            hard.append(source.measures[i])
+        }
+    }
+    var facets = 0, deviation = 0.0
+    for i in final.points.indices {
+        let p = final.points[i], m = final.measures[i]
+        // Nearest source segment in the adjacent measure intervals, avoiding
+        // unrelated arms of a loop while accommodating non-linear curve speed.
+        let at = max(0, min(source.points.count - 2, upperBound(source.measures, m) - 1))
+        var nearest = Double.infinity
+        for j in max(0, at - 2)...min(source.points.count - 2, at + 2) {
+            nearest = min(nearest, distance(p, to: source.points[j], source.points[j + 1]))
+        }
+        deviation = max(deviation, nearest)
+        if nearest > 10 { report?(i, -nearest, 0, 0) }
+        guard i > 0, i + 1 < final.points.count else { continue }
+        let previous = final.points[i - 1], next = final.points[i + 1]
+        guard hypot(p.x - previous.x, p.y - previous.y) > 4,
+              hypot(next.x - p.x, next.y - p.y) > 4,
+              abs(ContinuousStroke.turnAt(final.points, i)) * 180 / .pi > 2 + 1e-6 else { continue }
+        let h = lowerBound(hard, m - 1e-5)
+        if h < hard.count, abs(hard[h] - m) <= 1e-5 { continue }
+        facets += 1
+        report?(i, abs(ContinuousStroke.turnAt(final.points, i)) * 180 / .pi,
+                hypot(p.x - previous.x, p.y - previous.y), hypot(next.x - p.x, next.y - p.y))
+    }
+    let boxes = stride(from: 0, to: final.points.count - 1, by: 128).map { start -> Bounds in
+        let chunk = final.points[start..<min(start + 129, final.points.count)]
+        return Bounds(minX: chunk.map(\.x).min()!, maxX: chunk.map(\.x).max()!,
+                      minY: chunk.map(\.y).min()!, maxY: chunk.map(\.y).max()!, count: chunk.count)
+    }
+    return (facets, deviation, boxes)
 }
 
 private typealias Point = ContinuousStroke.Point
@@ -297,6 +380,7 @@ private func join(
     guard let other = allParts.first(where: {
         $0.lineId == part.lineId && $0.partIndex == neighbourIndex
     }) else { return nil }
+    if (atEnd ? other.joinPrevious : part.joinPrevious) == false { return nil }
     let own = projected(part.coordinates, zoom: projectionZoom)
     let theirs = projected(other.coordinates, zoom: projectionZoom)
     guard own.count >= 2, theirs.count >= 2 else { return nil }
@@ -328,16 +412,31 @@ private func coordinateMeasures(_ coordinates: [[Double]]) -> [Double] {
         guard args.count >= 2 else { throw NSError(domain: "audit", code: 2, userInfo: [NSLocalizedDescriptionKey: "input JSON path required"]) }
         let input = try JSONDecoder().decode(AuditInput.self, from: Data(contentsOf: URL(fileURLWithPath: args[1])))
         let zooms = args.dropFirst(2).compactMap(Double.init)
-        let requestedZooms = zooms.isEmpty ? [10, 11, 12, 13, 14, 15, 16] : zooms
+        let requestedZooms = zooms.isEmpty ? [10, 11, 12, 13, 14, 15, 16, 17] : zooms
         let strict = !args.contains("--legacy")
         let onlyLine = args.compactMap { $0.hasPrefix("--line=") ? String($0.dropFirst(7)) : nil }.first
         let mode = strict ? "production" : "legacy"
         var candidates: [Candidate] = []
         var crossingCandidates: [CrossingCandidate] = []
+        var metrics: [CurveMetrics] = []
         var continuousBuilds = 0, plainSimplifierBuilds = 0, plainLaneBuilds = 0
 
         for appZoom in requestedZooms {
             if appZoom <= 0 { continue }
+            var facetCount = 0, vertexCount = 0
+            var maxDeviation = 0.0, maxCentrelineDeviation = 0.0
+            var bounds: [Bounds] = []
+            func record(_ final: Stage, source: Stage, line: String = "", stage: String = "") {
+                // AUDIT_FACETS=1 lists facet vertices on stderr: line, stage, zoom, measure, pixel, turn, edges.
+                let held = curveMetrics(final, source: source, report: ProcessInfo.processInfo.environment["AUDIT_FACETS"] == nil ? nil : { i, turn, before, after in
+                    let q = final.points[i]
+                    FileHandle.standardError.write(Data(String(format: "FACET\t%@\t%@\tz%g\tm=%.1f\tpx=%.2f,%.2f\tturn=%.2f\tedges=%.1f,%.1f\n", line, stage, appZoom, final.measures[i], q.x, q.y, turn, before, after).utf8))
+                })
+                facetCount += held.facets
+                maxDeviation = max(maxDeviation, held.deviation)
+                vertexCount += held.bounds.reduce(0) { $0 + $1.count }
+                bounds.append(contentsOf: held.bounds)
+            }
             let projectionZoom = appZoom - 1
             let styleScale = scale(atAppZoom: appZoom)
             // Cold-build bucket. Camera hysteresis is stateful and outside a
@@ -394,12 +493,14 @@ private func coordinateMeasures(_ coordinates: [[Double]]) -> [Double] {
                     region: input.region, lineId: part.lineId, partIndex: part.partIndex,
                     appZoom: appZoom, mode: mode, stageName: "continuous_fillet_new_self_intersection",
                     previous: laned, current: final)
+                maxCentrelineDeviation = max(maxCentrelineDeviation, curveMetrics(source, source: Stage(points: pixels, measures: part.measures)).deviation)
+                record(final, source: followExpected, line: part.lineId + "#\(part.partIndex)", stage: "continuous")
                 continuousBuilds += 4
             }
 
             for part in input.plain where onlyLine == nil || part.lineId == onlyLine {
                 let measures = coordinateMeasures(part.coordinates)
-                if part.lane == 0 {
+                if part.lane == 0 && args.contains("--baseline-plain") {
                     let raw = Stage(points: projected(part.coordinates, zoom: projectionZoom), measures: measures)
                     let minX = raw.points.map(\.x).min()!, maxX = raw.points.map(\.x).max()!
                     let minY = raw.points.map(\.y).min()!, maxY = raw.points.map(\.y).max()!
@@ -418,6 +519,7 @@ private func coordinateMeasures(_ coordinates: [[Double]]) -> [Double] {
                         region: input.region, lineId: part.lineId, partIndex: part.partIndex,
                         appZoom: appZoom, mode: mode, stageName: "noncontinuous_final_new_self_intersection",
                         previous: raw, current: simplified)
+                    record(simplified, source: raw, line: part.lineId, stage: "plain-simplified")
                     plainSimplifierBuilds += 1
                 } else {
                     let synthetic = StrokePartInput(lineId: part.lineId, partIndex: part.partIndex,
@@ -435,9 +537,14 @@ private func coordinateMeasures(_ coordinates: [[Double]]) -> [Double] {
                         region: input.region, lineId: part.lineId, partIndex: part.partIndex,
                         appZoom: appZoom, mode: mode, stageName: "noncontinuous_lane_new_self_intersection",
                         previous: raw, current: shifted)
+                    record(shifted, source: raw, line: part.lineId, stage: "plain-shifted")
                     plainLaneBuilds += 1
                 }
             }
+            metrics.append(CurveMetrics(appZoom: appZoom, facets: facetCount,
+                maxDeviationPx: maxDeviation, maxCentrelineDeviationPx: maxCentrelineDeviation, drawnVertices: vertexCount,
+                worstViewportVertices: worstViewport(bounds), vertexBudget: 40_000,
+                viewportWidth: 1366, viewportHeight: 1024))
         }
         let result = AuditOutput(region: input.region, version: input.version,
             packageLineCount: input.packageLineCount,
@@ -452,7 +559,7 @@ private func coordinateMeasures(_ coordinates: [[Double]]) -> [Double] {
             crossingCandidates: crossingCandidates.sorted {
                 ($0.region, $0.lineId, $0.partIndex, $0.appZoom, $0.firstMeasure) <
                 ($1.region, $1.lineId, $1.partIndex, $1.appZoom, $1.firstMeasure)
-            })
+            }, curveMetrics: metrics)
         let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         FileHandle.standardOutput.write(try encoder.encode(result)); FileHandle.standardOutput.write(Data("\n".utf8))
     }

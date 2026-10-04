@@ -8,12 +8,20 @@ private struct PhysicalEndpointTrimPart: Decodable {
 
 @Suite(.serialized)
 struct PhysicalEndpointTrimTests {
-    private struct GapCounts {
+    init() {}
+
+    struct GapCounts {
         var boundaryStations: [String] = []
         var nonBoundary = 0
+        var reasons: [String: Int] = [:]
+
+        mutating func recordFailure(_ reason: String) {
+            nonBoundary += 1
+            reasons[reason, default: 0] += 1
+        }
     }
 
-    private struct RealData {
+    struct RealData {
         let stations: Stations.Index
         let graphStore: RouteGraph.RouteGraphStore
         let intervals: RouteSolver.OfficialIntervalIndex
@@ -66,10 +74,17 @@ struct PhysicalEndpointTrimTests {
         })
         #expect(RouteSolver.trimmedToGraphNodes(line: foldedLongBridge, graph: graph) == nil)
 
-        let interiorOffNode = [a, point(50), b]
-        #expect(RouteSolver.trimmedToGraphNodes(line: interiorOffNode, graph: graph) == interiorOffNode)
-        #expect(RouteSolver.verifiedSourcePath([interiorOffNode], graph: graph,
+        let midpoint = point(50)
+        let interiorOffEdge = [a, Coordinate(lon: midpoint.lon,
+            lat: midpoint.lat + 5 / (6_371_000 * .pi / 180)), b]
+        #expect(RouteSolver.trimmedToGraphNodes(line: interiorOffEdge, graph: graph) == interiorOffEdge)
+        #expect(RouteSolver.verifiedSourcePath([interiorOffEdge], graph: graph,
             context: .init(), section: section) == nil)
+
+        let interiorOnEdge = [a, Coordinate(lon: midpoint.lon,
+            lat: midpoint.lat + 0.3 / (6_371_000 * .pi / 180)), b]
+        #expect(RouteSolver.verifiedSourcePath([interiorOnEdge], graph: graph,
+            context: .init(), section: section) != nil)
     }
 
     @Test("Same-identity spans are bounded and cannot use other identities or connectors")
@@ -201,11 +216,13 @@ struct PhysicalEndpointTrimTests {
         let oki = try gapCounts(
             fixture: "part-097", expectedID: "20260719_03_super_oki5",
             branch: .legacy, root: root, data: data)
-        #expect(oki.boundaryStations == ["益田"])
+        #expect(oki.boundaryStations.isEmpty)
         #expect(oki.nonBoundary == 0)
     }
 
-    private func loadRealData(root: URL) throws -> RealData {
+    func loadRealData(
+        root: URL, junctions suppliedJunctions: [RouteGraph.PhysicalJunction]? = nil
+    ) throws -> RealData {
         let dataRoot = root.appending(path: "app/data")
         var sections = try RouteGraph.SectionFeatureCollection.load(
             contentsOf: dataRoot.appending(path: "rail-sections.json")).features
@@ -213,10 +230,16 @@ struct PhysicalEndpointTrimTests {
             contentsOf: dataRoot.appending(path: "stations.json")).features
         let overlay = try RailHistoryOverlay.load(from: dataRoot.appending(path: "rail-history.json"))
         _ = RailHistory.apply(overlay, sections: &sections, stations: &stationFeatures)
-        let registry = try PhysicalRailJunctionRegistry(data: Data(contentsOf:
-            dataRoot.appending(path: "physical-rail-junctions.json")))
+        let junctions: [RouteGraph.PhysicalJunction]
+        if let suppliedJunctions {
+            junctions = suppliedJunctions
+        } else {
+            let registry = try PhysicalRailJunctionRegistry(data: Data(contentsOf:
+                dataRoot.appending(path: "physical-rail-junctions.json")))
+            junctions = registry.junctions(for: "jp")
+        }
         let graphStore = RouteGraph.RouteGraphStore(
-            sections: sections, policy: .physicalRailway, junctions: registry.junctions(for: "jp"))
+            sections: sections, policy: .physicalRailway, junctions: junctions)
         let loaded = try DisplayParts.LoadedPackage.load(
             contentsOf: root.appending(path: "app/public/rail/jp-2025.json"))
         let network = RouteNetwork(lines: loaded.package.lines.map { line in
@@ -236,17 +259,13 @@ struct PhysicalEndpointTrimTests {
             resolver: StationIntervalResolver(network: network))
     }
 
-    private func proofGraph(
+    func proofGraph(
         _ coordinates: [Coordinate], store: RouteGraph.RouteGraphStore
     ) -> RouteGraph.Graph {
-        let box = RouteGraph.BBox(
-            minX: coordinates.map(\.lon).min()!, minY: coordinates.map(\.lat).min()!,
-            maxX: coordinates.map(\.lon).max()!, maxY: coordinates.map(\.lat).max()!)
-        return store.regionalGraph(for: RouteGraph.padBBoxMeters(box, meters: 1_000),
-            routeSolveInProgress: true)
+        store.corridorGraph(for: coordinates, meters: 1_000)
     }
 
-    private enum ReferenceBranch { case source, legacy }
+    enum ReferenceBranch { case automatic, source, legacy }
 
     private func gapCounts(
         fixture: String, expectedID: String, branch: ReferenceBranch,
@@ -257,9 +276,23 @@ struct PhysicalEndpointTrimTests {
         let train = TokyoConventionalRouteInference.applying(to: TrainValidation.normalizeExportTrain(
             TrainValidation.restoringRouteSectionEndpointNames(part.train), country: "jp",
             stations: TrainValidation.StationTable.empty))
-        let sections = train.routeSections ?? []
         try #require(train.id == expectedID)
+        return try gapCounts(train: train, branch: branch, data: data)
+    }
+
+    func normalizedSampleTrain(_ train: Train) -> Train {
+        TokyoConventionalRouteInference.applying(to: TrainValidation.normalizeExportTrain(
+            TrainValidation.restoringRouteSectionEndpointNames(train), country: "jp",
+            stations: TrainValidation.StationTable.empty))
+    }
+
+    func gapCounts(
+        train: Train, branch: ReferenceBranch = .automatic, data: RealData
+    ) throws -> GapCounts {
+        let sections = train.routeSections ?? []
         try #require(sections.isEmpty == false)
+        let isAutomatic: Bool
+        if case .automatic = branch { isAutomatic = true } else { isAutomatic = false }
         let context = RouteSolver.TrainContext(
             id: train.id, number: train.number, trainType: train.trainType ?? "",
             company: train.company ?? "", origin: train.origin, destination: train.destination,
@@ -277,7 +310,7 @@ struct PhysicalEndpointTrimTests {
         let inferred = RouteSolver.inferStationSections(
             sections, resolver: data.resolver, network: data.network, eligibility: data.eligibility,
             allowedCodes: allowedCodes, hard: context.institutionFilterMode == "hard")
-        try #require(inferred.ambiguous.isEmpty)
+        if !isAutomatic { try #require(inferred.ambiguous.isEmpty) }
 
         var counts = GapCounts()
         var lastSolvedIndex: Int?
@@ -285,14 +318,31 @@ struct PhysicalEndpointTrimTests {
         var continuity: Coordinate?
         var displayContinuity: Coordinate?
         var projectionCache = RouteProjectionCache()
+        var boundaryGapIndices: Set<Int> = []
 
         for (index, section) in sections.enumerated() {
             let sharesBoundary = index > 0 && lastSolvedIndex == index - 1
                 && RouteSolver.routeSectionBoundarySharesExplicitStop(sections[index - 1], section)
             let previousKey = sharesBoundary ? physicalKey : nil
             let anchor = sharesBoundary ? continuity : nil
+            if inferred.ambiguous.contains(index) {
+                counts.recordFailure("ambiguous-inference")
+                lastSolvedIndex = nil
+                physicalKey = nil
+                continuity = nil
+                displayContinuity = nil
+                continue
+            }
+            let useSource: Bool
             switch branch {
+            case .automatic:
+                useSource = section.sectionCodes?.isEmpty == false || inferred.hints[index] != nil
             case .source:
+                useSource = true
+            case .legacy:
+                useSource = false
+            }
+            if useSource {
                 try #require(section.sectionCodes?.isEmpty == false || inferred.hints[index] != nil)
                 var hints = inferred.hints[index] ?? RouteHints(
                     requiredLineIDs: section.lineIDs ?? [], sectionCodes: section.sectionCodes ?? [],
@@ -302,78 +352,137 @@ struct PhysicalEndpointTrimTests {
                     ?? hints.fromStationCode
                 hints.toStationCode = data.eligibility.stationCode(hints.toStationCode)
                     ?? hints.toStationCode
-                let source = try #require(data.network.sourceGeometry(for: hints))
-                let exact = try #require(data.network.canonicalizeRouteFeature(
+                let sourceResult = data.network.sourceGeometry(for: hints)
+                let exactResult = data.network.canonicalizeRouteFeature(
                     RouteFeature(geometry: nil, hints: hints),
-                    continueFrom: displayContinuity, cache: &projectionCache))
-                try #require(source.lines.count == exact.geometry.lines.count)
-                let graph = proofGraph(source.lines.flatMap { $0 }, store: data.graphStore)
+                    continueFrom: sharesBoundary ? displayContinuity : nil,
+                    cache: &projectionCache)
+                if let source = sourceResult, let exact = exactResult,
+                   source.lines.count == exact.geometry.lines.count {
+                    let graph = proofGraph(source.lines.flatMap { $0 }, store: data.graphStore)
+                    let keys = RouteSolver.verifiedSourcePath(
+                        source.lines, graph: graph, context: context, section: section)
+                    if keys == nil { counts.recordFailure("source-verification") }
+                    if sharesBoundary,
+                       !(previousKey.flatMap { previous in keys?.first.map { first in
+                           RouteSolver.physicalBoundaryIsProven(from: previous, to: first,
+                               graph: graph, rideDate: context.rideDate)
+                       } } ?? false) {
+                        if boundaryGapIndices.insert(index).inserted {
+                            counts.boundaryStations.append(section.from ?? "")
+                        }
+                    }
+                    physicalKey = keys?.last
+                    continuity = source.lines.last?.last
+                    displayContinuity = exact.geometry.lines.last?.last
+                    lastSolvedIndex = index
+                    continue
+                }
+                if !isAutomatic {
+                    try #require(sourceResult)
+                    let exact = try #require(exactResult)
+                    try #require(sourceResult?.lines.count == exact.geometry.lines.count)
+                }
+                counts.recordFailure("source-materialization")
+                lastSolvedIndex = nil
+                physicalKey = nil
+                continuity = nil
+                displayContinuity = nil
+                if inferred.hints[index] == nil { continue }
+            } else {
+                try #require(section.sectionCodes?.isEmpty != false && inferred.hints[index] == nil)
+            }
+
+            var solved = RouteSolver.solveOfficialInterval(
+                section, segmentIndex: index, train: context, country: "jp",
+                allowedCodes: allowedCodes, intervalIndex: data.intervals,
+                stations: data.stations, continuityAnchor: anchor)
+                ?? RouteSolver.solveSectionOnDemand(
+                    section, segmentIndex: index, train: context, country: "jp",
+                    graphStore: data.graphStore, stations: data.stations,
+                    continuityAnchor: anchor, physicalContinuationKey: previousKey,
+                    traversalPolicy: .physicalRail)
+            if solved == nil, sharesBoundary {
+                solved = RouteSolver.solveSectionOnDemand(
+                    section, segmentIndex: index, train: context, country: "jp",
+                    graphStore: data.graphStore, stations: data.stations,
+                    traversalPolicy: .physicalRail)
+            }
+            if !isAutomatic {
+                try #require(solved)
+                try #require((solved?.coordinates.count ?? 0) >= 2)
+            }
+            guard var resolved = solved, resolved.coordinates.count >= 2 else {
+                counts.recordFailure("legacy-unsolved")
+                if sharesBoundary, boundaryGapIndices.insert(index).inserted {
+                    counts.boundaryStations.append(section.from ?? "")
+                }
+                physicalKey = nil
+                continuity = nil
+                displayContinuity = nil
+                lastSolvedIndex = nil
+                continue
+            }
+            let solvedGraph = proofGraph(resolved.coordinates, store: data.graphStore)
+            if resolved.rawPathKeys.first?.contains("@") != true {
+                resolved.rawPathKeys = RouteSolver.verifiedPhysicalPathKeys(
+                    resolved.coordinates, graph: solvedGraph, rideDate: context.rideDate,
+                    requiredLines: Set(section.lineNames ?? []),
+                    requiredOperators: Set(section.operatorNames ?? [])) ?? []
+            }
+            if resolved.rawPathKeys.isEmpty { counts.recordFailure("legacy-path-verification") }
+            if sharesBoundary,
+               !(previousKey.flatMap { previous in resolved.rawPathKeys.first.map { first in
+                   RouteSolver.physicalBoundaryIsProven(from: previous, to: first,
+                       graph: proofGraph([resolved.coordinates[0]], store: data.graphStore),
+                       rideDate: context.rideDate)
+               } } ?? false) {
+                if boundaryGapIndices.insert(index).inserted {
+                    counts.boundaryStations.append(section.from ?? "")
+                }
+            }
+            physicalKey = resolved.rawPathKeys.last
+            continuity = resolved.coordinates.last
+
+            let hints = RouteHints(
+                requiredLineNames: (section.lineNames ?? []).map(Optional.some),
+                preferredLineNames: context.preferredLineNames.map(Optional.some),
+                requiredOperatorNames: (section.operatorNames ?? []).map(Optional.some),
+                preferredOperatorNames: context.preferredOperatorNames.map(Optional.some),
+                requiredLineIDs: section.lineIDs ?? [], sectionCodes: section.sectionCodes ?? [],
+                fromStationCode: section.fromN02StationCode,
+                toStationCode: section.toN02StationCode)
+            let canonical = RouteGraph.TemporalKind.shouldCanonicalizeDisplayNetwork(
+                resolved.temporalKind)
+                ? data.network.canonicalizeRouteFeature(
+                    RouteFeature(geometry: .lineString(resolved.coordinates), hints: hints),
+                    continueFrom: sharesBoundary ? displayContinuity : nil, cache: &projectionCache)
+                : nil
+            var matchedSource: RouteGeometry?
+            if let codes = canonical?.matchedSectionCodes, !codes.isEmpty {
+                var matchedHints = hints
+                matchedHints.sectionCodes = codes
+                matchedHints.requiredLineIDs = canonical?.displayLineIds ?? []
+                matchedSource = data.network.sourceGeometry(for: matchedHints)
+            }
+            if let matchedSource {
+                let matchedGraph = proofGraph(matchedSource.lines.flatMap { $0 }, store: data.graphStore)
                 let keys = RouteSolver.verifiedSourcePath(
-                    source.lines, graph: graph, context: context, section: section)
-                if keys == nil { counts.nonBoundary += 1 }
+                    matchedSource.lines, graph: matchedGraph, context: context, section: section)
+                if keys == nil { counts.recordFailure("matched-source-verification") }
                 if sharesBoundary,
                    !(previousKey.flatMap { previous in keys?.first.map { first in
                        RouteSolver.physicalBoundaryIsProven(from: previous, to: first,
-                           graph: graph, rideDate: context.rideDate)
-                   } } ?? false) {
+                           graph: matchedGraph, rideDate: context.rideDate)
+                   } } ?? false), boundaryGapIndices.insert(index).inserted {
                     counts.boundaryStations.append(section.from ?? "")
                 }
                 physicalKey = keys?.last
-                continuity = source.lines.last?.last
-                displayContinuity = exact.geometry.lines.last?.last
-
-            case .legacy:
-                try #require(section.sectionCodes?.isEmpty != false && inferred.hints[index] == nil)
-                var solved = RouteSolver.solveOfficialInterval(
-                    section, segmentIndex: index, train: context, country: "jp",
-                    allowedCodes: allowedCodes, intervalIndex: data.intervals,
-                    stations: data.stations, continuityAnchor: anchor)
-                    ?? RouteSolver.solveSectionOnDemand(
-                        section, segmentIndex: index, train: context, country: "jp",
-                        graphStore: data.graphStore, stations: data.stations,
-                        continuityAnchor: anchor, physicalContinuationKey: previousKey,
-                        traversalPolicy: .physicalRail)
-                if solved == nil, sharesBoundary {
-                    solved = RouteSolver.solveSectionOnDemand(
-                        section, segmentIndex: index, train: context, country: "jp",
-                        graphStore: data.graphStore, stations: data.stations,
-                        traversalPolicy: .physicalRail)
-                }
-                var resolved = try #require(solved)
-                try #require(resolved.coordinates.count >= 2)
-                let solvedGraph = proofGraph(resolved.coordinates, store: data.graphStore)
-                if resolved.rawPathKeys.first?.contains("@") != true {
-                    resolved.rawPathKeys = RouteSolver.verifiedPhysicalPathKeys(
-                        resolved.coordinates, graph: solvedGraph, rideDate: context.rideDate,
-                        requiredLines: Set(section.lineNames ?? []),
-                        requiredOperators: Set(section.operatorNames ?? [])) ?? []
-                }
-                if resolved.rawPathKeys.isEmpty { counts.nonBoundary += 1 }
-                if sharesBoundary,
-                   !(previousKey.flatMap { previous in resolved.rawPathKeys.first.map { first in
-                       RouteSolver.physicalBoundaryIsProven(from: previous, to: first,
-                           graph: proofGraph([resolved.coordinates[0]], store: data.graphStore),
-                           rideDate: context.rideDate)
-                   } } ?? false) {
-                    counts.boundaryStations.append(section.from ?? "")
-                }
-                physicalKey = resolved.rawPathKeys.last
-                continuity = resolved.coordinates.last
-
-                let hints = RouteHints(
-                    requiredLineNames: (section.lineNames ?? []).map(Optional.some),
-                    preferredLineNames: context.preferredLineNames.map(Optional.some),
-                    requiredOperatorNames: (section.operatorNames ?? []).map(Optional.some),
-                    preferredOperatorNames: context.preferredOperatorNames.map(Optional.some),
-                    requiredLineIDs: section.lineIDs ?? [], sectionCodes: section.sectionCodes ?? [],
-                    fromStationCode: section.fromN02StationCode,
-                    toStationCode: section.toN02StationCode)
-                let canonical = data.network.canonicalizeRouteFeature(
-                    RouteFeature(geometry: .lineString(resolved.coordinates), hints: hints),
-                    continueFrom: nil, cache: &projectionCache)
-                try #require(canonical?.matchedSectionCodes.isEmpty != false)
+                continuity = matchedSource.lines.last?.last
             }
+            displayContinuity = canonical?.geometry.lines.last?.last ?? resolved.coordinates.last
             lastSolvedIndex = index
+            if !isAutomatic { try #require(canonical?.matchedSectionCodes.isEmpty != false) }
         }
         return counts
     }

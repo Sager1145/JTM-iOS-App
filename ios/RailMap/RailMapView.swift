@@ -3355,7 +3355,18 @@ struct RailMapView: View {
             ) -> [CLLocationCoordinate2D]? {
                 guard let ref = strokeRef(for: segment, of: ride),
                     let built = networkGeometry.stroke(for: ref.chainID)
-                else { return nil }
+                else {
+                    guard let mapView, segment.coordinates.count >= 2 else { return nil }
+                    // Ride overlay fallback uses the same centreline smoothing as
+                    // lane 0. Live camera projection: stroke-bucket frames are
+                    // outside this change.
+                    let mapPointsPerScreenPoint = MapProjection.mapPointsPerScreenPoint(of: mapView)
+                    let fallbackScale = RailStyle.scale(atZoom: MapProjection.zoomLevel(of: mapView))
+                    return parallelLaneCoordinates(
+                        segment.coordinates.map(\.clLocation), lane: 0,
+                        mapPointsPerScreenPoint: mapPointsPerScreenPoint,
+                        scale: fallbackScale)
+                }
                 let sliced = ContinuousStroke.slice(
                     points: built.stroke.points, measures: built.stroke.measures,
                     from: ref.from, to: ref.to)

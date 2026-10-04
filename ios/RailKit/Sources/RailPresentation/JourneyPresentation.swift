@@ -146,6 +146,7 @@ public struct JourneyPresentation: Equatable, Sendable {
         case locate
         case showOnMap
         case rebuildRoute
+        case repairRoute
         case save
         case pause
         case resume
@@ -247,6 +248,7 @@ extension JourneyPresentation {
         case .locate: contradicted = []
         case .showOnMap: contradicted = [.hide, .show]
         case .rebuildRoute: contradicted = [.rebuildRoute]
+        case .repairRoute: contradicted = [.rebuildRoute]
         case .pause: contradicted = [.play]
         case .resume: contradicted = [.play]
         case .add: contradicted = [.add]

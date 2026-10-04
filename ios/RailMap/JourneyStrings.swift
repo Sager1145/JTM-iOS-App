@@ -174,11 +174,33 @@ enum JourneyStrings {
             .ja: "経路の確認が必要です",
             .en: "Route needs review",
         ],
+        "ios.route.repairRoute": [
+            .zhHans: "自动修复路线", .zhHant: "自動修復路線",
+            .ja: "経路を自動修復", .en: "Repair route",
+        ],
+        "ios.route.repairSummary": [
+            .zhHans: "已修复 {repaired}；需要选择 {choice}。",
+            .zhHant: "已修復 {repaired}；需要選擇 {choice}。",
+            .ja: "{repaired} 件を修復、要選択 {choice}。",
+            .en: "Repaired {repaired}; needs choice {choice}.",
+        ],
+        "ios.route.noSurveyedConnection": [
+            .zhHans: "没有实测连接 {from}→{to}（缺少轨道或接续数据）",
+            .zhHant: "沒有實測連接 {from}→{to}（缺少軌道或接續資料）",
+            .ja: "計測済みの接続がありません {from}→{to}（線路・分岐データ不足）",
+            .en: "No surveyed connection {from}→{to} (missing track/junction data)",
+        ],
         "ios.journey.routeUnavailable": [
             .zhHant: "無法繪製路線",
             .zhHans: "无法绘制路线",
             .ja: "経路を描画できません",
             .en: "Route unavailable",
+        ],
+        "ios.journey.repairInterrupted": [
+            .zhHans: "修复过程中行程已更改，请再次运行修复。",
+            .zhHant: "修復過程中行程已變更，請再次執行修復。",
+            .ja: "修復中に乗車が変更されました。もう一度修復を実行してください。",
+            .en: "Ride changed while repairing; run Repair again",
         ],
         // §1.1 and §5.5: a section that did not solve was left undrawn. Saying
         // so is the point of the sentence — the reader has to be able to tell
