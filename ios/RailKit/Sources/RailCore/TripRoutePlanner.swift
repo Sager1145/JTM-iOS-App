@@ -7,10 +7,12 @@ public enum TripRoutePlanner {
         public var stationAliases: [String: String]
         public var originLineID: String?
         public var destinationLineID: String?
+        public var allowUnverifiedConnections: Bool
 
         public init(originCode: String, destinationCode: String, trainType: String? = nil,
                     operatorName: String? = nil, stationAliases: [String: String] = [:],
-                    originLineID: String? = nil, destinationLineID: String? = nil) {
+                    originLineID: String? = nil, destinationLineID: String? = nil,
+                    allowUnverifiedConnections: Bool = false) {
             self.originCode = originCode
             self.destinationCode = destinationCode
             self.trainType = trainType
@@ -18,6 +20,7 @@ public enum TripRoutePlanner {
             self.stationAliases = stationAliases
             self.originLineID = originLineID
             self.destinationLineID = destinationLineID
+            self.allowUnverifiedConnections = allowUnverifiedConnections
         }
     }
 
@@ -73,6 +76,10 @@ public enum TripRoutePlanner {
             memo[key] = value
             return value
         }
+        func allows(_ from: CompactPackage.Line, _ to: CompactPackage.Line, _ code: String) -> Bool {
+            let verified = link(from, to, code) != .none
+            return request.allowUnverifiedConnections || verified
+        }
         let originKey = stationKey(request.originCode)
         let destinationKey = stationKey(request.destinationCode)
         let seeds: [CompactPackage.Line]
@@ -89,7 +96,7 @@ public enum TripRoutePlanner {
             cursor += 1
             for key in Set(from.stations.map { stationKey($0.id) }) {
                 for to in linesByStation[key] ?? [] where !reachable.contains(to.id) {
-                    if link(from, to, key) != .none {
+                    if allows(from, to, key) {
                         reachable.insert(to.id)
                         pending.append(to)
                     }
@@ -116,7 +123,7 @@ public enum TripRoutePlanner {
                 package: narrowed(to: lines), originCode: request.originCode,
                 destinationCode: request.destinationCode, trainType: request.trainType,
                 stationAliases: request.stationAliases, maximumChoices: 3,
-                continuation: { from, to, code in link(from, to, code) != .none },
+                continuation: allows,
                 originLineIDs: originLineIDs, destinationLineIDs: destinationLineIDs)
             constrainedTruncated = constrained.isTruncated
             var choices = constrained.choices
@@ -137,7 +144,7 @@ public enum TripRoutePlanner {
                     package: narrowed(to: namedLines), originCode: request.originCode,
                     destinationCode: request.destinationCode, trainType: request.trainType,
                     stationAliases: request.stationAliases, maximumChoices: 1,
-                    continuation: { from, to, code in link(from, to, code) != .none },
+                    continuation: allows,
                     originLineIDs: originLineIDs, destinationLineIDs: destinationLineIDs)
                 choices += direct.choices
                 directIDs.formUnion(direct.choices.map(\.id))
@@ -152,7 +159,7 @@ public enum TripRoutePlanner {
                 let corridor = Corridor(
                     id: choice.id, choice: choice, lineNames: choice.lineNames,
                     operatorNames: choice.operatorNames,
-                    junctions: junctions(for: choice, package: package).filter { $0.link != .none },
+                    junctions: junctions(for: choice, package: package),
                     distanceKm: distance(for: choice, package: package),
                     passStationCount: max(0, choice.stations.count - 2))
                 let key = choice.lineIDs.joined(separator: "→") + "|"

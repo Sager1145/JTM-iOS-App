@@ -129,7 +129,7 @@ function loadStatsScope() {
 
 // ── inputs ──────────────────────────────────────────────────────────────
 
-const COUNTRIES = ["jp", "tw", "hk", "mo", "kr", "us", "ca"];
+const COUNTRIES = ["jp", "tw", "hk", "mo", "kr"];
 /** Countries whose ridden-route cases are built below. */
 const RIDE_COUNTRIES = ["jp", "tw", "mo"];
 

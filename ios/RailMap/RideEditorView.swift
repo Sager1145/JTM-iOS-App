@@ -100,6 +100,9 @@ struct RideEditorView: View {
     @State private var routeGuideError = false
     @State private var routeCommitAfterDismiss: RouteCommit?
     @State private var routeUndoCatalogLineIDs: Set<String> = []
+    /// The route choice in effect before the last apply. Undo restores it with
+    /// the stops, so visits on the restored route still delete through the guide.
+    @State private var routeUndoChoice: RailwayRouteChoices.Choice?
 
     private struct RouteCommit {
         let plan: RailwayRouteEditing.Plan
@@ -896,6 +899,7 @@ struct RideEditorView: View {
 
     private func applyRoutePlan(_ plan: RailwayRouteEditing.Plan, choice: RailwayRouteChoices.Choice) {
         routeUndoCatalogLineIDs = selectedCatalogLineIDs
+        routeUndoChoice = selectedRouteChoice
         routeEditUndo = plan.undo
         withAnimation(reduceMotion ? .easeOut(duration: 0.16)
             : .timingCurve(0.77, 0, 0.175, 1, duration: 0.24)) {
@@ -941,6 +945,7 @@ struct RideEditorView: View {
 
     private func resetRouteChoiceState() {
         selectedRouteChoice = nil
+        routeUndoChoice = nil
         generatedStopIDs = Set(draft.stops.compactMap {
             $0.routeEditing?.generatedBy == nil ? nil : $0.routeEditing?.visitID
         })
@@ -1675,7 +1680,8 @@ struct RideEditorView: View {
                                 : .timingCurve(0.77, 0, 0.175, 1, duration: 0.24)) {
                                 draft = restored
                                 synchronizeStopIdentity()
-                                selectedRouteChoice = nil
+                                selectedRouteChoice = routeUndoChoice
+                                routeUndoChoice = nil
                                 selectedCatalogLineIDs = routeUndoCatalogLineIDs
                                 routeEditUndo = nil
                                 routeEditSummary = nil

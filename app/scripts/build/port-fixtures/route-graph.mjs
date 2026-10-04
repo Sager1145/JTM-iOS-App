@@ -54,7 +54,7 @@ import path from "node:path";
 
 export const name = "route-graph.json";
 
-const COUNTRIES = ["mo", "hk", "tw", "kr", "jp", "us", "ca"];
+const COUNTRIES = ["mo", "hk", "tw", "kr", "jp"];
 const CACHE_KEY_COUNTRIES = new Set(["mo", "hk", "tw", "kr", "jp"]);
 
 // app-config.js countrySuffixed(): Japan is the unsuffixed original.

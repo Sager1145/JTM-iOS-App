@@ -29,6 +29,53 @@ struct TripRoutePlannerTests {
         #expect(corridor.junctions.first?.toLineID == "second")
     }
 
+    @Test("Passing-through crossings require an explicit override", arguments: ["jr_conventional", "shinkansen", "private", "third_sector"])
+    func crossing(kind: String) throws {
+        let package = try fixture([line("main", ["A", "J", "B"], kind: kind),
+                                   line("cross", ["C", "J", "D"], kind: kind)])
+        let trainType = kind == "shinkansen" ? "shinkansen" : "local"
+        guard case .disconnected(let changes) = TripRoutePlanner.plan(package: package, request: .init(
+            originCode: "A", destinationCode: "D", trainType: trainType)) else {
+            Issue.record("Expected a disconnected crossing")
+            return
+        }
+        #expect(changes.first?.link == TripConnectivity.Link.none)
+        let outcome = TripRoutePlanner.plan(package: package, request: .init(
+            originCode: "A", destinationCode: "D", trainType: trainType, allowUnverifiedConnections: true))
+        guard case .corridors(let found) = outcome else {
+            Issue.record("Expected an overridden corridor")
+            return
+        }
+        #expect(found.first?.junctions.first?.link == TripConnectivity.Link.none)
+        #expect(found.first?.junctions.first?.stationCode == "J")
+    }
+
+    @Test("A branch terminal can connect to a passing main line")
+    func branchTerminal() throws {
+        let package = try fixture([line("main", ["A", "J", "B"]), line("branch", ["J", "D"])])
+        let found = try corridors(package, from: "A", to: "D")
+        #expect(found.first?.junctions.first?.link == .network)
+    }
+
+    @Test("Same-name split rows can continue at an interior station")
+    func sameNameSplit() throws {
+        var first = line("main", ["A", "J", "B"])
+        var second = line("main-5", ["C", "J", "D"])
+        first["name"] = "Main"
+        second["name"] = "Main"
+        let found = try corridors(fixture([first, second]), from: "A", to: "D")
+        #expect(found.first?.junctions.first?.link == .network)
+    }
+
+    @Test("A loop row has no terminal at its stored first station")
+    func loopIsNotTerminal() throws {
+        var loop = line("loop", ["J", "D", "E"])
+        loop["isLoop"] = true
+        let package = try fixture([line("main", ["A", "J", "B"]), loop])
+        #expect(TripConnectivity.link(from: package.lines[0], to: package.lines[1],
+                                      atStationCode: "J") == .none)
+    }
+
     @Test("Same-operator subway lines require a through-service record")
     func subwayDisconnected() throws {
         let package = try fixture([line("first", ["A", "B"], kind: "subway"),
@@ -71,12 +118,16 @@ struct TripRoutePlannerTests {
         let realPair = try fixture([
             line(pattern.legs[0].lineID, ["A", "B"], kind: "private", operatorName: "One"),
             line(pattern.legs[1].lineID, ["B", "C"], kind: "private", operatorName: "Two")])
-        for code in [pattern.legs[0].toStationCode, "alias-junction"] {
+        // Either leg's own code for the joining station counts (rows may code
+        // one physical station differently); any other station does not.
+        for code in [pattern.legs[0].toStationCode, pattern.legs[1].fromStationCode] {
             #expect(TripConnectivity.link(from: realPair.lines[0], to: realPair.lines[1],
                                           atStationCode: code) == .throughService)
             #expect(TripConnectivity.link(from: realPair.lines[1], to: realPair.lines[0],
                                           atStationCode: code) == .throughService)
         }
+        #expect(TripConnectivity.link(from: realPair.lines[0], to: realPair.lines[1],
+                                      atStationCode: "elsewhere") != .throughService)
     }
 
     @Test("Same and isolated stations have distinct outcomes")

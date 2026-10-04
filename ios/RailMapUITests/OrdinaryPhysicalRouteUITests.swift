@@ -49,10 +49,17 @@ final class OrdinaryPhysicalRouteUITests: XCTestCase {
         XCTAssertTrue(intermediate.label.contains("新橋"))
         XCTAssertFalse(app.descendants(matching: .any)["rideEditorStop-3"].firstMatch.exists)
 
-        // No verified alternative leaves the current tunnel route intact.
+        // Avoiding 新橋 still has a verified detour: 東北線-2 meets 山手線 at
+        // 田端, where 山手線 terminates, and 山手線 continues to 品川.
+        // Cancelling must leave the tunnel ride unchanged.
         deleteRow(1, in: app)
-        XCTAssertTrue(app.descendants(matching: .any)["routeCorrectionEmpty"].firstMatch.waitForExistence(timeout: 15))
-        XCTAssertFalse(app.buttons["routeCorrectionCompare"].isEnabled)
+        let compare = app.buttons["routeCorrectionCompare"]
+        let empty = app.descendants(matching: .any)["routeCorrectionEmpty"].firstMatch
+        let proposed = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+            empty.exists || (compare.exists && compare.isEnabled)
+        }, object: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [proposed], timeout: 40), .completed,
+                       "Deleting 新橋 must finish the avoidance search.")
         app.buttons["routeCorrectionCancel"].tap()
         revealEditorStop(intermediate, in: app)
         XCTAssertTrue(intermediate.waitForExistence(timeout: 8))
@@ -71,10 +78,16 @@ final class OrdinaryPhysicalRouteUITests: XCTestCase {
         app.navigationBars.buttons.firstMatch.tap()
         openRouteGuide(in: app)
         comparePaths(in: app)
+        // 有楽町 is also on the shorter 東海道線→総武線 tunnel, so the guide
+        // asks which physical path to keep. The surface 東海道線 choice
+        // leaves the edited visit in place.
+        confirmChoices(preferring: "東海道線", in: app)
         XCTAssertTrue(app.buttons["routeGuideApply"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.staticTexts["No stations will be added or removed."].exists,
                       "Ordinary route search must retain the edited authored station as a required anchor.")
-        let protectedStation = app.staticTexts["routeGuideProjectedStop-003798"]
+        // jp-2025.json stores 東海道線 有楽町 as the station-group code 003795.
+        // stations.json still has the line-specific N02 code 003798 for that row.
+        let protectedStation = app.staticTexts["routeGuideProjectedStop-003795"]
         let guideScroll = app.scrollViews["routeGuideScroll"]
         XCTAssertTrue(guideScroll.waitForExistence(timeout: 8))
         for _ in 0..<8 {
@@ -165,7 +178,11 @@ final class OrdinaryPhysicalRouteUITests: XCTestCase {
         XCTAssertFalse(app.descendants(matching: .any)["rideEditorStop-3"].firstMatch.exists)
 
         let numberField = app.otherElements["rideEditorNumber"].textFields.firstMatch
-        XCTAssertTrue(EditorUITestSupport.reveal(numberField, in: app), app.debugDescription)
+        // Basics sits above the stop list. The stop checks leave that row unmounted,
+        // and the default reveal searches downward first.
+        XCTAssertTrue(
+            EditorUITestSupport.reveal(numberField, in: app, maxDrags: 24, unmountedRowIsAbove: true),
+            app.debugDescription)
         EditorUITestSupport.tap(numberField, in: app)
         numberField.typeText(number + "\n")
         XCTAssertEqual(numberField.value as? String, number)
@@ -176,7 +193,9 @@ final class OrdinaryPhysicalRouteUITests: XCTestCase {
         let serviceLabel = tunnelService.label
 
         let dateInput = app.textFields["rideEditorDateInput"]
-        XCTAssertTrue(EditorUITestSupport.reveal(dateInput, in: app), app.debugDescription)
+        XCTAssertTrue(
+            EditorUITestSupport.reveal(dateInput, in: app, maxDrags: 24, unmountedRowIsAbove: true),
+            app.debugDescription)
         EditorUITestSupport.tap(dateInput, in: app)
         let existingDate = dateInput.value as? String ?? ""
         let datePlaceholder = dateInput.placeholderValue ?? ""
@@ -245,9 +264,15 @@ final class OrdinaryPhysicalRouteUITests: XCTestCase {
         XCTAssertTrue(reveal(tunnelService, in: editor, app: app))
         XCTAssertEqual(tunnelService.label, serviceLabel,
                        "The physical tunnel's endpoint/operator/line summary must survive persistence.")
-        XCTAssertTrue(revealEarlierSavedField(numberField, in: app))
+        // The service row is below the stops, so Basics is several pages up
+        // and the short return used after a stop-only scroll stops short.
+        XCTAssertTrue(
+            EditorUITestSupport.reveal(numberField, in: app, maxDrags: 24, unmountedRowIsAbove: true),
+            app.debugDescription)
         XCTAssertEqual(numberField.value as? String, number)
-        XCTAssertTrue(revealEarlierSavedField(dateInput, in: app))
+        XCTAssertTrue(
+            EditorUITestSupport.reveal(dateInput, in: app, maxDrags: 24, unmountedRowIsAbove: true),
+            app.debugDescription)
         XCTAssertEqual(dateInput.value as? String, date)
         recordFailure("repaired-tunnel-route-after-save-and-relaunch", app: app)
         let evidence = XCTAttachment(string:
@@ -259,61 +284,6 @@ final class OrdinaryPhysicalRouteUITests: XCTestCase {
         evidence.name = "repaired-route-persisted-record-identity-and-evidence-limits"
         evidence.lifetime = .keepAlways
         add(evidence)
-    }
-
-    /// Reopened number/date belong to Basics, before the stop and service sections.
-    private func revealEarlierSavedField(_ field: XCUIElement, in app: XCUIApplication) -> Bool {
-        let form = app.collectionViews["rideEditorForm"].firstMatch
-        guard form.waitForExistence(timeout: 5) else { return false }
-        for attempt in 0...4 {
-            let bounds = usableBounds(of: form, in: app)
-            if field.exists && field.isHittable && bounds.contains(field.frame) { return true }
-            guard attempt < 4, bounds.height > 40 else { return false }
-            let controls = form.descendants(matching: .any).matching(NSPredicate(
-                format: "identifier BEGINSWITH %@", "rideEditor")).allElementsBoundByIndex
-                .filter { $0.exists && $0.isHittable && bounds.contains($0.frame) }
-                .sorted { $0.frame.minY < $1.frame.minY }
-            var anchorID: String?
-            var nativeCell: XCUIElement?
-            for control in controls {
-                let identifier = control.identifier
-                let cell = form.cells.containing(.any, identifier: identifier).firstMatch
-                if cell.exists && cell.isHittable && bounds.contains(cell.frame) {
-                    anchorID = identifier
-                    nativeCell = cell
-                    break
-                }
-            }
-            guard let anchorID, let nativeCell else { return false }
-            let anchor = app.descendants(matching: .any)[anchorID].firstMatch
-            let beforeAnchor = anchor.frame
-            let beforeForm = form.frame
-            let startPoint = CGPoint(x: nativeCell.frame.midX, y: nativeCell.frame.midY)
-            let endPoint = CGPoint(x: startPoint.x,
-                                  y: min(bounds.maxY - 2, startPoint.y + bounds.height * 0.4))
-            guard endPoint.y - startPoint.y > 10 else { return false }
-            let origin = app.coordinate(withNormalizedOffset: .zero)
-            origin.withOffset(CGVector(dx: startPoint.x - app.frame.minX,
-                                      dy: startPoint.y - app.frame.minY))
-                .press(forDuration: 0.05, thenDragTo: origin.withOffset(CGVector(
-                    dx: endPoint.x - app.frame.minX, dy: endPoint.y - app.frame.minY)))
-            let afterForm = form.frame
-            let fieldRevealed = field.exists && field.isHittable
-                && usableBounds(of: form, in: app).contains(field.frame)
-            let anchorMovedDown = anchor.exists && anchor.frame.minY > beforeAnchor.minY + 1
-            let formStayed = abs(afterForm.minY - beforeForm.minY) < 2
-                && abs(afterForm.height - beforeForm.height) < 2
-            let evidence = XCTAttachment(string:
-                "Saved Basics field return toward earlier rows \(attempt + 1): "
-                + "anchor=\(anchorID), beforeAnchor=\(beforeAnchor), "
-                + "anchorMovedDown=\(anchorMovedDown), fieldRevealed=\(fieldRevealed), "
-                + "Form before=\(beforeForm), after=\(afterForm), formStayed=\(formStayed).")
-            evidence.name = "saved-route-basics-native-content-progress-\(attempt + 1)"
-            evidence.lifetime = .keepAlways
-            add(evidence)
-            guard formStayed && (fieldRevealed || anchorMovedDown) else { return false }
-        }
-        return false
     }
 
     private func revealEditorStop(_ stop: XCUIElement, in app: XCUIApplication) {
@@ -482,12 +452,12 @@ final class OrdinaryPhysicalRouteUITests: XCTestCase {
     private func confirmChoices(preferring line: String, in app: XCUIApplication) {
         let apply = app.buttons["routeGuideApply"]
         for _ in 0..<12 {
-            if apply.exists { break }
-            let preferred = app.buttons.matching(NSPredicate(
-                format: "identifier BEGINSWITH %@ AND label CONTAINS %@", "routeGuideOption", line)).firstMatch
-            let fallback = app.buttons["routeGuideOption1"]
-            XCTAssertTrue(fallback.waitForExistence(timeout: 10))
-            let option = preferred.exists ? preferred : fallback
+            // A decision slice can be shared by several complete routes. Apply
+            // stays disabled until the review names one of those routes.
+            if apply.exists && apply.isEnabled { break }
+            let option = apply.exists
+                ? reviewRouteOption(preferring: line, in: app)
+                : decisionOption(preferring: line, in: app)
             let foreground = app.scrollViews.firstMatch
             guard revealGuideOption(option, in: foreground, app: app) else {
                 recordFailure("route-guide-option-outside-preview", app: app)
@@ -495,10 +465,36 @@ final class OrdinaryPhysicalRouteUITests: XCTestCase {
                 return
             }
             option.tap()
+            if apply.exists { break }
             app.buttons["routeGuideConfirm"].tap()
         }
         XCTAssertTrue(apply.waitForExistence(timeout: 10))
-        XCTAssertTrue(apply.isEnabled)
+        // Apply enables once the reviewed plan is computed for the confirmed choice.
+        expectation(for: NSPredicate(format: "enabled == true"), evaluatedWith: apply)
+        waitForExpectations(timeout: 20)
+    }
+
+    /// Decision cards may name only the diverging span. Any card that mentions
+    /// the preferred line is enough to continue.
+    private func decisionOption(preferring line: String, in app: XCUIApplication) -> XCUIElement {
+        let preferred = app.buttons.matching(NSPredicate(
+            format: "identifier BEGINSWITH %@ AND label CONTAINS %@", "routeGuideOption", line)).firstMatch
+        let fallback = app.buttons["routeGuideOption1"]
+        XCTAssertTrue(fallback.waitForExistence(timeout: 10))
+        return preferred.exists ? preferred : fallback
+    }
+
+    /// The review lists whole routes. Prefer the card whose line list is exactly
+    /// the requested line, so a longer ride that merely passes over it is not applied.
+    private func reviewRouteOption(preferring line: String, in app: XCUIApplication) -> XCUIElement {
+        let exact = app.buttons.matching(NSPredicate(
+            format: "identifier BEGINSWITH %@ AND label CONTAINS %@", "routeGuideOption", ", \(line),")).firstMatch
+        let preferred = app.buttons.matching(NSPredicate(
+            format: "identifier BEGINSWITH %@ AND label CONTAINS %@", "routeGuideOption", line)).firstMatch
+        let fallback = app.buttons["routeGuideOption1"]
+        XCTAssertTrue(fallback.waitForExistence(timeout: 10))
+        if exact.exists { return exact }
+        return preferred.exists ? preferred : fallback
     }
 
     /// Scroll from a real option card; starting inside the Map pans the Map.

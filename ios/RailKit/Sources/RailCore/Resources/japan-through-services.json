@@ -189,6 +189,51 @@
       "notes": "Some scheduled trains run through this corridor; exact departures and stopping patterns are not modeled."
     },
     {
+      "id": "rinkai-saikyo-kawagoe",
+      "serviceCode": "rinkai-saikyo-kawagoe",
+      "name": "りんかい線・埼京線・川越線直通",
+      "aliases": [
+        "Rinkai",
+        "Saikyo",
+        "埼京線",
+        "りんかい線",
+        "川越線"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-東京臨海高速鉄道-臨海副都心線",
+          "fromStationCode": "003997",
+          "toStationCode": "004135"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-山手線",
+          "fromStationCode": "004135",
+          "toStationCode": "003390"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-赤羽線",
+          "fromStationCode": "003390",
+          "toStationCode": "003155"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-東北線-5",
+          "fromStationCode": "003155",
+          "toStationCode": "002914"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-川越線",
+          "fromStationCode": "002914",
+          "toStationCode": "002909"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.twr.co.jp/chtw/tabid/270/Default.aspx",
+        "https://www.jreast.co.jp/map/pdf/map_tokyo.pdf"
+      ],
+      "notes": "Some scheduled trains run through 新木場–大崎–埼京線–大宮–川越; others cover only part of this corridor. Exact departures and stopping patterns are not modeled."
+    },
+    {
       "id": "asakusa-keisei-keikyu",
       "serviceCode": "asakusa-keisei-keikyu",
       "name": "京成・都営浅草線・京急直通",

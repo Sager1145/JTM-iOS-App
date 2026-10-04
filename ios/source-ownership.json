@@ -104,9 +104,12 @@
         "ios/RailMap/JourneyCompletionView.swift",
         "ios/RailMap/JourneyEditing.swift",
         "ios/RailMap/LocalJourneyFillView.swift",
+        "ios/RailMap/NewTripStrings.swift",
+        "ios/RailMap/NewTripView.swift",
         "ios/RailMap/RailwayRouteGuideView.swift",
         "ios/RailMap/RideEditorView.swift",
-        "ios/RailMap/StationPickerSearchController.swift"
+        "ios/RailMap/StationPickerSearchController.swift",
+        "ios/RailMap/TripStationSearchView.swift"
       ]
     },
     {
@@ -443,6 +446,8 @@
         "ios/RailKit/Sources/RailCore/TransferGuide.swift",
         "ios/RailKit/Sources/RailCore/TransferGuideText.swift",
         "ios/RailKit/Sources/RailCore/TransferGuideTrains.swift",
+        "ios/RailKit/Sources/RailCore/TripConnectivity.swift",
+        "ios/RailKit/Sources/RailCore/TripRoutePlanner.swift",
         "ios/RailKit/Sources/RailCore/Visibility.swift"
       ]
     },

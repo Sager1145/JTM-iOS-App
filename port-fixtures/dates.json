@@ -4486,7 +4486,7 @@
         {
           "arrival": null,
           "departure": null,
-          "stop_type": "passenger_stop"
+          "stop_type": "pass_through"
         },
         {
           "arrival": "19:51",

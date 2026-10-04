@@ -114,6 +114,26 @@ struct JapanThroughServicesTests {
         #expect(unrelated.choices(package: package, originCode: "004235", destinationCode: "004135").isEmpty)
     }
 
+    @Test("Rinkai connects to the Saikyo corridor at Osaki")
+    func rinkaiSaikyoConnectivity() throws {
+        let package = try PortFixtures.package(country: "jp")
+        let rinkai = try #require(package.lines.first { $0.id == "jp-東京臨海高速鉄道-臨海副都心線" })
+        let yamanote = try #require(package.lines.first { $0.id == "jp-東日本旅客鉄道-山手線" })
+        #expect(TripConnectivity.link(from: rinkai, to: yamanote, atStationCode: "004135") == .throughService)
+    }
+
+    @Test("Adjacent through-service legs join only at their anchor, not at a shared intermediate station")
+    func throughServiceLegsJoinOnlyAtAnchors() throws {
+        let package = try PortFixtures.package(country: "jp")
+        let sobu = try #require(package.lines.first { $0.id == "jp-東日本旅客鉄道-総武線-3" })
+        let tokaido = try #require(package.lines.first { $0.id == "jp-東日本旅客鉄道-東海道線" })
+        // 新橋 lies on both rows between 東京 and 品川; no train changes rows there.
+        #expect(TripConnectivity.link(from: tokaido, to: sobu, atStationCode: "003872") == .none)
+        #expect(TripConnectivity.link(from: sobu, to: tokaido, atStationCode: "003872") == .none)
+        // The same pair still joins at a listed anchor (東京).
+        #expect(TripConnectivity.link(from: sobu, to: tokaido, atStationCode: "003766") != .none)
+    }
+
     @Test("Keisei to Keikyu crosses only the anchored Asakusa corridor")
     func asakusa() throws {
         let package = try PortFixtures.package(country: "jp")

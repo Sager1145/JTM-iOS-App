@@ -63,7 +63,7 @@ const require = createRequire(import.meta.url);
 const AppCore = require(path.join(APP_DIR, "shared", "app-core.js"));
 const RailNetwork = require(path.join(APP_DIR, "public", "rail-network.js"));
 
-const COUNTRIES = ["mo", "hk", "tw", "kr", "jp", "us", "ca"];
+const COUNTRIES = ["mo", "hk", "tw", "kr", "jp"];
 const STORE_COUNTRIES = ["mo", "hk", "tw", "kr", "jp"];
 
 const readPublic = (file) =>

@@ -671,7 +671,8 @@ final class WorkspaceEditingTests: XCTestCase {
         // The explicit edit-mode minus now executes the same deletion handler
         // directly; a native second-stage Delete confirmation no longer exists.
         let remove = app.buttons["rideEditorDeleteStop-0"]
-        XCTAssertTrue(remove.waitForExistence(timeout: 5))
+        // Edit mode animates the minus controls in; allow for a loaded simulator.
+        XCTAssertTrue(remove.waitForExistence(timeout: 15))
         EditorUITestSupport.tap(remove, in: app)
         XCTAssertFalse(app.otherElements["rideEditorStopName"].textFields.firstMatch.exists,
                        "The row's minus must delete without navigating into the stop editor.")

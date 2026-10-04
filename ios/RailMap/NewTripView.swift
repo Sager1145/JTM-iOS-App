@@ -40,6 +40,7 @@ struct NewTripView: View {
     @State private var departure: Date
     @State private var arrival: Date
     @State private var picking: StationField?
+    @State private var allowUnverifiedConnections = false
     @State private var outcome: TripRoutePlanner.Outcome?
     /// `routeIdentity` that `outcome` was planned for. A newer identity makes the outcome stale.
     @State private var plannedIdentity = ""
@@ -152,6 +153,7 @@ struct NewTripView: View {
             saveIssues = []
         }
         .onChange(of: region) { _, _ in
+            allowUnverifiedConnections = false
             clearTimetable()
             limitedExpressName = ""
             origin = nil
@@ -170,9 +172,11 @@ struct NewTripView: View {
             refreshCompanyCache()
         }
         .onChange(of: origin) { _, _ in
+            allowUnverifiedConnections = false
             refreshCompanyCache()
         }
         .onChange(of: destination) { _, _ in
+            allowUnverifiedConnections = false
             refreshCompanyCache()
         }
         .onChange(of: companyOptions) { _, options in
@@ -580,7 +584,16 @@ struct NewTripView: View {
                 }
             }
         case .disconnected(let junctions):
-            routeError(disconnectedMessage(junctions))
+            VStack(alignment: .leading, spacing: 8) {
+                routeError(disconnectedMessage(junctions))
+                Text(text("continueAnywayExplanation",
+                          fallback: "Treat the listed stations as through-running connections."))
+                    .font(.caption).foregroundStyle(.secondary)
+                Button(text("continueAnyway", fallback: "Continue anyway")) {
+                    allowUnverifiedConnections = true
+                }
+                .accessibilityIdentifier("newTripContinueAnyway")
+            }
         case .noRoute:
             routeError(text(
                 "noRoute",
@@ -619,10 +632,17 @@ struct NewTripView: View {
                         .foregroundStyle(.secondary)
                     ForEach(Array(corridor.junctions.enumerated()), id: \.offset) { _, junction in
                         if let badge = junctionBadge(junction) {
-                            Text(badge)
-                                .font(.caption2)
-                                .foregroundStyle(.secondary)
-                                .fixedSize(horizontal: false, vertical: true)
+                            if junction.link == .none {
+                                Label(badge, systemImage: "exclamationmark.triangle")
+                                    .font(.caption2)
+                                    .foregroundStyle(.orange)
+                                    .fixedSize(horizontal: false, vertical: true)
+                            } else {
+                                Text(badge)
+                                    .font(.caption2)
+                                    .foregroundStyle(.secondary)
+                                    .fixedSize(horizontal: false, vertical: true)
+                            }
                         }
                     }
                 }
@@ -728,6 +748,7 @@ struct NewTripView: View {
             trainType,
             companyName,
             package == nil ? "0" : "1",
+            allowUnverifiedConnections ? "1" : "0",
         ].joined(separator: "\u{1f}")
     }
 
@@ -856,6 +877,7 @@ struct NewTripView: View {
         searching = true
         let originCode = origin.key.sourceCode
         let destinationCode = destination.key.sourceCode
+        let allowUnverifiedConnections = allowUnverifiedConnections
         let originLineID = originLine?.id
         let destinationLineID = destinationLine?.id
         let trainType = trainType
@@ -871,7 +893,8 @@ struct NewTripView: View {
                 stationAliases: loadJourneyStationAliases(
                     for: [originCode, destinationCode], package: package),
                 originLineID: originLineID,
-                destinationLineID: destinationLineID)
+                destinationLineID: destinationLineID,
+                allowUnverifiedConnections: allowUnverifiedConnections)
             return TripRoutePlanner.plan(package: package, request: request)
         }
         let result = await withTaskCancellationHandler {
@@ -998,7 +1021,10 @@ struct NewTripView: View {
                 "continuesAt",
                 fallback: "Continues at {station}",
                 ["station": .string(station)])
-        case .sameLine, .none:
+        case .none:
+            return text("unverifiedConnection", fallback: "Unverified connection at {station}",
+                        ["station": .string(station)])
+        case .sameLine:
             return nil
         }
     }

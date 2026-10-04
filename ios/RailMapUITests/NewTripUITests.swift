@@ -89,11 +89,14 @@ final class NewTripUITests: XCTestCase {
         if !passes.exists { corridor.tap() }
         XCTAssertTrue(reveal(passes, in: app, timeout: 8))
         passes.tap()
+        // The disclosure group's aggregate label also contains 横浜. Target
+        // the station itself, which is near the end of the long through route.
         let yokohama = app.staticTexts.matching(NSPredicate(
-            format: "label CONTAINS %@", "横浜")).firstMatch
-        XCTAssertTrue(reveal(yokohama, in: app, timeout: 8),
+            format: "label == %@", "横浜")).firstMatch
+        XCTAssertTrue(reveal(yokohama, in: app, timeout: 30),
                       "The through-service corridor must list 横浜.")
         // Collapse the long pass list so the number field, above the route, can be reached.
+        XCTAssertTrue(reveal(passes, in: app, timeout: 30, upward: true))
         passes.tap()
 
         typeNumber(number, in: app)
@@ -112,11 +115,14 @@ final class NewTripUITests: XCTestCase {
     func testMultipleCorridorsRequireChoice() {
         let app = XCUIApplication()
         EditorLaunchSupport.launchNewTrip(app)
-        // "東北" line-matches 東北新幹線 first. The two-corridor pair is conventional 東北線.
-        pickStation(field: "newTripOrigin", query: "大宮", code: "002914",
-                    lineID: "jp-東日本旅客鉄道-東北線", in: app)
-        pickStation(field: "newTripDestination", query: "新木場", code: "003997",
-                    lineID: "jp-東日本旅客鉄道-京葉線", in: app)
+        // 大宮(東北線)→新木場(京葉線) no longer yields two corridors: 京葉線's 東京
+        // is a different station code from the 東北線 東京, and the remaining
+        // joins are not two verified single-train corridors. Both directions
+        // of 大阪環状線 still are.
+        pickStation(field: "newTripOrigin", query: "大阪", code: "007068",
+                    lineID: "jp-西日本旅客鉄道-大阪環状線", in: app)
+        pickStation(field: "newTripDestination", query: "天王寺", code: "007439",
+                    lineID: "jp-西日本旅客鉄道-大阪環状線", in: app)
 
         XCTAssertTrue(reveal(app.buttons["newTripCorridor-1"], in: app, timeout: 40))
         let waiting = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in

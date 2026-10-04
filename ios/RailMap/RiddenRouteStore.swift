@@ -268,7 +268,10 @@ final class RiddenRouteStore {
                         entries: Self.statusEntries(for: rides, wanted: []), phase: .loading)
                     TraversedLineDetector.shared.publishSelected(rides: rides)
                 }
-                let decoded = try await Self.decode(wanted: pending, primed: primed) { partial in
+                let decoded = try await Self.decode(
+                    wanted: pending, requestedOrder: wantedIDs,
+                    preferredTrainID: preferredTrainID, primed: primed
+                ) { partial in
                     await MainActor.run {
                         guard !Task.isCancelled, self.loadRevision == revision else { return }
                         self.rides = self.ordered(retained + partial)
@@ -508,12 +511,18 @@ final class RiddenRouteStore {
     /// is the order the overlays are added in and therefore which line is
     /// drawn over which.
     @concurrent private nonisolated static func decode(
-        wanted: [String: Train], primed: DrawnRide? = nil,
+        wanted: [String: Train], requestedOrder: [String],
+        preferredTrainID: String?, primed: DrawnRide? = nil,
         publish: @Sendable ([DrawnRide]) async -> Void = { _ in }
     ) async throws -> [DrawnRide] {
         var result: [DrawnRide] = primed.map { [$0] } ?? []
         var unresolved: [(scope: RouteScope, trains: [Train])] = []
-        let remaining = wanted.values.filter { $0.id != primed?.id && !$0.requiresRouteConfirmation }
+        var seen: Set<String> = []
+        let remaining = requestedOrder.compactMap { id -> Train? in
+            guard seen.insert(id).inserted, let train = wanted[id],
+                  id != primed?.id, !train.requiresRouteConfirmation else { return nil }
+            return train
+        }
         // Grouped by SCOPE rather than by region, which for every journey that
         // stays inside one country is the same grouping it always was. A
         // journey that crosses a border forms its own group, so the two
@@ -548,43 +557,64 @@ final class RiddenRouteStore {
         // is a blank map for seconds to draw one line.
         if !unresolved.isEmpty { await publish(result) }
 
-        // Compact scopes first, for the same reason the launch badge index
-        // takes them first: a reader whose uncached journeys are Taiwanese
-        // should not wait on Japan's datasets to see them. Publish each ride
-        // as it finishes, before asking the solver for the next one.
-        for (scope, trains) in unresolved {
-            var missing = Dictionary(
-                trains.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
-            // A fresh JS precompute remains a valid legacy fallback, but cannot
-            // decide a different physical route before station inference.
-            // This inexpensive pass never initializes a coordinate graph.
+        // Finish the selected journey through every fallback before starting
+        // the remaining scopes. Cache hits above still reach the map first.
+        if let preferredTrainID,
+           let index = unresolved.firstIndex(where: { batch in
+               batch.trains.contains { $0.id == preferredTrainID }
+           }),
+           let preferred = unresolved[index].trains.first(where: { $0.id == preferredTrainID }) {
+            result = try await decodeUncached(
+                [preferred], scope: unresolved[index].scope, previous: result, publish: publish)
+            unresolved[index].trains.removeAll { $0.id == preferredTrainID }
+        }
+
+        // All other journeys retain requested order within the ordered scopes.
+        for (scope, trains) in unresolved where !trains.isEmpty {
+            result = try await decodeUncached(
+                trains, scope: scope, previous: result, publish: publish)
+        }
+        return result
+    }
+
+    /// The shared inference, dataset, and solver pipeline after a cache miss.
+    @concurrent private nonisolated static func decodeUncached(
+        _ trains: [Train], scope: RouteScope, previous: [DrawnRide],
+        publish: @Sendable ([DrawnRide]) async -> Void
+    ) async throws -> [DrawnRide] {
+        try Task.checkCancellation()
+        var result = previous
+        var missing = Dictionary(
+            trains.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
+        // A fresh JS precompute remains a valid legacy fallback, but cannot
+        // decide a different physical route before station inference.
+        // This inexpensive pass never initializes a coordinate graph.
+        let previous = result
+        let rejections = PrecomputedRouteRejections()
+        let inferred = try await solveMissing(
+            trains, scope: scope, allowLegacy: false,
+            rejectPrecomputed: { await rejections.reject($0) }) { partial in
+                await publish(previous + partial)
+            }
+        for ride in inferred { missing.removeValue(forKey: ride.id) }
+        result += inferred
+        for dataset in RideLibrary.routeDatasets(for: scope.home) {
+            let eligible = await rejections.allowed(missing)
+            if eligible.isEmpty { break }
             let previous = result
-            let rejections = PrecomputedRouteRejections()
-            let inferred = try await solveMissing(
-                trains, scope: scope, allowLegacy: false,
-                rejectPrecomputed: { await rejections.reject($0) }) { partial in
+            let found = try await datasetRides(
+                dataset: dataset, country: scope.code, wanted: eligible) { partial in
                     await publish(previous + partial)
                 }
-            for ride in inferred { missing.removeValue(forKey: ride.id) }
-            result += inferred
-            for dataset in RideLibrary.routeDatasets(for: scope.home) {
-                let eligible = await rejections.allowed(missing)
-                if eligible.isEmpty { break }
-                let previous = result
-                let found = try await datasetRides(
-                    dataset: dataset, country: scope.code, wanted: eligible) { partial in
-                        await publish(previous + partial)
-                    }
-                for ride in found { missing.removeValue(forKey: ride.id) }
-                result += found
-            }
-            if !missing.isEmpty {
-                let previous = result
-                result += try await solveMissing(
-                    trains.filter { missing[$0.id] != nil }, scope: scope, publish: { partial in
-                        await publish(previous + partial)
-                    })
-            }
+            for ride in found { missing.removeValue(forKey: ride.id) }
+            result += found
+        }
+        if !missing.isEmpty {
+            let previous = result
+            result += try await solveMissing(
+                trains.filter { missing[$0.id] != nil }, scope: scope, publish: { partial in
+                    await publish(previous + partial)
+                })
         }
         return result
     }

@@ -225,6 +225,19 @@ struct LocalJourneyFillView: View {
         // Service labels are display metadata, never additional graph edges.
         let worker = Task.detached(priority: .userInitiated) {
             let aliases = loadJourneyStationAliases(for: required, package: package)
+            // A ride is one train; transfer chains must not crowd out a plain
+            // line within the three-choice cap. Retain the existing fallback.
+            var memo: [String: Bool] = [:]
+            func allows(_ from: CompactPackage.Line, _ to: CompactPackage.Line, _ code: String) -> Bool {
+                let key = from.id + "\u{1F}" + to.id + "\u{1F}" + code
+                if let known = memo[key] { return known }
+                let value = TripConnectivity.allows(from: from, to: to, atStationCode: code)
+                memo[key] = value
+                return value
+            }
+            let preferred = LocalJourneySearch.search(package: package, originCode: originCode,
+                destinationCode: destinationCode, trainType: type, requiredStationCodes: required, stationAliases: aliases, continuation: allows)
+            if !preferred.choices.isEmpty { return preferred }
             return LocalJourneySearch.search(package: package, originCode: originCode,
                 destinationCode: destinationCode, trainType: type, requiredStationCodes: required, stationAliases: aliases)
         }

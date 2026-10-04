@@ -154,16 +154,63 @@ struct RailwayRouteCorrectionView: View {
             }
             let protectedCodes = Set((required + [search.origin, search.destination]).map(canonical))
             let canonicalExcluded = Set(excluded.map(canonical)).subtracting(protectedCodes)
-            return LocalJourneySearch.search(
+            // A ride is one train; transfer chains must not crowd out a plain
+            // line within the three-choice cap. Retain the existing fallback.
+            var memo: [String: Bool] = [:]
+            func allows(_ from: CompactPackage.Line, _ to: CompactPackage.Line, _ code: String) -> Bool {
+                let key = from.id + "\u{1F}" + to.id + "\u{1F}" + code
+                if let known = memo[key] { return known }
+                let value = TripConnectivity.allows(from: from, to: to, atStationCode: code)
+                memo[key] = value
+                return value
+            }
+            let preferred = LocalJourneySearch.search(
                 package: package, originCode: search.origin, destinationCode: search.destination,
                 trainType: trainType, excludingStationCodes: canonicalExcluded,
-                requiredStationCodes: required, stationAliases: aliases)
+                requiredStationCodes: required, stationAliases: aliases, continuation: allows)
+            var choices = preferred.choices
+            if choices.isEmpty {
+                choices = LocalJourneySearch.search(
+                    package: package, originCode: search.origin, destinationCode: search.destination,
+                    trainType: trainType, excludingStationCodes: canonicalExcluded,
+                    requiredStationCodes: required, stationAliases: aliases).choices
+            }
+            let originKey = canonical(search.origin)
+            let destinationKey = canonical(search.destination)
+            let sharedNames = Set(package.lines.filter { line in
+                line.stations.contains { canonical($0.id) == originKey }
+            }.map(\.name)).intersection(package.lines.filter { line in
+                line.stations.contains { canonical($0.id) == destinationKey }
+            }.map(\.name))
+            // One pooled search returns only the shortest shared name. Between
+            // 東京 and 品川 that is already the capped 総武線 choice, so the
+            // plain 東海道線 row stays hidden. Search each name on its own rows.
+            // CompactPackage has no public narrow constructor; row membership
+            // is that bound, under the same continuation.
+            var namedChoices: [Choice] = []
+            var seen = Set(choices.map(\.id))
+            for name in sharedNames.sorted() {
+                let namedIDs = Set(package.lines.filter { $0.name == name }.map(\.id))
+                guard !namedIDs.isEmpty else { continue }
+                let direct = LocalJourneySearch.search(
+                    package: package, originCode: search.origin, destinationCode: search.destination,
+                    trainType: trainType, excludingStationCodes: canonicalExcluded,
+                    requiredStationCodes: required, stationAliases: aliases,
+                    maximumChoices: 1,
+                    continuation: { from, to, code in
+                        namedIDs.contains(from.id) && namedIDs.contains(to.id) && allows(from, to, code)
+                    }, originLineIDs: namedIDs, destinationLineIDs: namedIDs)
+                if let choice = direct.choices.first, seen.insert(choice.id).inserted {
+                    namedChoices.append(choice)
+                }
+            }
+            return namedChoices + choices
         }
         let result = await withTaskCancellationHandler {
             await worker.value
         } onCancel: { worker.cancel() }
         guard !Task.isCancelled, self.search == search else { return }
-        foundChoices = result.choices
+        foundChoices = result
         loadedSearch = search
         loading = false
     }
@@ -590,6 +637,9 @@ struct RailwayRouteGuideView: View {
         .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(.background, in: RoundedRectangle(cornerRadius: 16))
+        // A container identifier otherwise replaces each stop's own identifier,
+        // so the reviewed station code is no longer addressable.
+        .accessibilityElement(children: .contain)
         .accessibilityIdentifier("routeGuideProjectedStops")
     }
 

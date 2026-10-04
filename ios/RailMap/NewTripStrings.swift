@@ -107,6 +107,18 @@ enum NewTripStrings {
             .zhHans: "在{station}继续", .zhHant: "在{station}繼續",
             .ja: "{station}で継続", .en: "Continues at {station}",
         ],
+        "ios.newTrip.continueAnyway": [
+            .en: "Continue anyway", .ja: "このまま続ける", .zhHant: "仍要繼續", .zhHans: "仍要继续",
+        ],
+        "ios.newTrip.continueAnywayExplanation": [
+            .en: "Treat the listed stations as through-running connections.",
+            .ja: "表示された駅で直通運転できるものとして続けます。",
+            .zhHant: "將所列車站視為可直通運行的接續點。", .zhHans: "将所列车站视为可直通运行的接续点。",
+        ],
+        "ios.newTrip.unverifiedConnection": [
+            .en: "Unverified connection at {station}", .ja: "{station}での接続は未確認",
+            .zhHant: "{station}的接續尚未確認", .zhHans: "{station}的接续尚未确认",
+        ],
         "ios.newTrip.disconnected": [
             .zhHans: "这些线路并不相连，一趟列车无法这样运行。请在以下车站换乘：{changes}",
             .zhHant: "這些路線並不相連，一班列車無法這樣運行。請在以下車站轉乘：{changes}",
