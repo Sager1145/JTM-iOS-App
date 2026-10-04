@@ -238,6 +238,26 @@ struct RailwayRouteInferenceTests {
         }
     }
 
+    @Test("総武線-3 品川 uses the package row id for the Narita Express sample")
+    func sobuTunnelShinagawaUsesThePackageRow() throws {
+        let root = try PortFixtures.repositoryRoot()
+        let package = try PortFixtures.package(country: "jp")
+        let ids = try #require(TokyoConventionalRouteInference.tunnelStationIDs(in: package))
+        let part = try JSONDecoder().decode(SamplePart.self, from: Data(contentsOf:
+            root.appending(path: "app/data/sample-data/part-171.json")))
+        #expect(part.train.id == "20260727_08_narita_express")
+        let choice = try #require(TokyoConventionalRouteInference.choice(in: part.train, package: package))
+        #expect(choice.lineIDs == [TokyoConventionalRouteInference.tunnelLineID])
+        #expect(choice.stations.last?.code == ids[2])
+        var unnamed = part.train
+        unnamed.stops[1].n02StationCode = nil
+        unnamed.routeSections = [RouteSection(from: "東京", to: "品川", fromN02StationCode: "003766")]
+        let applied = TokyoConventionalRouteInference.applying(to: unnamed, package: package)
+        let section = try #require(applied.routeSections?.first)
+        #expect(section.toN02StationCode == ids[2])
+        #expect(section.sectionCodes?.last?.hasSuffix(":" + ids[2]) == true)
+    }
+
     @Test("Section endpoints canonicalize non-call junction and restored visit aliases")
     func aliasedSectionBoundary() throws {
         let package = try fixture([
@@ -317,4 +337,8 @@ struct RailwayRouteInferenceTests {
         try JSONDecoder().decode(CompactPackage.self, from: JSONSerialization.data(withJSONObject: [
             "format": "compact-v1", "version": "test", "country": "jp", "lines": lines]))
     }
+}
+
+private struct SamplePart: Decodable {
+    let train: Train
 }

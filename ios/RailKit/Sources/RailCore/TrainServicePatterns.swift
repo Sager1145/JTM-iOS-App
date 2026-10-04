@@ -510,6 +510,22 @@ public enum TrainServicePatterns {
     /// Every pattern's `companyLabel`, precomputed once — see ``allPatternNames``.
     private static let allPatternCompanyLabels: Set<String> = Set(patterns.map(\.companyLabel))
 
+    /// N02 spellings of each pattern's lines. A preferred-line list that
+    /// equals one of these was written by an earlier `apply`, so the next
+    /// apply may replace it. Any other non-empty list is the user's.
+    private static let patternPreferredLineLists: Set<[String]> = Set(
+        patterns.map { canonicalPreferredLineNames($0.lines) })
+
+    private static func canonicalPreferredLineNames(_ lines: [String]) -> [String] {
+        var seen = Set<String>()
+        var names: [String] = []
+        for line in lines {
+            let name = TrainServiceBranding.canonicalLineName(line)
+            if !name.isEmpty, seen.insert(name).inserted { names.append(name) }
+        }
+        return names
+    }
+
     /// A copy of `train` pre-filled from `pattern`: the stop list becomes
     /// `pattern.stops` in order — reversed (destination to origin) when
     /// `reversed` is true — with the first stop "origin", the last
@@ -518,13 +534,15 @@ public enum TrainServicePatterns {
     /// added here — those stations exist so the caller can offer them for
     /// the user to insert.
     ///
-    /// Origin, destination, `routeSections` and `routePolicy` are always
-    /// overwritten — any hard line constraints from a previous route are
-    /// stale once the stop list changes, the same as the editor's
-    /// region-reset path. Number, train type and company are overwritten
-    /// only when empty or when they still hold a value a previous `apply`
-    /// call wrote (so a second pick replaces the first, but a user's own
-    /// edit survives).
+    /// Origin, destination and `routeSections` are always overwritten — any
+    /// hard line constraints from a previous route are stale once the stop
+    /// list changes, the same as the editor's region-reset path. `routePolicy`
+    /// keeps user-edited fields. Its preferred lines become the pattern's
+    /// lines in N02 spelling (a trailing 本線 folds to 線) unless the train
+    /// already carries a preferred-line list that no pattern would have
+    /// written. Number, train type and company are overwritten only when
+    /// empty or when they still hold a value a previous `apply` call wrote
+    /// (so a second pick replaces the first, but a user's own edit survives).
     public static func apply(
         _ pattern: Pattern, to train: Train, reversed: Bool = false, ridden: Bool = true
     ) -> Train {
@@ -546,8 +564,26 @@ public enum TrainServicePatterns {
         }
         result.origin = reversed ? pattern.destination : pattern.origin
         result.destination = reversed ? pattern.origin : pattern.destination
+        let previousPolicy = result.routePolicy
+        let mappedLines = canonicalPreferredLineNames(pattern.lines)
+        let previousLines = previousPolicy?.preferredLineNames ?? []
+        let keepUserLines = !previousLines.isEmpty
+            && !patternPreferredLineLists.contains(previousLines)
+        let preferredLines = keepUserLines ? previousLines : mappedLines
         result.routeSections = nil
-        result.routePolicy = nil
+        if previousPolicy == nil && preferredLines.isEmpty {
+            result.routePolicy = nil
+        } else {
+            result.routePolicy = RoutePolicy(
+                mode: "single_primary_route",
+                jrOnly: previousPolicy?.jrOnly ?? false,
+                allowAlternatives: false,
+                allowBrowserStraightLineFallback: false,
+                allowedInstitutionTypeCodes: previousPolicy?.allowedInstitutionTypeCodes,
+                preferredLineNames: preferredLines.isEmpty ? nil : preferredLines,
+                preferredOperatorNames: previousPolicy?.preferredOperatorNames,
+                institutionFilterMode: previousPolicy?.institutionFilterMode)
+        }
 
         let trimmedNumber = result.number.trimmingCharacters(in: .whitespacesAndNewlines)
         if pattern.id.hasPrefix("timetable:")

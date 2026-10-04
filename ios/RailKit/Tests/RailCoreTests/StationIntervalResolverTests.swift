@@ -134,6 +134,30 @@ struct StationIntervalResolverTests {
         #expect(selected.sectionCodes == ["repeat@A:B", "repeat@B:C~1", "repeat@B:C~2", "repeat@B:D"])
     }
 
+    @Test func adjacentOrShorterIntervalWinsWhenSeveralRowsRemain() throws {
+        let resolver = try fixture([
+            row("direct", ["A", "D"]),
+            row("long", ["A", "B", "C", "D"]),
+        ])
+        let selected = try resolved(resolver.resolve(
+            stationCodes: ["A", "D"], requiredLineNames: ["Family"]))
+        #expect(selected.lineIDs == ["direct"])
+        #expect(selected.intervals.count == 1)
+        let tied = try fixture([
+            row("one", ["A", "B"], name: "Loop"),
+            row("two", ["A", "B"], name: "Loop"),
+        ])
+        #expect(tied.resolve(stationCodes: ["A", "B"], requiredLineNames: ["Loop"]) == .ambiguous)
+    }
+
+    @Test func oedoDaimonToAkabanebashiPrefersTheAdjacentLoopInterval() throws {
+        let package = try PortFixtures.package(country: "jp")
+        let selected = try resolved(index(package).resolve(
+            stationCodes: ["003939", "003954"], requiredLineNames: ["12号線大江戸線"]))
+        #expect(selected.intervals.count == 1)
+        #expect(selected.lineIDs == ["jp-東京都-12号線大江戸線-2"])
+    }
+
     @Test func tokyoUenoOmiyaUsesTheSourcedShinkansenIntervals() throws {
         let package = try PortFixtures.package(country: "jp")
         let resolver = index(package)

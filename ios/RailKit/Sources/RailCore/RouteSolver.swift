@@ -50,10 +50,18 @@ public enum RouteSolver {
         /// ADR 0011: the ride's date, `YYYY-MM-DD`, or `nil` for an undated
         /// ride. Governs which rail-history edges `dijkstra` may use.
         public var rideDate: String?
+        /// Institution codes rejected even when the filter mode is soft and
+        /// the soft fallback restores the default allowed set. Conventional
+        /// JR sets this to `["1"]`.
+        public var hardExcludedInstitutionTypeCodes: [String]
 
-        public init(institutionFilterMode: String = "soft", rideDate: String? = nil) {
+        public init(
+            institutionFilterMode: String = "soft", rideDate: String? = nil,
+            hardExcludedInstitutionTypeCodes: [String] = []
+        ) {
             self.institutionFilterMode = institutionFilterMode
             self.rideDate = rideDate
+            self.hardExcludedInstitutionTypeCodes = hardExcludedInstitutionTypeCodes
         }
     }
 
@@ -94,7 +102,10 @@ public enum RouteSolver {
         }
 
         public var policy: TrainPolicy {
-            .init(institutionFilterMode: institutionFilterMode, rideDate: rideDate)
+            .init(
+                institutionFilterMode: institutionFilterMode, rideDate: rideDate,
+                hardExcludedInstitutionTypeCodes: RouteGraph.hardExcludedInstitutionTypeCodes(
+                    trainType: trainType, company: company, country: "jp"))
         }
     }
 
@@ -426,11 +437,13 @@ public enum RouteSolver {
         stations: Stations.Index,
         graph: RouteGraph.Graph,
         hints: SegmentHints = SegmentHints(),
-        allowedCodes: [String] = RouteGraph.defaultAllowedInstitutionTypeCodes
+        allowedCodes: [String] = RouteGraph.defaultAllowedInstitutionTypeCodes,
+        hardExcludedInstitutionTypeCodes: [String] = []
     ) -> [StationNodeCandidate] {
         stationCandidateGraphNodes(
             stationIndex: stationIndex, stations: stations, graph: graph,
-            hints: hints, preferredCodes: Set(allowedCodes.filter { !$0.isEmpty }))
+            hints: hints, preferredCodes: Set(allowedCodes.filter { !$0.isEmpty }),
+            excludedCodes: Set(hardExcludedInstitutionTypeCodes.filter { !$0.isEmpty }))
     }
 
     private static func stationCandidateGraphNodes(
@@ -438,7 +451,8 @@ public enum RouteSolver {
         stations: Stations.Index,
         graph: RouteGraph.Graph,
         hints: SegmentHints,
-        preferredCodes: Set<String>
+        preferredCodes: Set<String>,
+        excludedCodes: Set<String>
     ) -> [StationNodeCandidate] {
         let feature = stations.features[stationIndex]
         let sourceCoordinates = stationGeometryCoordinates(feature)
@@ -451,6 +465,9 @@ public enum RouteSolver {
             for nearest in RouteGraph.nearbyNodes(source, in: graph, radiusDeg: 0.006, limit: 160) {
                 guard nearest.distance <= stationSnapMaxDistanceMeters,
                       let meta = graph.nodeMeta[nearest.key] else { continue }
+                if nodeIsExcludedInstitution(meta.institutionTypeCodes, excluded: excludedCodes) {
+                    continue
+                }
                 let preferredInstitution = graphNodeHasPreferredInstitution(
                     meta, preferred: preferredCodes)
                 if hints.requirePreferredInstitution && !preferredInstitution { continue }
@@ -508,15 +525,17 @@ public enum RouteSolver {
         stations: Stations.Index,
         graph: RouteGraph.Graph,
         hints: SegmentHints,
-        allowedCodes: [String]
+        allowedCodes: [String],
+        hardExcludedInstitutionTypeCodes: [String] = []
     ) -> [StationNodeCandidate] {
         let preferredCodes = Set(allowedCodes.filter { !$0.isEmpty })
+        let excludedCodes = Set(hardExcludedInstitutionTypeCodes.filter { !$0.isEmpty })
         var byKey: [String: (candidate: StationNodeCandidate, order: Int)] = [:]
         var nextOrder = 0
         for stationIndex in stationIndices {
             for candidate in stationCandidateGraphNodes(
                 stationIndex: stationIndex, stations: stations, graph: graph,
-                hints: hints, preferredCodes: preferredCodes)
+                hints: hints, preferredCodes: preferredCodes, excludedCodes: excludedCodes)
             {
                 if let previous = byKey[candidate.key] {
                     if candidate.score < previous.candidate.score
@@ -540,6 +559,22 @@ public enum RouteSolver {
             }
             return $0.order < $1.order
         }.map(\.candidate)
+    }
+
+    /// The top 12 snaps. A mini-shinkansen endpoint lives on conventional
+    /// track, and the institution penalty can push that platform out of the
+    /// twelve. When none of the twelve is on a preferred line, keep the four
+    /// best preferred-line platforms as well.
+    private static func cappedStationCandidates(
+        _ candidates: [StationNodeCandidate], hints: SegmentHints, graph: RouteGraph.Graph
+    ) -> [StationNodeCandidate] {
+        let ranked = Array(candidates.prefix(12))
+        guard !hints.preferredLines.isEmpty else { return ranked }
+        func matches(_ candidate: StationNodeCandidate) -> Bool {
+            RouteGraph.intersects(hints.preferredLines, graph.nodeMeta[candidate.key]?.lineNames ?? [])
+        }
+        guard !ranked.contains(where: matches) else { return ranked }
+        return ranked + candidates.filter(matches).prefix(4)
     }
 
     /// Adds the short, penalised platform-transfer edges that join physical
@@ -1085,9 +1120,14 @@ public enum RouteSolver {
 
     /// Remove short station-marker bridges only at the ends of a source line.
     /// Interior vertices remain subject to exact surveyed-edge verification.
+    /// An anchor within 1 m of the identity's edge may stand up to twice the
+    /// off-edge cap away; the shorter cap stays for anchors off the edge.
     public static func trimmedToGraphNodes(
         line: [Coordinate], graph: RouteGraph.Graph,
-        maxTrimMeters: Double = RouteNetwork.endpointSnapMeters
+        maxTrimMeters: Double = RouteNetwork.endpointSnapMeters,
+        requiredLines: Set<String> = [],
+        requiredOperators: Set<String> = [],
+        rideDate: String? = nil
     ) -> [Coordinate]? {
         func isNode(_ coordinate: Coordinate) -> Bool {
             let normalized = Grid.normalizeGraphCoord(coordinate)
@@ -1099,8 +1139,158 @@ public enum RouteSolver {
             .reduce(0.0) { $0 + Geometry.distanceMeters($1.0, $1.1) }
         let trailing = zip(line[last...], line[last...].dropFirst())
             .reduce(0.0) { $0 + Geometry.distanceMeters($1.0, $1.1) }
-        guard leading <= maxTrimMeters, trailing <= maxTrimMeters else { return nil }
+        let onEdgeCap = 2 * RouteNetwork.endpointSnapMeters
+        func allowed(_ distance: Double, anchor: Coordinate, node: Coordinate) -> Bool {
+            if distance <= maxTrimMeters { return true }
+            guard distance <= onEdgeCap else { return false }
+            return anchorLiesOnIdentityEdge(
+                anchor, terminal: node, graph: graph, maxMeters: onEdgeCap,
+                requiredLines: requiredLines, requiredOperators: requiredOperators,
+                rideDate: rideDate)
+        }
+        guard allowed(leading, anchor: line[0], node: line[first]),
+              allowed(trailing, anchor: line[line.count - 1], node: line[last]) else { return nil }
         return Array(line[first...last])
+    }
+
+    private static func physicalIdentity(_ key: String) -> Substring {
+        guard let separator = key.lastIndex(of: "@") else { return key[...] }
+        return key[..<separator]
+    }
+
+    /// Local easting/northing projection. `t` is unclamped; `length` is the
+    /// segment. A zero-length segment returns nil.
+    private static func segmentProjection(
+        _ point: Coordinate, from a: Coordinate, to b: Coordinate
+    ) -> (t: Double, distance: Double, length: Double)? {
+        let metersPerDegree = 6_371_000.0 * .pi / 180
+        let sx = metersPerDegree * cos((a.lat + b.lat) / 2 * .pi / 180)
+        let dx = (b.lon - a.lon) * sx
+        let dy = (b.lat - a.lat) * metersPerDegree
+        let lengthSquared = dx * dx + dy * dy
+        guard lengthSquared > 0 else { return nil }
+        let px = (point.lon - a.lon) * sx
+        let py = (point.lat - a.lat) * metersPerDegree
+        let t = (px * dx + py * dy) / lengthSquared
+        return (t, hypot(px - t * dx, py - t * dy), sqrt(lengthSquared))
+    }
+
+    /// True when `anchor` lies within 1 m of a same-identity, date-valid rail
+    /// edge reachable from `terminal` without a connector or junction.
+    private static func anchorLiesOnIdentityEdge(
+        _ anchor: Coordinate, terminal: Coordinate, graph: RouteGraph.Graph,
+        maxMeters: Double, requiredLines: Set<String>, requiredOperators: Set<String>,
+        rideDate: String?
+    ) -> Bool {
+        let hints = SegmentHints(requiredLines: requiredLines, requiredOperators: requiredOperators)
+        let origins = RouteGraph.exactNodeKeys(Grid.normalizeGraphCoord(terminal), in: graph)
+        for start in origins {
+            let requiredIdentity = physicalIdentity(start)
+            var queue: [(key: String, length: Double)] = [(start, 0)]
+            var best = [start: 0.0]
+            var index = 0
+            while index < queue.count {
+                let current = queue[index]
+                index += 1
+                guard let origin = graph.nodes[current.key] else { continue }
+                for edge in graph.adjacency[current.key] ?? [] {
+                    guard edge.connector == nil, edge.physicalJunction == nil,
+                          let destination = graph.nodes[edge.to],
+                          physicalIdentity(edge.to) == requiredIdentity,
+                          edgeMatchesRequiredHints(edge, hints: hints),
+                          RouteGraph.RailValidity.isValid(
+                            validFrom: edge.validFrom, validTo: edge.validTo, on: rideDate)
+                    else { continue }
+                    if let projection = segmentProjection(anchor, from: origin, to: destination),
+                       projection.t >= 0, projection.t <= 1, projection.distance <= 1.0
+                    {
+                        return true
+                    }
+                    let total = current.length + edge.length
+                    guard total <= maxMeters, total < best[edge.to, default: .infinity] else { continue }
+                    best[edge.to] = total
+                    queue.append((edge.to, total))
+                }
+            }
+        }
+        return false
+    }
+
+    /// One same-identity walk of at most `maxMeters` whose polyline passes
+    /// within 1 m of every pending point in order. Nil when no walk or more
+    /// than one walk qualifies. Connectors and junctions stay closed.
+    private static func onEdgeIdentityPath(
+        from start: String, targetKeys: Set<String>, pendingPoints: [Coordinate],
+        graph: RouteGraph.Graph, rideDate: String?, hints: SegmentHints,
+        maxMeters: Double
+    ) -> [String]? {
+        guard graph.nodes[start] != nil, !pendingPoints.isEmpty else { return nil }
+        let requiredIdentity = physicalIdentity(start)
+        let targets = Set(targetKeys.filter {
+            $0 != start && graph.nodes[$0] != nil && physicalIdentity($0) == requiredIdentity
+        })
+        guard !targets.isEmpty else { return nil }
+        struct Item { var key: String; var length: Double; var path: [String] }
+        var queue = [Item(key: start, length: 0, path: [start])]
+        var matches: [[String]] = []
+        var index = 0
+        while index < queue.count && index < 64 {
+            if Task.isCancelled { return nil }
+            let current = queue[index]
+            index += 1
+            if targets.contains(current.key) {
+                let coordinates = current.path.compactMap { graph.nodes[$0] }
+                if coordinates.count == current.path.count,
+                   pendingPointsFollowPolyline(pendingPoints, vertices: coordinates)
+                {
+                    matches.append(current.path)
+                    if matches.count > 1 { return nil }
+                }
+                continue
+            }
+            for edge in graph.adjacency[current.key] ?? [] {
+                let total = current.length + edge.length
+                guard edge.connector == nil, edge.physicalJunction == nil,
+                      graph.nodes[edge.to] != nil,
+                      physicalIdentity(edge.to) == requiredIdentity,
+                      total <= maxMeters,
+                      !current.path.contains(edge.to),
+                      edgeMatchesRequiredHints(edge, hints: hints),
+                      RouteGraph.RailValidity.isValid(
+                        validFrom: edge.validFrom, validTo: edge.validTo, on: rideDate)
+                else { continue }
+                queue.append(Item(key: edge.to, length: total, path: current.path + [edge.to]))
+            }
+        }
+        return matches.count == 1 ? matches[0] : nil
+    }
+
+    private static func pendingPointsFollowPolyline(
+        _ pending: [Coordinate], vertices: [Coordinate]
+    ) -> Bool {
+        guard !pending.isEmpty, vertices.count >= 2 else { return pending.isEmpty }
+        var previousArc = 0.0
+        var placed = false
+        for point in pending {
+            var traversed = 0.0
+            var match: Double?
+            for index in 0..<(vertices.count - 1) {
+                let start = vertices[index]
+                let end = vertices[index + 1]
+                guard let projection = segmentProjection(point, from: start, to: end) else { continue }
+                if projection.t >= 0, projection.t <= 1, projection.distance <= 1.0 {
+                    let arc = traversed + projection.t * projection.length
+                    if (!placed || arc + 0.000_001 >= previousArc), match == nil || arc < match! {
+                        match = arc
+                    }
+                }
+                traversed += projection.length
+            }
+            guard let match else { return false }
+            previousArc = match
+            placed = true
+        }
+        return true
     }
 
     /// Prove a bounded span of surveyed rail within one physical identity.
@@ -1289,10 +1479,13 @@ public enum RouteSolver {
     ) -> [String]? {
         var result: [String] = []
         for sourceLine in lines {
-            guard let line = trimmedToGraphNodes(line: sourceLine, graph: graph),
+            let requiredLines = Set(section.lineNames ?? [])
+            let requiredOperators = Set(section.operatorNames ?? [])
+            guard let line = trimmedToGraphNodes(
+                    line: sourceLine, graph: graph, requiredLines: requiredLines,
+                    requiredOperators: requiredOperators, rideDate: context.rideDate),
                   let keys = verifiedPhysicalPathKeys(line, graph: graph, rideDate: context.rideDate,
-                    requiredLines: Set(section.lineNames ?? []),
-                    requiredOperators: Set(section.operatorNames ?? [])) else { return nil }
+                    requiredLines: requiredLines, requiredOperators: requiredOperators) else { return nil }
             if let previous = result.last, let first = keys.first {
                 guard let bridge = physicalContinuationPath(
                     from: previous, to: first, graph: graph, rideDate: context.rideDate)
@@ -1385,6 +1578,7 @@ public enum RouteSolver {
                         next[candidateKey] = prefixParent
                         continue
                     }
+                    var tookDirectEdge = false
                     for edge in graph.adjacency[candidateKey] ?? [] {
                         guard edge.connector == nil, edge.physicalJunction == nil,
                               let destination = graph.nodes[edge.to],
@@ -1395,6 +1589,28 @@ public enum RouteSolver {
                               pendingPointsFollowEdge(from: currentCoordinate, to: destination) else { continue }
                         steps.append(Step(key: edge.to, parent: prefixParent))
                         next[edge.to] = steps.count - 1
+                        tookDirectEdge = true
+                    }
+                    // A station anchor can sit on the identity between two
+                    // nodes that the package polyline does not show as one
+                    // graph edge. Carry it only along the unique same-identity
+                    // walk whose polyline actually passes through the anchor.
+                    if !tookDirectEdge, !pending.isEmpty {
+                        let targets = isNode
+                            ? Set(RouteGraph.exactNodeKeys(nextCoordinate, in: graph))
+                            : roundedKeys
+                        if let path = onEdgeIdentityPath(
+                            from: candidateKey, targetKeys: targets, pendingPoints: pending,
+                            graph: graph, rideDate: rideDate, hints: hints,
+                            maxMeters: 2 * RouteNetwork.endpointSnapMeters)
+                        {
+                            var cursor = prefixParent
+                            for node in path.dropFirst() {
+                                steps.append(Step(key: node, parent: cursor))
+                                cursor = steps.count - 1
+                            }
+                            if let end = path.last { next[end] = cursor }
+                        }
                     }
                 }
             }
@@ -1551,6 +1767,9 @@ public enum RouteSolver {
         if train.institutionFilterMode == "hard", !allowedCodes.isEmpty,
            !match.institutionTypeCode.isEmpty,
            !allowedCodes.contains(match.institutionTypeCode) { return nil }
+        if Set(train.policy.hardExcludedInstitutionTypeCodes).contains(match.institutionTypeCode) {
+            return nil
+        }
         let coordinates = match.reversed ? Array(match.coordinates.reversed()) : match.coordinates
         guard let first = coordinates.first else { return nil }
         if let continuityAnchor,
@@ -1909,9 +2128,13 @@ public enum RouteSolver {
         func runAttempt(
             hints: SegmentHints, attemptIndex: Int, allowedCodes: [String]
         ) -> (best: Best?, guarded: Best?) {
-            var fromCandidates = Array(collectStationCandidateGraphNodes(
-                stationIndices: fromStations, stations: stations, graph: graph,
-                hints: hints, allowedCodes: allowedCodes).prefix(12))
+            let excludedInstitutions = train.policy.hardExcludedInstitutionTypeCodes
+            var fromCandidates = cappedStationCandidates(
+                collectStationCandidateGraphNodes(
+                    stationIndices: fromStations, stations: stations, graph: graph,
+                    hints: hints, allowedCodes: allowedCodes,
+                    hardExcludedInstitutionTypeCodes: excludedInstitutions),
+                hints: hints, graph: graph)
             var fromAnchored = false
             if let continuityAnchor, physicalContinuationKey == nil {
                 let continuous = fromCandidates.filter {
@@ -1944,6 +2167,9 @@ public enum RouteSolver {
                             graph: graph, rideDate: train.rideDate) else { return nil }
                     continuationPaths[key] = path
                     let codes = graph.nodeMeta[key]?.institutionTypeCodes ?? []
+                    if nodeIsExcludedInstitution(codes, excluded: Set(excludedInstitutions)) {
+                        return nil
+                    }
                     return StationNodeCandidate(
                         key: key, distance: 0, score: 0,
                         hasPreferredInstitution: allowedCodes.isEmpty
@@ -1952,9 +2178,12 @@ public enum RouteSolver {
                 }
                 fromAnchored = true
             }
-            let toCandidates = Array(collectStationCandidateGraphNodes(
-                stationIndices: toStations, stations: stations, graph: graph,
-                hints: hints, allowedCodes: allowedCodes).prefix(12))
+            let toCandidates = cappedStationCandidates(
+                collectStationCandidateGraphNodes(
+                    stationIndices: toStations, stations: stations, graph: graph,
+                    hints: hints, allowedCodes: allowedCodes,
+                    hardExcludedInstitutionTypeCodes: excludedInstitutions),
+                hints: hints, graph: graph)
             guard !fromCandidates.isEmpty, !toCandidates.isEmpty else { return (nil, nil) }
             let fromByKey = Dictionary(uniqueKeysWithValues: fromCandidates.map { ($0.key, $0) })
             let toByKey = Dictionary(uniqueKeysWithValues: toCandidates.map { ($0.key, $0) })
@@ -2171,6 +2400,11 @@ public enum RouteSolver {
         train: TrainPolicy,
         hints: SegmentHints = SegmentHints()
     ) -> Bool {
+        if edgeUsesExcludedInstitution(
+            edge, excluded: Set(train.hardExcludedInstitutionTypeCodes.filter { !$0.isEmpty }))
+        {
+            return false
+        }
         let hardFilter = train.institutionFilterMode == "hard"
             || hints.requirePreferredInstitution
         return !hardFilter || edgeHasPreferredInstitution(edge, allowedCodes: allowedCodes)
@@ -2290,6 +2524,7 @@ public enum RouteSolver {
             }) else { return [] }
         }
         let preferredCodes = Set(allowedCodes.filter { !$0.isEmpty })
+        let excludedInstitutions = Set(train.hardExcludedInstitutionTypeCodes.filter { !$0.isEmpty })
         let hardInstitutionFilter = train.institutionFilterMode == "hard"
             || hints.requirePreferredInstitution
         let requiresPhysicalRail = !hints.requiredLines.isEmpty
@@ -2336,6 +2571,7 @@ public enum RouteSolver {
             }
             for (edgeIndex, edge) in (graph.adjacency[current.state.key] ?? []).enumerated() {
                 guard traversalPolicy.permits(edge),
+                    !edgeUsesExcludedInstitution(edge, excluded: excludedInstitutions),
                     directionPermits(edge, hints: hints, graph: graph),
                     !hardInstitutionFilter
                     || edgeHasPreferredInstitution(edge, allowed: preferredCodes),
@@ -2509,6 +2745,22 @@ public enum RouteSolver {
         let qx = ax + clamped * dx
         let qy = ay + clamped * dy
         return (JSMath.hypot(px - qx, py - qy), t)
+    }
+
+    private static func edgeUsesExcludedInstitution(
+        _ edge: RouteGraph.Edge, excluded: Set<String>
+    ) -> Bool {
+        if excluded.isEmpty || edge.connector != nil { return false }
+        if let junction = edge.physicalJunction {
+            return junction.institutionTypeCodes.contains { excluded.contains($0) }
+        }
+        return excluded.contains(edge.institutionTypeCode)
+    }
+
+    private static func nodeIsExcludedInstitution(
+        _ codes: Set<String>, excluded: Set<String>
+    ) -> Bool {
+        !excluded.isEmpty && !codes.isEmpty && codes.allSatisfy(excluded.contains)
     }
 
     private static func graphNodeHasPreferredInstitution(

@@ -202,6 +202,63 @@ struct PhysicalTopologyRoutingTests {
         #expect(try solve(RouteGraph.build(from: [first, second])).isEmpty)
     }
 
+    @Test("Conventional JR excludes shinkansen track and mini-shinkansen keeps conventional access")
+    func conventionalJRExcludesShinkansen() throws {
+        #expect(RouteGraph.hardExcludedInstitutionTypeCodes(
+            trainType: "寝台特急", company: "JR東海", country: "jp") == ["1"])
+        #expect(RouteGraph.hardExcludedInstitutionTypeCodes(
+            trainType: "特急", company: "九州旅客鉄道", country: "jp") == ["1"])
+        #expect(RouteGraph.hardExcludedInstitutionTypeCodes(
+            trainType: "新幹線", company: "JR東日本", country: "jp") == [])
+        let root = try PortFixtures.repositoryRoot()
+        let data = try PhysicalEndpointTrimTests().loadRealData(root: root)
+        func solved(
+            _ from: String, _ fromCode: String, _ to: String, _ toCode: String,
+            type: String, company: String, lines: [String], rideDate: String = "2026-07-29"
+        ) throws -> RouteSolver.SolvedSection {
+            let section = RouteSection(from: from, to: to, fromN02StationCode: fromCode,
+                toN02StationCode: toCode)
+            let train = RouteSolver.TrainContext(
+                trainType: type, company: company, preferredLineNames: lines, rideDate: rideDate)
+            return try #require(RouteSolver.solveSectionOnDemand(
+                section, segmentIndex: 0, train: train, country: "jp",
+                graphStore: data.graphStore, stations: data.stations), "\(from)→\(to) \(type)")
+        }
+        func names(_ section: RouteSolver.SolvedSection) -> Set<String> {
+            var found: Set<String> = []
+            let graph = data.graphStore.fullGraph()
+            for pair in zip(section.rawPathKeys, section.rawPathKeys.dropFirst()) {
+                for edge in graph.adjacency[pair.0] ?? [] where edge.to == pair.1
+                    && edge.connector == nil && edge.physicalJunction == nil && edge.institutionTypeCode != "1"
+                {
+                    found.insert(edge.lineName)
+                }
+            }
+            return found
+        }
+        let hamamatsu = try solved("静岡", "006128", "浜松", "007059",
+            type: "寝台特急", company: "JR東海", lines: ["東海道線"])
+        #expect(!hamamatsu.usedInstitutionTypeCodes.contains("1"))
+        #expect(names(hamamatsu).contains("東海道線"))
+        let himeji = try solved("姫路", "006509", "相生", "006554",
+            type: "寝台特急", company: "JR西日本", lines: ["山陽線"])
+        #expect(!himeji.usedInstitutionTypeCodes.contains("1"))
+        #expect(names(himeji).contains("山陽線"))
+        let tsubame = try solved("久留米", "009383", "筑後船小屋", "009546",
+            type: "特急", company: "九州旅客鉄道", lines: ["鹿児島線"])
+        #expect(!tsubame.usedInstitutionTypeCodes.contains("1"))
+        #expect(names(tsubame).contains("鹿児島線"))
+        let nozomi = try solved("静岡", "006128", "浜松", "007059",
+            type: "新幹線", company: "JR東海", lines: ["東海道新幹線"])
+        #expect(nozomi.usedInstitutionTypeCodes.contains("1"))
+        // morioka-east-40 and omagari-east-38 are valid from 2026-09-18.
+        let komachi = try solved("盛岡", "000792", "秋田", "000783",
+            type: "新幹線", company: "JR東日本", lines: ["田沢湖線", "奥羽線"],
+            rideDate: "2026-10-03")
+        #expect(names(komachi).contains("田沢湖線"))
+        #expect(names(komachi).contains("奥羽線"))
+    }
+
     @Test("Source level and track identifiers survive decoding into physical identity")
     func sourceTrackIdentityDecodes() throws {
         let json = #"{"type":"Feature","properties":{"line_name":"Rail","operator":"Operator","railway_class_code":"11","level":-1,"track_id":"tunnel"},"geometry":{"type":"LineString","coordinates":[[139,35],[139.02,35]]}}"#

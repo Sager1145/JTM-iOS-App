@@ -68,6 +68,12 @@ struct PhysicalEndpointTrimTests {
         #expect(RouteSolver.verifiedSourcePath([longBridge], graph: graph,
             context: .init(), section: section) == nil)
 
+        let extended = RouteGraph.build(from: [rail([point(-400), a, b, c])])
+        let onEdgeApproach = [point(-315), a, b, c]
+        #expect(RouteSolver.trimmedToGraphNodes(line: onEdgeApproach, graph: extended) == [a, b, c])
+        #expect(RouteSolver.verifiedSourcePath([onEdgeApproach], graph: extended,
+            context: .init(), section: section) != nil)
+
         let foldedLongBridge = [point(-150), point(-250), a, b]
         #expect(foldedLongBridge.dropLast(2).allSatisfy {
             Geometry.distanceMeters($0, a) <= RouteNetwork.endpointSnapMeters

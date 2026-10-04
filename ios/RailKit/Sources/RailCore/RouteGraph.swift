@@ -581,6 +581,28 @@ public enum RouteGraph {
         return jsSorted(codes)
     }
 
+    /// Institution codes a train may not traverse, regardless of soft-filter
+    /// fallback. Conventional JR (company is JR, and `trainType` does not
+    /// name 新幹線) never uses 新幹線 track. A 新幹線 train keeps an empty
+    /// exclusion so mini-shinkansen can still pay the soft penalty onto
+    /// conventional track.
+    public static func hardExcludedInstitutionTypeCodes(
+        trainType: String, company: String, country: String
+    ) -> [String] {
+        if trainType.contains("新幹線") || trainType.contains("新干线")
+            || trainType.uppercased().contains("SHINKANSEN")
+        {
+            return []
+        }
+        let parts = companyParts(company: company, country: country).joined(separator: " ")
+        if parts.uppercased().contains("JR") || parts.contains("旅客鉄道")
+            || parts.contains("旅客铁道")
+        {
+            return ["1"]
+        }
+        return []
+    }
+
     /// The institution codes a solve is allowed — or, under the default
     /// filter mode, merely biased towards.
     ///

@@ -229,7 +229,34 @@ struct TrainServicePatternsTests {
             routePolicy: RoutePolicy(mode: "single_primary_route"), routeSections: [], stops: [])
         let filled = TrainServicePatterns.apply(pattern, to: train)
         #expect(filled.routeSections == nil)
-        #expect(filled.routePolicy == nil)
+        #expect(filled.routePolicy?.preferredLineNames == ["東海道線", "山陽線", "伯備線", "山陰線"])
+        #expect(filled.routePolicy?.mode == "single_primary_route")
+        #expect(filled.routePolicy?.jrOnly == false)
+        #expect(filled.routePolicy?.allowAlternatives == false)
+    }
+
+    @Test("apply copies pattern lines into preferred lines and keeps a user list")
+    func applyCopiesPreferredLines() throws {
+        let conventional = TrainServicePatterns.Pattern(
+            id: "conventional-lines", serviceId: "tanigawa", name: "たにがわ",
+            company: "東日本旅客鉄道", label: "上野〜水上", origin: "上野", destination: "水上",
+            stopRefs: [.init(name: "上野", sourceCode: "A"), .init(name: "水上", sourceCode: "B")],
+            optionalStopRefs: [], via: [], confidence: nil, source: nil,
+            lines: ["東海道本線", "東北本線", "総武本線", "山陽本線", "伯備線"])
+        let empty = Train(id: "t1", number: "", origin: "", destination: "", stops: [])
+        let filled = TrainServicePatterns.apply(conventional, to: empty)
+        #expect(filled.routeSections == nil)
+        #expect(filled.routePolicy?.preferredLineNames == ["東海道線", "東北線", "総武線", "山陽線", "伯備線"])
+        var edited = empty
+        edited.routePolicy = RoutePolicy(
+            mode: "single_primary_route", jrOnly: true, allowAlternatives: false,
+            allowBrowserStraightLineFallback: false, preferredLineNames: ["山手線"],
+            institutionFilterMode: "hard")
+        let kept = TrainServicePatterns.apply(conventional, to: edited)
+        #expect(kept.routePolicy?.preferredLineNames == ["山手線"])
+        #expect(kept.routePolicy?.jrOnly == true)
+        #expect(kept.routePolicy?.institutionFilterMode == "hard")
+        #expect(kept.routeSections == nil)
     }
 
     @Test("reversed apply swaps origin and destination")

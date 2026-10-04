@@ -6,25 +6,44 @@ import Foundation
 public enum TokyoConventionalRouteInference {
     public static let tunnelLineID = "jp-東日本旅客鉄道-総武線-3"
     public static let surfaceLineID = "jp-東日本旅客鉄道-東海道線"
-    private static let tunnelCodes = ["003766", "003872", "004095"]
+    /// Corridor order used only when no package is in hand. 品川's id is not
+    /// an independent fact: ``tunnelStationIDs(in:)`` reads it from the
+    /// 総武線-3 row. The shipped row currently stores 004095.
+    private static let fallbackTunnelCodes = ["003766", "003872", "004095"]
     private static let surfaceCodes: Set<String> = ["003795", "003949", "004000", "004061"]
+
+    /// 東京, 新橋, 品川 station ids on the 総武線-3 package row, in that order.
+    static func tunnelStationIDs(in package: CompactPackage) -> [String]? {
+        guard let line = package.lines.first(where: { $0.id == tunnelLineID }) else { return nil }
+        let names = ["東京", "新橋", "品川"]
+        let ids = names.compactMap { name in line.stations.first { $0.name == name }?.id }
+        return ids.count == names.count ? ids : nil
+    }
+
+    private static func corridorCodes(package: CompactPackage?) -> [String] {
+        if let package, let ids = tunnelStationIDs(in: package) { return ids }
+        return fallbackTunnelCodes
+    }
 
     /// Used at the common native normalization boundary so cached, live and
     /// imported sparse journeys all receive the same physical identities.
-    public static func applying(to train: Train) -> Train {
+    public static func applying(to train: Train, package: CompactPackage? = nil) -> Train {
         guard eligible(train), let sections = train.routeSections else { return train }
         var result = train
-        result.routeSections = sections.map { section($0, in: train) }
+        result.routeSections = sections.map { section($0, in: train, package: package) }
         return result
     }
 
-    public static func section(_ value: RouteSection, in train: Train) -> RouteSection {
+    public static func section(
+        _ value: RouteSection, in train: Train, package: CompactPackage? = nil
+    ) -> RouteSection {
+        let corridor = corridorCodes(package: package)
         guard eligible(train), value.sectionCodes?.isEmpty != false,
               permitsTunnel(value),
-              let from = stationCode(value.fromN02StationCode, name: value.from),
-              let to = stationCode(value.toN02StationCode, name: value.to),
-              let start = tunnelCodes.firstIndex(of: from),
-              let end = tunnelCodes.firstIndex(of: to), start != end else { return value }
+              let from = stationCode(value.fromN02StationCode, name: value.from, corridor: corridor),
+              let to = stationCode(value.toN02StationCode, name: value.to, corridor: corridor),
+              let start = corridor.firstIndex(of: from),
+              let end = corridor.firstIndex(of: to), start != end else { return value }
         var indices = Array(min(start, end)..<max(start, end))
         if start > end { indices.reverse() }
         var result = value
@@ -34,7 +53,7 @@ public enum TokyoConventionalRouteInference {
         if result.lineNames?.isEmpty != false { result.lineNames = ["総武線"] }
         if result.operatorNames?.isEmpty != false { result.operatorNames = ["東日本旅客鉄道"] }
         result.sectionCodes = indices.map {
-            "\(tunnelLineID)@\(tunnelCodes[$0]):\(tunnelCodes[$0 + 1])"
+            "\(tunnelLineID)@\(corridor[$0]):\(corridor[$0 + 1])"
         }
         return result
     }
@@ -42,18 +61,19 @@ public enum TokyoConventionalRouteInference {
     /// An editor may fill a complete local corridor, including Shimbashi,
     /// without removing an authored visit or overriding a selected pathway.
     public static func choice(in train: Train, package: CompactPackage) -> RailwayRouteChoices.Choice? {
+        let corridor = corridorCodes(package: package)
         guard eligible(train), train.stops.count >= 2,
               train.routeSections?.contains(where: { $0.sectionCodes?.isEmpty == false }) != true,
               (train.routeSections ?? []).allSatisfy(permitsTunnel),
               let first = train.stops.first, let last = train.stops.last,
-              let from = stationCode(first.n02StationCode, name: first.name),
-              let to = stationCode(last.n02StationCode, name: last.name),
-              tunnelCodes.contains(from), tunnelCodes.contains(to), from != to else { return nil }
+              let from = stationCode(first.n02StationCode, name: first.name, corridor: corridor),
+              let to = stationCode(last.n02StationCode, name: last.name, corridor: corridor),
+              corridor.contains(from), corridor.contains(to), from != to else { return nil }
         let choices = RailwayRouteChoices.choices(
             package: package, originCode: from, destinationCode: to,
             trainType: train.trainType)
         let authored = train.stops.filter { !RailwayRouteEditing.isUntouchedGenerated($0) }
-            .compactMap { stationCode($0.n02StationCode, name: $0.name) }
+            .compactMap { stationCode($0.n02StationCode, name: $0.name, corridor: corridor) }
         return choices.first { candidate in
             guard candidate.lineIDs == [tunnelLineID] else { return false }
             var cursor = 0
@@ -98,12 +118,15 @@ public enum TokyoConventionalRouteInference {
         }
     }
 
-    private static func stationCode(_ code: String?, name: String?) -> String? {
+    private static func stationCode(
+        _ code: String?, name: String?, corridor: [String]? = nil
+    ) -> String? {
         if let code, !code.isEmpty { return code }
+        let codes = corridor ?? fallbackTunnelCodes
         switch (name ?? "").lowercased() {
-        case "東京", "东京", "tokyo": return "003766"
-        case "新橋", "新桥", "shimbashi", "shinbashi": return "003872"
-        case "品川", "shinagawa": return "004095"
+        case "東京", "东京", "tokyo": return codes.first
+        case "新橋", "新桥", "shimbashi", "shinbashi": return codes.count > 1 ? codes[1] : nil
+        case "品川", "shinagawa": return codes.count > 2 ? codes[2] : nil
         case "有楽町", "有乐町", "yurakucho", "yūrakuchō": return "003795"
         case "浜松町", "滨松町", "hamamatsucho": return "003949"
         case "田町", "tamachi": return "004000"

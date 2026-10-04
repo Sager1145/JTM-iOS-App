@@ -324,19 +324,20 @@ The 1500 m cap applies to `osmConnector` only. `osmTrack` is same-identity surve
 | fukuchiyama-sanin-miyafuku | osmConnector | 734217342 | 27.22 / 43.76 | 2026-07-30 |
 | hachioji-yokohama-chuo | osmConnector | 249149440, 638441264, 638441265 | 26.94 / 17.33 | 2008-09-23 (validTo 2008-09-24) |
 | tokyo-tohoku-kanda | osmTrack | 348681062, 348681077, 362230881, 362230888, 34282732, 896850007, 896850005, 896850010, 273056373 | 12.30 / 21.41 | 1925-11-01 |
+| tokyo-tokaido-shinkansen-shinagawa | osmTrack | 1174526293 and 39 following surveyed ways | 1.11 / 14.46 | 1964-10-01 |
 | tokyo-sobu-shin-nihonbashi | osmTrack | 759433002, 759432998 | 33.69 / 22.76 | 1972-07-15 |
 | tokyo-tokaido-shimbashi | osmTrack | 759433005, 210358354 | 33.69 / 9.34 | 1914-12-20 |
 | shimbashi-tokaido-shinagawa | osmTrack | 210358354, 210358355, 244134593, 852774337, 1313812927 | 33.92 / 13.06 | 1872-10-14 |
 | tokyo-tokaido-yurakucho | osmTrack | 365230218, 1381338053, 846477081, 23630772, 203301431, 203301434, 203301430, 203301433 | 12.30 / 31.19 | 1914-12-20 |
 
-Rejected (broken way chain and a stub over 50 m; length is not the reason):
+Registered after the earlier rejection (the display stroke attaches inside 50 m; the old way-chain stubs do not):
 
-- tokyo-tokaido-shinkansen-shinagawa — 39 ways plus disconnected 74446959; stubs 65.45 / 32.02 m
-- tokyo-tohoku-shinkansen-ueno — 19 ways plus disconnected 1215817087; stubs 92.44 / 6.88 m. Platform-patch ways 34282734, 670515796, 362230918, 670515794 stay in that rejected chain.
+- tokyo-tokaido-shinkansen-shinagawa — path is the decoded 品川–東京 display interval (64 vertices), stubs 1.11 / 14.46 m. The earlier 39-way chain plus disconnected 74446959 stubbed at 65.45 / 32.02 m and was not registered.
+- tokyo-tohoku-shinkansen-ueno — registered separately as a terminus osmTrack. The earlier chain stubbed at 92.44 / 6.88 m.
 
 ## Junction dates and missing seams — 2026-10-04
 
-Registry is 158 entries (148 zeroLength, 2 shortLink, 3 osmConnector, 5 osmTrack). Applied the four jn5 `validFrom` improvements (新栃木 1931-08-11, 宇多津 station arm 1988-04-10, 十三 1921-04-01, 宮津 1988-07-16) and appended the 10-id fragment. The eastern 宇多津 bypass stays 2019-10-18. Backdates with saved official bytes are in `jn6/backdate.md`. Year-only sources use `YYYY-12-31` and the phrase `conservative year-end bound` (佐倉 1897, 大分豊肥 1914, 大分久大 1915, 渋川 1945, 佃 1914).
+Registry before the r3 batch below was 160 entries (148 zeroLength, 2 shortLink, 4 osmConnector, 6 osmTrack). Applied the four jn5 `validFrom` improvements (新栃木 1931-08-11, 宇多津 station arm 1988-04-10, 十三 1921-04-01, 宮津 1988-07-16) and appended the 10-id fragment. The eastern 宇多津 bypass stays 2019-10-18. Backdates with saved official bytes are in `jn6/backdate.md`. Year-only sources use `YYYY-12-31` and the phrase `conservative year-end bound` (佐倉 1897, 大分豊肥 1914, 大分久大 1915, 渋川 1945, 佃 1914).
 
 New geometry junctions:
 
@@ -348,4 +349,20 @@ New geometry junctions:
 | naka-oguni-tsugaru-kaikyo | zeroLength | 津軽線↔海峡線 [140.59738, 41.05138] | 1988-03-13 | 2016-03-26 |
 | kaifu-mugi-asato | shortLink 13.6 m | 牟岐線 [134.35076, 33.60587]↔阿佐東線 [134.35086, 33.60596] | 1992-03-26 | 2019-03-16 |
 
-`naka-oguni-tsugaru-kaikyo` omits a 海峡線 catalog id. `line-service-catalog.json` has no `jp-北海道旅客鉄道-海峡線`. The loader does not decode `lineIDs`; the graph match is 北海道旅客鉄道 / 海峡線 / class 11. 佃’s 1914-12-31 is the JR Shikoku 2014 「徳島線全線開通100周年」 year-end bound. That page does not name 佃, and no 土讃線 opening day was in the saved bytes. 63 entries remain with `validFrom` ≥ 2000-01-01: post-2000 openings and through-service starts, dated service windows, and junctions whose earlier official year or day was not in saved operator/municipal bytes (JR East history PDFs returned HTTP 403; JR West databook 開業 cells are CID-garbled). 大宮 stays 2026-10-01 for that 403. 日暮里 was not set to 1896-12-25 because that press is 田端. 高崎 was not set to 1884-05-01 because that is the 高崎線 station opening, not 上越線.
+`naka-oguni-tsugaru-kaikyo` omits a 海峡線 catalog id. `line-service-catalog.json` has no `jp-北海道旅客鉄道-海峡線`. The loader does not decode `lineIDs`; the graph match is 北海道旅客鉄道 / 海峡線 / class 11. 佃’s 1914-12-31 is the JR Shikoku 2014 「徳島線全線開通100周年」 year-end bound. That page does not name 佃, and no 土讃線 opening day was in the saved bytes. 63 entries remain with `validFrom` ≥ 2000-01-01: post-2000 openings and through-service starts, dated service windows, and junctions whose earlier official year or day was not in saved operator/municipal bytes (JR East history PDFs returned HTTP 403; JR West databook 開業 cells are CID-garbled). 大宮 stayed 2026-10-01 until the r3 backdate below. 日暮里 was not set to 1896-12-25 because that press is 田端. 高崎 was not set to 1884-05-01 because that is the 高崎線 station opening, not 上越線.
+
+## r3 batch — 2026-10-04
+
+Registry is 171 entries (155 zeroLength, 5 shortLink, 4 osmConnector, 7 osmTrack). Added the 8-id r2 fragment, `kikonai-esashi-kaikyo` (1988-03-13 to 2016-03-26) and `goryokaku-esashi-hakodate-kamiiso` (1913-09-15 to 2016-03-26, vertex [140.73386, 41.80234], not the 1936 [140.73218, 41.80838] junction), and osmTrack `tokyo-tokaido-shinkansen-shinagawa`. `tokyo-tohoku-kanda` path is the 11 decoded 東京↔神田 display vertices plus the previous 14-point tail so the 神田 stub stays 21.41 m (the 神田 anchor is about 375 m from that N02 vertex).
+
+Backdates: 大宮 1885-07-16, 新津 1912-12-31, 日暮里 1905-04-01, 秋田 1924-07-31, 下今市 1929-10-22, 尼崎 1904-11-03, 伯耆大山 `west-hokidaisen` 1928-10-25 (same JR West databook row as 倉敷, 伯備線全通).
+
+おおさか東線 sections in `rail-history.json` (revision stays `2026-09-28.3`): 放出–久宝寺 `valid_from` 2008-03-15, 新大阪–放出 `valid_from` 2019-03-16. Targets are sections only.
+
+成田エクスプレス: five patterns that already ran before 空港第2ビル gained a `-before-terminal2` twin (1991-03-19 until 1992-12-03) without that stop; the existing patterns start 1992-12-03. `narita-express-ofuna` only moved to 1992-12-03, because the same JR East 要覧 dates the 大船延長 to that day. スワローあかぎ lines now include 両毛線.
+
+`osaka-osakaloop-tokaido` is the shared 梅田貨物線 vertex [135.48736, 34.69757]. It does not close sample `20260703_01_haruka` at 大阪: the ride's 東海道線 end is the passenger arm, 8,171 m along-track from that vertex, past the 1,500 m approach cap. The registry still contains the junction. No second link was added at the passenger platforms.
+
+## Known limitation — はるか at 大阪 (2026-10-04)
+
+The reviewed `osaka-osakaloop-tokaido` junction sits on the 梅田貨物線/うめきた arm. Section solving ends 新大阪→大阪 on the 東海道線 passenger arm, which has no physical track link to the 大阪環状線, so the boundary stays unproven (~8 km along-track from the junction). Fix: solve the sections that meet at a stop jointly so the shared endpoint can be the うめきた arm. `JunctionApproachTests` lists this junction as the only explicit exception.

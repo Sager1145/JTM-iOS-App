@@ -184,7 +184,7 @@ public struct StationIntervalResolver: Sendable {
         var pending: [State] = []
         var examined = 0
         var found: [[DirectedInterval]] = []
-        var selection: Selection?
+        var selections: [Selection] = []
         var incompleteCandidate = false
         let permittedIDs = Set(requiredLineIDs)
 
@@ -205,7 +205,8 @@ public struct StationIntervalResolver: Sendable {
                 let identity = legs.flatMap { $0 }
                 if !found.contains(identity) {
                     found.append(identity)
-                    selection = Selection(stationCodes: stationCodes, legIntervals: legs)
+                    let chosen = Selection(stationCodes: stationCodes, legIntervals: legs)
+                    selections.append(chosen)
                 }
                 return
             }
@@ -234,7 +235,6 @@ public struct StationIntervalResolver: Sendable {
             && (permittedIDs.isEmpty || permittedIDs.contains(edge.identity.lineID)) {
             guard admitsAnotherState() else { return .unsupported }
             append(edge, after: nil)
-            if found.count >= 2 { return .ambiguous }
         }
         while let state = pending.popLast() {
             guard !isCancelled() else { return .unsupported }
@@ -249,10 +249,21 @@ public struct StationIntervalResolver: Sendable {
                     && !state.visitedCodes.contains(edge.toCode)) else { continue }
                 if edge.toCode == state.previous.fromCode && !state.mayReverse { continue }
                 append(edge, after: state)
-                if found.count >= 2 { return .ambiguous }
             }
         }
-        guard !isCancelled(), !incompleteCandidate, let selection else { return .unsupported }
-        return .resolved(selection)
+        guard !isCancelled(), !incompleteCandidate else { return .unsupported }
+        func preferred(_ selections: [Selection]) -> Selection? {
+            if selections.count <= 1 { return selections.first }
+            let adjacent = selections.filter { $0.legIntervals.allSatisfy { $0.count == 1 } }
+            let pool = adjacent.isEmpty ? selections : adjacent
+            if pool.count == 1 { return pool[0] }
+            let shortest = pool.map(\.intervals.count).min() ?? 0
+            let short = pool.filter { $0.intervals.count == shortest }
+            return short.count == 1 ? short[0] : nil
+        }
+        guard let chosen = preferred(selections) else {
+            return selections.isEmpty ? .unsupported : .ambiguous
+        }
+        return .resolved(chosen)
     }
 }

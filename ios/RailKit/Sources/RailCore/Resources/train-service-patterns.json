@@ -2311,6 +2311,58 @@
   "notes": "Runs 山手貨物線 (not in inventory; 山手線 used) then 品鶴線 (legally 東海道本線). 渋谷・大崎 stops unverified. [verify-joban 2026-09] Official stop list NOT obtained: archived JR East train pages (web.archive.org captures of /train/express/*.html 2021-2023) carry only 運行区間, no 停車駅; saphir/shonan/shiosai pages were never archived; the 2015/2020/2021/2024 改正 press PDFs could not be located (Wayback CDX for jreast.co.jp/press/2019-2023 was offline). Stops left unchanged. 2026-09-23 JR東日本「駅の時刻表」（JR時刻表2026年10月号ベース）で全列車の停車駅一覧を照合。 平日のみ運転。朝の上りは平塚・二宮・国府津を通過する列車あり。"
  },
  {
+  "patternId": "narita-express-tokyo-before-terminal2",
+  "serviceId": "narita-express",
+  "name": "成田エクスプレス",
+  "company": "東日本旅客鉄道",
+  "label": "東京〜成田空港",
+  "origin": "東京",
+  "destination": "成田空港",
+  "stops": [
+   {
+    "name": "東京",
+    "sourceCode": "003766"
+   },
+   {
+    "name": "成田空港",
+    "sourceCode": "003203"
+   }
+  ],
+  "optionalStops": [
+   {
+    "name": "千葉",
+    "sourceCode": "004173"
+   },
+   {
+    "name": "四街道",
+    "sourceCode": "003898"
+   },
+   {
+    "name": "佐倉",
+    "sourceCode": "003531"
+   },
+   {
+    "name": "成田",
+    "sourceCode": "003161"
+   }
+  ],
+  "via": [],
+  "lines": [
+   "総武本線",
+   "成田線"
+  ],
+  "validFrom": "1991-03-19",
+  "validUntil": "1992-12-03",
+  "completeness": {
+   "stops": "complete",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "confidence": "high",
+  "source": "https://www.jreast.co.jp/youran/pdf/jre_youran_group_p30_35.pdf",
+  "notes": "validFrom = NEX start 1991-03-19; stop pattern changed several times (E259 2009-10-01/2010-03-13), no scheme date pinned. 東京〜品川 is the 総武快速 tunnel (legally 総武本線 from 東京). [verify-joban 2026-09] Official stop list NOT obtained: archived JR East train pages (web.archive.org captures of /train/express/*.html 2021-2023) carry only 運行区間, no 停車駅; saphir/shonan/shiosai pages were never archived; the 2015/2020/2021/2024 改正 press PDFs could not be located (Wayback CDX for jreast.co.jp/press/2019-2023 was offline). Stops left unchanged. 2026-09-23 JR東日本「駅の時刻表」（JR時刻表2026年10月号ベース）で全列車の停車駅一覧を照合。 [r3] Pre-空港第2ビル pattern. JR東日本要覧: 成田エクスプレス debut 1991-03-19 at 成田空港駅; 空港第2ビル駅 opened 1992-12-03. validUntil is that morning (half-open)."
+ },
+ {
   "patternId": "narita-express-tokyo",
   "serviceId": "narita-express",
   "name": "成田エクスプレス",
@@ -2355,7 +2407,7 @@
    "総武本線",
    "成田線"
   ],
-  "validFrom": "1991-03-19",
+  "validFrom": "1992-12-03",
   "validUntil": null,
   "completeness": {
    "stops": "complete",
@@ -2364,7 +2416,73 @@
   },
   "confidence": "high",
   "source": "https://timetables.jreast.co.jp/timetable/list0611.html",
-  "notes": "validFrom = NEX start 1991-03-19; stop pattern changed several times (E259 2009-10-01/2010-03-13), no scheme date pinned. 東京〜品川 is the 総武快速 tunnel (legally 総武本線 from 東京). [verify-joban 2026-09] Official stop list NOT obtained: archived JR East train pages (web.archive.org captures of /train/express/*.html 2021-2023) carry only 運行区間, no 停車駅; saphir/shonan/shiosai pages were never archived; the 2015/2020/2021/2024 改正 press PDFs could not be located (Wayback CDX for jreast.co.jp/press/2019-2023 was offline). Stops left unchanged. 2026-09-23 JR東日本「駅の時刻表」（JR時刻表2026年10月号ベース）で全列車の停車駅一覧を照合。"
+  "notes": "validFrom = NEX start 1991-03-19; stop pattern changed several times (E259 2009-10-01/2010-03-13), no scheme date pinned. 東京〜品川 is the 総武快速 tunnel (legally 総武本線 from 東京). [verify-joban 2026-09] Official stop list NOT obtained: archived JR East train pages (web.archive.org captures of /train/express/*.html 2021-2023) carry only 運行区間, no 停車駅; saphir/shonan/shiosai pages were never archived; the 2015/2020/2021/2024 改正 press PDFs could not be located (Wayback CDX for jreast.co.jp/press/2019-2023 was offline). Stops left unchanged. 2026-09-23 JR東日本「駅の時刻表」（JR時刻表2026年10月号ベース）で全列車の停車駅一覧を照合。 [r3] JR東日本要覧 jre_youran_group_p30_35.pdf (live 403; archive 2014-11-29) states 「1992.12.3（木） 空港第２ビル駅開業」 and 「成田空港駅開業、「成田エクスプレス」デビュー（1991.3.19～）」. This pattern's validFrom is 1992-12-03; the pre-opening stop list is the -before-terminal2 pattern."
+ },
+ {
+  "patternId": "narita-express-shinjuku-before-terminal2",
+  "serviceId": "narita-express",
+  "name": "成田エクスプレス",
+  "company": "東日本旅客鉄道",
+  "label": "新宿〜成田空港",
+  "origin": "新宿",
+  "destination": "成田空港",
+  "stops": [
+   {
+    "name": "新宿",
+    "sourceCode": "003700"
+   },
+   {
+    "name": "渋谷",
+    "sourceCode": "003922"
+   },
+   {
+    "name": "東京",
+    "sourceCode": "003766"
+   },
+   {
+    "name": "成田空港",
+    "sourceCode": "003203"
+   }
+  ],
+  "optionalStops": [
+   {
+    "name": "品川",
+    "sourceCode": "004095"
+   },
+   {
+    "name": "千葉",
+    "sourceCode": "004173"
+   },
+   {
+    "name": "四街道",
+    "sourceCode": "003898"
+   },
+   {
+    "name": "佐倉",
+    "sourceCode": "003531"
+   },
+   {
+    "name": "成田",
+    "sourceCode": "003161"
+   }
+  ],
+  "via": [],
+  "lines": [
+   "山手線",
+   "東海道本線",
+   "総武本線",
+   "成田線"
+  ],
+  "validFrom": "1991-03-19",
+  "validUntil": "1992-12-03",
+  "completeness": {
+   "stops": "complete",
+   "lines": "partial",
+   "validity": "partial"
+  },
+  "confidence": "high",
+  "source": "https://www.jreast.co.jp/youran/pdf/jre_youran_group_p30_35.pdf",
+  "notes": "新宿〜品川 via 山手貨物線 (山手線 used as stand-in); 品川 stop on the 新宿 portion and exact 新宿〜東京 routing unverified. [verify-joban 2026-09] Official stop list NOT obtained: archived JR East train pages (web.archive.org captures of /train/express/*.html 2021-2023) carry only 運行区間, no 停車駅; saphir/shonan/shiosai pages were never archived; the 2015/2020/2021/2024 改正 press PDFs could not be located (Wayback CDX for jreast.co.jp/press/2019-2023 was offline). Stops left unchanged. 2026-09-23 JR東日本「駅の時刻表」（JR時刻表2026年10月号ベース）で全列車の停車駅一覧を照合。 新宿編成は東京で大船編成と併結。品川は新宿編成の一部列車が通過。 [r3] Pre-空港第2ビル pattern. JR東日本要覧: 成田エクスプレス debut 1991-03-19 at 成田空港駅; 空港第2ビル駅 opened 1992-12-03. validUntil is that morning (half-open)."
  },
  {
   "patternId": "narita-express-shinjuku",
@@ -2425,7 +2543,7 @@
    "総武本線",
    "成田線"
   ],
-  "validFrom": "1991-03-19",
+  "validFrom": "1992-12-03",
   "validUntil": null,
   "completeness": {
    "stops": "complete",
@@ -2434,7 +2552,60 @@
   },
   "confidence": "high",
   "source": "https://timetables.jreast.co.jp/timetable/list0611.html",
-  "notes": "新宿〜品川 via 山手貨物線 (山手線 used as stand-in); 品川 stop on the 新宿 portion and exact 新宿〜東京 routing unverified. [verify-joban 2026-09] Official stop list NOT obtained: archived JR East train pages (web.archive.org captures of /train/express/*.html 2021-2023) carry only 運行区間, no 停車駅; saphir/shonan/shiosai pages were never archived; the 2015/2020/2021/2024 改正 press PDFs could not be located (Wayback CDX for jreast.co.jp/press/2019-2023 was offline). Stops left unchanged. 2026-09-23 JR東日本「駅の時刻表」（JR時刻表2026年10月号ベース）で全列車の停車駅一覧を照合。 新宿編成は東京で大船編成と併結。品川は新宿編成の一部列車が通過。"
+  "notes": "新宿〜品川 via 山手貨物線 (山手線 used as stand-in); 品川 stop on the 新宿 portion and exact 新宿〜東京 routing unverified. [verify-joban 2026-09] Official stop list NOT obtained: archived JR East train pages (web.archive.org captures of /train/express/*.html 2021-2023) carry only 運行区間, no 停車駅; saphir/shonan/shiosai pages were never archived; the 2015/2020/2021/2024 改正 press PDFs could not be located (Wayback CDX for jreast.co.jp/press/2019-2023 was offline). Stops left unchanged. 2026-09-23 JR東日本「駅の時刻表」（JR時刻表2026年10月号ベース）で全列車の停車駅一覧を照合。 新宿編成は東京で大船編成と併結。品川は新宿編成の一部列車が通過。 [r3] JR東日本要覧 jre_youran_group_p30_35.pdf (live 403; archive 2014-11-29) states 「1992.12.3（木） 空港第２ビル駅開業」 and 「成田空港駅開業、「成田エクスプレス」デビュー（1991.3.19～）」. This pattern's validFrom is 1992-12-03; the pre-opening stop list is the -before-terminal2 pattern."
+ },
+ {
+  "patternId": "narita-express-ikebukuro-before-terminal2",
+  "serviceId": "narita-express",
+  "name": "成田エクスプレス",
+  "company": "東日本旅客鉄道",
+  "label": "池袋〜成田空港",
+  "origin": "池袋",
+  "destination": "成田空港",
+  "stops": [
+   {
+    "name": "池袋",
+    "sourceCode": "003390"
+   },
+   {
+    "name": "新宿",
+    "sourceCode": "003700"
+   },
+   {
+    "name": "渋谷",
+    "sourceCode": "003922"
+   },
+   {
+    "name": "品川",
+    "sourceCode": "004095"
+   },
+   {
+    "name": "東京",
+    "sourceCode": "003766"
+   },
+   {
+    "name": "成田空港",
+    "sourceCode": "003203"
+   }
+  ],
+  "optionalStops": [],
+  "via": [],
+  "lines": [
+   "山手線",
+   "東海道本線",
+   "総武本線",
+   "成田線"
+  ],
+  "validFrom": "1991-03-19",
+  "validUntil": "1992-12-03",
+  "completeness": {
+   "stops": "partial",
+   "lines": "partial",
+   "validity": "partial"
+  },
+  "confidence": "low",
+  "source": "https://www.jreast.co.jp/youran/pdf/jre_youran_group_p30_35.pdf",
+  "notes": "池袋 terminus runs vary by year; 山手貨物線 → 山手線 stand-in; 品川 stop unverified. [verify-joban 2026-09] Official stop list NOT obtained: archived JR East train pages (web.archive.org captures of /train/express/*.html 2021-2023) carry only 運行区間, no 停車駅; saphir/shonan/shiosai pages were never archived; the 2015/2020/2021/2024 改正 press PDFs could not be located (Wayback CDX for jreast.co.jp/press/2019-2023 was offline). Stops left unchanged. 2026-09-23 照合: 2022-03-12 ダイヤ改正で池袋・大宮発着を終了。2026年10月号時刻表に設定なし。 [r3] Pre-空港第2ビル pattern. JR東日本要覧: 成田エクスプレス debut 1991-03-19 at 成田空港駅; 空港第2ビル駅 opened 1992-12-03. validUntil is that morning (half-open)."
  },
  {
   "patternId": "narita-express-ikebukuro",
@@ -2482,7 +2653,7 @@
    "総武本線",
    "成田線"
   ],
-  "validFrom": "1991-03-19",
+  "validFrom": "1992-12-03",
   "validUntil": "2022-03-12",
   "completeness": {
    "stops": "partial",
@@ -2491,7 +2662,66 @@
   },
   "confidence": "low",
   "source": "https://ja.wikipedia.org/wiki/成田エクスプレス",
-  "notes": "池袋 terminus runs vary by year; 山手貨物線 → 山手線 stand-in; 品川 stop unverified. [verify-joban 2026-09] Official stop list NOT obtained: archived JR East train pages (web.archive.org captures of /train/express/*.html 2021-2023) carry only 運行区間, no 停車駅; saphir/shonan/shiosai pages were never archived; the 2015/2020/2021/2024 改正 press PDFs could not be located (Wayback CDX for jreast.co.jp/press/2019-2023 was offline). Stops left unchanged. 2026-09-23 照合: 2022-03-12 ダイヤ改正で池袋・大宮発着を終了。2026年10月号時刻表に設定なし。"
+  "notes": "池袋 terminus runs vary by year; 山手貨物線 → 山手線 stand-in; 品川 stop unverified. [verify-joban 2026-09] Official stop list NOT obtained: archived JR East train pages (web.archive.org captures of /train/express/*.html 2021-2023) carry only 運行区間, no 停車駅; saphir/shonan/shiosai pages were never archived; the 2015/2020/2021/2024 改正 press PDFs could not be located (Wayback CDX for jreast.co.jp/press/2019-2023 was offline). Stops left unchanged. 2026-09-23 照合: 2022-03-12 ダイヤ改正で池袋・大宮発着を終了。2026年10月号時刻表に設定なし。 [r3] JR東日本要覧 jre_youran_group_p30_35.pdf (live 403; archive 2014-11-29) states 「1992.12.3（木） 空港第２ビル駅開業」 and 「成田空港駅開業、「成田エクスプレス」デビュー（1991.3.19～）」. This pattern's validFrom is 1992-12-03; the pre-opening stop list is the -before-terminal2 pattern."
+ },
+ {
+  "patternId": "narita-express-omiya-before-terminal2",
+  "serviceId": "narita-express",
+  "name": "成田エクスプレス",
+  "company": "東日本旅客鉄道",
+  "label": "大宮〜成田空港",
+  "origin": "大宮",
+  "destination": "成田空港",
+  "stops": [
+   {
+    "name": "大宮",
+    "sourceCode": "002914"
+   },
+   {
+    "name": "池袋",
+    "sourceCode": "003390"
+   },
+   {
+    "name": "新宿",
+    "sourceCode": "003700"
+   },
+   {
+    "name": "渋谷",
+    "sourceCode": "003922"
+   },
+   {
+    "name": "品川",
+    "sourceCode": "004095"
+   },
+   {
+    "name": "東京",
+    "sourceCode": "003766"
+   },
+   {
+    "name": "成田空港",
+    "sourceCode": "003203"
+   }
+  ],
+  "optionalStops": [],
+  "via": [],
+  "lines": [
+   "東北本線",
+   "赤羽線",
+   "山手線",
+   "東海道本線",
+   "総武本線",
+   "成田線"
+  ],
+  "validFrom": "1991-03-19",
+  "validUntil": "1992-12-03",
+  "completeness": {
+   "stops": "partial",
+   "lines": "partial",
+   "validity": "partial"
+  },
+  "confidence": "low",
+  "source": "https://www.jreast.co.jp/youran/pdf/jre_youran_group_p30_35.pdf",
+  "notes": "大宮〜池袋 via 埼京線 (legally 東北本線+赤羽線); 浦和 etc. stops unverified; 大宮 service reduced to few trains, current status unverified. [verify-joban 2026-09] Official stop list NOT obtained: archived JR East train pages (web.archive.org captures of /train/express/*.html 2021-2023) carry only 運行区間, no 停車駅; saphir/shonan/shiosai pages were never archived; the 2015/2020/2021/2024 改正 press PDFs could not be located (Wayback CDX for jreast.co.jp/press/2019-2023 was offline). Stops left unchanged. 2026-09-23 照合: 2022-03-12 ダイヤ改正で池袋・大宮発着を終了。2026年10月号時刻表に設定なし。 [r3] Pre-空港第2ビル pattern. JR東日本要覧: 成田エクスプレス debut 1991-03-19 at 成田空港駅; 空港第2ビル駅 opened 1992-12-03. validUntil is that morning (half-open)."
  },
  {
   "patternId": "narita-express-omiya",
@@ -2545,7 +2775,7 @@
    "総武本線",
    "成田線"
   ],
-  "validFrom": "1991-03-19",
+  "validFrom": "1992-12-03",
   "validUntil": "2022-03-12",
   "completeness": {
    "stops": "partial",
@@ -2554,7 +2784,55 @@
   },
   "confidence": "low",
   "source": "https://ja.wikipedia.org/wiki/成田エクスプレス",
-  "notes": "大宮〜池袋 via 埼京線 (legally 東北本線+赤羽線); 浦和 etc. stops unverified; 大宮 service reduced to few trains, current status unverified. [verify-joban 2026-09] Official stop list NOT obtained: archived JR East train pages (web.archive.org captures of /train/express/*.html 2021-2023) carry only 運行区間, no 停車駅; saphir/shonan/shiosai pages were never archived; the 2015/2020/2021/2024 改正 press PDFs could not be located (Wayback CDX for jreast.co.jp/press/2019-2023 was offline). Stops left unchanged. 2026-09-23 照合: 2022-03-12 ダイヤ改正で池袋・大宮発着を終了。2026年10月号時刻表に設定なし。"
+  "notes": "大宮〜池袋 via 埼京線 (legally 東北本線+赤羽線); 浦和 etc. stops unverified; 大宮 service reduced to few trains, current status unverified. [verify-joban 2026-09] Official stop list NOT obtained: archived JR East train pages (web.archive.org captures of /train/express/*.html 2021-2023) carry only 運行区間, no 停車駅; saphir/shonan/shiosai pages were never archived; the 2015/2020/2021/2024 改正 press PDFs could not be located (Wayback CDX for jreast.co.jp/press/2019-2023 was offline). Stops left unchanged. 2026-09-23 照合: 2022-03-12 ダイヤ改正で池袋・大宮発着を終了。2026年10月号時刻表に設定なし。 [r3] JR東日本要覧 jre_youran_group_p30_35.pdf (live 403; archive 2014-11-29) states 「1992.12.3（木） 空港第２ビル駅開業」 and 「成田空港駅開業、「成田エクスプレス」デビュー（1991.3.19～）」. This pattern's validFrom is 1992-12-03; the pre-opening stop list is the -before-terminal2 pattern."
+ },
+ {
+  "patternId": "narita-express-yokohama-before-terminal2",
+  "serviceId": "narita-express",
+  "name": "成田エクスプレス",
+  "company": "東日本旅客鉄道",
+  "label": "横浜〜成田空港",
+  "origin": "横浜",
+  "destination": "成田空港",
+  "stops": [
+   {
+    "name": "横浜",
+    "sourceCode": "004633"
+   },
+   {
+    "name": "武蔵小杉",
+    "sourceCode": "004301"
+   },
+   {
+    "name": "品川",
+    "sourceCode": "004095"
+   },
+   {
+    "name": "東京",
+    "sourceCode": "003766"
+   },
+   {
+    "name": "成田空港",
+    "sourceCode": "003203"
+   }
+  ],
+  "optionalStops": [],
+  "via": [],
+  "lines": [
+   "東海道本線",
+   "総武本線",
+   "成田線"
+  ],
+  "validFrom": "1991-03-19",
+  "validUntil": "1992-12-03",
+  "completeness": {
+   "stops": "complete",
+   "lines": "complete",
+   "validity": "partial"
+  },
+  "confidence": "medium",
+  "source": "https://www.jreast.co.jp/youran/pdf/jre_youran_group_p30_35.pdf",
+  "notes": "横浜〜品川 via 品鶴線 (legally 東海道本線, 横須賀線 service). Scheme date not pinned. [verify-joban 2026-09] Official stop list NOT obtained: archived JR East train pages (web.archive.org captures of /train/express/*.html 2021-2023) carry only 運行区間, no 停車駅; saphir/shonan/shiosai pages were never archived; the 2015/2020/2021/2024 改正 press PDFs could not be located (Wayback CDX for jreast.co.jp/press/2019-2023 was offline). Stops left unchanged. 2026-09-23 照合: 2026年10月号時刻表では横浜方面の列車はすべて大船発着で、横浜発着の設定なし（終了日は未照合のため validTo 未設定）。 [r3] Pre-空港第2ビル pattern. JR東日本要覧: 成田エクスプレス debut 1991-03-19 at 成田空港駅; 空港第2ビル駅 opened 1992-12-03. validUntil is that morning (half-open)."
  },
  {
   "patternId": "narita-express-yokohama",
@@ -2597,7 +2875,7 @@
    "総武本線",
    "成田線"
   ],
-  "validFrom": "1991-03-19",
+  "validFrom": "1992-12-03",
   "validUntil": null,
   "completeness": {
    "stops": "complete",
@@ -2606,7 +2884,7 @@
   },
   "confidence": "medium",
   "source": "https://ja.wikipedia.org/wiki/成田エクスプレス",
-  "notes": "横浜〜品川 via 品鶴線 (legally 東海道本線, 横須賀線 service). Scheme date not pinned. [verify-joban 2026-09] Official stop list NOT obtained: archived JR East train pages (web.archive.org captures of /train/express/*.html 2021-2023) carry only 運行区間, no 停車駅; saphir/shonan/shiosai pages were never archived; the 2015/2020/2021/2024 改正 press PDFs could not be located (Wayback CDX for jreast.co.jp/press/2019-2023 was offline). Stops left unchanged. 2026-09-23 照合: 2026年10月号時刻表では横浜方面の列車はすべて大船発着で、横浜発着の設定なし（終了日は未照合のため validTo 未設定）。"
+  "notes": "横浜〜品川 via 品鶴線 (legally 東海道本線, 横須賀線 service). Scheme date not pinned. [verify-joban 2026-09] Official stop list NOT obtained: archived JR East train pages (web.archive.org captures of /train/express/*.html 2021-2023) carry only 運行区間, no 停車駅; saphir/shonan/shiosai pages were never archived; the 2015/2020/2021/2024 改正 press PDFs could not be located (Wayback CDX for jreast.co.jp/press/2019-2023 was offline). Stops left unchanged. 2026-09-23 照合: 2026年10月号時刻表では横浜方面の列車はすべて大船発着で、横浜発着の設定なし（終了日は未照合のため validTo 未設定）。 [r3] JR東日本要覧 jre_youran_group_p30_35.pdf (live 403; archive 2014-11-29) states 「1992.12.3（木） 空港第２ビル駅開業」 and 「成田空港駅開業、「成田エクスプレス」デビュー（1991.3.19～）」. This pattern's validFrom is 1992-12-03; the pre-opening stop list is the -before-terminal2 pattern."
  },
  {
   "patternId": "narita-express-ofuna",
@@ -2674,7 +2952,7 @@
    "総武本線",
    "成田線"
   ],
-  "validFrom": "1991-03-19",
+  "validFrom": "1992-12-03",
   "validUntil": null,
   "completeness": {
    "stops": "complete",
@@ -2683,7 +2961,7 @@
   },
   "confidence": "high",
   "source": "https://timetables.jreast.co.jp/timetable/list0611.html",
-  "notes": "大船〜品川 via 横須賀線 tracks/品鶴線 (legally 東海道本線). Scheme date not pinned. [verify-joban 2026-09] Official stop list NOT obtained: archived JR East train pages (web.archive.org captures of /train/express/*.html 2021-2023) carry only 運行区間, no 停車駅; saphir/shonan/shiosai pages were never archived; the 2015/2020/2021/2024 改正 press PDFs could not be located (Wayback CDX for jreast.co.jp/press/2019-2023 was offline). Stops left unchanged. 2026-09-23 JR東日本「駅の時刻表」（JR時刻表2026年10月号ベース）で全列車の停車駅一覧を照合。"
+  "notes": "大船〜品川 via 横須賀線 tracks/品鶴線 (legally 東海道本線). Scheme date not pinned. [verify-joban 2026-09] Official stop list NOT obtained: archived JR East train pages (web.archive.org captures of /train/express/*.html 2021-2023) carry only 運行区間, no 停車駅; saphir/shonan/shiosai pages were never archived; the 2015/2020/2021/2024 改正 press PDFs could not be located (Wayback CDX for jreast.co.jp/press/2019-2023 was offline). Stops left unchanged. 2026-09-23 JR東日本「駅の時刻表」（JR時刻表2026年10月号ベース）で全列車の停車駅一覧を照合。 [r3] The same要覧 dates 「成田エクスプレス」大船延長 to 1992-12-03, the same day as 空港第2ビル駅開業. No pre-1992 大船 pattern was added. validFrom set to 1992-12-03."
  },
  {
   "patternId": "kamakura-yoshikawaminami-kamakura",
@@ -12287,7 +12565,8 @@
   "via": [],
   "lines": [
    "東北線",
-   "高崎線"
+   "高崎線",
+   "両毛線"
   ],
   "validFrom": "2014-03-15",
   "validUntil": "2023-03-18",
@@ -12298,7 +12577,7 @@
   },
   "confidence": "low",
   "source": "https://ja.wikipedia.org/wiki/あかぎ_(列車)",
-  "notes": "座席指定制ホームライナー後継。一部は本庄・籠原止まり、前橋延長便は両毛線経由（lines未記載）。2023-03-18にあかぎへ統合。 [verified] Official 2022-12-16 release (https://www.jreast.co.jp/press/2022/20221216_ho02.pdf (archived: https://web.archive.org/web/20221216050327/https://www.jreast.co.jp/press/2022/20221216_ho02.pdf)): 「スワローあかぎ」は列車名を「あかぎ」に変更, ダイヤ改正日 2023-03-18 → validTo 2023-03-17 official. validFrom 2014-03-15 not checked against an official source."
+  "notes": "座席指定制ホームライナー後継。一部は本庄・籠原止まり、前橋延長便は両毛線経由（linesに両毛線）。2023-03-18にあかぎへ統合。 [verified] Official 2022-12-16 release (https://www.jreast.co.jp/press/2022/20221216_ho02.pdf (archived: https://web.archive.org/web/20221216050327/https://www.jreast.co.jp/press/2022/20221216_ho02.pdf)): 「スワローあかぎ」は列車名を「あかぎ」に変更, ダイヤ改正日 2023-03-18 → validTo 2023-03-17 official. validFrom 2014-03-15 not checked against an official source."
  },
  {
   "patternId": "akagi-ueno-maebashi",
