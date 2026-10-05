@@ -33,7 +33,8 @@ struct ReviewedKobeRoutingTests {
         #expect(kobe.from.coordinate == Coordinate(lon: 135.17838, lat: 34.68057))
         #expect(kobe.from.coordinate == kobe.to.coordinate)
         #expect(!kobe.evidence.isEmpty)
-        #expect(kobe.validFrom == "1987-04-01")
+        // Dating rule (2026-10-04): the link is as old as both rows, so no lower bound.
+        #expect(kobe.validFrom == nil)
 
         let independent = RouteGraph.build(from: sections, policy: .physicalRailway)
         let joined = RouteGraph.build(from: sections, policy: .physicalRailway, junctions: junctions)

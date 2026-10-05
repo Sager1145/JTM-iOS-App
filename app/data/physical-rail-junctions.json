@@ -2526,7 +2526,8 @@
         ]
       },
       "evidence": [
-        "https://timetables.jreast.co.jp/2610/train/155/155641.html"
+        "https://timetables.jreast.co.jp/2610/train/155/155641.html",
+        "https://www.city.tachikawa.lg.jp/shisei/gaiyo/1005930/1005948/1005963.html"
       ],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical 5-decimal existing vertex on both identities at [139.41254, 35.69802]; 112.328 m / 112.328 m along-track from projected N02 station display point (from/to). Identity-agnostic shortest path 国立 -> 西立川 (4852.021 m) contains this vertex; 5 shared vertices within 3 km; nearest on that through path chosen. See east/geometry.json row 33.",
       "reviewedAt": "2026-10-04",
@@ -2606,7 +2607,8 @@
         ]
       },
       "evidence": [
-        "https://timetables.jreast.co.jp/2610/timetable-v/238u2p.html"
+        "https://timetables.jreast.co.jp/2610/timetable-v/238u2p.html",
+        "https://www.city.shibukawa.lg.jp/manage/contents/upload/60c86df9760a4.txt"
       ],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical 5-decimal existing vertex on both identities at [139.04829, 36.37997]; 157.819 m / 157.819 m along-track from projected N02 station display point (from/to). Identity-agnostic shortest path 前橋 -> 井野 (5567.869 m) contains this vertex; 6 shared vertices within 3 km; nearest on that through path chosen. See east/geometry.json row 35.",
       "reviewedAt": "2026-10-04",
@@ -4371,7 +4373,9 @@
         ]
       },
       "evidence": [
-        "https://timetable.jr-odekake.net/train-timetable/82781?date=20261003"
+        "https://timetable.jr-odekake.net/train-timetable/82781?date=20261003",
+        "https://www.jrkyushu.co.jp/news/__icsFiles/afieldfile/2022/11/08/221108_kanmon80th_tours.pdf",
+        "https://www.city.kitakyushu.lg.jp/contents/26501134.html"
       ],
       "geometryEvidence": "app/data/rail-sections.json: identical existing five-decimal vertex on both identities; 3 shared vertices within 3 km. Selected overlap boundary/branch vertex on identity-agnostic shortest path 下関 → 小倉 (11173.0 m), with approach edges on from identity and departure edges on to identity. Along-track distance to projected N02 station display point: 163.7 m. Reproduce with west/geometry.py; see geometry.json.",
       "reviewedAt": "2026-10-04",
@@ -5362,7 +5366,7 @@
       "geometryEvidence": "app/data/rail-sections.json: identical existing 5-decimal vertex on both identities; 309.869 m / 283.029 m along track to station display point. Identity-agnostic shortest path 北春日部 → 八木崎 (1765.573 m) passes the vertex with incoming 伊勢崎線 and outgoing 野田線 edges. Geometry copied from jn2/east/geometry.json row 7.",
       "reviewedAt": "2026-10-04",
       "validFrom": null,
-      "validTo": "2024-03-16",
+      "validTo": null,
       "temporalEvidence": "Physical link is as old as both rows, which predate the representable history, so validFrom is unbounded. The previous 2017-04-21 date is a documented-existing timetable window, retained as evidence. Tobu official history dates the アーバンパークライナー launch to 2017-04-21; an official timetable lists one train 浅草→大宮 across 春日部. Tobu ended the service in the 2024-03-16 revision, so validTo is the exclusive end bound."
     },
     {
@@ -9680,6 +9684,301 @@
       "validFrom": "1891-09-01",
       "validTo": null,
       "temporalEvidence": "validFrom 1891-09-01 is the 盛岡～青森 opening, which is the track through this vertex (IGR https://igr.jp/2021/09/01/130th/, 明治24年9月1日). 目時駅 itself is later: the Aoimori 130th chronology PDF http://aoimorirailway.com/wp/wp-content/uploads/2021/09/389cde32f5238134f19f290cae98d75d.pdf dates 目時駅開業 1948-10-01 and the ownership splits 2002-12-01 (盛岡～目時 to IGR, 目時～八戸 to 青い森) and 2010-12-04 (八戸～青森 to 青い森). Those are not the physical day. validTo is null."
+    },
+    {
+      "id": "fuji-tokaido-minobu",
+      "kind": "zeroLength",
+      "region": "jp",
+      "station": "富士",
+      "stationCode": "005522",
+      "lineIDs": [
+        "jp-東海旅客鉄道-東海道線",
+        "jp-東海旅客鉄道-身延線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "東海旅客鉄道",
+          "lineName": "東海道線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          138.64986,
+          35.1514
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東海旅客鉄道",
+          "lineName": "身延線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          138.64986,
+          35.1514
+        ]
+      },
+      "evidence": [
+        "https://www.city.fuji.shizuoka.jp/archive/kouhou/kiji/101111105_0744_04.htm",
+        "https://jr-central.co.jp/news/release/_pdf/000042054.pdf"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json: identical 5-decimal vertex [138.64986, 35.15140] on 東海旅客鉄道 東海道線 and 身延線 (class 11). zeroLength.",
+      "reviewedAt": "2026-10-04",
+      "validFrom": "1913-12-31",
+      "validTo": null,
+      "temporalEvidence": "身延線 reached 富士 in 1913, year only. Fuji city (fuji-kouhou.html, sha256 3daf37269a73eef72bd20eb0c774fddfd4737b491ceb504c84e55b58a7f4a7f8) says 大正2年（1913年）に、富士身延鉄道として富士・大宮（現在の富士宮）間で営業を開始. No month or day, so 1913-12-31. 東海道線 was already at 富士. Same train: JR Central (fujikawa-2022.pdf, sha256 1c60301ae2a5f60377a9110b4ff39d8629f4490fdce4251a65fe3eb352a88ddf) ２０２２年７月２日, 運転区間：静岡駅発（８:３１）⇒甲府駅着（１１:２６）, and names 静岡駅、清水駅、富士駅、富士宮駅. 静岡 and 清水 are 東海道線; 富士宮 and 甲府 are 身延線."
+    },
+    {
+      "id": "tsubata-hokuriku-nanao",
+      "kind": "zeroLength",
+      "region": "jp",
+      "station": "津幡",
+      "stationCode": "002010",
+      "lineIDs": [
+        "jp-西日本旅客鉄道-北陸線",
+        "jp-西日本旅客鉄道-七尾線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "西日本旅客鉄道",
+          "lineName": "北陸線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          136.72993,
+          36.65692
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "西日本旅客鉄道",
+          "lineName": "七尾線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          136.72993,
+          36.65692
+        ]
+      },
+      "evidence": [
+        "https://www.city.nanao.lg.jp/koho/shise/koho/kohonanao/h24/documents/koho-h24-10-0124.pdf",
+        "https://www.westjr.co.jp/press/article/items/141219_00_hokuriku.pdf",
+        "https://www.westjr.co.jp/company/info/history"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json has 西日本旅客鉄道 七尾線 (class 11) at [136.72993, 36.65692]. app/data/rail-history.json has 西日本旅客鉄道 北陸線 (class 11) at the same vertex, valid_to 2015-03-14. Current sections there are 七尾線 and IRいしかわ鉄道線, not JR 北陸線. Distinct from tsubata-ir-nanao at [136.73154, 36.65884]. zeroLength.",
+      "reviewedAt": "2026-10-04",
+      "validFrom": "1900-08-31",
+      "validTo": "2015-03-14",
+      "temporalEvidence": "Nanao city (nanao-h24.pdf, sha256 34aea6fd54de5598f731ffec1da3b9673a91e5841ab11ead908a99ceae83c947) says 明治31年４月 the 七尾鉄道 and 北陸線 were 接続されなかった, then 明治33年８月に北陸線と七尾線がつながった. Meiji 33 is 1900. Month printed, no day, so 1900-08-31. validTo 2015-03-14. JR West (thunderbird-2014.pdf, sha256 ba8f463f70cbddc892b5f1a497b4eaaf031a23abb2a58b149ca66538c5c82f31) says 平成27年3月14日 and 金沢～直江津間の運行を取り止めます。（各第３セクター会社に移管）. JR West history (jrwest-history.html, sha256 4edce5f285d59bb6bb9289da84febb18cac38002347b834b4f8ce5ede555e560) says 3月14日北陸線（金沢～直江津間）の運営をIRいしかわ鉄道株式会社、あいの風とやま鉄道株式会社、えちごトキめき鉄道株式会社に移管. Pre-transfer same train is the same press footnote 現行の和倉温泉に直通する特急列車. It does not name はくたか and does not list 羽咋 with 大阪. The 能登かがり火 stop list in that PDF is the service after the transfer."
+    },
+    {
+      "id": "kanazawa-ir-hokuriku",
+      "kind": "zeroLength",
+      "region": "jp",
+      "station": "金沢",
+      "stationCode": "002093",
+      "lineIDs": [
+        "jp-IRいしかわ鉄道-IRいしかわ鉄道線",
+        "jp-西日本旅客鉄道-北陸線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "IRいしかわ鉄道",
+          "lineName": "IRいしかわ鉄道線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          136.63771,
+          36.56453
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "西日本旅客鉄道",
+          "lineName": "北陸線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          136.63771,
+          36.56453
+        ]
+      },
+      "evidence": [
+        "https://www.westjr.co.jp/company/info/history",
+        "https://www.westjr.co.jp/press/article/items/141219_00_hokuriku.pdf",
+        "https://www.westjr.co.jp/press/article/items/240227_00_press_thunderbird.pdf"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json has IRいしかわ鉄道 IRいしかわ鉄道線 (class 12) at [136.63771, 36.56453]. app/data/rail-history.json has 西日本旅客鉄道 北陸線 (class 11) at the same vertex, valid_to 2024-03-16. zeroLength.",
+      "reviewedAt": "2026-10-04",
+      "validFrom": null,
+      "validTo": "2024-03-16",
+      "temporalEvidence": "validFrom 2015-03-14, when IR took 金沢～直江津 and met JR 北陸線 at this vertex. JR West history (jrwest-history.html, sha256 4edce5f285d59bb6bb9289da84febb18cac38002347b834b4f8ce5ede555e560) and thunderbird-2014.pdf (sha256 ba8f463f70cbddc892b5f1a497b4eaaf031a23abb2a58b149ca66538c5c82f31) date that transfer 平成27年3月14日 / 3月14日. validTo 2024-03-16 matches rail-history valid_to. The history page says 3月16日北陸新幹線金沢～敦賀間が開業 under the 2024年 heading. Same train: thunderbird-2024.pdf (sha256 4f3d5e482baeea74fb47f68427d09276f441bbc33688c8eb383adc67db3a4964) 2024年3月15日 サンダーバード17号 大阪駅（10：42発）⇒和倉温泉駅（14：30着）. 大阪 is the JR 北陸線 side south of 金沢; 和倉温泉 is beyond 金沢 on IR. 2024-03-15 is inside the window. サンダーバード50号 starts at 金沢 and is not both sides. Dating rule (2026-10-04): validFrom is the physical-link date; 2015-03-14 was a document/ownership date and is kept as evidence only."
+    },
+    {
+      "id": "sako-kotoku-tokushima",
+      "kind": "zeroLength",
+      "region": "jp",
+      "station": "佐古",
+      "stationCode": "008483",
+      "lineIDs": [
+        "jp-四国旅客鉄道-高徳線",
+        "jp-四国旅客鉄道-徳島線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "四国旅客鉄道",
+          "lineName": "高徳線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          134.53926,
+          34.08039
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "四国旅客鉄道",
+          "lineName": "徳島線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          134.53926,
+          34.08039
+        ]
+      },
+      "evidence": [
+        "https://www.jr-shikoku.co.jp/01_trainbus/jikoku/pdf/awa-kamo.pdf",
+        "https://www.pref.tokushima.lg.jp/renritsu/shiryou/rc/08.html"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json: identical 5-decimal vertex [134.53926, 34.08039] on 四国旅客鉄道 高徳線 and 徳島線 (class 11). zeroLength.",
+      "reviewedAt": "2026-10-04",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Same train: JR Shikoku 阿波加茂 board (awa-kamo.pdf, sha256 e7c6b9bc1531710c538a490f06050a6a63b6f3c151fdaac8872a3ef9404184a8) 2025.03.15改正, 特急剣山２号 toward 徳島, stops 貞光･穴吹･阿波山川･阿波川島･鴨島･石井･蔵本. 徳島 is the 高徳線 side of 佐古; 蔵本 is 徳島線. Tokushima prefecture (sako.html, sha256 a5f90a9b1b3b5ad36b80a03386b0eae9101879bc138f6c714f4bbc7df5f0fbad) names the station JR高徳線・徳島線. validFrom 2025-03-15 is the revision date printed on that board, not an opening day. No opening day was in the saved official pages. Dating rule (2026-10-04): validFrom is the physical-link date; 2025-03-15 was a document/ownership date and is kept as evidence only."
+    },
+    {
+      "id": "wakayamashi-nankai-wakayamako",
+      "kind": "zeroLength",
+      "region": "jp",
+      "station": "和歌山市",
+      "stationCode": "008358",
+      "lineIDs": [
+        "jp-南海電気鉄道-南海本線",
+        "jp-南海電気鉄道-和歌山港線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "南海電気鉄道",
+          "lineName": "南海本線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          135.16511,
+          34.23587
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "南海電気鉄道",
+          "lineName": "和歌山港線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          135.16511,
+          34.23587
+        ]
+      },
+      "evidence": [
+        "https://www.nankai.co.jp/community/station/wakayamako.html",
+        "https://www.nankai.co.jp/lib/traffic/express/sazan/pdf/sazan_down.pdf"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json: identical 5-decimal vertex [135.16511, 34.23587] on 南海電気鉄道 南海本線 and 和歌山港線 (class 12). zeroLength.",
+      "reviewedAt": "2026-10-04",
+      "validFrom": "1971-03-31",
+      "validTo": null,
+      "temporalEvidence": "Nankai (wakayamako.html, sha256 ba6f1c583409fcdb2129d96f646fc2d64c0b227a42eaae17abe882f4f37f94f1) says 昭和46年(1971)3月、築港町(旧和歌山港)駅～水軒駅間の延長工事が完成し and this 和歌山港 station opened. No day, so 1971-03-31. The sentence dates the port station, the far end of 和歌山港線, so the 和歌山市 divergence was already in use. Same train: sazan.pdf (sha256 4fc9adad63124de294c417abaf714d72e1247b7863bed6e3020b35078dc28dd4) header 2024年12月21日, columns through 和歌山市 to 和歌山港. サザン９号 has twelve times ending １０：１５ at 和歌山港, not the dashes on １・３・５・７号. なんば is 南海本線; 和歌山港 is 和歌山港線."
+    },
+    {
+      "id": "uchiko-yosan-uchiko",
+      "kind": "zeroLength",
+      "region": "jp",
+      "station": "内子",
+      "stationCode": "009179",
+      "lineIDs": [
+        "jp-四国旅客鉄道-予讃線",
+        "jp-四国旅客鉄道-内子線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "四国旅客鉄道",
+          "lineName": "予讃線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          132.64618,
+          33.54873
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "四国旅客鉄道",
+          "lineName": "内子線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          132.64618,
+          33.54873
+        ]
+      },
+      "evidence": [
+        "https://www.jr-shikoku.co.jp/03_news/press/yawatahama_20180719.pdf"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json: identical 5-decimal vertex [132.64618, 33.54873] on 四国旅客鉄道 予讃線 and 内子線 (class 11). zeroLength.",
+      "reviewedAt": "2026-10-04",
+      "validFrom": "1986-03-03",
+      "validTo": null,
+      "temporalEvidence": "JR Shikoku (uwakai-2018.pdf, sha256 a41fbe6df9bd93a0542bb7dcc35d11b79933b257d5424ce416e5a455387b0095) board 平成30年7月17日, 予讃線 松山～卯之町（内子経由）, with 伊予市～伊予大洲（伊予長浜経由） suspended. 宇和海25号 is the column that calls 伊予中山 17:48, 内子 17:58, 伊予大洲 18:08. 伊予中山 is 内子線; 伊予大洲 is 予讃線 past 内子. validFrom 2018-07-17 is the first day printed on this disruption board, not the shortcut opening. No opening day was in a saved official file. Dating rule (2026-10-04): validFrom is the physical-link date; 2018-07-17 was a document/ownership date and is kept as evidence only."
+    },
+    {
+      "id": "hatabu-sanin-sanyo",
+      "kind": "zeroLength",
+      "region": "jp",
+      "station": "幡生",
+      "stationCode": "008592",
+      "lineIDs": [
+        "jp-西日本旅客鉄道-山陰線",
+        "jp-西日本旅客鉄道-山陽線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "西日本旅客鉄道",
+          "lineName": "山陰線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          130.92696,
+          33.98088
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "西日本旅客鉄道",
+          "lineName": "山陽線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          130.92696,
+          33.98088
+        ]
+      },
+      "evidence": [
+        "https://timetable.jr-odekake.net/line-timetable/2407?date=20261003",
+        "https://timetable.jr-odekake.net/train-timetable/67461?date=20261003"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json: identical 5-decimal vertex [130.92696, 33.98088] on 西日本旅客鉄道 山陰線 and 山陽線 (class 11). Feature indexes 8166 and 8575. zeroLength. 山陰線 ends at 幡生; no 山陰線 feature was added at 下関.",
+      "reviewedAt": "2026-10-04",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "No 山陰線 小串–幡生 or 幡生 junction opening day was in the saved official pages. JR West company history starts in 1987 and does not name 幡生. The 2025-08-21 山陰線 resume press does not name 幡生. validFrom is the documented-existing date of the fetched timetable, 2026-10-03. Line board line-2407.html (sha256 971201999556344ff008a5a23738ecf3faabb3ffe4bc54a8468c49a5a98af468) contains 山陰本線(益田～下関), 2026年10月3日, 851D, >幡生</td><tdclass=\"departure-arrival\">発</td><tdclass=\"celltrainBlack\">06:23</td>, >小串</td><tdclass=\"departure-arrival\">発</td><tdclass=\"celltrainBlack\">05:45</td>, >下関</td><tdclass=\"departure-arrival\">着</td><tdclass=\"celltrainBlack\">06:28</td>, and data=\"/train-timetable/67461?date=20261003\". Train page train-67461.html (sha256 3e5fbaa5917bb9a33dc1f25baae2eb5baf4f5eb12e488b4f9ff123f9b14d1219) contains 普通下関行, 列車番号</th><tdcolspan=\"2\">851D, 毎日運転, >小串</td><tdclass=\"text\"><div>05:45<spanclass=\"destination\">発, >幡生</td><tdclass=\"text\"><div>06:22<spanclass=\"destination\">着</span></div><div>06:23<spanclass=\"destination\">発, >下関</td><tdclass=\"text\"><div>06:28<spanclass=\"destination\">着, and 2026年10月号. JR時刻表2026年10月号 is not one whitespace-stripped substring. Dating rule (2026-10-04): validFrom is the physical-link date; 2026-10-03 was a document/ownership date and is kept as evidence only."
     }
   ]
 }

@@ -1105,9 +1105,12 @@ final class RiddenRouteStore {
 
     private nonisolated static func verifiedSourcePath(
         _ lines: [[Coordinate]], graph: RouteGraph.Graph,
-        context: RouteSolver.TrainContext, section: RouteSection
+        context: RouteSolver.TrainContext, section: RouteSection,
+        displayRowNames: [String] = [], anchorIndices: [Set<Int>] = []
     ) -> [String]? {
-        RouteSolver.verifiedSourcePath(lines, graph: graph, context: context, section: section)
+        RouteSolver.verifiedSourcePath(
+            lines, graph: graph, context: context, section: section,
+            displayRowNames: displayRowNames, anchorIndices: anchorIndices)
     }
 
     @concurrent private nonisolated static func solveMissingWithPermit(
@@ -1183,21 +1186,23 @@ final class RiddenRouteStore {
                         toStationCode: section.toN02StationCode)
                     hints.fromStationCode = eligibility?.stationCode(hints.fromStationCode) ?? hints.fromStationCode
                     hints.toStationCode = eligibility?.stationCode(hints.toStationCode) ?? hints.toStationCode
-                    if let source = displayNetwork?.sourceGeometry(for: hints),
+                    if let certified = displayNetwork?.sourceCertification(for: hints),
                        let exact = displayNetwork?.canonicalizeRouteFeature(
                         RouteFeature(geometry: nil, hints: hints),
                         continueFrom: sharesBoundary ? displayContinuity : nil,
                         cache: &projectionCache),
-                       source.lines.count == exact.geometry.lines.count,
+                       certified.geometry.lines.count == exact.geometry.lines.count,
                        let selection = physicalSelection(
                         hints: hints, network: displayNetwork,
                         provenance: inferred.hints[index] == nil ? .explicit : .stationSequence) {
+                        let source = certified.geometry
                         if graphStore == nil {
                             graphStore = fallbackGraphStore(inputs: inputs, displayNetwork: displayNetwork)
                         }
                         let graph = physicalProofGraph(coordinates: source.lines.flatMap { $0 }, store: graphStore!)
                         let recordedKeys = verifiedSourcePath(
-                            source.lines, graph: graph, context: context, section: section)
+                            source.lines, graph: graph, context: context, section: section,
+                            displayRowNames: certified.rowNames, anchorIndices: certified.anchorIndices)
                         let verified = recordedKeys != nil
                         if !verified {
                             physicalGaps.append(PhysicalGap(segmentIndex: index, isBoundary: false))
@@ -1304,16 +1309,20 @@ final class RiddenRouteStore {
                     // opposite-direction bore. Mileage and exports must use
                     // the same corrected source intervals as the drawn path.
                     var matchedSource: RouteGeometry?
+                    var matchedCertification: RouteNetwork.SourceGeometryCertification?
                     if let codes = canonical?.matchedSectionCodes, !codes.isEmpty {
                         var matchedHints = hints
                         matchedHints.sectionCodes = codes
                         matchedHints.requiredLineIDs = canonical?.displayLineIds ?? []
-                        matchedSource = displayNetwork?.sourceGeometry(for: matchedHints)
+                        matchedCertification = displayNetwork?.sourceCertification(for: matchedHints)
+                        matchedSource = matchedCertification?.geometry
                     }
                     if let matchedSource {
                         let keys = verifiedSourcePath(matchedSource.lines,
                             graph: physicalProofGraph(coordinates: matchedSource.lines.flatMap { $0 }, store: graphStore!),
-                            context: context, section: section)
+                            context: context, section: section,
+                            displayRowNames: matchedCertification?.rowNames ?? [],
+                            anchorIndices: matchedCertification?.anchorIndices ?? [])
                         if keys == nil {
                             physicalGaps.append(PhysicalGap(segmentIndex: index, isBoundary: false))
                         }

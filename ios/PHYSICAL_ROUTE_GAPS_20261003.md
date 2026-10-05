@@ -375,6 +375,13 @@ Registry is 181 entries (162 zeroLength, 5 shortLink, 5 osmConnector, 9 osmTrack
 
 Not applied: 幡生 (no official junction day in the MLIT chronology, the JR West databook, or the 2025 瑞風 press). 高崎 / 新前橋 stay 2026-10-03 (1921-07-01 is not in the saved Gunma page or the MLIT chronology). 成田エクスプレス 東京 sourceCode is already the 総武線 id 003766. No 東北線↔奥羽線 junction at 青森 (shared vertex exists; no saved 奥羽 arrival day).
 
+## r7 batch — 2026-10-04
+
+Registry is 189 entries (170 zeroLength, 5 shortLink, 5 osmConnector, 9 osmTrack). Merged the r6 seven-id fragment: 富士 1913-12-31, 宇土 1899-12-25, 津幡 北陸線↔七尾線 1900-08-31 until 2015-03-14 (distinct from `tsubata-ir-nanao`), 金沢 IR↔北陸線 2015-03-14 until 2024-03-16, 佐古 2025-03-15, 和歌山市 1971-03-31, 内子 2018-07-17. Backdates: 立川 `tachikawa-east-33` 1894-12-31, 門司 `west-moji` 1942-07-01, 新前橋 `shin-maebashi-east-35` 1921-07-01. 高崎 `takasaki-east-34` stays 2026-10-03; 1921-07-01 is 渋川–新前橋, not 高崎. `kasukabe-isesaki-noda` keeps validFrom 2017-04-21 and validTo is now null. 2024-03-16 was the アーバンパークライナー withdrawal; Tobu news 3658 still runs 東武アーバンパークライン and 春日部駅始発スカイツリーライナー.
+
+幡生 `hatabu-sanin-sanyo` is zeroLength at [130.92696, 33.98088], on both 西日本旅客鉄道 山陰線 and 山陽線 (class 11). validFrom 2026-10-03 is the fetched JR West timetable day. No 小串–幡生 opening day was in the saved official pages. The line board 山陰本線(益田～下関) for 2026年10月3日 links train 851D (`/train-timetable/67461`), which runs 小串–幡生–下関. No 山陰線 feature was added at 下関.
+
+新八代 osmTrack was not applied. `rail-sections.json` feature 3004 (九州旅客鉄道/鹿児島線/11) already joins [130.63372, 32.51754] and [130.63386, 32.51771] (23.01 m). Nearest OSM cache vertices in E130N32 (fetchedAt 2026-08-18) are way 579487413 idx 40 at 87.1 m / 64.2 m and way 190662067 idx 5 at 88.9 m / 65.9 m. Both ends must attach within 50 m, so a registered osmTrack would be rejected.
 ## Dating rule (2026-10-04)
 
 A junction's `validFrom` is the day the **physical link** existed — not the day a timetable or document first showed it, and not a company-split or ownership date (1987-04-01 JR split, 2002-12-01 IGR, 2015-03-14 IR/えちごトキめき, 2016-03-26 いさりび). When a link is as old as both rows it joins, `validFrom` is null (no lower bound). Newer links keep a sourced construction date. Evidence that only proves "documented existing on day X" stays in `temporalEvidence`, never in `validFrom`.

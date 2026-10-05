@@ -701,14 +701,38 @@ public struct RouteNetwork: Sendable {
         return CanonicalRoute(geometry: geometry, displayLineIds: used)
     }
 
+    /// Source geometry plus the station-table vertices `decodeIntervals`
+    /// writes over each interval end. Concatenating intervals leaves those
+    /// ends as interior joins. `rowNames` are package `line.name` values in
+    /// first-seen order, before graph-line normalization.
+    public struct SourceGeometryCertification: Sendable {
+        public var geometry: RouteGeometry
+        public var anchorIndices: [Set<Int>]
+        public var rowNames: [String]
+
+        public init(geometry: RouteGeometry, anchorIndices: [Set<Int>], rowNames: [String]) {
+            self.geometry = geometry
+            self.anchorIndices = anchorIndices
+            self.rowNames = rowNames
+        }
+    }
+
     /// The selected physical intervals' source path, kept separate from the
     /// groomed display path for mileage and exports. Platform gaps stay as
     /// separate parts; no unsurveyed connector is added between them.
     public func sourceGeometry(for hints: RouteHints) -> RouteGeometry? {
+        sourceCertification(for: hints)?.geometry
+    }
+
+    public func sourceCertification(for hints: RouteHints) -> SourceGeometryCertification? {
         var current = hints.fromStationCode
         var parts: [[Coordinate]] = []
+        var anchors: [Set<Int>] = []
+        var rowNames: [String] = []
+        var seenRows = Set<String>()
         for code in hints.sectionCodes {
-            guard let interval = intervalByCode[code]?.interval else { return nil }
+            guard let record = intervalByCode[code] else { return nil }
+            let interval = record.interval
             if !hints.requiredLineIDs.isEmpty && !hints.requiredLineIDs.contains(interval.lineID) { return nil }
             let forward: Bool
             if current == interval.fromStationCode { forward = true }
@@ -717,13 +741,22 @@ public struct RouteNetwork: Sendable {
             guard allowedDirections(for: code).contains(forward ? 1 : -1) else { return nil }
             let path = forward ? interval.coordinates : Array(interval.coordinates.reversed())
             guard path.count >= 2 else { return nil }
+            if let name = lines[record.lineIndex].name, !name.isEmpty, seenRows.insert(name).inserted {
+                rowNames.append(name)
+            }
             if let last = parts.last?.last, last == path.first {
+                let join = parts[parts.count - 1].count - 1
+                anchors[anchors.count - 1].insert(join)
                 parts[parts.count - 1] += path.dropFirst()
-            } else { parts.append(path) }
+            } else {
+                parts.append(path)
+                anchors.append([])
+            }
             current = forward ? interval.toStationCode : interval.fromStationCode
         }
         guard !parts.isEmpty, hints.toStationCode == nil || current == hints.toStationCode else { return nil }
-        return parts.count == 1 ? .lineString(parts[0]) : .multiLineString(parts)
+        let geometry: RouteGeometry = parts.count == 1 ? .lineString(parts[0]) : .multiLineString(parts)
+        return SourceGeometryCertification(geometry: geometry, anchorIndices: anchors, rowNames: rowNames)
     }
 
     // MARK: - the function

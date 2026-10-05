@@ -33,7 +33,8 @@ struct ReviewedHimejiRoutingTests {
         #expect(himeji.kind == .osmConnector)
         #expect(himeji.from.coordinate == Coordinate(lon: 134.692862, lat: 34.826493))
         #expect(himeji.to.coordinate == Coordinate(lon: 134.70054, lat: 34.82813))
-        #expect(himeji.validFrom == "1987-04-01")
+        // Dating rule (2026-10-04): the link is as old as both rows, so no lower bound.
+        #expect(himeji.validFrom == nil)
         #expect(!himeji.evidence.isEmpty)
 
         let independent = RouteGraph.build(from: sections, policy: .physicalRailway)

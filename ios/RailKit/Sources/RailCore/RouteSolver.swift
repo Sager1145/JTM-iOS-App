@@ -1657,20 +1657,59 @@ public enum RouteSolver {
         return !previousName.isEmpty && previousName == nextName
     }
 
+    /// Package row `name` to the graph's `lineName`. `-2` and `-p1` are row
+    /// ids, and a trailing 本線 is the passenger spelling of 線.
+    public static func displayRowGraphLineName(_ name: String) -> String {
+        var units = Array(name.utf16)
+        while true {
+            let end = units.count
+            var digits = 0
+            while end - digits > 0, (0x30...0x39).contains(units[end - digits - 1]) { digits += 1 }
+            guard digits > 0 else { break }
+            var start = end - digits
+            if start > 0, units[start - 1] == 0x70 { start -= 1 }
+            guard start > 0, units[start - 1] == 0x2D else { break }
+            start -= 1
+            units.removeSubrange(start..<end)
+        }
+        var text = String(decoding: units, as: UTF16.self)
+        if text.hasSuffix("本線") {
+            text = String(text.dropLast(2)) + "線"
+        }
+        return text
+    }
+
     /// Shared by production source certification and real-data regression tests.
+    ///
+    /// `displayRowNames` are package row names for a display-interval polyline.
+    /// A name that is an identity of the line's first graph node becomes the
+    /// required line. A name that matches nothing there leaves the section's
+    /// own hints unchanged. `anchorIndices` are interval joins in each source
+    /// line, in that line's original vertex order.
     public static func verifiedSourcePath(
         _ lines: [[Coordinate]], graph: RouteGraph.Graph,
-        context: TrainContext, section: RouteSection
+        context: TrainContext, section: RouteSection,
+        displayRowNames: [String] = [], anchorIndices: [Set<Int>] = []
     ) -> [String]? {
         var result: [String] = []
-        for sourceLine in lines {
-            let requiredLines = Set(section.lineNames ?? [])
-            let requiredOperators = Set(section.operatorNames ?? [])
-            guard let line = trimmedToGraphNodes(
-                    line: sourceLine, graph: graph, requiredLines: requiredLines,
-                    requiredOperators: requiredOperators, rideDate: context.rideDate),
-                  let keys = verifiedPhysicalPathKeys(line, graph: graph, rideDate: context.rideDate,
-                    requiredLines: requiredLines, requiredOperators: requiredOperators) else { return nil }
+        for (lineIndex, sourceLine) in lines.enumerated() {
+            let required = certificationHints(
+                line: sourceLine, graph: graph, section: section, displayRowNames: displayRowNames)
+            guard let trimmed = trimmedToGraphNodes(
+                    line: sourceLine, graph: graph, requiredLines: required.lines,
+                    requiredOperators: required.operators, rideDate: context.rideDate),
+                  let offset = firstGraphNodeIndex(sourceLine, graph: graph) else { return nil }
+            let anchors = lineIndex < anchorIndices.count
+                ? Set(anchorIndices[lineIndex].compactMap { index -> Int? in
+                    let local = index - offset
+                    guard local >= 0, local < trimmed.count else { return nil }
+                    return local
+                })
+                : []
+            guard let keys = verifiedPhysicalPathKeys(
+                trimmed, graph: graph, rideDate: context.rideDate,
+                requiredLines: required.lines, requiredOperators: required.operators,
+                anchorIndices: anchors) else { return nil }
             if let previous = result.last, let first = keys.first {
                 guard let bridge = physicalContinuationPath(
                     from: previous, to: first, graph: graph, rideDate: context.rideDate)
@@ -1683,6 +1722,33 @@ public enum RouteSolver {
         return result.isEmpty ? nil : result
     }
 
+    private static func firstGraphNodeIndex(_ line: [Coordinate], graph: RouteGraph.Graph) -> Int? {
+        line.firstIndex { coordinate in
+            !RouteGraph.exactNodeKeys(Grid.normalizeGraphCoord(coordinate), in: graph).isEmpty
+        }
+    }
+
+    /// Display-row identities that sit on the first certified node, or the
+    /// section hints when none of the row names do.
+    private static func certificationHints(
+        line: [Coordinate], graph: RouteGraph.Graph, section: RouteSection,
+        displayRowNames: [String]
+    ) -> (lines: Set<String>, operators: Set<String>) {
+        let operators = Set(section.operatorNames ?? [])
+        let sectionLines = Set(section.lineNames ?? [])
+        guard !displayRowNames.isEmpty,
+              let index = firstGraphNodeIndex(line, graph: graph) else {
+            return (sectionLines, operators)
+        }
+        let keys = RouteGraph.exactNodeKeys(Grid.normalizeGraphCoord(line[index]), in: graph)
+        var identities = Set<String>()
+        for key in keys {
+            identities.formUnion(graph.nodeMeta[key]?.lineNames ?? [])
+        }
+        let hinted = Set(displayRowNames.map(displayRowGraphLineName).filter { identities.contains($0) })
+        return (hinted.isEmpty ? sectionLines : hinted, operators)
+    }
+
     /// Certify an already selected source polyline without replacing its rail
     /// choice with a newly solved route. Every step must be a surveyed edge
     /// (including an `osmTrack` drawn on the line's own identity). Only
@@ -1691,7 +1757,8 @@ public enum RouteSolver {
     /// `osmConnector` with reviewed OpenStreetMap stubs of at most 50 m.
     public static func verifiedPhysicalPathKeys(
         _ coordinates: [Coordinate], graph: RouteGraph.Graph, rideDate: String?,
-        requiredLines: Set<String> = [], requiredOperators: Set<String> = []
+        requiredLines: Set<String> = [], requiredOperators: Set<String> = [],
+        anchorIndices: Set<Int> = []
     ) -> [String]? {
         guard coordinates.count >= 2, let first = coordinates.first else { return nil }
         struct Step { let key: String; let parent: Int? }
@@ -1708,7 +1775,9 @@ public enum RouteSolver {
         // Measured off-grid error: max 0.7 m, p99 0.06 m; five-decimal
         // coordinate rounding has a worst-case displacement of about 0.72 m.
         let onEdgeToleranceMeters = 1.0
+        let anchorSpanMeters = 2 * RouteNetwork.endpointSnapMeters
         var pending: [Coordinate] = []
+        var skippedAnchor = false
         let hints = SegmentHints(requiredLines: requiredLines, requiredOperators: requiredOperators)
 
         func pendingPointsFollowEdge(from a: Coordinate, to b: Coordinate) -> Bool {
@@ -1732,10 +1801,59 @@ public enum RouteSolver {
             return true
         }
 
-        for coordinate in coordinates.dropFirst() {
+        // A station-table join that is neither a node nor on a surveyed edge
+        // is not a vertex of the ride. The keys on either side still have to
+        // be one date-valid same-identity walk of at most 520 m.
+        func anchorWithinOneMeter(_ coordinate: Coordinate) -> Bool {
+            for key in frontier.keys {
+                guard let terminal = graph.nodes[key] else { continue }
+                if anchorLiesOnIdentityEdge(
+                    coordinate, terminal: terminal, graph: graph, maxMeters: anchorSpanMeters,
+                    requiredLines: requiredLines, requiredOperators: requiredOperators,
+                    rideDate: rideDate)
+                {
+                    return true
+                }
+            }
+            return false
+        }
+
+        func bridgeSkippedAnchor(to nextCoordinate: Coordinate) -> [String: Int]? {
+            let targets = RouteGraph.exactNodeKeys(nextCoordinate, in: graph)
+            guard !targets.isEmpty else { return nil }
+            var bridged: [String: Int] = [:]
+            for (key, parent) in frontier.sorted(by: { $0.value < $1.value }) {
+                for target in targets {
+                    guard let span = sameIdentitySpanPath(
+                        from: key, to: target, graph: graph, date: rideDate,
+                        maxMeters: anchorSpanMeters) else { continue }
+                    var cursor = parent
+                    for node in span.dropFirst() {
+                        steps.append(Step(key: node, parent: cursor))
+                        cursor = steps.count - 1
+                    }
+                    bridged[target] = cursor
+                    if span.count >= 2 { arrivedByRail.insert(target) }
+                }
+            }
+            return bridged.isEmpty ? nil : bridged
+        }
+
+        for (offset, coordinate) in coordinates.enumerated().dropFirst() {
             guard !Task.isCancelled else { return nil }
             let nextCoordinate = Grid.normalizeGraphCoord(coordinate)
             let isNode = !RouteGraph.exactNodeKeys(nextCoordinate, in: graph).isEmpty
+            if !isNode, anchorIndices.contains(offset), offset < coordinates.count - 1,
+               !anchorWithinOneMeter(coordinate) {
+                skippedAnchor = true
+                continue
+            }
+            if isNode, skippedAnchor, pending.isEmpty {
+                guard let bridged = bridgeSkippedAnchor(to: nextCoordinate) else { return nil }
+                frontier = bridged
+                skippedAnchor = false
+                continue
+            }
             let nearby = isNode ? []
                 : RouteGraph.nearbyNodes(nextCoordinate, in: graph, radiusDeg: 0, limit: Int.max)
             // nearbyNodes measures from a normalized coordinate. Rounding must
@@ -1771,6 +1889,7 @@ public enum RouteSolver {
                         guard edge.connector == nil, edge.physicalJunction == nil,
                               let destination = graph.nodes[edge.to],
                               (isNode ? destination == nextCoordinate : roundedKeys.contains(edge.to)),
+                              !(skippedAnchor && edge.length > anchorSpanMeters),
                               edgeMatchesRequiredHints(edge, hints: hints),
                               RouteGraph.RailValidity.isValid(
                                 validFrom: edge.validFrom, validTo: edge.validTo, on: rideDate),
@@ -1807,14 +1926,26 @@ public enum RouteSolver {
                 }
             }
             if next.isEmpty {
+                // An anchor that is itself a graph node (a reviewed osmTrack
+                // through the station dot) can be followed by a display vertex
+                // that skips the track's intermediate points. Those points are
+                // not polyline vertices, so this is not a skipped non-anchor:
+                // the next node still has to be the same identity within 520 m.
+                if isNode, pending.isEmpty, anchorIndices.contains(offset - 1),
+                   let bridged = bridgeSkippedAnchor(to: nextCoordinate) {
+                    frontier = bridged
+                    skippedAnchor = false
+                    continue
+                }
                 guard !isNode else { return nil }
                 pending.append(coordinate)
             } else {
                 frontier = next
                 pending.removeAll(keepingCapacity: true)
+                skippedAnchor = false
             }
         }
-        guard pending.isEmpty else { return nil }
+        guard pending.isEmpty, !skippedAnchor else { return nil }
         frontier = droppingTerminalJunctionSiblings(
             frontier, arrivedByRail: arrivedByRail, graph: graph, rideDate: rideDate)
         // Ambiguous identities remain unconfirmed rather than selecting one

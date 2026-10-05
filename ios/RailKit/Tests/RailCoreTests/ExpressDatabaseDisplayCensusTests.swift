@@ -81,8 +81,11 @@ struct ExpressDatabaseDisplayCensusTests {
                 if let previous, let first {
                     cause = previous == first ? "boundary-same-identity-unproven" : "boundary-identity-change-without-junction"
                     let matches = junctions.filter { junctionStations[$0.id] == section.from && Set([identity(RouteGraph.physicalNodeKey($0.from.coordinate, identity: $0.from.identity)), identity(RouteGraph.physicalNodeKey($0.to.coordinate, identity: $0.to.identity))]) == Set([previous, first]) }
-                    if matches.contains(where: { ($0.validFrom ?? "") > result.date }) { cause = "boundary-before-junction-validFrom" }
-                    else if !matches.isEmpty && previous != first { cause = "boundary-reviewed-junction-outside-proof" }
+                    if let label = Self.reviewedJunctionBoundaryLabel(
+                        previous: previous, first: first, date: result.date,
+                        junctions: matches.map { ($0.validFrom, $0.validTo) }) {
+                        cause = label
+                    }
                 }
             }
             result.gaps.append(Gap(index: currentIndex, from: section.from ?? "", to: section.to ?? "", isBoundary: boundary, reason: cause, prevIdentity: previous, firstIdentity: first, station: boundary ? section.from : nil))
@@ -123,16 +126,18 @@ struct ExpressDatabaseDisplayCensusTests {
                     ?? hints.fromStationCode
                 hints.toStationCode = data.eligibility.stationCode(hints.toStationCode)
                     ?? hints.toStationCode
-                let sourceResult = data.network.sourceGeometry(for: hints)
+                let sourceResult = data.network.sourceCertification(for: hints)
                 let exactResult = data.network.canonicalizeRouteFeature(
                     RouteFeature(geometry: nil, hints: hints),
                     continueFrom: sharesBoundary ? displayContinuity : nil,
                     cache: &projectionCache)
-                if let source = sourceResult, let exact = exactResult,
-                   source.lines.count == exact.geometry.lines.count {
+                if let certified = sourceResult, let exact = exactResult,
+                   certified.geometry.lines.count == exact.geometry.lines.count {
+                    let source = certified.geometry
                     let graph = pipeline.proofGraph(source.lines.flatMap { $0 }, store: data.graphStore)
                     let keys = RouteSolver.verifiedSourcePath(
-                        source.lines, graph: graph, context: context, section: section)
+                        source.lines, graph: graph, context: context, section: section,
+                        displayRowNames: certified.rowNames, anchorIndices: certified.anchorIndices)
                     currentFirst = keys?.first ?? endpointKey(source.lines.first?.first, graph: graph)
                     if keys == nil { failureDetail = verificationReason(source.lines, graph: graph); record("source-verification"); failureDetail = nil }
                     result.segmentsDrawn += exact.geometry.lines.count
@@ -229,16 +234,20 @@ struct ExpressDatabaseDisplayCensusTests {
                     continueFrom: sharesBoundary ? displayContinuity : nil, cache: &projectionCache)
                 : nil
             var matchedSource: RouteGeometry?
+            var matchedCertification: RouteNetwork.SourceGeometryCertification?
             if let codes = canonical?.matchedSectionCodes, !codes.isEmpty {
                 var matchedHints = hints
                 matchedHints.sectionCodes = codes
                 matchedHints.requiredLineIDs = canonical?.displayLineIds ?? []
-                matchedSource = data.network.sourceGeometry(for: matchedHints)
+                matchedCertification = data.network.sourceCertification(for: matchedHints)
+                matchedSource = matchedCertification?.geometry
             }
             if let matchedSource {
                 let matchedGraph = pipeline.proofGraph(matchedSource.lines.flatMap { $0 }, store: data.graphStore)
                 let keys = RouteSolver.verifiedSourcePath(
-                    matchedSource.lines, graph: matchedGraph, context: context, section: section)
+                    matchedSource.lines, graph: matchedGraph, context: context, section: section,
+                    displayRowNames: matchedCertification?.rowNames ?? [],
+                    anchorIndices: matchedCertification?.anchorIndices ?? [])
                 currentFirst = keys?.first ?? endpointKey(matchedSource.lines.first?.first, graph: matchedGraph)
                 if keys == nil { failureDetail = verificationReason(matchedSource.lines, graph: matchedGraph); record("matched-source-verification"); failureDetail = nil }
                 if sharesBoundary,
@@ -272,6 +281,57 @@ struct ExpressDatabaseDisplayCensusTests {
             }
         }
         return result
+    }
+
+    /// A reviewed junction counts only inside `[validFrom, validTo)`.
+    static func reviewedJunctionBoundaryLabel(
+        previous: String, first: String, date: String,
+        junctions: [(validFrom: String?, validTo: String?)]
+    ) -> String? {
+        func covers(_ item: (validFrom: String?, validTo: String?)) -> Bool {
+            let from = item.validFrom.flatMap { $0.isEmpty ? nil : $0 }
+            let to = item.validTo.flatMap { $0.isEmpty ? nil : $0 }
+            if let from, from > date { return false }
+            if let to, date >= to { return false }
+            return true
+        }
+        if junctions.contains(where: covers), previous != first {
+            return "boundary-reviewed-junction-outside-proof"
+        }
+        if junctions.contains(where: { item in
+            guard let from = item.validFrom, !from.isEmpty else { return false }
+            return from > date
+        }) {
+            return "boundary-before-junction-validFrom"
+        }
+        if junctions.contains(where: { item in
+            guard let to = item.validTo, !to.isEmpty else { return false }
+            return date >= to
+        }) {
+            return "after-junction-validTo"
+        }
+        return nil
+    }
+
+    @Test("Reviewed junction labels honour validFrom and validTo")
+    func reviewedJunctionValidityLabels() {
+        let open = (validFrom: "2017-04-21", validTo: nil as String?)
+        let expired = (validFrom: "2017-04-21", validTo: "2024-03-16" as String?)
+        let future = (validFrom: "2027-01-01", validTo: nil as String?)
+        #expect(Self.reviewedJunctionBoundaryLabel(
+            previous: "a", first: "b", date: "2026-10-03", junctions: [open])
+            == "boundary-reviewed-junction-outside-proof")
+        #expect(Self.reviewedJunctionBoundaryLabel(
+            previous: "a", first: "b", date: "2020-01-01", junctions: [expired])
+            == "boundary-reviewed-junction-outside-proof")
+        #expect(Self.reviewedJunctionBoundaryLabel(
+            previous: "a", first: "b", date: "2026-10-03", junctions: [expired])
+            == "after-junction-validTo")
+        #expect(Self.reviewedJunctionBoundaryLabel(
+            previous: "a", first: "b", date: "2026-10-03", junctions: [future])
+            == "boundary-before-junction-validFrom")
+        #expect(Self.reviewedJunctionBoundaryLabel(
+            previous: "a", first: "a", date: "2026-10-03", junctions: [open]) == nil)
     }
 
     private func identity(_ key: String) -> String {
