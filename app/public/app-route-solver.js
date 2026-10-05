@@ -997,18 +997,11 @@ function inferSectionRouteConstraints(section, train) {
     operatorNames.add("九州旅客鉄道");
   }
 
-  // Haruka: keep the route on JR West around Kansai Airport/Osaka and stop
-  // the solver from preferring nearby subway geometry at 天王寺/大阪/新大阪.
+  // Haruka keeps its JR West operator preference (away from nearby subway
+  // geometry) but no longer pins a line per section; reviewed physical
+  // junctions decide which rows a train can cross. Mirrors RouteSolver.swift.
   if (/はるか|haruka/i.test(text)) {
     operatorNames.add("西日本旅客鉄道");
-    if (sectionHasEndpointPair(section, ["関西空港"], ["日根野"]))
-      lineNames.add("関西空港線");
-    else if (sectionHasEndpointPair(section, ["日根野"], ["天王寺"]))
-      lineNames.add("阪和線");
-    else if (sectionHasEndpointPair(section, ["天王寺"], ["大阪"]))
-      lineNames.add("大阪環状線");
-    else if (sectionHasEndpointPair(section, ["大阪"], ["新大阪"]))
-      lineNames.add("東海道線");
   }
 
   return {

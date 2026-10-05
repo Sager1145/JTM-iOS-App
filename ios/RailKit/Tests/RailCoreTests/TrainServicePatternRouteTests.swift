@@ -262,8 +262,8 @@ struct TrainServicePatternRouteTests {
         }
     }
 
-    @Test("Service display and durable stop identities survive an unproven physical boundary")
-    func serviceDisplaySurvivesUnprovenPhysicalBoundary() throws {
+    @Test("Service display and durable stop identities survive the reviewed physical Yoyogi-Uehara boundary")
+    func serviceDisplaySurvivesReviewedPhysicalBoundary() throws {
         let pattern = try #require(TrainServicePatterns.patterns.first {
             $0.id == "metro-hakone-kitasenju-hakoneyumoto"
         })
@@ -278,12 +278,19 @@ struct TrainServicePatternRouteTests {
         #expect(canonical.stops.map(\.n02StationCode) == pattern.stopRefs.map { Optional($0.sourceCode) })
         let sections = StoreOperations.rideRouteSections(for: canonical)
         let index = try #require(sections.firstIndex { $0.from == "表参道" && $0.to == "町田" })
-        // No reviewed Chiyoda–Odakyu boundary exists in this fixture. The
-        // service catalog cannot supply that missing physical evidence.
-        #expect(RouteSolver.solveSectionOnDemand(
+        // yoyogi-uehara-east-12 is the reviewed Chiyoda–Odakyu boundary
+        // (validFrom 1978-03-31). The service catalog does not create it.
+        let solved = try #require(RouteSolver.solveSectionOnDemand(
             sections[index], segmentIndex: index, train: Self.context(canonical), country: "jp",
             graphStore: Self.environment.graphStore, stations: Self.environment.stations,
-            continuityAnchor: nil) == nil)
+            continuityAnchor: nil))
+        #expect(solved.validFrom == "1978-03-31")
+        #expect(solved.rawPathKeys.contains {
+            $0.contains("9号線千代田線") && $0.contains("@139.67954,35.66886")
+        })
+        #expect(solved.rawPathKeys.contains {
+            $0.contains("小田原線") && $0.contains("@139.67954,35.66886")
+        })
     }
 
     /// A retired branch is a property of the railway, not of a service pattern.

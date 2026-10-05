@@ -792,17 +792,13 @@ public enum RouteSolver {
             lines.insert("日豊線")
             operators.insert("九州旅客鉄道")
         }
+        // Haruka keeps its JR West operator preference, but no longer pins a
+        // line per section: required lines skip every fallback attempt, so a
+        // leg continuing from the previous leg's track (関西空港線 at 日根野,
+        // the うめきた platform at 大阪) could not reach the pinned row.
+        // Physical junctions now decide which rows a train can cross.
         if text.contains("はるか") || asciiCaseInsensitiveContains(text, "haruka") {
             operators.insert("西日本旅客鉄道")
-            if sectionHasEndpointPair(section, ["関西空港"], ["日根野"]) {
-                lines.insert("関西空港線")
-            } else if sectionHasEndpointPair(section, ["日根野"], ["天王寺"]) {
-                lines.insert("阪和線")
-            } else if sectionHasEndpointPair(section, ["天王寺"], ["大阪"]) {
-                lines.insert("大阪環状線")
-            } else if sectionHasEndpointPair(section, ["大阪"], ["新大阪"]) {
-                lines.insert("東海道線")
-            }
         }
         return (lines, operators)
     }

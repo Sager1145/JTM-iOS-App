@@ -328,10 +328,10 @@
       "evidence": [
         "https://wwwtb.mlit.go.jp/tohoku/content/000175092.pdf",
         "https://www.city.iwanuma.miyagi.jp/shisei/gaiyo/gaiyo/index.html",
-        "https://www.jreast.co.jp/estation/stations/img/floormap/0191_1f-2f.png"
-      ,
+        "https://www.jreast.co.jp/estation/stations/img/floormap/0191_1f-2f.png",
         "https://www.pref.fukushima.lg.jp/uploaded/attachment/760579.pdf",
-        "https://www.city.iwanuma.miyagi.jp/kanko/rekishi/nyumon/ato.html"],
+        "https://www.city.iwanuma.miyagi.jp/kanko/rekishi/nyumon/ato.html"
+      ],
       "geometryEvidence": "Original features 14770/16476 share the station segment and this north endpoint continues into Tohoku feature16501. MLIT reconstruction Fig1.3.6 Sendai inset depicts actual restored Joban branch joining Tohoku at Iwanuma. Official city description identifies the physical railway junction. This is one source line-identity boundary, not a georeferenced turnout or connection of all24 shared vertices. Nippori remains separate.",
       "reviewedAt": "2026-10-03",
       "validFrom": "1898-12-31",
@@ -376,9 +376,9 @@
       ],
       "geometryEvidence": "Existing Honshi Bisan feature 5506 eastern bypass meets Yosan features 5601/5602 at this exact surveyed vertex. The municipal aerial photograph and three-arm description identify the physical Kojima–Sakaide bypass separately from the Utazu station arm. Only this named source centerline identity boundary is accepted; it does not join every shared vertex, platform, or parallel track, or certify individual turnout locations and permitted switch movements.",
       "reviewedAt": "2026-10-03",
-      "validFrom": "2019-10-18",
+      "validFrom": "1988-04-10",
       "validTo": null,
-      "temporalEvidence": "Conservative verified-existing facility evidence window, not an arm opening date: JR Shikoku document dated 2019-10-18, PDF page 27 (printed 25), describes maintained Shikoku-side railway facilities including the short-cut line. Municipal guide PDF page 1 (right printed 8) physically documents all three triangle arms. JB 2022 facility booklet PDF page 5 (printed 42), row 6, records the physical Yosan connection at Utazu; row 5 records actual Kojima–Utazu opening 1988-04-10, which is not used to infer precise individual-arm commissioning or historical fidelity of every current survey vertex. Earlier physical continuity is not disproven; every traversed source edge retains its separate history validity."
+      "temporalEvidence": "validFrom 1988-04-10 is the physical Honshi–Yosan connection at 宇多津 (Kojima–Utazu opening), under the physical-link dating rule. The 2019-10-18 JR Shikoku facility document remains evidence that the eastern bypass existed then; it is not the opening day. Conservative verified-existing facility evidence window, not an arm opening date: JR Shikoku document dated 2019-10-18, PDF page 27 (printed 25), describes maintained Shikoku-side railway facilities including the short-cut line. Municipal guide PDF page 1 (right printed 8) physically documents all three triangle arms. JB 2022 facility booklet PDF page 5 (printed 42), row 6, records the physical Yosan connection at Utazu; row 5 records actual Kojima–Utazu opening 1988-04-10, which is not used to infer precise individual-arm commissioning or historical fidelity of every current survey vertex. Earlier physical continuity is not disproven; every traversed source edge retains its separate history validity."
     },
     {
       "id": "utazu-honshi-bisan-yosan-station-arm",
@@ -1130,9 +1130,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json: identical existing surveyed vertex on both named railway identities, 0.000 m / 1093.393 m along-track from the station key (from/to)",
       "reviewedAt": "2026-10-03",
-      "validFrom": "1987-04-01",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "opening: The Sanyo Shinkansen Shin-Osaka–Okayama section opened under JNR on 1972-03-15; JR West and JR Central histories date both companies to 1987-04-01. The company boundary therefore starts on the later date, 1987-04-01. This dates the named connection; traversed source edges retain their separate history validity."
+      "temporalEvidence": "validFrom is unbounded: 1987-04-01 is a company-split or ownership date, not when the physical link existed. The physical connection is as old as the rows. opening: The Sanyo Shinkansen Shin-Osaka–Okayama section opened under JNR on 1972-03-15; JR West and JR Central histories date both companies to 1987-04-01. The company boundary therefore starts on the later date, 1987-04-01. This dates the named connection; traversed source edges retain their separate history validity."
     },
     {
       "id": "kurashiki-sanyo-hakubi",
@@ -1625,9 +1625,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json: identical existing surveyed vertex on both named railway identities, 110.629 m / 306.386 m along-track from the station key (from/to)",
       "reviewedAt": "2026-10-03",
-      "validFrom": "1987-04-01",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "opening: Atami city history dates completion of the Tanna/Atami route to 1934-12-01. JRTT dates national-railway division into six passenger companies to 1987-04-01; this later date controls the JR East/JR Central boundary. This dates the named connection; traversed source edges retain their separate history validity."
+      "temporalEvidence": "validFrom is unbounded: 1987-04-01 is a company-split or ownership date, not when the physical link existed. The physical connection is as old as the rows. opening: Atami city history dates completion of the Tanna/Atami route to 1934-12-01. JRTT dates national-railway division into six passenger companies to 1987-04-01; this later date controls the JR East/JR Central boundary. This dates the named connection; traversed source edges retain their separate history validity."
     },
     {
       "id": "izumisano-nankai-airport",
@@ -1744,9 +1744,9 @@
         ]
       },
       "evidence": [
-        "https://www.tobu.co.jp/pdf/timetable/time-table_01_kudari.pdf?202603"
-      ,
-        "https://www.tobu.co.jp/sl/more/history/"],
+        "https://www.tobu.co.jp/pdf/timetable/time-table_01_kudari.pdf?202603",
+        "https://www.tobu.co.jp/sl/more/history/"
+      ],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical 5-decimal existing vertex on both identities at [139.69181, 36.7259]; 91.935 m / 91.935 m along-track from projected N02 station display point (from/to). Identity-agnostic shortest path 下小代 -> 大谷向 (9676.020 m) contains this vertex; 3 shared vertices within 3 km; nearest on that through path chosen. See east/geometry.json row 1.",
       "reviewedAt": "2026-10-04",
       "validFrom": "1929-10-22",
@@ -2078,9 +2078,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical 5-decimal existing vertex on both identities at [139.14061, 35.34543]; 148.543 m / 148.543 m along-track from projected N02 station display point (from/to). Identity-agnostic shortest path 渋沢 -> 東山北 (9292.618 m) contains this vertex; 1 shared vertices within 3 km; nearest on that through path chosen. See east/geometry.json row 15.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "1987-04-01",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "Odakyu history dates Shinjuku–Gotemba through operation to 1955-10-01. JRTT official 1987-04-01 JR reorganization is the later controlling date for the named JR Central identity."
+      "temporalEvidence": "validFrom is unbounded: 1987-04-01 is a company-split or ownership date, not when the physical link existed. The physical connection is as old as the rows. Odakyu history dates Shinjuku–Gotemba through operation to 1955-10-01. JRTT official 1987-04-01 JR reorganization is the later controlling date for the named JR Central identity."
     },
     {
       "id": "atami-east-16",
@@ -2114,9 +2114,9 @@
         ]
       },
       "evidence": [
-        "https://timetables.jreast.co.jp/2610/train/095/098901.html"
-      ,
-        "https://www.city.atami.lg.jp/kosodate/shogaigakushu/1011165/1006016/1009091/1009710.html"],
+        "https://timetables.jreast.co.jp/2610/train/095/098901.html",
+        "https://www.city.atami.lg.jp/kosodate/shogaigakushu/1011165/1006016/1009091/1009710.html"
+      ],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical 5-decimal existing vertex on both identities at [139.07892, 35.10432]; 100.965 m / 100.965 m along-track from projected N02 station display point (from/to). Identity-agnostic shortest path 湯河原 -> 来宮 (6511.996 m) contains this vertex; 5 shared vertices within 3 km; nearest on that through path chosen. See east/geometry.json row 16.",
       "reviewedAt": "2026-10-04",
       "validFrom": "1935-12-31",
@@ -2238,9 +2238,9 @@
         ]
       },
       "evidence": [
-        "https://timetables.jreast.co.jp/2610/train/065/069941.html"
-      ,
-        "https://web.archive.org/web/20141127080113/http://www.jrmito.com/press/141030/20141030_press02.pdf"],
+        "https://timetables.jreast.co.jp/2610/train/065/069941.html",
+        "https://web.archive.org/web/20141127080113/http://www.jrmito.com/press/141030/20141030_press02.pdf"
+      ],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical 5-decimal existing vertex on both identities at [139.76716, 35.68228]; 152.557 m / 152.557 m along-track from projected N02 station display point (from/to). Identity-agnostic shortest path 新橋 -> 上野 (5326.331 m) contains this vertex; 7 shared vertices within 3 km; nearest on that through path chosen. See east/geometry.json row 20.",
       "reviewedAt": "2026-10-04",
       "validFrom": "2015-03-14",
@@ -2280,9 +2280,9 @@
         ]
       },
       "evidence": [
-        "https://timetables.jreast.co.jp/2610/train/060/063411.html"
-      ,
-        "https://media.jreast.co.jp/articles/2275"],
+        "https://timetables.jreast.co.jp/2610/train/060/063411.html",
+        "https://media.jreast.co.jp/articles/2275"
+      ],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical 5-decimal existing vertex on both identities at [139.76528, 35.68159]; 11.978 m / 11.978 m along-track from projected N02 station display point (from/to). Identity-agnostic shortest path 新橋 -> 新日本橋 (2909.680 m) contains this vertex; 3 shared vertices within 3 km; nearest on that through path chosen. See east/geometry.json row 21.",
       "reviewedAt": "2026-10-04",
       "validFrom": "1980-12-31",
@@ -2325,9 +2325,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical 5-decimal existing vertex on both identities at [139.77121, 35.69258]; 95.120 m / 95.120 m along-track from projected N02 station display point (from/to). Identity-agnostic shortest path 東京 -> 御茶ノ水 (2108.798 m) contains this vertex; 3 shared vertices within 3 km; nearest on that through path chosen. See east/geometry.json row 23.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2026-09-18",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "Conservative documented-existing date: earliest active operating-calendar day explicitly marked in the saved official same-train timetable; original junction opening not asserted."
+      "temporalEvidence": "Physical link is as old as both rows (東北線↔中央線 at 神田), so validFrom is unbounded. The previous 2026-09-18 date is a documented-existing timetable window, retained as evidence. 2015-03-14 is the 上野東京ライン date and is not this pair. Conservative documented-existing date: earliest active operating-calendar day explicitly marked in the saved official same-train timetable; original junction opening not asserted."
     },
     {
       "id": "nippori-east-25",
@@ -2362,10 +2362,10 @@
         ]
       },
       "evidence": [
-        "https://timetables.jreast.co.jp/2610/train/045/048451.html"
-      ,
+        "https://timetables.jreast.co.jp/2610/train/045/048451.html",
         "http://www.jreast.co.jp/estation/station/info.aspx?StationCD=1184",
-        "https://www.jreast.co.jp/press/2026/mito_j/20260918_m01.pdf"],
+        "https://www.jreast.co.jp/press/2026/mito_j/20260918_m01.pdf"
+      ],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical 5-decimal existing vertex on both identities at [139.77092, 35.72822]; 35.633 m / 35.633 m along-track from projected N02 station display point (from/to). Identity-agnostic shortest path 上野 -> 三河島 (2893.700 m) contains this vertex; 3 shared vertices within 3 km; nearest on that through path chosen. See east/geometry.json row 25.",
       "reviewedAt": "2026-10-04",
       "validFrom": "1905-04-01",
@@ -2450,9 +2450,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical 5-decimal existing vertex on both identities at [140.13049, 35.58266]; 40.292 m / 40.292 m along-track from projected N02 station display point (from/to). Identity-agnostic shortest path 千葉みなと -> 浜野 (7116.297 m) contains this vertex; 3 shared vertices within 3 km; nearest on that through path chosen. See east/geometry.json row 29.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2026-09-18",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "Conservative documented-existing date: earliest active operating-calendar day explicitly marked in the saved official same-train timetable; original junction opening not asserted."
+      "temporalEvidence": "Physical link is as old as both rows, which predate the representable history, so validFrom is unbounded. The previous 2026-09-18 date is a documented-existing timetable window, retained as evidence. Conservative documented-existing date: earliest active operating-calendar day explicitly marked in the saved official same-train timetable; original junction opening not asserted."
     },
     {
       "id": "soga-east-30",
@@ -2490,9 +2490,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical 5-decimal existing vertex on both identities at [140.13049, 35.58266]; 40.292 m / 40.292 m along-track from projected N02 station display point (from/to). Identity-agnostic shortest path 千葉みなと -> 鎌取 (8942.333 m) contains this vertex; 13 shared vertices within 3 km; nearest on that through path chosen. See east/geometry.json row 30.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2026-09-18",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "Conservative documented-existing date: earliest active operating-calendar day explicitly marked in the saved official same-train timetable; original junction opening not asserted."
+      "temporalEvidence": "Physical link is as old as both rows, which predate the representable history, so validFrom is unbounded. The previous 2026-09-18 date is a documented-existing timetable window, retained as evidence. Conservative documented-existing date: earliest active operating-calendar day explicitly marked in the saved official same-train timetable; original junction opening not asserted."
     },
     {
       "id": "tachikawa-east-33",
@@ -2530,9 +2530,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical 5-decimal existing vertex on both identities at [139.41254, 35.69802]; 112.328 m / 112.328 m along-track from projected N02 station display point (from/to). Identity-agnostic shortest path 国立 -> 西立川 (4852.021 m) contains this vertex; 5 shared vertices within 3 km; nearest on that through path chosen. See east/geometry.json row 33.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2026-09-18",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "Conservative documented-existing date: earliest active operating-calendar day explicitly marked in the saved official same-train timetable; original junction opening not asserted."
+      "temporalEvidence": "Physical link is as old as both rows, which predate the representable history, so validFrom is unbounded. The previous 2026-09-18 date is a documented-existing timetable window, retained as evidence. Conservative documented-existing date: earliest active operating-calendar day explicitly marked in the saved official same-train timetable; original junction opening not asserted."
     },
     {
       "id": "takasaki-east-34",
@@ -2570,9 +2570,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical 5-decimal existing vertex on both identities at [139.01243, 36.32143]; 101.640 m / 101.640 m along-track from projected N02 station display point (from/to). Identity-agnostic shortest path 倉賀野 -> 高崎問屋町 (6868.759 m) contains this vertex; 4 shared vertices within 3 km; nearest on that through path chosen. See east/geometry.json row 34.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2026-10-03",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "Conservative documented-existing date: official October 2026 Saturday/holiday timetable shows train 2825Y from Maebashi 05:31 via Shin-Maebashi 05:36 and Takasaki 06:10 to Kuragano 06:14 on the Takasaki Line. First Saturday of the documented issue month is 2026-10-03; original opening date not asserted."
+      "temporalEvidence": "Physical link is as old as both rows, which predate the representable history, so validFrom is unbounded. The previous 2026-10-03 date is a documented-existing timetable window, retained as evidence. Conservative documented-existing date: official October 2026 Saturday/holiday timetable shows train 2825Y from Maebashi 05:31 via Shin-Maebashi 05:36 and Takasaki 06:10 to Kuragano 06:14 on the Takasaki Line. First Saturday of the documented issue month is 2026-10-03; original opening date not asserted."
     },
     {
       "id": "shin-maebashi-east-35",
@@ -2610,9 +2610,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical 5-decimal existing vertex on both identities at [139.04829, 36.37997]; 157.819 m / 157.819 m along-track from projected N02 station display point (from/to). Identity-agnostic shortest path 前橋 -> 井野 (5567.869 m) contains this vertex; 6 shared vertices within 3 km; nearest on that through path chosen. See east/geometry.json row 35.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2026-10-03",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "Conservative documented-existing date: official October 2026 Saturday/holiday timetable shows train 2825Y from Maebashi 05:31 via Shin-Maebashi 05:36 and Takasaki 06:10 to Kuragano 06:14 on the Takasaki Line. First Saturday of the documented issue month is 2026-10-03; original opening date not asserted."
+      "temporalEvidence": "Physical link is as old as both rows, which predate the representable history, so validFrom is unbounded. The previous 2026-10-03 date is a documented-existing timetable window, retained as evidence. Conservative documented-existing date: official October 2026 Saturday/holiday timetable shows train 2825Y from Maebashi 05:31 via Shin-Maebashi 05:36 and Takasaki 06:10 to Kuragano 06:14 on the Takasaki Line. First Saturday of the documented issue month is 2026-10-03; original opening date not asserted."
     },
     {
       "id": "omagari-east-38",
@@ -2650,9 +2650,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical 5-decimal existing vertex on both identities at [140.47668, 39.46858]; 389.998 m / 389.998 m along-track from projected N02 station display point (from/to). Identity-agnostic shortest path 北大曲 -> 神宮寺 (8680.164 m) contains this vertex; 5 shared vertices within 3 km; nearest on that through path chosen. See east/geometry.json row 38.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2026-09-18",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "Conservative documented-existing date: earliest active calendar day explicitly marked for official Komachi 61, with stops on both sides of Morioka and Omagari. Original mini-Shinkansen opening date not asserted."
+      "temporalEvidence": "Physical link is as old as both rows, which predate the representable history, so validFrom is unbounded. The previous 2026-09-18 date is a documented-existing timetable window, retained as evidence. Conservative documented-existing date: earliest active calendar day explicitly marked for official Komachi 61, with stops on both sides of Morioka and Omagari. Original mini-Shinkansen opening date not asserted."
     },
     {
       "id": "fukushima-east-39",
@@ -2731,9 +2731,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical 5-decimal existing vertex on both identities at [141.13499, 39.70295]; 204.170 m / 204.170 m along-track from projected N02 station display point (from/to). Identity-agnostic shortest path 新花巻 -> 大釜 (39247.829 m) contains this vertex; 7 shared vertices within 3 km; nearest on that through path chosen. See east/geometry.json row 40.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2026-09-18",
+      "validFrom": "1997-03-22",
       "validTo": null,
-      "temporalEvidence": "Conservative documented-existing date: earliest active calendar day explicitly marked for official Komachi 61, with stops on both sides of Morioka and Omagari. Original mini-Shinkansen opening date not asserted."
+      "temporalEvidence": "validFrom 1997-03-22 is the physical 秋田新幹線 standard-gauge connection at 盛岡, not the documented-existing Komachi timetable window. The previous 2026-09-18 window is retained as evidence. Conservative documented-existing date: earliest active calendar day explicitly marked for official Komachi 61, with stops on both sides of Morioka and Omagari. Original mini-Shinkansen opening date not asserted."
     },
     {
       "id": "goryokaku-east-48",
@@ -2937,9 +2937,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical 5-decimal existing vertex on both identities at [138.13796, 36.57666]; 34.546 m / 34.546 m along-track from projected N02 station display point (from/to). Identity-agnostic shortest path 稲荷山 -> 今井 (5774.710 m) contains this vertex; 3 shared vertices within 3 km; nearest on that through path chosen. See east/geometry.json row 55.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2026-09-18",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "Conservative documented-existing date: earliest active operating-calendar day explicitly marked in the saved official same-train timetable; original junction opening not asserted."
+      "temporalEvidence": "Physical link is as old as both rows, which predate the representable history, so validFrom is unbounded. The previous 2026-09-18 date is a documented-existing timetable window, retained as evidence. Conservative documented-existing date: earliest active operating-calendar day explicitly marked in the saved official same-train timetable; original junction opening not asserted."
     },
     {
       "id": "matsumoto-east-56",
@@ -2977,9 +2977,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical 5-decimal existing vertex on both identities at [137.96405, 36.2314]; 135.976 m / 135.976 m along-track from projected N02 station display point (from/to). Identity-agnostic shortest path 南松本 -> 北松本 (2914.179 m) contains this vertex; 19 shared vertices within 3 km; nearest on that through path chosen. See east/geometry.json row 56.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2026-09-18",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "Conservative documented-existing date: earliest active operating-calendar day explicitly marked in the saved official same-train timetable; original junction opening not asserted."
+      "temporalEvidence": "Physical link is as old as both rows, which predate the representable history, so validFrom is unbounded. The previous 2026-09-18 date is a documented-existing timetable window, retained as evidence. Conservative documented-existing date: earliest active operating-calendar day explicitly marked in the saved official same-train timetable; original junction opening not asserted."
     },
     {
       "id": "shiojiri-east-57",
@@ -3018,9 +3018,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical 5-decimal existing vertex on both identities at [137.94792, 36.11571]; 100.826 m / 100.826 m along-track from projected N02 station display point (from/to). Identity-agnostic shortest path 洗馬 -> 広丘 (7741.371 m) contains this vertex; 2 shared vertices within 3 km; nearest on that through path chosen. See east/geometry.json row 57.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "1987-04-01",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "JRTT official national railway reorganization date 1987-04-01 controls the JR Central/JR East company-boundary connection. Shinano 10 official timetable runs Kiso-Fukushima–Shiojiri–Matsumoto on the same train."
+      "temporalEvidence": "validFrom is unbounded: 1987-04-01 is a company-split or ownership date, not when the physical link existed. The physical connection is as old as the rows. JRTT official national railway reorganization date 1987-04-01 controls the JR Central/JR East company-boundary connection. Shinano 10 official timetable runs Kiso-Fukushima–Shiojiri–Matsumoto on the same train."
     },
     {
       "id": "naoetsu-east-59",
@@ -3637,9 +3637,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical existing 5-decimal vertex on both identities; 96.752 m along track to station display point (station segment endpoint plus within-station distance). Identity-agnostic shortest path 紀伊中ノ島 → 宮前 (3291.127 m) passes the vertex with an incoming from-identity edge and outgoing to-identity edge. Geometry details: geometry.json.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2011-08-04",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "2011-08-04 is the official dated release describing the existing Kyoto/Osaka–Wakayama/Nanki Kuroshio service; conservative documented-existing date, not physical opening."
+      "temporalEvidence": "Physical link is as old as both rows, which predate the representable history, so validFrom is unbounded. The previous 2011-08-04 date is a documented-existing timetable window, retained as evidence. 2011-08-04 is the official dated release describing the existing Kyoto/Osaka–Wakayama/Nanki Kuroshio service; conservative documented-existing date, not physical opening."
     },
     {
       "id": "hineno-hanwa-airport",
@@ -3756,9 +3756,9 @@
       },
       "evidence": [
         "https://www.jr-odekake.net/railroad/train/kounotori/",
-        "https://www.westjr.co.jp/company/info/history/"
-      ,
-        "https://www.westjr.co.jp/press/article/items/240729_00_press_FukuchiyamaandMaizuru120thevent_1.pdf"],
+        "https://www.westjr.co.jp/company/info/history/",
+        "https://www.westjr.co.jp/press/article/items/240729_00_press_FukuchiyamaandMaizuru120thevent_1.pdf"
+      ],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical existing 5-decimal vertex on both identities; 104.288 m along track to station display point (station segment endpoint plus within-station distance). Identity-agnostic shortest path 塚本 → 塚口 (6571.486 m) passes the vertex with an incoming from-identity edge and outgoing to-identity edge. Geometry details: geometry.json.",
       "reviewedAt": "2026-10-04",
       "validFrom": "1904-11-03",
@@ -3845,9 +3845,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical existing 5-decimal vertex on both identities; 138.534 m along track to station display point (station segment endpoint plus within-station distance). Identity-agnostic shortest path 京都 → 大津京 (10507.334 m) passes the vertex with an incoming from-identity edge and outgoing to-identity edge. Geometry details: geometry.json.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "1987-04-01",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "Official Takashima municipal history dates Kosei full opening to 1974-07-20. validFrom is capped at JR West identity founding 1987-04-01, supported by JR West history."
+      "temporalEvidence": "validFrom is unbounded: 1987-04-01 is a company-split or ownership date, not when the physical link existed. The physical connection is as old as the rows. Official Takashima municipal history dates Kosei full opening to 1974-07-20. validFrom is capped at JR West identity founding 1987-04-01, supported by JR West history."
     },
     {
       "id": "omishiotsu-kosei-hokuriku",
@@ -3887,9 +3887,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical existing 5-decimal vertex on both identities; 154.705 m along track to station display point (station segment endpoint plus within-station distance). Identity-agnostic shortest path 永原 → 新疋田 (13480.208 m) passes the vertex with an incoming from-identity edge and outgoing to-identity edge. Geometry details: geometry.json.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "1987-04-01",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "Official Takashima municipal history dates Kosei full opening to 1974-07-20. validFrom is capped at JR West identity founding 1987-04-01, supported by JR West history."
+      "temporalEvidence": "validFrom is unbounded: 1987-04-01 is a company-split or ownership date, not when the physical link existed. The physical connection is as old as the rows. Official Takashima municipal history dates Kosei full opening to 1974-07-20. validFrom is capped at JR West identity founding 1987-04-01, supported by JR West history."
     },
     {
       "id": "maibara-tokaido-boundary",
@@ -3928,9 +3928,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical existing 5-decimal vertex on both identities; 111.120 m along track to station display point (station segment endpoint plus within-station distance). Identity-agnostic shortest path 醒ヶ井 → 彦根 (11796.277 m) passes the vertex with an incoming from-identity edge and outgoing to-identity edge. Geometry details: geometry.json.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "1987-04-01",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "JR founding 1987-04-01 is the accepted operator-split start per batch spec; official current through-train route confirms passage across the boundary."
+      "temporalEvidence": "validFrom is unbounded: 1987-04-01 is a company-split or ownership date, not when the physical link existed. The physical connection is as old as the rows. JR founding 1987-04-01 is the accepted operator-split start per batch spec; official current through-train route confirms passage across the boundary."
     },
     {
       "id": "inotani-takayama-boundary",
@@ -3969,9 +3969,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical existing 5-decimal vertex on both identities; 58.554 m along track to station display point (station segment endpoint plus within-station distance). Identity-agnostic shortest path 杉原 → 楡原 (15560.191 m) passes the vertex with an incoming from-identity edge and outgoing to-identity edge. Geometry details: geometry.json.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "1987-04-01",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "JR founding 1987-04-01 is the accepted operator-split start per batch spec; official current through-train route confirms passage across the boundary."
+      "temporalEvidence": "validFrom is unbounded: 1987-04-01 is a company-split or ownership date, not when the physical link existed. The physical connection is as old as the rows. JR founding 1987-04-01 is the accepted operator-split start per batch spec; official current through-train route confirms passage across the boundary."
     },
     {
       "id": "shingu-kisei-boundary",
@@ -4010,9 +4010,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical existing 5-decimal vertex on both identities; 102.029 m along track to station display point (station segment endpoint plus within-station distance). Identity-agnostic shortest path 鵜殿 → 三輪崎 (8179.283 m) passes the vertex with an incoming from-identity edge and outgoing to-identity edge. Geometry details: geometry.json.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "1987-04-01",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "JR founding 1987-04-01 is the accepted operator-split start per batch spec; official current through-train route confirms passage across the boundary."
+      "temporalEvidence": "validFrom is unbounded: 1987-04-01 is a company-split or ownership date, not when the physical link existed. The physical connection is as old as the rows. JR founding 1987-04-01 is the accepted operator-split start per batch spec; official current through-train route confirms passage across the boundary."
     },
     {
       "id": "tsu-ise-kisei",
@@ -4050,9 +4050,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical existing 5-decimal vertex on both identities; 5.634 m along track to station display point (station segment endpoint plus within-station distance). Identity-agnostic shortest path 東一身田 → 阿漕 (6723.432 m) passes the vertex with an incoming from-identity edge and outgoing to-identity edge. Geometry details: geometry.json.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2024-03-16",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "2024-03-16 is the dated official Ise Railway through-train timetable, the earliest day-precise documented-existing date verified in this packet; not an assertion of physical opening."
+      "temporalEvidence": "Physical link is as old as both rows, which predate the representable history, so validFrom is unbounded. The previous 2024-03-16 date is a documented-existing timetable window, retained as evidence. 2024-03-16 is the dated official Ise Railway through-train timetable, the earliest day-precise documented-existing date verified in this packet; not an assertion of physical opening."
     },
     {
       "id": "tsubata-ir-nanao",
@@ -4091,9 +4091,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical existing 5-decimal vertex on both identities; 128.403 m along track to station display point (station segment endpoint plus within-station distance). Identity-agnostic shortest path 森本 → 中津幡 (7967.461 m) passes the vertex with an incoming from-identity edge and outgoing to-identity edge. Geometry details: geometry.json.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2015-03-14",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "Official dated history establishes this connection or an earliest documented existing through service, not necessarily the first physical opening."
+      "temporalEvidence": "validFrom is unbounded: 2015-03-14 is a company-split or ownership date, not when the physical link existed. The physical connection is as old as the rows. Official dated history establishes this connection or an earliest documented existing through service, not necessarily the first physical opening."
     },
     {
       "id": "west-kamigori",
@@ -4213,9 +4213,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json: identical existing five-decimal vertex on both identities; 9 shared vertices within 3 km. Selected overlap boundary/branch vertex on identity-agnostic shortest path 津ノ井 → 湖山 (8408.1 m), with approach edges on from identity and departure edges on to identity. Along-track distance to projected N02 station display point: 660.9 m. Reproduce with west/geometry.py; see geometry.json.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2026-10-03",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "Earliest dated official through-train timetable verified in this batch; conservative documented-existing date, not a claim about original opening. Super Hakuto continues 智頭–鳥取–倉吉."
+      "temporalEvidence": "Physical link is as old as both rows, which predate the representable history, so validFrom is unbounded. The previous 2026-10-03 date is a documented-existing timetable window, retained as evidence. Earliest dated official through-train timetable verified in this batch; conservative documented-existing date, not a claim about original opening. Super Hakuto continues 智頭–鳥取–倉吉."
     },
     {
       "id": "west-kobe",
@@ -4254,9 +4254,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json: identical existing five-decimal vertex on both identities; 2 shared vertices within 3 km. Selected overlap boundary/branch vertex on identity-agnostic shortest path 元町 → 兵庫 (3109.1 m), with approach edges on from identity and departure edges on to identity. Along-track distance to projected N02 station display point: 150.8 m. Reproduce with west/geometry.py; see geometry.json.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "1987-04-01",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "Same-company pair. JR West's official 沿革 page (https://www.westjr.co.jp/company/info/history/) gives 1987-04-01 西日本旅客鉄道株式会社発足; validFrom is capped at that JR West identity founding, as for yamashina-tokaido-kosei. The connection itself is older, but no exact earlier official date was secured, so none is asserted. Current through running: Hamakaze 1 runs 大阪–神戸–姫路."
+      "temporalEvidence": "validFrom is unbounded: 1987-04-01 is a company-split or ownership date, not when the physical link existed. The physical connection is as old as the rows. Same-company pair. JR West's official 沿革 page (https://www.westjr.co.jp/company/info/history/) gives 1987-04-01 西日本旅客鉄道株式会社発足; validFrom is capped at that JR West identity founding, as for yamashina-tokaido-kosei. The connection itself is older, but no exact earlier official date was secured, so none is asserted. Current through running: Hamakaze 1 runs 大阪–神戸–姫路."
     },
     {
       "id": "west-wadayama",
@@ -4294,9 +4294,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json: identical existing five-decimal vertex on both identities; 9 shared vertices within 3 km. Selected overlap boundary/branch vertex on identity-agnostic shortest path 竹田 → 養父 (10695.7 m), with approach edges on from identity and departure edges on to identity. Along-track distance to projected N02 station display point: 445.8 m. Reproduce with west/geometry.py; see geometry.json.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2026-10-03",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "Earliest dated official through-train timetable verified in this batch; conservative documented-existing date, not a claim about original opening. Hamakaze 1 runs 竹田–和田山–城崎温泉."
+      "temporalEvidence": "Physical link is as old as both rows, which predate the representable history, so validFrom is unbounded. The previous 2026-10-03 date is a documented-existing timetable window, retained as evidence. Earliest dated official through-train timetable verified in this batch; conservative documented-existing date, not a claim about original opening. Hamakaze 1 runs 竹田–和田山–城崎温泉."
     },
     {
       "id": "west-hokidaisen",
@@ -4375,9 +4375,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json: identical existing five-decimal vertex on both identities; 3 shared vertices within 3 km. Selected overlap boundary/branch vertex on identity-agnostic shortest path 下関 → 小倉 (11173.0 m), with approach edges on from identity and departure edges on to identity. Along-track distance to projected N02 station display point: 163.7 m. Reproduce with west/geometry.py; see geometry.json.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2026-10-03",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "Earliest dated official through-train timetable verified in this batch; conservative documented-existing date, not a claim about original opening. Train 5121M runs 下関–門司–小倉."
+      "temporalEvidence": "Physical link is as old as both rows, which predate the representable history, so validFrom is unbounded. The previous 2026-10-03 date is a documented-existing timetable window, retained as evidence. Earliest dated official through-train timetable verified in this batch; conservative documented-existing date, not a claim about original opening. Train 5121M runs 下関–門司–小倉."
     },
     {
       "id": "west-hakata",
@@ -4456,9 +4456,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json: identical existing five-decimal vertex on both identities; 9 shared vertices within 3 km. Selected overlap boundary/branch vertex on identity-agnostic shortest path 香西 → 昭和町 (3085.1 m), with approach edges on from identity and departure edges on to identity. Along-track distance to projected N02 station display point: 996.9 m. Reproduce with west/geometry.py; see geometry.json.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2024-12-13",
+      "validFrom": null,
       "validTo": "2025-03-15",
-      "temporalEvidence": "JR Shikoku release dated 2024-12-13 documents then-current 岡山–高松–徳島 Uzushio through services and replacement by Takamatsu transfers from 2025-03-15. Conservative documented service window, not a claim of physical track removal; no current through-service claim."
+      "temporalEvidence": "Physical link is as old as both rows, which predate the representable history, so validFrom is unbounded. The previous 2024-12-13 date is a documented-existing timetable window, retained as evidence. JR Shikoku release dated 2024-12-13 documents then-current 岡山–高松–徳島 Uzushio through services and replacement by Takamatsu transfers from 2025-03-15. Conservative documented service window, not a claim of physical track removal; no current through-service claim."
     },
     {
       "id": "west-kubokawa",
@@ -4497,9 +4497,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json: identical existing five-decimal vertex on both identities; 2 shared vertices within 3 km. Selected overlap boundary/branch vertex on identity-agnostic shortest path 仁井田 → 若井 (8673.3 m), with approach edges on from identity and departure edges on to identity. Along-track distance to projected N02 station display point: 38.4 m. Reproduce with west/geometry.py; see geometry.json.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "1988-04-01",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "Tosa Kuroshio official history dates its 中村線 operation to 1988-04-01; Shimanto 1 timetable shows 高知–窪川–中村."
+      "temporalEvidence": "validFrom is unbounded: 1988-04-01 is a company-split or ownership date, not when the physical link existed. The physical connection is as old as the rows. Tosa Kuroshio official history dates its 中村線 operation to 1988-04-01; Shimanto 1 timetable shows 高知–窪川–中村."
     },
     {
       "id": "west-nakamura",
@@ -4579,9 +4579,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json: identical existing five-decimal vertex on both identities; 3 shared vertices within 3 km. Selected overlap boundary/branch vertex on identity-agnostic shortest path 新八代 → 段 (7843.7 m), with approach edges on from identity and departure edges on to identity. Along-track distance to projected N02 station display point: 99.2 m. Reproduce with west/geometry.py; see geometry.json.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2009-04-25",
+      "validFrom": null,
       "validTo": "2020-07-04",
-      "temporalEvidence": "JR Kyushu official SL Hitoyoshi history documents 熊本–人吉 operation from 2009-04-25. Official disaster release states 肥薩線 八代–隼人 suspended from first train 2020-07-04. Bound to evidenced historical service window; suspension is not asserted to be legal closure or removal of the local junction."
+      "temporalEvidence": "Physical link is as old as both rows, which predate the representable history, so validFrom is unbounded. The previous 2009-04-25 date is a documented-existing timetable window, retained as evidence. JR Kyushu official SL Hitoyoshi history documents 熊本–人吉 operation from 2009-04-25. Official disaster release states 肥薩線 八代–隼人 suspended from first train 2020-07-04. Bound to evidenced historical service window; suspension is not asserted to be legal closure or removal of the local junction."
     },
     {
       "id": "west-hayato",
@@ -4620,9 +4620,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json: identical existing five-decimal vertex on both identities; 4 shared vertices within 3 km. Selected overlap boundary/branch vertex on identity-agnostic shortest path 日当山 → 加治木 (9276.9 m), with approach edges on from identity and departure edges on to identity. Along-track distance to projected N02 station display point: 494.0 m. Reproduce with west/geometry.py; see geometry.json.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2004-03-13",
+      "validFrom": null,
       "validTo": "2022-03-22",
-      "temporalEvidence": "Official JR Kyushu chronology dates Hayato no Kaze debut to 2004-03-13; final-run release identifies 吉松–鹿児島中央 route and last run 2022-03-21. Exclusive validTo 2022-03-22 bounds this evidenced historical service; no assertion that physical rails were removed."
+      "temporalEvidence": "Physical link is as old as both rows, which predate the representable history, so validFrom is unbounded. The previous 2004-03-13 date is a documented-existing timetable window, retained as evidence. Official JR Kyushu chronology dates Hayato no Kaze debut to 2004-03-13; final-run release identifies 吉松–鹿児島中央 route and last run 2022-03-21. Exclusive validTo 2022-03-22 bounds this evidenced historical service; no assertion that physical rails were removed."
     },
     {
       "id": "west-oita-kyudai",
@@ -4742,9 +4742,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json: identical existing five-decimal vertex on both identities; 7 shared vertices within 3 km. Selected overlap boundary/branch vertex on identity-agnostic shortest path 柚須 → 博多 (4109.6 m), with approach edges on from identity and departure edges on to identity. Along-track distance to projected N02 station display point: 400.3 m. Reproduce with west/geometry.py; see geometry.json.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2026-10-03",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "Earliest dated official through-train timetable verified in this batch; conservative documented-existing date, not a claim about original opening. Kaiou 3 runs 直方–桂川–吉塚–博多."
+      "temporalEvidence": "Physical link is as old as both rows, which predate the representable history, so validFrom is unbounded. The previous 2026-10-03 date is a documented-existing timetable window, retained as evidence. Earliest dated official through-train timetable verified in this batch; conservative documented-existing date, not a claim about original opening. Kaiou 3 runs 直方–桂川–吉塚–博多."
     },
     {
       "id": "west-keisen",
@@ -4782,9 +4782,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json: identical existing five-decimal vertex on both identities; 11 shared vertices within 3 km. Selected overlap boundary/branch vertex on identity-agnostic shortest path 天道 → 筑前大分 (5918.1 m), with approach edges on from identity and departure edges on to identity. Along-track distance to projected N02 station display point: 456.7 m. Reproduce with west/geometry.py; see geometry.json.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2026-10-03",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "Earliest dated official through-train timetable verified in this batch; conservative documented-existing date, not a claim about original opening. Kaiou 3 runs 直方–桂川–博多 over 筑豊線 and 篠栗線."
+      "temporalEvidence": "Physical link is as old as both rows, which predate the representable history, so validFrom is unbounded. The previous 2026-10-03 date is a documented-existing timetable window, retained as evidence. Earliest dated official through-train timetable verified in this batch; conservative documented-existing date, not a claim about original opening. Kaiou 3 runs 直方–桂川–博多 over 筑豊線 and 篠栗線."
     },
     {
       "id": "west-minamimiyazaki",
@@ -4822,9 +4822,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json: identical existing five-decimal vertex on both identities; 3 shared vertices within 3 km. Selected overlap boundary/branch vertex on identity-agnostic shortest path 宮崎 → 田吉 (4455.3 m), with approach edges on from identity and departure edges on to identity. Along-track distance to projected N02 station display point: 136.4 m. Reproduce with west/geometry.py; see geometry.json.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2026-09-30",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "Earliest dated official through-train timetable verified in this batch; conservative documented-existing date, not a claim about original opening. Hyuga 9 (5079M) runs 宮崎–南宮崎–宮崎空港 via 日南線."
+      "temporalEvidence": "Physical link is as old as both rows, which predate the representable history, so validFrom is unbounded. The previous 2026-09-30 date is a documented-existing timetable window, retained as evidence. Earliest dated official through-train timetable verified in this batch; conservative documented-existing date, not a claim about original opening. Hyuga 9 (5079M) runs 宮崎–南宮崎–宮崎空港 via 日南線."
     },
     {
       "id": "west-tayoshi",
@@ -4899,10 +4899,10 @@
         ]
       },
       "evidence": [
-        "https://timetables.jreast.co.jp/2610/train/095/098851.html"
-      ,
+        "https://timetables.jreast.co.jp/2610/train/095/098851.html",
         "https://www.jreast.co.jp/takanawachikutei/international/pdf/yusikisya_4_zentai_siryou.pdf",
-        "https://www.jreast.co.jp/takanawachikutei/international/pdf/yusikisya_6_zentai_siryou.pdf"],
+        "https://www.jreast.co.jp/takanawachikutei/international/pdf/yusikisya_6_zentai_siryou.pdf"
+      ],
       "geometryEvidence": "rail-sections.json + rail-history.json: identical existing five-decimal vertex [139.73881, 35.62549] on both identities; along-track station distances 296.355/296.355m. Reused jn2/east/geometry.json index24: identity-agnostic 大崎–田町 shortest path (4106.361m) passes the selected shared vertex; 26 shared vertices within3km.",
       "reviewedAt": "2026-10-04",
       "validFrom": "1885-12-31",
@@ -4945,9 +4945,9 @@
       ],
       "geometryEvidence": "rail-sections.json + rail-history.json: identical existing five-decimal vertex [140.11035, 35.61508] on both identities; along-track station distances 332.852/303.961m. Reused jn2/east/geometry.json index28: identity-agnostic 西千葉–本千葉 shortest path (2773.000m) passes the selected shared vertex; 1 shared vertices within3km.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2026-09-18",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "Official rapid 591F/3591F explicitly marks 直通 at 千葉; earliest active operating-calendar date is a documented-existing fallback, not opening."
+      "temporalEvidence": "Physical link is as old as both rows, which predate the representable history, so validFrom is unbounded. The previous 2026-09-18 date is a documented-existing timetable window, retained as evidence. Official rapid 591F/3591F explicitly marks 直通 at 千葉; earliest active operating-calendar date is a documented-existing fallback, not opening."
     },
     {
       "id": "katori-narita-kashima-jn3",
@@ -5022,9 +5022,9 @@
         ]
       },
       "evidence": [
-        "https://www.pref.yamagata.jp/documents/34190/05_shiryo1-4_20250911.pdf"
-      ,
-        "https://www.jreast.co.jp/press/2022/niigata/20220922_ni02.pdf"],
+        "https://www.pref.yamagata.jp/documents/34190/05_shiryo1-4_20250911.pdf",
+        "https://www.jreast.co.jp/press/2022/niigata/20220922_ni02.pdf"
+      ],
       "geometryEvidence": "rail-sections.json + rail-history.json: identical existing five-decimal vertex [139.12119, 37.80463] on both identities; along-track station distances 482.044/482.044m. Reused jn2/east/geometry.json index36: identity-agnostic さつき野–京ヶ瀬 shortest path (6365.486m) passes the selected shared vertex; 6 shared vertices within3km.",
       "reviewedAt": "2026-10-04",
       "validFrom": "1912-12-31",
@@ -5064,9 +5064,9 @@
       },
       "evidence": [
         "https://timetables.jreast.co.jp/2610/train/000/004351.html",
-        "https://timetables.jreast.co.jp/2610/train/005/005671.html"
-      ,
-        "https://www.jreast.co.jp/press/2024/niigata/20240524_ni02.pdf"],
+        "https://timetables.jreast.co.jp/2610/train/005/005671.html",
+        "https://www.jreast.co.jp/press/2024/niigata/20240524_ni02.pdf"
+      ],
       "geometryEvidence": "rail-sections.json + rail-history.json: identical existing five-decimal vertex [140.12947, 39.71836] on both identities; along-track station distances 118.019/118.019m. Reused jn2/east/geometry.json index37: identity-agnostic 羽後牛島–泉外旭川 shortest path (5548.748m) passes the selected shared vertex; 2 shared vertices within3km.",
       "reviewedAt": "2026-10-04",
       "validFrom": "1924-07-31",
@@ -5106,10 +5106,10 @@
       },
       "evidence": [
         "https://www.jrhokkaido.co.jp/press/2010/100924-1.pdf",
-        "https://www.jrhokkaido.co.jp/press/2015/151218-1.pdf"
-      ,
+        "https://www.jrhokkaido.co.jp/press/2015/151218-1.pdf",
         "https://www.jreast.co.jp/press/2021/morioka/20211119_mr11.pdf",
-        "https://timetables.jreast.co.jp/2610/timetable-v/280u2.html"],
+        "https://timetables.jreast.co.jp/2610/timetable-v/280u2.html"
+      ],
       "geometryEvidence": "rail-sections.json + rail-history.json: identical existing five-decimal vertex [140.71576, 40.82598] on both identities; along-track station distances 2131.294/2131.294m. Reused jn2/east/geometry.json index41: identity-agnostic 新青森–油川 shortest path (5838.402m) passes the selected shared vertex; 25 shared vertices within3km.",
       "reviewedAt": "2026-10-04",
       "validFrom": "1951-12-05",
@@ -5195,9 +5195,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json: identical existing 5-decimal vertex on both identities; 337.481 m along track to station display point. Identity-agnostic shortest path 新今宮 → 東部市場前 (3367.040 m) passes the vertex with incoming 大阪環状線 and outgoing 関西線 edges. Geometry copied from jn2/central/geometry.json.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2023-10-23",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "JR West's 2023-08-24 release documents that the already-existing 加茂・奈良→天王寺・大阪方面 区間快速 would receive paid seating from 2023-10-23; its route diagram continues into the 大阪環状線. The date is an earliest exact documented-existing fallback in this packet, not the launch date of the train or junction. The current official per-train timetable independently lists the same through path."
+      "temporalEvidence": "Physical link is as old as both rows, which predate the representable history, so validFrom is unbounded. The previous 2023-10-23 date is a documented-existing timetable window, retained as evidence. JR West's 2023-08-24 release documents that the already-existing 加茂・奈良→天王寺・大阪方面 区間快速 would receive paid seating from 2023-10-23; its route diagram continues into the 大阪環状線. The date is an earliest exact documented-existing fallback in this packet, not the launch date of the train or junction. The current official per-train timetable independently lists the same through path."
     },
     {
       "id": "ayabe-sanin-maizuru",
@@ -5235,9 +5235,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json: identical existing 5-decimal vertex on both identities; 120.657 m along track to station display point. Identity-agnostic shortest path 高津 → 淵垣 (9254.574 m) passes the vertex with incoming 山陰線 and outgoing 舞鶴線 edges. Geometry copied from jn2/central/geometry.json.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2026-10-02",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "JR West's official per-train page is explicitly requested for 2026-10-02, marks まいづる4号 as 毎日運転, and lists 東舞鶴→綾部→京都 as one train. This is the earliest exact dated-existing through-service evidence verified in this packet, not a claim that the service or physical junction first opened that day."
+      "temporalEvidence": "Physical link is as old as both rows, which predate the representable history, so validFrom is unbounded. The previous 2026-10-02 date is a documented-existing timetable window, retained as evidence. JR West's official per-train page is explicitly requested for 2026-10-02, marks まいづる4号 as 毎日運転, and lists 東舞鶴→綾部→京都 as one train. This is the earliest exact dated-existing through-service evidence verified in this packet, not a claim that the service or physical junction first opened that day."
     },
     {
       "id": "tatebayashi-isesaki-sano",
@@ -5361,9 +5361,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json: identical existing 5-decimal vertex on both identities; 309.869 m / 283.029 m along track to station display point. Identity-agnostic shortest path 北春日部 → 八木崎 (1765.573 m) passes the vertex with incoming 伊勢崎線 and outgoing 野田線 edges. Geometry copied from jn2/east/geometry.json row 7.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2017-04-21",
+      "validFrom": null,
       "validTo": "2024-03-16",
-      "temporalEvidence": "Tobu official history dates the アーバンパークライナー launch to 2017-04-21; an official timetable lists one train 浅草→大宮 across 春日部. Tobu ended the service in the 2024-03-16 revision, so validTo is the exclusive end bound."
+      "temporalEvidence": "Physical link is as old as both rows, which predate the representable history, so validFrom is unbounded. The previous 2017-04-21 date is a documented-existing timetable window, retained as evidence. Tobu official history dates the アーバンパークライナー launch to 2017-04-21; an official timetable lists one train 浅草→大宮 across 春日部. Tobu ended the service in the 2024-03-16 revision, so validTo is the exclusive end bound."
     },
     {
       "id": "aoto-oshiage-main",
@@ -5485,9 +5485,9 @@
       ],
       "geometryEvidence": "rail-sections.json + rail-history.json: identical existing five-decimal vertex [130.92106, 33.94829] on both TrackIdentities. Along-track distance to station projection 108.110 / 108.110 m. Original jn2/west candidate; path 幡生–門司 passes this shared vertex.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "1987-04-01",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "Official JR Kyushu company profile gives founding 1987-04-01, the JR-company boundary date explicitly permitted for this pair. Official single-train timetable 5173M documents 下関–門司–小倉. No earlier opening date asserted."
+      "temporalEvidence": "validFrom is unbounded: 1987-04-01 is a company-split or ownership date, not when the physical link existed. The physical connection is as old as the rows. Official JR Kyushu company profile gives founding 1987-04-01, the JR-company boundary date explicitly permitted for this pair. Official single-train timetable 5173M documents 下関–門司–小倉. No earlier opening date asserted."
     },
     {
       "id": "kumamoto-jn3-hohi-kagoshima",
@@ -5526,9 +5526,9 @@
       ],
       "geometryEvidence": "rail-sections.json + rail-history.json: identical existing five-decimal vertex [130.68586, 32.78437] on both TrackIdentities. Along-track distance to station projection 610.215 / 610.202 m. Reused southern shared boundary from jn2/west candidate set; identity-agnostic 平成–川尻 path passes this vertex (6506.625 m). Original selected northern vertex was not on that southbound path. The documented service calls at 熊本 and reverses; this is a topology witness, not a claim that the shortest path reproduces the station reversal.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2004-03-13",
+      "validFrom": null,
       "validTo": "2016-03-26",
-      "temporalEvidence": "JR Kyushu fiscal-2003 history gives March 13 (calendar 2004) debut of 九州横断特急. Official 2015-12-18 release explicitly describes existing 別府・大分–熊本・人吉 trains and ends 熊本–人吉 running at the 2016-03-26 timetable change. validTo is exclusive, per RouteGraph.swift 652–656. This evidence bounds the documented historical service; it does not claim physical removal of the connection."
+      "temporalEvidence": "Physical link is as old as both rows, which predate the representable history, so validFrom is unbounded. The previous 2004-03-13 date is a documented-existing timetable window, retained as evidence. JR Kyushu fiscal-2003 history gives March 13 (calendar 2004) debut of 九州横断特急. Official 2015-12-18 release explicitly describes existing 別府・大分–熊本・人吉 trains and ends 熊本–人吉 running at the 2016-03-26 timetable change. validTo is exclusive, per RouteGraph.swift 652–656. This evidence bounds the documented historical service; it does not claim physical removal of the connection."
     },
     {
       "id": "okayama-sanyo-uno",
@@ -5673,9 +5673,9 @@
       ],
       "geometryEvidence": "OSM way 243609295 service=crossover in cache cell E138N35 (fetchedAt 2026-08-18T10:35:32.136Z). Path vertices are the cache geometry in traversal order, not a simplified centreline. path 161.41 m. from attach 16.69 m to an existing 中央線 vertex in rail-sections.json; to attach 2.07 m to an existing 大月線 vertex. End distances were 中央/大月 16.69/22.89 m and 42.05/2.07 m. each end attached to the identity it is closer to. Haversine R=6371000. Total stubs+path 180.16 m.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2026-03-14",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "No opening day on the fetched official pages. 富士山麓電気鉄道 https://www.fujikyu-railway.jp/fujikaiyuu/ states 「2026年3月14日以降の時刻」 for 直通特急「富士回遊」新宿–河口湖, so validFrom is that exact documented date. JR East timetable https://timetables.jreast.co.jp/2610/train/060/063482.html (「JR時刻表」2026年10月号) still lists 特急富士回遊 15号 新宿–大月–河口湖 with 中央線 stations (新宿・立川・八王子・大月) and 富士急行 stations (下吉田・河口湖). validTo is null."
+      "temporalEvidence": "Physical link is as old as both rows, which predate the representable history, so validFrom is unbounded. The previous 2026-03-14 date is a documented-existing timetable window, retained as evidence. No opening day on the fetched official pages. 富士山麓電気鉄道 https://www.fujikyu-railway.jp/fujikaiyuu/ states 「2026年3月14日以降の時刻」 for 直通特急「富士回遊」新宿–河口湖, so validFrom is that exact documented date. JR East timetable https://timetables.jreast.co.jp/2610/train/060/063482.html (「JR時刻表」2026年10月号) still lists 特急富士回遊 15号 新宿–大月–河口湖 with 中央線 stations (新宿・立川・八王子・大月) and 富士急行 stations (下吉田・河口湖). validTo is null."
     },
     {
       "id": "fukuchiyama-sanin-miyafuku",
@@ -5818,9 +5818,9 @@
       ],
       "geometryEvidence": "Cache cell E139N35 (fetchedAt 2026-08-18T10:37:59.411Z). Four cache vertices, 74.82 m, ways [249149440, 638441264, 638441265]: 249149440 from its endpoint on named way 25721997 JR横浜線 to the next vertex (an endpoint of 638441264); one edge of 638441264 to the shared node [139.3425752, 35.6548016], which is also an interior vertex of 638441265; then 638441265 to its endpoint on named way 638399121 中央本線. Every step is a successive cache edge (joint gap 0 m). The 264/265 joint is that shared node, not either way's endpoint; 249149440's far endpoint is not on 中央本線, so the three sidings do not chain end-to-end. A nearer N02 中央線 vertex is 10.48 m from the 横浜線 node; attach uses the 横浜線 vertex at 26.94 m because the OSM node lies on JR横浜線. 中央線 attach is 17.33 m (a 横浜線 vertex there is 22.54 m). Total 119.09 m. Haversine R=6371000. Vertices are cache geometry, not coverage.json's rounded coordinates.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2008-09-23",
+      "validFrom": null,
       "validTo": "2008-09-24",
-      "temporalEvidence": "Historical only. Official JR East 横浜支社・八王子支社 PDF dated ２００８年７月１７日 (live www.jreast.co.jp returned HTTP 403 on 2026-10-04; bytes fetched with curl from the 2011-12-20 Wayback capture of https://www.jreast.co.jp/hachioji/info/080717/080717_100_yokohama.pdf). 快速「横濱ものがたり号」運転日 ９月２３日（祝）, 運転区間 松本⇔東神奈川. The station list runs 松本・甲府・大月・八王子 then 橋本・町田・新横浜・東神奈川, so the train uses 中央線 through 八王子 and 横浜線 beyond it. validFrom 2008-09-23 is that operating day. validTo 2008-09-24 is exclusive (the documented end of this one-day train). The current JR East 八王子 横浜線 timetable (October 2026) shows no 中央線 destination, so the through service is not current."
+      "temporalEvidence": "Physical link is as old as both rows, which predate the representable history, so validFrom is unbounded. The previous 2008-09-23 date is a documented-existing timetable window, retained as evidence. Historical only. Official JR East 横浜支社・八王子支社 PDF dated ２００８年７月１７日 (live www.jreast.co.jp returned HTTP 403 on 2026-10-04; bytes fetched with curl from the 2011-12-20 Wayback capture of https://www.jreast.co.jp/hachioji/info/080717/080717_100_yokohama.pdf). 快速「横濱ものがたり号」運転日 ９月２３日（祝）, 運転区間 松本⇔東神奈川. The station list runs 松本・甲府・大月・八王子 then 橋本・町田・新横浜・東神奈川, so the train uses 中央線 through 八王子 and 横浜線 beyond it. validFrom 2008-09-23 is that operating day. validTo 2008-09-24 is exclusive (the documented end of this one-day train). The current JR East 八王子 横浜線 timetable (October 2026) shows no 中央線 destination, so the through service is not current."
     },
     {
       "id": "tokyo-tohoku-kanda",
@@ -6927,11 +6927,11 @@
         ]
       },
       "evidence": [
-        "https://timetables.jreast.co.jp/2610/timetable-v/238d2p.html"
-      ,
+        "https://timetables.jreast.co.jp/2610/timetable-v/238d2p.html",
         "https://media.jreast.co.jp/articles/4321",
         "https://www.mlit.go.jp/common/000227427.pdf",
-        "https://www.jreast.co.jp/press/2022/omiya/20230224_o01.pdf"],
+        "https://www.jreast.co.jp/press/2022/omiya/20230224_o01.pdf"
+      ],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical 5-decimal existing vertex on both identities at [139.62383, 35.90782]; 161.684 m / 161.684 m along-track from projected N02 station display point (from/to). Identity-agnostic shortest path 土呂 -> 宮原 (7987.971 m) contains this vertex; 2 shared vertices within 3 km; nearest on that through path chosen.",
       "reviewedAt": "2026-10-04",
       "validFrom": "1885-07-16",
@@ -7223,9 +7223,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical 5-decimal existing vertex on both identities at [136.29175, 35.32217]; 826.038 m / 831.097 m along-track from projected N02 station display point (from/to). Identity-agnostic shortest path 醒ヶ井 -> 坂田 (6839.105 m) contains this vertex; 8 shared vertices within 3 km; nearest on that through path chosen.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "1987-04-01",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "Company-boundary identities. JR West history page: 1987-04-01 西日本旅客鉄道株式会社発足 (the JNR split that created both JR Central and JR West). しらさぎ6号 (daily, page date 2026-07-08) lists 敦賀 and 坂田 (JR West 北陸線) with 米原, 醒ケ井, and 名古屋 (JR Central 東海道線)."
+      "temporalEvidence": "validFrom is unbounded: 1987-04-01 is a company-split or ownership date, not when the physical link existed. The physical connection is as old as the rows. Company-boundary identities. JR West history page: 1987-04-01 西日本旅客鉄道株式会社発足 (the JNR split that created both JR Central and JR West). しらさぎ6号 (daily, page date 2026-07-08) lists 敦賀 and 坂田 (JR West 北陸線) with 米原, 醒ケ井, and 名古屋 (JR Central 東海道線)."
     },
     {
       "id": "fukuchiyama-fukuchiyama-sanin",
@@ -7306,9 +7306,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical 5-decimal existing vertex on both identities at [138.24239, 37.17035]; 39.219 m / 39.219 m along-track from projected N02 station display point (from/to). Identity-agnostic shortest path 黒井 -> 谷浜 (9202.781 m) contains this vertex; 11 shared vertices within 3 km; nearest on that through path chosen. Same coordinate as naoetsu-east-59, which pairs 信越線 with 妙高はねうまライン rather than historical JR West 北陸線.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "1987-04-01",
+      "validFrom": null,
       "validTo": "2015-03-14",
-      "temporalEvidence": "Company-boundary pair from the JNR split (JR West history: 1987-04-01 発足) until the third-sector transfer. JR West 2014-08-27 plan names 特急「北越」（新潟～金沢） as ending at the 2015-03-14 opening; 新潟 is 信越線 and 金沢 was JR 北陸線. The 2014-09-01 release sets the transfer of 北陸本線 金沢～直江津 and 信越本線 直江津～長野 on 平成27年3月14日, used as validTo. 北陸線-p1 is omitted; it does not serve 001600."
+      "temporalEvidence": "validFrom is unbounded: 1987-04-01 is a company-split or ownership date, not when the physical link existed. The physical connection is as old as the rows. Company-boundary pair from the JNR split (JR West history: 1987-04-01 発足) until the third-sector transfer. JR West 2014-08-27 plan names 特急「北越」（新潟～金沢） as ending at the 2015-03-14 opening; 新潟 is 信越線 and 金沢 was JR 北陸線. The 2014-09-01 release sets the transfer of 北陸本線 金沢～直江津 and 信越本線 直江津～長野 on 平成27年3月14日, used as validTo. 北陸線-p1 is omitted; it does not serve 001600."
     },
     {
       "id": "tokoname-tokoname-airport",
@@ -7468,7 +7468,7 @@
       "geometryEvidence": "rail-sections.json: 東日本旅客鉄道 津軽線 and 北海道旅客鉄道 海峡線 share [140.59738, 41.05138].",
       "reviewedAt": "2026-10-04",
       "validFrom": "1988-03-13",
-      "validTo": "2016-03-26",
+      "validTo": null,
       "temporalEvidence": "JR Hokkaido com_02: 海峡線 1988-03-13 中小国～木古内. Seikan memorial: 63年3月13日 青函トンネル completed and Hakodate–Aomori service began; conventional trains include 北斗星, カシオペア, スーパー白鳥. validTo 2016-03-26 is the Hokkaido Shinkansen opening (新青森〜新函館北斗) that ended that conventional passenger use. line-service-catalog has no 海峡線 lineID; lineIDs omits that side. The loader matches operator + lineName + class and does not decode lineIDs."
     },
     {
@@ -7889,11 +7889,10 @@
       ],
       "geometryEvidence": "rail-sections.json has no identical 山陽線/播但線 vertex at 姫路 (nearest pair 83 m apart), and the 山陽線 N02 vertices here are ~900 m apart. OSM cache cell E134N34 (fetchedAt 2026-08-18T10:29:35.337Z) chains ways 264563422 + 880276154 (山陽本線 main) → 264563418 (siding, the turnout from 山陽本線 onto the 播但線 tracks) → 205350490, 1077661683, 1077661684 (JR播但線 branch) → 205350488 (JR播但線 main); path vertices are cache geometry in traversal order, trimmed to the vertices nearest the attach points. from attach 38.50 m to existing 山陽線 vertex [134.692862, 34.826493]; to attach 1.86 m to existing 播但線 vertex [134.70054, 34.82813]. path 734.15 m, total stubs+path 774.51 m. Haversine R=6371000.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "1987-04-01",
+      "validFrom": null,
       "validTo": null,
-      "temporalEvidence": "Same-company pair. JR West's official 沿革 page (https://www.westjr.co.jp/company/info/history/) gives 1987-04-01 西日本旅客鉄道株式会社発足; validFrom is capped at that JR West identity founding, as for yamashina-tokaido-kosei. The connection itself is older, but no exact earlier official date was secured, so none is asserted. Current through running: はまかぜ1号 (2026-10-03 page) lists 東姫路 (山陽線) → 姫路 08:52/08:58 → 京口 (播但線) as one train."
-    }
-,
+      "temporalEvidence": "validFrom is unbounded: 1987-04-01 is a company-split or ownership date, not when the physical link existed. The physical connection is as old as the rows. Same-company pair. JR West's official 沿革 page (https://www.westjr.co.jp/company/info/history/) gives 1987-04-01 西日本旅客鉄道株式会社発足; validFrom is capped at that JR West identity founding, as for yamashina-tokaido-kosei. The connection itself is older, but no exact earlier official date was secured, so none is asserted. Current through running: はまかぜ1号 (2026-10-03 page) lists 東姫路 (山陽線) → 姫路 08:52/08:58 → 京口 (播但線) as one train."
+    },
     {
       "id": "osaka-osakaloop-tokaido",
       "kind": "zeroLength",
@@ -8147,9 +8146,9 @@
       ],
       "geometryEvidence": "app/data/rail-sections.json: identical vertex [141.13473, 39.7027] on 東日本旅客鉄道 東北線 and アイジーアールいわて銀河鉄道 いわて銀河鉄道線, 218.7 m from the 東北線 display [141.136375, 39.701195]. Two shared vertices; the 矢幅→厨川 path meets [141.13802, 39.69969] then this northern one. Last shared vertex toward IGR. Not morioka-east-40. 北斗星/カシオペア dates before 2002-12-01 are not covered.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2002-12-01",
+      "validFrom": "1891-09-01",
       "validTo": null,
-      "temporalEvidence": "IGR opening, the later identity. igr.jp/company/ (sha256 16abea759e87a1db069bd66be944100009869380c2c677959aec7aa650ab751c) says 平成14年12月1日, 東北新幹線盛岡～八戸開業に伴い東北本線の盛岡～目時を引き継ぎ開業, so 2002-12-01. igr.jp/station/iwatekawaguchi (sha256 4d11995ae8a0a9a3cd059b42c874a1b1ca680f95ff9caefb35a4705ff10d38ef) lists 6:32 矢幅 and 7:17 北上 marked ＪＲ東北本線直通 from 岩手川口 (IGR, north of 盛岡) to JR 東北線 stations south of 盛岡. Inherited: JNR/JR 東北本線 until the 2002-12-01 transfer. Do not use this junction for 1988 北斗星 or 1999 カシオペア."
+      "temporalEvidence": "validFrom 1891-09-01 is the later row, the track north of 盛岡. IGR https://igr.jp/2021/09/01/130th/ states 明治24年9月1日に、日本鉄道として盛岡～青森間の鉄道が開通. https://igr.jp/company/ gives the same opening as 1891年9月. 2002-12-01 is the IGR ownership transfer and is not used. validTo is null."
     },
     {
       "id": "sendai-kagoshima-hisatsu-orange",
@@ -8919,8 +8918,7 @@
       "validFrom": "1986-12-31",
       "validTo": null,
       "temporalEvidence": "Year only. shikoku-social.pdf (sha256 91749ff22ecab303d08c213e554a0d03b6e9fc1d69bba09fada09a625f2d9111, 社会資本アーカイブスあらかると on shikoku-shakaishihon.com, not .go.jp and not JR Shikoku; the PDF does not contain 国土交通省) says 昭和61年に向井原駅から内子線内子駅を結ぶ予讃新線（内山線）が新設されて、現在の予讃線の形になりました and 伊予大洲駅～新谷駅間5.9km. No month or day, so 1986-12-31. Same train: JR Shikoku press (uwakai-2018.pdf, sha256 a41fbe6df9bd93a0542bb7dcc35d11b79933b257d5424ce416e5a455387b0095) lists 宇和海1号 内子発6:13 伊予大洲発6:27. A newspaper day 1986-03-03 was not used."
-    }
-  ,
+    },
     {
       "id": "yatsushiro-kagoshima-hisatsu-orange",
       "kind": "zeroLength",
@@ -9226,6 +9224,462 @@
       "validFrom": "1951-12-05",
       "validTo": "2010-12-04",
       "temporalEvidence": "東北線 was already at 青森: MLIT chronology says 明治24年9月1日 東北線全通（上野・青森間、日本鉄道会社）. 津軽線 reached 青森 on 1951-12-05 (JR East Morioka press: 1951年12月5日青森駅～蟹田駅間開業). validTo 2010-12-04 is the 青い森 transfer of 八戸–青森, when this JR 東北線 overlay ends. 盛岡 needs no junction: the overlay is the same 東北線 identity as the existing line."
+    },
+    {
+      "id": "mishima-tokaido-sunzu",
+      "kind": "osmConnector",
+      "path": [
+        [
+          138.9094703,
+          35.1256805
+        ],
+        [
+          138.9099902,
+          35.1258213
+        ],
+        [
+          138.910105,
+          35.1258404
+        ],
+        [
+          138.9134836,
+          35.1264487
+        ],
+        [
+          138.9138556,
+          35.1265323
+        ],
+        [
+          138.9142476,
+          35.1266596
+        ],
+        [
+          138.9145564,
+          35.1267676
+        ],
+        [
+          138.9148906,
+          35.1268584
+        ],
+        [
+          138.915247,
+          35.1269422
+        ]
+      ],
+      "source": {
+        "provider": "OpenStreetMap",
+        "license": "ODbL-1.0",
+        "ways": [
+          1267265957,
+          479274709,
+          479274707,
+          331790201
+        ],
+        "retrieved": "2026-08-18",
+        "cache": "Japan-Train-Map/outputs/osm-basemap-cache"
+      },
+      "attachMeters": {
+        "from": 38.46,
+        "to": 34.72
+      },
+      "region": "jp",
+      "station": "三島",
+      "stationCode": "005601",
+      "lineIDs": [
+        "jp-伊豆箱根鉄道-駿豆線",
+        "jp-東海旅客鉄道-東海道線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "伊豆箱根鉄道",
+          "lineName": "駿豆線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          138.90989,
+          35.12572
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東海旅客鉄道",
+          "lineName": "東海道線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          138.91487,
+          35.12691
+        ]
+      },
+      "evidence": [
+        "https://www.izuhakone.co.jp/izu-group/izu_company/company_article/enkaku2.html",
+        "https://www.openstreetmap.org/way/1267265957",
+        "https://www.openstreetmap.org/way/479274709",
+        "https://www.openstreetmap.org/way/479274707",
+        "https://www.openstreetmap.org/way/331790201"
+      ],
+      "geometryEvidence": "OSM siding chain in cache cell E138N35 (fetchedAt 2026-08-18T10:35:32.136Z). Path vertices are the cache geometry in traversal order, oriented from the 駿豆線 joint. Ways 1267265957, 479274709, 479274707, then the east portion of 331790201 to its east end on 東海道本線 way 1453260472. path 545.11 m. from attach 38.46 m to existing 駿豆線 vertex [138.90989, 35.12572]; to attach 34.72 m to existing 東海道線 vertex [138.91487, 35.12691]. The west exit of 331790201 also fits the stub and total limits and is not a second record. Haversine R=6371000. Total stubs+path 618.28 m.",
+      "reviewedAt": "2026-10-04",
+      "validFrom": "1934-12-01",
+      "validTo": null,
+      "temporalEvidence": "validFrom 1934-12-01 is the physical 駿豆線 connection into the present 三島駅, the same day as the Tanna tunnel and the present station (Izuhakone chronology: 丹那トンネル開通、現在の三島駅開業、駿豆鉄道線が三島駅に乗り入れ). The 1898 dates are the old 三島 (now 御殿場線 下土狩). 2010s through-service dates are not this link."
+    },
+    {
+      "id": "uto-kagoshima-misumi",
+      "region": "jp",
+      "station": "宇土",
+      "stationCode": "009850",
+      "lineIDs": [
+        "jp-九州旅客鉄道-鹿児島線",
+        "jp-九州旅客鉄道-三角線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "九州旅客鉄道",
+          "lineName": "鹿児島線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          130.66915,
+          32.694865
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "九州旅客鉄道",
+          "lineName": "三角線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          130.66915,
+          32.694865
+        ]
+      },
+      "evidence": [
+        "https://www.city.uto.lg.jp/article/view/1102/1809.html",
+        "https://www.city.uto.lg.jp/museum/article/view/8/379.html"
+      ],
+      "geometryEvidence": "rail-sections.json: identical existing five-decimal vertex [130.66915, 32.694865] on both TrackIdentities. Station-segment endpoint of the duplicated 宇土 LineString (one named source-identity boundary). 4 shared vertices. Haversine R=6371000.",
+      "reviewedAt": "2026-10-04",
+      "validFrom": "1899-12-25",
+      "validTo": null,
+      "temporalEvidence": "validFrom 1899-12-25 is the 三角線 宇土–三角 opening, the later row. 鹿児島線 was already at 宇土 (宇土–八代, 1895). 1987-04-01 is the JR split and is not used."
+    },
+    {
+      "id": "nanao-jr-noto",
+      "region": "jp",
+      "station": "七尾",
+      "stationCode": "001669",
+      "lineIDs": [
+        "jp-西日本旅客鉄道-七尾線",
+        "jp-のと鉄道-七尾線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "西日本旅客鉄道",
+          "lineName": "七尾線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          136.96364,
+          37.04222
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "のと鉄道",
+          "lineName": "七尾線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          136.96364,
+          37.04222
+        ]
+      },
+      "evidence": [
+        "https://www.city.nanao.lg.jp/koho/shise/koho/kohonanao/h23/08/h2308-4.html",
+        "https://www.city.nanao.lg.jp/koho/shise/koho/machinokao/r7/12/071220.html"
+      ],
+      "geometryEvidence": "rail-sections.json: identical existing five-decimal vertex [136.96364, 37.04222] on both TrackIdentities. Station-segment endpoint nearest 七尾. 50 shared vertices lie along the 七尾–和倉温泉 overlap; the far overlap vertices are not this boundary. Haversine R=6371000.",
+      "reviewedAt": "2026-10-04",
+      "validFrom": "1925-12-15",
+      "validTo": null,
+      "temporalEvidence": "validFrom 1925-12-15 is the physical 七尾–和倉 opening (国鉄七尾線). 1991-09-01 is the のと鉄道 takeover of 和倉温泉–輪島, which is ownership, not a new track. 七尾–和倉温泉 stayed jointly used."
+    },
+    {
+      "id": "aomori-aoimori-ou",
+      "region": "jp",
+      "station": "青森",
+      "stationCode": "000527",
+      "lineIDs": [
+        "jp-青い森鉄道-青い森鉄道線",
+        "jp-東日本旅客鉄道-奥羽線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "青い森鉄道",
+          "lineName": "青い森鉄道線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          140.73407,
+          40.82905
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "奥羽線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          140.73407,
+          40.82905
+        ]
+      },
+      "evidence": [
+        "https://www.library.city.aomori.aomori.jp/aomoricity_history/trivia/101-/173.pdf"
+      ],
+      "geometryEvidence": "rail-sections.json: identical existing five-decimal vertex [140.73407, 40.82905] on both TrackIdentities. Station-segment endpoint of the duplicated 青森 LineString (one named source-identity boundary). 4 shared vertices; farther shared vertices south of the station are not this boundary. Haversine R=6371000.",
+      "reviewedAt": "2026-10-04",
+      "validFrom": "1894-12-01",
+      "validTo": null,
+      "temporalEvidence": "validFrom 1894-12-01 is the 奥羽本線 青森–弘前 opening, the later row. 青い森鉄道線 is former 東北本線 track already at 青森 (1891-09-01). 2010-12-04 is the Aoimori ownership transfer and is not used."
+    },
+    {
+      "id": "aomori-aoimori-tsugaru",
+      "region": "jp",
+      "station": "青森",
+      "stationCode": "000527",
+      "lineIDs": [
+        "jp-青い森鉄道-青い森鉄道線",
+        "jp-東日本旅客鉄道-津軽線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "青い森鉄道",
+          "lineName": "青い森鉄道線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          140.73407,
+          40.82905
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "津軽線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          140.73407,
+          40.82905
+        ]
+      },
+      "evidence": [
+        "https://www.jreast.co.jp/press/2021/morioka/20211119_mr11.pdf"
+      ],
+      "geometryEvidence": "rail-sections.json: identical existing five-decimal vertex [140.73407, 40.82905] on both TrackIdentities. Same station-segment endpoint as aomori-aoimori-ou, a different identity pair from aomori-ou-tsugaru-jn3 (JR 奥羽線↔JR 津軽線). 4 shared vertices. Haversine R=6371000.",
+      "reviewedAt": "2026-10-04",
+      "validFrom": "1951-12-05",
+      "validTo": null,
+      "temporalEvidence": "validFrom 1951-12-05 is the 津軽線 青森–蟹田 opening (JR East Morioka branch press, 27.0 km). The Aoimori/former Tohoku track was already at 青森. 2010-12-04 is the ownership transfer and is not used."
+    },
+    {
+      "id": "nippori-tohoku-main-approach",
+      "kind": "shortLink",
+      "linkMeters": 21.7,
+      "region": "jp",
+      "station": "日暮里",
+      "stationCode": "003417",
+      "lineIDs": [
+        "jp-東日本旅客鉄道-東北線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "東北線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          139.77069,
+          35.7284
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "東北線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          139.77051,
+          35.72827
+        ]
+      },
+      "evidence": [
+        "http://www.jreast.co.jp/estation/station/info.aspx?StationCD=1184"
+      ],
+      "geometryEvidence": "rail-sections.json: same-identity 東日本旅客鉄道 東北線 class 11 survey break. Isolated-component endpoint [139.77069, 35.7284], feature 16713 (degree 1), and main-trunk vertex [139.77051, 35.72827], feature 16684 (degree 2; same component as 東京 [139.76716, 35.68228]). Haversine 21.7 m (R=6371000; computed 21.74762193233721 m). Within the 30 m shortLink cap. No shared vertex. The isolated component also holds 日暮里 [139.77092, 35.72822], where nippori-east-25 already joins 常磐線, and the Ueno stub [139.7766, 35.71262]. Ueno platform gaps of about 82 m and 152 m exceed the shortLink cap and are not this link.",
+      "reviewedAt": "2026-10-04",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "validFrom is null. Both 東北線 rows are unbounded, so this survey break is not given a later bound. JR East station page StationCD=1184 records 日暮里 opened 明治38年4月1日 (1905-04-01) and lists 京浜東北線・根岸線, 常磐線快速, and 山手線. That is the station opening, not the day these two surveyed 東北線 components were joined, so it is not validFrom. 1896-12-25 is 田端–土浦 and is not used. 2015-03-14 is the 上野東京ライン opening at tokyo-east-20 and is not this seam."
+    },
+    {
+      "id": "okutsugaru-imabetsu-kaikyo-osm",
+      "kind": "osmTrack",
+      "path": [
+        [
+          140.5147107,
+          41.1458237
+        ],
+        [
+          140.5149634,
+          41.1455486
+        ],
+        [
+          140.5157271,
+          41.1447243
+        ],
+        [
+          140.516262,
+          41.1441375
+        ]
+      ],
+      "source": {
+        "provider": "OpenStreetMap",
+        "license": "ODbL-1.0",
+        "ways": [
+          676730709
+        ],
+        "retrieved": "2026-10-04",
+        "cache": "overpass-api.de/api/interpreter around 41.14484,140.51570"
+      },
+      "attachMeters": {
+        "from": 9.21,
+        "to": 39.69
+      },
+      "region": "jp",
+      "station": "奥津軽いまべつ",
+      "stationCode": "000491",
+      "lineIDs": [],
+      "from": {
+        "identity": {
+          "operatorName": "北海道旅客鉄道",
+          "lineName": "海峡線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          140.51482,
+          41.14582
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "北海道旅客鉄道",
+          "lineName": "海峡線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          140.51657,
+          41.14387
+        ]
+      },
+      "evidence": [
+        "https://www.openstreetmap.org/way/676730709",
+        "https://www.jrhokkaido.co.jp/corporate/company/com_02.html",
+        "https://www.jreast.co.jp/press/2021/morioka/20211119_mr11.pdf"
+      ],
+      "geometryEvidence": "OSM way 676730709 (name 海峡線, gauge 1067, usage main; Overpass around 41.14484,140.51570 on 2026-10-04), vertices index 5→2 of 7, ordered from the north 海峡線 survey endpoint toward the south. No way tagged gauge 1067;1435 reaches both endpoints within 50 m (way 676730704 best 12.68 m / 185.46 m; way 1267890416 best 79.46 m / 130.80 m). Ways tagged 北海道新幹線 gauge 1435 (682949454, 682949469) lie in the same corridor and are not used, because this osmTrack must stay on the 海峡線 identity. rail-sections.json 北海道旅客鉄道|海峡線|11 is two components: [140.51482, 41.14582] feature 18928 and [140.51657, 41.14387] feature 18933, 261.70 m apart, over the 30 m shortLink cap. The only N02 linestring that bridges them is 北海道新幹線 feature 21662, whose identity is dated from 2016-03-26, so a zeroLength onto 北海道新幹線 cannot carry a pre-2016 海峡線 train. Attach 9.21 m and 39.69 m (second-nearest 海峡線 vertices 21.72 m and 72.01 m). Path 227.47 m. Haversine R=6371000 on quant5 coordinates, matching RouteGraph.osmRejection. stationCode 000491 is the only 奥津軽いまべつ code. line-service-catalog has no 海峡線 lineID.",
+      "reviewedAt": "2026-10-04",
+      "validFrom": "1988-03-13",
+      "validTo": null,
+      "temporalEvidence": "JR Hokkaido com_02.html lists 海峡線 1988-03-13 中小国～木古内 87.8 km and still lists the line. JR East Morioka branch press 20211119_mr11.pdf states 1988年3月13日 青函トンネル開通・海峡線開通. validTo is null: 2016-03-26 opened 北海道新幹線 新青森～新函館北斗 and transferred 五稜郭〜木古内 to 道南いさりび鉄道; it did not remove the 海峡線 track through 奥津軽いまべつ (opened as 津軽今別). The osmTrack keeps the pre-2016 train on the 海峡線 identity across the survey gap."
+    },
+    {
+      "id": "kikonai-kaikyo-isaribi",
+      "region": "jp",
+      "station": "木古内",
+      "stationCode": "000477",
+      "lineIDs": [
+        "jp-道南いさりび鉄道-道南いさりび鉄道線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "北海道旅客鉄道",
+          "lineName": "海峡線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          140.43446,
+          41.67809
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "道南いさりび鉄道",
+          "lineName": "道南いさりび鉄道線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          140.43446,
+          41.67809
+        ]
+      },
+      "evidence": [
+        "https://www.jrhokkaido.co.jp/corporate/company/com_02.html",
+        "https://www.shr-isaribi.jp/info/6475/",
+        "https://www.mlit.go.jp/common/001514800.pdf"
+      ],
+      "geometryEvidence": "rail-sections.json: 北海道旅客鉄道|海峡線|11 feature 18927 and 道南いさりび鉄道|道南いさりび鉄道線|12 features 18998 and 21552 share [140.43446, 41.67809]. Sibling of kikonai-kaikyo-esashi, which pairs the same 海峡線 vertex with the pre-transfer 江差線 identity. Haversine R=6371000. Catalog lineID is only the いさりび side.",
+      "reviewedAt": "2026-10-04",
+      "validFrom": "1988-03-13",
+      "validTo": null,
+      "temporalEvidence": "validFrom 1988-03-13 is the physical day 海峡線 reached the conventional track at 木古内 (com_02.html, 中小国～木古内). 道南いさりび鉄道線 is that same conventional track after the 2016-03-26 company split (com_02 footnote; MLIT https://www.mlit.go.jp/common/001514800.pdf). The split is not validFrom. 上磯～木古内 had opened 1930-10-25 (shr-isaribi.jp/info/6475/). validTo is null."
+    },
+    {
+      "id": "metoki-igr-aoimori",
+      "region": "jp",
+      "station": "目時",
+      "stationCode": "000651",
+      "lineIDs": [
+        "jp-アイジーアールいわて銀河鉄道-いわて銀河鉄道線",
+        "jp-青い森鉄道-青い森鉄道線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "アイジーアールいわて銀河鉄道",
+          "lineName": "いわて銀河鉄道線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          141.28974,
+          40.35298
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "青い森鉄道",
+          "lineName": "青い森鉄道線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          141.28974,
+          40.35298
+        ]
+      },
+      "evidence": [
+        "https://igr.jp/2021/09/01/130th/",
+        "http://aoimorirailway.com/wp/wp-content/uploads/2021/09/389cde32f5238134f19f290cae98d75d.pdf",
+        "https://aoimorirailway.com/company/aoimori"
+      ],
+      "geometryEvidence": "rail-sections.json: いわて銀河鉄道線 feature 14 and 青い森鉄道|青い森鉄道線|12 features 10038 and 10040 share [141.28974, 40.35298]. stationCode 000651 is the 目時 group (IGR row; 青い森 row is 000652). Haversine R=6371000.",
+      "reviewedAt": "2026-10-04",
+      "validFrom": "1891-09-01",
+      "validTo": null,
+      "temporalEvidence": "validFrom 1891-09-01 is the 盛岡～青森 opening, which is the track through this vertex (IGR https://igr.jp/2021/09/01/130th/, 明治24年9月1日). 目時駅 itself is later: the Aoimori 130th chronology PDF http://aoimorirailway.com/wp/wp-content/uploads/2021/09/389cde32f5238134f19f290cae98d75d.pdf dates 目時駅開業 1948-10-01 and the ownership splits 2002-12-01 (盛岡～目時 to IGR, 目時～八戸 to 青い森) and 2010-12-04 (八戸～青森 to 青い森). Those are not the physical day. validTo is null."
     }
   ]
 }

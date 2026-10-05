@@ -185,8 +185,8 @@ struct JunctionApproachTests {
         }
 
         #expect(baselineJunctions.count == 10)
-        #expect(addedRecords.count == 171)
-        #expect(Set(addedRecords.map(\.station)).count == 143)
+        #expect(addedRecords.count == 180)
+        #expect(Set(addedRecords.map(\.station)).count == 148)
 
         try assertRegistryAccepted(dataRoot: dataRoot, junctions: fullJunctions)
 
@@ -225,7 +225,8 @@ struct JunctionApproachTests {
 
         let reviewedJunctions = try addedRecords.map { record in
             (station: record.station,
-             validFrom: try #require(record.validFrom, "Missing validFrom for \(record.id)"),
+             // nil = the physical link is as old as both rows (dating rule 2026-10-04).
+             validFrom: record.validFrom ?? "",
              junction: try #require(fullJunctions.first { $0.id == record.id }))
         }
         for train in trains {

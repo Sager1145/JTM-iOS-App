@@ -173,13 +173,23 @@ struct PhysicalSectionContinuityTests {
             ("丸亀", "008271", "児島", "007919")] {
             let incoming = RouteSection(from: start, to: "宇多津", fromN02StationCode: startCode, toN02StationCode: "008252")
             let outgoing = RouteSection(from: "宇多津", to: end, fromN02StationCode: "008252", toN02StationCode: endCode)
-            for day in ["1988-04-10", "2019-10-18"] {
-                let previous = try #require(RouteSolver.solveSectionOnDemand(incoming, segmentIndex: 0,
-                    train: .init(company: "四国旅客鉄道", rideDate: day), country: "jp", graphStore: store, stations: stations))
-                let next = RouteSolver.solveSectionOnDemand(outgoing, segmentIndex: 1,
-                    train: .init(company: "四国旅客鉄道", rideDate: day), country: "jp", graphStore: store,
-                    stations: stations, physicalContinuationKey: previous.rawPathKeys.last)
-                #expect((next != nil) == (day == "2019-10-18"))
+            for day in ["1988-04-09", "1988-04-10", "2019-10-18"] {
+                let previous = RouteSolver.solveSectionOnDemand(incoming, segmentIndex: 0,
+                    train: .init(company: "四国旅客鉄道", rideDate: day), country: "jp", graphStore: store, stations: stations)
+                let next = previous.flatMap { solved in
+                    RouteSolver.solveSectionOnDemand(outgoing, segmentIndex: 1,
+                        train: .init(company: "四国旅客鉄道", rideDate: day), country: "jp", graphStore: store,
+                        stations: stations, physicalContinuationKey: solved.rawPathKeys.last)
+                }
+                // 児島↔丸亀 uses the station arm. Both Utazu arms opened
+                // 1988-04-10 with the 瀬戸大橋線, so a day before that still
+                // cannot cross. 2019-10-18 remains in the evidence text only.
+                if day < "1988-04-10" {
+                    #expect(next == nil)
+                } else {
+                    #expect(previous != nil)
+                    #expect(next != nil)
+                }
             }
         }
     }
