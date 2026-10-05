@@ -385,6 +385,79 @@ struct OnEdgeCertificationTests {
         #expect(stitched == "ok", "\(stitched)")
     }
 
+    @Test("The census path certifies 36-plus-3-blue 杵築→中津 on 2026-10-03")
+    func censusKitsukiToNakatsu() throws {
+        let root = try PortFixtures.repositoryRoot()
+        let pipeline = PhysicalEndpointTrimTests()
+        let data = try pipeline.loadRealData(root: root)
+        let pattern = try #require(TrainServicePatterns.patterns.first {
+            $0.id == "36-plus-3-blue-oita-hakata"
+        })
+        let day = "2026-10-03"
+        let applied = TrainServicePatterns.apply(pattern, to: Train(
+            id: pattern.id, date: day, number: "", origin: "", destination: "", stops: []))
+        let train = TrainValidation.normalizeExportTrain(applied, country: "jp")
+        let sections = StoreOperations.rideRouteSections(for: train)
+        let index = try #require(sections.firstIndex { $0.from == "杵築" && $0.to == "中津" })
+        let section = sections[index]
+        let context = RouteSolver.TrainContext(
+            id: train.id, number: train.number, trainType: train.trainType ?? "",
+            company: train.company ?? "", origin: train.origin, destination: train.destination,
+            preferredLineNames: train.routePolicy?.preferredLineNames ?? [],
+            preferredOperatorNames: train.routePolicy?.preferredOperatorNames ?? [],
+            allowedInstitutionTypeCodes: train.routePolicy?.allowedInstitutionTypeCodes,
+            institutionFilterMode: train.routePolicy?.institutionFilterMode ?? "soft",
+            rideDate: day)
+        let allowedCodes = RouteGraph.allowedInstitutionTypeCodes(.init(
+            trainType: context.trainType, company: context.company,
+            preferredLineNames: context.preferredLineNames,
+            preferredOperatorNames: context.preferredOperatorNames,
+            allowedInstitutionTypeCodes: context.allowedInstitutionTypeCodes,
+            institutionFilterMode: context.institutionFilterMode), country: "jp")
+        let inferred = RouteSolver.inferStationSections(
+            sections, resolver: data.resolver, network: data.network, eligibility: data.eligibility,
+            allowedCodes: allowedCodes, hard: context.institutionFilterMode == "hard")
+        let useSource = section.sectionCodes?.isEmpty == false || inferred.hints[index] != nil
+        let keys: [String]?
+        if useSource {
+            var hints = inferred.hints[index] ?? RouteHints(
+                requiredLineIDs: section.lineIDs ?? [], sectionCodes: section.sectionCodes ?? [],
+                fromStationCode: section.fromN02StationCode, toStationCode: section.toN02StationCode)
+            hints.fromStationCode = data.eligibility.stationCode(hints.fromStationCode) ?? hints.fromStationCode
+            hints.toStationCode = data.eligibility.stationCode(hints.toStationCode) ?? hints.toStationCode
+            let certified = try #require(data.network.sourceCertification(for: hints))
+            let graph = pipeline.proofGraph(certified.geometry.lines.flatMap { $0 }, store: data.graphStore)
+            keys = RouteSolver.verifiedSourcePath(
+                certified.geometry.lines, graph: graph, context: context, section: section,
+                displayRowNames: certified.rowNames, anchorIndices: certified.anchorIndices)
+        } else {
+            let solved = try #require(RouteSolver.solveSectionOnDemand(
+                section, segmentIndex: index, train: context, country: "jp",
+                graphStore: data.graphStore, stations: data.stations, traversalPolicy: .physicalRail))
+            var cache = RouteProjectionCache()
+            let hints = RouteHints(
+                requiredLineNames: (section.lineNames ?? []).map(Optional.some),
+                preferredLineNames: context.preferredLineNames.map(Optional.some),
+                requiredOperatorNames: (section.operatorNames ?? []).map(Optional.some),
+                preferredOperatorNames: context.preferredOperatorNames.map(Optional.some),
+                requiredLineIDs: section.lineIDs ?? [], sectionCodes: section.sectionCodes ?? [],
+                fromStationCode: section.fromN02StationCode, toStationCode: section.toN02StationCode)
+            let canonical = data.network.canonicalizeRouteFeature(
+                RouteFeature(geometry: .lineString(solved.coordinates), hints: hints),
+                continueFrom: nil, cache: &cache)
+            let codes = try #require(canonical?.matchedSectionCodes)
+            var matchedHints = hints
+            matchedHints.sectionCodes = codes
+            matchedHints.requiredLineIDs = canonical?.displayLineIds ?? []
+            let certified = try #require(data.network.sourceCertification(for: matchedHints))
+            let graph = pipeline.proofGraph(certified.geometry.lines.flatMap { $0 }, store: data.graphStore)
+            keys = RouteSolver.verifiedSourcePath(
+                certified.geometry.lines, graph: graph, context: context, section: section,
+                displayRowNames: certified.rowNames, anchorIndices: certified.anchorIndices)
+        }
+        #expect(keys != nil, "useSource=\(useSource) 杵築→中津 census path")
+    }
+
     private func lineNames(of key: String?, graph: RouteGraph.Graph) -> Set<String> {
         guard let key else { return [] }
         return graph.nodeMeta[key]?.lineNames ?? []

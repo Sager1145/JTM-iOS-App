@@ -4,6 +4,38 @@ import Testing
 
 struct TrainServicePatternsTests {
 
+    @Test("京とれいん 雅洛 rides 宝塚線 大阪梅田→十三 and the 十三 boundary to 京都線 proves")
+    func garakuRidesTakarazukaThroughJuso() throws {
+        let pattern = try #require(TrainServicePatterns.patterns.first {
+            $0.id == "kyo-train-garaku-umeda-kawaramachi"
+        })
+        let day = "2026-10-03"
+        let applied = TrainServicePatterns.apply(pattern, to: Train(
+            id: pattern.id, date: day, number: "", origin: "", destination: "", stops: []))
+        let canonical = TrainValidation.normalizeExportTrain(applied, country: "jp")
+        let sections = StoreOperations.rideRouteSections(for: canonical)
+        let index = try #require(sections.firstIndex { $0.from == "大阪梅田" && $0.to == "十三" })
+        let env = TrainServicePatternRouteTests.environment
+        let train = TrainServicePatternRouteTests.context(canonical)
+        let solved = try #require(RouteSolver.solveSectionOnDemand(
+            sections[index], segmentIndex: index, train: train, country: "jp",
+            graphStore: env.graphStore, stations: env.stations, continuityAnchor: nil))
+        let next = try #require(RouteSolver.solveSectionOnDemand(
+            sections[index + 1], segmentIndex: index + 1, train: train, country: "jp",
+            graphStore: env.graphStore, stations: env.stations,
+            physicalContinuationKey: solved.rawPathKeys.last))
+        let graph = env.graphStore.corridorGraph(
+            for: solved.coordinates + next.coordinates, meters: 1_000)
+        let ridden = Set(solved.rawPathKeys.flatMap { graph.nodeMeta[$0]?.lineNames ?? [] })
+        #expect(ridden.contains("宝塚線"), "rode \(ridden)")
+        #expect(!ridden.contains("神戸線"), "rode \(ridden)")
+        #expect(RouteSolver.provenBoundaryContinuation(
+            previous: solved.rawPathKeys.last, first: next.rawPathKeys.first,
+            previousSection: sections[index], nextSection: sections[index + 1],
+            graph: graph, stations: env.stations, rideDate: day) != nil)
+    }
+
+
     // MARK: - catalog shape
 
     @Test("the bundled catalog has stable identities and well-formed stop lists")

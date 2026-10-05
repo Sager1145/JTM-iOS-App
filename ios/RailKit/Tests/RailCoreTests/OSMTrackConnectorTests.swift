@@ -283,6 +283,71 @@ struct OSMTrackConnectorTests {
         ], junctions: [junction])
     }
 
+    @Test("An osmTrack endJunction is one hop onto a different identity")
+    func endJunctionOneHop() {
+        let graph = endTrack()
+        #expect(graph.rejectedPhysicalJunctionIDs.isEmpty)
+        let ownEnd = key(point(200), "West")
+        let foreign = key(point(220), "East")
+        #expect(RouteSolver.sameIdentitySpan(from: ownEnd, to: foreign, graph: graph, date: nil) == false)
+        #expect(RouteSolver.sameIdentitySpan(
+            from: key(point(20), "West"), to: ownEnd, graph: graph, date: nil))
+        let hop = RouteSolver.physicalContinuationPath(
+            from: ownEnd, to: foreign, graph: graph, rideDate: nil)
+        #expect(hop == [ownEnd, foreign])
+        #expect(RouteSolver.physicalBoundaryIsProven(
+            from: key(point(-100), "West"), to: key(point(400), "East"),
+            graph: graph, rideDate: nil))
+    }
+
+    @Test("A 60 m endJunction stub is rejected")
+    func endJunctionStubTooLong() {
+        let graph = endTrack(pathEnd: 160, foreignAt: 220, attachTo: 60)
+        #expect(graph.rejectedPhysicalJunctionIDs == ["track"])
+        #expect(graph.rejectedPhysicalJunctionReasons.contains { $0.contains("attach") })
+    }
+
+    @Test("An endJunction without same-train evidence is rejected")
+    func endJunctionMissingSameTrainEvidence() {
+        let graph = endTrack(evidence: ["https://www.openstreetmap.org/way/1"])
+        #expect(graph.rejectedPhysicalJunctionIDs == ["track"])
+        #expect(graph.rejectedPhysicalJunctionReasons.contains { $0.contains("same-train") })
+    }
+
+    @Test("An endJunction aimed at the wrong identity is rejected")
+    func endJunctionWrongIdentity() {
+        let missing = endTrack(toLine: "Other")
+        #expect(missing.rejectedPhysicalJunctionIDs == ["track"])
+        #expect(missing.rejectedPhysicalJunctionReasons.contains { $0.contains("existing vertex") })
+        let mismatched = endTrack(toLine: "East", endIdentity: "Other")
+        #expect(mismatched.rejectedPhysicalJunctionIDs == ["track"])
+        #expect(mismatched.rejectedPhysicalJunctionReasons.contains { $0.contains("identity mismatch") })
+    }
+
+    private func endTrack(
+        pathEnd: Double = 200, foreignAt: Double = 220, attachTo: Double = 20,
+        toLine: String = "East", endIdentity: String? = nil,
+        evidence: [String] = [
+            "https://example.invalid/train", "https://www.openstreetmap.org/way/1",
+        ]
+    ) -> RouteGraph.Graph {
+        let named = endIdentity ?? toLine
+        let foreign = point(foreignAt)
+        let junction = RouteGraph.PhysicalJunction(
+            id: "track",
+            from: .init(identity: identity("West"), coordinate: point(0)),
+            to: .init(identity: identity(toLine), coordinate: foreign),
+            evidence: evidence, kind: .osmTrack,
+            path: [point(20), point(pathEnd)], source: source([1]),
+            attachMeters: .init(from: 20, to: attachTo),
+            endJunction: .init(end: .to, identity: identity(named), coordinate: foreign))
+        var features = [rail([point(-100), point(0)], line: "West")]
+        if toLine == "East" {
+            features.append(rail([foreign, point(foreignAt + 180)], line: "East"))
+        }
+        return RouteGraph.build(from: features, junctions: [junction])
+    }
+
     @Test("A zeroLength endpoint that is only an osmTrack path vertex is rejected in either order")
     func zeroLengthOnOsmTrackVertexRejectedInEitherOrder() {
         let westStart = point(0)

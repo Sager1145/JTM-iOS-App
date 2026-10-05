@@ -831,6 +831,10 @@ public enum RouteSolver {
         explicitOperators.formUnion(inferred.operatorNames)
         preferredLines.formUnion(explicitLines)
         preferredOperators.formUnion(explicitOperators)
+        // A service's preferred lines stay preferred. A same-name platform on
+        // another line (神戸線 beside 宝塚線) must not join that set, or the
+        // soft penalty never distinguishes them. With no service list, the
+        // common endpoint lines are still the preference.
 
         let fromPreferred = preferredStationPool(
             fromStationIndices, stations: stations, allowedCodes: allowedCodes)
@@ -852,7 +856,15 @@ public enum RouteSolver {
         let commonLines = preferredCommonLines.isEmpty ? allCommonLines : preferredCommonLines
         let commonOperators = preferredCommonOperators.isEmpty
             ? allCommonOperators : preferredCommonOperators
-        preferredLines.formUnion(commonLines)
+        let serviceLines = Set(train.preferredLineNames.filter { !$0.isEmpty })
+        if serviceLines.isEmpty {
+            preferredLines.formUnion(commonLines)
+        } else {
+            let foldedService = Set(serviceLines.map(displayRowGraphLineName))
+            for line in commonLines where foldedService.contains(displayRowGraphLineName(line)) {
+                preferredLines.insert(line)
+            }
+        }
         preferredOperators.formUnion(commonOperators)
         if preferredLines.isEmpty {
             // A section spanning two lines must not penalize its destination
@@ -1050,6 +1062,11 @@ public enum RouteSolver {
                     continue
                 }
                 guard visited.insert(edge.to).inserted else { continue }
+                if boundary.kind == .osmTrack, boundary.endJunction != nil {
+                    previous[edge.to] = current
+                    pending.append(edge.to)
+                    continue
+                }
                 let from = RouteGraph.physicalNodeKey(boundary.from.coordinate, identity: boundary.from.identity)
                 let to = RouteGraph.physicalNodeKey(boundary.to.coordinate, identity: boundary.to.identity)
                 guard (current == from && edge.to == to) || (current == to && edge.to == from) else { continue }
@@ -1083,7 +1100,12 @@ public enum RouteSolver {
                     junction.to.coordinate, identity: junction.to.identity)] else { return false }
             return junction.osmRejection(fromCoordinate: from, toCoordinate: to) == nil
         case .osmTrack:
-            return false
+            guard let endJunction = junction.endJunction, edge.length > 0, a != b,
+                  Geometry.distanceMeters(a, b) <= RouteGraph.PhysicalJunction.maximumOSMAttachMeters
+            else { return false }
+            let foreign = RouteGraph.physicalNodeKey(
+                endJunction.coordinate, identity: endJunction.identity)
+            return current == foreign || edge.to == foreign
         }
     }
 
@@ -1371,6 +1393,10 @@ public enum RouteSolver {
                                 from: current.key, junction: junction, graph: graph, rideDate: rideDate)
                             else { continue }
                             nextSources.insert(hop.destination)
+                            continue
+                        }
+                        if junction.kind == .osmTrack, junction.endJunction != nil {
+                            nextSources.insert(edge.to)
                             continue
                         }
                         let from = RouteGraph.physicalNodeKey(junction.from.coordinate, identity: junction.from.identity)
@@ -1839,14 +1865,92 @@ public enum RouteSolver {
             return bridged.isEmpty ? nil : bridged
         }
 
+        /// Nodes within 520 m whose incoming edge passes within 1 m of `anchor`.
+        /// The walk stops on that edge. It does not use `sameIdentitySpan`.
+        func carryTargets(from start: String, anchor: Coordinate) -> Set<String> {
+            let requiredIdentity = physicalIdentity(start)
+            var targets = Set<String>()
+            var queue: [(key: String, length: Double)] = [(start, 0)]
+            var best = [start: 0.0]
+            var index = 0
+            while index < queue.count && index < 64 {
+                let current = queue[index]
+                index += 1
+                guard let origin = graph.nodes[current.key] else { continue }
+                for edge in graph.adjacency[current.key] ?? [] {
+                    let total = current.length + edge.length
+                    guard edge.connector == nil, edge.physicalJunction == nil,
+                          let destination = graph.nodes[edge.to],
+                          physicalIdentity(edge.to) == requiredIdentity,
+                          edgeMatchesRequiredHints(edge, hints: hints),
+                          RouteGraph.RailValidity.isValid(
+                            validFrom: edge.validFrom, validTo: edge.validTo, on: rideDate)
+                    else { continue }
+                    let onAnchor = segmentProjection(anchor, from: origin, to: destination)
+                        .map { $0.t >= 0 && $0.t <= 1 && $0.distance <= onEdgeToleranceMeters } ?? false
+                    if onAnchor, total <= anchorSpanMeters {
+                        targets.insert(edge.to)
+                    }
+                    guard total <= anchorSpanMeters, !onAnchor,
+                          total < best[edge.to, default: .infinity] else { continue }
+                    best[edge.to] = total
+                    queue.append((edge.to, total))
+                }
+            }
+            return targets
+        }
+
+        /// Carry an on-edge station dot along its edge to the next node.
+        /// Nil when that walk is longer than 520 m or is not unique, so the
+        /// caller keeps the direct-edge path (a 700 m edge still certifies).
+        func carryOnEdgeAnchor(_ anchor: Coordinate) -> [String: Int]? {
+            var carried: [String: Int] = [:]
+            let pendingPoints = pending + [anchor]
+            for (key, parent) in frontier.sorted(by: { $0.value < $1.value }) {
+                guard let currentCoordinate = graph.nodes[key] else { continue }
+                for candidateKey in RouteGraph.exactNodeKeys(currentCoordinate, in: graph) {
+                    guard pending.isEmpty || candidateKey == key,
+                          let prefix = physicalContinuationPath(
+                            from: key, to: candidateKey, graph: graph, rideDate: rideDate)
+                    else { continue }
+                    let targets = carryTargets(from: candidateKey, anchor: anchor)
+                    guard let path = onEdgeIdentityPath(
+                        from: candidateKey, targetKeys: targets, pendingPoints: pendingPoints,
+                        graph: graph, rideDate: rideDate, hints: hints,
+                        maxMeters: anchorSpanMeters), path.count >= 2 else { continue }
+                    var cursor = parent
+                    for prefixKey in prefix.dropFirst() {
+                        steps.append(Step(key: prefixKey, parent: cursor))
+                        cursor = steps.count - 1
+                    }
+                    for node in path.dropFirst() {
+                        steps.append(Step(key: node, parent: cursor))
+                        cursor = steps.count - 1
+                    }
+                    if let end = path.last {
+                        carried[end] = cursor
+                        arrivedByRail.insert(end)
+                    }
+                }
+            }
+            return carried.isEmpty ? nil : carried
+        }
+
         for (offset, coordinate) in coordinates.enumerated().dropFirst() {
             guard !Task.isCancelled else { return nil }
             let nextCoordinate = Grid.normalizeGraphCoord(coordinate)
             let isNode = !RouteGraph.exactNodeKeys(nextCoordinate, in: graph).isEmpty
-            if !isNode, anchorIndices.contains(offset), offset < coordinates.count - 1,
-               !anchorWithinOneMeter(coordinate) {
-                skippedAnchor = true
-                continue
+            if !isNode, anchorIndices.contains(offset), offset < coordinates.count - 1 {
+                if !anchorWithinOneMeter(coordinate) {
+                    skippedAnchor = true
+                    continue
+                }
+                if let carried = carryOnEdgeAnchor(coordinate) {
+                    frontier = carried
+                    pending.removeAll(keepingCapacity: true)
+                    skippedAnchor = false
+                    continue
+                }
             }
             if isNode, skippedAnchor, pending.isEmpty {
                 guard let bridged = bridgeSkippedAnchor(to: nextCoordinate) else { return nil }

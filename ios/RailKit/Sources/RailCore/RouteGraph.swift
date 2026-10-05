@@ -94,6 +94,10 @@ public enum RouteGraph {
         public let attachMeters: AttachMeters?
         /// Set when one end is a dead-end platform rather than an N02 vertex.
         public let terminus: Terminus?
+        /// Set when one end of an `osmTrack` attaches to an existing vertex of
+        /// a different identity. The track stays on its own identity; only the
+        /// stub is a junction hop.
+        public let endJunction: EndJunction?
         /// Passenger stop this reviewed connection belongs to. Empty when the
         /// catalog row did not name one. Matching uses these, never proximity.
         public let station: String?
@@ -144,6 +148,21 @@ public enum RouteGraph {
             }
         }
 
+        /// One end of an `osmTrack` attaches to an existing surveyed vertex of
+        /// a different identity. `end == .to` means `to` is that foreign vertex
+        /// and the path's last point is the near side of the stub.
+        public struct EndJunction: Sendable, Equatable {
+            public enum End: String, Sendable, Equatable { case to, from }
+            public let end: End
+            public let identity: TrackIdentity
+            public let coordinate: Coordinate
+            public init(end: End, identity: TrackIdentity, coordinate: Coordinate) {
+                self.end = end
+                self.identity = identity
+                self.coordinate = coordinate
+            }
+        }
+
         /// Longest reviewed link between two existing surveyed vertices.
         public static let maximumReviewedLinkMeters: Double = 30
         /// Longest straight stub from an existing vertex onto a reviewed OSM path.
@@ -159,18 +178,34 @@ public enum RouteGraph {
         /// The registered 上野–東京 display interval's longest step is 697 m.
         public static let maximumOSMPathStepMeters: Double = 2_000
 
+        /// True when `evidence` cites the train, not only an OpenStreetMap way.
+        /// An `endJunction` stub joins two identities and needs that citation.
+        public static func hasSameTrainEvidence(_ evidence: [String]) -> Bool {
+            evidence.contains { item in
+                let trimmed = item.trimmingCharacters(in: .whitespacesAndNewlines)
+                guard !trimmed.isEmpty else { return false }
+                let lower = trimmed.lowercased()
+                if lower.contains("openstreetmap.org") { return false }
+                if lower.hasPrefix("way "), lower.dropFirst(4).allSatisfy(\.isNumber) { return false }
+                return true
+            }
+        }
+
         /// Cross-identity continuity is only a reviewed junction: `zeroLength`
         /// at an identical surveyed vertex, a `shortLink` of at most
         /// `maximumReviewedLinkMeters` between two different existing vertices,
         /// or an `osmConnector` with a reviewed OpenStreetMap path whose stubs
-        /// are at most `maximumOSMAttachMeters`. An `osmTrack` does not change
-        /// identity. A terminus `osmTrack` leaves its named end as a dead-end
-        /// platform. Neither distance nor a service/display relationship can
-        /// create one; they are never inferred.
+        /// are at most `maximumOSMAttachMeters`. An `osmTrack` keeps its path
+        /// on one identity. A terminus `osmTrack` leaves its named end as a
+        /// dead-end platform. An `endJunction` leaves a stub of at most
+        /// `maximumOSMAttachMeters` onto an existing vertex of a different
+        /// identity; that stub is one junction hop. Neither distance nor a
+        /// service/display relationship can create one; they are never inferred.
         public init(id: String, from: Endpoint, to: Endpoint, evidence: [String],
                     validFrom: String? = nil, validTo: String? = nil, kind: Kind = .zeroLength,
                     path: [Coordinate]? = nil, source: Source? = nil,
                     attachMeters: AttachMeters? = nil, terminus: Terminus? = nil,
+                    endJunction: EndJunction? = nil,
                     station: String? = nil, stationCode: String? = nil) {
             self.kind = kind
             self.id = id
@@ -183,6 +218,7 @@ public enum RouteGraph {
             self.source = source
             self.attachMeters = attachMeters
             self.terminus = terminus
+            self.endJunction = endJunction
             self.station = station
             self.stationCode = stationCode
         }
@@ -200,14 +236,21 @@ public enum RouteGraph {
         /// dead-end platform, not an existing N02 vertex.
         func chainNodeKeys() -> [String]? {
             guard kind == .osmConnector || kind == .osmTrack, let path, path.count >= 2 else { return nil }
-            let pathIdentity = kind == .osmConnector ? Self.osmConnectorIdentity(id) : from.identity
+            let foreignTo = kind == .osmTrack && endJunction?.end == .to
+            let foreignFrom = kind == .osmTrack && endJunction?.end == .from
             let deadEnd = kind == .osmTrack && terminus?.end == .to
-            var keys = [RouteGraph.physicalNodeKey(from.coordinate, identity: from.identity)]
+            let pathIdentity = kind == .osmConnector
+                ? Self.osmConnectorIdentity(id)
+                : (foreignFrom ? to.identity : from.identity)
+            var keys: [String] = []
+            if !foreignFrom {
+                keys.append(RouteGraph.physicalNodeKey(from.coordinate, identity: from.identity))
+            }
             for point in path {
                 let key = RouteGraph.physicalNodeKey(point, identity: pathIdentity)
                 if keys.last != key { keys.append(key) }
             }
-            if !deadEnd {
+            if !deadEnd && !foreignTo {
                 let end = RouteGraph.physicalNodeKey(to.coordinate, identity: to.identity)
                 if keys.last != end { keys.append(end) }
             }
@@ -227,6 +270,14 @@ public enum RouteGraph {
             if let terminus {
                 guard kind == .osmTrack else { return "terminus requires osmTrack" }
                 guard terminus.end == .to else { return "unsupported terminus end" }
+            }
+            if let endJunction {
+                guard kind == .osmTrack else { return "endJunction requires osmTrack" }
+                if terminus != nil { return "endJunction excludes terminus" }
+                let foreign = endJunction.end == .to ? to.coordinate : from.coordinate
+                if Grid.normalizeGraphCoord(endJunction.coordinate) != Grid.normalizeGraphCoord(foreign) {
+                    return "endJunction coordinate mismatch"
+                }
             }
             guard let path, path.count >= 2 else { return "path has fewer than 2 points" }
             guard let attachMeters else { return "missing attachMeters" }
@@ -275,10 +326,22 @@ public enum RouteGraph {
                     }
                 }
             }
+            if let endJunction {
+                let ownIdentity = endJunction.end == .to ? from.identity : to.identity
+                let foreignIdentity = endJunction.end == .to ? to.identity : from.identity
+                if endJunction.identity != foreignIdentity || endJunction.identity == ownIdentity {
+                    return "identity mismatch"
+                }
+                if !Self.hasSameTrainEvidence(evidence) {
+                    return "missing same-train evidence"
+                }
+            }
             switch kind {
             case .osmConnector where from.identity == to.identity:
                 return "identity mismatch"
-            case .osmTrack where from.identity != to.identity:
+            case .osmTrack where endJunction == nil && from.identity != to.identity:
+                return "identity mismatch"
+            case .osmTrack where endJunction != nil && from.identity == to.identity:
                 return "identity mismatch"
             default:
                 return nil
@@ -1268,13 +1331,19 @@ public enum RouteGraph {
                 let institutions = (graph.nodeMeta[fromKey]?.institutionTypeCodes ?? [])
                     .union(graph.nodeMeta[toKey]?.institutionTypeCodes ?? [])
                 if junction.kind == .osmConnector || junction.kind == .osmTrack {
-                    let pathIdentity = junction.kind == .osmConnector
-                        ? PhysicalJunction.osmConnectorIdentity(junction.id) : junction.from.identity
+                    let pathIdentity: TrackIdentity
+                    if junction.kind == .osmConnector {
+                        pathIdentity = PhysicalJunction.osmConnectorIdentity(junction.id)
+                    } else if junction.endJunction?.end == .from {
+                        pathIdentity = junction.to.identity
+                    } else {
+                        pathIdentity = junction.from.identity
+                    }
                     for point in junction.path ?? [] {
                         _ = ensureNode(point, pathIdentity)
                     }
                     let keys: [String]
-                    if deadEnd {
+                    if deadEnd || junction.endJunction != nil {
                         guard let chained = junction.chainNodeKeys() else {
                             reject(junction, "path has fewer than 2 points")
                             continue
@@ -1297,6 +1366,31 @@ public enum RouteGraph {
                         graph.adjacency[start, default: []].append(edge)
                         edge.to = start
                         graph.adjacency[end, default: []].append(edge)
+                    }
+                    if junction.kind == .osmTrack, let endJunction = junction.endJunction,
+                       let ownKey = endJunction.end == .to ? keys.last : keys.first {
+                        let foreignKey = physicalNodeKey(
+                            endJunction.coordinate, identity: endJunction.identity)
+                        guard let ownNode = graph.nodes[ownKey], let foreignNode = graph.nodes[foreignKey],
+                              ownKey != foreignKey else {
+                            reject(junction, "endpoint is not an existing vertex")
+                            continue
+                        }
+                        let meters = Geometry.distanceMeters(ownNode, foreignNode)
+                        guard meters <= PhysicalJunction.maximumOSMAttachMeters else {
+                            reject(junction, "attach exceeds \(PhysicalJunction.maximumOSMAttachMeters) m")
+                            continue
+                        }
+                        let stub = PhysicalJunctionEdge(
+                            junction: junction, institutionTypeCodes: institutions)
+                        var stubEdge = Edge(
+                            to: foreignKey, length: max(meters, 0.01), institutionTypeCode: "",
+                            railwayClassCode: "", lineName: "", operator: "",
+                            connector: nil, physicalJunction: stub,
+                            validFrom: junction.validFrom, validTo: junction.validTo)
+                        graph.adjacency[ownKey, default: []].append(stubEdge)
+                        stubEdge.to = ownKey
+                        graph.adjacency[foreignKey, default: []].append(stubEdge)
                     }
                     if junction.kind == .osmTrack {
                         for key in keys {

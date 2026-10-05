@@ -60,6 +60,24 @@ public struct PhysicalRailJunctionRegistry: Sendable {
                 return .init(end: end, station: station, stationCode: stationCode, coordinate: point)
             }
         }
+        struct EndJunction: Decodable {
+            let end: String
+            let identity: Identity
+            let coordinate: [Double]
+            func value() throws -> RouteGraph.PhysicalJunction.EndJunction {
+                guard let end = RouteGraph.PhysicalJunction.EndJunction.End(rawValue: end) else {
+                    throw RegistryError.unsupportedEndJunction
+                }
+                guard let point = Coordinate(pair: coordinate), point.lon.isFinite, point.lat.isFinite,
+                      (-180...180).contains(point.lon), (-90...90).contains(point.lat) else {
+                    throw RegistryError.invalidCoordinate
+                }
+                return .init(end: end, identity: .init(
+                    operatorName: identity.operatorName, lineName: identity.lineName,
+                    railwayClassCode: identity.railwayClassCode,
+                    level: identity.level, trackID: identity.trackID), coordinate: point)
+            }
+        }
         let id: String
         let region: String
         let from: Endpoint
@@ -73,6 +91,7 @@ public struct PhysicalRailJunctionRegistry: Sendable {
         let source: Source?
         let attachMeters: Attach?
         let terminus: Terminus?
+        let endJunction: EndJunction?
         let station: String?
         let stationCode: String?
         func pathCoordinates() throws -> [Coordinate]? {
@@ -86,7 +105,7 @@ public struct PhysicalRailJunctionRegistry: Sendable {
             }
         }
     }
-    public enum RegistryError: Error, Equatable { case unsupportedFormat, unsupportedRegion, invalidCoordinate, duplicateID, unsupportedKind, unsupportedTerminus }
+    public enum RegistryError: Error, Equatable { case unsupportedFormat, unsupportedRegion, invalidCoordinate, duplicateID, unsupportedKind, unsupportedTerminus, unsupportedEndJunction }
     private let byRegion: [String: [RouteGraph.PhysicalJunction]]
 
     public init(data: Data) throws {
@@ -105,6 +124,7 @@ public struct PhysicalRailJunctionRegistry: Sendable {
                 validFrom: row.validFrom, validTo: row.validTo, kind: kind,
                 path: try row.pathCoordinates(), source: row.source?.value(),
                 attachMeters: row.attachMeters?.value, terminus: try row.terminus?.value(),
+                endJunction: try row.endJunction?.value(),
                 station: row.station, stationCode: row.stationCode))
         }
         byRegion = records
