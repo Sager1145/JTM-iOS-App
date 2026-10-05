@@ -1202,13 +1202,13 @@ final class RiddenRouteStore {
                         if !verified {
                             physicalGaps.append(PhysicalGap(segmentIndex: index, isBoundary: false))
                         }
-                        if sharesBoundary {
-                            if let previous = physicalContinuationKey, let first = recordedKeys?.first,
-                               RouteSolver.physicalBoundaryIsProven(from: previous, to: first,
-                                   graph: graph, rideDate: context.rideDate) { }
-                            else if !physicalGaps.contains(where: { $0.segmentIndex == index && $0.isBoundary }) {
-                                physicalGaps.append(PhysicalGap(segmentIndex: index, isBoundary: true))
-                            }
+                        if sharesBoundary,
+                           RouteSolver.provenBoundaryContinuation(
+                               previous: physicalContinuationKey, first: recordedKeys?.first,
+                               previousSection: sections[index - 1], nextSection: section,
+                               graph: graph, stations: stationIndex, rideDate: context.rideDate) == nil,
+                           !physicalGaps.contains(where: { $0.segmentIndex == index && $0.isBoundary }) {
+                            physicalGaps.append(PhysicalGap(segmentIndex: index, isBoundary: true))
                         }
                         physicalContinuationKey = recordedKeys?.last
                         for (partIndex, coordinates) in exact.geometry.lines.enumerated() {
@@ -1266,13 +1266,14 @@ final class RiddenRouteStore {
                     if solved.rawPathKeys.isEmpty {
                         physicalGaps.append(PhysicalGap(segmentIndex: index, isBoundary: false))
                     }
-                    if sharesBoundary {
-                        if let previous = physicalContinuationKey, let first = solved.rawPathKeys.first,
-                           physicalBoundaryIsProven(from: previous, to: first, at: solved.coordinates[0],
-                               store: graphStore!, rideDate: context.rideDate) { }
-                        else if !physicalGaps.contains(where: { $0.segmentIndex == index && $0.isBoundary }) {
-                            physicalGaps.append(PhysicalGap(segmentIndex: index, isBoundary: true))
-                        }
+                    if sharesBoundary,
+                       RouteSolver.provenBoundaryContinuation(
+                           previous: physicalContinuationKey, first: solved.rawPathKeys.first,
+                           previousSection: sections[index - 1], nextSection: section,
+                           graph: physicalProofGraph(coordinates: [solved.coordinates[0]], store: graphStore!),
+                           stations: stationIndex, rideDate: context.rideDate) == nil,
+                       !physicalGaps.contains(where: { $0.segmentIndex == index && $0.isBoundary }) {
+                        physicalGaps.append(PhysicalGap(segmentIndex: index, isBoundary: true))
                     }
                     physicalContinuationKey = solved.rawPathKeys.last
 
@@ -1316,14 +1317,16 @@ final class RiddenRouteStore {
                         if keys == nil {
                             physicalGaps.append(PhysicalGap(segmentIndex: index, isBoundary: false))
                         }
-                        if sharesBoundary {
-                            if let previous = previousPhysicalKey, let first = keys?.first,
-                               let coordinate = matchedSource.lines.first?.first,
-                               physicalBoundaryIsProven(from: previous, to: first, at: coordinate,
-                                   store: graphStore!, rideDate: context.rideDate) { }
-                            else if !physicalGaps.contains(where: { $0.segmentIndex == index && $0.isBoundary }) {
-                                physicalGaps.append(PhysicalGap(segmentIndex: index, isBoundary: true))
-                            }
+                        if sharesBoundary,
+                           RouteSolver.provenBoundaryContinuation(
+                               previous: previousPhysicalKey, first: keys?.first,
+                               previousSection: sections[index - 1], nextSection: section,
+                               graph: physicalProofGraph(
+                                   coordinates: matchedSource.lines.first?.first.map { [$0] } ?? [],
+                                   store: graphStore!),
+                               stations: stationIndex, rideDate: context.rideDate) == nil,
+                           !physicalGaps.contains(where: { $0.segmentIndex == index && $0.isBoundary }) {
+                            physicalGaps.append(PhysicalGap(segmentIndex: index, isBoundary: true))
                         }
                         physicalContinuationKey = keys?.last
                     }

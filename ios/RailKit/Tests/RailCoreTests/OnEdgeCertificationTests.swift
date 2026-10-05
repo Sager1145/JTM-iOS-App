@@ -109,6 +109,21 @@ struct OnEdgeCertificationTests {
         #expect(certify([a, point(0.5), b], graph: graph) == [key(a), key(b)])
     }
 
+    @Test("A terminal zero-length sibling is not a second traversed identity")
+    func terminalJunctionSibling() {
+        let north = Coordinate(lon: b.lon, lat: b.lat + 0.001)
+        let sibling = RouteGraph.PhysicalJunction(
+            id: "rail-other", from: .init(identity: identity(), coordinate: b),
+            to: .init(identity: identity("Other"), coordinate: b), evidence: ["survey:reviewed"])
+        let graph = RouteGraph.build(from: [rail([a, b]), rail([b, north], line: "Other")],
+            junctions: [sibling])
+        #expect(certify([a, b, b], graph: graph) == [key(a), key(b)])
+        #expect(certify([a, b, b], graph: graph, lines: []) == [key(a), key(b)])
+        let parallel = RouteGraph.build(
+            from: [rail([a, b]), rail([a, b], line: "Other")], junctions: [sibling])
+        #expect(certify([a, b, b], graph: parallel, lines: []) == nil)
+    }
+
     @Test("Real source paths certify via 岐阜羽島, 吉富 and 石川, including 芦原温泉 rounding")
     func realSourcePaths() throws {
         let root = try PortFixtures.repositoryRoot()
@@ -164,8 +179,10 @@ struct OnEdgeCertificationTests {
             ("杵築", "宇佐", "009303", "009217", "日豊線", "九州旅客鉄道", "2026-07-01"),
             ("杵築", "中津", "009303", "009013", "日豊線", "九州旅客鉄道", "2026-07-01"),
             ("重岡", "大分", "009707", "009479", "日豊線", "九州旅客鉄道", "2026-07-01"),
+            ("重岡", "大分", "009707", "009479", "日豊線", "九州旅客鉄道", "2026-10-03"),
             ("大鰐温泉", "大館", "000618", "000660", "奥羽線", "東日本旅客鉄道", "2026-07-01"),
             ("香椎", "吉塚", "008931", "009002", "鹿児島線", "九州旅客鉄道", "2026-07-01"),
+            ("香椎", "吉塚", "008931", "009002", "鹿児島線", "九州旅客鉄道", "2026-10-03"),
             ("大宮", "宇都宮", "002914", "002113", "東北線", "東日本旅客鉄道", "2026-07-01"),
             ("大宮", "宇都宮", "002914", "002113", "東北線", "東日本旅客鉄道", "1999-07-17"),
         ]

@@ -98,8 +98,8 @@ struct ShortLinkJunctionTests {
             .appendingPathComponent("app/data/physical-rail-junctions.json")
         let registry = try PhysicalRailJunctionRegistry(data: Data(contentsOf: url))
         let all = Localization.supportedCountries.flatMap { registry.junctions(for: $0) }
-        #expect(all.count == 171)
-        #expect(all.filter { $0.kind == .zeroLength }.count == 155)
+        #expect(all.count == 181)
+        #expect(all.filter { $0.kind == .zeroLength }.count == 162)
         #expect(all.filter { $0.kind == .shortLink }.count == 5)
     }
 }

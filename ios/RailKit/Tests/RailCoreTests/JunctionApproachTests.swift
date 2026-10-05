@@ -68,10 +68,26 @@ struct JunctionApproachTests {
             institutionTypeCode: "1", validFrom: validFrom), lines: [[point(from), point(to)]])
     }
 
-    private func junction(_ meters: Double, _ from: String, _ to: String) -> RouteGraph.PhysicalJunction {
+    private func junction(
+        _ meters: Double, _ from: String, _ to: String,
+        station: String? = nil, stationCode: String? = nil
+    ) -> RouteGraph.PhysicalJunction {
         .init(id: "\(from)-\(to)", from: .init(identity: identity(from), coordinate: point(meters)),
             to: .init(identity: identity(to), coordinate: point(meters)), evidence: ["survey:reviewed"],
-            validFrom: "2020-01-01", validTo: "2030-01-01")
+            validFrom: "2020-01-01", validTo: "2030-01-01",
+            station: station, stationCode: stationCode)
+    }
+
+    private func station(
+        _ point: Coordinate, code: String, name: String, group: String, line: String
+    ) -> Stations.Feature {
+        .init(properties: [
+            "n02_station_code": .string(code), "n02_group_code": .string(group),
+            "station_name": .string(name), "line_name": .string(line),
+            "operator": .string("Operator"), "institution_type_code": .string("1"),
+        ], geometry: .init(type: "Point", coordinates: .array([
+            .number(point.lon), .number(point.lat),
+        ])))
     }
 
     @Test("Reviewed junction approaches are bounded on both sides and date-valid")
@@ -169,8 +185,8 @@ struct JunctionApproachTests {
         }
 
         #expect(baselineJunctions.count == 10)
-        #expect(addedRecords.count == 161)
-        #expect(Set(addedRecords.map(\.station)).count == 138)
+        #expect(addedRecords.count == 171)
+        #expect(Set(addedRecords.map(\.station)).count == 143)
 
         try assertRegistryAccepted(dataRoot: dataRoot, junctions: fullJunctions)
 
@@ -227,17 +243,150 @@ struct JunctionApproachTests {
                         reviewed.junction.to.coordinate, identity: reviewed.junction.to.identity))
                     guard (previous == from && first == to)
                         || (previous == to && first == from) else { continue }
-                    // Known, tracked limitation (not a data error): はるか leaves the
-                    // 東海道線 passenger arm at 大阪, but its physical path is the
-                    // 梅田貨物線/うめきた arm, ~8 km along-track from the reviewed
-                    // osaka-osakaloop-tokaido vertex. Fixing it needs joint solving of
-                    // the sections that meet at the stop; see
-                    // ios/PHYSICAL_ROUTE_GAPS_20261003.md.
-                    if reviewed.junction.id == "osaka-osakaloop-tokaido" { continue }
                     Issue.record("\(train.id) retains a boundary gap at \(gap.station) on \(rideDate); junction \(reviewed.junction.id) valid from \(reviewed.validFrom)")
                 }
             }
         }
+    }
+
+    @Test("新大阪→大阪 and 大阪→天王寺 prove at the reviewed 大阪 vertex")
+    func osakaSectionsProveAtReviewedVertex() throws {
+        let root = try PortFixtures.repositoryRoot()
+        let pipeline = PhysicalEndpointTrimTests()
+        let data = try pipeline.loadRealData(root: root)
+        let date = "2026-10-03"
+        let tokaido = try #require(displayLine(data.network, name: "東海道線", stations: ["新大阪", "大阪"]))
+        let loop = try #require(displayLine(data.network, name: "大阪環状線", stations: ["大阪", "天王寺"]))
+        let shinOsaka = try #require(tokaido.compactLine?.stations.first { $0.name == "新大阪" }?.id)
+        let tokaidoOsaka = try #require(tokaido.compactLine?.stations.first { $0.name == "大阪" }?.id)
+        let loopOsaka = try #require(loop.compactLine?.stations.first { $0.name == "大阪" }?.id)
+        let tennoji = try #require(loop.compactLine?.stations.first { $0.name == "天王寺" }?.id)
+        let west = try #require(sourceKeys(
+            line: tokaido, from: shinOsaka, to: tokaidoOsaka, data: data, pipeline: pipeline, date: date),
+            "東海道線 \(shinOsaka)→\(tokaidoOsaka)")
+        let east = try #require(sourceKeys(
+            line: loop, from: loopOsaka, to: tennoji, data: data, pipeline: pipeline, date: date),
+            "大阪環状線 \(loopOsaka)→\(tennoji)")
+        let previousKey = try #require(west.keys.last)
+        let firstKey = try #require(east.keys.first)
+        let graph = pipeline.proofGraph(east.coordinates, store: data.graphStore)
+        #expect(graph.nodes[previousKey] != nil)
+        #expect(!RouteSolver.physicalBoundaryIsProven(
+            from: previousKey, to: firstKey, graph: graph, rideDate: date))
+        let previous = RouteSection(
+            from: "新大阪", to: "大阪", fromN02StationCode: shinOsaka, toN02StationCode: loopOsaka,
+            lineNames: ["東海道線"], operatorNames: ["西日本旅客鉄道"])
+        let next = RouteSection(
+            from: "大阪", to: "天王寺", fromN02StationCode: loopOsaka, toN02StationCode: tennoji,
+            lineNames: ["大阪環状線"], operatorNames: ["西日本旅客鉄道"])
+        let pair = try #require(RouteSolver.provenBoundaryContinuation(
+            previous: previousKey, first: firstKey, previousSection: previous, nextSection: next,
+            graph: graph, stations: data.stations, rideDate: date))
+        let vertex = Grid.normalizeGraphCoord(Coordinate(lon: 135.48736, lat: 34.69757))
+        let atVertex = graph.nodes.filter { $0.value == vertex }.map(\.key)
+        let vertexPrevious = try #require(atVertex.first {
+            physicalIdentityKey($0) == physicalIdentityKey(previousKey)
+        })
+        let vertexFirst = try #require(atVertex.first {
+            physicalIdentityKey($0) == physicalIdentityKey(firstKey)
+        })
+        #expect(RouteSolver.physicalBoundaryIsProven(
+            from: vertexPrevious, to: vertexFirst, graph: graph, rideDate: date))
+        #expect(pair.previous == pair.first
+            || RouteSolver.physicalBoundaryIsProven(
+                from: pair.previous, to: pair.first, graph: graph, rideDate: date))
+        var unmatched = next
+        unmatched.fromN02StationCode = tokaidoOsaka == loopOsaka ? "007091" : tokaidoOsaka
+        #expect(unmatched.fromN02StationCode != previous.toN02StationCode)
+        #expect(RouteSolver.provenStationBoundaryPair(
+            from: previousKey, to: firstKey, previousSection: previous, nextSection: unmatched,
+            graph: graph, stations: data.stations, rideDate: date) == nil)
+    }
+
+    @Test("A distant reviewed vertex proves only when the stop code is shared")
+    func stationBoundaryPairRetriesOnlyASharedCode() {
+        let far = 2_000.0
+        let features = [
+            rail(0, 100, "West"), rail(0, -100, "East"),
+            rail(far, far + 100, "West"), rail(far, far - 100, "East"),
+        ]
+        let joined = RouteGraph.build(from: features, junctions: [
+            junction(far, "West", "East", station: "Central", stationCode: "S"),
+        ])
+        let stations = Stations.Index([
+            station(point(0), code: "W", name: "Central", group: "S", line: "West"),
+            station(point(0), code: "E", name: "Central", group: "S", line: "East"),
+        ])
+        let previous = RouteSection(
+            to: "Central", toN02StationCode: "S", lineNames: ["West"], operatorNames: ["Operator"])
+        let next = RouteSection(
+            from: "Central", fromN02StationCode: "S", lineNames: ["East"], operatorNames: ["Operator"])
+        let west = key(0, "West")
+        let east = key(0, "East")
+        let date = "2026-10-03"
+        #expect(!RouteSolver.physicalBoundaryIsProven(from: west, to: east, graph: joined, rideDate: date))
+        let pair = RouteSolver.provenStationBoundaryPair(
+            from: west, to: east, previousSection: previous, nextSection: next,
+            graph: joined, stations: stations, rideDate: date)
+        #expect(pair?.previous == key(far, "West"))
+        #expect(pair?.first == key(far, "East"))
+        var otherCode = next
+        otherCode.fromN02StationCode = "E"
+        #expect(RouteSolver.provenStationBoundaryPair(
+            from: west, to: east, previousSection: previous, nextSection: otherCode,
+            graph: joined, stations: stations, rideDate: date) == nil)
+        var unnamed = next
+        unnamed.fromN02StationCode = nil
+        #expect(RouteSolver.provenBoundaryContinuation(
+            previous: west, first: east, previousSection: previous, nextSection: unnamed,
+            graph: joined, stations: stations, rideDate: date) == nil)
+        #expect(RouteSolver.provenStationBoundaryPair(
+            from: west, to: east, previousSection: previous, nextSection: next,
+            graph: joined, stations: stations, rideDate: "2019-01-01") == nil)
+        let open = RouteGraph.build(from: features)
+        #expect(RouteSolver.provenStationBoundaryPair(
+            from: west, to: east, previousSection: previous, nextSection: next,
+            graph: open, stations: stations, rideDate: date) == nil)
+    }
+
+    private func displayLine(
+        _ network: RouteNetwork, name: String, stations: [String]
+    ) -> RouteNetwork.Line? {
+        network.lines.first { line in
+            line.name == name && line.operator == "西日本旅客鉄道" && line.alignmentDirection == nil
+                && stations.allSatisfy { station in
+                    line.compactLine?.stations.contains { $0.name == station } == true
+                }
+        }
+    }
+
+    private func sourceKeys(
+        line: RouteNetwork.Line, from: String, to: String,
+        data: PhysicalEndpointTrimTests.RealData, pipeline: PhysicalEndpointTrimTests, date: String
+    ) -> (keys: [String], coordinates: [Coordinate])? {
+        guard let stations = line.compactLine?.stations.map(\.id),
+              let start = stations.firstIndex(of: from), let end = stations.firstIndex(of: to),
+              start != end else { return nil }
+        let step = start < end ? 1 : -1
+        var index = start
+        var codes: [String] = []
+        while index != end {
+            let next = index + step
+            guard line.intervals.indices.contains(min(index, next)) else { return nil }
+            codes.append(line.intervals[min(index, next)].code)
+            index = next
+        }
+        let section = RouteSection(
+            fromN02StationCode: from, toN02StationCode: to,
+            lineNames: line.name.map { [$0] }, operatorNames: line.operator.map { [$0] })
+        let hints = RouteHints(
+            requiredLineIDs: [line.lineId], sectionCodes: codes, fromStationCode: from, toStationCode: to)
+        guard let source = data.network.sourceGeometry(for: hints) else { return nil }
+        let coordinates = source.lines.flatMap { $0 }
+        let graph = pipeline.proofGraph(coordinates, store: data.graphStore)
+        guard let keys = RouteSolver.verifiedSourcePath(
+            source.lines, graph: graph, context: .init(rideDate: date), section: section) else { return nil }
+        return (keys, coordinates)
     }
 
     private func physicalIdentityKey(_ key: String?) -> String? {
@@ -359,10 +508,10 @@ struct JunctionApproachTests {
                     let keys = RouteSolver.verifiedSourcePath(
                         source.lines, graph: graph, context: context, section: section)
                     if sharesBoundary,
-                       !(previousKey.flatMap { previous in keys?.first.map { first in
-                           RouteSolver.physicalBoundaryIsProven(from: previous, to: first,
-                               graph: graph, rideDate: context.rideDate)
-                       } } ?? false) {
+                       RouteSolver.provenBoundaryContinuation(
+                           previous: previousKey, first: keys?.first,
+                           previousSection: sections[index - 1], nextSection: section,
+                           graph: graph, stations: data.stations, rideDate: context.rideDate) == nil {
                         if boundaryGapIndices.insert(index).inserted {
                             gaps.append(.init(station: section.from ?? "", previous: previousKey, first: keys?.first))
                         }
@@ -415,11 +564,11 @@ struct JunctionApproachTests {
                     requiredOperators: Set(section.operatorNames ?? [])) ?? []
             }
             if sharesBoundary,
-               !(previousKey.flatMap { previous in resolved.rawPathKeys.first.map { first in
-                   RouteSolver.physicalBoundaryIsProven(from: previous, to: first,
-                       graph: pipeline.proofGraph([resolved.coordinates[0]], store: data.graphStore),
-                       rideDate: context.rideDate)
-               } } ?? false) {
+               RouteSolver.provenBoundaryContinuation(
+                   previous: previousKey, first: resolved.rawPathKeys.first,
+                   previousSection: sections[index - 1], nextSection: section,
+                   graph: pipeline.proofGraph([resolved.coordinates[0]], store: data.graphStore),
+                   stations: data.stations, rideDate: context.rideDate) == nil {
                 if boundaryGapIndices.insert(index).inserted {
                     gaps.append(.init(station: section.from ?? "", previous: previousKey, first: resolved.rawPathKeys.first))
                 }
@@ -453,10 +602,11 @@ struct JunctionApproachTests {
                 let keys = RouteSolver.verifiedSourcePath(
                     matchedSource.lines, graph: matchedGraph, context: context, section: section)
                 if sharesBoundary,
-                   !(previousKey.flatMap { previous in keys?.first.map { first in
-                       RouteSolver.physicalBoundaryIsProven(from: previous, to: first,
-                           graph: matchedGraph, rideDate: context.rideDate)
-                   } } ?? false), boundaryGapIndices.insert(index).inserted {
+                   RouteSolver.provenBoundaryContinuation(
+                       previous: previousKey, first: keys?.first,
+                       previousSection: sections[index - 1], nextSection: section,
+                       graph: matchedGraph, stations: data.stations,
+                       rideDate: context.rideDate) == nil, boundaryGapIndices.insert(index).inserted {
                     gaps.append(.init(station: section.from ?? "", previous: previousKey, first: keys?.first))
                 }
                 physicalKey = keys?.last

@@ -73,6 +73,8 @@ public struct PhysicalRailJunctionRegistry: Sendable {
         let source: Source?
         let attachMeters: Attach?
         let terminus: Terminus?
+        let station: String?
+        let stationCode: String?
         func pathCoordinates() throws -> [Coordinate]? {
             guard let path else { return nil }
             return try path.map { pair in
@@ -102,7 +104,8 @@ public struct PhysicalRailJunctionRegistry: Sendable {
                 id: row.id, from: try row.from.value(), to: try row.to.value(), evidence: row.evidence,
                 validFrom: row.validFrom, validTo: row.validTo, kind: kind,
                 path: try row.pathCoordinates(), source: row.source?.value(),
-                attachMeters: row.attachMeters?.value, terminus: try row.terminus?.value()))
+                attachMeters: row.attachMeters?.value, terminus: try row.terminus?.value(),
+                station: row.station, stationCode: row.stationCode))
         }
         byRegion = records
     }

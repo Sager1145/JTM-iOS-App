@@ -94,6 +94,10 @@ public enum RouteGraph {
         public let attachMeters: AttachMeters?
         /// Set when one end is a dead-end platform rather than an N02 vertex.
         public let terminus: Terminus?
+        /// Passenger stop this reviewed connection belongs to. Empty when the
+        /// catalog row did not name one. Matching uses these, never proximity.
+        public let station: String?
+        public let stationCode: String?
 
         public enum Kind: String, Sendable, Equatable {
             case zeroLength, shortLink, osmConnector, osmTrack
@@ -166,7 +170,8 @@ public enum RouteGraph {
         public init(id: String, from: Endpoint, to: Endpoint, evidence: [String],
                     validFrom: String? = nil, validTo: String? = nil, kind: Kind = .zeroLength,
                     path: [Coordinate]? = nil, source: Source? = nil,
-                    attachMeters: AttachMeters? = nil, terminus: Terminus? = nil) {
+                    attachMeters: AttachMeters? = nil, terminus: Terminus? = nil,
+                    station: String? = nil, stationCode: String? = nil) {
             self.kind = kind
             self.id = id
             self.from = from
@@ -178,6 +183,8 @@ public enum RouteGraph {
             self.source = source
             self.attachMeters = attachMeters
             self.terminus = terminus
+            self.station = station
+            self.stationCode = stationCode
         }
 
         /// Node identity for the internal vertices of one `osmConnector`.

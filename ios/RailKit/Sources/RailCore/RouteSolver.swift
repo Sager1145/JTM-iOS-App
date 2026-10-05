@@ -1398,6 +1398,195 @@ public enum RouteSolver {
         return false
     }
 
+    /// When the certified ends of two sections fail ``physicalBoundaryIsProven``,
+    /// try the stop's other surveyed nodes. Candidate keys on a side are the
+    /// nodes snapped from any station feature in the stop's N02 group, within
+    /// ``stationSnapMaxDistanceMeters``, plus endpoints of date-valid reviewed
+    /// junctions whose `station` / `stationCode` is that stop and whose identity
+    /// is the certified end's line. The first pair that is the same key, a
+    /// same-identity span of at most 520 m, or ``physicalBoundaryIsProven``
+    /// replaces the continuity keys. The certified strokes stay.
+    ///
+    /// Returns nil without searching when the sections do not share an explicit
+    /// station code. An unjoined co-located identity is not a proof.
+    public static func provenStationBoundaryPair(
+        from previous: String, to first: String,
+        previousSection: RouteSection, nextSection: RouteSection,
+        graph: RouteGraph.Graph, stations: Stations.Index, rideDate: String?
+    ) -> (previous: String, first: String)? {
+        let previousCode = trimmedStationCode(previousSection.toN02StationCode)
+        let nextCode = trimmedStationCode(nextSection.fromN02StationCode)
+        guard !previousCode.isEmpty, previousCode == nextCode else { return nil }
+        guard graph.nodes[previous] != nil, graph.nodes[first] != nil else { return nil }
+        let stopName = Stations.normalizeStationName(
+            previousSection.to ?? nextSection.from ?? "")
+        let stopCodes = stationGroupCodes(stopCode: previousCode, stations: stations, rideDate: rideDate)
+        let previousKeys = boundaryCandidateKeys(
+            identityOf: previous, section: previousSection, stopCodes: stopCodes,
+            stopName: stopName, graph: graph, stations: stations, rideDate: rideDate)
+        let firstKeys = boundaryCandidateKeys(
+            identityOf: first, section: nextSection, stopCodes: stopCodes,
+            stopName: stopName, graph: graph, stations: stations, rideDate: rideDate)
+        for previousKey in previousKeys {
+            for firstKey in firstKeys {
+                if previousKey == firstKey
+                    || sameIdentitySpan(from: previousKey, to: firstKey, graph: graph, date: rideDate)
+                    || physicalBoundaryIsProven(
+                        from: previousKey, to: firstKey, graph: graph, rideDate: rideDate) {
+                    return (previousKey, firstKey)
+                }
+            }
+        }
+        return nil
+    }
+
+    /// Certified ends when they already prove, otherwise the station-boundary
+    /// pair. Nil when neither proves. Callers keep the certified stroke and
+    /// use the returned keys only as the boundary's previous and first.
+    public static func provenBoundaryContinuation(
+        previous: String?, first: String?,
+        previousSection: RouteSection, nextSection: RouteSection,
+        graph: RouteGraph.Graph, stations: Stations.Index, rideDate: String?
+    ) -> (previous: String, first: String)? {
+        guard let previous, let first else { return nil }
+        if physicalBoundaryIsProven(from: previous, to: first, graph: graph, rideDate: rideDate) {
+            return (previous, first)
+        }
+        guard routeSectionBoundarySharesExplicitStop(previousSection, nextSection) else { return nil }
+        return provenStationBoundaryPair(
+            from: previous, to: first, previousSection: previousSection,
+            nextSection: nextSection, graph: graph, stations: stations, rideDate: rideDate)
+    }
+
+    private static func trimmedStationCode(_ code: String?) -> String {
+        code?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+    }
+
+    /// The stop code, its N02 group, and every membership code in that group.
+    private static func stationGroupCodes(
+        stopCode: String, stations: Stations.Index, rideDate: String?
+    ) -> Set<String> {
+        var codes: Set<String> = [stopCode]
+        var groups: Set<String> = []
+        func absorb(_ feature: Stations.Feature) {
+            let code = trimmedStationCode(Stations.stationCode(feature))
+            let group = trimmedStationCode(Stations.stationGroupCode(feature))
+            if !code.isEmpty { codes.insert(code) }
+            if !group.isEmpty {
+                codes.insert(group)
+                groups.insert(group)
+            }
+        }
+        for feature in stations.features {
+            guard stationFeatureIsCurrent(feature, rideDate: rideDate) else { continue }
+            let code = trimmedStationCode(Stations.stationCode(feature))
+            let group = trimmedStationCode(Stations.stationGroupCode(feature))
+            if code == stopCode || group == stopCode { absorb(feature) }
+        }
+        guard !groups.isEmpty else { return codes }
+        for feature in stations.features {
+            guard stationFeatureIsCurrent(feature, rideDate: rideDate) else { continue }
+            let code = trimmedStationCode(Stations.stationCode(feature))
+            let group = trimmedStationCode(Stations.stationGroupCode(feature))
+            if (!group.isEmpty && groups.contains(group)) || codes.contains(code) {
+                absorb(feature)
+            }
+        }
+        return codes
+    }
+
+    private static func stationFeatureIsCurrent(
+        _ feature: Stations.Feature, rideDate: String?
+    ) -> Bool {
+        RouteGraph.RailValidity.isValid(
+            validFrom: Stations.stationValidFrom(feature),
+            validTo: Stations.stationValidTo(feature), on: rideDate)
+    }
+
+    /// Snaps first, then junction endpoints, each in stable order.
+    private static func boundaryCandidateKeys(
+        identityOf certified: String, section: RouteSection, stopCodes: Set<String>,
+        stopName: String, graph: RouteGraph.Graph, stations: Stations.Index,
+        rideDate: String?
+    ) -> [String] {
+        let requiredIdentity = String(physicalIdentity(certified))
+        var keys: [String] = []
+        var seen = Set<String>()
+        func add(_ key: String) {
+            guard graph.nodes[key] != nil, seen.insert(key).inserted,
+                  String(physicalIdentity(key)) == requiredIdentity,
+                  nodeMatchesSectionLine(key, section: section, graph: graph) else { return }
+            keys.append(key)
+        }
+        var snaps: [(key: String, distance: Double, order: Int)] = []
+        var order = 0
+        for feature in stations.features {
+            guard stationFeatureIsCurrent(feature, rideDate: rideDate) else { continue }
+            let code = trimmedStationCode(Stations.stationCode(feature))
+            let group = trimmedStationCode(Stations.stationGroupCode(feature))
+            guard stopCodes.contains(code) || stopCodes.contains(group) else { continue }
+            for source in stationGeometryCoordinates(feature) {
+                for nearest in RouteGraph.nearbyNodes(
+                    source, in: graph, radiusDeg: 0.006, limit: 160)
+                where nearest.distance <= stationSnapMaxDistanceMeters {
+                    snaps.append((nearest.key, nearest.distance, order))
+                    order += 1
+                }
+            }
+        }
+        snaps.sort { lhs, rhs in
+            if lhs.distance != rhs.distance { return lhs.distance < rhs.distance }
+            return lhs.order < rhs.order
+        }
+        for snap in snaps { add(snap.key) }
+        var junctions: [(id: String, key: String)] = []
+        var seenJunctions = Set<String>()
+        for (fromKey, edges) in graph.adjacency {
+            for edge in edges {
+                guard let junction = edge.physicalJunction?.junction,
+                      seenJunctions.insert(junction.id).inserted,
+                      !junction.evidence.isEmpty,
+                      junctionServesStop(junction, stopCodes: stopCodes, stopName: stopName),
+                      RouteGraph.RailValidity.isValid(
+                        validFrom: junction.validFrom, validTo: junction.validTo, on: rideDate)
+                else { continue }
+                junctions.append((junction.id, fromKey))
+                junctions.append((junction.id, edge.to))
+            }
+        }
+        junctions.sort { lhs, rhs in
+            if lhs.id != rhs.id { return lhs.id < rhs.id }
+            return lhs.key < rhs.key
+        }
+        for junction in junctions { add(junction.key) }
+        return keys
+    }
+
+    private static func nodeMatchesSectionLine(
+        _ key: String, section: RouteSection, graph: RouteGraph.Graph
+    ) -> Bool {
+        let lines = Set((section.lineNames ?? []).map {
+            $0.trimmingCharacters(in: .whitespacesAndNewlines)
+        }.filter { !$0.isEmpty })
+        let operators = Set((section.operatorNames ?? []).map {
+            $0.trimmingCharacters(in: .whitespacesAndNewlines)
+        }.filter { !$0.isEmpty })
+        guard !lines.isEmpty || !operators.isEmpty else { return true }
+        guard let meta = graph.nodeMeta[key] else { return false }
+        if !lines.isEmpty && !RouteGraph.intersects(lines, meta.lineNames) { return false }
+        if !operators.isEmpty && !RouteGraph.intersects(operators, meta.operators) { return false }
+        return true
+    }
+
+    private static func junctionServesStop(
+        _ junction: RouteGraph.PhysicalJunction, stopCodes: Set<String>, stopName: String
+    ) -> Bool {
+        let code = trimmedStationCode(junction.stationCode)
+        if !code.isEmpty { return stopCodes.contains(code) }
+        let name = Stations.normalizeStationName(junction.station ?? "")
+        return !stopName.isEmpty && name == stopName
+    }
+
     public struct StationSectionInference: Sendable {
         public var hints: [Int: RouteHints] = [:]
         public var ambiguous: Set<Int> = []
@@ -1512,6 +1701,9 @@ public enum RouteSolver {
         struct Step { let key: String; let parent: Int? }
         var steps: [Step] = []
         var frontier: [String: Int] = [:]
+        // Keys entered by a surveyed rail edge. A zero-length junction copy at
+        // the same vertex is not one of these.
+        var arrivedByRail: Set<String> = []
         let firstCoordinate = Grid.normalizeGraphCoord(first)
         for key in RouteGraph.exactNodeKeys(firstCoordinate, in: graph) {
             frontier[key] = steps.count
@@ -1589,6 +1781,7 @@ public enum RouteSolver {
                               pendingPointsFollowEdge(from: currentCoordinate, to: destination) else { continue }
                         steps.append(Step(key: edge.to, parent: prefixParent))
                         next[edge.to] = steps.count - 1
+                        arrivedByRail.insert(edge.to)
                         tookDirectEdge = true
                     }
                     // A station anchor can sit on the identity between two
@@ -1609,7 +1802,10 @@ public enum RouteSolver {
                                 steps.append(Step(key: node, parent: cursor))
                                 cursor = steps.count - 1
                             }
-                            if let end = path.last { next[end] = cursor }
+                            if let end = path.last {
+                                next[end] = cursor
+                                arrivedByRail.insert(end)
+                            }
                         }
                     }
                 }
@@ -1623,6 +1819,8 @@ public enum RouteSolver {
             }
         }
         guard pending.isEmpty else { return nil }
+        frontier = droppingTerminalJunctionSiblings(
+            frontier, arrivedByRail: arrivedByRail, graph: graph, rideDate: rideDate)
         // Ambiguous identities remain unconfirmed rather than selecting one
         // merely because its coordinates coincide with the recorded path.
         guard frontier.count == 1, var index = frontier.values.first else { return nil }
@@ -1633,6 +1831,50 @@ public enum RouteSolver {
             index = parent
         }
         return path.reversed()
+    }
+
+    /// At the last vertex, keep the one identity that rode a rail edge and
+    /// drop siblings copied there by a date-valid zero-length junction. Two
+    /// identities that each rode their own edge stay ambiguous. A key at
+    /// another coordinate is a real fork and stays.
+    private static func droppingTerminalJunctionSiblings(
+        _ frontier: [String: Int], arrivedByRail: Set<String>,
+        graph: RouteGraph.Graph, rideDate: String?
+    ) -> [String: Int] {
+        let arrivals = frontier.keys.filter { arrivedByRail.contains($0) }
+        guard arrivals.count == 1, let arrival = arrivals.first,
+              let coordinate = graph.nodes[arrival] else { return frontier }
+        var kept = frontier
+        for key in frontier.keys where key != arrival {
+            guard graph.nodes[key] == coordinate,
+                  zeroLengthJunctionSibling(
+                    from: arrival, to: key, graph: graph, rideDate: rideDate) else { continue }
+            kept.removeValue(forKey: key)
+        }
+        return kept
+    }
+
+    private static func zeroLengthJunctionSibling(
+        from arrival: String, to key: String, graph: RouteGraph.Graph, rideDate: String?
+    ) -> Bool {
+        guard arrival != key,
+              let path = physicalContinuationPath(
+                from: arrival, to: key, graph: graph, rideDate: rideDate),
+              path.count >= 2 else { return false }
+        for (start, end) in zip(path, path.dropFirst()) {
+            guard graph.nodes[start] == graph.nodes[end],
+                  let edge = (graph.adjacency[start] ?? []).first(where: { candidate in
+                      candidate.to == end && candidate.connector == nil
+                          && candidate.physicalJunction != nil
+                  }),
+                  let junction = edge.physicalJunction?.junction,
+                  junction.kind == .zeroLength, edge.length == 0, !junction.evidence.isEmpty,
+                  junctionGeometryIsValid(junction, edge: edge, current: start, graph: graph),
+                  RouteGraph.RailValidity.isValid(
+                    validFrom: junction.validFrom, validTo: junction.validTo, on: rideDate)
+            else { return false }
+        }
+        return true
     }
 
     public struct OfficialIntervalIndex: Sendable {

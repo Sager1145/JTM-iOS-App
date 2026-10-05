@@ -370,10 +370,10 @@ struct PhysicalEndpointTrimTests {
                         source.lines, graph: graph, context: context, section: section)
                     if keys == nil { counts.recordFailure("source-verification") }
                     if sharesBoundary,
-                       !(previousKey.flatMap { previous in keys?.first.map { first in
-                           RouteSolver.physicalBoundaryIsProven(from: previous, to: first,
-                               graph: graph, rideDate: context.rideDate)
-                       } } ?? false) {
+                       RouteSolver.provenBoundaryContinuation(
+                           previous: previousKey, first: keys?.first,
+                           previousSection: sections[index - 1], nextSection: section,
+                           graph: graph, stations: data.stations, rideDate: context.rideDate) == nil {
                         if boundaryGapIndices.insert(index).inserted {
                             counts.boundaryStations.append(section.from ?? "")
                         }
@@ -438,11 +438,11 @@ struct PhysicalEndpointTrimTests {
             }
             if resolved.rawPathKeys.isEmpty { counts.recordFailure("legacy-path-verification") }
             if sharesBoundary,
-               !(previousKey.flatMap { previous in resolved.rawPathKeys.first.map { first in
-                   RouteSolver.physicalBoundaryIsProven(from: previous, to: first,
-                       graph: proofGraph([resolved.coordinates[0]], store: data.graphStore),
-                       rideDate: context.rideDate)
-               } } ?? false) {
+               RouteSolver.provenBoundaryContinuation(
+                   previous: previousKey, first: resolved.rawPathKeys.first,
+                   previousSection: sections[index - 1], nextSection: section,
+                   graph: proofGraph([resolved.coordinates[0]], store: data.graphStore),
+                   stations: data.stations, rideDate: context.rideDate) == nil {
                 if boundaryGapIndices.insert(index).inserted {
                     counts.boundaryStations.append(section.from ?? "")
                 }
@@ -477,10 +477,11 @@ struct PhysicalEndpointTrimTests {
                     matchedSource.lines, graph: matchedGraph, context: context, section: section)
                 if keys == nil { counts.recordFailure("matched-source-verification") }
                 if sharesBoundary,
-                   !(previousKey.flatMap { previous in keys?.first.map { first in
-                       RouteSolver.physicalBoundaryIsProven(from: previous, to: first,
-                           graph: matchedGraph, rideDate: context.rideDate)
-                   } } ?? false), boundaryGapIndices.insert(index).inserted {
+                   RouteSolver.provenBoundaryContinuation(
+                       previous: previousKey, first: keys?.first,
+                       previousSection: sections[index - 1], nextSection: section,
+                       graph: matchedGraph, stations: data.stations,
+                       rideDate: context.rideDate) == nil, boundaryGapIndices.insert(index).inserted {
                     counts.boundaryStations.append(section.from ?? "")
                 }
                 physicalKey = keys?.last

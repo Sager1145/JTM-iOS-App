@@ -329,12 +329,14 @@
         "https://wwwtb.mlit.go.jp/tohoku/content/000175092.pdf",
         "https://www.city.iwanuma.miyagi.jp/shisei/gaiyo/gaiyo/index.html",
         "https://www.jreast.co.jp/estation/stations/img/floormap/0191_1f-2f.png"
-      ],
+      ,
+        "https://www.pref.fukushima.lg.jp/uploaded/attachment/760579.pdf",
+        "https://www.city.iwanuma.miyagi.jp/kanko/rekishi/nyumon/ato.html"],
       "geometryEvidence": "Original features 14770/16476 share the station segment and this north endpoint continues into Tohoku feature16501. MLIT reconstruction Fig1.3.6 Sendai inset depicts actual restored Joban branch joining Tohoku at Iwanuma. Official city description identifies the physical railway junction. This is one source line-identity boundary, not a georeferenced turnout or connection of all24 shared vertices. Nippori remains separate.",
       "reviewedAt": "2026-10-03",
-      "validFrom": "2011-04-21",
+      "validFrom": "1898-12-31",
       "validTo": null,
-      "temporalEvidence": "Conservative documented-existing window, not original opening: MLIT Tohoku Sept2012 reconstruction record PDFp46/printed44 restored railway map dated2011-04-21; JR East engineering chapter PDFp119/printed117 records completed Watari–Iwanuma restoration2011-04-12. Original1897 opening unverified from primary evidence. Earlier physical continuity is not disproven, but is not authorized by this reviewed interval. Every traversed source edge retains its own separate history validity."
+      "temporalEvidence": "常磐線 reached 岩沼 in 明治31年, year only. Fukushima prefecture (fukushima-joban.pdf, sha256 03ba5faaaab5490b5fc448b2301ab76305363f85d2b8c80ba681ae68e18278bf) says 翌年の明治31年には上野駅〜岩沼駅（宮城県）までが開通しました and 1898年（明治31年）・常磐線全線開通. Iwanuma city (iwanuma-ato.html, sha256 66e258ebf9a7a84b0c1de99cf4d682743e114a66d08dc034225ae597615706cb) says 1887年（明治20年）に上野－仙台－塩竈間で東北本線が開通, so 東北線 was already there. No day, so 1898-12-31. Not 1897."
     },
     {
       "id": "utazu-honshi-bisan-yosan-eastern-bypass",
@@ -1742,9 +1744,9 @@
         ]
       },
       "evidence": [
-        "https://www.tobu.co.jp/pdf/timetable/time-table_01_kudari.pdf?202603",
-        "https://www.tobu.co.jp/sl/more/history/"
-      ],
+        "https://www.tobu.co.jp/pdf/timetable/time-table_01_kudari.pdf?202603"
+      ,
+        "https://www.tobu.co.jp/sl/more/history/"],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical 5-decimal existing vertex on both identities at [139.69181, 36.7259]; 91.935 m / 91.935 m along-track from projected N02 station display point (from/to). Identity-agnostic shortest path 下小代 -> 大谷向 (9676.020 m) contains this vertex; 3 shared vertices within 3 km; nearest on that through path chosen. See east/geometry.json row 1.",
       "reviewedAt": "2026-10-04",
       "validFrom": "1929-10-22",
@@ -2113,12 +2115,13 @@
       },
       "evidence": [
         "https://timetables.jreast.co.jp/2610/train/095/098901.html"
-      ],
+      ,
+        "https://www.city.atami.lg.jp/kosodate/shogaigakushu/1011165/1006016/1009091/1009710.html"],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical 5-decimal existing vertex on both identities at [139.07892, 35.10432]; 100.965 m / 100.965 m along-track from projected N02 station display point (from/to). Identity-agnostic shortest path 湯河原 -> 来宮 (6511.996 m) contains this vertex; 5 shared vertices within 3 km; nearest on that through path chosen. See east/geometry.json row 16.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2026-09-18",
+      "validFrom": "1935-12-31",
       "validTo": null,
-      "temporalEvidence": "Conservative documented-existing date: earliest active calendar day in saved official Odoriko 1 timetable; no earlier opening date asserted."
+      "temporalEvidence": "伊東線 at 熱海, year only. Atami city (atami-21.html, sha256 94b741d8f045711688a85aa5f2ef67995d6f18324a632494f67706f92cca59ff) says 昭和10年には国鉄伊東線が熱海－網代間で開通しました. No month or day in the saved page, so 1935-12-31. 東海道線 was already at 熱海."
     },
     {
       "id": "ito-east-17",
@@ -2236,12 +2239,13 @@
       },
       "evidence": [
         "https://timetables.jreast.co.jp/2610/train/065/069941.html"
-      ],
+      ,
+        "https://web.archive.org/web/20141127080113/http://www.jrmito.com/press/141030/20141030_press02.pdf"],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical 5-decimal existing vertex on both identities at [139.76716, 35.68228]; 152.557 m / 152.557 m along-track from projected N02 station display point (from/to). Identity-agnostic shortest path 新橋 -> 上野 (5326.331 m) contains this vertex; 7 shared vertices within 3 km; nearest on that through path chosen. See east/geometry.json row 20.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2026-09-18",
+      "validFrom": "2015-03-14",
       "validTo": null,
-      "temporalEvidence": "Conservative documented-existing date: earliest active operating-calendar day explicitly marked in the saved official same-train timetable; original junction opening not asserted."
+      "temporalEvidence": "上野東京ライン opening. Archived JR East Mito press (jrmito 20141030_press02.pdf) says 上野～東京間の開業日 ２０１５年３月１４日（土） and 宇都宮線及び高崎線は東海道線と相互直通運転を実施します. validFrom 2015-03-14. The saved timetable remains same-train evidence. Not backdated before this opening."
     },
     {
       "id": "tokyo-east-21",
@@ -2277,12 +2281,13 @@
       },
       "evidence": [
         "https://timetables.jreast.co.jp/2610/train/060/063411.html"
-      ],
+      ,
+        "https://media.jreast.co.jp/articles/2275"],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical 5-decimal existing vertex on both identities at [139.76528, 35.68159]; 11.978 m / 11.978 m along-track from projected N02 station display point (from/to). Identity-agnostic shortest path 新橋 -> 新日本橋 (2909.680 m) contains this vertex; 3 shared vertices within 3 km; nearest on that through path chosen. See east/geometry.json row 21.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2026-09-18",
+      "validFrom": "1980-12-31",
       "validTo": null,
-      "temporalEvidence": "Conservative documented-existing date: earliest active operating-calendar day explicitly marked in the saved official same-train timetable; original junction opening not asserted."
+      "temporalEvidence": "総武快速・横須賀線 through running at 東京, year only. JR East media article 2275 says 1980年に東京駅から千葉方面へ総武快速線との直通運転が開始され. No month or day in the saved article, and the saved MLIT chronology does not give 1980-10-01 or 1976-10-01 for this connection, so validFrom is the year-end bound 1980-12-31."
     },
     {
       "id": "kanda-east-23",
@@ -2357,10 +2362,10 @@
         ]
       },
       "evidence": [
-        "https://timetables.jreast.co.jp/2610/train/045/048451.html",
+        "https://timetables.jreast.co.jp/2610/train/045/048451.html"
+      ,
         "http://www.jreast.co.jp/estation/station/info.aspx?StationCD=1184",
-        "https://www.jreast.co.jp/press/2026/mito_j/20260918_m01.pdf"
-      ],
+        "https://www.jreast.co.jp/press/2026/mito_j/20260918_m01.pdf"],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical 5-decimal existing vertex on both identities at [139.77092, 35.72822]; 35.633 m / 35.633 m along-track from projected N02 station display point (from/to). Identity-agnostic shortest path 上野 -> 三河島 (2893.700 m) contains this vertex; 3 shared vertices within 3 km; nearest on that through path chosen. See east/geometry.json row 25.",
       "reviewedAt": "2026-10-04",
       "validFrom": "1905-04-01",
@@ -3751,9 +3756,9 @@
       },
       "evidence": [
         "https://www.jr-odekake.net/railroad/train/kounotori/",
-        "https://www.westjr.co.jp/company/info/history/",
-        "https://www.westjr.co.jp/press/article/items/240729_00_press_FukuchiyamaandMaizuru120thevent_1.pdf"
-      ],
+        "https://www.westjr.co.jp/company/info/history/"
+      ,
+        "https://www.westjr.co.jp/press/article/items/240729_00_press_FukuchiyamaandMaizuru120thevent_1.pdf"],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical existing 5-decimal vertex on both identities; 104.288 m along track to station display point (station segment endpoint plus within-station distance). Identity-agnostic shortest path 塚本 → 塚口 (6571.486 m) passes the vertex with an incoming from-identity edge and outgoing to-identity edge. Geometry details: geometry.json.",
       "reviewedAt": "2026-10-04",
       "validFrom": "1904-11-03",
@@ -4895,12 +4900,14 @@
       },
       "evidence": [
         "https://timetables.jreast.co.jp/2610/train/095/098851.html"
-      ],
+      ,
+        "https://www.jreast.co.jp/takanawachikutei/international/pdf/yusikisya_4_zentai_siryou.pdf",
+        "https://www.jreast.co.jp/takanawachikutei/international/pdf/yusikisya_6_zentai_siryou.pdf"],
       "geometryEvidence": "rail-sections.json + rail-history.json: identical existing five-decimal vertex [139.73881, 35.62549] on both identities; along-track station distances 296.355/296.355m. Reused jn2/east/geometry.json index24: identity-agnostic 大崎–田町 shortest path (4106.361m) passes the selected shared vertex; 26 shared vertices within3km.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2026-09-18",
+      "validFrom": "1885-12-31",
       "validTo": null,
-      "temporalEvidence": "Official NEX13 2213M/2013M follows 新宿–渋谷–品川–東京; earliest active operating-calendar date in the saved train page is used as dated-existing fallback, not opening."
+      "temporalEvidence": "日本鉄道品川線 at 品川, year only. JR East committee PDF (shinagawa-4.pdf, sha256 7a386f4637bafb193016a7776e5fbd6c8276c4cbac77aae836f367b9ce9ff118, live 403, fetched via web.archive.org/web/20240416145255/) says 明治18年（1885年）日本鉄道品川線品川～赤羽間開通 and 明治5年（1872年）品川～横浜間, so the 東海道 side was already there. shinagawa-6.pdf (sha256 fba49c7d265d482e19751cf7845a3f5d67573e06cf0224fe304f5842a68e065c, archive /web/20240416145404/) says 東海道線と山手線の分岐駅. No month or day, so 1885-12-31. A March day was not in the saved PDF."
     },
     {
       "id": "chiba-sobu-sotobo-jn3",
@@ -5015,9 +5022,9 @@
         ]
       },
       "evidence": [
-        "https://www.pref.yamagata.jp/documents/34190/05_shiryo1-4_20250911.pdf",
-        "https://www.jreast.co.jp/press/2022/niigata/20220922_ni02.pdf"
-      ],
+        "https://www.pref.yamagata.jp/documents/34190/05_shiryo1-4_20250911.pdf"
+      ,
+        "https://www.jreast.co.jp/press/2022/niigata/20220922_ni02.pdf"],
       "geometryEvidence": "rail-sections.json + rail-history.json: identical existing five-decimal vertex [139.12119, 37.80463] on both identities; along-track station distances 482.044/482.044m. Reused jn2/east/geometry.json index36: identity-agnostic さつき野–京ヶ瀬 shortest path (6365.486m) passes the selected shared vertex; 6 shared vertices within3km.",
       "reviewedAt": "2026-10-04",
       "validFrom": "1912-12-31",
@@ -5057,9 +5064,9 @@
       },
       "evidence": [
         "https://timetables.jreast.co.jp/2610/train/000/004351.html",
-        "https://timetables.jreast.co.jp/2610/train/005/005671.html",
-        "https://www.jreast.co.jp/press/2024/niigata/20240524_ni02.pdf"
-      ],
+        "https://timetables.jreast.co.jp/2610/train/005/005671.html"
+      ,
+        "https://www.jreast.co.jp/press/2024/niigata/20240524_ni02.pdf"],
       "geometryEvidence": "rail-sections.json + rail-history.json: identical existing five-decimal vertex [140.12947, 39.71836] on both identities; along-track station distances 118.019/118.019m. Reused jn2/east/geometry.json index37: identity-agnostic 羽後牛島–泉外旭川 shortest path (5548.748m) passes the selected shared vertex; 2 shared vertices within3km.",
       "reviewedAt": "2026-10-04",
       "validFrom": "1924-07-31",
@@ -5100,12 +5107,14 @@
       "evidence": [
         "https://www.jrhokkaido.co.jp/press/2010/100924-1.pdf",
         "https://www.jrhokkaido.co.jp/press/2015/151218-1.pdf"
-      ],
+      ,
+        "https://www.jreast.co.jp/press/2021/morioka/20211119_mr11.pdf",
+        "https://timetables.jreast.co.jp/2610/timetable-v/280u2.html"],
       "geometryEvidence": "rail-sections.json + rail-history.json: identical existing five-decimal vertex [140.71576, 40.82598] on both identities; along-track station distances 2131.294/2131.294m. Reused jn2/east/geometry.json index41: identity-agnostic 新青森–油川 shortest path (5838.402m) passes the selected shared vertex; 25 shared vertices within3km.",
       "reviewedAt": "2026-10-04",
-      "validFrom": "2010-12-04",
-      "validTo": "2016-03-22",
-      "temporalEvidence": "JR Hokkaido 2010-09-24 release starts 新青森–函館 スーパー白鳥/白鳥 on2010-12-04, explicitly gives 津軽線・奥羽本線 in the route, and includes individual train timetables with 青森. Official2015-12-18 release explicitly makes2016-03-21 the final operating day, so validTo=2016-03-22 is exclusive. This bounds the documented historical through service, not physical track removal."
+      "validFrom": "1951-12-05",
+      "validTo": null,
+      "temporalEvidence": "津軽線 reached 青森 on 1951-12-05. JR East Morioka press (tsugaru-70.pdf, sha256 9cf3539b7020784752626afbf2019a2c09cc2b3157ddb4fe91f4fd04c4888a65, live 403, fetched via web.archive.org/web/20220207210819/) under 津軽線等沿革 says 1951年12月5日青森駅～蟹田駅間開業. 奥羽 was already at 青森. 1958年10月21日三厩駅まで延伸開業 is the northward extension, not this junction. newValidTo null: registry validTo 2016-03-22 is the 白鳥 service end, not track removal. Current board (tsugaru-tt.html, sha256 024886787205c229a0f26c623b21718aee8c0a3f0b2023ab89c92142eb0c635f) is 津軽線上り(三厩－青森・新青森) and lists 4632M, so trains still run through 青森 onto 奥羽."
     },
     {
       "id": "kishinosato-nankai-koya",
@@ -6918,11 +6927,11 @@
         ]
       },
       "evidence": [
-        "https://timetables.jreast.co.jp/2610/timetable-v/238d2p.html",
+        "https://timetables.jreast.co.jp/2610/timetable-v/238d2p.html"
+      ,
         "https://media.jreast.co.jp/articles/4321",
         "https://www.mlit.go.jp/common/000227427.pdf",
-        "https://www.jreast.co.jp/press/2022/omiya/20230224_o01.pdf"
-      ],
+        "https://www.jreast.co.jp/press/2022/omiya/20230224_o01.pdf"],
       "geometryEvidence": "app/data/rail-sections.json + rail-history.json: identical 5-decimal existing vertex on both identities at [139.62383, 35.90782]; 161.684 m / 161.684 m along-track from projected N02 station display point (from/to). Identity-agnostic shortest path 土呂 -> 宮原 (7987.971 m) contains this vertex; 2 shared vertices within 3 km; nearest on that through path chosen.",
       "reviewedAt": "2026-10-04",
       "validFrom": "1885-07-16",
@@ -7883,7 +7892,8 @@
       "validFrom": "1987-04-01",
       "validTo": null,
       "temporalEvidence": "Same-company pair. JR West's official 沿革 page (https://www.westjr.co.jp/company/info/history/) gives 1987-04-01 西日本旅客鉄道株式会社発足; validFrom is capped at that JR West identity founding, as for yamashina-tokaido-kosei. The connection itself is older, but no exact earlier official date was secured, so none is asserted. Current through running: はまかぜ1号 (2026-10-03 page) lists 東姫路 (山陽線) → 姫路 08:52/08:58 → 京口 (播但線) as one train."
-    },
+    }
+,
     {
       "id": "osaka-osakaloop-tokaido",
       "kind": "zeroLength",
@@ -8697,6 +8707,525 @@
       "validFrom": "1964-10-01",
       "validTo": null,
       "temporalEvidence": "JR Central 品川駅紹介 (market.jr-central.co.jp/shop/pages/shinagawa_introduction.aspx) states 「東海道新幹線の開業は1964年10月1日」 and that 新幹線品川駅 opened on 2003-10-01. validFrom is the line opening 1964-10-01. The path is the current display stroke, which passes through the later 品川 station anchor."
+    },
+    {
+      "id": "omiya-joetsu-tohoku",
+      "kind": "zeroLength",
+      "region": "jp",
+      "station": "大宮",
+      "stationCode": "002914",
+      "lineIDs": [
+        "jp-東日本旅客鉄道-上越新幹線",
+        "jp-東日本旅客鉄道-東北新幹線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "上越新幹線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          139.6199,
+          35.91483
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "東北新幹線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          139.6199,
+          35.91483
+        ]
+      },
+      "evidence": [
+        "https://www.pref.niigata.lg.jp/sec/koutsuseisaku/1192379424498.html",
+        "https://www.mlit.go.jp/common/000227427.pdf",
+        "https://timetables.jreast.co.jp/2610/timetable/tt0934/0934031.html"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json: identical 5-decimal vertex [139.61990, 35.91483] on 東日本旅客鉄道 上越新幹線 and 東北新幹線 (class 11). Shared divergence north of the 大宮 display point. zeroLength.",
+      "reviewedAt": "2026-10-04",
+      "validFrom": "1982-11-15",
+      "validTo": null,
+      "temporalEvidence": "Later shinkansen at the shared 大宮 vertex is 上越新幹線. Niigata prefecture (niigata-joetsu.html, sha256 73335d3b182a35d67f69527e03267fcd537d77301c34910161c17b39e5c8cbb7) says 1982年11月15日上越新幹線新潟・大宮間開業. MLIT (mlit-chronology.pdf, sha256 cfb9b83e9205f1139966be572939624cd2fe0c35e8be0fe459bb07b7fdb2ee71) says 昭和57年11月15日上越新幹線、大宮・新潟間開業. Same train: JR East 高崎 board (takasaki-joetsu-tt.html, sha256 6be685de781d6c30d13684ba4202888e77053c20c6ebc9cfc49156484475ee16) is 上越・北陸新幹線 大宮・東京方面, with と=とき and 無印=東京, so a とき for 東京 uses 上越新幹線 at 高崎 and 東北新幹線 south of 大宮 through this vertex. validFrom 1982-11-15."
+    },
+    {
+      "id": "ofuna-tokaido-yokosuka",
+      "kind": "zeroLength",
+      "region": "jp",
+      "station": "大船",
+      "stationCode": "004961",
+      "lineIDs": [
+        "jp-東日本旅客鉄道-東海道線",
+        "jp-東日本旅客鉄道-横須賀線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "東海道線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          139.53164,
+          35.35542
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "横須賀線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          139.53164,
+          35.35542
+        ]
+      },
+      "evidence": [
+        "https://www.jreast.co.jp/press/2019/yokohama/20190523_y03.pdf",
+        "https://media.jreast.co.jp/articles/2275"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json: identical vertex [139.53164, 35.35542] on 東日本旅客鉄道 東海道線 and 横須賀線 (class 11). The only shared vertex of the two identities near 大船. zeroLength.",
+      "reviewedAt": "2026-10-04",
+      "validFrom": "1889-06-16",
+      "validTo": null,
+      "temporalEvidence": "横須賀線 大船–横須賀 anniversary. JR East Yokohama press (yokosuka-130.pdf, sha256 6b112f87595e85379e481a13382e9d8595c32a8264a6ffb4729007e400bcba57, live 403, fetched via web.archive.org/web/20201204182145/) says 横須賀線（大船駅～横須賀駅間）は２０１９年６月１６日（日）に開業１３０周年. 2019-06-16 minus 130 years is 1889-06-16. The PDF does not print 1889. Same train: media.jreast.co.jp/articles/2275 (yokosuka-media.html, sha256 10f02144dd5c536053c92b11e40fbcce2b328a87112470cfef04c1dcd4201cd2) says 大船駅から東京駅までは東海道本線が正式名称ですが、久里浜駅から東京駅まで電車が直通している. 東海道線 was already at 大船. validFrom 1889-06-16."
+    },
+    {
+      "id": "kawarada-kansai-ise",
+      "kind": "zeroLength",
+      "region": "jp",
+      "station": "河原田",
+      "stationCode": "006285",
+      "lineIDs": [
+        "jp-東海旅客鉄道-関西線",
+        "jp-伊勢鉄道-伊勢線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "東海旅客鉄道",
+          "lineName": "関西線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          136.59898,
+          34.9108
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "伊勢鉄道",
+          "lineName": "伊勢線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          136.59898,
+          34.9108
+        ]
+      },
+      "evidence": [
+        "https://www.pref.mie.lg.jp/KOTSU/HP/m0009200175_00008.htm",
+        "https://www.pref.mie.lg.jp/KOTSU/HP/56992001415.htm",
+        "https://railway.jr-central.co.jp/time-schedule/srch/_pdf/data/202603/kisei_Shingu_D_e_u.pdf"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json: identical vertex [136.59898, 34.91080] on 東海旅客鉄道 関西線 class 11 and 伊勢鉄道 伊勢線 class 12. Station group 006285. zeroLength.",
+      "reviewedAt": "2026-10-04",
+      "validFrom": "1987-03-27",
+      "validTo": null,
+      "temporalEvidence": "伊勢鉄道営業開始 at 河原田. Mie prefecture (mie-rail.html, sha256 03ac7ab4e27aa03939ad628d5cb76fdf31aa577e04bdd9c2063801bc80975fed) says 伊勢線は、JR関西本線河原田駅とJR紀勢本線津駅を結ぶ and 昭和62年3月27日に営業を開始しました. Same train: mie-ise.html (sha256 bb3b32063b73536e9524b71dabb13c15647aeb7422b3bdedb7ae61575fed1e64) says the line joins 河原田 and 津 and that JR東海の特急「ワイドビュー南紀」と快速「みえ」が乗り入れ. JR Central 紀勢 timetable (nanki-kisei.pdf, sha256 f46daeaa0a548f7666efbc55da2463179c02244c7474d9d6fc11bf08b5f451c9) says 特急「南紀」は、津～河原田間は伊勢鉄道線を経由します and lists 四日市 (関西線) and 鈴鹿 (伊勢線). validFrom 1987-03-27. 東海旅客鉄道 as a company begins 1987-04-01; the 関西線 side until then is 国鉄, inherited. The saved Mie page does not state 1987-04-01."
+    },
+    {
+      "id": "nishi-biwajima-nagoya-inuyama",
+      "kind": "zeroLength",
+      "region": "jp",
+      "station": "西枇杷島",
+      "stationCode": "005376",
+      "lineIDs": [
+        "jp-名古屋鉄道-名古屋本線",
+        "jp-名古屋鉄道-犬山線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "名古屋鉄道",
+          "lineName": "名古屋本線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          136.86566,
+          35.19514
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "名古屋鉄道",
+          "lineName": "犬山線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          136.86566,
+          35.19514
+        ]
+      },
+      "evidence": [
+        "https://www.meitetsu.co.jp/library/memorial130/index.html",
+        "https://www.meitetsu.co.jp/train/timetable/__icsFiles/afieldfile/2026/02/25/20260314_IY_W1.pdf"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json: identical vertex [136.86566, 35.19514] on 名古屋鉄道 名古屋本線 and 犬山線 (class 12), nearest shared vertex to the 名古屋本線 display [136.86528, 35.195085]. Group 005376 is filed on 名古屋本線 only. zeroLength.",
+      "reviewedAt": "2026-10-04",
+      "validFrom": "1914-01-23",
+      "validTo": null,
+      "temporalEvidence": "Later of the two lines at the shared vertex. Meitetsu 130th memorial (meitetsu-130.html, sha256 717153b64aacf2885cc7cd3deeaad531ad20e5caa769ec1131bbf404d8e279f4) says 大正元年（1912）8月6日 岩倉～犬山間（現在の犬山線）開通 and 大正3年（1914）1月23日 枇杷島橋～新津島間（現在の名古屋本線・津島線）開通. The page names 枇杷島 and 枇杷島橋, not 西枇杷島. Same train: Inuyama weekday PDF (meitetsu-iy.pdf, sha256 947229f62d74c44ce423be5dafde60e25f1e9e7c0ff23e0c90b833be714af465) header 神宮前→岩倉→犬山→名鉄岐阜, with 名鉄名古屋 on the same page. pypdf renders the μＳ mark as μμＳＳ. validFrom 1914-01-23."
+    },
+    {
+      "id": "niiya-yosan-uchiko",
+      "kind": "zeroLength",
+      "region": "jp",
+      "station": "新谷",
+      "stationCode": "009213",
+      "lineIDs": [
+        "jp-四国旅客鉄道-予讃線",
+        "jp-四国旅客鉄道-内子線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "四国旅客鉄道",
+          "lineName": "予讃線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          132.59812,
+          33.53417
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "四国旅客鉄道",
+          "lineName": "内子線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          132.59812,
+          33.53417
+        ]
+      },
+      "evidence": [
+        "https://www.jr-shikoku.co.jp/03_news/press/yawatahama_20180719.pdf",
+        "https://www.shikoku-shakaishihon.com/uploads/articleattachments/000085_0_00_1625449972.pdf"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json: identical vertex [132.59812, 33.53417] on 四国旅客鉄道 予讃線 and 内子線 (class 11), group 009213. Shortest 内子→伊予大洲 path that may change identity is 11193.2 m and enters the 伊予大洲-bound 予讃線 run at this 新谷 vertex (after 91 内子線 vertices). 予讃線-only is 63780.8 m. Straight 内子–伊予大洲 display is 10009.8 m; detour threshold max(straight×3.8+6000, 12000) is 44037.1 m. The long path is the rejected detour; the short path needs this junction. zeroLength.",
+      "reviewedAt": "2026-10-04",
+      "validFrom": "1986-12-31",
+      "validTo": null,
+      "temporalEvidence": "Year only. shikoku-social.pdf (sha256 91749ff22ecab303d08c213e554a0d03b6e9fc1d69bba09fada09a625f2d9111, 社会資本アーカイブスあらかると on shikoku-shakaishihon.com, not .go.jp and not JR Shikoku; the PDF does not contain 国土交通省) says 昭和61年に向井原駅から内子線内子駅を結ぶ予讃新線（内山線）が新設されて、現在の予讃線の形になりました and 伊予大洲駅～新谷駅間5.9km. No month or day, so 1986-12-31. Same train: JR Shikoku press (uwakai-2018.pdf, sha256 a41fbe6df9bd93a0542bb7dcc35d11b79933b257d5424ce416e5a455387b0095) lists 宇和海1号 内子発6:13 伊予大洲発6:27. A newspaper day 1986-03-03 was not used."
+    }
+  ,
+    {
+      "id": "yatsushiro-kagoshima-hisatsu-orange",
+      "kind": "zeroLength",
+      "region": "jp",
+      "station": "八代",
+      "stationCode": "009872",
+      "lineIDs": [
+        "jp-九州旅客鉄道-鹿児島線",
+        "jp-肥薩おれんじ鉄道-肥薩おれんじ鉄道線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "九州旅客鉄道",
+          "lineName": "鹿児島線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          130.61983,
+          32.50508
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "肥薩おれんじ鉄道",
+          "lineName": "肥薩おれんじ鉄道線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          130.61983,
+          32.50508
+        ]
+      },
+      "evidence": [
+        "https://www.hs-orange.com/page1.html"
+      ],
+      "geometryEvidence": "rail-sections.json: identical vertex [130.61983, 32.50508] on 九州旅客鉄道/鹿児島線/11 and 肥薩おれんじ鉄道/肥薩おれんじ鉄道線/12. zeroLength. Distinct from west-yatsushiro (鹿児島線↔肥薩線).",
+      "reviewedAt": "2026-10-04",
+      "validFrom": "2004-03-13",
+      "validTo": null,
+      "temporalEvidence": "肥薩おれんじ鉄道 opening, the later operator at this vertex. hs-orange.com/page1.html says 平成16年3月13日 as 開業日 and names 八代. 鹿児島線 was already at the vertex. validFrom 2004-03-13."
+    },
+    {
+      "id": "akabane-tohoku-track",
+      "kind": "osmTrack",
+      "path": [
+        [
+          139.7206955,
+          35.7780912
+        ],
+        [
+          139.7211197,
+          35.7774716
+        ]
+      ],
+      "source": {
+        "provider": "OpenStreetMap",
+        "license": "ODbL-1.0",
+        "ways": [
+          650168486
+        ],
+        "retrieved": "2026-08-18",
+        "cache": "Japan-Train-Map/outputs/osm-basemap-cache"
+      },
+      "attachMeters": {
+        "from": 46.95,
+        "to": 16.19
+      },
+      "region": "jp",
+      "station": "赤羽",
+      "stationCode": "003157",
+      "lineIDs": [
+        "jp-東日本旅客鉄道-東北線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "東北線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          139.72111,
+          35.77783
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "東北線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          139.72097,
+          35.77755
+        ]
+      },
+      "evidence": [
+        "https://www.openstreetmap.org/way/650168486",
+        "https://www.mlit.go.jp/common/000227427.pdf"
+      ],
+      "geometryEvidence": "OSM way 650168486 railway=rail name=JR東北本線 operator=東日本旅客鉄道 in cache cell E139N35 (fetchedAt 2026-08-18T10:37:59.411Z). No service=crossover way joins the two 東北線 vertices inside 赤羽; this is the consecutive centerline slice idx 0–1. Path vertices are cache geometry. from attach 46.95 m to N02 [139.72111, 35.77783]; to attach 16.19 m to N02 [139.72097, 35.77755]. Both identities 東日本旅客鉄道/東北線/11. Haversine R=6371000. The parallel 東北新幹線 ~18.8 m pair was not used.",
+      "reviewedAt": "2026-10-04",
+      "validFrom": "1925-11-01",
+      "validTo": null,
+      "temporalEvidence": "Same 東北線 validity already used for tokyo-tohoku-kanda. MLIT chronology (000227427.pdf) says 大正14年11月1日 神田・上野間が開通し、山手線が環状運転となる. validFrom 1925-11-01."
+    },
+    {
+      "id": "kanda-tohoku-track",
+      "kind": "osmTrack",
+      "path": [
+        [
+          139.7707494,
+          35.6908987
+        ],
+        [
+          139.7709194,
+          35.6912379
+        ],
+        [
+          139.7711039,
+          35.6916113
+        ],
+        [
+          139.770875,
+          35.69177
+        ],
+        [
+          139.7712336,
+          35.6918771
+        ],
+        [
+          139.7713134,
+          35.6920583
+        ],
+        [
+          139.7713667,
+          35.6921794
+        ],
+        [
+          139.7714638,
+          35.6924403
+        ]
+      ],
+      "source": {
+        "provider": "OpenStreetMap",
+        "license": "ODbL-1.0",
+        "ways": [
+          211381364
+        ],
+        "retrieved": "2026-08-18",
+        "cache": "Japan-Train-Map/outputs/osm-basemap-cache"
+      },
+      "attachMeters": {
+        "from": 20.1,
+        "to": 27.42
+      },
+      "region": "jp",
+      "station": "神田",
+      "stationCode": "003677",
+      "lineIDs": [
+        "jp-東日本旅客鉄道-東北線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "東北線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          139.77054,
+          35.69096
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "東北線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          139.77121,
+          35.69258
+        ]
+      },
+      "evidence": [
+        "https://www.openstreetmap.org/way/211381364",
+        "https://www.mlit.go.jp/common/000227427.pdf"
+      ],
+      "geometryEvidence": "OSM way 211381364 railway=rail name=JR東北本線 operator=東日本旅客鉄道 in cache cell E139N35 (fetchedAt 2026-08-18T10:37:59.411Z), idx 3–9. The display coordinate [139.770875, 35.69177] (quant5 [139.77087, 35.69177], already a path vertex of tokyo-tohoku-kanda) is inserted between idx 5 and idx 6 so this track chains to that node. It is not a surveyed rail-sections vertex, so it is not an endpoint. from attach 20.10 m to surveyed [139.77054, 35.69096]; to attach 27.42 m to surveyed [139.77121, 35.69258]. Haversine R=6371000.",
+      "reviewedAt": "2026-10-04",
+      "validFrom": "1925-11-01",
+      "validTo": null,
+      "temporalEvidence": "東北線 東京–上野 validity already used for tokyo-tohoku-kanda. MLIT chronology says 大正14年11月1日 神田・上野間が開通. validFrom 1925-11-01."
+    },
+    {
+      "id": "kurihashi-jr-tobu",
+      "kind": "osmConnector",
+      "path": [
+        [
+          139.694152,
+          36.1369625
+        ],
+        [
+          139.6941923,
+          36.1371639
+        ],
+        [
+          139.6942378,
+          36.1374482
+        ]
+      ],
+      "source": {
+        "provider": "OpenStreetMap",
+        "license": "ODbL-1.0",
+        "ways": [
+          142969198
+        ],
+        "retrieved": "2026-08-18",
+        "cache": "Japan-Train-Map/outputs/osm-basemap-cache"
+      },
+      "attachMeters": {
+        "from": 31.29,
+        "to": 33.8
+      },
+      "region": "jp",
+      "station": "栗橋",
+      "stationCode": "002592",
+      "lineIDs": [
+        "jp-東日本旅客鉄道-東北線",
+        "jp-東武鉄道-日光線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "東北線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          139.69431,
+          36.13721
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東武鉄道",
+          "lineName": "日光線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          139.69392,
+          36.13729
+        ]
+      },
+      "evidence": [
+        "https://www.jreast.co.jp/press/2016/omiya/20160714_o04.pdf",
+        "https://timetables.jreast.co.jp/2610/timetable-v/699d1.html",
+        "https://www.openstreetmap.org/way/142969198"
+      ],
+      "geometryEvidence": "OSM way 142969198 railway=rail service=crossover in cache cell E139N36 (fetchedAt 2026-08-18T10:38:38.423Z), idx 8–10 only (the station vertices; the rest of the way runs south of 栗橋 and was not used). from attach 31.29 m to 東北線 [139.69431, 36.13721]; to attach 33.80 m to 東武日光線 [139.69392, 36.13729]. path 54.56 m. Total stubs+path 119.65 m. Haversine R=6371000. idx 8 is closer to JR (the Tobu-only yard loop was not used).",
+      "reviewedAt": "2026-10-04",
+      "validFrom": "2006-03-18",
+      "validTo": null,
+      "temporalEvidence": "JR East Omiya press (kurihashi-10.pdf, archive web.archive.org/web/20160804094249/) says 2006年（平成18年）３月18日ＪＲ・東武特急列車直通運転開始 and that 栗橋駅構内に専用線路 joins JR東北線（宇都宮線） and 東武日光線. Same train: JR East timetable 699d1 (日光線下り) lists 特急日光21号, スペーシア日光1号 and きぬがわ3号 from 新宿 through 栗橋 to 東武日光 or 鬼怒川温泉. validFrom 2006-03-18."
+    },
+    {
+      "id": "aomori-tohoku-tsugaru",
+      "kind": "zeroLength",
+      "region": "jp",
+      "station": "青森",
+      "stationCode": "000527",
+      "lineIDs": [
+        "jp-東日本旅客鉄道-東北線",
+        "jp-東日本旅客鉄道-津軽線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "東北線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          140.73407,
+          40.82905
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "津軽線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          140.73407,
+          40.82905
+        ]
+      },
+      "evidence": [
+        "https://www.mlit.go.jp/common/000227427.pdf",
+        "https://www.jreast.co.jp/press/2021/morioka/20211119_mr11.pdf",
+        "https://aoimorirailway.com/company/aoimori"
+      ],
+      "geometryEvidence": "Vertex [140.73407, 40.82905] is on current 津軽線 and on 青い森鉄道線. The JR 東北線 overlay copy of the 八戸–青森 geometry keeps that vertex until 2010-12-04. zeroLength between that overlay identity and 津軽線. 奥羽線 shares the vertex too; no 奥羽 arrival day was in the saved MLIT chronology or the 津軽線 70th-anniversary press, so no 東北線↔奥羽線 junction was added.",
+      "reviewedAt": "2026-10-04",
+      "validFrom": "1951-12-05",
+      "validTo": "2010-12-04",
+      "temporalEvidence": "東北線 was already at 青森: MLIT chronology says 明治24年9月1日 東北線全通（上野・青森間、日本鉄道会社）. 津軽線 reached 青森 on 1951-12-05 (JR East Morioka press: 1951年12月5日青森駅～蟹田駅間開業). validTo 2010-12-04 is the 青い森 transfer of 八戸–青森, when this JR 東北線 overlay ends. 盛岡 needs no junction: the overlay is the same 東北線 identity as the existing line."
     }
   ]
 }

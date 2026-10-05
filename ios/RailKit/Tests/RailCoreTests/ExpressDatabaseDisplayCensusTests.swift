@@ -138,10 +138,10 @@ struct ExpressDatabaseDisplayCensusTests {
                     result.segmentsDrawn += exact.geometry.lines.count
                     result.paths[index] = source.lines.flatMap { $0 }
                     if sharesBoundary,
-                       !(previousKey.flatMap { previous in keys?.first.map { first in
-                           RouteSolver.physicalBoundaryIsProven(from: previous, to: first,
-                               graph: graph, rideDate: context.rideDate)
-                       } } ?? false) {
+                       RouteSolver.provenBoundaryContinuation(
+                           previous: previousKey, first: keys?.first,
+                           previousSection: sections[index - 1], nextSection: section,
+                           graph: graph, stations: data.stations, rideDate: context.rideDate) == nil {
                         if boundaryGapIndices.insert(index).inserted {
                             record("boundary", boundary: true)
                         }
@@ -201,11 +201,11 @@ struct ExpressDatabaseDisplayCensusTests {
             currentFirst = resolved.rawPathKeys.first ?? endpointKey(resolved.coordinates.first, graph: solvedGraph)
             if resolved.rawPathKeys.isEmpty { record("legacy-path-verification") }
             if sharesBoundary,
-               !(previousKey.flatMap { previous in resolved.rawPathKeys.first.map { first in
-                   RouteSolver.physicalBoundaryIsProven(from: previous, to: first,
-                       graph: pipeline.proofGraph([resolved.coordinates[0]], store: data.graphStore),
-                       rideDate: context.rideDate)
-               } } ?? false) {
+               RouteSolver.provenBoundaryContinuation(
+                   previous: previousKey, first: resolved.rawPathKeys.first,
+                   previousSection: sections[index - 1], nextSection: section,
+                   graph: pipeline.proofGraph([resolved.coordinates[0]], store: data.graphStore),
+                   stations: data.stations, rideDate: context.rideDate) == nil {
                 if boundaryGapIndices.insert(index).inserted {
                     record("boundary", boundary: true)
                 }
@@ -242,10 +242,11 @@ struct ExpressDatabaseDisplayCensusTests {
                 currentFirst = keys?.first ?? endpointKey(matchedSource.lines.first?.first, graph: matchedGraph)
                 if keys == nil { failureDetail = verificationReason(matchedSource.lines, graph: matchedGraph); record("matched-source-verification"); failureDetail = nil }
                 if sharesBoundary,
-                   !(previousKey.flatMap { previous in keys?.first.map { first in
-                       RouteSolver.physicalBoundaryIsProven(from: previous, to: first,
-                           graph: matchedGraph, rideDate: context.rideDate)
-                   } } ?? false), boundaryGapIndices.insert(index).inserted {
+                   RouteSolver.provenBoundaryContinuation(
+                       previous: previousKey, first: keys?.first,
+                       previousSection: sections[index - 1], nextSection: section,
+                       graph: matchedGraph, stations: data.stations,
+                       rideDate: context.rideDate) == nil, boundaryGapIndices.insert(index).inserted {
                     record("boundary", boundary: true)
                 }
                 diagnosticLastKey = keys?.last ?? endpointKey(matchedSource.lines.last?.last, graph: matchedGraph)

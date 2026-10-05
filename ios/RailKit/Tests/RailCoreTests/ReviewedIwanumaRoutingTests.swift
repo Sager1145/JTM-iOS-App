@@ -36,12 +36,11 @@ struct ReviewedIwanumaRoutingTests {
         #expect(junction.to.coordinate == coordinate)
         #expect(!junction.evidence.isEmpty)
 
-        // This is the first accepted evidence date, not the original opening
-        // of the junction. Check the boundary's window directly: a current
-        // route must not imply that all its surveyed geometry existed in 2011.
-        #expect(junction.validFrom == "2011-04-21")
+        // Dated from the official 常磐線 completion year (conservative
+        // year-end bound), replacing the 2011 recovery evidence window.
+        #expect(junction.validFrom == "1898-12-31")
         #expect(!RouteGraph.RailValidity.isValid(
-            validFrom: junction.validFrom, validTo: junction.validTo, on: "2011-04-20"))
+            validFrom: junction.validFrom, validTo: junction.validTo, on: "1898-12-30"))
         #expect(RouteGraph.RailValidity.isValid(
             validFrom: junction.validFrom, validTo: junction.validTo, on: "2011-04-21"))
 

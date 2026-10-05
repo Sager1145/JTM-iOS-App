@@ -366,3 +366,11 @@ Backdates: 大宮 1885-07-16, 新津 1912-12-31, 日暮里 1905-04-01, 秋田 19
 ## Known limitation — はるか at 大阪 (2026-10-04)
 
 The reviewed `osaka-osakaloop-tokaido` junction sits on the 梅田貨物線/うめきた arm. Section solving ends 新大阪→大阪 on the 東海道線 passenger arm, which has no physical track link to the 大阪環状線, so the boundary stays unproven (~8 km along-track from the junction). Fix: solve the sections that meet at a stop jointly so the shared endpoint can be the うめきた arm. `JunctionApproachTests` lists this junction as the only explicit exception.
+
+## r5 batch — 2026-10-04
+
+Registry is 181 entries (162 zeroLength, 5 shortLink, 5 osmConnector, 9 osmTrack). Merged the r4 five-id fragment and applied its four backdates (岩沼 1898-12-31, 熱海 1935-12-31, 品川 1885-12-31, 青森 奥羽↔津軽 1951-12-05 with validTo cleared). Added 八代 鹿児島線↔肥薩おれんじ鉄道線 2004-03-13, 栗橋 osmConnector 2006-03-18 (way 142969198 idx 8–10), 赤羽 osmTrack (way 650168486), and 神田 osmTrack (way 211381364 idx 3–9 plus the existing display coordinate [139.770875, 35.69177]; endpoints are the surveyed vertices [139.77054, 35.69096] and [139.77121, 35.69258]). tokyo-east-20 validFrom is 2015-03-14. tokyo-east-21 validFrom is 1980-12-31 (year-only JR East media article; 1980-10-01 and 1976-10-01 were not in the saved pages).
+
+`rail-history.json` revision stays `2026-09-28.3`. JR 東北線 copies: 盛岡–目時–八戸 (IGR plus 青い森 south, plus the 八戸 throat) valid_to 2002-12-01, and 八戸–青森 (青い森 north, plus the throat) valid_to 2010-12-04. Current-operator valid_from retirements match those extents. 青山’s 2006-03-18 station retirement stays after the IGR station stamp so it still wins. zeroLength `aomori-tohoku-tsugaru` is [140.73407, 40.82905] from 1951-12-05 until 2010-12-04. No 盛岡 junction (same 東北線 identity). No 八戸 cross-operator junction.
+
+Not applied: 幡生 (no official junction day in the MLIT chronology, the JR West databook, or the 2025 瑞風 press). 高崎 / 新前橋 stay 2026-10-03 (1921-07-01 is not in the saved Gunma page or the MLIT chronology). 成田エクスプレス 東京 sourceCode is already the 総武線 id 003766. No 東北線↔奥羽線 junction at 青森 (shared vertex exists; no saved 奥羽 arrival day).
