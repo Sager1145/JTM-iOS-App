@@ -338,87 +338,12 @@ public enum TransferGuide {
         var drafts: [CallDraft] = []
         var closed: [(LegHeader, [CallDraft])] = []
 
-        func closeLeg() {
-            guard let header = openHeader else { return }
-            closed.append((header, drafts))
-            carried = drafts.last
-            drafts = []
-            openHeader = nil
-        }
-
         for row in rows {
-            if row.isFooter { continue }
-
-            if route.header.departure == nil, let read = readHeader(row) {
-                route.header.merge(read)
-                continue
-            }
-            if let summary = readSummary(row) {
-                route.header.merge(summary)
-                continue
-            }
-            if let call = readCall(row) {
-                if let opened = pending {
-                    if pendingContinues, openHeader != nil {
-                        // 乗換不要: one ride whose LINE changed under it. The
-                        // block below the badge names the new line, and
-                        // folding it into the leg above is what keeps
-                        // 越後湯沢→直江津 one journey instead of three.
-                        openHeader?.continue(with: opened)
-                    } else {
-                        // The header block just ended. This leg's origin is
-                        // the boundary station standing above it.
-                        openHeader = opened
-                        drafts = []
-                        if let carried { drafts.append(carried) }
-                        carried = nil
-                    }
-                    pending = nil
-                    pendingContinues = false
-                }
-                if openHeader != nil {
-                    drafts.append(call)
-                } else {
-                    // Above the first leg header: the journey's own origin.
-                    // The last one wins — it is the row directly above the
-                    // block, and anything earlier was a misread.
-                    carried = call
-                }
-                continue
-            }
-            // An open block swallows everything until a station row closes
-            // it, INCLUDING a second service name. `ＪＲ上野東京ライン` and
-            // the `ＪＲ高崎線` printed under it are one 直通 ride that changes
-            // line at 大宮; reading the second as a new leg would invent a
-            // transfer at a station the train does not even stop long enough
-            // to be transferred at.
-            if pending != nil {
-                pending?.absorb(row)
-                continue
-            }
-            // A station whose time was not read at all. Only inside a leg
-            // that is already running, and only for a row that is a bare
-            // station name: a stop that arrives without its time is a stop
-            // with a gap in it, and a stop that never arrives is a journey
-            // that skips a station it made.
-            if openHeader != nil, !drafts.isEmpty, let call = readBareCall(row) {
-                drafts.append(call)
-                continue
-            }
-            if let header = readLegHeader(row) {
-                // A block that follows a 乗換不要 station belongs to the leg
-                // already running; anything else ends it.
-                if openHeader != nil, drafts.last?.continues == true {
-                    pendingContinues = true
-                } else {
-                    closeLeg()
-                }
-                pending = header
-                continue
-            }
-            if !row.tokens.isEmpty { unclaimed.append(row.text) }
+            consumeYahooRow(row, route: &route, pending: &pending, pendingContinues: &pendingContinues,
+                openHeader: &openHeader, carried: &carried, drafts: &drafts,
+                closed: &closed, unclaimed: &unclaimed)
         }
-        closeLeg()
+        closeYahooLeg(openHeader: &openHeader, closed: &closed, carried: &carried, drafts: &drafts)
         // A header block at the very end of a cropped screenshot never met a
         // station row. It is not a leg; it is the top of the next screenshot.
         if let service = pending?.service, !service.isEmpty { unclaimed.append(service) }
@@ -427,6 +352,107 @@ public enum TransferGuide {
         route.notes = review(route)
         route.unclaimed = unclaimed
         return route
+    }
+
+    private static func closeYahooLeg(
+        openHeader: inout LegHeader?, closed: inout [(LegHeader, [CallDraft])],
+        carried: inout CallDraft?, drafts: inout [CallDraft]
+    ) {
+        guard let header = openHeader else { return }
+        closed.append((header, drafts))
+        carried = drafts.last
+        drafts = []
+        openHeader = nil
+    }
+
+    private static func consumeYahooRow(
+        _ row: Row, route: inout Route, pending: inout LegHeader?, pendingContinues: inout Bool,
+        openHeader: inout LegHeader?, carried: inout CallDraft?, drafts: inout [CallDraft],
+        closed: inout [(LegHeader, [CallDraft])], unclaimed: inout [String]
+    ) {
+        if row.isFooter { return }
+
+        if mergeYahooHeader(row, into: &route) { return }
+        if let call = readCall(row) {
+            appendYahooCall(call, pending: &pending, pendingContinues: &pendingContinues,
+                openHeader: &openHeader, carried: &carried, drafts: &drafts)
+            return
+        }
+        // An open block swallows everything until a station row closes
+        // it, INCLUDING a second service name. `ＪＲ上野東京ライン` and
+        // the `ＪＲ高崎線` printed under it are one 直通 ride that changes
+        // line at 大宮; reading the second as a new leg would invent a
+        // transfer at a station the train does not even stop long enough
+        // to be transferred at.
+        if pending != nil {
+            pending?.absorb(row)
+            return
+        }
+        // A station whose time was not read at all. Only inside a leg
+        // that is already running, and only for a row that is a bare
+        // station name: a stop that arrives without its time is a stop
+        // with a gap in it, and a stop that never arrives is a journey
+        // that skips a station it made.
+        if openHeader != nil, !drafts.isEmpty, let call = readBareCall(row) {
+            drafts.append(call)
+            return
+        }
+        if let header = readLegHeader(row) {
+            // A block that follows a 乗換不要 station belongs to the leg
+            // already running; anything else ends it.
+            if openHeader != nil, drafts.last?.continues == true {
+                pendingContinues = true
+            } else {
+                closeYahooLeg(openHeader: &openHeader, closed: &closed, carried: &carried, drafts: &drafts)
+            }
+            pending = header
+            return
+        }
+        if !row.tokens.isEmpty { unclaimed.append(row.text) }
+    }
+
+    private static func mergeYahooHeader(_ row: Row, into route: inout Route) -> Bool {
+        if route.header.departure == nil, let read = readHeader(row) {
+            route.header.merge(read)
+            return true
+        }
+        if let summary = readSummary(row) {
+            route.header.merge(summary)
+            return true
+        }
+        return false
+    }
+
+    private static func appendYahooCall(
+        _ call: CallDraft, pending: inout LegHeader?, pendingContinues: inout Bool,
+        openHeader: inout LegHeader?, carried: inout CallDraft?, drafts: inout [CallDraft]
+    ) {
+        if let opened = pending {
+            if pendingContinues, openHeader != nil {
+                // 乗換不要: one ride whose LINE changed under it. The
+                // block below the badge names the new line, and
+                // folding it into the leg above is what keeps
+                // 越後湯沢→直江津 one journey instead of three.
+                openHeader?.continue(with: opened)
+            } else {
+                // The header block just ended. This leg's origin is
+                // the boundary station standing above it.
+                openHeader = opened
+                drafts = []
+                if let carried { drafts.append(carried) }
+                carried = nil
+            }
+            pending = nil
+            pendingContinues = false
+        }
+        if openHeader != nil {
+            drafts.append(call)
+        } else {
+            // Above the first leg header: the journey's own origin.
+            // The last one wins — it is the row directly above the
+            // block, and anything earlier was a misread.
+            carried = call
+        }
     }
 
     // MARK: - rows
@@ -1021,18 +1047,7 @@ public enum TransferGuide {
         mutating func absorbToken(_ token: Token, from line: TextLine) {
             switch token {
             case .service(let text, let serviceKind):
-                let parts = Self.split(service: text)
-                if let bound = parts.destination { destination = destination ?? bound }
-                if service.isEmpty {
-                    service = parts.name
-                    kind = serviceKind
-                    equipment = equipment ?? parts.equipment
-                    serviceBox = line.box
-                } else if !Self.sameService(parts.name, service),
-                    !throughServices.contains(where: { Self.sameService(parts.name, $0) })
-                {
-                    throughServices.append(parts.name)
-                }
+                absorbServiceToken(text, kind: serviceKind, from: line)
             case .destination(let text): destination = destination ?? text
             case .platform(.departure, let number):
                 departurePlatform = departurePlatform ?? number
@@ -1045,6 +1060,28 @@ public enum TransferGuide {
             // 指定席 surcharge beside it is smaller. Taking the maximum
             // avoids having to know which box Vision read first.
             case .fare(let yen): fareYen = max(fareYen ?? 0, yen)
+            case .note, .name: absorbTextToken(token)
+            default: return
+            }
+        }
+
+        private mutating func absorbServiceToken(_ text: String, kind serviceKind: Leg.Kind, from line: TextLine) {
+            let parts = Self.split(service: text)
+            if let bound = parts.destination { destination = destination ?? bound }
+            if service.isEmpty {
+                service = parts.name
+                kind = serviceKind
+                equipment = equipment ?? parts.equipment
+                serviceBox = line.box
+            } else if !Self.sameService(parts.name, service),
+                !throughServices.contains(where: { Self.sameService(parts.name, $0) })
+            {
+                throughServices.append(parts.name)
+            }
+        }
+
+        private mutating func absorbTextToken(_ token: Token) {
+            switch token {
             case .note(let text):
                 if text.contains("当駅始発") { startsHere = true }
                 if !notes.contains(text) { notes.append(text) }
@@ -1059,6 +1096,7 @@ public enum TransferGuide {
             default: return
             }
         }
+
     }
 
     /// Turns a block's drafts into a leg, deciding arrival from departure with

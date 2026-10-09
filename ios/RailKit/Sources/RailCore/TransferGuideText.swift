@@ -848,47 +848,63 @@ extension TransferGuide {
             let base = stationName(raw).name.precomposedStringWithCompatibilityMapping
             var scalars = String.UnicodeScalarView()
             for scalar in base.unicodeScalars {
-                switch scalar.value {
-                case 0x30F6: scalars.append(Unicode.Scalar(0x30B1) ?? scalar)  // ヶ → ケ
-                case 0x30F5: scalars.append(Unicode.Scalar(0x30AB) ?? scalar)  // ヵ → カ
-                // Two spellings of one kanji that Unicode keeps apart and
-                // Japanese station names do not. 倶利伽羅 is written 俱利伽羅
-                // on the screen and 倶利伽羅 in the package, and NFKC folds
-                // neither into the other — they are separate unified
-                // ideographs rather than a compatibility pair. Kept short on
-                // purpose: 龍ケ崎 and 竜ヶ崎 are two DIFFERENT stations, so a
-                // general old-to-new fold would merge two real places.
-                case 0x4FF1: scalars.append(Unicode.Scalar(0x5036) ?? scalar)  // 俱 → 倶
-                case 0x9AD9: scalars.append(Unicode.Scalar(0x9AD8) ?? scalar)  // 髙 → 高
-                case 0x6FF1, 0x6FF5: scalars.append(Unicode.Scalar(0x6D5C) ?? scalar)  // 濱濵 → 浜
-                case 0x7028: scalars.append(Unicode.Scalar(0x7011) ?? scalar)  // 瀨 → 瀬
-                case 0x9243, 0x9435: scalars.append(Unicode.Scalar(0x9244) ?? scalar)  // 鉃鐵 → 鉄
-                // The kanji/katakana homoglyphs. 二ツ井 came back as `ニツ丼`:
-                // the first character is katakana ニ where the station is
-                // kanji 二, and no recogniser will ever reliably tell those
-                // apart because they are the same two strokes.
-                //
-                // Folded on BOTH sides — the query and the package go through
-                // this function — so nothing is lost by choosing one of each
-                // pair arbitrarily. ニセコ and 二セコ become the same key, and
-                // there is only one station either could be.
-                case 0x30CB: scalars.append(Unicode.Scalar(0x4E8C) ?? scalar)  // ニ → 二
-                case 0x30AB: scalars.append(Unicode.Scalar(0x529B) ?? scalar)  // カ → 力
-                case 0x30ED: scalars.append(Unicode.Scalar(0x53E3) ?? scalar)  // ロ → 口
-                case 0x30A8: scalars.append(Unicode.Scalar(0x5DE5) ?? scalar)  // エ → 工
-                case 0x30AA: scalars.append(Unicode.Scalar(0x624D) ?? scalar)  // オ → 才
-                case 0x30BF: scalars.append(Unicode.Scalar(0x5915) ?? scalar)  // タ → 夕
-                case 0x30C8: scalars.append(Unicode.Scalar(0x535C) ?? scalar)  // ト → 卜
-                case 0x30CF: scalars.append(Unicode.Scalar(0x516B) ?? scalar)  // ハ → 八
-                case 0x0020, 0x30FB, 0xFF65, 0x002D, 0x2010...0x2015:
-                    continue
-                default:
-                    scalars.append(scalar)
-                }
+                if isStationKeySeparator(scalar) { continue }
+                scalars.append(stationOrthographicScalar(scalar) ?? stationHomoglyphScalar(scalar) ?? scalar)
             }
             var text = String(scalars)
             if text.count > 1, text.hasSuffix("駅") { text = String(text.dropLast()) }
             return text.lowercased()
         }
+
+        private static func stationOrthographicScalar(_ scalar: Unicode.Scalar) -> Unicode.Scalar? {
+            switch scalar.value {
+            case 0x30F6: return Unicode.Scalar(0x30B1) ?? scalar  // ヶ → ケ
+            case 0x30F5: return Unicode.Scalar(0x30AB) ?? scalar  // ヵ → カ
+            // Two spellings of one kanji that Unicode keeps apart and
+            // Japanese station names do not. 倶利伽羅 is written 俱利伽羅
+            // on the screen and 倶利伽羅 in the package, and NFKC folds
+            // neither into the other — they are separate unified
+            // ideographs rather than a compatibility pair. Kept short on
+            // purpose: 龍ケ崎 and 竜ヶ崎 are two DIFFERENT stations, so a
+            // general old-to-new fold would merge two real places.
+            case 0x4FF1: return Unicode.Scalar(0x5036) ?? scalar  // 俱 → 倶
+            case 0x9AD9: return Unicode.Scalar(0x9AD8) ?? scalar  // 髙 → 高
+            case 0x6FF1, 0x6FF5: return Unicode.Scalar(0x6D5C) ?? scalar  // 濱濵 → 浜
+            case 0x7028: return Unicode.Scalar(0x7011) ?? scalar  // 瀨 → 瀬
+            case 0x9243, 0x9435: return Unicode.Scalar(0x9244) ?? scalar  // 鉃鐵 → 鉄
+            default: return nil
+            }
+        }
+
+        private static func stationHomoglyphScalar(_ scalar: Unicode.Scalar) -> Unicode.Scalar? {
+            switch scalar.value {
+            // The kanji/katakana homoglyphs. 二ツ井 came back as `ニツ丼`:
+            // the first character is katakana ニ where the station is
+            // kanji 二, and no recogniser will ever reliably tell those
+            // apart because they are the same two strokes.
+            //
+            // Folded on BOTH sides — the query and the package go through
+            // this function — so nothing is lost by choosing one of each
+            // pair arbitrarily. ニセコ and 二セコ become the same key, and
+            // there is only one station either could be.
+            case 0x30CB: return Unicode.Scalar(0x4E8C) ?? scalar  // ニ → 二
+            case 0x30AB: return Unicode.Scalar(0x529B) ?? scalar  // カ → 力
+            case 0x30ED: return Unicode.Scalar(0x53E3) ?? scalar  // ロ → 口
+            case 0x30A8: return Unicode.Scalar(0x5DE5) ?? scalar  // エ → 工
+            case 0x30AA: return Unicode.Scalar(0x624D) ?? scalar  // オ → 才
+            case 0x30BF: return Unicode.Scalar(0x5915) ?? scalar  // タ → 夕
+            case 0x30C8: return Unicode.Scalar(0x535C) ?? scalar  // ト → 卜
+            case 0x30CF: return Unicode.Scalar(0x516B) ?? scalar  // ハ → 八
+            default: return nil
+            }
+        }
+
+        private static func isStationKeySeparator(_ scalar: Unicode.Scalar) -> Bool {
+            switch scalar.value {
+            case 0x0020, 0x30FB, 0xFF65, 0x002D, 0x2010...0x2015: return true
+            default: return false
+            }
+        }
+
     }
 }

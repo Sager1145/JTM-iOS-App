@@ -76,24 +76,8 @@ public enum LocalJourneySearch {
         let requiredStationCodes = requiredStationCodes.map(canonical)
         let protectedCodes = Set(requiredStationCodes + [originCode, destinationCode])
         let excludingStationCodes = Set(excludingStationCodes.map(canonical)).subtracting(protectedCodes)
-        func restoreAnchors(_ input: RailwayRouteChoices.Choice) -> RailwayRouteChoices.Choice {
-            var choice = input
-            var anchor = 0
-            for index in choice.stations.indices {
-                guard anchor < originalAnchors.count,
-                      choice.stations[index].code == canonical(originalAnchors[anchor]) else { continue }
-                choice.stations[index].code = originalAnchors[anchor]
-                anchor += 1
-            }
-            for index in choice.routeSections.indices {
-                choice.routeSections[index].fromN02StationCode = choice.stations[index].code
-                choice.routeSections[index].toN02StationCode = choice.stations[index + 1].code
-            }
-            // Choice identity remains the ordered physical section-code chain.
-            return choice
-        }
         func result(_ choices: [RailwayRouteChoices.Choice] = [], truncated: Bool = false) -> Result {
-            Result(choices: choices.map(restoreAnchors), isTruncated: truncated, topologyIsComplete: false, directionIsKnown: false)
+            Result(choices: choices.map { restoreAnchors($0, originalAnchors: originalAnchors, canonical: canonical) }, isTruncated: truncated, topologyIsComplete: false, directionIsKnown: false)
         }
         guard maximumChoices > 0, maximumExpansions > 0 else { return result(truncated: true) }
         guard originCode != destinationCode,
@@ -109,8 +93,46 @@ public enum LocalJourneySearch {
         var nodes: [Node] = []
         var edges: [Edge] = []
         var outgoing: [String: [Int]] = [:]
+        guard buildGraph(lines: lines, excludingStationCodes: excludingStationCodes,
+            nodes: &nodes, edges: &edges, outgoing: &outgoing) else { return result(truncated: true) }
+        guard outgoing[originCode] != nil else { return result() }
+        // A cheap directed reachability pass avoids searching disconnected
+        // national components. Occurrence constraints are applied below.
+        let reachable = reachableCodes(destinationCode: destinationCode, nodes: nodes, edges: edges)
+        guard reachable.contains(originCode) else { return result() }
+        let settled = settledChoices(originCode: originCode, destinationCode: destinationCode,
+            nodes: nodes, edges: edges, lines: lines, anchors: anchors, outgoing: outgoing,
+            reachable: reachable, budget: budget, limit: limit, originLineIDs: originLineIDs,
+            destinationLineIDs: destinationLineIDs, continuation: continuation)
+        return result(settled.choices, truncated: settled.truncated)
+    }
+
+    private static func restoreAnchors(
+        _ input: RailwayRouteChoices.Choice, originalAnchors: [String],
+        canonical: (String) -> String
+    ) -> RailwayRouteChoices.Choice {
+        var choice = input
+        var anchor = 0
+        for index in choice.stations.indices {
+            guard anchor < originalAnchors.count,
+                  choice.stations[index].code == canonical(originalAnchors[anchor]) else { continue }
+            choice.stations[index].code = originalAnchors[anchor]
+            anchor += 1
+        }
+        for index in choice.routeSections.indices {
+            choice.routeSections[index].fromN02StationCode = choice.stations[index].code
+            choice.routeSections[index].toN02StationCode = choice.stations[index + 1].code
+        }
+        // Choice identity remains the ordered physical section-code chain.
+        return choice
+    }
+
+    private static func buildGraph(
+        lines: [CompactPackage.Line], excludingStationCodes: Set<String>,
+        nodes: inout [Node], edges: inout [Edge], outgoing: inout [String: [Int]]
+    ) -> Bool {
         for (row, line) in lines.enumerated() {
-            guard !Task.isCancelled else { return result(truncated: true) }
+            guard !Task.isCancelled else { return false }
             let base = nodes.count
             nodes += line.stations.map { Node(row: row, station: $0) }
             let intervals = RailIntervalCodes.intervals(for: line)
@@ -130,9 +152,12 @@ public enum LocalJourneySearch {
                 }
             }
         }
-        guard outgoing[originCode] != nil else { return result() }
-        // A cheap directed reachability pass avoids searching disconnected
-        // national components. Occurrence constraints are applied below.
+        return true
+    }
+
+    private static func reachableCodes(
+        destinationCode: String, nodes: [Node], edges: [Edge]
+    ) -> Set<String> {
         var predecessors: [String: [String]] = [:]
         for edge in edges {
             predecessors[nodes[edge.to].station.id, default: []].append(nodes[edge.from].station.id)
@@ -144,7 +169,146 @@ public enum LocalJourneySearch {
                 pending.append(previous)
             }
         }
-        guard reachable.contains(originCode) else { return result() }
+        return reachable
+    }
+
+    private static func enqueue(
+        edgeIndex: Int, parent: Int?, queueBudget: Int, edges: [Edge], nodes: [Node],
+        anchors: [String], records: inout [Record], heap: inout Heap, truncated: inout Bool
+    ) {
+        guard records.count < queueBudget else { truncated = true; return }
+        let edge = edges[edgeIndex]
+        let previous = parent.map { records[$0] }
+        var anchorIndex = previous?.anchorIndex ?? 0
+        if anchorIndex + 1 < anchors.count, nodes[edge.to].station.id == anchors[anchorIndex + 1] {
+            anchorIndex += 1
+        }
+        let record = Record(edge: edgeIndex, parent: parent, anchorIndex: anchorIndex,
+                            distance: (previous?.distance ?? 0) + edge.distance,
+                            transfers: (previous?.transfers ?? 0)
+                                + (previous.map { edges[$0.edge].row != edge.row ? 1 : 0 } ?? 0),
+                            hops: (previous?.hops ?? 0) + 1)
+        let id = records.count
+        records.append(record)
+        heap.push(Entry(id: id, distance: record.distance,
+                        transfers: record.transfers, hops: record.hops))
+    }
+
+    private static func appendChoice(
+        entryID: Int, records: [Record], edges: [Edge], nodes: [Node],
+        lines: [CompactPackage.Line], results: inout [RailwayRouteChoices.Choice], seen: inout Set<String>
+    ) {
+        var path: [Edge] = []
+        var cursor: Int? = entryID
+        while let id = cursor {
+            path.append(edges[records[id].edge])
+            cursor = records[id].parent
+        }
+        let choice = makeChoice(path: Array(path.reversed()), nodes: nodes, lines: lines)
+        if seen.insert(choice.id).inserted { results.append(choice) }
+    }
+
+    private static func wouldCycle(
+        entryID: Int, record: Record, arrived: Edge, edge: Edge,
+        originCode: String, nodes: [Node], edges: [Edge], records: [Record]
+    ) -> Bool {
+        var cursor: Int? = entryID
+        var cycle = false
+        while let id = cursor {
+            let prior = edges[records[id].edge]
+            // A different row's origin occurrence must not permit an
+            // unrequested loop back to the start before the next anchor.
+            // Later anchored returns and repeated visits within a row
+            // retain their occurrence-specific semantics.
+            let crossRowOriginRevisit = prior.row != edge.row
+                && record.anchorIndex == 0
+                && nodes[edge.to].station.id == originCode
+                && (nodes[prior.from].station.id == originCode
+                    || nodes[prior.to].station.id == originCode)
+            if crossRowOriginRevisit || prior.from == edge.to || prior.to == edge.to
+                || (edge.row != arrived.row && (prior.from == edge.from || prior.to == edge.from)) {
+                cycle = true
+                break
+            }
+            cursor = records[id].parent
+        }
+        return cycle
+    }
+
+    private static func expandEdges(
+        entry: Entry, record: Record, arrived: Edge, code: String, originCode: String,
+        nodes: [Node], edges: [Edge], lines: [CompactPackage.Line], anchors: [String],
+        outgoing: [String: [Int]], reachable: Set<String>, operatorCodes: [Set<String>],
+        continuation: ((CompactPackage.Line, CompactPackage.Line, String) -> Bool)?,
+        queueBudget: Int, records: inout [Record], heap: inout Heap, truncated: inout Bool
+    ) {
+        for edgeIndex in outgoing[code] ?? [] {
+            let edge = edges[edgeIndex]
+            guard reachable.contains(nodes[edge.to].station.id) else { continue }
+            // Continuing one row must use the actual occurrence reached.
+            // A–B–C–B–D therefore cannot silently become A–B–D.
+            if edge.row == arrived.row {
+                guard edge.from == arrived.to else { continue }
+            } else {
+                guard continuation?(lines[arrived.row], lines[edge.row], code)
+                    ?? transferAllowed(lines[arrived.row], lines[edge.row],
+                                       fromCodes: operatorCodes[arrived.row],
+                                       toCodes: operatorCodes[edge.row]) else { continue }
+            }
+            // Forbid revisiting an occurrence, including a transfer's
+            // departure occurrence; repeated IDs at other positions remain.
+            let cycle = wouldCycle(entryID: entry.id, record: record, arrived: arrived,
+                edge: edge, originCode: originCode, nodes: nodes, edges: edges, records: records)
+            if !cycle {
+                enqueue(edgeIndex: edgeIndex, parent: entry.id, queueBudget: queueBudget,
+                    edges: edges, nodes: nodes, anchors: anchors,
+                    records: &records, heap: &heap, truncated: &truncated)
+            }
+        }
+    }
+
+    private static func runSearch(
+        originCode: String, destinationCode: String, nodes: [Node], edges: [Edge],
+        lines: [CompactPackage.Line], anchors: [String], outgoing: [String: [Int]],
+        reachable: Set<String>, operatorCodes: [Set<String>], budget: Int, limit: Int,
+        destinationLineIDs: Set<String>?,
+        continuation: ((CompactPackage.Line, CompactPackage.Line, String) -> Bool)?,
+        queueBudget: Int, records: inout [Record], heap: inout Heap, settled: inout [Int],
+        results: inout [RailwayRouteChoices.Choice], seen: inout Set<String>,
+        expansions: inout Int, truncated: inout Bool
+    ) {
+        while !heap.items.isEmpty {
+            guard expansions < budget, results.count < limit else { truncated = true; break }
+            guard let entry = heap.pop() else { break }
+            guard !Task.isCancelled else { truncated = true; return }
+            let record = records[entry.id]
+            let arrived = edges[record.edge]
+            let settledIndex = arrived.to * anchors.count + record.anchorIndex
+            guard settled[settledIndex] < limit else { truncated = true; continue }
+            settled[settledIndex] += 1
+            expansions += 1
+            let code = nodes[arrived.to].station.id
+            if code == destinationCode && record.anchorIndex == anchors.count - 1,
+               destinationLineIDs?.contains(lines[arrived.row].id) ?? true {
+                appendChoice(entryID: entry.id, records: records, edges: edges, nodes: nodes,
+                    lines: lines, results: &results, seen: &seen)
+                continue
+            }
+            expandEdges(entry: entry, record: record, arrived: arrived, code: code,
+                originCode: originCode, nodes: nodes, edges: edges, lines: lines, anchors: anchors,
+                outgoing: outgoing, reachable: reachable, operatorCodes: operatorCodes,
+                continuation: continuation, queueBudget: queueBudget,
+                records: &records, heap: &heap, truncated: &truncated)
+        }
+    }
+
+    private static func settledChoices(
+        originCode: String, destinationCode: String, nodes: [Node], edges: [Edge],
+        lines: [CompactPackage.Line], anchors: [String], outgoing: [String: [Int]],
+        reachable: Set<String>, budget: Int, limit: Int, originLineIDs: Set<String>?,
+        destinationLineIDs: Set<String>?,
+        continuation: ((CompactPackage.Line, CompactPackage.Line, String) -> Bool)?
+    ) -> (choices: [RailwayRouteChoices.Choice], truncated: Bool) {
         var records: [Record] = []
         var heap = Heap()
         var settled = Array(repeating: 0, count: nodes.count * anchors.count)
@@ -155,93 +319,21 @@ public enum LocalJourneySearch {
         // Queue storage also has a hard bound; a large interchange cannot
         // consume unbounded memory before the expansion budget is reached.
         let queueBudget = budget * 8
-        func enqueue(edgeIndex: Int, parent: Int?) {
-            guard records.count < queueBudget else { truncated = true; return }
-            let edge = edges[edgeIndex]
-            let previous = parent.map { records[$0] }
-            var anchorIndex = previous?.anchorIndex ?? 0
-            if anchorIndex + 1 < anchors.count, nodes[edge.to].station.id == anchors[anchorIndex + 1] {
-                anchorIndex += 1
-            }
-            let record = Record(edge: edgeIndex, parent: parent, anchorIndex: anchorIndex,
-                                distance: (previous?.distance ?? 0) + edge.distance,
-                                transfers: (previous?.transfers ?? 0)
-                                    + (previous.map { edges[$0.edge].row != edge.row ? 1 : 0 } ?? 0),
-                                hops: (previous?.hops ?? 0) + 1)
-            let id = records.count
-            records.append(record)
-            heap.push(Entry(id: id, distance: record.distance,
-                            transfers: record.transfers, hops: record.hops))
-        }
         for edge in outgoing[originCode] ?? [] where reachable.contains(nodes[edges[edge].to].station.id) {
             guard originLineIDs?.contains(lines[edges[edge].row].id) ?? true else { continue }
-            enqueue(edgeIndex: edge, parent: nil)
+            enqueue(edgeIndex: edge, parent: nil, queueBudget: queueBudget, edges: edges, nodes: nodes,
+                anchors: anchors, records: &records, heap: &heap, truncated: &truncated)
         }
         let operatorCodes = lines.map { line in
             line.operator.map { Set(OperatorIdentity.codes(forJoined: $0)) } ?? []
         }
-        while !heap.items.isEmpty {
-            guard expansions < budget, results.count < limit else { truncated = true; break }
-            guard let entry = heap.pop() else { break }
-            guard !Task.isCancelled else { return result(results, truncated: true) }
-            let record = records[entry.id]
-            let arrived = edges[record.edge]
-            let settledIndex = arrived.to * anchors.count + record.anchorIndex
-            guard settled[settledIndex] < limit else { truncated = true; continue }
-            settled[settledIndex] += 1
-            expansions += 1
-            let code = nodes[arrived.to].station.id
-            if code == destinationCode && record.anchorIndex == anchors.count - 1,
-               destinationLineIDs?.contains(lines[arrived.row].id) ?? true {
-                var path: [Edge] = []
-                var cursor: Int? = entry.id
-                while let id = cursor {
-                    path.append(edges[records[id].edge])
-                    cursor = records[id].parent
-                }
-                let choice = makeChoice(path: Array(path.reversed()), nodes: nodes, lines: lines)
-                if seen.insert(choice.id).inserted { results.append(choice) }
-                continue
-            }
-            for edgeIndex in outgoing[code] ?? [] {
-                let edge = edges[edgeIndex]
-                guard reachable.contains(nodes[edge.to].station.id) else { continue }
-                // Continuing one row must use the actual occurrence reached.
-                // A–B–C–B–D therefore cannot silently become A–B–D.
-                if edge.row == arrived.row {
-                    guard edge.from == arrived.to else { continue }
-                } else {
-                    guard continuation?(lines[arrived.row], lines[edge.row], code)
-                        ?? transferAllowed(lines[arrived.row], lines[edge.row],
-                                           fromCodes: operatorCodes[arrived.row],
-                                           toCodes: operatorCodes[edge.row]) else { continue }
-                }
-                // Forbid revisiting an occurrence, including a transfer's
-                // departure occurrence; repeated IDs at other positions remain.
-                var cursor: Int? = entry.id
-                var cycle = false
-                while let id = cursor {
-                    let prior = edges[records[id].edge]
-                    // A different row's origin occurrence must not permit an
-                    // unrequested loop back to the start before the next anchor.
-                    // Later anchored returns and repeated visits within a row
-                    // retain their occurrence-specific semantics.
-                    let crossRowOriginRevisit = prior.row != edge.row
-                        && record.anchorIndex == 0
-                        && nodes[edge.to].station.id == originCode
-                        && (nodes[prior.from].station.id == originCode
-                            || nodes[prior.to].station.id == originCode)
-                    if crossRowOriginRevisit || prior.from == edge.to || prior.to == edge.to
-                        || (edge.row != arrived.row && (prior.from == edge.from || prior.to == edge.from)) {
-                        cycle = true
-                        break
-                    }
-                    cursor = records[id].parent
-                }
-                if !cycle { enqueue(edgeIndex: edgeIndex, parent: entry.id) }
-            }
-        }
-        return result(results, truncated: truncated)
+        runSearch(originCode: originCode, destinationCode: destinationCode, nodes: nodes, edges: edges,
+            lines: lines, anchors: anchors, outgoing: outgoing, reachable: reachable,
+            operatorCodes: operatorCodes, budget: budget, limit: limit,
+            destinationLineIDs: destinationLineIDs, continuation: continuation, queueBudget: queueBudget,
+            records: &records, heap: &heap, settled: &settled, results: &results, seen: &seen,
+            expansions: &expansions, truncated: &truncated)
+        return (results, truncated)
     }
 
     /// Resolve line-instance codes through official station-group identity only.

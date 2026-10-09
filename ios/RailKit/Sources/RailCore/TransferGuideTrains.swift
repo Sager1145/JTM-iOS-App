@@ -234,6 +234,38 @@ extension TransferGuide {
         let hints = lineHints(for: leg)
         let shinkansen = isShinkansen(leg)
 
+        let stops = trainStops(leg: leg, places: places, ridden: options.ridden)
+
+        var sections: [RouteSection] = []
+        var lineNamesSeen: [String] = []
+        var operatorsSeen: [String] = []
+        var colorHex: String?
+        appendTrainSections(leg: leg, places: places, shinkansen: shinkansen, hints: hints,
+            sections: &sections, lineNamesSeen: &lineNamesSeen,
+            operatorsSeen: &operatorsSeen, colorHex: &colorHex)
+        let policy = trainRoutePolicy(leg: leg, shinkansen: shinkansen,
+            lineNamesSeen: lineNamesSeen, operatorsSeen: operatorsSeen)
+
+        let origin = leg.calls.first?.name ?? ""
+        let destination = leg.calls.last?.name ?? ""
+        return Train(
+            id: id,
+            date: options.date,
+            number: number(for: leg),
+            trainType: trainType(for: leg),
+            company: company(from: operatorsSeen, service: leg.service),
+            origin: origin,
+            destination: destination,
+            direction: leg.destination ?? destination,
+            visible: true,
+            style: TrainStyle(color: colorHex ?? TrainValidation.defaultTrainColor),
+            routePolicy: policy,
+            routeSections: sections.isEmpty ? nil : sections,
+            stops: stops,
+            region: options.region)
+    }
+
+    private static func trainStops(leg: Leg, places: [StationIndex.Place?], ridden: Bool) -> [Stop] {
         var stops: [Stop] = []
         for (index, call) in leg.calls.enumerated() {
             let isFirst = index == 0
@@ -246,14 +278,18 @@ extension TransferGuide {
                 arrival: call.arrival,
                 departure: call.departure,
                 stopType: isFirst ? "origin" : (isLast ? "destination" : "passenger_stop"),
-                rideSegment: options.ridden)
+                rideSegment: ridden)
             stops.append(stop)
         }
 
-        var sections: [RouteSection] = []
-        var lineNamesSeen: [String] = []
-        var operatorsSeen: [String] = []
-        var colorHex: String?
+        return stops
+    }
+
+    private static func appendTrainSections(
+        leg: Leg, places: [StationIndex.Place?], shinkansen: Bool, hints: [String],
+        sections: inout [RouteSection], lineNamesSeen: inout [String],
+        operatorsSeen: inout [String], colorHex: inout String?
+    ) {
         for index in 0..<max(leg.calls.count - 1, 0) {
             let from = places[index]
             let to = places[index + 1]
@@ -276,6 +312,11 @@ extension TransferGuide {
                         ? nil : Array(Set(shared.compactMap(\.operatorName))).sorted()))
         }
 
+    }
+
+    private static func trainRoutePolicy(
+        leg: Leg, shinkansen: Bool, lineNamesSeen: [String], operatorsSeen: [String]
+    ) -> RoutePolicy {
         // `jr_only` is a constraint, so it takes the strict reading: the
         // service says JR, or every operator the resolved lines named is one.
         // A leg where one end is a JR platform and the other is not would
@@ -293,23 +334,7 @@ extension TransferGuide {
             preferredOperatorNames: operatorsSeen.isEmpty ? nil : operatorsSeen,
             institutionFilterMode: "soft")
 
-        let origin = leg.calls.first?.name ?? ""
-        let destination = leg.calls.last?.name ?? ""
-        return Train(
-            id: id,
-            date: options.date,
-            number: number(for: leg),
-            trainType: trainType(for: leg),
-            company: company(from: operatorsSeen, service: leg.service),
-            origin: origin,
-            destination: destination,
-            direction: leg.destination ?? destination,
-            visible: true,
-            style: TrainStyle(color: colorHex ?? TrainValidation.defaultTrainColor),
-            routePolicy: policy,
-            routeSections: sections.isEmpty ? nil : sections,
-            stops: stops,
-            region: options.region)
+        return policy
     }
 
     /// The lines both ends of a section carry, narrowed by what the leg is.

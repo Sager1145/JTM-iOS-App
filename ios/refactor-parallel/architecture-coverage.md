@@ -65,3 +65,25 @@ PhaseA quality CI37988893033 SUCCESS. PhaseB quality37991411921, port-parity3799
 Eight package files now separate catalog/through-service, playback/editing, station decoding/display and timetable/pattern stages. Independent static reviews preserved SQL literals and binds, query/lock/error precedence, geometry/time/UUID/order and public APIs. Original155 functions across9 suites pass before/after using identical sealed657 fixtures. Supported arm64 builds complete; quality244 inherited,13 removed in C,zero new; format PASS and changed/new usual10/40 PASS. Candidate max observed645612912bytes; baseline645760416bytes, with short-sample limitations; no whole-App footprint claim.
 
 Initial PhaseC reports failed in both variants because a private rail-history fixture was omitted. Failed reports retained; fixture supplied from accepted main-regression-root, completed v2 reports are the acceptance evidence. Delivery under shared lock/alternate index is authorized by standing user approval. Full coverage/App migration remain outstanding.
+
+## Standing delivery authorization and pushed PhaseB
+
+User explicitly approved automatic commit and push to main after EACH remaining validated phase in this chat's architecture, RailKit coverage and quality scope, including PhaseB. This supersedes the historical approval-pending entries above; no repeated per-phase approval is required.
+
+PhaseB commit41a350c559bd0bfddf5935b392749611bb1d3944 pushed; origin/main verified under shared delivery lock. Exact validated blobs and unrelated index/live changes preserved. Receipt outputs/refactor-20261009-resume/architecture-phaseB-delivery.json. Original100 functions in5 suites pass before/after; 10 inherited findings removed, zero new; cumulative13 removed.
+
+PhaseA quality CI37988893033 SUCCESS. PhaseB quality37991411921, port-parity37991411790 and layout37991411746 currently in progress; no success claim yet. PhaseC build and nine original focused contract suites pending. Independent PhaseD/E semantic reviews active. Full App migration, full-package coverage and whole-App footprint acceptance remain open.
+
+## PhaseC validated for standing-authorized delivery
+
+Eight package files now separate catalog/through-service, playback/editing, station decoding/display and timetable/pattern stages. Independent static reviews preserved SQL literals and binds, query/lock/error precedence, geometry/time/UUID/order and public APIs. Original155 functions across9 suites pass before/after using identical sealed657 fixtures. Supported arm64 builds complete; quality244 inherited,13 removed in C,zero new; format PASS and changed/new usual10/40 PASS. Candidate max observed645612912bytes; baseline645760416bytes, with short-sample limitations; no whole-App footprint claim.
+
+Initial PhaseC reports failed in both variants because a private rail-history fixture was omitted. Failed reports retained; fixture supplied from accepted main-regression-root, completed v2 reports are the acceptance evidence. Delivery under shared lock/alternate index is authorized by standing user approval. Full coverage/App migration remain outstanding.
+
+## Pushed PhaseC and validated PhaseD
+
+PhaseC commit4fe45cd91e4cf603ffd9b17935a402f499ad98e7 pushed; origin/main verified. Delivery preflight initially stopped before mutations because generated default.profraw changed during concurrent test discovery. Exact production/test/resource source hashes and owned suite profiles passed; generated default.profraw explicitly excluded from source gate and recorded in delivery receipt. PhaseB quality CI37991411921 SUCCESS; other workflows still in progress.
+
+PhaseD six files separate local search, trip planning, train validation/JSON parsing, and transfer-guide parsing/text/train conversion. Independent reviews passed including all28 validator error strings/precedence, scalar folding and graph/queue/memo ordering. Original121 functions across10 suites PASS before/after; sealed657 matchingfixtures. Quality233 inherited,11 removed in D,zero new; format and changed/new usual10/40 PASS. Supported builds complete. Focused process peaks recorded in architecture-phaseD-{baseline,candidate}-guarded.json; no whole-App reduction claim. Standing authorization permits locked delivery.
+
+PhaseD delivery preflight stopped before shared writes on overlapping pre-existing TripRoutePlanner.swift edits (date/through-service extensions). Preserve that live file byte-for-byte; commit only validated frozen source using alternate index. Working copy may differ from accepted HEAD. Source/tests/binary receipts establish accepted Git blobs, not live dirty-source acceptance.

@@ -911,6 +911,31 @@ public enum TrainValidation {
         try validateSupportedRegions(train)
         let prefix = "Train \(index + 1)"
 
+        try validateTrainMetadata(train, prefix: prefix)
+        try validateTrainIdentity(train, prefix: prefix, ids: &ids)
+        try validateTrainDate(train, prefix: prefix)
+        let stops = try validatedStopRows(train, prefix: prefix)
+        for (stopIndex, stop) in stops.enumerated() {
+            let at = "\(prefix) stop \(stopIndex + 1)"
+            try validateStop(stop, at: at)
+        }
+        try validateTrainRouteSections(train, prefix: prefix)
+        try validateTrainRoutePolicy(train, prefix: prefix)
+
+        // ACCEPTS: `train.style?.color` — a `style` that is a string, a
+        // number or null yields undefined here rather than an error, and an
+        // empty colour is falsy, so all of those skip the check.
+        let color = train["style"]?["color"]
+        if let color, color.isTruthy, !isValidTrainColor(jsToString(color)) {
+            throw fail("\(prefix): style.color must be #RRGGBB.")
+        }
+
+        // warnBranchLeak (§6.4) is not ported: it is advisory, console-only,
+        // wrapped in its own try/catch, and needs the station index. It
+        // cannot change this function's result.
+    }
+
+    private static func validateTrainMetadata(_ train: JSON, prefix: String) throws {
         for key in ["id", "number", "origin", "destination"] {
             let value = train[key] ?? .null
             guard value.isTruthy, case .string = value else {
@@ -928,6 +953,9 @@ public enum TrainValidation {
             }
         }
         _ = try normalizeImportedRouteConfirmation(train["route_confirmation"])
+    }
+
+    private static func validateTrainIdentity(_ train: JSON, prefix: String, ids: inout Set<String>) throws {
         guard case .string(let id)? = train["id"] else {
             // Unreachable — the loop above already required a truthy string.
             throw fail("\(prefix): id is required.")
@@ -944,6 +972,9 @@ public enum TrainValidation {
         if ids.contains(id) { throw fail("\(prefix): duplicate id \(id).") }
         ids.insert(id)
 
+    }
+
+    private static func validateTrainDate(_ train: JSON, prefix: String) throws {
         // Absent is accepted; an explicit null is not. The guard is
         // `!== undefined`, and null is a value, so `{"date": null}` — the one
         // spelling JSON has for "no date" — is the shape that fails.
@@ -954,6 +985,9 @@ public enum TrainValidation {
             }
         }
 
+    }
+
+    private static func validatedStopRows(_ train: JSON, prefix: String) throws -> [JSON] {
         guard case .array(let stops)? = train["stops"], stops.count >= 2 else {
             throw fail("\(prefix): stops must contain at least 2 rows.")
         }
@@ -966,40 +1000,47 @@ public enum TrainValidation {
             throw fail("\(prefix): final stop should not need both arrival and departure.")
         }
 
-        for (stopIndex, stop) in stops.enumerated() {
-            let at = "\(prefix) stop \(stopIndex + 1)"
-            // Crashes on null for the same reason the guard above does —
-            // stopName(null) reads `.name` off it.
-            _ = try member(stop, "name")
-            if !stopNameIsTruthy(stop) { throw fail("\(at): name is required.") }
-            let stopType = stop["stop_type"] ?? .null
-            if !stopType.isTruthy { throw fail("\(at): stop_type is required.") }
-            // §7.2: an unrecognised stop_type silently falls through every
-            // `=== "pass_through"` test and gets treated as a stopping
-            // station, so it is rejected here rather than mis-rendered later.
-            if !stopTypes.contains(where: { stopType == .string($0) }) {
-                throw fail(
-                    "\(at): stop_type must be one of \(stopTypes.joined(separator: " / ")).")
-            }
-            guard case .bool = stop["ride_segment"] ?? .null else {
-                throw fail("\(at): ride_segment must be boolean.")
-            }
-            if !isValidSourceStationCode(stop["n02_station_code"]) {
-                throw fail(
-                    "\(at): n02_station_code must be a six-digit N02_005c, a TDX StationUID, or null."
-                )
-            }
-            if !isValidPlatformNumber(stop["platform_number"]) {
-                throw fail(
-                    "\(at): platform_number must be a non-negative integer or null.")
-            }
-            for field in ["arrival", "actual_arrival", "departure", "actual_departure"] {
-                if let value = stop[field], value != .null, !value.isString {
-                    throw fail("\(at): \(field) must be a string or null.")
-                }
+        return stops
+    }
+
+    private static func validateStop(_ stop: JSON, at: String) throws {
+        // Crashes on null for the same reason the guard above does —
+        // stopName(null) reads `.name` off it.
+        _ = try member(stop, "name")
+        if !stopNameIsTruthy(stop) { throw fail("\(at): name is required.") }
+        let stopType = stop["stop_type"] ?? .null
+        if !stopType.isTruthy { throw fail("\(at): stop_type is required.") }
+        // §7.2: an unrecognised stop_type silently falls through every
+        // `=== "pass_through"` test and gets treated as a stopping
+        // station, so it is rejected here rather than mis-rendered later.
+        if !stopTypes.contains(where: { stopType == .string($0) }) {
+            throw fail(
+                "\(at): stop_type must be one of \(stopTypes.joined(separator: " / ")).")
+        }
+        guard case .bool = stop["ride_segment"] ?? .null else {
+            throw fail("\(at): ride_segment must be boolean.")
+        }
+        if !isValidSourceStationCode(stop["n02_station_code"]) {
+            throw fail(
+                "\(at): n02_station_code must be a six-digit N02_005c, a TDX StationUID, or null."
+            )
+        }
+        if !isValidPlatformNumber(stop["platform_number"]) {
+            throw fail(
+                "\(at): platform_number must be a non-negative integer or null.")
+        }
+        try validateStopTimeFields(stop, at: at)
+    }
+
+    private static func validateStopTimeFields(_ stop: JSON, at: String) throws {
+        for field in ["arrival", "actual_arrival", "departure", "actual_departure"] {
+            if let value = stop[field], value != .null, !value.isString {
+                throw fail("\(at): \(field) must be a string or null.")
             }
         }
+    }
 
+    private static func validateTrainRouteSections(_ train: JSON, prefix: String) throws {
         // ACCEPTS: `if (train.route_sections)` — a falsy non-array (0, "",
         // false) skips this entire block instead of failing it, so a
         // `route_sections: 0` is an unchecked section list rather than an
@@ -1010,96 +1051,107 @@ public enum TrainValidation {
             }
             for (sectionIndex, section) in rows.enumerated() {
                 let at = "\(prefix) route section \(sectionIndex + 1)"
-                // Crashes on a null row, third instance of the same pattern.
-                let from = try member(section, "from")
-                let fromCode = try member(section, "from_n02_station_code")
-                let to = try member(section, "to")
-                let toCode = try member(section, "to_n02_station_code")
-                if !(from.isTruthy || fromCode.isTruthy) || !(to.isTruthy || toCode.isTruthy) {
-                    throw fail(
-                        "\(at): from/to names or official station codes are required.")
-                }
-                for field in ["from_n02_station_code", "to_n02_station_code"] {
-                    if !isValidSourceStationCode(section[field]) {
-                        throw fail(
-                            "\(at): \(field) must be a six-digit N02_005c, a TDX StationUID, or null."
-                        )
-                    }
-                }
-                for field in ["line_names", "operator_names"] {
-                    // ACCEPTS: `section[field] || []` — a null array becomes
-                    // an empty one before the type check ever runs.
-                    let values = (section[field] ?? .null).orEmptyArray
-                    guard case .array(let items) = values,
-                        items.allSatisfy({ $0.isString })
-                    else {
-                        throw fail("\(at): \(field) must be an array of strings.")
-                    }
-                }
+                try validateRouteSection(section, at: at)
             }
         }
 
-        // ACCEPTS: the same falsy-skip as route_sections.
-        if let policy = train["route_policy"], policy.isTruthy {
-            if policy["mode"] != .string("single_primary_route") {
-                throw fail("\(prefix): route_policy.mode must be single_primary_route.")
-            }
-            guard case .bool = policy["jr_only"] ?? .null else {
-                throw fail("\(prefix): route_policy.jr_only must be boolean.")
-            }
-            // `!== false`, so 0 and absent are both rejected — only the
-            // boolean false passes.
-            if policy["allow_alternatives"] != .bool(false) {
-                throw fail("\(prefix): route_policy.allow_alternatives must be false.")
-            }
-            if policy["allow_browser_straight_line_fallback"] != .bool(false) {
+    }
+
+    private static func validateRouteSection(_ section: JSON, at: String) throws {
+        // Crashes on a null row, third instance of the same pattern.
+        let from = try member(section, "from")
+        let fromCode = try member(section, "from_n02_station_code")
+        let to = try member(section, "to")
+        let toCode = try member(section, "to_n02_station_code")
+        if !(from.isTruthy || fromCode.isTruthy) || !(to.isTruthy || toCode.isTruthy) {
+            throw fail(
+                "\(at): from/to names or official station codes are required.")
+        }
+        for field in ["from_n02_station_code", "to_n02_station_code"] {
+            if !isValidSourceStationCode(section[field]) {
                 throw fail(
-                    "\(prefix): route_policy.allow_browser_straight_line_fallback must be false.")
-            }
-            let allowed = (policy["allowed_institution_type_codes"] ?? .null).orEmptyArray
-            // One message covers both "not an array" and "bad code", because
-            // the JavaScript joins the two tests with `||`.
-            var allowedIsValid = false
-            if case .array(let codes) = allowed {
-                // ACCEPTS: the membership test is on `String(code)`, so the
-                // JSON number 1 is the string "1".
-                allowedIsValid = codes.allSatisfy { code in
-                    defaultAllowedInstitutionTypeCodes.contains {
-                        jsStringEquals($0, jsToString(code))
-                    }
-                }
-            }
-            if !allowedIsValid {
-                throw fail(
-                    "\(prefix): route_policy.allowed_institution_type_codes must contain only N02_002 codes 1/2/3/4/5."
+                    "\(at): \(field) must be a six-digit N02_005c, a TDX StationUID, or null."
                 )
             }
-            for field in ["preferred_line_names", "preferred_operator_names"] {
-                let values = (policy[field] ?? .null).orEmptyArray
-                guard case .array(let items) = values, items.allSatisfy({ $0.isString }) else {
-                    throw fail("\(prefix): route_policy.\(field) must be an array of strings.")
+        }
+        for field in ["line_names", "operator_names"] {
+            // ACCEPTS: `section[field] || []` — a null array becomes
+            // an empty one before the type check ever runs.
+            let values = (section[field] ?? .null).orEmptyArray
+            guard case .array(let items) = values,
+                items.allSatisfy({ $0.isString })
+            else {
+                throw fail("\(at): \(field) must be an array of strings.")
+            }
+        }
+    }
+
+    private static func validateTrainRoutePolicy(_ train: JSON, prefix: String) throws {
+        // ACCEPTS: the same falsy-skip as route_sections.
+        if let policy = train["route_policy"], policy.isTruthy {
+            try validateRoutePolicyRequirements(policy, prefix: prefix)
+            try validateRoutePolicyInstitutions(policy, prefix: prefix)
+            try validateRoutePolicyPreferences(policy, prefix: prefix)
+            try validateRoutePolicyFilterMode(policy, prefix: prefix)
+        }
+    }
+
+    private static func validateRoutePolicyRequirements(_ policy: JSON, prefix: String) throws {
+        if policy["mode"] != .string("single_primary_route") {
+            throw fail("\(prefix): route_policy.mode must be single_primary_route.")
+        }
+        guard case .bool = policy["jr_only"] ?? .null else {
+            throw fail("\(prefix): route_policy.jr_only must be boolean.")
+        }
+        // `!== false`, so 0 and absent are both rejected — only the
+        // boolean false passes.
+        if policy["allow_alternatives"] != .bool(false) {
+            throw fail("\(prefix): route_policy.allow_alternatives must be false.")
+        }
+        if policy["allow_browser_straight_line_fallback"] != .bool(false) {
+            throw fail(
+                "\(prefix): route_policy.allow_browser_straight_line_fallback must be false.")
+        }
+    }
+
+    private static func validateRoutePolicyInstitutions(_ policy: JSON, prefix: String) throws {
+        let allowed = (policy["allowed_institution_type_codes"] ?? .null).orEmptyArray
+        // One message covers both "not an array" and "bad code", because
+        // the JavaScript joins the two tests with `||`.
+        var allowedIsValid = false
+        if case .array(let codes) = allowed {
+            // ACCEPTS: the membership test is on `String(code)`, so the
+            // JSON number 1 is the string "1".
+            allowedIsValid = codes.allSatisfy { code in
+                defaultAllowedInstitutionTypeCodes.contains {
+                    jsStringEquals($0, jsToString(code))
                 }
             }
-            // ACCEPTS: guarded by the value's own truthiness, so "" means
-            // "not supplied" rather than "invalid".
-            if let mode = policy["institution_filter_mode"], mode.isTruthy,
-                mode != .string("soft"), mode != .string("hard")
-            {
-                throw fail("\(prefix): route_policy.institution_filter_mode must be soft or hard.")
+        }
+        if !allowedIsValid {
+            throw fail(
+                "\(prefix): route_policy.allowed_institution_type_codes must contain only N02_002 codes 1/2/3/4/5."
+            )
+        }
+    }
+
+    private static func validateRoutePolicyPreferences(_ policy: JSON, prefix: String) throws {
+        for field in ["preferred_line_names", "preferred_operator_names"] {
+            let values = (policy[field] ?? .null).orEmptyArray
+            guard case .array(let items) = values, items.allSatisfy({ $0.isString }) else {
+                throw fail("\(prefix): route_policy.\(field) must be an array of strings.")
             }
         }
+    }
 
-        // ACCEPTS: `train.style?.color` — a `style` that is a string, a
-        // number or null yields undefined here rather than an error, and an
-        // empty colour is falsy, so all of those skip the check.
-        let color = train["style"]?["color"]
-        if let color, color.isTruthy, !isValidTrainColor(jsToString(color)) {
-            throw fail("\(prefix): style.color must be #RRGGBB.")
+    private static func validateRoutePolicyFilterMode(_ policy: JSON, prefix: String) throws {
+        // ACCEPTS: guarded by the value's own truthiness, so "" means
+        // "not supplied" rather than "invalid".
+        if let mode = policy["institution_filter_mode"], mode.isTruthy,
+            mode != .string("soft"), mode != .string("hard")
+        {
+            throw fail("\(prefix): route_policy.institution_filter_mode must be soft or hard.")
         }
-
-        // warnBranchLeak (§6.4) is not ported: it is advisory, console-only,
-        // wrapped in its own try/catch, and needs the station index. It
-        // cannot change this function's result.
     }
 
     /// Property access that reproduces JavaScript's `TypeError` on null.
@@ -2204,16 +2256,11 @@ extension TrainValidation.JSON {
             index += 1  // opening quote
             var units: [UInt16] = []
             var literal: [UInt8] = []
-            func flushLiteral() {
-                guard !literal.isEmpty else { return }
-                units.append(contentsOf: Array(String(decoding: literal, as: UTF8.self).utf16))
-                literal.removeAll(keepingCapacity: true)
-            }
             while index < bytes.count {
                 let byte = bytes[index]
                 if byte == UInt8(ascii: "\"") {
                     index += 1
-                    flushLiteral()
+                    Self.flushStringLiteral(&literal, units: &units)
                     // A lone surrogate cannot live in a Swift String; JSON
                     // text produced by this project never contains one, and
                     // substituting U+FFFD is what String(decoding:) would do
@@ -2221,40 +2268,8 @@ extension TrainValidation.JSON {
                     return String(decoding: units, as: UTF16.self)
                 }
                 if byte == UInt8(ascii: "\\") {
-                    flushLiteral()
-                    index += 1
-                    guard index < bytes.count else { throw error("Unexpected end of JSON input") }
-                    let escape = bytes[index]
-                    index += 1
-                    switch escape {
-                    case UInt8(ascii: "\""): units.append(0x22)
-                    case UInt8(ascii: "\\"): units.append(0x5C)
-                    case UInt8(ascii: "/"): units.append(0x2F)
-                    case UInt8(ascii: "b"): units.append(0x08)
-                    case UInt8(ascii: "f"): units.append(0x0C)
-                    case UInt8(ascii: "n"): units.append(0x0A)
-                    case UInt8(ascii: "r"): units.append(0x0D)
-                    case UInt8(ascii: "t"): units.append(0x09)
-                    case UInt8(ascii: "u"):
-                        guard index + 4 <= bytes.count else {
-                            throw error("Bad Unicode escape in JSON")
-                        }
-                        var unit: UInt16 = 0
-                        for offset in 0..<4 {
-                            let digit = bytes[index + offset]
-                            let value: UInt16
-                            switch digit {
-                            case 0x30...0x39: value = UInt16(digit - 0x30)
-                            case 0x41...0x46: value = UInt16(digit - 0x41 + 10)
-                            case 0x61...0x66: value = UInt16(digit - 0x61 + 10)
-                            default: throw error("Bad Unicode escape in JSON")
-                            }
-                            unit = unit << 4 | value
-                        }
-                        index += 4
-                        units.append(unit)
-                    default: throw error("Bad escaped character in JSON")
-                    }
+                    Self.flushStringLiteral(&literal, units: &units)
+                    units.append(try parseStringEscape())
                     continue
                 }
                 guard byte > 0x1F else {
@@ -2264,6 +2279,56 @@ extension TrainValidation.JSON {
                 index += 1
             }
             throw error("Unterminated string in JSON")
+        }
+
+        private static func flushStringLiteral(_ literal: inout [UInt8], units: inout [UInt16]) {
+            guard !literal.isEmpty else { return }
+            units.append(contentsOf: Array(String(decoding: literal, as: UTF8.self).utf16))
+            literal.removeAll(keepingCapacity: true)
+        }
+
+        private mutating func parseStringEscape() throws -> UInt16 {
+            index += 1
+            guard index < bytes.count else { throw error("Unexpected end of JSON input") }
+            let escape = bytes[index]
+            index += 1
+            if escape == UInt8(ascii: "u") { return try parseUnicodeEscape() }
+            if let unit = Self.simpleEscapeUnit(escape) { return unit }
+            throw error("Bad escaped character in JSON")
+        }
+
+        private static func simpleEscapeUnit(_ escape: UInt8) -> UInt16? {
+            switch escape {
+            case UInt8(ascii: "\""): return 0x22
+            case UInt8(ascii: "\\"): return 0x5C
+            case UInt8(ascii: "/"): return 0x2F
+            case UInt8(ascii: "b"): return 0x08
+            case UInt8(ascii: "f"): return 0x0C
+            case UInt8(ascii: "n"): return 0x0A
+            case UInt8(ascii: "r"): return 0x0D
+            case UInt8(ascii: "t"): return 0x09
+            default: return nil
+            }
+        }
+
+        private mutating func parseUnicodeEscape() throws -> UInt16 {
+            guard index + 4 <= bytes.count else {
+                throw error("Bad Unicode escape in JSON")
+            }
+            var unit: UInt16 = 0
+            for offset in 0..<4 {
+                let digit = bytes[index + offset]
+                let value: UInt16
+                switch digit {
+                case 0x30...0x39: value = UInt16(digit - 0x30)
+                case 0x41...0x46: value = UInt16(digit - 0x41 + 10)
+                case 0x61...0x66: value = UInt16(digit - 0x61 + 10)
+                default: throw error("Bad Unicode escape in JSON")
+                }
+                unit = unit << 4 | value
+            }
+            index += 4
+            return unit
         }
 
         mutating func parseNumber() throws -> Double {
