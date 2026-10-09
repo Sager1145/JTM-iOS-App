@@ -921,6 +921,8 @@ struct RideEditorView: View {
         selectedCatalogLineIDs = Set(proposal.choice.lineIDs)
         selectedPattern = nil
         selectedTimetableDate = nil
+        // Settle editor-derived direction before capturing the exact Undo draft.
+        refreshAutoDirection()
         localJourneyUndo = LocalJourneyUndo(before: before, after: draft,
             previousChoice: previousChoice, previousLineIDs: previousLineIDs,
             previousPattern: previousPattern, previousTimetableDate: previousTimetableDate)

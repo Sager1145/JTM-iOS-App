@@ -650,3 +650,30 @@ includes neither the failed helper nor speculative Undo product changes.
 Receipts: autofill-ui-{candidate,build,validation} artifacts retain both
 outcomes. This closes only the stale catalogue-name regression; full UI,
 Undo and comparative memory acceptance remain open.
+
+## Phase 26: capture Undo after editor-derived direction settles
+
+Status: both original committed autofill UI tests PASS. Scratch DEBUG evidence
+proves Undo already exists internally but snapshot equality becomes false:
+direction=nil→down is the only changed Train field, including while the
+route action is mounted. The normal draft onChange infers that direction
+after the old snapshot. Call the existing refreshAutoDirection immediately
+before snapshot capture; retain its authored-direction/official-direction
+rules and the exact equality guard protecting later user edits. Add no
+retained state or new diagnostic surface to production.
+
+Validation: independently built exact Main25 + this two-line change, Debug
+arm64 build-for-testing PASS. Original physical-fill/intermediate-stop/Undo
+restoration test PASS47.730s with the original navigation helper; original
+through-service candidate/pending/save/reopen test PASS134.434s, exit0.
+137actual physical samples across3expected launch/relaunch PIDs,
+peak394021816B, no2GiB breach. Full507-file pinned lint/format evidence
+retains270legacy findings, zero new debt; formatting PASS. This is not paired
+RAM or leak acceptance. Failed scrolling and diagnostic attempts remain
+in autofill-ui and autofill-undo-diagnostic receipts; neither is shipped.
+
+Receipts: autofill-undo-fix-{candidate,build,validation,new-debt} artifacts and
+quality reports. Unrelated live RideEditor CLI changes are preserved by
+applying only the snapshot insertion; an isolated Git index commits the
+validated Main candidate rather than the rest of that dirty file. Full
+platform/memory acceptance remains open.
