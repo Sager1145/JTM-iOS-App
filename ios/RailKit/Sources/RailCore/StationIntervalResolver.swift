@@ -60,6 +60,16 @@ public struct StationIntervalResolver: Sendable {
         let start: Coordinate
         let end: Coordinate
     }
+    private struct State {
+        let previous: Edge
+        let stage: Int
+        let visited: Set<Occurrence>
+        let visitedCodes: Set<String>
+        let legs: [[DirectedInterval]]
+        let incomplete: Bool
+        let mayReverse: Bool
+    }
+
     private let rows: [Row]
     private let rowsByID: [String: [Int]]
     private let adjacency: [String: [Edge]]
@@ -169,18 +179,9 @@ public struct StationIntervalResolver: Sendable {
         guard stationCodes.count >= 2, stationCodes.allSatisfy({ !$0.isEmpty }),
               maximumExaminedStates > 0, !isCancelled(),
               let families = matchingFamilies(
-                requiredLineIDs: requiredLineIDs, requiredLineNames: requiredLineNames,
-                requiredOperatorNames: requiredOperatorNames),
+                  requiredLineIDs: requiredLineIDs, requiredLineNames: requiredLineNames,
+                  requiredOperatorNames: requiredOperatorNames),
               families.isDisjoint(with: incompleteFamilies) else { return .unsupported }
-        struct State {
-            let previous: Edge
-            let stage: Int
-            let visited: Set<Occurrence>
-            let visitedCodes: Set<String>
-            let legs: [[DirectedInterval]]
-            let incomplete: Bool
-            let mayReverse: Bool
-        }
         var pending: [State] = []
         var examined = 0
         var truncated = false
@@ -189,61 +190,100 @@ public struct StationIntervalResolver: Sendable {
         var incompleteCandidate = false
         let permittedIDs = Set(requiredLineIDs)
 
-        func append(_ edge: Edge, after state: State?) {
-            let stage = state?.stage ?? 1
-            let reachesVisit = edge.toCode == stationCodes[stage]
-            var legs = state?.legs ?? Array(repeating: [], count: stationCodes.count - 1)
-            legs[stage - 1].append(edge.identity)
-            let incomplete: Bool
-            if let previous = state?.previous {
-                // Same row must also retain its exact station occurrence.
-                let changesRow = previous.to.row != edge.from.row
-                let pairedJoin = changesRow && (rows[previous.to.row].pairedAlignment || rows[edge.from.row].pairedAlignment)
-                incomplete = state!.incomplete || previous.end != edge.start || pairedJoin
-            } else { incomplete = false }
-            if reachesVisit && stage == stationCodes.count - 1 {
-                if incomplete { incompleteCandidate = true; return }
-                let identity = legs.flatMap { $0 }
-                if found.insert(identity).inserted {
-                    let chosen = Selection(stationCodes: stationCodes, legIntervals: legs)
-                    selections.append(chosen)
-                }
-                return
-            }
-            let nextStage = reachesVisit ? stage + 1 : stage
-            // A later via cannot license a lap through already visited trunk
-            // stations. Only an explicitly repeated requested visit opens a
-            // return leg, which may need those same intermediate occurrences.
-            let returnLeg = reachesVisit && stationCodes[..<stage].contains(stationCodes[nextStage])
-            var visited = returnLeg ? [] : state?.visited ?? [edge.from]
-            var visitedCodes = returnLeg ? [] : state?.visitedCodes ?? [edge.fromCode]
-            visited.insert(edge.to)
-            visitedCodes.insert(edge.toCode)
-            pending.append(State(
-                previous: edge, stage: nextStage, visited: visited, visitedCodes: visitedCodes,
-                legs: legs, incomplete: incomplete,
-                mayReverse: returnLeg))
+        seedIntervalSearch(families: families, stationCodes: stationCodes, permittedIDs: permittedIDs,
+                           maximumExaminedStates: maximumExaminedStates, isCancelled: isCancelled,
+                           pending: &pending, examined: &examined, truncated: &truncated, found: &found,
+                           selections: &selections, incompleteCandidate: &incompleteCandidate)
+        searchIntervals(stationCodes: stationCodes, permittedIDs: permittedIDs,
+                        maximumExaminedStates: maximumExaminedStates, isCancelled: isCancelled,
+                        pending: &pending, examined: &examined, truncated: &truncated, found: &found,
+                        selections: &selections, incompleteCandidate: &incompleteCandidate)
+        guard !isCancelled(), !incompleteCandidate else { return .unsupported }
+        // A capped search cannot prove the matches it already found are exhaustive.
+        if truncated { return selections.isEmpty ? .unsupported : .ambiguous }
+        guard let chosen = preferredIntervalSelection(selections) else {
+            return selections.isEmpty ? .unsupported : .ambiguous
         }
+        return .resolved(chosen)
+    }
 
-        // Count every examined edge, including completed and rejected paths.
-        func admitsAnotherState() -> Bool {
-            guard !isCancelled() else { return false }
-            guard examined < maximumExaminedStates else {
-                truncated = true
-                return false
+    private func appendIntervalState(
+        _ edge: Edge, after state: State?, stationCodes: [String], pending: inout [State],
+        found: inout Set<[DirectedInterval]>, selections: inout [Selection], incompleteCandidate: inout Bool
+    ) {
+        let stage = state?.stage ?? 1
+        let reachesVisit = edge.toCode == stationCodes[stage]
+        var legs = state?.legs ?? Array(repeating: [], count: stationCodes.count - 1)
+        legs[stage - 1].append(edge.identity)
+        let incomplete: Bool
+        if let previous = state?.previous {
+            // Same row must also retain its exact station occurrence.
+            let changesRow = previous.to.row != edge.from.row
+            let pairedJoin = changesRow && (rows[previous.to.row].pairedAlignment || rows[edge.from.row].pairedAlignment)
+            incomplete = state!.incomplete || previous.end != edge.start || pairedJoin
+        } else { incomplete = false }
+        if reachesVisit && stage == stationCodes.count - 1 {
+            if incomplete { incompleteCandidate = true; return }
+            let identity = legs.flatMap { $0 }
+            if found.insert(identity).inserted {
+                let chosen = Selection(stationCodes: stationCodes, legIntervals: legs)
+                selections.append(chosen)
             }
-            examined += 1
-            return true
+            return
         }
+        let nextStage = reachesVisit ? stage + 1 : stage
+        // A later via cannot license a lap through already visited trunk
+        // stations. Only an explicitly repeated requested visit opens a
+        // return leg, which may need those same intermediate occurrences.
+        let returnLeg = reachesVisit && stationCodes[..<stage].contains(stationCodes[nextStage])
+        var visited = returnLeg ? [] : state?.visited ?? [edge.from]
+        var visitedCodes = returnLeg ? [] : state?.visitedCodes ?? [edge.fromCode]
+        visited.insert(edge.to)
+        visitedCodes.insert(edge.toCode)
+        pending.append(State(
+            previous: edge, stage: nextStage, visited: visited, visitedCodes: visitedCodes,
+            legs: legs, incomplete: incomplete,
+            mayReverse: returnLeg))
+    }
+
+    // Count every examined edge, including completed and rejected paths.
+    private func admitsIntervalState(
+        maximumExaminedStates: Int, isCancelled: @Sendable () -> Bool,
+        examined: inout Int, truncated: inout Bool
+    ) -> Bool {
+        guard !isCancelled() else { return false }
+        guard examined < maximumExaminedStates else {
+            truncated = true
+            return false
+        }
+        examined += 1
+        return true
+    }
+
+    private func seedIntervalSearch(
+        families: Set<Family>,
+        stationCodes: [String], permittedIDs: Set<String>, maximumExaminedStates: Int,
+        isCancelled: @Sendable () -> Bool, pending: inout [State], examined: inout Int,
+        truncated: inout Bool, found: inout Set<[DirectedInterval]>, selections: inout [Selection],
+        incompleteCandidate: inout Bool
+    ) {
         for edge in adjacency[stationCodes[0]] ?? [] where families.contains(edge.family)
             && (permittedIDs.isEmpty || permittedIDs.contains(edge.identity.lineID)) {
-            guard admitsAnotherState() else { break }
-            append(edge, after: nil)
+            guard admitsIntervalState(maximumExaminedStates: maximumExaminedStates, isCancelled: isCancelled, examined: &examined, truncated: &truncated) else { break }
+            appendIntervalState(edge, after: nil, stationCodes: stationCodes, pending: &pending, found: &found, selections: &selections, incompleteCandidate: &incompleteCandidate)
         }
+    }
+
+    private func searchIntervals(
+        stationCodes: [String], permittedIDs: Set<String>, maximumExaminedStates: Int,
+        isCancelled: @Sendable () -> Bool, pending: inout [State], examined: inout Int,
+        truncated: inout Bool, found: inout Set<[DirectedInterval]>, selections: inout [Selection],
+        incompleteCandidate: inout Bool
+    ) {
         search: while !truncated, !isCancelled(), let state = pending.popLast() {
             for edge in adjacency[state.previous.toCode] ?? [] where edge.family == state.previous.family
                 && (permittedIDs.isEmpty || permittedIDs.contains(edge.identity.lineID)) {
-                guard admitsAnotherState() else { break search }
+                guard admitsIntervalState(maximumExaminedStates: maximumExaminedStates, isCancelled: isCancelled, examined: &examined, truncated: &truncated) else { break search }
                 // Changing rows can only use the same station code. A non-exact
                 // endpoint remains an incomplete candidate, never a real join.
                 guard edge.from.row != state.previous.to.row || edge.from == state.previous.to else { continue }
@@ -251,24 +291,18 @@ public struct StationIntervalResolver: Sendable {
                 guard reachesVisit || (!state.visited.contains(edge.to)
                     && !state.visitedCodes.contains(edge.toCode)) else { continue }
                 if edge.toCode == state.previous.fromCode && !state.mayReverse { continue }
-                append(edge, after: state)
+                appendIntervalState(edge, after: state, stationCodes: stationCodes, pending: &pending, found: &found, selections: &selections, incompleteCandidate: &incompleteCandidate)
             }
         }
-        guard !isCancelled(), !incompleteCandidate else { return .unsupported }
-        // A capped search cannot prove the matches it already found are exhaustive.
-        if truncated { return selections.isEmpty ? .unsupported : .ambiguous }
-        func preferred(_ selections: [Selection]) -> Selection? {
-            if selections.count <= 1 { return selections.first }
-            let adjacent = selections.filter { $0.legIntervals.allSatisfy { $0.count == 1 } }
-            let pool = adjacent.isEmpty ? selections : adjacent
-            if pool.count == 1 { return pool[0] }
-            let shortest = pool.map(\.intervals.count).min() ?? 0
-            let short = pool.filter { $0.intervals.count == shortest }
-            return short.count == 1 ? short[0] : nil
-        }
-        guard let chosen = preferred(selections) else {
-            return selections.isEmpty ? .unsupported : .ambiguous
-        }
-        return .resolved(chosen)
+    }
+
+    private func preferredIntervalSelection(_ selections: [Selection]) -> Selection? {
+        if selections.count <= 1 { return selections.first }
+        let adjacent = selections.filter { $0.legIntervals.allSatisfy { $0.count == 1 } }
+        let pool = adjacent.isEmpty ? selections : adjacent
+        if pool.count == 1 { return pool[0] }
+        let shortest = pool.map(\.intervals.count).min() ?? 0
+        let short = pool.filter { $0.intervals.count == shortest }
+        return short.count == 1 ? short[0] : nil
     }
 }

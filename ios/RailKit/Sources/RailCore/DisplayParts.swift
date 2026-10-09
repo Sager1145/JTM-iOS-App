@@ -1266,11 +1266,6 @@ public enum DisplayParts {
         var parts: [[Coordinate]] = []
         var current: [Coordinate] = []
 
-        func flush() {
-            if current.count >= 2 { parts.append(current) }
-            current = []
-        }
-
         // Station approaches are rebuilt on the interval chain, BEFORE any of
         // the branch machinery below runs, so a branch lead-in copied off a
         // trunk copies the finished geometry and the two strokes stay
@@ -1279,108 +1274,115 @@ public enum DisplayParts {
         anchorIntervalsToStations(&intervals, stations: line.displayStations)
 
         for var decoded in intervals {
-            // `dropStationRepeat` mutates BOTH sides, and the mutated interval
-            // is what goes into `laid` and (absent a retrace) into the stroke.
-            if !current.isEmpty { dropStationRepeat(&current, &decoded) }
-
-            var coordinates = decoded
-            let head = retracedHeadIndex(decoded, laid: laid)
-            if head > 0 {
-                let tail = Array(decoded[head...])
-                if pathLength(tail) < retraceMinTailMeters {
-                    // Nothing new at all — the interval is pure duplicate
-                    // track. Skip it entirely; the next interval opens a fresh
-                    // part at its own station.
-                    flush()
-                    laid.add(decoded)
-                    continue
-                }
-                let divergence = decoded[head]
-                let inCurrent =
-                    !current.isEmpty
-                    ? nearestVertexIndex(current, divergence)
-                    : (index: -1, distance: Double.infinity)
-                if inCurrent.distance <= retraceMatchMeters
-                    && spliceTurnDegrees(current, index: inCurrent.index, tail: tail)
-                        >= sharpTurnDegrees
-                {
-                    // The tail leaves the divergence back along the way the
-                    // trunk came in, so there is no trunk to carry on with:
-                    // the station this interval STARTS at is a reversal, and
-                    // the two legs merely share the rail between its platform
-                    // and the switch. Splitting here would weld a hairpin into
-                    // open track short of the platform — 成田 at the 我孫子支線
-                    // switch, 会津若松 a kilometre out — and leave the station
-                    // on the branch stroke alone. Close the stroke instead,
-                    // the same shape `isReversalJoint` draws where the two
-                    // legs share no track at all, and let this interval open
-                    // its own part at the station, head included, so both legs
-                    // reach the platform.
-                    flush()
-                } else if inCurrent.distance <= retraceMatchMeters {
-                    // The excursion we just drew hangs off THIS part at
-                    // `divergence`. Split there: the far side is the branch,
-                    // the trunk resumes along the fresh tail, and the branch
-                    // is re-served from the station this interval's tail runs
-                    // to (its own lead-in, reversed).
-                    let excursion = Array(current[inCurrent.index...])
-                    current = Array(current[0...inCurrent.index])
-                    let leadIn = branchLeadIn(
-                        Array(tail.reversed()), divergenceIndex: tail.count - 1,
-                        stationPoints: stationPoints)
-                    if excursion.count >= 2 {
-                        let branch = leadIn.map { $0 + excursion.dropFirst() } ?? excursion
-                        if branch.count >= 2 { parts.append(branch) }
-                    }
-                    // The cut vertex and the tail's first vertex are the same
-                    // switch to within the match radius; make them literally
-                    // equal so the trunk welds instead of jogging.
-                    //
-                    // Unless the cut vertex is a PLATFORM ANCHOR, which
-                    // happens whenever the branch leaves from a station rather
-                    // than from open track — the whole open part being the
-                    // anchor alone is only its commonest shape (阪和線 opens a
-                    // part at 鳳 to reach 東羽衣). Overwriting an anchor would
-                    // cut the trunk loose ~40 m short of the station AND take
-                    // the station off the line it calls at. Append instead, so
-                    // the continuation still reads station → switch → onward.
-                    if current.count >= 2
-                        && !anchorKeys.contains(Grooming.coordinateKey(current[current.count - 1]))
-                    {
-                        current[current.count - 1] = tail[0]
-                    } else if !Grooming.sameCoordinate(current.last, tail[0]) {
-                        current.append(tail[0])
-                    }
-                    coordinates = tail
-                } else {
-                    // The retrace lands on track from an already-closed part.
-                    // Open a new one at the divergence point — and lead it in
-                    // along the retraced head itself, which IS the trunk this
-                    // branch leaves and is guaranteed to reach a station (it
-                    // starts at one).
-                    flush()
-                    let leadIn = branchLeadIn(
-                        decoded, divergenceIndex: head, stationPoints: stationPoints)
-                    coordinates = leadIn.map { $0 + tail.dropFirst() } ?? tail
-                }
-            } else if !current.isEmpty && isReversalJoint(current, coordinates) {
-                // No shared track, but the line turns back on itself at the
-                // joint: still a branch, and still must not be drawn as one
-                // stroke.
-                flush()
-            }
-
-            if current.isEmpty {
-                current = coordinates
-            } else if Grooming.sameCoordinate(current.last, coordinates.first) {
-                current.append(contentsOf: coordinates.dropFirst())
-            } else {
-                current.append(contentsOf: coordinates)
-            }
-            laid.add(decoded)
+            appendDisplayInterval(&decoded, current: &current, laid: &laid, parts: &parts,
+                                  stationPoints: stationPoints, anchorKeys: anchorKeys)
         }
-        flush()
+        flushDisplayPart(current: &current, parts: &parts)
 
+        return groomDisplayParts(parts, line: line, topology: topology,
+                                 stationPoints: stationPoints, anchorKeys: anchorKeys, limits: limits)
+    }
+
+    private static func flushDisplayPart(current: inout [Coordinate], parts: inout [[Coordinate]]) {
+        if current.count >= 2 { parts.append(current) }
+        current = []
+    }
+
+    private static func appendDisplayInterval(
+        _ decoded: inout [Coordinate], current: inout [Coordinate], laid: inout TrackIndex,
+        parts: inout [[Coordinate]], stationPoints: [Coordinate], anchorKeys: Set<String>
+    ) {
+        if !current.isEmpty { dropStationRepeat(&current, &decoded) }
+        var coordinates = decoded
+        let head = retracedHeadIndex(decoded, laid: laid)
+        if head > 0 {
+            if !prepareRetracedDisplayInterval(decoded, head: head, coordinates: &coordinates,
+                                               current: &current, parts: &parts, stationPoints: stationPoints, anchorKeys: anchorKeys) {
+                laid.add(decoded)
+                return
+            }
+        } else if !current.isEmpty && isReversalJoint(current, coordinates) {
+            flushDisplayPart(current: &current, parts: &parts)
+        }
+        if current.isEmpty {
+            current = coordinates
+        } else if Grooming.sameCoordinate(current.last, coordinates.first) {
+            current.append(contentsOf: coordinates.dropFirst())
+        } else {
+            current.append(contentsOf: coordinates)
+        }
+        laid.add(decoded)
+    }
+
+    private static func prepareRetracedDisplayInterval(
+        _ decoded: [Coordinate], head: Int, coordinates: inout [Coordinate],
+        current: inout [Coordinate], parts: inout [[Coordinate]],
+        stationPoints: [Coordinate], anchorKeys: Set<String>
+    ) -> Bool {
+        let tail = Array(decoded[head...])
+        if pathLength(tail) < retraceMinTailMeters {
+            // A duplicate interval closes the current stroke before entering laid track.
+            flushDisplayPart(current: &current, parts: &parts)
+            return false
+        }
+        let divergence = decoded[head]
+        let inCurrent = !current.isEmpty ? nearestVertexIndex(current, divergence)
+            : (index: -1, distance: Double.infinity)
+        if inCurrent.distance <= retraceMatchMeters
+            && spliceTurnDegrees(current, index: inCurrent.index, tail: tail) >= sharpTurnDegrees {
+            // A reversal keeps both interval heads reaching their platform.
+            flushDisplayPart(current: &current, parts: &parts)
+        } else if inCurrent.distance <= retraceMatchMeters {
+            splitDisplayExcursion(current: &current, parts: &parts, index: inCurrent.index,
+                                  tail: tail, stationPoints: stationPoints, anchorKeys: anchorKeys)
+            coordinates = tail
+        } else {
+            // Closed-track retraces open at the divergence with their own station lead-in.
+            flushDisplayPart(current: &current, parts: &parts)
+            let leadIn = branchLeadIn(decoded, divergenceIndex: head, stationPoints: stationPoints)
+            coordinates = leadIn.map { $0 + tail.dropFirst() } ?? tail
+        }
+        return true
+    }
+
+    private static func splitDisplayExcursion(
+        current: inout [Coordinate], parts: inout [[Coordinate]], index: Int,
+        tail: [Coordinate], stationPoints: [Coordinate], anchorKeys: Set<String>
+    ) {
+        let excursion = Array(current[index...])
+        current = Array(current[0...index])
+        let leadIn = branchLeadIn(
+            Array(tail.reversed()), divergenceIndex: tail.count - 1,
+            stationPoints: stationPoints)
+        if excursion.count >= 2 {
+            let branch = leadIn.map { $0 + excursion.dropFirst() } ?? excursion
+            if branch.count >= 2 { parts.append(branch) }
+        }
+        // The cut vertex and the tail's first vertex are the same
+        // switch to within the match radius; make them literally
+        // equal so the trunk welds instead of jogging.
+        //
+        // Unless the cut vertex is a PLATFORM ANCHOR, which
+        // happens whenever the branch leaves from a station rather
+        // than from open track — the whole open part being the
+        // anchor alone is only its commonest shape (阪和線 opens a
+        // part at 鳳 to reach 東羽衣). Overwriting an anchor would
+        // cut the trunk loose ~40 m short of the station AND take
+        // the station off the line it calls at. Append instead, so
+        // the continuation still reads station → switch → onward.
+        if current.count >= 2
+            && !anchorKeys.contains(Grooming.coordinateKey(current[current.count - 1]))
+        {
+            current[current.count - 1] = tail[0]
+        } else if !Grooming.sameCoordinate(current.last, tail[0]) {
+            current.append(tail[0])
+        }
+    }
+
+    private static func groomDisplayParts(
+        _ parts: [[Coordinate]], line: CompactPackage.Line, topology: LineTopology,
+        stationPoints: [Coordinate], anchorKeys: Set<String>, limits: Grooming.Limits
+    ) -> [[Coordinate]] {
         // Trim on both sides of grooming. Before, because a fold hides real
         // corners from the groomer; after, because dropping a barb can expose
         // a smaller fold that was not one while the extra vertices were there.
@@ -1394,12 +1396,12 @@ public enum DisplayParts {
         for key in anchorKeys { protectedKeys.insert(key) }
         var groomed =
             trimmed
-            .map {
-                trimFoldedEnds(
-                    Grooming.smoothMicroKinks($0, limits: limits, protectedKeys: protectedKeys),
-                    anchorKeys: anchorKeys)
-            }
-            .filter { $0.count >= 2 }
+                .map {
+                    trimFoldedEnds(
+                        Grooming.smoothMicroKinks($0, limits: limits, protectedKeys: protectedKeys),
+                        anchorKeys: anchorKeys)
+                }
+                .filter { $0.count >= 2 }
 
         var chain: [[Coordinate]]
         if groomed.isEmpty {
@@ -1413,6 +1415,7 @@ public enum DisplayParts {
         return chain + extraSegmentParts(topology, stationPoints: stationPoints, limits: limits)
             + line.displayBranchLeadIns
     }
+
 
     /// The historic single-stroke geometry, retained for callers that want it.
     ///

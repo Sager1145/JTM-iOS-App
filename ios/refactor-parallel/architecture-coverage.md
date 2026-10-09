@@ -103,3 +103,9 @@ PhaseE v2 twelve suites still active, route/sample-heavy junction group under2Gi
 ## PhaseE validated for standing-authorized delivery
 
 RouteSolver, OverlapLanes and JourneyCompletion: original 107 functions across 12 suites PASS before/after. Exact original selectors and argument cases retained. Quality 201 inherited, 32 removed in this phase, zero new; format/ownership/changed-new usual10/40 and independent static review PASS. Candidate/baseline observed focused peaks {'baseline': 789005824, 'candidate': 784795112} bytes; short unmeasured cases remain in receipts. No complete-package/global/App coverage or strict whole-App footprint claim.
+
+PhaseE commit 8a616ed69fee4e60b0d788762356cc04fa54aa26 pushed and origin/main verified under shared delivery lock; exact validated blobs and unrelated index entries preserved. Delivery receipt architecture-phaseE-delivery.json.
+
+## PhaseF validated for standing-authorized delivery
+
+statistics/history/graph/matcher/display/station geometry: original 144 functions across 16 suites PASS before/after. Exact original selectors and argument cases retained. Quality 176 inherited, 25 removed in this phase, zero new; format/ownership/changed-new usual10/40 and independent static review PASS. Candidate/baseline observed focused peaks {'baseline': 834487808, 'candidate': 835913288} bytes; short unmeasured cases remain in receipts. No complete-package/global/App coverage or strict whole-App footprint claim.

@@ -267,6 +267,23 @@ public enum RouteGraph {
         func osmRejection(fromCoordinate: Coordinate, toCoordinate: Coordinate) -> String? {
             guard kind == .osmConnector || kind == .osmTrack else { return nil }
             let deadEnd = kind == .osmTrack && terminus?.end == .to
+            if let reason = osmEndLayoutRejection() { return reason }
+            guard let path, path.count >= 2 else { return "path has fewer than 2 points" }
+            guard let attachMeters else { return "missing attachMeters" }
+            if attachMeters.from < 0 || (!deadEnd && attachMeters.to < 0)
+                || attachMeters.from > Self.maximumOSMAttachMeters
+                || (!deadEnd && attachMeters.to > Self.maximumOSMAttachMeters) {
+                return "attach exceeds \(Self.maximumOSMAttachMeters) m"
+            }
+            let fromPoint = Grid.normalizeGraphCoord(fromCoordinate)
+            let pathPoints = path.map(Grid.normalizeGraphCoord)
+            if let reason = osmPathRejection(pathPoints, fromPoint: fromPoint, toCoordinate: toCoordinate, deadEnd: deadEnd) {
+                return reason
+            }
+            return osmIdentityRejection()
+        }
+
+        private func osmEndLayoutRejection() -> String? {
             if let terminus {
                 guard kind == .osmTrack else { return "terminus requires osmTrack" }
                 guard terminus.end == .to else { return "unsupported terminus end" }
@@ -279,15 +296,12 @@ public enum RouteGraph {
                     return "endJunction coordinate mismatch"
                 }
             }
-            guard let path, path.count >= 2 else { return "path has fewer than 2 points" }
-            guard let attachMeters else { return "missing attachMeters" }
-            if attachMeters.from < 0 || (!deadEnd && attachMeters.to < 0)
-                || attachMeters.from > Self.maximumOSMAttachMeters
-                || (!deadEnd && attachMeters.to > Self.maximumOSMAttachMeters) {
-                return "attach exceeds \(Self.maximumOSMAttachMeters) m"
-            }
-            let fromPoint = Grid.normalizeGraphCoord(fromCoordinate)
-            let pathPoints = path.map(Grid.normalizeGraphCoord)
+            return nil
+        }
+
+        private func osmPathRejection(
+            _ pathPoints: [Coordinate], fromPoint: Coordinate, toCoordinate: Coordinate, deadEnd: Bool
+        ) -> String? {
             for point in pathPoints {
                 guard point.lon.isFinite, point.lat.isFinite,
                       (-180...180).contains(point.lon), (-90...90).contains(point.lat) else {
@@ -298,34 +312,46 @@ public enum RouteGraph {
             if stubFrom > Self.maximumOSMAttachMeters {
                 return "attach exceeds \(Self.maximumOSMAttachMeters) m"
             }
-            if deadEnd, let terminus {
-                let station = Grid.normalizeGraphCoord(terminus.coordinate)
-                let end = pathPoints[pathPoints.count - 1]
-                if Geometry.distanceMeters(end, station) > Self.maximumTerminusMeters {
-                    return "terminus exceeds \(Self.maximumTerminusMeters) m"
-                }
-                for index in pathPoints.indices.dropFirst() {
-                    if Geometry.distanceMeters(pathPoints[index - 1], pathPoints[index])
-                        > Self.maximumOSMPathStepMeters {
-                        return "path is not continuous"
-                    }
-                }
-            } else {
-                let toPoint = Grid.normalizeGraphCoord(toCoordinate)
-                let stubTo = Geometry.distanceMeters(pathPoints[pathPoints.count - 1], toPoint)
-                if stubTo > Self.maximumOSMAttachMeters {
-                    return "attach exceeds \(Self.maximumOSMAttachMeters) m"
-                }
-                if kind == .osmConnector {
-                    var total = stubFrom + stubTo
-                    for index in pathPoints.indices.dropFirst() {
-                        total += Geometry.distanceMeters(pathPoints[index - 1], pathPoints[index])
-                    }
-                    if total > Self.maximumOSMTotalMeters {
-                        return "total length exceeds \(Self.maximumOSMTotalMeters) m"
-                    }
+            if deadEnd, let terminus { return osmTerminusPathRejection(pathPoints, terminus: terminus) }
+            return osmThroughPathRejection(pathPoints, stubFrom: stubFrom, toCoordinate: toCoordinate)
+        }
+
+        private func osmTerminusPathRejection(_ pathPoints: [Coordinate], terminus: Terminus) -> String? {
+            let station = Grid.normalizeGraphCoord(terminus.coordinate)
+            let end = pathPoints[pathPoints.count - 1]
+            if Geometry.distanceMeters(end, station) > Self.maximumTerminusMeters {
+                return "terminus exceeds \(Self.maximumTerminusMeters) m"
+            }
+            for index in pathPoints.indices.dropFirst() {
+                if Geometry.distanceMeters(pathPoints[index - 1], pathPoints[index])
+                    > Self.maximumOSMPathStepMeters {
+                    return "path is not continuous"
                 }
             }
+            return nil
+        }
+
+        private func osmThroughPathRejection(
+            _ pathPoints: [Coordinate], stubFrom: Double, toCoordinate: Coordinate
+        ) -> String? {
+            let toPoint = Grid.normalizeGraphCoord(toCoordinate)
+            let stubTo = Geometry.distanceMeters(pathPoints[pathPoints.count - 1], toPoint)
+            if stubTo > Self.maximumOSMAttachMeters {
+                return "attach exceeds \(Self.maximumOSMAttachMeters) m"
+            }
+            if kind == .osmConnector {
+                var total = stubFrom + stubTo
+                for index in pathPoints.indices.dropFirst() {
+                    total += Geometry.distanceMeters(pathPoints[index - 1], pathPoints[index])
+                }
+                if total > Self.maximumOSMTotalMeters {
+                    return "total length exceeds \(Self.maximumOSMTotalMeters) m"
+                }
+            }
+            return nil
+        }
+
+        private func osmIdentityRejection() -> String? {
             if let endJunction {
                 let ownIdentity = endJunction.end == .to ? from.identity : to.identity
                 let foreignIdentity = endJunction.end == .to ? to.identity : from.identity
@@ -347,6 +373,7 @@ public enum RouteGraph {
                 return nil
             }
         }
+
     }
 
     public struct PhysicalJunctionEdge: Sendable, Equatable {
@@ -1343,64 +1370,105 @@ public enum RouteGraph {
         var position = 0
         for f in featureIndices {
             position += 1
-            let rec = c.records[f]!
-            let properties = rec.properties
-            let historyIDs = rec.historyIDs
-            for range in rec.lineRanges {
-                for v in range {
-                    let g = Int(c.vertexID[v])
-                    if localOf[g] < 0 {
-                        localOf[g] = Int32(creator.count)
-                        creator.append(v)
-                        adjacency.append([])
-                        meta.append(NodeMeta())
-                        metaStamp.append(0)
-                    }
-                }
-                func record(_ l: Int) {
-                    if metaStamp[l] == position { return }
-                    if metaStamp[l] == 0 {
-                        meta[l] = rec.meta
-                    } else {
-                        if !properties.lineName.isEmpty { meta[l].lineNames.insert(properties.lineName) }
-                        if !properties.operator.isEmpty { meta[l].operators.insert(properties.operator) }
-                        if !properties.institutionTypeCode.isEmpty { meta[l].institutionTypeCodes.insert(properties.institutionTypeCode) }
-                        if !properties.railwayClassCode.isEmpty { meta[l].railwayClassCodes.insert(properties.railwayClassCode) }
-                    }
-                    metaStamp[l] = position
-                }
-                var v = range.lowerBound
-                while v + 1 < range.upperBound {
-                    let a = Int(localOf[Int(c.vertexID[v])])
-                    let b = Int(localOf[Int(c.vertexID[v + 1])])
-                    if a != b {
-                        record(a)
-                        record(b)
-                        let length = Geometry.distanceMeters(c.vertexCoord[creator[a]], c.vertexCoord[creator[b]])
-                        let edge = Edge(
-                            to: c.vertexKey[v + 1],
-                            length: max(length, 0.01),
-                            institutionTypeCode: properties.institutionTypeCode,
-                            railwayClassCode: properties.railwayClassCode,
-                            lineName: properties.lineName,
-                            operator: properties.operator,
-                            connector: nil,
-                            validFrom: properties.validFrom,
-                            validTo: properties.validTo,
-                            historyIDs: historyIDs,
-                            temporalKind: properties.temporalKind)
-                        adjacency[a].append(edge)
-                        var reverse = edge
-                        reverse.to = c.vertexKey[v]
-                        adjacency[b].append(reverse)
-                    }
-                    v += 1
-                }
-            }
+            appendCompiledFeature(c, feature: f, position: position,
+                localOf: &localOf, creator: &creator, adjacency: &adjacency, meta: &meta, metaStamp: &metaStamp)
         }
         // Global-to-local lookup and stamps are needed only while recording edges.
         localOf.removeAll(keepingCapacity: false)
         metaStamp.removeAll(keepingCapacity: false)
+        materializeCompiledGraph(graph, compiled: c, creator: &creator, adjacency: &adjacency, meta: &meta)
+        if c.policy == .physicalRailway {
+            addPhysicalJunctions(to: graph, junctions: junctions, plans: plans)
+        }
+        return graph
+    }
+
+    private static func appendCompiledFeature(
+        _ c: CompiledSections, feature f: Int, position: Int,
+        localOf: inout [Int32], creator: inout [Int], adjacency: inout [[Edge]],
+        meta: inout [NodeMeta], metaStamp: inout [Int]
+    ) {
+        let rec = c.records[f]!
+        for range in rec.lineRanges {
+            indexCompiledRange(range, compiled: c, localOf: &localOf, creator: &creator,
+                adjacency: &adjacency, meta: &meta, metaStamp: &metaStamp)
+            appendCompiledEdges(range, compiled: c, rec: rec, position: position,
+                localOf: localOf, creator: creator, adjacency: &adjacency, meta: &meta, metaStamp: &metaStamp)
+        }
+    }
+
+    private static func indexCompiledRange(
+        _ range: Range<Int>, compiled c: CompiledSections, localOf: inout [Int32], creator: inout [Int],
+        adjacency: inout [[Edge]], meta: inout [NodeMeta], metaStamp: inout [Int]
+    ) {
+        for v in range {
+            let g = Int(c.vertexID[v])
+            if localOf[g] < 0 {
+                localOf[g] = Int32(creator.count)
+                creator.append(v)
+                adjacency.append([])
+                meta.append(NodeMeta())
+                metaStamp.append(0)
+            }
+        }
+    }
+
+    private static func recordCompiledMeta(
+        _ l: Int, rec: CompiledSections.FeatureRecord, position: Int,
+        meta: inout [NodeMeta], metaStamp: inout [Int]
+    ) {
+        let properties = rec.properties
+        if metaStamp[l] == position { return }
+        if metaStamp[l] == 0 {
+            meta[l] = rec.meta
+        } else {
+            if !properties.lineName.isEmpty { meta[l].lineNames.insert(properties.lineName) }
+            if !properties.operator.isEmpty { meta[l].operators.insert(properties.operator) }
+            if !properties.institutionTypeCode.isEmpty { meta[l].institutionTypeCodes.insert(properties.institutionTypeCode) }
+            if !properties.railwayClassCode.isEmpty { meta[l].railwayClassCodes.insert(properties.railwayClassCode) }
+        }
+        metaStamp[l] = position
+    }
+
+    private static func appendCompiledEdges(
+        _ range: Range<Int>, compiled c: CompiledSections, rec: CompiledSections.FeatureRecord, position: Int,
+        localOf: [Int32], creator: [Int], adjacency: inout [[Edge]], meta: inout [NodeMeta], metaStamp: inout [Int]
+    ) {
+        let properties = rec.properties
+        let historyIDs = rec.historyIDs
+        var v = range.lowerBound
+        while v + 1 < range.upperBound {
+            let a = Int(localOf[Int(c.vertexID[v])])
+            let b = Int(localOf[Int(c.vertexID[v + 1])])
+            if a != b {
+                recordCompiledMeta(a, rec: rec, position: position, meta: &meta, metaStamp: &metaStamp)
+                recordCompiledMeta(b, rec: rec, position: position, meta: &meta, metaStamp: &metaStamp)
+                let length = Geometry.distanceMeters(c.vertexCoord[creator[a]], c.vertexCoord[creator[b]])
+                let edge = Edge(
+                    to: c.vertexKey[v + 1],
+                    length: max(length, 0.01),
+                    institutionTypeCode: properties.institutionTypeCode,
+                    railwayClassCode: properties.railwayClassCode,
+                    lineName: properties.lineName,
+                    operator: properties.operator,
+                    connector: nil,
+                    validFrom: properties.validFrom,
+                    validTo: properties.validTo,
+                    historyIDs: historyIDs,
+                    temporalKind: properties.temporalKind)
+                adjacency[a].append(edge)
+                var reverse = edge
+                reverse.to = c.vertexKey[v]
+                adjacency[b].append(reverse)
+            }
+            v += 1
+        }
+    }
+
+    private static func materializeCompiledGraph(
+        _ graph: Graph, compiled c: CompiledSections, creator: inout [Int],
+        adjacency: inout [[Edge]], meta: inout [NodeMeta]
+    ) {
         let n = creator.count
         var nodes = [String: Coordinate](minimumCapacity: n)
         var finalAdjacency = [String: [Edge]](minimumCapacity: n)
@@ -1428,10 +1496,6 @@ public enum RouteGraph {
         nodes = [:]
         finalAdjacency = [:]
         nodeMeta = [:]
-        if c.policy == .physicalRailway {
-            addPhysicalJunctions(to: graph, junctions: junctions, plans: plans)
-        }
-        return graph
     }
 
     struct JunctionPlan {
@@ -1469,185 +1533,243 @@ public enum RouteGraph {
     static func addPhysicalJunctions(to graph: Graph, junctions: [PhysicalJunction], plans: [JunctionPlan]? = nil) {
         let plans = plans ?? junctions.map(JunctionPlan.init)
         let policy = BuildPolicy.physicalRailway
-        func ensureNode(_ coord: Coordinate, _ identity: TrackIdentity,
-                        identityPrefix: String? = nil) -> String {
-            // Quantised twice, exactly as the JavaScript does: once by
-            // `iterateGeometryLines` on the way in, once here by
-            // `normalizeGraphCoord`, and `coordKey` quantises a third time.
-            // Idempotent in practice, but "in practice" is not a reason to
-            // drop a step from a function that decides node identity.
-            let normalized = Grid.normalizeGraphCoord(coord)
-            // `identityPrefix` is `identity.key + "@"`, computed once per
-            // feature: spelling the identity out per vertex was a quarter of
-            // every build.
-            let key = policy == .coordinateParity ? Grid.coordKey(normalized)
-                : identityPrefix.map { $0 + Grid.coordKey(normalized) }
-                    ?? physicalNodeKey(normalized, identity: identity)
-            if graph.nodes[key] == nil {
-                graph.nodes[key] = normalized
-                graph.adjacency[key] = []
-                graph.nodeMeta[key] = NodeMeta()
-                graph.grid[graphGridKey(normalized, cellSize: graph.cellSize), default: []]
-                    .append(key)
-            }
-            return key
-        }
         if policy == .physicalRailway {
-            // Surveyed rail-section and history vertices only. Junction and OSM
-            // rows add nodes later; acceptance must not see those, or a later
-            // row could treat an earlier path vertex as an existing endpoint.
+            // Acceptance sees only the surveyed vertices captured before augmentation.
             let surveyedNodes = graph.nodes
             var acceptedIDs: Set<String> = []
-            func reject(_ junction: PhysicalJunction, _ reason: String) {
-                graph.rejectedPhysicalJunctionIDs.append(junction.id)
-                graph.rejectedPhysicalJunctionReasons.append("\(junction.id): \(reason)")
-            }
             for (junction, plan) in zip(junctions, plans) {
-                if let staticReason = plan.staticReason {
-                    reject(junction, staticReason)
-                    continue
-                }
-                let fromKey = plan.fromKey
-                let toKey = plan.toKey
-                let deadEnd = plan.deadEnd
-                guard surveyedNodes[fromKey] != nil, deadEnd || surveyedNodes[toKey] != nil else {
-                    reject(junction, "endpoint is not an existing vertex")
-                    continue
-                }
-                let fromNode = surveyedNodes[fromKey]
-                let toNode = surveyedNodes[toKey]
-                let linkMeters = Geometry.distanceMeters(
-                    fromNode ?? junction.from.coordinate, toNode ?? junction.to.coordinate)
-                let geometryReason: String? = {
-                    switch junction.kind {
-                    case .zeroLength:
-                        return junction.from.coordinate == junction.to.coordinate
-                            ? nil : "zeroLength endpoints differ"
-                    case .shortLink:
-                        return junction.from.coordinate != junction.to.coordinate
-                            && linkMeters <= PhysicalJunction.maximumReviewedLinkMeters
-                            ? nil : "shortLink exceeds \(PhysicalJunction.maximumReviewedLinkMeters) m"
-                    case .osmConnector:
-                        if junction.terminus != nil { return "terminus requires osmTrack" }
-                        guard let fromNode, let toNode else { return nil }
-                        return junction.osmRejection(fromCoordinate: fromNode, toCoordinate: toNode)
-                    case .osmTrack:
-                        if deadEnd {
-                            guard let fromNode else { return nil }
-                            return junction.osmRejection(
-                                fromCoordinate: fromNode, toCoordinate: junction.to.coordinate)
-                        }
-                        if junction.terminus != nil { return "unsupported terminus end" }
-                        guard let fromNode, let toNode else { return nil }
-                        return junction.osmRejection(fromCoordinate: fromNode, toCoordinate: toNode)
-                    }
-                }()
-                let reason: String?
-                if fromNode == nil || (!deadEnd && toNode == nil) {
-                    reason = "endpoint is not an existing vertex"
-                } else if !deadEnd && fromKey == toKey {
-                    reason = "endpoints are the same vertex"
-                } else if deadEnd && plan.chainKeys == nil {
-                    reason = "path has fewer than 2 points"
-                } else if let geometryReason {
-                    reason = geometryReason
-                } else if !acceptedIDs.insert(junction.id).inserted {
-                    reason = "duplicate id"
-                } else {
-                    reason = nil
-                }
-                if let reason {
-                    reject(junction, reason)
-                    continue
-                }
-                let institutions = (graph.nodeMeta[fromKey]?.institutionTypeCodes ?? [])
-                    .union(graph.nodeMeta[toKey]?.institutionTypeCodes ?? [])
-                if junction.kind == .osmConnector || junction.kind == .osmTrack {
-                    let pathIdentity: TrackIdentity
-                    if junction.kind == .osmConnector {
-                        pathIdentity = PhysicalJunction.osmConnectorIdentity(junction.id)
-                    } else if junction.endJunction?.end == .from {
-                        pathIdentity = junction.to.identity
-                    } else {
-                        pathIdentity = junction.from.identity
-                    }
-                    for point in junction.path ?? [] {
-                        _ = ensureNode(point, pathIdentity)
-                    }
-                    let keys: [String]
-                    if deadEnd || junction.endJunction != nil {
-                        guard let chained = plan.chainKeys else {
-                            reject(junction, "path has fewer than 2 points")
-                            continue
-                        }
-                        keys = chained
-                    } else {
-                        keys = plan.chainKeys ?? [fromKey, toKey]
-                    }
-                    let junctionEdge: PhysicalJunctionEdge? = junction.kind == .osmConnector
-                        ? .init(junction: junction, institutionTypeCodes: institutions) : nil
-                    for (start, end) in zip(keys, keys.dropFirst()) where start != end {
-                        let meters = Geometry.distanceMeters(graph.nodes[start]!, graph.nodes[end]!)
-                        var edge = Edge(
-                            to: end, length: max(meters, 0.01), institutionTypeCode: "",
-                            railwayClassCode: junction.kind == .osmTrack ? pathIdentity.railwayClassCode : "",
-                            lineName: junction.kind == .osmTrack ? pathIdentity.lineName : "",
-                            operator: junction.kind == .osmTrack ? pathIdentity.operatorName : "",
-                            connector: nil, physicalJunction: junctionEdge,
-                            validFrom: junction.validFrom, validTo: junction.validTo)
-                        graph.adjacency[start, default: []].append(edge)
-                        edge.to = start
-                        graph.adjacency[end, default: []].append(edge)
-                    }
-                    if junction.kind == .osmTrack, let endJunction = junction.endJunction,
-                       let ownKey = endJunction.end == .to ? keys.last : keys.first {
-                        let foreignKey = plan.foreignKey ?? physicalNodeKey(
-                            endJunction.coordinate, identity: endJunction.identity)
-                        guard let ownNode = graph.nodes[ownKey], let foreignNode = graph.nodes[foreignKey],
-                              ownKey != foreignKey else {
-                            reject(junction, "endpoint is not an existing vertex")
-                            continue
-                        }
-                        let meters = Geometry.distanceMeters(ownNode, foreignNode)
-                        guard meters <= PhysicalJunction.maximumOSMAttachMeters else {
-                            reject(junction, "attach exceeds \(PhysicalJunction.maximumOSMAttachMeters) m")
-                            continue
-                        }
-                        let stub = PhysicalJunctionEdge(
-                            junction: junction, institutionTypeCodes: institutions)
-                        var stubEdge = Edge(
-                            to: foreignKey, length: max(meters, 0.01), institutionTypeCode: "",
-                            railwayClassCode: "", lineName: "", operator: "",
-                            connector: nil, physicalJunction: stub,
-                            validFrom: junction.validFrom, validTo: junction.validTo)
-                        graph.adjacency[ownKey, default: []].append(stubEdge)
-                        stubEdge.to = ownKey
-                        graph.adjacency[foreignKey, default: []].append(stubEdge)
-                    }
-                    if junction.kind == .osmTrack {
-                        for key in keys {
-                            guard graph.nodeMeta[key] != nil else { continue }
-                            if !pathIdentity.lineName.isEmpty {
-                                graph.nodeMeta[key]!.lineNames.insert(pathIdentity.lineName)
-                            }
-                            if !pathIdentity.operatorName.isEmpty {
-                                graph.nodeMeta[key]!.operators.insert(pathIdentity.operatorName)
-                            }
-                            if !pathIdentity.railwayClassCode.isEmpty {
-                                graph.nodeMeta[key]!.railwayClassCodes.insert(pathIdentity.railwayClassCode)
-                            }
-                        }
-                    }
-                    continue
-                }
-                var edge = Edge(to: toKey, length: junction.kind == .shortLink ? max(linkMeters, 0.01) : 0,
-                                institutionTypeCode: "", railwayClassCode: "",
-                                lineName: "", operator: "", connector: nil,
-                                physicalJunction: .init(junction: junction, institutionTypeCodes: institutions),
-                                validFrom: junction.validFrom, validTo: junction.validTo)
-                graph.adjacency[fromKey, default: []].append(edge)
-                edge.to = fromKey
-                graph.adjacency[toKey, default: []].append(edge)
+                appendPhysicalJunction(junction, plan: plan, graph: graph, policy: policy,
+                    surveyedNodes: surveyedNodes, acceptedIDs: &acceptedIDs)
+            }
+        }
+    }
+
+    private static func ensureJunctionNode(
+        _ coord: Coordinate, _ identity: TrackIdentity, graph: Graph, policy: BuildPolicy,
+        identityPrefix: String? = nil
+    ) -> String {
+        // Quantised twice, exactly as the JavaScript does: once by
+        // `iterateGeometryLines` on the way in, once here by
+        // `normalizeGraphCoord`, and `coordKey` quantises a third time.
+        // Idempotent in practice, but "in practice" is not a reason to
+        // drop a step from a function that decides node identity.
+        let normalized = Grid.normalizeGraphCoord(coord)
+        // `identityPrefix` is `identity.key + "@"`, computed once per
+        // feature: spelling the identity out per vertex was a quarter of
+        // every build.
+        let key = policy == .coordinateParity ? Grid.coordKey(normalized)
+            : identityPrefix.map { $0 + Grid.coordKey(normalized) }
+                ?? physicalNodeKey(normalized, identity: identity)
+        if graph.nodes[key] == nil {
+            graph.nodes[key] = normalized
+            graph.adjacency[key] = []
+            graph.nodeMeta[key] = NodeMeta()
+            graph.grid[graphGridKey(normalized, cellSize: graph.cellSize), default: []]
+                .append(key)
+        }
+        return key
+    }
+
+    private static func rejectJunction(_ junction: PhysicalJunction, _ reason: String, graph: Graph) {
+        graph.rejectedPhysicalJunctionIDs.append(junction.id)
+        graph.rejectedPhysicalJunctionReasons.append("\(junction.id): \(reason)")
+    }
+
+    private static func junctionGeometryReason(
+        _ junction: PhysicalJunction, deadEnd: Bool, fromNode: Coordinate?, toNode: Coordinate?, linkMeters: Double
+    ) -> String? {
+        switch junction.kind {
+        case .zeroLength:
+            return junction.from.coordinate == junction.to.coordinate
+                ? nil : "zeroLength endpoints differ"
+        case .shortLink:
+            return junction.from.coordinate != junction.to.coordinate
+                && linkMeters <= PhysicalJunction.maximumReviewedLinkMeters
+                ? nil : "shortLink exceeds \(PhysicalJunction.maximumReviewedLinkMeters) m"
+        case .osmConnector:
+            if junction.terminus != nil { return "terminus requires osmTrack" }
+            guard let fromNode, let toNode else { return nil }
+            return junction.osmRejection(fromCoordinate: fromNode, toCoordinate: toNode)
+        case .osmTrack:
+            if deadEnd {
+                guard let fromNode else { return nil }
+                return junction.osmRejection(
+                    fromCoordinate: fromNode, toCoordinate: junction.to.coordinate)
+            }
+            if junction.terminus != nil { return "unsupported terminus end" }
+            guard let fromNode, let toNode else { return nil }
+            return junction.osmRejection(fromCoordinate: fromNode, toCoordinate: toNode)
+        }
+    }
+
+    private static func junctionAcceptanceReason(
+        _ junction: PhysicalJunction, plan: JunctionPlan, fromNode: Coordinate?, toNode: Coordinate?,
+        geometryReason: String?, acceptedIDs: inout Set<String>
+    ) -> String? {
+        let deadEnd = plan.deadEnd, fromKey = plan.fromKey, toKey = plan.toKey
+        let reason: String?
+        if fromNode == nil || (!deadEnd && toNode == nil) {
+            reason = "endpoint is not an existing vertex"
+        } else if !deadEnd && fromKey == toKey {
+            reason = "endpoints are the same vertex"
+        } else if deadEnd && plan.chainKeys == nil {
+            reason = "path has fewer than 2 points"
+        } else if let geometryReason {
+            reason = geometryReason
+        } else if !acceptedIDs.insert(junction.id).inserted {
+            reason = "duplicate id"
+        } else {
+            reason = nil
+        }
+        return reason
+    }
+
+    private static func appendPhysicalJunction(
+        _ junction: PhysicalJunction, plan: JunctionPlan, graph: Graph, policy: BuildPolicy,
+        surveyedNodes: [String: Coordinate], acceptedIDs: inout Set<String>
+    ) {
+        if let staticReason = plan.staticReason {
+            rejectJunction(junction, staticReason, graph: graph)
+            return
+        }
+        let fromKey = plan.fromKey
+        let toKey = plan.toKey
+        let deadEnd = plan.deadEnd
+        guard surveyedNodes[fromKey] != nil, deadEnd || surveyedNodes[toKey] != nil else {
+            rejectJunction(junction, "endpoint is not an existing vertex", graph: graph)
+            return
+        }
+        let fromNode = surveyedNodes[fromKey]
+        let toNode = surveyedNodes[toKey]
+        let linkMeters = Geometry.distanceMeters(
+            fromNode ?? junction.from.coordinate, toNode ?? junction.to.coordinate)
+        let geometryReason = junctionGeometryReason(junction, deadEnd: deadEnd,
+            fromNode: fromNode, toNode: toNode, linkMeters: linkMeters)
+        let reason = junctionAcceptanceReason(junction, plan: plan, fromNode: fromNode, toNode: toNode,
+            geometryReason: geometryReason, acceptedIDs: &acceptedIDs)
+        if let reason {
+            rejectJunction(junction, reason, graph: graph)
+            return
+        }
+        let institutions = (graph.nodeMeta[fromKey]?.institutionTypeCodes ?? [])
+            .union(graph.nodeMeta[toKey]?.institutionTypeCodes ?? [])
+        if junction.kind == .osmConnector || junction.kind == .osmTrack {
+            appendOSMJunction(junction, plan: plan, graph: graph, policy: policy, institutions: institutions)
+            return
+        }
+        var edge = Edge(to: toKey, length: junction.kind == .shortLink ? max(linkMeters, 0.01) : 0,
+                        institutionTypeCode: "", railwayClassCode: "",
+                        lineName: "", operator: "", connector: nil,
+                        physicalJunction: .init(junction: junction, institutionTypeCodes: institutions),
+                        validFrom: junction.validFrom, validTo: junction.validTo)
+        graph.adjacency[fromKey, default: []].append(edge)
+        edge.to = fromKey
+        graph.adjacency[toKey, default: []].append(edge)
+    }
+
+    private static func junctionPathIdentity(_ junction: PhysicalJunction) -> TrackIdentity {
+        let pathIdentity: TrackIdentity
+        if junction.kind == .osmConnector {
+            pathIdentity = PhysicalJunction.osmConnectorIdentity(junction.id)
+        } else if junction.endJunction?.end == .from {
+            pathIdentity = junction.to.identity
+        } else {
+            pathIdentity = junction.from.identity
+        }
+        return pathIdentity
+    }
+
+    private static func appendOSMJunction(
+        _ junction: PhysicalJunction, plan: JunctionPlan, graph: Graph, policy: BuildPolicy,
+        institutions: Set<String>
+    ) {
+        let deadEnd = plan.deadEnd, fromKey = plan.fromKey, toKey = plan.toKey
+        let pathIdentity = junctionPathIdentity(junction)
+        for point in junction.path ?? [] {
+            _ = ensureJunctionNode(point, pathIdentity, graph: graph, policy: policy)
+        }
+        let keys: [String]
+        if deadEnd || junction.endJunction != nil {
+            guard let chained = plan.chainKeys else {
+                rejectJunction(junction, "path has fewer than 2 points", graph: graph)
+                return
+            }
+            keys = chained
+        } else {
+            keys = plan.chainKeys ?? [fromKey, toKey]
+        }
+        appendJunctionPathEdges(junction, keys: keys, pathIdentity: pathIdentity,
+            graph: graph, institutions: institutions)
+        guard appendJunctionEndStub(junction, plan: plan, keys: keys,
+            graph: graph, institutions: institutions) else { return }
+        if junction.kind == .osmTrack {
+            recordJunctionPathMeta(keys, pathIdentity: pathIdentity, graph: graph)
+        }
+    }
+
+    private static func appendJunctionPathEdges(
+        _ junction: PhysicalJunction, keys: [String], pathIdentity: TrackIdentity,
+        graph: Graph, institutions: Set<String>
+    ) {
+        let junctionEdge: PhysicalJunctionEdge? = junction.kind == .osmConnector
+            ? .init(junction: junction, institutionTypeCodes: institutions) : nil
+        for (start, end) in zip(keys, keys.dropFirst()) where start != end {
+            let meters = Geometry.distanceMeters(graph.nodes[start]!, graph.nodes[end]!)
+            var edge = Edge(
+                to: end, length: max(meters, 0.01), institutionTypeCode: "",
+                railwayClassCode: junction.kind == .osmTrack ? pathIdentity.railwayClassCode : "",
+                lineName: junction.kind == .osmTrack ? pathIdentity.lineName : "",
+                operator: junction.kind == .osmTrack ? pathIdentity.operatorName : "",
+                connector: nil, physicalJunction: junctionEdge,
+                validFrom: junction.validFrom, validTo: junction.validTo)
+            graph.adjacency[start, default: []].append(edge)
+            edge.to = start
+            graph.adjacency[end, default: []].append(edge)
+        }
+    }
+
+    private static func appendJunctionEndStub(
+        _ junction: PhysicalJunction, plan: JunctionPlan, keys: [String], graph: Graph, institutions: Set<String>
+    ) -> Bool {
+        if junction.kind == .osmTrack, let endJunction = junction.endJunction,
+           let ownKey = endJunction.end == .to ? keys.last : keys.first {
+            let foreignKey = plan.foreignKey ?? physicalNodeKey(
+                endJunction.coordinate, identity: endJunction.identity)
+            guard let ownNode = graph.nodes[ownKey], let foreignNode = graph.nodes[foreignKey],
+                  ownKey != foreignKey else {
+                rejectJunction(junction, "endpoint is not an existing vertex", graph: graph)
+                return false
+            }
+            let meters = Geometry.distanceMeters(ownNode, foreignNode)
+            guard meters <= PhysicalJunction.maximumOSMAttachMeters else {
+                rejectJunction(junction, "attach exceeds \(PhysicalJunction.maximumOSMAttachMeters) m", graph: graph)
+                return false
+            }
+            let stub = PhysicalJunctionEdge(
+                junction: junction, institutionTypeCodes: institutions)
+            var stubEdge = Edge(
+                to: foreignKey, length: max(meters, 0.01), institutionTypeCode: "",
+                railwayClassCode: "", lineName: "", operator: "",
+                connector: nil, physicalJunction: stub,
+                validFrom: junction.validFrom, validTo: junction.validTo)
+            graph.adjacency[ownKey, default: []].append(stubEdge)
+            stubEdge.to = ownKey
+            graph.adjacency[foreignKey, default: []].append(stubEdge)
+        }
+        return true
+    }
+
+    private static func recordJunctionPathMeta(_ keys: [String], pathIdentity: TrackIdentity, graph: Graph) {
+        for key in keys {
+            guard graph.nodeMeta[key] != nil else { continue }
+            if !pathIdentity.lineName.isEmpty {
+                graph.nodeMeta[key]!.lineNames.insert(pathIdentity.lineName)
+            }
+            if !pathIdentity.operatorName.isEmpty {
+                graph.nodeMeta[key]!.operators.insert(pathIdentity.operatorName)
+            }
+            if !pathIdentity.railwayClassCode.isEmpty {
+                graph.nodeMeta[key]!.railwayClassCodes.insert(pathIdentity.railwayClassCode)
             }
         }
     }

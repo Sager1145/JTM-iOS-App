@@ -207,6 +207,18 @@ public struct RailHistoryOverlay: Decodable, Sendable {
         var sectionIDs = Set<String>()
         var stationIDs = Set<String>()
         var retirementIDs = Set<String>()
+        try validateHistoryFeatures(root, sectionIDs: &sectionIDs, stationIDs: &stationIDs)
+        try validateRetirements(root, retirementIDs: &retirementIDs)
+        guard sectionIDs.isDisjoint(with: stationIDs),
+              sectionIDs.isDisjoint(with: retirementIDs),
+              stationIDs.isDisjoint(with: retirementIDs) else {
+            throw ValidationError.invalid("duplicate history_id across kinds")
+        }
+    }
+
+    private static func validateHistoryFeatures(
+        _ root: [String: Any], sectionIDs: inout Set<String>, stationIDs: inout Set<String>
+    ) throws {
         for kind in ["sections", "stations"] {
             guard let features = root[kind] as? [[String: Any]] else {
                 throw ValidationError.invalid(kind)
@@ -229,6 +241,9 @@ public struct RailHistoryOverlay: Decodable, Sendable {
                 }
             }
         }
+    }
+
+    private static func validateRetirements(_ root: [String: Any], retirementIDs: inout Set<String>) throws {
         guard let retirements = root["retirements"] as? [[String: Any]] else {
             throw ValidationError.invalid("retirements")
         }
@@ -242,22 +257,21 @@ public struct RailHistoryOverlay: Decodable, Sendable {
             }
             try validateInterval(retirement, field: "retirements")
             try validateKind(retirement["kind"], field: "retirements")
-            guard let match = retirement["match"] as? [String: Any],
-                  let bbox = match["bbox"] as? [Double], bbox.count == 4,
-                  bbox.allSatisfy(\.isFinite), bbox[0] <= bbox[2], bbox[1] <= bbox[3] else {
-                throw ValidationError.invalid("retirements.bbox")
-            }
-            if let targets = match["targets"] {
-                guard let names = targets as? [String], !names.isEmpty,
-                      names.allSatisfy({ $0 == "sections" || $0 == "stations" }) else {
-                    throw ValidationError.invalid("retirements.targets")
-                }
-            }
+            try validateRetirementMatch(retirement)
         }
-        guard sectionIDs.isDisjoint(with: stationIDs),
-              sectionIDs.isDisjoint(with: retirementIDs),
-              stationIDs.isDisjoint(with: retirementIDs) else {
-            throw ValidationError.invalid("duplicate history_id across kinds")
+    }
+
+    private static func validateRetirementMatch(_ retirement: [String: Any]) throws {
+        guard let match = retirement["match"] as? [String: Any],
+              let bbox = match["bbox"] as? [Double], bbox.count == 4,
+              bbox.allSatisfy(\.isFinite), bbox[0] <= bbox[2], bbox[1] <= bbox[3] else {
+            throw ValidationError.invalid("retirements.bbox")
+        }
+        if let targets = match["targets"] {
+            guard let names = targets as? [String], !names.isEmpty,
+                  names.allSatisfy({ $0 == "sections" || $0 == "stations" }) else {
+                throw ValidationError.invalid("retirements.targets")
+            }
         }
     }
 
@@ -367,55 +381,8 @@ public enum RailHistory {
             var matched = 0
 
             let bounds = serviceBounds(of: retirement)
-            if retirement.match.allows("sections") {
-                for index in sections.indices {
-                    guard matches(retirement.match, lineName: sections[index].properties.lineName,
-                        operatorName: sections[index].properties.operator,
-                        points: sections[index].lines.flatMap { $0 })
-                    else { continue }
-                    matched += 1
-                    if let validFrom = bounds.0 {
-                        sections[index].properties.validFrom = validFrom
-                        // `valid_from` marks the current alignment that replaced a
-                        // retired one. A later `valid_to`-only stamp must not
-                        // collapse that back to `.current`.
-                        if sections[index].properties.temporalKind == .current {
-                            sections[index].properties.temporalKind = .relocatedNew
-                        }
-                        if sections[index].properties.historyId == nil {
-                            sections[index].properties.historyId = retirement.historyId
-                        }
-                    }
-                    if let validTo = bounds.1 {
-                        sections[index].properties.validTo = validTo
-                    }
-                }
-            }
-
-            if retirement.match.allows("stations") {
-                for index in stations.indices {
-                    let feature = stations[index]
-                    let lineName = Stations.stationLineName(feature)
-                    let operatorName = Stations.stationOperator(feature)
-                    guard
-                        matches(retirement.match, lineName: lineName, operatorName: operatorName,
-                            points: stationPoints(feature.geometry))
-                    else { continue }
-                    matched += 1
-                    if let validFrom = bounds.0 {
-                        stations[index].properties["valid_from"] = .string(validFrom)
-                    }
-                    if let validTo = bounds.1 {
-                        stations[index].properties["valid_to"] = .string(validTo)
-                    }
-                    if let service = retirement.serviceValidity {
-                        stations[index].properties["service_validity"] = pairValue(service)
-                    }
-                    if let infrastructure = retirement.infrastructureValidity {
-                        stations[index].properties["infrastructure_validity"] = pairValue(infrastructure)
-                    }
-                }
-            }
+            stampRetiredSections(retirement, bounds: bounds, sections: &sections, matched: &matched)
+            stampRetiredStations(retirement, bounds: bounds, stations: &stations, matched: &matched)
 
             retirementsApplied[retirement.historyId] = matched
             if matched == 0 {
@@ -435,6 +402,66 @@ public enum RailHistory {
         return ApplyReport(
             sectionsAdded: overlay.sections.count, stationsAdded: overlay.stations.count,
             retirementsApplied: retirementsApplied, unmatchedRetirements: unmatchedRetirements)
+    }
+
+    private static func stampRetiredSections(
+        _ retirement: RailHistoryOverlay.Retirement, bounds: (String?, String?),
+        sections: inout [RouteGraph.SectionFeature], matched: inout Int
+    ) {
+        if retirement.match.allows("sections") {
+            for index in sections.indices {
+                guard matches(retirement.match, lineName: sections[index].properties.lineName,
+                    operatorName: sections[index].properties.operator,
+                    points: sections[index].lines.flatMap { $0 })
+                else { continue }
+                matched += 1
+                if let validFrom = bounds.0 {
+                    sections[index].properties.validFrom = validFrom
+                    // `valid_from` marks the current alignment that replaced a
+                    // retired one. A later `valid_to`-only stamp must not
+                    // collapse that back to `.current`.
+                    if sections[index].properties.temporalKind == .current {
+                        sections[index].properties.temporalKind = .relocatedNew
+                    }
+                    if sections[index].properties.historyId == nil {
+                        sections[index].properties.historyId = retirement.historyId
+                    }
+                }
+                if let validTo = bounds.1 {
+                    sections[index].properties.validTo = validTo
+                }
+            }
+        }
+    }
+
+    private static func stampRetiredStations(
+        _ retirement: RailHistoryOverlay.Retirement, bounds: (String?, String?),
+        stations: inout [Stations.Feature], matched: inout Int
+    ) {
+        if retirement.match.allows("stations") {
+            for index in stations.indices {
+                let feature = stations[index]
+                let lineName = Stations.stationLineName(feature)
+                let operatorName = Stations.stationOperator(feature)
+                guard
+                    matches(retirement.match, lineName: lineName, operatorName: operatorName,
+                        points: stationPoints(feature.geometry))
+                else { continue }
+                matched += 1
+                if let validFrom = bounds.0 {
+                    stations[index].properties["valid_from"] = .string(validFrom)
+                }
+                if let validTo = bounds.1 {
+                    stations[index].properties["valid_to"] = .string(validTo)
+                }
+                if let service = retirement.serviceValidity {
+                    stations[index].properties["service_validity"] = pairValue(service)
+                }
+                if let infrastructure = retirement.infrastructureValidity {
+                    stations[index].properties["infrastructure_validity"] = pairValue(infrastructure)
+                }
+            }
+        }
     }
 
     /// Overlay sections are historical unless swapping `.old-` for `.new-` in

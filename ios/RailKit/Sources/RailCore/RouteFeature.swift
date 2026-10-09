@@ -808,17 +808,48 @@ public struct RouteNetwork: Sendable {
             return canonicalizeIntervals(feature, cache: &cache)
         }
         if let matched = matchRouteAcrossLineRows(feature) ?? directedEndpointIntervals(feature) {
-            var hints = feature.hints
-            hints.sectionCodes = matched.sectionCodes
-            hints.requiredLineIDs = matched.lineIDs
-            guard var route = canonicalizeIntervals(RouteFeature(geometry: feature.geometry, hints: hints), cache: &cache) else { return nil }
-            route.matchedSectionCodes = matched.sectionCodes
-            route.directionCorrected = matched.corrected
-            return route
+            return canonicalizeMatchedRoute(feature, matched: matched, cache: &cache)
         }
         let rawLines = (feature.geometry?.lines ?? []).filter { $0.count >= 2 }
         guard !rawLines.isEmpty else { return nil }
 
+        let candidates = canonicalRouteCandidates(feature)
+        if !feature.hints.requiredLineIDs.isEmpty && candidates.isEmpty { return nil }
+
+        var canonicalLines: [[Coordinate]] = []
+        var usedLineIds: [String] = []
+
+        for rawCoordinates in rawLines {
+            guard let canonical = canonicalStroke(rawCoordinates, feature: feature,
+                                                  candidates: candidates, continueFrom: continueFrom, cache: &cache) else { return nil }
+            canonicalLines.append(canonical.coordinates)
+            usedLineIds.append(canonical.lineID)
+        }
+
+        var seenIds = Set<String>()
+        return CanonicalRoute(
+            geometry: {
+                if case .multiLineString = feature.geometry { return .multiLineString(canonicalLines) }
+                return .lineString(canonicalLines[0])
+            }(),
+            displayLineIds: usedLineIds.filter { seenIds.insert($0).inserted }
+        )
+    }
+
+
+    private func canonicalizeMatchedRoute(
+        _ feature: RouteFeature, matched: IntervalMatch, cache: inout RouteProjectionCache
+    ) -> CanonicalRoute? {
+        var hints = feature.hints
+        hints.sectionCodes = matched.sectionCodes
+        hints.requiredLineIDs = matched.lineIDs
+        guard var route = canonicalizeIntervals(RouteFeature(geometry: feature.geometry, hints: hints), cache: &cache) else { return nil }
+        route.matchedSectionCodes = matched.sectionCodes
+        route.directionCorrected = matched.corrected
+        return route
+    }
+
+    private func canonicalRouteCandidates(_ feature: RouteFeature) -> [Int] {
         let lineNames = Self.routeHintValues(
             arrays: [feature.hints.requiredLineNames, feature.hints.preferredLineNames],
             objects: [feature.hints.usedLineNames]
@@ -851,86 +882,86 @@ public struct RouteNetwork: Sendable {
         if !feature.hints.requiredLineIDs.isEmpty {
             let required = Set(feature.hints.requiredLineIDs)
             candidates = lines.indices.filter { required.contains(lines[$0].lineId) }
-            guard !candidates.isEmpty else { return nil }
+
         }
 
-        var canonicalLines: [[Coordinate]] = []
-        var usedLineIds: [String] = []
+        return candidates
+    }
 
-        for rawCoordinates in rawLines {
-            let rawStart = rawCoordinates[0]
-            let rawEnd = rawCoordinates[rawCoordinates.count - 1]
-            var best = bestFit(
-                over: candidates, rawStart: rawStart, rawEnd: rawEnd,
+    private func canonicalStroke(
+        _ rawCoordinates: [Coordinate], feature: RouteFeature, candidates: [Int],
+        continueFrom: Coordinate?, cache: inout RouteProjectionCache
+    ) -> (coordinates: [Coordinate], lineID: String)? {
+        let rawStart = rawCoordinates[0]
+        let rawEnd = rawCoordinates[rawCoordinates.count - 1]
+        guard let best = canonicalStrokeFit(rawStart: rawStart, rawEnd: rawEnd, feature: feature,
+            candidates: candidates, continueFrom: continueFrom, cache: &cache) else { return nil }
+        // Written as the JavaScript writes it — `> gate` rather than
+        // `<= gate` — so a NaN would pass here exactly as it does there.
+        if best.reach > Self.endpointGateMeters { return nil }
+
+        var canonical = canonicalLineSlice(
+            lineIndex: best.lineIndex, start: best.start, end: best.end,
+            rawCoordinates: rawCoordinates)
+        // One unusable stroke discards the WHOLE feature, including the
+        // strokes already accumulated. Reproduced deliberately: half a
+        // MultiLineString drawn on network geometry and half on the
+        // solver's own path would be two different claims in one shape.
+        if canonical.count < 2 { return nil }
+
+        // Finish ON the platform, not on the projection of it.
+        //
+        // A junction station belongs to two display parts, and the
+        // projection of the same station onto each lands metres apart, so
+        // consecutive hops routed over different parts left the drawn route
+        // visibly split open at the junction. The solver's own endpoints
+        // ARE the station nodes and are shared by both hops, so pinning the
+        // slice ends to them closes the seam exactly. Only over the short
+        // bridge from platform to track — a distant projection is a data
+        // problem and must stay visible, not be papered over with a long
+        // straight chord.
+        Self.snapEndpoint(&canonical, 0, rawStart, best.start.distance)
+        Self.snapEndpoint(&canonical, canonical.count - 1, rawEnd, best.end.distance)
+
+        return (canonical, lines[best.lineIndex].lineId)
+    }
+
+    private func canonicalStrokeFit(
+        rawStart: Coordinate, rawEnd: Coordinate, feature: RouteFeature, candidates: [Int],
+        continueFrom: Coordinate?, cache: inout RouteProjectionCache
+    ) -> Fit? {
+        var best = bestFit(
+            over: candidates, rawStart: rawStart, rawEnd: rawEnd,
+            continueFrom: continueFrom,
+            fromStationCode: feature.hints.fromStationCode,
+            toStationCode: feature.hints.toStationCode, cache: &cache)
+
+        // The hint names the RAILWAY the solver rode; it cannot make a line
+        // reach a platform it does not serve. Where the package draws that
+        // railway under another line's name — the 品鶴線 is 総武線-3 since
+        // the 東京 rebuild, so a 湘南新宿ライン hop hinted 東海道線 landed
+        // on the 相鉄直通線 106 m away — the drawn ride has to follow the
+        // rail rather than the name, or the snap below turns the difference
+        // into a right-angle chord into the station.
+        //
+        // Only when the hinted stroke is not at the platform AT ALL, and
+        // only for a replacement that genuinely reaches both stops.
+        // Anything in between is a disagreement about WHICH platform, which
+        // the hint is still the better judge of, and which the
+        // route-approach audit reports rather than papers over.
+        if feature.hints.requiredLineIDs.isEmpty
+            && (best?.reach ?? .infinity) > Self.hintedLineMaxReachMeters {
+            let anywhere = bestFit(
+                over: Array(lines.indices), rawStart: rawStart, rawEnd: rawEnd,
                 continueFrom: continueFrom,
                 fromStationCode: feature.hints.fromStationCode,
                 toStationCode: feature.hints.toStationCode, cache: &cache)
-
-            // The hint names the RAILWAY the solver rode; it cannot make a line
-            // reach a platform it does not serve. Where the package draws that
-            // railway under another line's name — the 品鶴線 is 総武線-3 since
-            // the 東京 rebuild, so a 湘南新宿ライン hop hinted 東海道線 landed
-            // on the 相鉄直通線 106 m away — the drawn ride has to follow the
-            // rail rather than the name, or the snap below turns the difference
-            // into a right-angle chord into the station.
-            //
-            // Only when the hinted stroke is not at the platform AT ALL, and
-            // only for a replacement that genuinely reaches both stops.
-            // Anything in between is a disagreement about WHICH platform, which
-            // the hint is still the better judge of, and which the
-            // route-approach audit reports rather than papers over.
-            if feature.hints.requiredLineIDs.isEmpty
-                && (best?.reach ?? .infinity) > Self.hintedLineMaxReachMeters {
-                let anywhere = bestFit(
-                    over: Array(lines.indices), rawStart: rawStart, rawEnd: rawEnd,
-                    continueFrom: continueFrom,
-                    fromStationCode: feature.hints.fromStationCode,
-                    toStationCode: feature.hints.toStationCode, cache: &cache)
-                if (anywhere?.reach ?? .infinity) <= Self.replacementMaxReachMeters {
-                    best = anywhere
-                }
+            if (anywhere?.reach ?? .infinity) <= Self.replacementMaxReachMeters {
+                best = anywhere
             }
-
-            guard let best else { return nil }
-            // Written as the JavaScript writes it — `> gate` rather than
-            // `<= gate` — so a NaN would pass here exactly as it does there.
-            if best.reach > Self.endpointGateMeters { return nil }
-
-            var canonical = canonicalLineSlice(
-                lineIndex: best.lineIndex, start: best.start, end: best.end,
-                rawCoordinates: rawCoordinates)
-            // One unusable stroke discards the WHOLE feature, including the
-            // strokes already accumulated. Reproduced deliberately: half a
-            // MultiLineString drawn on network geometry and half on the
-            // solver's own path would be two different claims in one shape.
-            if canonical.count < 2 { return nil }
-
-            // Finish ON the platform, not on the projection of it.
-            //
-            // A junction station belongs to two display parts, and the
-            // projection of the same station onto each lands metres apart, so
-            // consecutive hops routed over different parts left the drawn route
-            // visibly split open at the junction. The solver's own endpoints
-            // ARE the station nodes and are shared by both hops, so pinning the
-            // slice ends to them closes the seam exactly. Only over the short
-            // bridge from platform to track — a distant projection is a data
-            // problem and must stay visible, not be papered over with a long
-            // straight chord.
-            Self.snapEndpoint(&canonical, 0, rawStart, best.start.distance)
-            Self.snapEndpoint(&canonical, canonical.count - 1, rawEnd, best.end.distance)
-
-            canonicalLines.append(canonical)
-            usedLineIds.append(lines[best.lineIndex].lineId)
         }
 
-        var seenIds = Set<String>()
-        return CanonicalRoute(
-            geometry: {
-                if case .multiLineString = feature.geometry { return .multiLineString(canonicalLines) }
-                return .lineString(canonicalLines[0])
-            }(),
-            displayLineIds: usedLineIds.filter { seenIds.insert($0).inserted }
-        )
+        return best
     }
 
     private static func snapEndpoint(

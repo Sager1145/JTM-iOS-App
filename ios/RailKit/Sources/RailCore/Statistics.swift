@@ -877,14 +877,6 @@ public enum Statistics {
         var currentArr: [Bool] = []
         var variants: [EdgeKey: [Int]] = [:]
 
-        func bound(_ value: String?) -> String? {
-            guard let value, !value.isEmpty else { return nil }
-            return value
-        }
-        func slot(_ index: Int) -> (RouteGraph.TemporalKind, String?, String?, String?) {
-            (kindArr[index], bound(fromArr[index]), bound(toArr[index]), bound(historyArr[index]))
-        }
-
         // Reclassification accumulators, applied after the full pass. Every
         // edge is recorded against the CURRENT feature's line name (not the
         // first-wins lineArr), so a corridor edge co-located with another line
@@ -899,88 +891,178 @@ public enum Statistics {
         var ouNodeXY = OrderedDictionary<String, Coordinate>()
 
         for section in sections {
-            let props = section.properties
-            let coords = section.coordinates
-            let mask = classifySectionMask(props, country: country)
-            let lineName = props.lineNameString
-            let operatorName = props.operatorString
-            let fullReclass = hsrReclassifyFullLines.first { $0.line == lineName }?.display
-            let isOuLine = lineName == hsrReclassifyOuLine
-            let kind = props.temporalKind
-            let from = bound(props.validFrom)
-            let to = bound(props.validTo)
-            let history = bound(props.historyId)
-            let onCurrentNetwork = countsTowardCurrentNetwork(kind: kind, validTo: to)
-            let incoming = (kind, from, to, history)
-
-            guard coords.count >= 2 else { continue }
-            for i in 1..<coords.count {
-                let a = coords[i - 1]
-                let b = coords[i]
-                let key = packedEdgeKey(a, b)
-                let claimants = variants[key] ?? map[key].map { [$0] } ?? []
-                let ei: Int
-                if let existing = claimants.first(where: { slot($0) == incoming }) {
-                    ei = existing
-                    maskArr[ei] |= mask
-                    if lineArr[ei].isEmpty && !lineName.isEmpty {
-                        lineArr[ei] = lineName
-                        lineMaskArr[ei] = mask
-                        lineOpArr[ei] = operatorName
-                    }
-                } else {
-                    ei = kmArr.count
-                    if map[key] == nil { map[key] = ei }
-                    kmArr.append(equirectKm(a.lon, a.lat, b.lon, b.lat))
-                    maskArr.append(mask)
-                    lineArr.append(lineName)
-                    lineMaskArr.append(lineName.isEmpty ? 0 : mask)
-                    lineOpArr.append(lineName.isEmpty ? "" : operatorName)
-                    kindArr.append(kind)
-                    fromArr.append(from)
-                    toArr.append(to)
-                    historyArr.append(history)
-                    currentArr.append(onCurrentNetwork)
-                    if let first = map[key], first != ei {
-                        var list = variants[key] ?? [first]
-                        list.append(ei)
-                        variants[key] = list
-                    }
-                }
-
-                // Corridor reclassification is a current-network correction.
-                // A retired alignment that happens to share a name must not
-                // pull today's 奥羽線 trace onto geometry the denominator
-                // does not contain.
-                guard onCurrentNetwork || currentArr[ei] else { continue }
-                if let fullReclass {
-                    if hsrFullSeen[fullReclass]!.insert(ei).inserted {
-                        hsrFullHits[fullReclass]!.append(ei)
-                    }
-                } else if isOuLine {
-                    let ka = Grid.coordKey(a)
-                    let kb = Grid.coordKey(b)
-                    if ouNodeXY[ka] == nil {
-                        ouNodeXY[ka] = Coordinate(lon: Grid.quant5(a.lon), lat: Grid.quant5(a.lat))
-                    }
-                    if ouNodeXY[kb] == nil {
-                        ouNodeXY[kb] = Coordinate(lon: Grid.quant5(b.lon), lat: Grid.quant5(b.lat))
-                    }
-                    ouAdj[ka, default: []].append((kb, ei))
-                    ouAdj[kb, default: []].append((ka, ei))
-                }
-            }
+            appendStatsSection(section, country: country,
+                map: &map, kmArr: &kmArr, maskArr: &maskArr,
+                lineArr: &lineArr, lineMaskArr: &lineMaskArr, lineOpArr: &lineOpArr,
+                kindArr: &kindArr, fromArr: &fromArr, toArr: &toArr,
+                historyArr: &historyArr, currentArr: &currentArr, variants: &variants,
+                hsrFullSeen: &hsrFullSeen, hsrFullHits: &hsrFullHits,
+                ouAdj: &ouAdj, ouNodeXY: &ouNodeXY)
         }
 
+        applyStatsReclassification(hsrFullHits: hsrFullHits, ouAdj: ouAdj, ouNodeXY: ouNodeXY, kmArr: kmArr,
+            maskArr: &maskArr, lineArr: &lineArr, lineMaskArr: &lineMaskArr)
+
+        return finalizedEdgeIndex(country: country, map: map, kmArr: kmArr, maskArr: maskArr,
+            lineArr: lineArr, lineMaskArr: lineMaskArr, lineOpArr: lineOpArr, kindArr: kindArr,
+            fromArr: fromArr, toArr: toArr, historyArr: historyArr, currentArr: currentArr, variants: variants)
+    }
+
+    private static func edgeTemporalBound(_ value: String?) -> String? {
+        guard let value, !value.isEmpty else { return nil }
+        return value
+    }
+
+    private static func edgeTemporalSlot(
+        _ index: Int, kindArr: [RouteGraph.TemporalKind], fromArr: [String?],
+        toArr: [String?], historyArr: [String?]
+    ) -> (RouteGraph.TemporalKind, String?, String?, String?) {
+        (kindArr[index], edgeTemporalBound(fromArr[index]), edgeTemporalBound(toArr[index]), edgeTemporalBound(historyArr[index]))
+    }
+
+    private static func appendIndexedEdge(
+        key: EdgeKey, a: Coordinate, b: Coordinate, mask: Int, lineName: String, operatorName: String,
+        kind: RouteGraph.TemporalKind, from: String?, to: String?, history: String?, onCurrentNetwork: Bool,
+        map: inout [EdgeKey: Int], kmArr: inout [Double], maskArr: inout [Int],
+        lineArr: inout [String], lineMaskArr: inout [Int], lineOpArr: inout [String],
+        kindArr: inout [RouteGraph.TemporalKind], fromArr: inout [String?], toArr: inout [String?],
+        historyArr: inout [String?], currentArr: inout [Bool], variants: inout [EdgeKey: [Int]]
+    ) -> Int {
+        let ei = kmArr.count
+        if map[key] == nil { map[key] = ei }
+        kmArr.append(equirectKm(a.lon, a.lat, b.lon, b.lat))
+        maskArr.append(mask)
+        lineArr.append(lineName)
+        lineMaskArr.append(lineName.isEmpty ? 0 : mask)
+        lineOpArr.append(lineName.isEmpty ? "" : operatorName)
+        kindArr.append(kind)
+        fromArr.append(from)
+        toArr.append(to)
+        historyArr.append(history)
+        currentArr.append(onCurrentNetwork)
+        if let first = map[key], first != ei {
+            var list = variants[key] ?? [first]
+            list.append(ei)
+            variants[key] = list
+        }
+        return ei
+    }
+
+    private static func claimIndexedEdge(
+        key: EdgeKey, a: Coordinate, b: Coordinate, mask: Int, lineName: String, operatorName: String,
+        kind: RouteGraph.TemporalKind, from: String?, to: String?, history: String?, onCurrentNetwork: Bool,
+        map: inout [EdgeKey: Int], kmArr: inout [Double], maskArr: inout [Int],
+        lineArr: inout [String], lineMaskArr: inout [Int], lineOpArr: inout [String],
+        kindArr: inout [RouteGraph.TemporalKind], fromArr: inout [String?], toArr: inout [String?],
+        historyArr: inout [String?], currentArr: inout [Bool], variants: inout [EdgeKey: [Int]]
+    ) -> Int {
+        let incoming = (kind, from, to, history)
+        let claimants = variants[key] ?? map[key].map { [$0] } ?? []
+        let ei: Int
+        if let existing = claimants.first(where: { edgeTemporalSlot($0, kindArr: kindArr, fromArr: fromArr, toArr: toArr, historyArr: historyArr) == incoming }) {
+            ei = existing
+            maskArr[ei] |= mask
+            if lineArr[ei].isEmpty && !lineName.isEmpty {
+                lineArr[ei] = lineName
+                lineMaskArr[ei] = mask
+                lineOpArr[ei] = operatorName
+            }
+        } else {
+            ei = appendIndexedEdge(key: key, a: a, b: b, mask: mask, lineName: lineName, operatorName: operatorName,
+                kind: kind, from: from, to: to, history: history, onCurrentNetwork: onCurrentNetwork,
+                map: &map, kmArr: &kmArr, maskArr: &maskArr,
+                lineArr: &lineArr, lineMaskArr: &lineMaskArr, lineOpArr: &lineOpArr,
+                kindArr: &kindArr, fromArr: &fromArr, toArr: &toArr,
+                historyArr: &historyArr, currentArr: &currentArr, variants: &variants)
+        }
+        return ei
+    }
+
+    private static func recordReclassificationEdge(
+        _ ei: Int, a: Coordinate, b: Coordinate, fullReclass: String?, isOuLine: Bool,
+        hsrFullSeen: inout [String: Set<Int>], hsrFullHits: inout OrderedDictionary<String, [Int]>,
+        ouAdj: inout [String: [(node: String, edge: Int)]], ouNodeXY: inout OrderedDictionary<String, Coordinate>
+    ) {
+        if let fullReclass {
+            if hsrFullSeen[fullReclass]!.insert(ei).inserted {
+                hsrFullHits[fullReclass]!.append(ei)
+            }
+        } else if isOuLine {
+            let ka = Grid.coordKey(a)
+            let kb = Grid.coordKey(b)
+            if ouNodeXY[ka] == nil {
+                ouNodeXY[ka] = Coordinate(lon: Grid.quant5(a.lon), lat: Grid.quant5(a.lat))
+            }
+            if ouNodeXY[kb] == nil {
+                ouNodeXY[kb] = Coordinate(lon: Grid.quant5(b.lon), lat: Grid.quant5(b.lat))
+            }
+            ouAdj[ka, default: []].append((kb, ei))
+            ouAdj[kb, default: []].append((ka, ei))
+        }
+    }
+
+    private static func appendStatsSection(
+        _ section: Section, country: String,
+        map: inout [EdgeKey: Int], kmArr: inout [Double], maskArr: inout [Int],
+        lineArr: inout [String], lineMaskArr: inout [Int], lineOpArr: inout [String],
+        kindArr: inout [RouteGraph.TemporalKind], fromArr: inout [String?], toArr: inout [String?],
+        historyArr: inout [String?], currentArr: inout [Bool], variants: inout [EdgeKey: [Int]],
+        hsrFullSeen: inout [String: Set<Int>], hsrFullHits: inout OrderedDictionary<String, [Int]>,
+        ouAdj: inout [String: [(node: String, edge: Int)]], ouNodeXY: inout OrderedDictionary<String, Coordinate>
+    ) {
+        let props = section.properties
+        let coords = section.coordinates
+        let mask = classifySectionMask(props, country: country)
+        let lineName = props.lineNameString
+        let operatorName = props.operatorString
+        let fullReclass = hsrReclassifyFullLines.first { $0.line == lineName }?.display
+        let isOuLine = lineName == hsrReclassifyOuLine
+        let kind = props.temporalKind
+        let from = edgeTemporalBound(props.validFrom)
+        let to = edgeTemporalBound(props.validTo)
+        let history = edgeTemporalBound(props.historyId)
+        let onCurrentNetwork = countsTowardCurrentNetwork(kind: kind, validTo: to)
+
+        guard coords.count >= 2 else { return }
+        for i in 1..<coords.count {
+            let a = coords[i - 1]
+            let b = coords[i]
+            let key = packedEdgeKey(a, b)
+            let ei = claimIndexedEdge(key: key, a: a, b: b, mask: mask, lineName: lineName, operatorName: operatorName,
+                kind: kind, from: from, to: to, history: history, onCurrentNetwork: onCurrentNetwork,
+                map: &map, kmArr: &kmArr, maskArr: &maskArr,
+                lineArr: &lineArr, lineMaskArr: &lineMaskArr, lineOpArr: &lineOpArr,
+                kindArr: &kindArr, fromArr: &fromArr, toArr: &toArr,
+                historyArr: &historyArr, currentArr: &currentArr, variants: &variants)
+
+            // Corridor reclassification is a current-network correction.
+            // A retired alignment that happens to share a name must not
+            // pull today's 奥羽線 trace onto geometry the denominator
+            // does not contain.
+            guard onCurrentNetwork || currentArr[ei] else { continue }
+            recordReclassificationEdge(ei, a: a, b: b, fullReclass: fullReclass, isOuLine: isOuLine,
+                hsrFullSeen: &hsrFullSeen, hsrFullHits: &hsrFullHits,
+                ouAdj: &ouAdj, ouNodeXY: &ouNodeXY)
+        }
+    }
+
+    private static func applyHsrCorridorOverride(
+        _ ei: Int, _ display: String, maskArr: inout [Int], lineArr: inout [String], lineMaskArr: inout [Int]
+    ) {
+        maskArr[ei] = (maskArr[ei] & ~maskCONV) | maskHSR
+        lineArr[ei] = display
+        lineMaskArr[ei] = maskHSR | maskJR
+    }
+
+    private static func applyStatsReclassification(
+        hsrFullHits: OrderedDictionary<String, [Int]>, ouAdj: [String: [(node: String, edge: Int)]],
+        ouNodeXY: OrderedDictionary<String, Coordinate>, kmArr: [Double],
+        maskArr: inout [Int], lineArr: inout [String], lineMaskArr: inout [Int]
+    ) {
         // Apply the reclassification BEFORE totals are summed, so the 新幹線 /
         // 在來線 denominators and the per-line breakdown all reflect it.
-        func applyHsrCorridorOverride(_ ei: Int, _ display: String) {
-            maskArr[ei] = (maskArr[ei] & ~maskCONV) | maskHSR
-            lineArr[ei] = display
-            lineMaskArr[ei] = maskHSR | maskJR
-        }
         for (display, edges) in hsrFullHits.pairs {
-            for ei in edges { applyHsrCorridorOverride(ei, display) }
+            for ei in edges { applyHsrCorridorOverride(ei, display, maskArr: &maskArr, lineArr: &lineArr, lineMaskArr: &lineMaskArr) }
         }
         for corridor in hsrReclassifyOuCorridors {
             guard
@@ -988,10 +1070,19 @@ public enum Statistics {
                 let to = snapToNearestNode(corridor.to, ouNodeXY)
             else { continue }
             for ei in traceCorridorEdges(ouAdj, kmArr, from, to) {
-                applyHsrCorridorOverride(ei, corridor.display)
+                applyHsrCorridorOverride(ei, corridor.display, maskArr: &maskArr, lineArr: &lineArr, lineMaskArr: &lineMaskArr)
             }
         }
 
+    }
+
+    private static func finalizedEdgeIndex(
+        country: String,
+        map: [EdgeKey: Int], kmArr: [Double], maskArr: [Int],
+        lineArr: [String], lineMaskArr: [Int], lineOpArr: [String],
+        kindArr: [RouteGraph.TemporalKind], fromArr: [String?], toArr: [String?],
+        historyArr: [String?], currentArr: [Bool], variants: [EdgeKey: [Int]]
+    ) -> EdgeIndex {
         var totalKm = 0.0
         var totalsByMask: [Int: Double] = [:]
         let cats = categories(country: country)
@@ -1025,6 +1116,20 @@ public enum Statistics {
         // FIRST candidate at the maximum, so the insertion order of byOp is
         // the tie-break.
         var lineOperator = OrderedDictionary<String, String>()
+        resolveLineOperators(lineOpKm, lineOperator: &lineOperator)
+
+        return EdgeIndex(
+            map: map, km: kmArr, mask: maskArr, lineName: lineArr, lineMask: lineMaskArr,
+            totalKm: totalKm, totalsByMask: totalsByMask,
+            lineTotByCat: lineTotByCat, lineOperator: lineOperator,
+            temporalKind: kindArr, validFrom: fromArr, validTo: toArr,
+            historyId: historyArr, currentNetwork: currentArr, variants: variants)
+    }
+
+    private static func resolveLineOperators(
+        _ lineOpKm: OrderedDictionary<String, OrderedDictionary<String, Double>>,
+        lineOperator: inout OrderedDictionary<String, String>
+    ) {
         for (line, byOp) in lineOpKm.pairs {
             var best = ""
             var bestKm = -1.0
@@ -1035,12 +1140,6 @@ public enum Statistics {
             if !best.isEmpty { lineOperator[line] = best }
         }
 
-        return EdgeIndex(
-            map: map, km: kmArr, mask: maskArr, lineName: lineArr, lineMask: lineMaskArr,
-            totalKm: totalKm, totalsByMask: totalsByMask,
-            lineTotByCat: lineTotByCat, lineOperator: lineOperator,
-            temporalKind: kindArr, validFrom: fromArr, validTo: toArr,
-            historyId: historyArr, currentNetwork: currentArr, variants: variants)
     }
 
     /// Zero km accumulator keyed by category mask, for per-line-per-category sums.
@@ -1343,54 +1442,6 @@ public enum Statistics {
         var spans: [Span] = []
         var segments: [RiddenSection] = []
 
-        func recordSpan(_ from: Coordinate, _ to: Coordinate, _ km: Double, _ mask: Int) {
-            if km > 0 { spans.append(Span(key: edgeKey(from, to), km: km, mask: mask)) }
-        }
-
-        func walk(_ coords: [Coordinate]) {
-            guard coords.count >= 2 else { return }
-            var anchor = coords[0]
-            // Category of the edge the anchor most recently reached. The
-            // display network deliberately finishes a station interval at
-            // the station anchor, which can sit a short connector away from
-            // the raw section edge. A leading connector already inherits the
-            // edge it reconnects to below; keeping this makes the trailing
-            // connector inherit the edge it just left, symmetrically.
-            var anchorMask = 0
-            var pendingKm = 0.0
-            for i in 1..<coords.count {
-                let prev = coords[i - 1]
-                let v = coords[i]
-                if anchor.lon == v.lon && anchor.lat == v.lat { continue }
-                if let e = index.edgeID(for: packedEdgeKey(anchor, v), on: rideDate) {
-                    edges.append(e)
-                    anchor = v
-                    anchorMask = index.mask[e]
-                    pendingKm = 0  // pending hops were interior to this matched edge
-                    continue
-                }
-                if let e2 = index.edgeID(for: packedEdgeKey(prev, v), on: rideDate) {
-                    recordSpan(anchor, prev, pendingKm, index.mask[e2])
-                    edges.append(e2)
-                    anchor = v
-                    anchorMask = index.mask[e2]
-                    pendingKm = 0
-                    continue
-                }
-                pendingKm += equirectKm(prev.lon, prev.lat, v.lon, v.lat)
-                if pendingKm > maxBridgeKm {
-                    recordSpan(anchor, v, pendingKm, 0)
-                    anchor = v
-                    anchorMask = 0
-                    pendingKm = 0
-                } else if i == coords.count - 1 {
-                    recordSpan(anchor, v, pendingKm, anchorMask)
-                    anchor = v
-                    pendingKm = 0
-                }
-            }
-        }
-
         for feature in features {
             guard feature.hasGeometry else { continue }
             guard feature.rideSegment else { continue }
@@ -1399,46 +1450,109 @@ public enum Statistics {
             // accumulators.
             let edgeStart = edges.count
             let spanStart = spans.count
-            for line in feature.lines { walk(line) }
+            for line in feature.lines { walkStatsCoordinates(line, index: index, rideDate: rideDate, edges: &edges, spans: &spans) }
 
-            guard let from = feature.from, let to = feature.to, from != to else { continue }
-            var segKm = 0.0
-            // Attribute the section to the mode carrying the MOST of its
-            // distance. OR-ing every edge's mask instead would file a JR
-            // section under 私鐵 and 地下鐵 the moment its geometry clipped one
-            // parallel edge in a dense terminal area — which is what it used
-            // to do.
-            var kmByBucket = OrderedDictionary<Int, Double>()
-            func addKm(_ mask: Int, _ km: Double) {
-                let b = exclusiveTrackBucket(mask)
-                kmByBucket[b] = (kmByBucket[b] ?? 0) + km
-            }
-            for i in edgeStart..<edges.count {
-                segKm += index.km[edges[i]]
-                addKm(index.mask[edges[i]], index.km[edges[i]])
-            }
-            for i in spanStart..<spans.count {
-                segKm += spans[i].km
-                if spans[i].mask != 0 { addKm(spans[i].mask, spans[i].km) }
-            }
-            var bucket = 0
-            var bestKm = -1.0
-            for (b, km) in kmByBucket.pairs where km > bestKm {
-                bestKm = km
-                bucket = b
-            }
-            // Edge ids are the unit of "same track": two intervals that share
-            // none cannot contain one another, which is what keeps 新幹線 from
-            // swallowing the 在來線 running beside it.
-            let segEdges = edges[edgeStart...].sorted()
-            segments.append(
-                RiddenSection(from: from, to: to, km: segKm, bucket: bucket, edgeIds: segEdges))
+            appendRiddenStatsSection(feature, index: index, edgeStart: edgeStart, spanStart: spanStart,
+                edges: edges, spans: spans, segments: &segments)
         }
 
         var km = 0.0
         for e in edges { km += index.km[e] }
         for span in spans { km += span.km }
         return TrainEntry(edges: edges, spans: spans, km: km, segments: segments)
+    }
+
+    private static func recordSpan(
+        _ from: Coordinate, _ to: Coordinate, _ km: Double, _ mask: Int, spans: inout [Span]
+    ) {
+        if km > 0 { spans.append(Span(key: edgeKey(from, to), km: km, mask: mask)) }
+    }
+
+    private static func walkStatsCoordinates(
+        _ coords: [Coordinate], index: EdgeIndex, rideDate: String?, edges: inout [Int], spans: inout [Span]
+    ) {
+        guard coords.count >= 2 else { return }
+        var anchor = coords[0]
+        // Category of the edge the anchor most recently reached. The
+        // display network deliberately finishes a station interval at
+        // the station anchor, which can sit a short connector away from
+        // the raw section edge. A leading connector already inherits the
+        // edge it reconnects to below; keeping this makes the trailing
+        // connector inherit the edge it just left, symmetrically.
+        var anchorMask = 0
+        var pendingKm = 0.0
+        for i in 1..<coords.count {
+            let prev = coords[i - 1]
+            let v = coords[i]
+            if anchor.lon == v.lon && anchor.lat == v.lat { continue }
+            if let e = index.edgeID(for: packedEdgeKey(anchor, v), on: rideDate) {
+                edges.append(e)
+                anchor = v
+                anchorMask = index.mask[e]
+                pendingKm = 0  // pending hops were interior to this matched edge
+                continue
+            }
+            if let e2 = index.edgeID(for: packedEdgeKey(prev, v), on: rideDate) {
+                recordSpan(anchor, prev, pendingKm, index.mask[e2], spans: &spans)
+                edges.append(e2)
+                anchor = v
+                anchorMask = index.mask[e2]
+                pendingKm = 0
+                continue
+            }
+            pendingKm += equirectKm(prev.lon, prev.lat, v.lon, v.lat)
+            if pendingKm > maxBridgeKm {
+                recordSpan(anchor, v, pendingKm, 0, spans: &spans)
+                anchor = v
+                anchorMask = 0
+                pendingKm = 0
+            } else if i == coords.count - 1 {
+                recordSpan(anchor, v, pendingKm, anchorMask, spans: &spans)
+                anchor = v
+                pendingKm = 0
+            }
+        }
+    }
+
+    private static func addStatsBucketKm(
+        _ mask: Int, _ km: Double, kmByBucket: inout OrderedDictionary<Int, Double>
+    ) {
+        let b = exclusiveTrackBucket(mask)
+        kmByBucket[b] = (kmByBucket[b] ?? 0) + km
+    }
+
+    private static func appendRiddenStatsSection(
+        _ feature: RouteFeature, index: EdgeIndex, edgeStart: Int, spanStart: Int,
+        edges: [Int], spans: [Span], segments: inout [RiddenSection]
+    ) {
+        guard let from = feature.from, let to = feature.to, from != to else { return }
+        var segKm = 0.0
+        // Attribute the section to the mode carrying the MOST of its
+        // distance. OR-ing every edge's mask instead would file a JR
+        // section under 私鐵 and 地下鐵 the moment its geometry clipped one
+        // parallel edge in a dense terminal area — which is what it used
+        // to do.
+        var kmByBucket = OrderedDictionary<Int, Double>()
+        for i in edgeStart..<edges.count {
+            segKm += index.km[edges[i]]
+            addStatsBucketKm(index.mask[edges[i]], index.km[edges[i]], kmByBucket: &kmByBucket)
+        }
+        for i in spanStart..<spans.count {
+            segKm += spans[i].km
+            if spans[i].mask != 0 { addStatsBucketKm(spans[i].mask, spans[i].km, kmByBucket: &kmByBucket) }
+        }
+        var bucket = 0
+        var bestKm = -1.0
+        for (b, km) in kmByBucket.pairs where km > bestKm {
+            bestKm = km
+            bucket = b
+        }
+        // Edge ids are the unit of "same track": two intervals that share
+        // none cannot contain one another, which is what keeps 新幹線 from
+        // swallowing the 在來線 running beside it.
+        let segEdges = edges[edgeStart...].sorted()
+        segments.append(
+            RiddenSection(from: from, to: to, km: segKm, bucket: bucket, edgeIds: segEdges))
     }
 
     // MARK: - aggregation
@@ -1557,18 +1671,7 @@ public enum Statistics {
         var riddenOrder: [Int] = []
         var riddenSeen = Set<Int>()
         var extraSpans = OrderedDictionary<String, (km: Double, mask: Int)>()
-        for entry in entries {
-            for e in entry.edges where riddenSeen.insert(e).inserted { riddenOrder.append(e) }
-            for span in entry.spans {
-                if let current = extraSpans[span.key] {
-                    // A repeat ride of the same connector only ORs its mask in;
-                    // the km is counted once.
-                    extraSpans[span.key] = (current.km, current.mask | span.mask)
-                } else {
-                    extraSpans[span.key] = (span.km, span.mask)
-                }
-            }
-        }
+        collectUniqueRiddenParts(entries, riddenOrder: &riddenOrder, riddenSeen: &riddenSeen, extraSpans: &extraSpans)
 
         var riddenAll = 0.0
         var unmatchedKm = 0.0
@@ -1586,6 +1689,79 @@ public enum Statistics {
         for category in cats { riddenByMask[category.mask] = 0 }
         var lineRidByCat = OrderedDictionary<String, [Int: Double]>()
 
+        accumulateRiddenEdges(riddenOrder, index: index, country: country, asOf: asOf, cats: cats,
+            totalRiddenKm: &totalRiddenKm, relocatedOldKm: &relocatedOldKm, retiredNetworkKm: &retiredNetworkKm,
+            historySeen: &historySeen, historyIDs: &historyIDs, fallbackSeen: &fallbackSeen, fallbackLines: &fallbackLines,
+            currentNetworkRiddenKm: &currentNetworkRiddenKm, riddenAll: &riddenAll,
+            riddenByMask: &riddenByMask, currentLines: &currentLines, lineRidByCat: &lineRidByCat)
+
+        accumulateRiddenSpans(extraSpans, cats: cats, riddenAll: &riddenAll,
+            unmatchedKm: &unmatchedKm, riddenByMask: &riddenByMask)
+
+        let namedLines = fallbackLines.filter { !currentLines.contains($0) }
+        return MileageStats(
+            riddenAll: riddenAll, riddenByMask: riddenByMask,
+            unmatchedKm: unmatchedKm, lineRidByCat: lineRidByCat,
+            totalRiddenKm: totalRiddenKm,
+            currentNetworkRiddenKm: currentNetworkRiddenKm,
+            retiredNetworkKm: retiredNetworkKm,
+            relocatedOldKm: relocatedOldKm,
+            historicalUniqueKm: retiredNetworkKm + relocatedOldKm,
+            historicalLineCount: historyIDs.count + namedLines.count)
+    }
+
+    private static func collectUniqueRiddenParts(
+        _ entries: [TrainEntry], riddenOrder: inout [Int], riddenSeen: inout Set<Int>,
+        extraSpans: inout OrderedDictionary<String, (km: Double, mask: Int)>
+    ) {
+        for entry in entries {
+            for e in entry.edges where riddenSeen.insert(e).inserted { riddenOrder.append(e) }
+            for span in entry.spans {
+                if let current = extraSpans[span.key] {
+                    // A repeat ride of the same connector only ORs its mask in;
+                    // the km is counted once.
+                    extraSpans[span.key] = (current.km, current.mask | span.mask)
+                } else {
+                    extraSpans[span.key] = (span.km, span.mask)
+                }
+            }
+        }
+
+    }
+
+    private static func recordHistoricalMileage(
+        edge e: Int, km: Double, index: EdgeIndex, bucket: HistoricalBucket?,
+        relocatedOldKm: inout Double, retiredNetworkKm: inout Double,
+        historySeen: inout Set<String>, historyIDs: inout [String],
+        fallbackSeen: inout Set<String>, fallbackLines: inout [String]
+    ) {
+        switch bucket {
+        case .relocatedOld:
+            relocatedOldKm += km
+        case .retired:
+            retiredNetworkKm += km
+        case nil:
+            break
+        }
+        if bucket != nil {
+            if e < index.historyId.count, let id = index.historyId[e], !id.isEmpty {
+                if historySeen.insert(id).inserted { historyIDs.append(id) }
+            } else {
+                let name = index.lineName[e]
+                if !name.isEmpty, fallbackSeen.insert(name).inserted { fallbackLines.append(name) }
+            }
+        }
+    }
+
+    private static func accumulateRiddenEdges(
+        _ riddenOrder: [Int], index: EdgeIndex, country: String, asOf: String, cats: [Category],
+        totalRiddenKm: inout Double, relocatedOldKm: inout Double, retiredNetworkKm: inout Double,
+        historySeen: inout Set<String>, historyIDs: inout [String],
+        fallbackSeen: inout Set<String>, fallbackLines: inout [String],
+        currentNetworkRiddenKm: inout Double, riddenAll: inout Double,
+        riddenByMask: inout [Int: Double], currentLines: inout Set<String>,
+        lineRidByCat: inout OrderedDictionary<String, [Int: Double]>
+    ) {
         for e in riddenOrder {
             let km = index.km[e]
             let kind = e < index.temporalKind.count ? index.temporalKind[e] : RouteGraph.TemporalKind.current
@@ -1597,22 +1773,10 @@ public enum Statistics {
             let bucket = historicalClassification(
                 kind: kind, validFrom: validFrom, validTo: validTo, asOf: asOf)
             totalRiddenKm += km
-            switch bucket {
-            case .relocatedOld:
-                relocatedOldKm += km
-            case .retired:
-                retiredNetworkKm += km
-            case nil:
-                break
-            }
-            if bucket != nil {
-                if e < index.historyId.count, let id = index.historyId[e], !id.isEmpty {
-                    if historySeen.insert(id).inserted { historyIDs.append(id) }
-                } else {
-                    let name = index.lineName[e]
-                    if !name.isEmpty, fallbackSeen.insert(name).inserted { fallbackLines.append(name) }
-                }
-            }
+            recordHistoricalMileage(edge: e, km: km, index: index, bucket: bucket,
+                relocatedOldKm: &relocatedOldKm, retiredNetworkKm: &retiredNetworkKm,
+                historySeen: &historySeen, historyIDs: &historyIDs,
+                fallbackSeen: &fallbackSeen, fallbackLines: &fallbackLines)
             if !onCurrent { continue }
             // Reference geometry, including in-place retirement. Only the
             // still-active part (classification nil) is current-network ridden.
@@ -1631,6 +1795,12 @@ public enum Statistics {
             lineRidByCat[ln] = byCat
         }
 
+    }
+
+    private static func accumulateRiddenSpans(
+        _ extraSpans: OrderedDictionary<String, (km: Double, mask: Int)>, cats: [Category],
+        riddenAll: inout Double, unmatchedKm: inout Double, riddenByMask: inout [Int: Double]
+    ) {
         // Connector spans: counted nationally, attributed to their reconnect
         // category when known; the mask-0 remainder is reported as unmatchedKm.
         for span in extraSpans.values {
@@ -1644,16 +1814,6 @@ public enum Statistics {
             }
         }
 
-        let namedLines = fallbackLines.filter { !currentLines.contains($0) }
-        return MileageStats(
-            riddenAll: riddenAll, riddenByMask: riddenByMask,
-            unmatchedKm: unmatchedKm, lineRidByCat: lineRidByCat,
-            totalRiddenKm: totalRiddenKm,
-            currentNetworkRiddenKm: currentNetworkRiddenKm,
-            retiredNetworkKm: retiredNetworkKm,
-            relocatedOldKm: relocatedOldKm,
-            historicalUniqueKm: retiredNetworkKm + relocatedOldKm,
-            historicalLineCount: historyIDs.count + namedLines.count)
     }
 
     // MARK: - ride time

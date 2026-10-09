@@ -652,6 +652,33 @@ public enum StationJoinSmoothing {
         source: [Coordinate], template: OverlapLanes.FittedCurve, sourceLines: [[Coordinate]]
     ) -> JoinedCurve? {
         guard source.count >= 4 else { return nil }
+        let (metricSource, total, coslat, mx, my, origin, sigma, boxRadius, minRadius) =
+            joinedStationMetric(source: source, template: template)
+        var metric = boxPass(boxPass(boxPass(metricSource, boxRadius), boxRadius), boxRadius)
+
+        var curve = template
+        let passCount = smoothedJoinedStationGeometry(
+            metric: &metric, metricSource: metricSource, curve: &curve,
+            origin: origin, mx: mx, my: my, coslat: coslat, sigma: sigma,
+            total: total, minRadius: minRadius, boxRadius: boxRadius)
+
+        let rawSources = sourceLines
+        let deviation = OverlapLanes.validateFittedCurveDeviation(
+            points: curve.pts, sourceLines: rawSources, budgetMeters: curve.maxDeviationMeters)
+        curve.actualMaxDeviationMeters = deviation.maxDeviationMeters
+        let directionValid = rebuildLimitedDirectionField(&curve)
+        return JoinedCurve(
+            curve: curve, sourceLines: rawSources, finalDeviationValid: deviation.valid,
+            finalDirectionValid: directionValid, stationSmoothingPasses: passCount,
+            stationJoinRadiusRelaxed: false, acceptedMinRadiusMeters: nil, stationJoinCount: 0,
+            stationJoinOriginalMaxDeg: 0, stationJoinMaxGapMeters: 0,
+            stationJoinIdMatchedCount: 0)
+    }
+
+    private static func joinedStationMetric(
+        source: [Coordinate], template: OverlapLanes.FittedCurve
+    ) -> (metricSource: [OverlapLanes.MetricPoint], total: Double, coslat: Double,
+          mx: Double, my: Double, origin: Coordinate, sigma: Double, boxRadius: Int, minRadius: Double) {
         let lat0 = source.reduce(0.0) { $0 + $1.lat } / Double(source.count)
         let coslat = or(JSMath.cos((lat0 * .pi) / 180), 1e-6)
         let mx = OverlapLanes.metresPerDegreeLon * coslat
@@ -676,13 +703,19 @@ public enum StationJoinSmoothing {
                 Swift.min(
                     Double(metricSource.count - 1),
                     Swift.min(260, (sigma / Swift.max(1, step)).rounded(.up)))))
-        var metric = boxPass(boxPass(boxPass(metricSource, boxRadius), boxRadius), boxRadius)
 
+        return (metricSource, total, coslat, mx, my, origin, sigma, boxRadius, minRadius)
+    }
+
+    private static func smoothedJoinedStationGeometry(
+        metric: inout [OverlapLanes.MetricPoint], metricSource: [OverlapLanes.MetricPoint],
+        curve: inout OverlapLanes.FittedCurve, origin: Coordinate, mx: Double, my: Double,
+        coslat: Double, sigma: Double, total: Double, minRadius: Double, boxRadius: Int
+    ) -> Int {
         // Everything the template carries survives except the three fields
         // replaced here — the JavaScript spreads the template object, so the
         // requested radius, the detail and deviation budgets, the sampling
         // precision and the near-parallel flag all come through unchanged.
-        var curve = template
         curve.coslat = coslat
         curve.smoothingSigmaMeters = sigma
         curve.fitType = "cubic-bspline-c2-station-continuous"
@@ -716,17 +749,7 @@ public enum StationJoinSmoothing {
             passCount += 1
         }
 
-        let rawSources = sourceLines
-        let deviation = OverlapLanes.validateFittedCurveDeviation(
-            points: curve.pts, sourceLines: rawSources, budgetMeters: curve.maxDeviationMeters)
-        curve.actualMaxDeviationMeters = deviation.maxDeviationMeters
-        let directionValid = rebuildLimitedDirectionField(&curve)
-        return JoinedCurve(
-            curve: curve, sourceLines: rawSources, finalDeviationValid: deviation.valid,
-            finalDirectionValid: directionValid, stationSmoothingPasses: passCount,
-            stationJoinRadiusRelaxed: false, acceptedMinRadiusMeters: nil, stationJoinCount: 0,
-            stationJoinOriginalMaxDeg: 0, stationJoinMaxGapMeters: 0,
-            stationJoinIdMatchedCount: 0)
+        return passCount
     }
 
     // MARK: - The five intermediate products
@@ -1095,83 +1118,102 @@ public enum StationJoinSmoothing {
             curveCount: order.count, connections: connections)
 
         for component in components {
-            let concatenated = concatStationJoinComponentSource(
-                component, curves: curves, order: order, connections: connections)
-            if concatenated.source.count < 4 { continue }
-            var rawSources: [[Coordinate]] = []
-            for member in component {
-                rawSources.append(contentsOf: curves[order[member.curveIndex]].sourceLines)
-            }
-
-            func markFailure(_ reason: String, _ candidate: JoinedCurve?) {
-                let failure = Failure(
-                    reason: reason, joins: concatenated.joinEdges,
-                    groupKeys: component.flatMap { member in
-                        owners[member.curveIndex].map { groups[$0].groupKey }
-                    },
-                    requestedMinRadiusM: candidate.map {
-                        JSNumber.round(or($0.curve.requestedMinRadiusMeters, 0))
-                    },
-                    achievedMinRadiusM: candidate?.curve.achievedMinRadiusMeters.map {
-                        JSNumber.round($0)
-                    },
-                    maxDeviationM: candidate.map {
-                        JSNumber.round(or($0.curve.maxDeviationMeters, 0))
-                    },
-                    actualMaxDeviationM: candidate.map {
-                        JSNumber.round($0.curve.actualMaxDeviationMeters)
-                    })
-                let index = outcome.failures.count
-                for member in component {
-                    for groupIndex in owners[member.curveIndex] {
-                        outcome.groupFailure[groupIndex] = index
-                    }
-                }
-                outcome.failures.append(failure)
-            }
-
-            guard
-                var fitted = smoothJoinedStationCurve(
-                    source: concatenated.source,
-                    template: curves[order[component[0].curveIndex]].curve,
-                    sourceLines: rawSources)
-            else {
-                markFailure("solver", nil)
-                continue
-            }
-            let report = stationJoinConstraintReport(fitted)
-            if !(report.radiusOk || report.radiusRelaxed) || !report.deviationOk
-                || !report.directionOk
-            {
-                var reasons: [String] = []
-                if !report.radiusOk && !report.radiusRelaxed { reasons.append("radius") }
-                if !report.deviationOk { reasons.append("deviation") }
-                if !report.directionOk { reasons.append("direction") }
-                markFailure(reasons.isEmpty ? "unknown" : reasons.joined(separator: "+"), fitted)
-                continue
-            }
-            if report.radiusRelaxed {
-                fitted.stationJoinRadiusRelaxed = true
-                fitted.acceptedMinRadiusMeters =
-                    fitted.curve.requestedMinRadiusMeters * radiusRelax
-            }
-            fitted.stationJoinCount = component.count - 1
-            fitted.stationJoinOriginalMaxDeg = toFixedNumber(
-                (concatenated.worstTurn * 180) / .pi, 2)
-            fitted.stationJoinMaxGapMeters = toFixedNumber(concatenated.worstGap, 1)
-            fitted.stationJoinIdMatchedCount = concatenated.joinEdges.filter {
-                $0.matchKind == "node-id"
-            }.count
-            fitted.curve.fitType = "cubic-bspline-c2-station-continuous"
-            let joinedIndex = outcome.joined.count
-            outcome.joined.append(fitted)
-            for member in component {
-                for groupIndex in owners[member.curveIndex] {
-                    outcome.groupCurve[groupIndex] = .joined(joinedIndex)
-                }
-            }
-            outcome.roundedJoins += component.count - 1
+            smoothStationJoinComponent(component, curves: curves, order: order,
+                                       owners: owners, groups: groups, connections: connections, outcome: &outcome)
         }
         return outcome
+    }
+
+    private static func smoothStationJoinComponent(
+        _ component: [ChainMember], curves: [CurveEntry], order: [Int], owners: [[Int]], groups: [Group],
+        connections: [Int: [Int: Edge]], outcome: inout Outcome
+    ) {
+        let concatenated = concatStationJoinComponentSource(
+            component, curves: curves, order: order, connections: connections)
+        if concatenated.source.count < 4 { return }
+        var rawSources: [[Coordinate]] = []
+        for member in component {
+            rawSources.append(contentsOf: curves[order[member.curveIndex]].sourceLines)
+        }
+
+        guard
+            var fitted = smoothJoinedStationCurve(
+                source: concatenated.source,
+                template: curves[order[component[0].curveIndex]].curve,
+                sourceLines: rawSources)
+        else {
+            markStationJoinFailure("solver", candidate: nil, component: component, concatenated: concatenated, owners: owners, groups: groups, outcome: &outcome)
+            return
+        }
+        let report = stationJoinConstraintReport(fitted)
+        if !(report.radiusOk || report.radiusRelaxed) || !report.deviationOk
+            || !report.directionOk
+        {
+            var reasons: [String] = []
+            if !report.radiusOk && !report.radiusRelaxed { reasons.append("radius") }
+            if !report.deviationOk { reasons.append("deviation") }
+            if !report.directionOk { reasons.append("direction") }
+            markStationJoinFailure(reasons.isEmpty ? "unknown" : reasons.joined(separator: "+"), candidate: fitted, component: component, concatenated: concatenated, owners: owners, groups: groups, outcome: &outcome)
+            return
+        }
+        publishStationJoinComponent(component, fitted: &fitted, reportRadiusRelaxed: report.radiusRelaxed,
+                                    concatenated: concatenated, owners: owners, outcome: &outcome)
+    }
+
+    private static func markStationJoinFailure(
+        _ reason: String, candidate: JoinedCurve?, component: [ChainMember],
+        concatenated: (source: [Coordinate], joinEdges: [JoinEdge], worstTurn: Double, worstGap: Double), owners: [[Int]], groups: [Group], outcome: inout Outcome
+    ) {
+        let failure = Failure(
+            reason: reason, joins: concatenated.joinEdges,
+            groupKeys: component.flatMap { member in
+                owners[member.curveIndex].map { groups[$0].groupKey }
+            },
+            requestedMinRadiusM: candidate.map {
+                JSNumber.round(or($0.curve.requestedMinRadiusMeters, 0))
+            },
+            achievedMinRadiusM: candidate?.curve.achievedMinRadiusMeters.map {
+                JSNumber.round($0)
+            },
+            maxDeviationM: candidate.map {
+                JSNumber.round(or($0.curve.maxDeviationMeters, 0))
+            },
+            actualMaxDeviationM: candidate.map {
+                JSNumber.round($0.curve.actualMaxDeviationMeters)
+            })
+        let index = outcome.failures.count
+        for member in component {
+            for groupIndex in owners[member.curveIndex] {
+                outcome.groupFailure[groupIndex] = index
+            }
+        }
+        outcome.failures.append(failure)
+    }
+
+    private static func publishStationJoinComponent(
+        _ component: [ChainMember], fitted: inout JoinedCurve, reportRadiusRelaxed: Bool,
+        concatenated: (source: [Coordinate], joinEdges: [JoinEdge], worstTurn: Double, worstGap: Double), owners: [[Int]], outcome: inout Outcome
+    ) {
+        if reportRadiusRelaxed {
+            fitted.stationJoinRadiusRelaxed = true
+            fitted.acceptedMinRadiusMeters =
+                fitted.curve.requestedMinRadiusMeters * radiusRelax
+        }
+        fitted.stationJoinCount = component.count - 1
+        fitted.stationJoinOriginalMaxDeg = toFixedNumber(
+            (concatenated.worstTurn * 180) / .pi, 2)
+        fitted.stationJoinMaxGapMeters = toFixedNumber(concatenated.worstGap, 1)
+        fitted.stationJoinIdMatchedCount = concatenated.joinEdges.filter {
+            $0.matchKind == "node-id"
+        }.count
+        fitted.curve.fitType = "cubic-bspline-c2-station-continuous"
+        let joinedIndex = outcome.joined.count
+        outcome.joined.append(fitted)
+        for member in component {
+            for groupIndex in owners[member.curveIndex] {
+                outcome.groupCurve[groupIndex] = .joined(joinedIndex)
+            }
+        }
+        outcome.roundedJoins += component.count - 1
     }
 }
