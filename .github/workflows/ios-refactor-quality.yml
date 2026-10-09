@@ -1,0 +1,111 @@
+name: iOS refactor quality (advisory)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ios/**
+      - .github/workflows/ios-refactor-quality.yml
+  pull_request:
+    paths:
+      - ios/**
+      - .github/workflows/ios-refactor-quality.yml
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ios-refactor-quality-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  advisory:
+    name: Advisory Swift lint and format reports
+    runs-on: xcode-27
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Coverage report parser unit tests
+        run: python3 -m unittest discover -s ios/tools/tests -p 'test_*coverage*.py'
+
+      - name: Download and verify pinned official tools
+        env:
+          TOOL_DIR: ${{ runner.temp }}/swift-quality-tools
+          REPORT_DIR: ${{ runner.temp }}/swift-quality-reports
+        run: |
+          set -euo pipefail
+          mkdir -p "$TOOL_DIR/swiftlint" "$TOOL_DIR/swiftformat" "$REPORT_DIR"
+          curl --fail --location --retry 3 https://github.com/realm/SwiftLint/releases/download/0.65.1/portable_swiftlint.zip --output "$TOOL_DIR/swiftlint.zip"
+          curl --fail --location --retry 3 https://github.com/nicklockwood/SwiftFormat/releases/download/0.63.1/swiftformat.zip --output "$TOOL_DIR/swiftformat.zip"
+          ditto -xk "$TOOL_DIR/swiftlint.zip" "$TOOL_DIR/swiftlint"
+          ditto -xk "$TOOL_DIR/swiftformat.zip" "$TOOL_DIR/swiftformat"
+          chmod +x "$TOOL_DIR/swiftlint/swiftlint" "$TOOL_DIR/swiftformat/swiftformat"
+          "$TOOL_DIR/swiftlint/swiftlint" version | tee "$REPORT_DIR/swiftlint.version.log"
+          "$TOOL_DIR/swiftformat/swiftformat" --version | tee "$REPORT_DIR/swiftformat.version.log"
+          test "$(cat "$REPORT_DIR/swiftlint.version.log")" = "0.65.1"
+          test "$(cat "$REPORT_DIR/swiftformat.version.log")" = "0.63.1"
+          "$TOOL_DIR/swiftlint/swiftlint" lint --help > "$REPORT_DIR/swiftlint.help.log"
+          "$TOOL_DIR/swiftformat/swiftformat" --help > "$REPORT_DIR/swiftformat.help.log"
+
+      - name: Read-only advisory lint and format
+        env:
+          SWIFTLINT_BIN: ${{ runner.temp }}/swift-quality-tools/swiftlint/swiftlint
+          SWIFTFORMAT_BIN: ${{ runner.temp }}/swift-quality-tools/swiftformat/swiftformat
+          QUALITY_REPORT_DIR: ${{ runner.temp }}/swift-quality-reports
+        run: ./ios/tools/advisory-swift-quality.sh
+
+      - name: Preserve advisory reports including failure evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-refactor-quality-advisory
+          path: ${{ runner.temp }}/swift-quality-reports/
+          if-no-files-found: ignore
+
+  application-coverage:
+    name: Scoped Application coverage evidence
+    runs-on: xcode-27
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Instrumented Application tests and LCOV export
+        env:
+          COVERAGE_DIR: ${{ runner.temp }}/jtm-application-coverage
+          BASE_REF: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$COVERAGE_DIR"
+          swift test --package-path ios/RailKit --scratch-path "$COVERAGE_DIR/build" --jobs 1 --no-parallel --enable-code-coverage --filter RailApplicationTests 2>&1 | tee "$COVERAGE_DIR/tests.log"
+          python3 - "$COVERAGE_DIR" <<'PYTHON'
+          import os, pathlib, subprocess
+          output = pathlib.Path(os.environ["COVERAGE_DIR"])
+          profiles = list((output / "build").rglob("default.profdata"))
+          if len(profiles) != 1:
+              raise SystemExit(f"Expected one merged profile, found {len(profiles)}")
+          subprocess.run(["python3", "ios/tools/export-package-coverage.py", "--products", str(output / "build"), "--profile", str(profiles[0]), "--output-dir", str(output / "export")], check=True)
+          base = os.environ.get("BASE_REF", "")
+          if not base or set(base) == {"0"}:
+              base = "HEAD"
+          diff = subprocess.check_output(["git", "diff", "--no-ext-diff", "--unified=0", base, "HEAD", "--", "ios/RailKit/Sources/RailApplication"], text=True)
+          (output / "candidate.diff").write_text(diff)
+          command = ["python3", "ios/tools/coverage-report.py"]
+          for lcov in sorted((output / "export").glob("*.lcov")):
+              command += ["--lcov", str(lcov)]
+          command += ["--diff", str(output / "candidate.diff"), "--source-root", os.getcwd(), "--output", str(output / "report.json"), "--include", "ios/RailKit/Sources/RailApplication"]
+          subprocess.run(command, check=True)
+          PYTHON
+      - name: Preserve scoped coverage evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-application-coverage
+          path: |
+            ${{ runner.temp }}/jtm-application-coverage/tests.log
+            ${{ runner.temp }}/jtm-application-coverage/candidate.diff
+            ${{ runner.temp }}/jtm-application-coverage/report.json
+            ${{ runner.temp }}/jtm-application-coverage/export/
+          if-no-files-found: ignore

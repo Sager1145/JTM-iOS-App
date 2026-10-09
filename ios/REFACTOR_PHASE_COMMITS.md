@@ -43,7 +43,7 @@ Receipts: `graph-phase-head-test.log`, `validity-production-graph.log`, and
 
 ## Phase 3: coverage export and honest changed-line reporting
 
-Status: validated for independent commit/push.
+Status: committed and pushed as `da2ab0f1`.
 
 Adds sequential LCOV export for existing per-target SwiftPM test binaries and a
 reporter that unions repeated instrumented lines, maps candidate diff lines, and
@@ -61,6 +61,30 @@ The supplied 70%/75% scoped reporting thresholds pass; full Core/App coverage
 and the roadmap's final gates still require their complete instrumented suites.
 Receipts: `application-coverage-test.log`, `application-coverage-export/manifest.json`,
 `application-coverage-candidate.diff`, `application-coverage.json`.
+
+## Phase 4: pinned advisory quality and scoped coverage CI
+
+Status: validated locally for independent commit/push; hosted CI execution pending.
+
+Pins official SwiftLint 0.65.1 and SwiftFormat 0.63.1 portable release binaries;
+checks their actual versions before running readonly checks. JSON retains real
+command/version statuses. The initial rules are deliberately advisory; this does
+not establish the original complexity/length/no-new-warning release gate.
+CI runs all coverage-tool tests, exports instrumented Application-only coverage,
+and preserves report/error/input-identity artifacts. No full Domain/UI coverage
+is inferred, and test/export/mapping failures remain CI failures.
+
+Validation: shell syntax and workflow YAML parse pass; stub success, tool failure,
+missing binary/version mismatch and readonly-source cases pass. Actual pinned
+binaries over current iOS source: formatting passes, lint exits 2 with 33 findings
+(27 force_try, six force_cast), preserved in the local advisory report. No source
+is rewritten. Application coverage commands were exercised on the isolated local
+snapshot in Phase 3; the hosted workflow itself has not yet been observed.
+
+Expanded package regression after Phase 2 is still not accepted: its owned runner
+was stopped at sampled 2,327,481,248 bytes. The complete 23-test native history
+suite separately passes (53.379s), peak 1,113,163,432 bytes. Keep legacy browser
+and remaining package allocation diagnosis open; assertions remain unchanged.
 
 ## Remaining delivery phases
 

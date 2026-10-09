@@ -1,0 +1,5 @@
+# Advisory refactor report: deliberately narrow, with no autocorrection.
+only_rules:
+  - duplicate_imports
+  - force_cast
+  - force_try
