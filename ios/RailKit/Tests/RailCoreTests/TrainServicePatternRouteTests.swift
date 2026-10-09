@@ -31,7 +31,8 @@ struct TrainServicePatternRouteTests {
         // Passenger station transfers are not train edges.
         let graphStore = RouteGraph.RouteGraphStore(
             sections: sections, policy: .physicalRailway,
-            junctions: registry.junctions(for: "jp"))
+            junctions: registry.junctions(for: "jp"),
+            cachePolicy: .bounded(maximumNodes: 100_000))
         return Environment(
             graphStore: graphStore, stations: Stations.Index(stationCollection),
             historyRevision: overlay.revision)

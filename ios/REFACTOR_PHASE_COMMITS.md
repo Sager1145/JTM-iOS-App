@@ -241,7 +241,7 @@ the earlier public failure remains evidence, not waived by the later passes.
 
 ## Phase 12: bounded solver-input and batch graph lifetimes
 
-Status: validated for main delivery.
+Status: committed and pushed as `57f0f926`.
 
 Reduces completed immutable solver inputs from two scopes to one and admits
 JSON decodes through an independent one-at-a-time permit. Same-scope callers
@@ -263,6 +263,21 @@ The existing statistics Release A/B and graph memory receipts do not substitute
 for the remaining real solved-route App comparison or complete release goals.
 Receipts: `input-phase-head-build.log`, `input-phase-caches-candidate.log`,
 `input-phase-plumbing-candidate.log`, `scoped-share-public.log`.
+
+## Phase 13: bounded native service-pattern graph retention
+
+Status: validated for main delivery.
+
+Adds only the production bounded graph policy to the service-pattern physical
+fixture's reviewed-registry graph store. Source inputs, dates, route constraints,
+all route assertions and acceptance ledger output stay unchanged.
+
+Validation: three named end-date/identity/retired-branch tests pass on both
+snapshots. Ongoing-CLI Core/data: 98.258s, sampled peak 1,220,200,176 bytes.
+Clean-main Core: 77.632s, sampled peak 1,178,912,520 bytes. Both owned 2 GiB guards
+and runners exit zero. This covers these three tests, not every service-pattern
+parameter, complete package acceptance or a before/after App memory result.
+Receipts: `service-pattern-native-bounded*`, `service-pattern-clean-main*`.
 
 ## Remaining delivery phases
 
