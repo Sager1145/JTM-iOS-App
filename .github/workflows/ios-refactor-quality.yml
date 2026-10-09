@@ -33,6 +33,7 @@ jobs:
         run: |
           python3 -m unittest discover -s ios/tools/tests -p 'test_*coverage*.py'
           python3 -m unittest discover -s ios/tools/tests -p 'test_quality_debt_report.py'
+          python3 -m unittest discover -s ios/tools/tests -p 'test_measure_release_route_memory.py'
 
       - name: Download and verify pinned official tools
         env:

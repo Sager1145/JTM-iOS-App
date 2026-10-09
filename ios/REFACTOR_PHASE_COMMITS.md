@@ -767,3 +767,17 @@ paired-memory, history-compact-edge-main27-suite64, package-main18-isolated-
 coverage-v9, platform-main26-ui-remaining-results and five-region recovery.
 Temporary receipts are execution attachments; this committed summary is durable.
 Full memory, platforms, global coverage, directory migration and M remain open.
+
+
+## Phase30 — protect the physical-footprint sampler in CI
+
+Run all nine existing Phase28 snapshot regressions in the pinned quality CI
+before tool download and App/module work. This keeps actual process-exit nulls
+unavailable rather than zero, preserves positive over-budget values and rejects
+wrong/duplicate PIDs, malformed metrics and stale failed-command output.
+Validation: exact discovery command nine PASS,0.018s; YAML adds only that command,
+no fixture, App, process ownership, final-sample rule or 2GiB threshold changes.
+Supplemental Phase29 LLVM export reports new helper57/57 lines,10/10 functions,
+27/30 regions90%; only StatisticsLineCoverage, not module/Domain/global/App
+coverage. Original full-package memory failure and unsettled Edge candidate
+remain open. Unrelated CLI changes and staged logo deletions preserved.
