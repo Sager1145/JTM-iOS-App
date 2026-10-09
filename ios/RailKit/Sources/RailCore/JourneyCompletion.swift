@@ -338,142 +338,7 @@ public enum JourneyCompletion {
             }
 
             var train = completed[trainIndex]
-            try fill(&train.number, with: suggestion.number, path: path(suggestion.id, "number"))
-            try fill(&train.numberEn, with: suggestion.numberEn, path: path(suggestion.id, "number_en"))
-            try fill(&train.trainType, with: suggestion.trainType, path: path(suggestion.id, "train_type"))
-            try fill(&train.vehicleType, with: suggestion.vehicleType, path: path(suggestion.id, "vehicle_type"))
-            try fill(&train.company, with: suggestion.company, path: path(suggestion.id, "company"))
-            try fill(&train.direction, with: suggestion.direction, path: path(suggestion.id, "direction"))
-            try fill(&train.notes, with: suggestion.notes, path: path(suggestion.id, "notes"))
-            try fillLineNames(suggestion.lineNames, into: &train, trainID: suggestion.id)
-            try fillRouteSections(suggestion.routeSections, into: &train, trainID: suggestion.id)
-
-            var seenStopIndexes: Set<Int> = []
-            var suggestedTimeEvents: Set<String> = []
-            for stopSuggestion in suggestion.stops {
-                guard seenStopIndexes.insert(stopSuggestion.index).inserted else {
-                    throw Error.duplicateStopReference(
-                        trainID: suggestion.id, index: stopSuggestion.index)
-                }
-                // A stop row with no suggested values is skipped before the stop-reference check,
-                // so a model echoing every stop with a slightly different name for an unchanged
-                // stop can't reject the whole reply.
-                guard stopSuggestion.hasSuggestedValue else { continue }
-                guard train.stops.indices.contains(stopSuggestion.index),
-                      nonempty(train.stops[stopSuggestion.index].name) == nonempty(stopSuggestion.name)
-                else {
-                    throw Error.invalidStopReference(
-                        trainID: suggestion.id,
-                        index: stopSuggestion.index,
-                        name: stopSuggestion.name)
-                }
-
-                let stopPath = "trains[\(suggestion.id)].stops[\(stopSuggestion.index)]"
-                let stop = train.stops[stopSuggestion.index]
-                if stopSuggestion.arrival != nil,
-                   stopSuggestion.index == train.stops.startIndex || stop.stopType == "origin"
-                {
-                    throw Error.invalidValue(
-                        path: "\(stopPath).arrival",
-                        reason: "the first/origin stop cannot have an arrival suggestion")
-                }
-                if stopSuggestion.departure != nil,
-                   stopSuggestion.index == train.stops.index(before: train.stops.endIndex)
-                    || stop.stopType == "destination"
-                {
-                    throw Error.invalidValue(
-                        path: "\(stopPath).departure",
-                        reason: "the last/destination stop cannot have a departure suggestion")
-                }
-                if stopSuggestion.departure != nil,
-                   stopSuggestion.index == train.stops.startIndex,
-                   nonempty(stop.arrival) != nil
-                {
-                    throw Error.invalidValue(
-                        path: "\(stopPath).departure",
-                        reason: "the first stop already has an arrival time")
-                }
-                if stopSuggestion.arrival != nil,
-                   stopSuggestion.index == train.stops.index(before: train.stops.endIndex),
-                   nonempty(stop.departure) != nil
-                {
-                    throw Error.invalidValue(
-                        path: "\(stopPath).arrival",
-                        reason: "the last stop already has a departure time")
-                }
-                try fillTime(
-                    &train.stops[stopSuggestion.index].arrival,
-                    with: stopSuggestion.arrival,
-                    path: "\(stopPath).arrival")
-                if stopSuggestion.arrival != nil {
-                    suggestedTimeEvents.insert("\(stopSuggestion.index).arrival")
-                }
-                try fillTime(
-                    &train.stops[stopSuggestion.index].departure,
-                    with: stopSuggestion.departure,
-                    path: "\(stopPath).departure")
-                if stopSuggestion.departure != nil {
-                    suggestedTimeEvents.insert("\(stopSuggestion.index).departure")
-                }
-                try fill(
-                    &train.stops[stopSuggestion.index].platformNumber,
-                    with: stopSuggestion.platformNumber,
-                    path: "\(stopPath).platform_number")
-            }
-            let originalStopCount = train.stops.count
-            let originalStops = train.stops
-            var insertedAfterOriginalIndex = Array(repeating: 0, count: originalStopCount)
-            var insertedTimeEvents: [(afterIndex: Int, ordinal: Int, field: String)] = []
-            for (suggestionIndex, intermediate) in suggestion.intermediateStops.enumerated() {
-                guard intermediate.afterIndex >= 0,
-                      intermediate.afterIndex < originalStopCount - 1 else {
-                    throw Error.invalidValue(
-                        path: "trains[\(suggestion.id)].intermediate_stops[\(suggestionIndex)].after_index",
-                        reason: "expected the index of an original input stop before the destination")
-                }
-                let ordinal = insertedAfterOriginalIndex[intermediate.afterIndex]
-                let insertIndex = intermediate.afterIndex + 1
-                    + insertedAfterOriginalIndex[...intermediate.afterIndex].reduce(0, +)
-                let preceding = train.stops[insertIndex - 1]
-                train.stops.insert(
-                    Stop(
-                        name: intermediate.name,
-                        platformNumber: intermediate.platformNumber,
-                        arrival: intermediate.arrival,
-                        departure: intermediate.departure,
-                        stopType: "passenger_stop",
-                        rideSegment: preceding.rideSegment),
-                    at: insertIndex)
-                insertedAfterOriginalIndex[intermediate.afterIndex] += 1
-                if intermediate.arrival != nil {
-                    insertedTimeEvents.append((intermediate.afterIndex, ordinal, "arrival"))
-                }
-                if intermediate.departure != nil {
-                    insertedTimeEvents.append((intermediate.afterIndex, ordinal, "departure"))
-                }
-            }
-            if insertedAfterOriginalIndex.contains(where: { $0 > 0 }) {
-                train.routeSections = try expandedRouteSections(
-                    train.routeSections, originalStops: originalStops, expandedStops: train.stops,
-                    insertedAfterOriginalIndex: insertedAfterOriginalIndex, trainID: suggestion.id)
-                let originalSuggestedEvents = suggestedTimeEvents
-                suggestedTimeEvents = Set((0..<originalStopCount).flatMap { originalIndex in
-                    let shiftedIndex = originalIndex
-                        + insertedAfterOriginalIndex[..<originalIndex].reduce(0, +)
-                    return ["arrival", "departure"].compactMap { field in
-                        originalSuggestedEvents.contains("\(originalIndex).\(field)")
-                            ? "\(shiftedIndex).\(field)" : nil
-                    }
-                })
-                for event in insertedTimeEvents {
-                    let finalIndex = event.afterIndex + 1 + event.ordinal
-                        + insertedAfterOriginalIndex[..<event.afterIndex].reduce(0, +)
-                    suggestedTimeEvents.insert("\(finalIndex).\(event.field)")
-                }
-            }
-            try validateTimeline(
-                train, trainID: suggestion.id, suggestedEvents: suggestedTimeEvents)
-            try fillRouteSections(suggestion.expandedRouteSections, into: &train, trainID: suggestion.id)
+            try applySuggestion(suggestion, to: &train)
             completed[trainIndex] = train
         }
         return completed
@@ -722,6 +587,334 @@ private extension JourneyCompletion {
 // MARK: - Validation and merge helpers
 
 private extension JourneyCompletion {
+    static func validateStopTimeEndpoints(
+        _ stopSuggestion: StopSuggestion, stop: Stop, train: Train, stopPath: String
+    ) throws {
+        if stopSuggestion.arrival != nil,
+           stopSuggestion.index == train.stops.startIndex || stop.stopType == "origin"
+        {
+            throw Error.invalidValue(
+                path: "\(stopPath).arrival",
+                reason: "the first/origin stop cannot have an arrival suggestion")
+        }
+        if stopSuggestion.departure != nil,
+           stopSuggestion.index == train.stops.index(before: train.stops.endIndex)
+            || stop.stopType == "destination"
+        {
+            throw Error.invalidValue(
+                path: "\(stopPath).departure",
+                reason: "the last/destination stop cannot have a departure suggestion")
+        }
+        if stopSuggestion.departure != nil,
+           stopSuggestion.index == train.stops.startIndex,
+           nonempty(stop.arrival) != nil
+        {
+            throw Error.invalidValue(
+                path: "\(stopPath).departure",
+                reason: "the first stop already has an arrival time")
+        }
+        if stopSuggestion.arrival != nil,
+           stopSuggestion.index == train.stops.index(before: train.stops.endIndex),
+           nonempty(stop.departure) != nil
+        {
+            throw Error.invalidValue(
+                path: "\(stopPath).arrival",
+                reason: "the last stop already has a departure time")
+        }
+    }
+
+    static func fillStopValues(
+        _ stopSuggestion: StopSuggestion, train: inout Train, stopPath: String,
+        suggestedTimeEvents: inout Set<String>
+    ) throws {
+        try fillTime(
+            &train.stops[stopSuggestion.index].arrival,
+            with: stopSuggestion.arrival,
+            path: "\(stopPath).arrival")
+        if stopSuggestion.arrival != nil {
+            suggestedTimeEvents.insert("\(stopSuggestion.index).arrival")
+        }
+        try fillTime(
+            &train.stops[stopSuggestion.index].departure,
+            with: stopSuggestion.departure,
+            path: "\(stopPath).departure")
+        if stopSuggestion.departure != nil {
+            suggestedTimeEvents.insert("\(stopSuggestion.index).departure")
+        }
+        try fill(
+            &train.stops[stopSuggestion.index].platformNumber,
+            with: stopSuggestion.platformNumber,
+            path: "\(stopPath).platform_number")
+    }
+
+    static func applyStopSuggestions(
+        _ suggestion: TrainSuggestion, train: inout Train,
+        seenStopIndexes: inout Set<Int>, suggestedTimeEvents: inout Set<String>
+    ) throws {
+        for stopSuggestion in suggestion.stops {
+            guard seenStopIndexes.insert(stopSuggestion.index).inserted else {
+                throw Error.duplicateStopReference(
+                    trainID: suggestion.id, index: stopSuggestion.index)
+            }
+            // A stop row with no suggested values is skipped before the stop-reference check,
+            // so a model echoing every stop with a slightly different name for an unchanged
+            // stop can't reject the whole reply.
+            guard stopSuggestion.hasSuggestedValue else { continue }
+            guard train.stops.indices.contains(stopSuggestion.index),
+                  nonempty(train.stops[stopSuggestion.index].name) == nonempty(stopSuggestion.name)
+            else {
+                throw Error.invalidStopReference(
+                    trainID: suggestion.id,
+                    index: stopSuggestion.index,
+                    name: stopSuggestion.name)
+            }
+
+            let stopPath = "trains[\(suggestion.id)].stops[\(stopSuggestion.index)]"
+            let stop = train.stops[stopSuggestion.index]
+            try validateStopTimeEndpoints(stopSuggestion, stop: stop, train: train, stopPath: stopPath)
+            try fillStopValues(stopSuggestion, train: &train, stopPath: stopPath,
+                suggestedTimeEvents: &suggestedTimeEvents)
+        }
+    }
+
+    static func insertIntermediateStops(
+        _ suggestion: TrainSuggestion, train: inout Train, originalStopCount: Int,
+        insertedAfterOriginalIndex: inout [Int],
+        insertedTimeEvents: inout [(afterIndex: Int, ordinal: Int, field: String)]
+    ) throws {
+        for (suggestionIndex, intermediate) in suggestion.intermediateStops.enumerated() {
+            guard intermediate.afterIndex >= 0,
+                  intermediate.afterIndex < originalStopCount - 1 else {
+                throw Error.invalidValue(
+                    path: "trains[\(suggestion.id)].intermediate_stops[\(suggestionIndex)].after_index",
+                    reason: "expected the index of an original input stop before the destination")
+            }
+            let ordinal = insertedAfterOriginalIndex[intermediate.afterIndex]
+            let insertIndex = intermediate.afterIndex + 1
+                + insertedAfterOriginalIndex[...intermediate.afterIndex].reduce(0, +)
+            let preceding = train.stops[insertIndex - 1]
+            train.stops.insert(
+                Stop(
+                    name: intermediate.name,
+                    platformNumber: intermediate.platformNumber,
+                    arrival: intermediate.arrival,
+                    departure: intermediate.departure,
+                    stopType: "passenger_stop",
+                    rideSegment: preceding.rideSegment),
+                at: insertIndex)
+            insertedAfterOriginalIndex[intermediate.afterIndex] += 1
+            if intermediate.arrival != nil {
+                insertedTimeEvents.append((intermediate.afterIndex, ordinal, "arrival"))
+            }
+            if intermediate.departure != nil {
+                insertedTimeEvents.append((intermediate.afterIndex, ordinal, "departure"))
+            }
+        }
+    }
+
+    static func expandInsertedTimeline(
+        _ suggestion: TrainSuggestion, train: inout Train, originalStops: [Stop],
+        originalStopCount: Int, insertedAfterOriginalIndex: [Int],
+        insertedTimeEvents: [(afterIndex: Int, ordinal: Int, field: String)],
+        suggestedTimeEvents: inout Set<String>
+    ) throws {
+        if insertedAfterOriginalIndex.contains(where: { $0 > 0 }) {
+            train.routeSections = try expandedRouteSections(
+                train.routeSections, originalStops: originalStops, expandedStops: train.stops,
+                insertedAfterOriginalIndex: insertedAfterOriginalIndex, trainID: suggestion.id)
+            let originalSuggestedEvents = suggestedTimeEvents
+            suggestedTimeEvents = Set((0..<originalStopCount).flatMap { originalIndex in
+                let shiftedIndex = originalIndex
+                    + insertedAfterOriginalIndex[..<originalIndex].reduce(0, +)
+                return ["arrival", "departure"].compactMap { field in
+                    originalSuggestedEvents.contains("\(originalIndex).\(field)")
+                        ? "\(shiftedIndex).\(field)" : nil
+                }
+            })
+            for event in insertedTimeEvents {
+                let finalIndex = event.afterIndex + 1 + event.ordinal
+                    + insertedAfterOriginalIndex[..<event.afterIndex].reduce(0, +)
+                suggestedTimeEvents.insert("\(finalIndex).\(event.field)")
+            }
+        }
+    }
+
+    static func applySuggestion(
+        _ suggestion: TrainSuggestion, to train: inout Train
+    ) throws {
+        try fill(&train.number, with: suggestion.number, path: path(suggestion.id, "number"))
+        try fill(&train.numberEn, with: suggestion.numberEn, path: path(suggestion.id, "number_en"))
+        try fill(&train.trainType, with: suggestion.trainType, path: path(suggestion.id, "train_type"))
+        try fill(&train.vehicleType, with: suggestion.vehicleType, path: path(suggestion.id, "vehicle_type"))
+        try fill(&train.company, with: suggestion.company, path: path(suggestion.id, "company"))
+        try fill(&train.direction, with: suggestion.direction, path: path(suggestion.id, "direction"))
+        try fill(&train.notes, with: suggestion.notes, path: path(suggestion.id, "notes"))
+        try fillLineNames(suggestion.lineNames, into: &train, trainID: suggestion.id)
+        try fillRouteSections(suggestion.routeSections, into: &train, trainID: suggestion.id)
+
+        var seenStopIndexes: Set<Int> = []
+        var suggestedTimeEvents: Set<String> = []
+        try applyStopSuggestions(suggestion, train: &train, seenStopIndexes: &seenStopIndexes,
+            suggestedTimeEvents: &suggestedTimeEvents)
+        let originalStopCount = train.stops.count
+        let originalStops = train.stops
+        var insertedAfterOriginalIndex = Array(repeating: 0, count: originalStopCount)
+        var insertedTimeEvents: [(afterIndex: Int, ordinal: Int, field: String)] = []
+        try insertIntermediateStops(suggestion, train: &train, originalStopCount: originalStopCount,
+            insertedAfterOriginalIndex: &insertedAfterOriginalIndex, insertedTimeEvents: &insertedTimeEvents)
+        try expandInsertedTimeline(suggestion, train: &train, originalStops: originalStops,
+            originalStopCount: originalStopCount, insertedAfterOriginalIndex: insertedAfterOriginalIndex,
+            insertedTimeEvents: insertedTimeEvents, suggestedTimeEvents: &suggestedTimeEvents)
+        try validateTimeline(
+            train, trainID: suggestion.id, suggestedEvents: suggestedTimeEvents)
+        try fillRouteSections(suggestion.expandedRouteSections, into: &train, trainID: suggestion.id)
+    }
+
+    static func validateRouteSectionResponseKeys(
+        _ train: [String: Any], trainIndex: Int
+    ) throws {
+        for field in ["route_sections", "expanded_route_sections"] {
+            guard let rawSections = train[field] else { continue }
+            guard let sections = rawSections as? [Any] else {
+                throw Error.malformedResponse("\(field) must be an array")
+            }
+            for (sectionIndex, rawSection) in sections.enumerated() {
+                guard let section = rawSection as? [String: Any] else {
+                    throw Error.malformedResponse("route section \(sectionIndex) must be an object")
+                }
+                try requireKeys(
+                    section,
+                    allowed: ["from_index", "to_index", "from", "to", "line_names", "operator_names", "number", "name"],
+                    required: ["from_index", "to_index", "from", "to"],
+                    path: "response.trains[\(trainIndex)].\(field)[\(sectionIndex)]")
+            }
+        }
+    }
+
+    static func validateSourceResponseKeys(
+        _ train: [String: Any], trainIndex: Int
+    ) throws {
+        if let rawSources = train["sources"] {
+            guard let sources = rawSources as? [Any] else {
+                throw Error.malformedResponse("response.trains[\(trainIndex)].sources must be an array")
+            }
+            for (sourceIndex, rawSource) in sources.enumerated() {
+                guard let source = rawSource as? [String: Any] else {
+                    throw Error.malformedResponse("source \(sourceIndex) must be an object")
+                }
+                try requireKeys(
+                    source,
+                    allowed: ["url", "explanation"],
+                    required: ["url", "explanation"],
+                    path: "response.trains[\(trainIndex)].sources[\(sourceIndex)]")
+            }
+        }
+    }
+
+    static func validateStopResponseKeys(
+        _ train: [String: Any], trainIndex: Int
+    ) throws {
+        if let rawStops = train["stops"] {
+            guard let stops = rawStops as? [Any] else {
+                throw Error.malformedResponse("response.trains[\(trainIndex)].stops must be an array")
+            }
+            for (stopIndex, rawStop) in stops.enumerated() {
+                guard let stop = rawStop as? [String: Any] else {
+                    throw Error.malformedResponse("stop \(stopIndex) must be an object")
+                }
+                try requireKeys(
+                    stop,
+                    allowed: ["index", "name", "arrival", "departure", "platform_number"],
+                    required: ["index", "name"],
+                    path: "response.trains[\(trainIndex)].stops[\(stopIndex)]")
+            }
+        }
+    }
+
+    static func validateIntermediateResponseKeys(
+        _ train: [String: Any], trainIndex: Int
+    ) throws {
+        if let rawStops = train["intermediate_stops"] {
+            guard let stops = rawStops as? [Any] else {
+                throw Error.malformedResponse("response.trains[\(trainIndex)].intermediate_stops must be an array")
+            }
+            for (stopIndex, rawStop) in stops.enumerated() {
+                guard let stop = rawStop as? [String: Any] else {
+                    throw Error.malformedResponse("intermediate stop \(stopIndex) must be an object")
+                }
+                try requireKeys(
+                    stop,
+                    allowed: ["after_index", "name", "arrival", "departure", "platform_number"],
+                    required: ["after_index", "name"],
+                    path: "response.trains[\(trainIndex)].intermediate_stops[\(stopIndex)]")
+            }
+        }
+    }
+
+    static func validateTrainResponseKeys(
+        _ train: [String: Any], trainIndex: Int
+    ) throws {
+        try requireKeys(
+            train,
+            allowed: ["id", "sources", "number", "number_en", "train_type", "vehicle_type", "company", "direction", "line_names", "notes", "route_sections", "expanded_route_sections", "stops", "intermediate_stops"],
+            required: ["id", "sources"],
+            path: "response.trains[\(trainIndex)]")
+        try validateRouteSectionResponseKeys(train, trainIndex: trainIndex)
+        try validateSourceResponseKeys(train, trainIndex: trainIndex)
+        try validateStopResponseKeys(train, trainIndex: trainIndex)
+        try validateIntermediateResponseKeys(train, trainIndex: trainIndex)
+    }
+
+    static func validateStopSuggestions(
+        _ suggestion: TrainSuggestion
+    ) throws {
+        for stop in suggestion.stops {
+            guard nonempty(stop.name) == stop.name else {
+                throw Error.invalidValue(
+                    path: "trains[\(suggestion.id)].stops[\(stop.index)].name",
+                    reason: "the name must exactly identify a non-empty input stop")
+            }
+            for (field, value) in [("arrival", stop.arrival), ("departure", stop.departure)] {
+                if let value, validTime(value) == false {
+                    throw Error.invalidValue(
+                        path: "trains[\(suggestion.id)].stops[\(stop.index)].\(field)",
+                        reason: "expected H:MM or HH:MM, optionally +N, with minutes from 00 through 59")
+                }
+            }
+            if let platform = stop.platformNumber, platform < 0 {
+                throw Error.invalidValue(
+                    path: "trains[\(suggestion.id)].stops[\(stop.index)].platform_number",
+                    reason: "platform numbers cannot be negative")
+            }
+        }
+    }
+
+    static func validateIntermediateSuggestions(
+        _ suggestion: TrainSuggestion
+    ) throws {
+        for (index, stop) in suggestion.intermediateStops.enumerated() {
+            let stopPath = "trains[\(suggestion.id)].intermediate_stops[\(index)]"
+            guard nonempty(stop.name) == stop.name else {
+                throw Error.invalidValue(path: "\(stopPath).name", reason: "the station name must be non-empty")
+            }
+            guard stop.arrival != nil || stop.departure != nil else {
+                throw Error.invalidValue(
+                    path: stopPath, reason: "a scheduled arrival or departure is required")
+            }
+            for (field, value) in [("arrival", stop.arrival), ("departure", stop.departure)] {
+                if let value, validTime(value) == false {
+                    throw Error.invalidValue(
+                        path: "\(stopPath).\(field)",
+                        reason: "expected H:MM or HH:MM, optionally +N, with minutes from 00 through 59")
+                }
+            }
+            if let platform = stop.platformNumber, platform < 0 {
+                throw Error.invalidValue(
+                    path: "\(stopPath).platform_number", reason: "platform numbers cannot be negative")
+            }
+        }
+    }
+
     static func hasMissingCompletionField(_ train: Train) -> Bool {
         nonempty(train.number) == nil
             || nonempty(train.numberEn) == nil
@@ -801,72 +994,7 @@ private extension JourneyCompletion {
             guard let train = rawTrain as? [String: Any] else {
                 throw Error.malformedResponse("response.trains[\(trainIndex)] must be an object")
             }
-            try requireKeys(
-                train,
-                allowed: ["id", "sources", "number", "number_en", "train_type", "vehicle_type", "company", "direction", "line_names", "notes", "route_sections", "expanded_route_sections", "stops", "intermediate_stops"],
-                required: ["id", "sources"],
-                path: "response.trains[\(trainIndex)]")
-            for field in ["route_sections", "expanded_route_sections"] {
-                guard let rawSections = train[field] else { continue }
-                guard let sections = rawSections as? [Any] else {
-                    throw Error.malformedResponse("\(field) must be an array")
-                }
-                for (sectionIndex, rawSection) in sections.enumerated() {
-                    guard let section = rawSection as? [String: Any] else {
-                        throw Error.malformedResponse("route section \(sectionIndex) must be an object")
-                    }
-                    try requireKeys(
-                        section,
-                        allowed: ["from_index", "to_index", "from", "to", "line_names", "operator_names", "number", "name"],
-                        required: ["from_index", "to_index", "from", "to"],
-                        path: "response.trains[\(trainIndex)].\(field)[\(sectionIndex)]")
-                }
-            }
-            if let rawSources = train["sources"] {
-                guard let sources = rawSources as? [Any] else {
-                    throw Error.malformedResponse("response.trains[\(trainIndex)].sources must be an array")
-                }
-                for (sourceIndex, rawSource) in sources.enumerated() {
-                    guard let source = rawSource as? [String: Any] else {
-                        throw Error.malformedResponse("source \(sourceIndex) must be an object")
-                    }
-                    try requireKeys(
-                        source,
-                        allowed: ["url", "explanation"],
-                        required: ["url", "explanation"],
-                        path: "response.trains[\(trainIndex)].sources[\(sourceIndex)]")
-                }
-            }
-            if let rawStops = train["stops"] {
-                guard let stops = rawStops as? [Any] else {
-                    throw Error.malformedResponse("response.trains[\(trainIndex)].stops must be an array")
-                }
-                for (stopIndex, rawStop) in stops.enumerated() {
-                    guard let stop = rawStop as? [String: Any] else {
-                        throw Error.malformedResponse("stop \(stopIndex) must be an object")
-                    }
-                    try requireKeys(
-                        stop,
-                        allowed: ["index", "name", "arrival", "departure", "platform_number"],
-                        required: ["index", "name"],
-                        path: "response.trains[\(trainIndex)].stops[\(stopIndex)]")
-                }
-            }
-            if let rawStops = train["intermediate_stops"] {
-                guard let stops = rawStops as? [Any] else {
-                    throw Error.malformedResponse("response.trains[\(trainIndex)].intermediate_stops must be an array")
-                }
-                for (stopIndex, rawStop) in stops.enumerated() {
-                    guard let stop = rawStop as? [String: Any] else {
-                        throw Error.malformedResponse("intermediate stop \(stopIndex) must be an object")
-                    }
-                    try requireKeys(
-                        stop,
-                        allowed: ["after_index", "name", "arrival", "departure", "platform_number"],
-                        required: ["after_index", "name"],
-                        path: "response.trains[\(trainIndex)].intermediate_stops[\(stopIndex)]")
-                }
-            }
+            try validateTrainResponseKeys(train, trainIndex: trainIndex)
         }
     }
 
@@ -909,46 +1037,8 @@ private extension JourneyCompletion {
                 throw Error.invalidValue(path: path(suggestion.id, "line_names"), reason: "line names must be unique")
             }
         }
-        for stop in suggestion.stops {
-            guard nonempty(stop.name) == stop.name else {
-                throw Error.invalidValue(
-                    path: "trains[\(suggestion.id)].stops[\(stop.index)].name",
-                    reason: "the name must exactly identify a non-empty input stop")
-            }
-            for (field, value) in [("arrival", stop.arrival), ("departure", stop.departure)] {
-                if let value, validTime(value) == false {
-                    throw Error.invalidValue(
-                        path: "trains[\(suggestion.id)].stops[\(stop.index)].\(field)",
-                        reason: "expected H:MM or HH:MM, optionally +N, with minutes from 00 through 59")
-                }
-            }
-            if let platform = stop.platformNumber, platform < 0 {
-                throw Error.invalidValue(
-                    path: "trains[\(suggestion.id)].stops[\(stop.index)].platform_number",
-                    reason: "platform numbers cannot be negative")
-            }
-        }
-        for (index, stop) in suggestion.intermediateStops.enumerated() {
-            let stopPath = "trains[\(suggestion.id)].intermediate_stops[\(index)]"
-            guard nonempty(stop.name) == stop.name else {
-                throw Error.invalidValue(path: "\(stopPath).name", reason: "the station name must be non-empty")
-            }
-            guard stop.arrival != nil || stop.departure != nil else {
-                throw Error.invalidValue(
-                    path: stopPath, reason: "a scheduled arrival or departure is required")
-            }
-            for (field, value) in [("arrival", stop.arrival), ("departure", stop.departure)] {
-                if let value, validTime(value) == false {
-                    throw Error.invalidValue(
-                        path: "\(stopPath).\(field)",
-                        reason: "expected H:MM or HH:MM, optionally +N, with minutes from 00 through 59")
-                }
-            }
-            if let platform = stop.platformNumber, platform < 0 {
-                throw Error.invalidValue(
-                    path: "\(stopPath).platform_number", reason: "platform numbers cannot be negative")
-            }
-        }
+        try validateStopSuggestions(suggestion)
+        try validateIntermediateSuggestions(suggestion)
     }
 
     static func validTime(_ value: String) -> Bool {

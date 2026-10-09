@@ -635,69 +635,16 @@ public enum OverlapLanes {
         var pairs: [NearParallelPair] = []
         guard nearParallelMeters > 0, geometry.count > 1 else { return pairs }
         let cellM = Swift.max(20, nearParallelMeters)
-        let bucketSpan = 1 << 22
-        let bucketHalf = bucketSpan >> 1
-        func bucketKey(_ gx: Int, _ gy: Int) -> Int { gx * bucketSpan + (gy + bucketHalf) }
-
-        struct Descriptor {
-            var key: String
-            var a: Coordinate
-            var b: Coordinate
-            var minX = 0.0, maxX = 0.0, minY = 0.0, maxY = 0.0
-        }
-        // Do the two segments share a ride? A route must never overlap itself
-        // at a loop, a siding or a tight station throat. Walks the smaller set.
-        func intersects(_ a: OrderedSet, _ b: OrderedSet) -> Bool {
-            let small = a.count <= b.count ? a : b
-            let large = a.count <= b.count ? b : a
-            for id in small.order where large.contains(id) { return true }
-            return false
-        }
-
         var buckets: [Int: [Int]] = [:]
-        var descriptors = geometry.entries.map { Descriptor(key: $0.key, a: $0.value.a, b: $0.value.b) }
+        var descriptors = geometry.entries.map { NearParallelDescriptor(key: $0.key, a: $0.value.a, b: $0.value.b) }
         for index in descriptors.indices {
             var d = descriptors[index]
-            let ax = d.a.lon * 80_000
-            let ay = d.a.lat * metresPerDegreeLat
-            let bx = d.b.lon * 80_000
-            let by = d.b.lat * metresPerDegreeLat
-            d.minX = Swift.min(ax, bx)
-            d.maxX = Swift.max(ax, bx)
-            d.minY = Swift.min(ay, by)
-            d.maxY = Swift.max(ay, by)
+            populateNearParallelBounds(&d)
             descriptors[index] = d
 
-            let qx0 = Int(((d.minX - nearParallelMeters) / cellM).rounded(.down))
-            let qx1 = Int(((d.maxX + nearParallelMeters) / cellM).rounded(.down))
-            let qy0 = Int(((d.minY - nearParallelMeters) / cellM).rounded(.down))
-            let qy1 = Int(((d.maxY + nearParallelMeters) / cellM).rounded(.down))
-            var checked = Set<String>()
-            for gx in qx0...qx1 {
-                for gy in qy0...qy1 {
-                    guard let list = buckets[bucketKey(gx, gy)] else { continue }
-                    for otherIndex in list {
-                        let other = descriptors[otherIndex]
-                        if checked.contains(other.key) { continue }
-                        checked.insert(other.key)
-                        guard let aIds = seg[d.key], let bIds = seg[other.key] else { continue }
-                        if intersects(aIds, bIds) { continue }
-                        guard
-                            let separation = nearParallelSegmentSeparation(
-                                d.a, d.b, other.a, other.b, maxMeters: nearParallelMeters)
-                        else { continue }
-                        pairs.append(
-                            NearParallelPair(a: d.key, b: other.key, separation: separation))
-                    }
-                }
-            }
-            let ix0 = Int((d.minX / cellM).rounded(.down))
-            let ix1 = Int((d.maxX / cellM).rounded(.down))
-            let iy0 = Int((d.minY / cellM).rounded(.down))
-            let iy1 = Int((d.maxY / cellM).rounded(.down))
-            for gx in ix0...ix1 {
-                for gy in iy0...iy1 { buckets[bucketKey(gx, gy), default: []].append(index) }
-            }
+            collectNearParallelNeighbours(
+                d, cellM: cellM, buckets: buckets, descriptors: descriptors, seg: seg, pairs: &pairs)
+            indexNearParallelDescriptor(d, index: index, cellM: cellM, buckets: &buckets)
         }
         return pairs
     }
@@ -798,21 +745,7 @@ public enum OverlapLanes {
         // Expand membership only through DIRECT geometric neighbours. Do not
         // flood ride ids through an entire spatial component: A beside B and B
         // later beside C must not make C appear on A's earlier section.
-        var expanded = OrderedMap<OrderedSet>()
-        func expandedFor(_ key: String) -> OrderedSet {
-            if let existing = expanded[key] { return existing }
-            let fresh = seg[key] ?? OrderedSet()
-            expanded[key] = fresh
-            return fresh
-        }
-        for pair in pairs {
-            var aIds = expandedFor(pair.a)
-            var bIds = expandedFor(pair.b)
-            for id in (seg[pair.b] ?? OrderedSet()).order { aIds.insert(id) }
-            for id in (seg[pair.a] ?? OrderedSet()).order { bIds.insert(id) }
-            expanded[pair.a] = aIds
-            expanded[pair.b] = bIds
-        }
+        let expanded = expandedNearParallelMembership(seg: seg, pairs: pairs)
         var signatures: [String: String] = [:]
         for (key, ids) in expanded.entries { signatures[key] = ids.signature }
 
@@ -823,44 +756,9 @@ public enum OverlapLanes {
 
         var parent = OrderedMap<String>()
         var componentIds: [String: OrderedSet] = [:]
-        func find(_ key: String) -> String {
-            var root = key
-            while parent[root] != root { root = parent[root]! }
-            var current = key
-            while parent[current] != current {
-                let next = parent[current]!
-                parent[current] = root
-                current = next
-            }
-            return root
+        let acyclicPairs = validPairs.filter {
+            unionNearParallelMembership($0.a, $0.b, seg: seg, parent: &parent, componentIds: &componentIds)
         }
-        func union(_ a: String, _ b: String) -> Bool {
-            if !parent.contains(a) {
-                parent[a] = a
-                componentIds[a] = seg[a] ?? OrderedSet()
-            }
-            if !parent.contains(b) {
-                parent[b] = b
-                componentIds[b] = seg[b] ?? OrderedSet()
-            }
-            let ar = find(a)
-            let br = find(b)
-            if ar == br { return true }
-            var aIds = componentIds[ar] ?? OrderedSet()
-            let bIds = componentIds[br] ?? OrderedSet()
-            // The direct pair check above prevents a route overlapping itself,
-            // but a plain disjoint-set can reintroduce that bug transitively:
-            // A↔B and B↔C would merge A with C even when A and C are two
-            // branches of one ride. A physical interaction component may
-            // contain each ride only once.
-            for id in aIds.order where bIds.contains(id) { return false }
-            parent[br] = ar
-            for id in bIds.order { aIds.insert(id) }
-            componentIds[ar] = aIds
-            componentIds.removeValue(forKey: br)
-            return true
-        }
-        let acyclicPairs = validPairs.filter { union($0.a, $0.b) }
         var accepted = Set<String>()
         for pair in acyclicPairs {
             accepted.insert(pair.a)
@@ -868,7 +766,7 @@ public enum OverlapLanes {
         }
         var components = OrderedMap<[String]>()
         for key in parent.keys where accepted.contains(key) {
-            let root = find(key)
+            let root = nearParallelRoot(key, parent: &parent)
             components[root] = (components[root] ?? []) + [key]
         }
         for (_, keys) in components.entries {
@@ -929,67 +827,15 @@ public enum OverlapLanes {
             }
         }
         var segFrom: [String: String] = [:]
-        func otherEnd(_ segKey: String, _ nodeKey: String) -> String {
-            let parts = segKey.components(separatedBy: "|")
-            return parts[0] == nodeKey ? parts[1] : parts[0]
-        }
-        func nodeXY(_ nodeKey: String) -> (x: Double, y: Double) {
-            let parts = nodeKey.components(separatedBy: ",")
-            return (Double(parts[0]) ?? .nan, Double(parts[1]) ?? .nan)
-        }
-
         var visited = Set<String>()
         for startNode in adjacency.keys {
             if visited.contains(startNode) { continue }
-            var compNodes: [String] = []
-            var stack = [startNode]
-            visited.insert(startNode)
-            while let n = stack.popLast() {
-                compNodes.append(n)
-                for sk in adjacency[n] ?? [] {
-                    let o = otherEnd(sk, n)
-                    if !visited.contains(o) {
-                        visited.insert(o)
-                        stack.append(o)
-                    }
-                }
-            }
+            let compNodes = collectCorridorDirectionNodes(startNode: startNode, adjacency: adjacency, visited: &visited)
             let start =
                 compNodes.first { (adjacency[$0] ?? []).count == 1 } ?? compNodes[0]
 
-            var compSegs: [String] = []
-            var seenNode: Set<String> = [start]
-            var queue = [start]
-            var head = 0
-            while head < queue.count {
-                let n = queue[head]
-                head += 1
-                for sk in adjacency[n] ?? [] {
-                    if segFrom[sk] != nil { continue }
-                    segFrom[sk] = n
-                    compSegs.append(sk)
-                    let o = otherEnd(sk, n)
-                    if !seenNode.contains(o) {
-                        seenNode.insert(o)
-                        queue.append(o)
-                    }
-                }
-            }
-
-            var dxSum = 0.0
-            var dySum = 0.0
-            for sk in compSegs {
-                let from = segFrom[sk]!
-                let to = otherEnd(sk, from)
-                let f = nodeXY(from)
-                let t = nodeXY(to)
-                dxSum += (t.x - f.x) * JSMath.cos((((f.y + t.y) / 2) * .pi) / 180)
-                dySum += t.y - f.y
-            }
-            let flip = abs(dxSum) >= abs(dySum) ? dxSum < 0 : dySum < 0
-            if flip {
-                for sk in compSegs { segFrom[sk] = otherEnd(sk, segFrom[sk]!) }
-            }
+            let compSegs = orientCorridorDirectionSegments(start: start, adjacency: adjacency, segFrom: &segFrom)
+            canonicalizeCorridorDirection(compSegs: compSegs, segFrom: &segFrom)
         }
         return segFrom
     }
@@ -1445,123 +1291,13 @@ public enum OverlapLanes {
         var tempKeys: [String] = []
         var tempLines: [String: [Coordinate]] = [:]
         var endpoints: [Endpoint] = []
-        for (index, line) in lines.enumerated() {
-            let key = "representative:\(index)"
-            tempKeys.append(key)
-            tempLines[key] = line
-            for side in 0...1 {
-                guard let out = corridorEndpointOutward(line: line, side: side) else { continue }
-                endpoints.append(
-                    Endpoint(
-                        id: "\(key)::\(side)", key: key, side: side,
-                        p: side == 0 ? line[0] : line[line.count - 1],
-                        out: out, sig: "representative", nearParallel: false))
-            }
-        }
-        var candidates: [Join] = []
-        for i in 0..<endpoints.count {
-            for j in (i + 1)..<endpoints.count {
-                guard let match = corridorEndpointPair(endpoints[i], endpoints[j]) else { continue }
-                candidates.append(
-                    Join(a: endpoints[i], b: endpoints[j], metres: match.metres, score: match.score))
-            }
-        }
-        candidates = stableSorted(candidates) { $0.score < $1.score }
-        let joins = selectOneToOneEndpointPairs(sortedCandidates: candidates, ambiguityMargin: 8)
-
-        var parent: [String: String] = [:]
-        for key in tempKeys { parent[key] = key }
-        func find(_ key: String) -> String {
-            var root = key
-            while parent[root] != root { root = parent[root]! }
-            var current = key
-            while parent[current] != current {
-                let next = parent[current]!
-                parent[current] = root
-                current = next
-            }
-            return root
-        }
-        for join in joins { parent[find(join.b.key)] = find(join.a.key) }
-        var components = OrderedMap<[String]>()
-        for key in tempKeys {
-            let root = find(key)
-            components[root] = (components[root] ?? []) + [key]
-        }
-        func lineLength(_ line: [Coordinate]) -> Double {
-            var length = 0.0
-            for i in 1..<Swift.max(1, line.count) {
-                length += Geometry.distanceMeters(line[i - 1], line[i])
-            }
-            return length
-        }
-        var representative = lines[0]
-        var representativeLength = lineLength(representative)
-        for (_, keys) in components.entries {
-            let keySet = Set(keys)
-            let componentJoins = joins.filter { keySet.contains($0.a.key) && keySet.contains($0.b.key) }
-            var candidate: [Coordinate]? = nil
-            if keys.count > 1 && componentJoins.count < keys.count {
-                candidate = buildCorridorChain(
-                    keys: keys, keySet: keySet, joins: componentJoins,
-                    lineFor: { tempLines[$0] })
-            }
-            if candidate == nil {
-                for key in keys {
-                    let line = tempLines[key]!
-                    if candidate == nil || lineLength(line) > lineLength(candidate!) {
-                        candidate = line
-                    }
-                }
-            }
-            let length = lineLength(candidate!)
-            if length > representativeLength {
-                representative = candidate!
-                representativeLength = length
-            }
-        }
-
-        var latitudeSum = 0.0
-        var latitudeCount = 0
-        for i in 1..<Swift.max(1, representative.count) {
-            latitudeSum += (representative[i - 1].lat + representative[i].lat) / 2
-            latitudeCount += 1
-        }
-        let latRef = latitudeCount > 0 ? latitudeSum / Double(latitudeCount) : representative[0].lat
-        let c = JSMath.cos((latRef * .pi) / 180)
-        let coslat = c == 0 ? 1e-6 : c
-        var pa = representative[0]
-        var pb = representative[representative.count - 1]
-        if pb.lon < pa.lon || (pb.lon == pa.lon && pb.lat < pa.lat) { swap(&pa, &pb) }
-        var dx = (pb.lon - pa.lon) * coslat
-        var dy = pb.lat - pa.lat
-        var length = JSMath.hypot(dx, dy)
-        if length < 1e-9 {
-            // A closed representative has no chord. Take its longest segment
-            // instead, canonically oriented the same way the chord would be.
-            var longest = 0.0
-            for i in 1..<Swift.max(1, representative.count) {
-                var sx = (representative[i].lon - representative[i - 1].lon) * coslat
-                var sy = representative[i].lat - representative[i - 1].lat
-                let segmentLength = JSMath.hypot(sx, sy)
-                if segmentLength <= longest { continue }
-                if sx < 0 || (sx == 0 && sy < 0) {
-                    sx = -sx
-                    sy = -sy
-                }
-                longest = segmentLength
-                dx = sx
-                dy = sy
-            }
-            length = JSMath.hypot(dx, dy)
-            if length == 0 { length = 1 }
-        }
-        corridor.line = representative
-        corridor.pa = representative[0]
-        corridor.pb = representative[representative.count - 1]
-        corridor.latRef = latRef
-        corridor.sx = dy / length / coslat
-        corridor.sy = -dx / length
+        collectRepresentativeEndpoints(
+            lines: lines, tempKeys: &tempKeys, tempLines: &tempLines, endpoints: &endpoints)
+        let joins = representativeEndpointJoins(endpoints)
+        let components = representativeComponents(tempKeys: tempKeys, joins: joins)
+        let representative = chooseRepresentativeLine(
+            lines: lines, components: components, joins: joins, tempLines: tempLines)
+        applyRepresentativeGeometry(&corridor, representative: representative)
     }
 
     /// `joins` — one geometrically continuous partner per run endpoint.
@@ -2161,32 +1897,10 @@ public enum OverlapLanes {
         let dx = end.x - start.x
         let dy = end.y - start.y
         let chord = JSMath.hypot(dx, dy)
-        let minimumArcRadius = Swift.max(minRadius * 1.03, chord * 0.5001)
-        var radii: [Double] = []
-        for value in [
-            minimumArcRadius,
-            Swift.max(minimumArcRadius, total / (2 * Double.pi)),
-            Swift.max(minimumArcRadius, total / Double.pi),
-            minimumArcRadius * 1.5,
-        ] {
-            let rounded = JSNumber.round(value * 1000) / 1000
-            if !radii.contains(rounded) { radii.append(rounded) }
-        }
+        let radii = circularArcRadii(chord: chord, total: total, minRadius: minRadius)
         // Anchor segment vectors are invariant across every radius, side and
         // sweep candidate and every sampled point.
-        struct ArcSegment {
-            var ax: Double, ay: Double, vx: Double, vy: Double, den: Double
-        }
-        var arcSegs: [ArcSegment] = []
-        arcSegs.reserveCapacity(anchorMetric.count - 1)
-        for j in 0..<(anchorMetric.count - 1) {
-            let a0 = anchorMetric[j]
-            let b0 = anchorMetric[j + 1]
-            let vx = b0.x - a0.x
-            let vy = b0.y - a0.y
-            arcSegs.append(
-                ArcSegment(ax: a0.x, ay: a0.y, vx: vx, vy: vy, den: vx * vx + vy * vy))
-        }
+        let arcSegs = circularArcSegments(anchorMetric)
         var bestArc: [MetricPoint]? = nil
         var bestArcScore = Double.infinity
         for radius in radii {
@@ -2207,54 +1921,9 @@ public enum OverlapLanes {
                     shortSweep,
                     shortSweep > 0 ? shortSweep - 2 * .pi : shortSweep + 2 * .pi,
                 ]
-                for sweep in sweeps {
-                    if abs(sweep) < 1e-6 { continue }
-                    var candidate = [MetricPoint](
-                        repeating: MetricPoint(x: 0, y: 0), count: solveN)
-                    for i in 0..<solveN {
-                        let t = Double(i) / Double(solveN - 1)
-                        let a = startAngle + sweep * t
-                        candidate[i] = MetricPoint(
-                            x: center.x + cos(a) * radius, y: center.y + sin(a) * radius)
-                    }
-                    var sampledDeviation = 0.0
-                    var maxNearestDeviation = 0.0
-                    var sampledCount = 0
-                    let stride = Swift.max(1, Int((Double(solveN) / 96).rounded(.down)))
-                    var i = 0
-                    while i < solveN {
-                        let p = candidate[i]
-                        var nearestSq = Double.infinity
-                        for s in arcSegs {
-                            let u =
-                                s.den != 0
-                                ? Swift.max(
-                                    0,
-                                    Swift.min(
-                                        1,
-                                        ((p.x - s.ax) * s.vx + (p.y - s.ay) * s.vy) / s.den))
-                                : 0
-                            let ex = p.x - (s.ax + s.vx * u)
-                            let ey = p.y - (s.ay + s.vy * u)
-                            let dSq = ex * ex + ey * ey
-                            if dSq < nearestSq { nearestSq = dSq }
-                        }
-                        let nearest = nearestSq.squareRoot()
-                        sampledDeviation += nearest
-                        maxNearestDeviation = Swift.max(maxNearestDeviation, nearest)
-                        sampledCount += 1
-                        i += stride
-                    }
-                    if maxNearestDeviation > maxDeviation * 1.02 { continue }
-                    let arcLength = radius * abs(sweep)
-                    let score =
-                        sampledDeviation / Swift.max(1, Double(sampledCount))
-                        + abs(arcLength - total) * 0.08
-                    if score < bestArcScore {
-                        bestArcScore = score
-                        bestArc = candidate
-                    }
-                }
+                evaluateCircularArcSweeps(sweeps: sweeps, center: center, radius: radius,
+                    startAngle: startAngle, solveN: solveN, arcSegs: arcSegs, maxDeviation: maxDeviation,
+                    total: total, bestArcScore: &bestArcScore, bestArc: &bestArc)
             }
         }
         return bestArc
@@ -2415,77 +2084,18 @@ public enum OverlapLanes {
         let cellDeg = Swift.max(0.005, Swift.min(0.05, budgetMeters / metresPerDegreeLat))
         var cells: [Int64: [Int]] = [:]
         var segments: [(Coordinate, Coordinate)] = []
-        func cellKey(_ x: Int, _ y: Int) -> Int64 { Int64(x) &* 1_000_003 &+ Int64(y) }
-        for line in lines {
-            for i in 0..<(line.count - 1) {
-                let a = line[i]
-                let b = line[i + 1]
-                let index = segments.count
-                segments.append((a, b))
-                let x0 = Int((Swift.min(a.lon, b.lon) / cellDeg).rounded(.down))
-                let x1 = Int((Swift.max(a.lon, b.lon) / cellDeg).rounded(.down))
-                let y0 = Int((Swift.min(a.lat, b.lat) / cellDeg).rounded(.down))
-                let y1 = Int((Swift.max(a.lat, b.lat) / cellDeg).rounded(.down))
-                for x in x0...x1 {
-                    for y in y0...y1 { cells[cellKey(x, y), default: []].append(index) }
-                }
-            }
-        }
-        func nearest(_ p: Coordinate) -> Double {
-            let c = JSMath.cos((p.lat * .pi) / 180)
-            let coslat = c == 0 ? 1e-6 : c
-            let lonRadius = budgetMeters / (metresPerDegreeLon * coslat)
-            let latRadius = budgetMeters / metresPerDegreeLat
-            let x0 = Int(((p.lon - lonRadius) / cellDeg).rounded(.down)) - 1
-            let x1 = Int(((p.lon + lonRadius) / cellDeg).rounded(.down)) + 1
-            let y0 = Int(((p.lat - latRadius) / cellDeg).rounded(.down)) - 1
-            let y1 = Int(((p.lat + latRadius) / cellDeg).rounded(.down)) + 1
-            var seen = Set<Int>()
-            var best = Double.infinity
-            for x in x0...x1 {
-                for y in y0...y1 {
-                    guard let bucket = cells[cellKey(x, y)] else { continue }
-                    for index in bucket {
-                        if seen.contains(index) { continue }
-                        seen.insert(index)
-                        let segment = segments[index]
-                        best = Swift.min(
-                            best,
-                            fittedPointSegmentDistanceMeters(p, segment.0, segment.1))
-                    }
-                }
-            }
-            return best
-        }
-
+        indexFittedDeviationSegments(lines: lines, cellDeg: cellDeg, cells: &cells, segments: &segments)
         var maximum = 0.0
         let distances = points.map { p -> Double in
-            let d = nearest(p)
+            let d = nearestFittedDeviation(p, budgetMeters: budgetMeters, cellDeg: cellDeg, cells: cells, segments: segments)
             maximum = Swift.max(maximum, d)
             return d
         }
         if maximum > budgetMeters { return (false, maximum) }
 
-        // Distance-to-a-set is 1-Lipschitz, so this bound proves whole output
-        // SEGMENTS rather than only their vertices; only spans too close to the
-        // budget are subdivided, and at the depth cap the answer is a
-        // conservative rejection.
-        func verifySpan(
-            _ a: Coordinate, _ b: Coordinate, _ da: Double, _ db: Double, _ depth: Int
-        ) -> Bool {
-            let length = Geometry.distanceMeters(a, b)
-            let upper = Swift.max(da, Swift.max(db, (da + db + length) / 2))
-            if upper <= budgetMeters { return true }
-            let mid = Coordinate(lon: (a.lon + b.lon) / 2, lat: (a.lat + b.lat) / 2)
-            let dm = nearest(mid)
-            maximum = Swift.max(maximum, dm)
-            if dm > budgetMeters { return false }
-            if depth >= 9 { return false }
-            return verifySpan(a, mid, da, dm, depth + 1)
-                && verifySpan(mid, b, dm, db, depth + 1)
-        }
         for i in 0..<(points.count - 1) {
-            if !verifySpan(points[i], points[i + 1], distances[i], distances[i + 1], 0) {
+            if !verifyFittedDeviationSpan(points[i], points[i + 1], distances[i], distances[i + 1], 0,
+                budgetMeters: budgetMeters, cellDeg: cellDeg, cells: cells, segments: segments, maximum: &maximum) {
                 return (false, maximum)
             }
         }
@@ -2555,56 +2165,9 @@ public enum OverlapLanes {
         let minDetail = inputs.minDetail
         let maxDeviation = inputs.maxDeviation
         let total = inputs.total
-
-        // ── §1 anchors: the source corridor at a fixed physical work resolution ──
-        // Work resolution is independent of the debug-output resolution. Tying
-        // it to physical detail makes every option stable across source
-        // densities.
-        let workStepTarget = Swift.max(20, Swift.min(90, minDetail / 6))
-        let workN = Int(
-            Swift.max(20, Swift.min(1800, (total / workStepTarget).rounded(.up) + 1)))
-        let workStep = total / Double(workN - 1)
-        let anchors = resampleCorridorAnchors(
-            line: line, cum: inputs.cum, total: total, count: workN)
-
-        // ── §2 the local metric frame every stage below works in ──
-        let lat0 = line.reduce(0.0) { $0 + $1.lat } / Double(line.count)
-        let coslatRaw = JSMath.cos((lat0 * .pi) / 180)
-        let coslat = coslatRaw == 0 ? 1e-6 : coslatRaw
-        let mx = metresPerDegreeLon * coslat
-        let my = metresPerDegreeLat
-        let origin = anchors[0]
-        let anchorMetric = metricOffsetsFrom(anchors, origin: origin, mx: mx, my: my)
-        var metric = anchorMetric
-
-        // ── §3 scale-space smoothing, then deviation clamping ──
-        let sigmaM = Swift.max(100, Swift.max(minDetail * 1.1, minRadius * 0.65))
-        metric = gaussianSmoothPolyline(metric, sigma: sigmaM, step: workStep)
-        metric = gaussianSmoothPolyline(metric, sigma: sigmaM * 0.65, step: workStep)
-        metric = metric.enumerated().map {
-            clampMetricDeviation($1, anchor: anchorMetric[$0], maxDeviation: maxDeviation)
-        }
-        // Keep the physical corridor endpoints addressable; the clamped
-        // B-spline still provides a smooth one-sided tangent there.
-        metric[0] = anchorMetric[0]
-        metric[metric.count - 1] = anchorMetric[anchorMetric.count - 1]
-
-        // ── §4 curvature projection against the requested minimum radius ──
-        let curvatureHalf = Int(
-            Swift.max(
-                1,
-                JSNumber.round(
-                    Swift.max(100, Swift.max(minDetail * 0.45, minRadius * 0.12)) / workStep)))
-        metric = relaxMetricToMinRadius(
-            metric, anchorMetric: anchorMetric, minRadius: minRadius,
-            maxDeviation: maxDeviation, curvatureHalf: curvatureHalf)
-
-        // ── §5 control polygon and the first spline evaluation ──
-        let knotSpacing = Swift.max(100, Swift.max(minDetail * 1.25, minRadius * 0.18))
-        let knotEvery = Swift.max(1, Int(JSNumber.round(knotSpacing / workStep)))
-        let controls = buildSplineControlPolygon(
-            metric: metric, anchorMetric: anchorMetric, knotEvery: knotEvery, total: total,
-            minDetail: minDetail, minRadius: minRadius)
+        let (anchorMetric, origin, coslat, mx, my, workStep) = prepareCorridorMetric(line: line, inputs: inputs)
+        let (controls, sigmaM) = prepareCorridorControls(anchorMetric: anchorMetric,
+            workStep: workStep, total: total, minDetail: minDetail, minRadius: minRadius, maxDeviation: maxDeviation)
         // Candidate solving and validation use ONE fixed physical resolution.
         // The precision setting is applied only when the accepted curve is
         // resampled below, so it cannot trigger a different fallback or shape.
@@ -2612,53 +2175,12 @@ public enum OverlapLanes {
         var splineMetric = sampleClampedBSpline(controls, count: solveN)
         var achievedMinRadius = measureMinCircumRadius(splineMetric, minDetail: minDetail)
 
-        // ── §6 fallback 1: pull the whole control polygon toward its chord ──
-        if achievedMinRadius < minRadius * 0.999 {
-            let pulled = pullControlsTowardChord(
-                controls: controls, anchorMetric: anchorMetric, spline: splineMetric,
-                radius: achievedMinRadius, minRadius: minRadius, maxDeviation: maxDeviation,
-                minDetail: minDetail, solveN: solveN)
-            splineMetric = pulled.spline
-            achievedMinRadius = pulled.radius
-        }
-
-        // ── §7 fallback 2: constant-curvature circular arcs ──
-        var usedCircularArc = false
-        if achievedMinRadius < minRadius * 0.999 {
-            if let bestArc = fitCircularArcFallback(
-                splineMetric: splineMetric, anchorMetric: anchorMetric, total: total,
-                minRadius: minRadius, maxDeviation: maxDeviation, solveN: solveN)
-            {
-                splineMetric = bestArc
-                achievedMinRadius = measureMinCircumRadius(splineMetric, minDetail: minDetail)
-                usedCircularArc = true
-            }
-        }
-
-        // ── §8 back to lon/lat: arc length and step of the accepted geometry ──
-        var cur = pointsFromMetricOffsets(splineMetric, origin: origin, mx: mx, my: my)
-        var smoothCum = cumulativeMeters(cur)
-        var smoothTotal = smoothCum[smoothCum.count - 1]
-        var outputStep = smoothTotal / Double(Swift.max(1, cur.count - 1))
-
-        // ── §9 direction field, then geometry re-integrated from it ──
-        let directionRadiusM = Swift.max(minRadius, minDetail * 2)
-        let directionSigmaM = Swift.max(80, Swift.max(minDetail * 0.45, minRadius * 0.12))
-        let angles = directionFieldAngles(
-            cur: cur, coslat: coslat, minDetail: minDetail, minRadius: minRadius,
-            outputStep: outputStep, directionSigma: directionSigmaM)
-        let integrated = integrateFromDirectionField(splineMetric: splineMetric, angles: angles)
-        let integratedRadius = measureMinCircumRadius(integrated, minDetail: minDetail)
-        if integratedRadius >= achievedMinRadius {
-            splineMetric = integrated
-            achievedMinRadius = integratedRadius
-            cur = pointsFromMetricOffsets(splineMetric, origin: origin, mx: mx, my: my)
-            smoothCum = cumulativeMeters(cur)
-            smoothTotal = smoothCum[smoothCum.count - 1]
-            outputStep = smoothTotal / Double(Swift.max(1, cur.count - 1))
-        }
-        let achievedDirectionRadius = minDirectionRadius(angles: angles, cum: smoothCum)
-
+        let usedCircularArc = applyCorridorSplineFallbacks(controls: controls, anchorMetric: anchorMetric,
+            total: total, minRadius: minRadius, minDetail: minDetail, maxDeviation: maxDeviation,
+            solveN: solveN, splineMetric: &splineMetric, achievedMinRadius: &achievedMinRadius)
+        let (cur, smoothCum, smoothTotal, angles, achievedDirectionRadius, directionRadiusM, directionSigmaM) =
+            integrateCorridorSpline(splineMetric: &splineMetric, achievedMinRadius: &achievedMinRadius,
+                origin: origin, mx: mx, my: my, coslat: coslat, minRadius: minRadius, minDetail: minDetail)
         // ── §10 hard validation of the fixed-resolution solution ──
         let deviation = validateFittedCurveDeviation(
             points: cur, sourceLines: [line], budgetMeters: maxDeviation)
@@ -2666,66 +2188,15 @@ public enum OverlapLanes {
             || achievedDirectionRadius < inputs.requestedMinRadius * 0.999
         { return nil }
 
-        // ── §11 output resampling at the requested precision ──
-        let displayN = Int(
-            Swift.max(
-                20,
-                Swift.min(3200, (smoothTotal / (30 / inputs.precision)).rounded(.up) + 1)))
-        var outputPoints = cur
-        var outputAngles = angles
-        var outputCum = smoothCum
-        if displayN != cur.count {
-            let resampled = resampleFittedCurveOutput(
-                cur: cur, angles: angles, smoothCum: smoothCum, smoothTotal: smoothTotal,
-                displayN: displayN)
-            outputPoints = resampled.points
-            outputAngles = resampled.angles
-            outputCum = resampled.cum
-        }
-        var finalDeviation = validateFittedCurveDeviation(
-            points: outputPoints, sourceLines: [line], budgetMeters: maxDeviation)
-        let outputMetric = metricOffsetsFrom(outputPoints, origin: origin, mx: mx, my: my)
-        var finalAchievedMinRadius = measureMinCircumRadius(outputMetric, minDetail: minDetail)
-        var finalAchievedDirectionRadius = minDirectionRadius(
-            angles: outputAngles, cum: outputCum)
-        if !finalDeviation.valid
-            || finalAchievedMinRadius < inputs.requestedMinRadius * 0.999
-            || finalAchievedDirectionRadius < inputs.requestedMinRadius * 0.999
-        {
-            // A low-density representation may replace a validated bend with a
-            // chord. Hard invariants win over the requested output density:
-            // keep the fixed-resolution solution rather than publish an invalid
-            // polyline.
-            outputPoints = cur
-            outputAngles = angles
-            outputCum = smoothCum
-            finalDeviation = deviation
-            finalAchievedMinRadius = achievedMinRadius
-            finalAchievedDirectionRadius = achievedDirectionRadius
-        }
-        return FittedCurve(
-            pts: outputPoints,
-            cum: outputCum,
-            dirs: outputAngles.map { (cos($0), sin($0)) },
-            totalMeters: outputCum[outputCum.count - 1],
-            sourceTotalMeters: total,
-            endpointChordMeters: JSMath.hypot(
-                anchorMetric[anchorMetric.count - 1].x - anchorMetric[0].x,
-                anchorMetric[anchorMetric.count - 1].y - anchorMetric[0].y),
-            radiusMeters: directionRadiusM,
-            smoothingSigmaMeters: sigmaM,
-            directionSigmaMeters: directionSigmaM,
-            requestedMinRadiusMeters: inputs.requestedMinRadius,
-            achievedMinRadiusMeters: finalAchievedMinRadius.isFinite
-                ? finalAchievedMinRadius : nil,
-            achievedDirectionRadiusMeters: finalAchievedDirectionRadius.isFinite
-                ? finalAchievedDirectionRadius : nil,
-            minDetailMeters: minDetail,
-            maxDeviationMeters: maxDeviation,
-            actualMaxDeviationMeters: finalDeviation.maxDeviationMeters,
-            samplingPrecision: inputs.precision,
-            fitType: usedCircularArc ? "circular-arc" : "cubic-bspline-c2",
-            coslat: coslat)
+        let (outputPoints, outputAngles, outputCum, finalDeviation, finalAchievedMinRadius, finalAchievedDirectionRadius) =
+            validatedCorridorOutput(cur: cur, angles: angles, smoothCum: smoothCum, smoothTotal: smoothTotal,
+                line: line, inputs: inputs, origin: origin, mx: mx, my: my, deviation: deviation,
+                achievedMinRadius: achievedMinRadius, achievedDirectionRadius: achievedDirectionRadius)
+        return makeFittedCorridorCurve(outputPoints: outputPoints, outputAngles: outputAngles, outputCum: outputCum,
+            total: total, anchorMetric: anchorMetric, directionRadiusM: directionRadiusM, sigmaM: sigmaM,
+            directionSigmaM: directionSigmaM, inputs: inputs, finalAchievedMinRadius: finalAchievedMinRadius,
+            finalAchievedDirectionRadius: finalAchievedDirectionRadius, minDetail: minDetail,
+            maxDeviation: maxDeviation, finalDeviation: finalDeviation, usedCircularArc: usedCircularArc, coslat: coslat)
     }
 
     // MARK: - §5 the record build
@@ -2798,102 +2269,941 @@ public enum OverlapLanes {
         var drawnLenByTid: [String: Double] = [:]
         var hasOverlaps = false
 
+        buildInitialRouteRecords(items: items, lines: lines, overlap: overlap, snap: snap, spacingPx: spacingPx,
+            records: &records, expandRecords: &expandRecords, groupInfo: &groupInfo,
+            drawnLenByTid: &drawnLenByTid, hasOverlaps: &hasOverlaps)
+        rebuildRouteRecordCorridors(groupInfo: &groupInfo, records: &records, snap: snap,
+            settings: settings, spacingPx: spacingPx)
+        assignRouteRecordPainterOrder(records: &records, drawnLenByTid: drawnLenByTid, rank: rank)
+        return RecordBundle(
+            records: records, expandRecords: expandRecords,
+            corridors: groupInfo.entries.map { (key: $0.key, corridor: $0.value) },
+            spacingPx: spacingPx, hasOverlaps: hasOverlaps)
+    }
+
+    /// Keeps distinct geometry for an interaction key met on more than one
+    /// physical run. Two run lines are the same run when both endpoints match
+    /// within 5 cm, in either direction.
+    static func mergeRunLineIntoGroup(_ gi: inout Corridor, runLine: [Coordinate]) {
+        let duplicate = gi.lines.contains { other in
+            let same =
+                Geometry.distanceMeters(other[0], runLine[0]) <= 0.05
+                && Geometry.distanceMeters(
+                    other[other.count - 1], runLine[runLine.count - 1]) <= 0.05
+            let reverse =
+                Geometry.distanceMeters(other[0], runLine[runLine.count - 1]) <= 0.05
+                && Geometry.distanceMeters(other[other.count - 1], runLine[0]) <= 0.05
+            return same || reverse
+        }
+        if !duplicate { gi.lines.append(runLine) }
+    }
+    // MARK: - Private near-parallel geometry and membership
+
+    private struct NearParallelDescriptor {
+        var key: String
+        var a: Coordinate
+        var b: Coordinate
+        var minX = 0.0, maxX = 0.0, minY = 0.0, maxY = 0.0
+    }
+
+    private static func nearParallelBucketKey(_ gx: Int, _ gy: Int) -> Int {
+        let bucketSpan = 1 << 22
+        let bucketHalf = bucketSpan >> 1
+        return gx * bucketSpan + (gy + bucketHalf)
+    }
+
+    // Do the two segments share a ride? A route must never overlap itself
+    // at a loop, a siding or a tight station throat. Walks the smaller set.
+    private static func overlapMembershipIntersects(_ a: OrderedSet, _ b: OrderedSet) -> Bool {
+        let small = a.count <= b.count ? a : b
+        let large = a.count <= b.count ? b : a
+        for id in small.order where large.contains(id) { return true }
+        return false
+    }
+
+    private static func populateNearParallelBounds(_ d: inout NearParallelDescriptor) {
+        let ax = d.a.lon * 80_000
+        let ay = d.a.lat * metresPerDegreeLat
+        let bx = d.b.lon * 80_000
+        let by = d.b.lat * metresPerDegreeLat
+        d.minX = Swift.min(ax, bx)
+        d.maxX = Swift.max(ax, bx)
+        d.minY = Swift.min(ay, by)
+        d.maxY = Swift.max(ay, by)
+    }
+
+    private static func collectNearParallelNeighbours(
+        _ d: NearParallelDescriptor, cellM: Double, buckets: [Int: [Int]],
+        descriptors: [NearParallelDescriptor], seg: OrderedMap<OrderedSet>,
+        pairs: inout [NearParallelPair]
+    ) {
+        let qx0 = Int(((d.minX - nearParallelMeters) / cellM).rounded(.down))
+        let qx1 = Int(((d.maxX + nearParallelMeters) / cellM).rounded(.down))
+        let qy0 = Int(((d.minY - nearParallelMeters) / cellM).rounded(.down))
+        let qy1 = Int(((d.maxY + nearParallelMeters) / cellM).rounded(.down))
+        var checked = Set<String>()
+        for gx in qx0...qx1 {
+            for gy in qy0...qy1 {
+                guard let list = buckets[nearParallelBucketKey(gx, gy)] else { continue }
+                for otherIndex in list {
+                    let other = descriptors[otherIndex]
+                    if checked.contains(other.key) { continue }
+                    checked.insert(other.key)
+                    guard let aIds = seg[d.key], let bIds = seg[other.key] else { continue }
+                    if overlapMembershipIntersects(aIds, bIds) { continue }
+                    guard
+                        let separation = nearParallelSegmentSeparation(
+                            d.a, d.b, other.a, other.b, maxMeters: nearParallelMeters)
+                    else { continue }
+                    pairs.append(
+                        NearParallelPair(a: d.key, b: other.key, separation: separation))
+                }
+            }
+        }
+    }
+
+    private static func indexNearParallelDescriptor(
+        _ d: NearParallelDescriptor, index: Int, cellM: Double, buckets: inout [Int: [Int]]
+    ) {
+        let ix0 = Int((d.minX / cellM).rounded(.down))
+        let ix1 = Int((d.maxX / cellM).rounded(.down))
+        let iy0 = Int((d.minY / cellM).rounded(.down))
+        let iy1 = Int((d.maxY / cellM).rounded(.down))
+        for gx in ix0...ix1 {
+            for gy in iy0...iy1 { buckets[nearParallelBucketKey(gx, gy), default: []].append(index) }
+        }
+    }
+
+    private static func expandedNearParallelMembership(
+        seg: OrderedMap<OrderedSet>, pairs: [NearParallelPair]
+    ) -> OrderedMap<OrderedSet> {
+        var expanded = OrderedMap<OrderedSet>()
+        func expandedFor(_ key: String) -> OrderedSet {
+            if let existing = expanded[key] { return existing }
+            let fresh = seg[key] ?? OrderedSet()
+            expanded[key] = fresh
+            return fresh
+        }
+        for pair in pairs {
+            var aIds = expandedFor(pair.a)
+            var bIds = expandedFor(pair.b)
+            for id in (seg[pair.b] ?? OrderedSet()).order { aIds.insert(id) }
+            for id in (seg[pair.a] ?? OrderedSet()).order { bIds.insert(id) }
+            expanded[pair.a] = aIds
+            expanded[pair.b] = bIds
+        }
+        return expanded
+    }
+
+    private static func nearParallelRoot(_ key: String, parent: inout OrderedMap<String>) -> String {
+        var root = key
+        while parent[root] != root { root = parent[root]! }
+        var current = key
+        while parent[current] != current {
+            let next = parent[current]!
+            parent[current] = root
+            current = next
+        }
+        return root
+    }
+
+    private static func unionNearParallelMembership(
+        _ a: String, _ b: String, seg: OrderedMap<OrderedSet>,
+        parent: inout OrderedMap<String>, componentIds: inout [String: OrderedSet]
+    ) -> Bool {
+        if !parent.contains(a) {
+            parent[a] = a
+            componentIds[a] = seg[a] ?? OrderedSet()
+        }
+        if !parent.contains(b) {
+            parent[b] = b
+            componentIds[b] = seg[b] ?? OrderedSet()
+        }
+        let ar = nearParallelRoot(a, parent: &parent)
+        let br = nearParallelRoot(b, parent: &parent)
+        if ar == br { return true }
+        var aIds = componentIds[ar] ?? OrderedSet()
+        let bIds = componentIds[br] ?? OrderedSet()
+        // The direct pair check above prevents a route overlapping itself,
+        // but a plain disjoint-set can reintroduce that bug transitively:
+        // A↔B and B↔C would merge A with C even when A and C are two
+        // branches of one ride. A physical interaction component may
+        // contain each ride only once.
+        for id in aIds.order where bIds.contains(id) { return false }
+        parent[br] = ar
+        for id in bIds.order { aIds.insert(id) }
+        componentIds[ar] = aIds
+        componentIds.removeValue(forKey: br)
+        return true
+    }
+
+    // MARK: - Private corridor orientation and representative geometry
+
+    private static func corridorOtherEnd(_ segKey: String, _ nodeKey: String) -> String {
+        let parts = segKey.components(separatedBy: "|")
+        return parts[0] == nodeKey ? parts[1] : parts[0]
+    }
+
+    private static func corridorNodeXY(_ nodeKey: String) -> (x: Double, y: Double) {
+        let parts = nodeKey.components(separatedBy: ",")
+        return (Double(parts[0]) ?? .nan, Double(parts[1]) ?? .nan)
+    }
+
+    private static func collectCorridorDirectionNodes(
+        startNode: String, adjacency: OrderedMap<[String]>, visited: inout Set<String>
+    ) -> [String] {
+        var compNodes: [String] = []
+        var stack = [startNode]
+        visited.insert(startNode)
+        while let n = stack.popLast() {
+            compNodes.append(n)
+            for sk in adjacency[n] ?? [] {
+                let o = corridorOtherEnd(sk, n)
+                if !visited.contains(o) {
+                    visited.insert(o)
+                    stack.append(o)
+                }
+            }
+        }
+        return compNodes
+    }
+
+    private static func orientCorridorDirectionSegments(
+        start: String, adjacency: OrderedMap<[String]>, segFrom: inout [String: String]
+    ) -> [String] {
+        var compSegs: [String] = []
+        var seenNode: Set<String> = [start]
+        var queue = [start]
+        var head = 0
+        while head < queue.count {
+            let n = queue[head]
+            head += 1
+            for sk in adjacency[n] ?? [] {
+                if segFrom[sk] != nil { continue }
+                segFrom[sk] = n
+                compSegs.append(sk)
+                let o = corridorOtherEnd(sk, n)
+                if !seenNode.contains(o) {
+                    seenNode.insert(o)
+                    queue.append(o)
+                }
+            }
+        }
+        return compSegs
+    }
+
+    private static func canonicalizeCorridorDirection(
+        compSegs: [String], segFrom: inout [String: String]
+    ) {
+        var dxSum = 0.0
+        var dySum = 0.0
+        for sk in compSegs {
+            let from = segFrom[sk]!
+            let to = corridorOtherEnd(sk, from)
+            let f = corridorNodeXY(from)
+            let t = corridorNodeXY(to)
+            dxSum += (t.x - f.x) * JSMath.cos((((f.y + t.y) / 2) * .pi) / 180)
+            dySum += t.y - f.y
+        }
+        let flip = abs(dxSum) >= abs(dySum) ? dxSum < 0 : dySum < 0
+        if flip {
+            for sk in compSegs { segFrom[sk] = corridorOtherEnd(sk, segFrom[sk]!) }
+        }
+    }
+
+    private static func collectRepresentativeEndpoints(
+        lines: [[Coordinate]], tempKeys: inout [String],
+        tempLines: inout [String: [Coordinate]], endpoints: inout [Endpoint]
+    ) {
+        for (index, line) in lines.enumerated() {
+            let key = "representative:\(index)"
+            tempKeys.append(key)
+            tempLines[key] = line
+            for side in 0...1 {
+                guard let out = corridorEndpointOutward(line: line, side: side) else { continue }
+                endpoints.append(
+                    Endpoint(
+                        id: "\(key)::\(side)", key: key, side: side,
+                        p: side == 0 ? line[0] : line[line.count - 1],
+                        out: out, sig: "representative", nearParallel: false))
+            }
+        }
+    }
+
+    private static func representativeEndpointJoins(_ endpoints: [Endpoint]) -> [Join] {
+        var candidates: [Join] = []
+        for i in 0..<endpoints.count {
+            for j in (i + 1)..<endpoints.count {
+                guard let match = corridorEndpointPair(endpoints[i], endpoints[j]) else { continue }
+                candidates.append(
+                    Join(a: endpoints[i], b: endpoints[j], metres: match.metres, score: match.score))
+            }
+        }
+        candidates = stableSorted(candidates) { $0.score < $1.score }
+        return selectOneToOneEndpointPairs(sortedCandidates: candidates, ambiguityMargin: 8)
+    }
+
+    private static func representativeComponents(
+        tempKeys: [String], joins: [Join]
+    ) -> OrderedMap<[String]> {
+        var parent: [String: String] = [:]
+        for key in tempKeys { parent[key] = key }
+        func find(_ key: String) -> String {
+            var root = key
+            while parent[root] != root { root = parent[root]! }
+            var current = key
+            while parent[current] != current {
+                let next = parent[current]!
+                parent[current] = root
+                current = next
+            }
+            return root
+        }
+        for join in joins { parent[find(join.b.key)] = find(join.a.key) }
+        var components = OrderedMap<[String]>()
+        for key in tempKeys {
+            let root = find(key)
+            components[root] = (components[root] ?? []) + [key]
+        }
+        return components
+    }
+
+    private static func representativeLineLength(_ line: [Coordinate]) -> Double {
+        var length = 0.0
+        for i in 1..<Swift.max(1, line.count) {
+            length += Geometry.distanceMeters(line[i - 1], line[i])
+        }
+        return length
+    }
+
+    private static func chooseRepresentativeLine(
+        lines: [[Coordinate]], components: OrderedMap<[String]>, joins: [Join],
+        tempLines: [String: [Coordinate]]
+    ) -> [Coordinate] {
+        var representative = lines[0]
+        var representativeLength = representativeLineLength(representative)
+        for (_, keys) in components.entries {
+            let keySet = Set(keys)
+            let componentJoins = joins.filter { keySet.contains($0.a.key) && keySet.contains($0.b.key) }
+            var candidate: [Coordinate]? = nil
+            if keys.count > 1 && componentJoins.count < keys.count {
+                candidate = buildCorridorChain(
+                    keys: keys, keySet: keySet, joins: componentJoins,
+                    lineFor: { tempLines[$0] })
+            }
+            if candidate == nil {
+                for key in keys {
+                    let line = tempLines[key]!
+                    if candidate == nil || representativeLineLength(line) > representativeLineLength(candidate!) {
+                        candidate = line
+                    }
+                }
+            }
+            let length = representativeLineLength(candidate!)
+            if length > representativeLength {
+                representative = candidate!
+                representativeLength = length
+            }
+        }
+        return representative
+    }
+
+    private static func longestRepresentativeAxis(
+        representative: [Coordinate], coslat: Double, dx: inout Double, dy: inout Double
+    ) {
+        var longest = 0.0
+        for i in 1..<Swift.max(1, representative.count) {
+            var sx = (representative[i].lon - representative[i - 1].lon) * coslat
+            var sy = representative[i].lat - representative[i - 1].lat
+            let segmentLength = JSMath.hypot(sx, sy)
+            if segmentLength <= longest { continue }
+            if sx < 0 || (sx == 0 && sy < 0) {
+                sx = -sx
+                sy = -sy
+            }
+            longest = segmentLength
+            dx = sx
+            dy = sy
+        }
+    }
+
+    private static func applyRepresentativeGeometry(
+        _ corridor: inout Corridor, representative: [Coordinate]
+    ) {
+        var latitudeSum = 0.0
+        var latitudeCount = 0
+        for i in 1..<Swift.max(1, representative.count) {
+            latitudeSum += (representative[i - 1].lat + representative[i].lat) / 2
+            latitudeCount += 1
+        }
+        let latRef = latitudeCount > 0 ? latitudeSum / Double(latitudeCount) : representative[0].lat
+        let c = JSMath.cos((latRef * .pi) / 180)
+        let coslat = c == 0 ? 1e-6 : c
+        var pa = representative[0]
+        var pb = representative[representative.count - 1]
+        if pb.lon < pa.lon || (pb.lon == pa.lon && pb.lat < pa.lat) { swap(&pa, &pb) }
+        var dx = (pb.lon - pa.lon) * coslat
+        var dy = pb.lat - pa.lat
+        var length = JSMath.hypot(dx, dy)
+        if length < 1e-9 {
+            // A closed representative has no chord. Take its longest segment
+            // instead, canonically oriented the same way the chord would be.
+            longestRepresentativeAxis(representative: representative, coslat: coslat, dx: &dx, dy: &dy)
+            length = JSMath.hypot(dx, dy)
+            if length == 0 { length = 1 }
+        }
+        corridor.line = representative
+        corridor.pa = representative[0]
+        corridor.pb = representative[representative.count - 1]
+        corridor.latRef = latRef
+        corridor.sx = dy / length / coslat
+        corridor.sy = -dx / length
+    }
+
+    // MARK: - Private circular-arc candidates
+
+    private struct ArcSegment {
+        var ax: Double, ay: Double, vx: Double, vy: Double, den: Double
+    }
+
+    private static func circularArcRadii(
+        chord: Double, total: Double, minRadius: Double
+    ) -> [Double] {
+        let minimumArcRadius = Swift.max(minRadius * 1.03, chord * 0.5001)
+        var radii: [Double] = []
+        for value in [
+            minimumArcRadius,
+            Swift.max(minimumArcRadius, total / (2 * Double.pi)),
+            Swift.max(minimumArcRadius, total / Double.pi),
+            minimumArcRadius * 1.5,
+        ] {
+            let rounded = JSNumber.round(value * 1000) / 1000
+            if !radii.contains(rounded) { radii.append(rounded) }
+        }
+        return radii
+    }
+
+    private static func circularArcSegments(_ anchorMetric: [MetricPoint]) -> [ArcSegment] {
+        var arcSegs: [ArcSegment] = []
+        arcSegs.reserveCapacity(anchorMetric.count - 1)
+        for j in 0..<(anchorMetric.count - 1) {
+            let a0 = anchorMetric[j]
+            let b0 = anchorMetric[j + 1]
+            let vx = b0.x - a0.x
+            let vy = b0.y - a0.y
+            arcSegs.append(
+                ArcSegment(ax: a0.x, ay: a0.y, vx: vx, vy: vy, den: vx * vx + vy * vy))
+        }
+        return arcSegs
+    }
+
+    private static func circularArcDeviation(
+        candidate: [MetricPoint], arcSegs: [ArcSegment], solveN: Int
+    ) -> (sampledDeviation: Double, maxNearestDeviation: Double, sampledCount: Int) {
+        var sampledDeviation = 0.0
+        var maxNearestDeviation = 0.0
+        var sampledCount = 0
+        let stride = Swift.max(1, Int((Double(solveN) / 96).rounded(.down)))
+        var i = 0
+        while i < solveN {
+            let p = candidate[i]
+            var nearestSq = Double.infinity
+            for s in arcSegs {
+                let u =
+                    s.den != 0
+                    ? Swift.max(
+                        0,
+                        Swift.min(
+                            1,
+                            ((p.x - s.ax) * s.vx + (p.y - s.ay) * s.vy) / s.den))
+                    : 0
+                let ex = p.x - (s.ax + s.vx * u)
+                let ey = p.y - (s.ay + s.vy * u)
+                let dSq = ex * ex + ey * ey
+                if dSq < nearestSq { nearestSq = dSq }
+            }
+            let nearest = nearestSq.squareRoot()
+            sampledDeviation += nearest
+            maxNearestDeviation = Swift.max(maxNearestDeviation, nearest)
+            sampledCount += 1
+            i += stride
+        }
+        return (sampledDeviation, maxNearestDeviation, sampledCount)
+    }
+
+    private static func sampleCircularArc(
+        center: MetricPoint, radius: Double, startAngle: Double, sweep: Double, solveN: Int
+    ) -> [MetricPoint] {
+        var candidate = [MetricPoint](
+            repeating: MetricPoint(x: 0, y: 0), count: solveN)
+        for i in 0..<solveN {
+            let t = Double(i) / Double(solveN - 1)
+            let a = startAngle + sweep * t
+            candidate[i] = MetricPoint(
+                x: center.x + cos(a) * radius, y: center.y + sin(a) * radius)
+        }
+        return candidate
+    }
+
+    private static func evaluateCircularArcSweeps(
+        sweeps: [Double], center: MetricPoint, radius: Double, startAngle: Double,
+        solveN: Int, arcSegs: [ArcSegment], maxDeviation: Double, total: Double,
+        bestArcScore: inout Double, bestArc: inout [MetricPoint]?
+    ) {
+        for sweep in sweeps {
+            if abs(sweep) < 1e-6 { continue }
+            let candidate = sampleCircularArc(center: center, radius: radius, startAngle: startAngle, sweep: sweep, solveN: solveN)
+            let deviation = circularArcDeviation(candidate: candidate, arcSegs: arcSegs, solveN: solveN)
+            let sampledDeviation = deviation.sampledDeviation
+            let maxNearestDeviation = deviation.maxNearestDeviation
+            let sampledCount = deviation.sampledCount
+            if maxNearestDeviation > maxDeviation * 1.02 { continue }
+            let arcLength = radius * abs(sweep)
+            let score =
+                sampledDeviation / Swift.max(1, Double(sampledCount))
+                + abs(arcLength - total) * 0.08
+            if score < bestArcScore {
+                bestArcScore = score
+                bestArc = candidate
+            }
+        }
+    }
+
+    // MARK: - Private raw-geometry deviation proof
+
+    private static func fittedDeviationCellKey(_ x: Int, _ y: Int) -> Int64 {
+        return Int64(x) &* 1_000_003 &+ Int64(y)
+    }
+
+    private static func indexFittedDeviationSegments(
+        lines: [[Coordinate]], cellDeg: Double, cells: inout [Int64: [Int]],
+        segments: inout [(Coordinate, Coordinate)]
+    ) {
+        for line in lines {
+            for i in 0..<(line.count - 1) {
+                let a = line[i]
+                let b = line[i + 1]
+                let index = segments.count
+                segments.append((a, b))
+                let x0 = Int((Swift.min(a.lon, b.lon) / cellDeg).rounded(.down))
+                let x1 = Int((Swift.max(a.lon, b.lon) / cellDeg).rounded(.down))
+                let y0 = Int((Swift.min(a.lat, b.lat) / cellDeg).rounded(.down))
+                let y1 = Int((Swift.max(a.lat, b.lat) / cellDeg).rounded(.down))
+                for x in x0...x1 {
+                    for y in y0...y1 { cells[fittedDeviationCellKey(x, y), default: []].append(index) }
+                }
+            }
+        }
+    }
+
+    private static func nearestFittedDeviation(
+        _ p: Coordinate, budgetMeters: Double, cellDeg: Double,
+        cells: [Int64: [Int]], segments: [(Coordinate, Coordinate)]
+    ) -> Double {
+        let c = JSMath.cos((p.lat * .pi) / 180)
+        let coslat = c == 0 ? 1e-6 : c
+        let lonRadius = budgetMeters / (metresPerDegreeLon * coslat)
+        let latRadius = budgetMeters / metresPerDegreeLat
+        let x0 = Int(((p.lon - lonRadius) / cellDeg).rounded(.down)) - 1
+        let x1 = Int(((p.lon + lonRadius) / cellDeg).rounded(.down)) + 1
+        let y0 = Int(((p.lat - latRadius) / cellDeg).rounded(.down)) - 1
+        let y1 = Int(((p.lat + latRadius) / cellDeg).rounded(.down)) + 1
+        var seen = Set<Int>()
+        var best = Double.infinity
+        for x in x0...x1 {
+            for y in y0...y1 {
+                guard let bucket = cells[fittedDeviationCellKey(x, y)] else { continue }
+                for index in bucket {
+                    if seen.contains(index) { continue }
+                    seen.insert(index)
+                    let segment = segments[index]
+                    best = Swift.min(
+                        best,
+                        fittedPointSegmentDistanceMeters(p, segment.0, segment.1))
+                }
+            }
+        }
+        return best
+    }
+
+    // Distance-to-a-set is 1-Lipschitz, so this bound proves whole output
+    // SEGMENTS rather than only their vertices; only spans too close to the
+    // budget are subdivided, and at the depth cap the answer is a
+    // conservative rejection.
+    private static func verifyFittedDeviationSpan(
+        _ a: Coordinate, _ b: Coordinate, _ da: Double, _ db: Double, _ depth: Int,
+        budgetMeters: Double, cellDeg: Double, cells: [Int64: [Int]],
+        segments: [(Coordinate, Coordinate)], maximum: inout Double
+    ) -> Bool {
+        let length = Geometry.distanceMeters(a, b)
+        let upper = Swift.max(da, Swift.max(db, (da + db + length) / 2))
+        if upper <= budgetMeters { return true }
+        let mid = Coordinate(lon: (a.lon + b.lon) / 2, lat: (a.lat + b.lat) / 2)
+        let dm = nearestFittedDeviation(mid, budgetMeters: budgetMeters, cellDeg: cellDeg, cells: cells, segments: segments)
+        maximum = Swift.max(maximum, dm)
+        if dm > budgetMeters { return false }
+        if depth >= 9 { return false }
+        return verifyFittedDeviationSpan(a, mid, da, dm, depth + 1, budgetMeters: budgetMeters, cellDeg: cellDeg, cells: cells, segments: segments, maximum: &maximum)
+            && verifyFittedDeviationSpan(mid, b, dm, db, depth + 1, budgetMeters: budgetMeters, cellDeg: cellDeg, cells: cells, segments: segments, maximum: &maximum)
+    }
+
+    // MARK: - Private corridor fit stages
+
+    private static func prepareCorridorMetric(
+        line: [Coordinate], inputs: FitInputs
+    ) -> (anchorMetric: [MetricPoint], origin: Coordinate, coslat: Double,
+        mx: Double, my: Double, workStep: Double) {
+        let minDetail = inputs.minDetail
+        let total = inputs.total
+
+        // ── §1 anchors: the source corridor at a fixed physical work resolution ──
+        // Work resolution is independent of the debug-output resolution. Tying
+        // it to physical detail makes every option stable across source
+        // densities.
+        let workStepTarget = Swift.max(20, Swift.min(90, minDetail / 6))
+        let workN = Int(
+            Swift.max(20, Swift.min(1800, (total / workStepTarget).rounded(.up) + 1)))
+        let workStep = total / Double(workN - 1)
+        let anchors = resampleCorridorAnchors(
+            line: line, cum: inputs.cum, total: total, count: workN)
+
+        // ── §2 the local metric frame every stage below works in ──
+        let lat0 = line.reduce(0.0) { $0 + $1.lat } / Double(line.count)
+        let coslatRaw = JSMath.cos((lat0 * .pi) / 180)
+        let coslat = coslatRaw == 0 ? 1e-6 : coslatRaw
+        let mx = metresPerDegreeLon * coslat
+        let my = metresPerDegreeLat
+        let origin = anchors[0]
+        let anchorMetric = metricOffsetsFrom(anchors, origin: origin, mx: mx, my: my)
+        return (anchorMetric, origin, coslat, mx, my, workStep)
+    }
+
+    private static func prepareCorridorControls(
+        anchorMetric: [MetricPoint], workStep: Double, total: Double,
+        minDetail: Double, minRadius: Double, maxDeviation: Double
+    ) -> (controls: [MetricPoint], sigmaM: Double) {
+        var metric = anchorMetric
+        // ── §3 scale-space smoothing, then deviation clamping ──
+        let sigmaM = Swift.max(100, Swift.max(minDetail * 1.1, minRadius * 0.65))
+        metric = gaussianSmoothPolyline(metric, sigma: sigmaM, step: workStep)
+        metric = gaussianSmoothPolyline(metric, sigma: sigmaM * 0.65, step: workStep)
+        metric = metric.enumerated().map {
+            clampMetricDeviation($1, anchor: anchorMetric[$0], maxDeviation: maxDeviation)
+        }
+        // Keep the physical corridor endpoints addressable; the clamped
+        // B-spline still provides a smooth one-sided tangent there.
+        metric[0] = anchorMetric[0]
+        metric[metric.count - 1] = anchorMetric[anchorMetric.count - 1]
+
+        // ── §4 curvature projection against the requested minimum radius ──
+        let curvatureHalf = Int(
+            Swift.max(
+                1,
+                JSNumber.round(
+                    Swift.max(100, Swift.max(minDetail * 0.45, minRadius * 0.12)) / workStep)))
+        metric = relaxMetricToMinRadius(
+            metric, anchorMetric: anchorMetric, minRadius: minRadius,
+            maxDeviation: maxDeviation, curvatureHalf: curvatureHalf)
+
+        // ── §5 control polygon and the first spline evaluation ──
+        let knotSpacing = Swift.max(100, Swift.max(minDetail * 1.25, minRadius * 0.18))
+        let knotEvery = Swift.max(1, Int(JSNumber.round(knotSpacing / workStep)))
+        let controls = buildSplineControlPolygon(
+            metric: metric, anchorMetric: anchorMetric, knotEvery: knotEvery, total: total,
+            minDetail: minDetail, minRadius: minRadius)
+        return (controls, sigmaM)
+    }
+
+    private static func applyCorridorSplineFallbacks(
+        controls: [MetricPoint], anchorMetric: [MetricPoint], total: Double,
+        minRadius: Double, minDetail: Double, maxDeviation: Double, solveN: Int,
+        splineMetric: inout [MetricPoint], achievedMinRadius: inout Double
+    ) -> Bool {
+        // ── §6 fallback 1: pull the whole control polygon toward its chord ──
+        if achievedMinRadius < minRadius * 0.999 {
+            let pulled = pullControlsTowardChord(
+                controls: controls, anchorMetric: anchorMetric, spline: splineMetric,
+                radius: achievedMinRadius, minRadius: minRadius, maxDeviation: maxDeviation,
+                minDetail: minDetail, solveN: solveN)
+            splineMetric = pulled.spline
+            achievedMinRadius = pulled.radius
+        }
+
+        // ── §7 fallback 2: constant-curvature circular arcs ──
+        var usedCircularArc = false
+        if achievedMinRadius < minRadius * 0.999 {
+            if let bestArc = fitCircularArcFallback(
+                splineMetric: splineMetric, anchorMetric: anchorMetric, total: total,
+                minRadius: minRadius, maxDeviation: maxDeviation, solveN: solveN)
+            {
+                splineMetric = bestArc
+                achievedMinRadius = measureMinCircumRadius(splineMetric, minDetail: minDetail)
+                usedCircularArc = true
+            }
+        }
+        return usedCircularArc
+    }
+
+    private static func integrateCorridorSpline(
+        splineMetric: inout [MetricPoint], achievedMinRadius: inout Double,
+        origin: Coordinate, mx: Double, my: Double, coslat: Double,
+        minRadius: Double, minDetail: Double
+    ) -> (cur: [Coordinate], smoothCum: [Double], smoothTotal: Double,
+        angles: [Double], achievedDirectionRadius: Double, directionRadiusM: Double, directionSigmaM: Double) {
+        // ── §8 back to lon/lat: arc length and step of the accepted geometry ──
+        var cur = pointsFromMetricOffsets(splineMetric, origin: origin, mx: mx, my: my)
+        var smoothCum = cumulativeMeters(cur)
+        var smoothTotal = smoothCum[smoothCum.count - 1]
+        var outputStep = smoothTotal / Double(Swift.max(1, cur.count - 1))
+
+        // ── §9 direction field, then geometry re-integrated from it ──
+        let directionRadiusM = Swift.max(minRadius, minDetail * 2)
+        let directionSigmaM = Swift.max(80, Swift.max(minDetail * 0.45, minRadius * 0.12))
+        let angles = directionFieldAngles(
+            cur: cur, coslat: coslat, minDetail: minDetail, minRadius: minRadius,
+            outputStep: outputStep, directionSigma: directionSigmaM)
+        let integrated = integrateFromDirectionField(splineMetric: splineMetric, angles: angles)
+        let integratedRadius = measureMinCircumRadius(integrated, minDetail: minDetail)
+        if integratedRadius >= achievedMinRadius {
+            splineMetric = integrated
+            achievedMinRadius = integratedRadius
+            cur = pointsFromMetricOffsets(splineMetric, origin: origin, mx: mx, my: my)
+            smoothCum = cumulativeMeters(cur)
+            smoothTotal = smoothCum[smoothCum.count - 1]
+            outputStep = smoothTotal / Double(Swift.max(1, cur.count - 1))
+        }
+        let achievedDirectionRadius = minDirectionRadius(angles: angles, cum: smoothCum)
+        return (cur, smoothCum, smoothTotal, angles, achievedDirectionRadius, directionRadiusM, directionSigmaM)
+    }
+
+    private static func validatedCorridorOutput(
+        cur: [Coordinate], angles: [Double], smoothCum: [Double], smoothTotal: Double,
+        line: [Coordinate], inputs: FitInputs, origin: Coordinate, mx: Double, my: Double,
+        deviation: (valid: Bool, maxDeviationMeters: Double),
+        achievedMinRadius: Double, achievedDirectionRadius: Double
+    ) -> (points: [Coordinate], angles: [Double], cum: [Double],
+        deviation: (valid: Bool, maxDeviationMeters: Double), minRadius: Double, directionRadius: Double) {
+        let maxDeviation = inputs.maxDeviation
+        let minDetail = inputs.minDetail
+        // ── §11 output resampling at the requested precision ──
+        let displayN = Int(
+            Swift.max(
+                20,
+                Swift.min(3200, (smoothTotal / (30 / inputs.precision)).rounded(.up) + 1)))
+        var outputPoints = cur
+        var outputAngles = angles
+        var outputCum = smoothCum
+        if displayN != cur.count {
+            let resampled = resampleFittedCurveOutput(
+                cur: cur, angles: angles, smoothCum: smoothCum, smoothTotal: smoothTotal,
+                displayN: displayN)
+            outputPoints = resampled.points
+            outputAngles = resampled.angles
+            outputCum = resampled.cum
+        }
+        var finalDeviation = validateFittedCurveDeviation(
+            points: outputPoints, sourceLines: [line], budgetMeters: maxDeviation)
+        let outputMetric = metricOffsetsFrom(outputPoints, origin: origin, mx: mx, my: my)
+        var finalAchievedMinRadius = measureMinCircumRadius(outputMetric, minDetail: minDetail)
+        var finalAchievedDirectionRadius = minDirectionRadius(
+            angles: outputAngles, cum: outputCum)
+        if !finalDeviation.valid
+            || finalAchievedMinRadius < inputs.requestedMinRadius * 0.999
+            || finalAchievedDirectionRadius < inputs.requestedMinRadius * 0.999
+        {
+            // A low-density representation may replace a validated bend with a
+            // chord. Hard invariants win over the requested output density:
+            // keep the fixed-resolution solution rather than publish an invalid
+            // polyline.
+            outputPoints = cur
+            outputAngles = angles
+            outputCum = smoothCum
+            finalDeviation = deviation
+            finalAchievedMinRadius = achievedMinRadius
+            finalAchievedDirectionRadius = achievedDirectionRadius
+        }
+        return (outputPoints, outputAngles, outputCum, finalDeviation, finalAchievedMinRadius, finalAchievedDirectionRadius)
+    }
+
+    private static func makeFittedCorridorCurve(
+        outputPoints: [Coordinate], outputAngles: [Double], outputCum: [Double], total: Double,
+        anchorMetric: [MetricPoint], directionRadiusM: Double, sigmaM: Double, directionSigmaM: Double,
+        inputs: FitInputs, finalAchievedMinRadius: Double, finalAchievedDirectionRadius: Double,
+        minDetail: Double, maxDeviation: Double, finalDeviation: (valid: Bool, maxDeviationMeters: Double),
+        usedCircularArc: Bool, coslat: Double
+    ) -> FittedCurve {
+        return FittedCurve(
+            pts: outputPoints,
+            cum: outputCum,
+            dirs: outputAngles.map { (cos($0), sin($0)) },
+            totalMeters: outputCum[outputCum.count - 1],
+            sourceTotalMeters: total,
+            endpointChordMeters: JSMath.hypot(
+                anchorMetric[anchorMetric.count - 1].x - anchorMetric[0].x,
+                anchorMetric[anchorMetric.count - 1].y - anchorMetric[0].y),
+            radiusMeters: directionRadiusM,
+            smoothingSigmaMeters: sigmaM,
+            directionSigmaMeters: directionSigmaM,
+            requestedMinRadiusMeters: inputs.requestedMinRadius,
+            achievedMinRadiusMeters: finalAchievedMinRadius.isFinite
+                ? finalAchievedMinRadius : nil,
+            achievedDirectionRadiusMeters: finalAchievedDirectionRadius.isFinite
+                ? finalAchievedDirectionRadius : nil,
+            minDetailMeters: minDetail,
+            maxDeviationMeters: maxDeviation,
+            actualMaxDeviationMeters: finalDeviation.maxDeviationMeters,
+            samplingPrecision: inputs.precision,
+            fitType: usedCircularArc ? "circular-arc" : "cubic-bspline-c2",
+            coslat: coslat)
+    }
+
+    // MARK: - Private record construction and publication
+
+    private static func buildInitialRouteRecords(
+        items: [Item], lines: [[RouteLine]], overlap: OverlapMap, snap: VertexSnap, spacingPx: Double,
+        records: inout [Record], expandRecords: inout [ExpandRecord], groupInfo: inout OrderedMap<Corridor>,
+        drawnLenByTid: inout [String: Double], hasOverlaps: inout Bool
+    ) {
         // ── §1 per line ──
         for (itemIndex, item) in items.enumerated() {
             guard item.recordDrawn else { continue }
-            let tid = item.trainId
-            let noPick = item.noPick
             for line in lines[itemIndex] {
-                let orig = line.orig
-                guard orig.count >= 2 else { continue }
-                let nSeg = orig.count - 1
-                let lanes = assignSegmentOverlapLanes(
-                    overlap: overlap, orig: orig, segKeys: line.segKeys, trainId: tid,
-                    noPick: noPick)
-                if lanes.lineHasOverlap { hasOverlaps = true }
-                let runs = maximalOverlapRuns(segIdentity: lanes.segIdentity, nSeg: nSeg)
-                let subset = buildDrawnVertexSubset(
-                    orig: orig, keepIdx: line.keepIdx, runs: runs, nSeg: nSeg)
-                drawnLenByTid[tid] = (drawnLenByTid[tid] ?? 0) + subset.drawnLen
-
-                for run in runs {
-                    guard let ka = subset.posOf[run.a], let kb = subset.posOf[run.b] else {
-                        continue
-                    }
-                    let runLine = Array(subset.drawn[ka...kb])
-                    if runLine.count < 2 { continue }
-                    let identity = lanes.segIdentity[run.a]
-                    let n = identity.map { overlap.sharedSets[$0].count } ?? 1
-                    let mult = lanes.segMult[run.a]
-                    var groupKey = ""
-                    if n > 1 {
-                        groupKey = canonicalRunGroupKey(
-                            overlap: overlap, segKeys: line.segKeys,
-                            segBridged: lanes.segBridged, ra: run.a, rb: run.b)
-                    }
-                    var shiftX = 0.0
-                    var shiftY = 0.0
-                    if n > 1, let identity {
-                        if var gi = groupInfo[groupKey] {
-                            // A near-parallel interaction key can be met on
-                            // more than one physical run. Keep the distinct
-                            // geometry; the representative pass joins whatever
-                            // is compatible.
-                            mergeRunLineIntoGroup(&gi, runLine: runLine)
-                            groupInfo[groupKey] = gi
-                            shiftX = gi.sx
-                            shiftY = gi.sy
-                        } else {
-                            let axis = corridorRunShiftAxis(
-                                overlap: overlap, snap: snap, orig: orig,
-                                segKeys: line.segKeys, ra: run.a, rb: run.b)
-                            let ids = overlap.sharedSets[identity]
-                            let mults = ids.order.map {
-                                (
-                                    trainId: $0,
-                                    mult: Double(ids.slot(of: $0)) - Double(ids.count - 1) / 2
-                                )
-                            }
-                            let gi = Corridor(
-                                sx: axis.dy / axis.len / axis.coslatRef,
-                                sy: -axis.dx / axis.len,
-                                mults: mults,
-                                line: runLine,
-                                lines: [runLine],
-                                pa: orig[run.a],
-                                pb: orig[run.b],
-                                latRef: axis.latRef,
-                                signature: "",
-                                curveEndpointNodeKeys: [],
-                                nearParallel: overlap.nearGroupInfo(groupKey),
-                                corridorJoins: [],
-                                pickBridges: [],
-                                curve: nil)
-                            groupInfo[groupKey] = gi
-                            shiftX = gi.sx
-                            shiftY = gi.sy
-                        }
-                    }
-                    records.append(
-                        Record(
-                            trainId: tid,
-                            path: runLine,
-                            shiftX: shiftX,
-                            shiftY: shiftY,
-                            laneMult: mult,
-                            pickWidth: n > 1
-                                ? Swift.max(spacingPx, 6) : Swift.max(item.strokeWidth + 4, 10),
-                            overlapCount: n,
-                            overlapSlot: lanes.segSlot[run.a],
-                            groupKey: groupKey,
-                            nopick: noPick,
-                            lane: 0,
-                            sortKey: 0))
-                }
-                expandRecords.append(ExpandRecord(trainId: tid, path: subset.drawn))
+                appendRouteLineRecords(item: item, line: line, overlap: overlap, snap: snap, spacingPx: spacingPx,
+                    records: &records, expandRecords: &expandRecords, groupInfo: &groupInfo,
+                    drawnLenByTid: &drawnLenByTid, hasOverlaps: &hasOverlaps)
             }
         }
+    }
 
+    private static func appendRouteLineRecords(
+        item: Item, line: RouteLine, overlap: OverlapMap, snap: VertexSnap, spacingPx: Double,
+        records: inout [Record], expandRecords: inout [ExpandRecord], groupInfo: inout OrderedMap<Corridor>,
+        drawnLenByTid: inout [String: Double], hasOverlaps: inout Bool
+    ) {
+        let tid = item.trainId
+        let noPick = item.noPick
+        let orig = line.orig
+        guard orig.count >= 2 else { return }
+        let nSeg = orig.count - 1
+        let lanes = assignSegmentOverlapLanes(
+            overlap: overlap, orig: orig, segKeys: line.segKeys, trainId: tid,
+            noPick: noPick)
+        if lanes.lineHasOverlap { hasOverlaps = true }
+        let runs = maximalOverlapRuns(segIdentity: lanes.segIdentity, nSeg: nSeg)
+        let subset = buildDrawnVertexSubset(
+            orig: orig, keepIdx: line.keepIdx, runs: runs, nSeg: nSeg)
+        drawnLenByTid[tid] = (drawnLenByTid[tid] ?? 0) + subset.drawnLen
+
+        appendOverlapRunRecords(runs: runs, subset: subset, lanes: lanes, overlap: overlap, snap: snap,
+            orig: orig, line: line, item: item, spacingPx: spacingPx, records: &records, groupInfo: &groupInfo)
+        expandRecords.append(ExpandRecord(trainId: tid, path: subset.drawn))
+    }
+
+    private static func appendOverlapRunRecords(
+        runs: [(a: Int, b: Int)], subset: (drawn: [Coordinate], posOf: [Int: Int], drawnLen: Double), lanes: LaneAssignment, overlap: OverlapMap, snap: VertexSnap,
+        orig: [Coordinate], line: RouteLine, item: Item, spacingPx: Double,
+        records: inout [Record], groupInfo: inout OrderedMap<Corridor>
+    ) {
+        let tid = item.trainId
+        let noPick = item.noPick
+        for run in runs {
+            guard let ka = subset.posOf[run.a], let kb = subset.posOf[run.b] else {
+                continue
+            }
+            let runLine = Array(subset.drawn[ka...kb])
+            if runLine.count < 2 { continue }
+            let identity = lanes.segIdentity[run.a]
+            let n = identity.map { overlap.sharedSets[$0].count } ?? 1
+            let mult = lanes.segMult[run.a]
+            var groupKey = ""
+            if n > 1 {
+                groupKey = canonicalRunGroupKey(
+                    overlap: overlap, segKeys: line.segKeys,
+                    segBridged: lanes.segBridged, ra: run.a, rb: run.b)
+            }
+            var shiftX = 0.0
+            var shiftY = 0.0
+            overlapRunShift(n: n, identity: identity, groupKey: groupKey, runLine: runLine,
+                overlap: overlap, snap: snap, orig: orig, line: line, run: run,
+                groupInfo: &groupInfo, shiftX: &shiftX, shiftY: &shiftY)
+            records.append(
+                Record(
+                    trainId: tid,
+                    path: runLine,
+                    shiftX: shiftX,
+                    shiftY: shiftY,
+                    laneMult: mult,
+                    pickWidth: n > 1
+                        ? Swift.max(spacingPx, 6) : Swift.max(item.strokeWidth + 4, 10),
+                    overlapCount: n,
+                    overlapSlot: lanes.segSlot[run.a],
+                    groupKey: groupKey,
+                    nopick: noPick,
+                    lane: 0,
+                    sortKey: 0))
+        }
+    }
+
+    private static func overlapRunShift(
+        n: Int, identity: Int?, groupKey: String, runLine: [Coordinate],
+        overlap: OverlapMap, snap: VertexSnap, orig: [Coordinate], line: RouteLine, run: (a: Int, b: Int),
+        groupInfo: inout OrderedMap<Corridor>, shiftX: inout Double, shiftY: inout Double
+    ) {
+        if n > 1, let identity {
+            if var gi = groupInfo[groupKey] {
+                // A near-parallel interaction key can be met on
+                // more than one physical run. Keep the distinct
+                // geometry; the representative pass joins whatever
+                // is compatible.
+                mergeRunLineIntoGroup(&gi, runLine: runLine)
+                groupInfo[groupKey] = gi
+                shiftX = gi.sx
+                shiftY = gi.sy
+            } else {
+                let gi = newOverlapRunCorridor(overlap: overlap, snap: snap, orig: orig, line: line,
+                    run: run, identity: identity, groupKey: groupKey, runLine: runLine)
+                groupInfo[groupKey] = gi
+                shiftX = gi.sx
+                shiftY = gi.sy
+            }
+        }
+    }
+
+    private static func newOverlapRunCorridor(
+        overlap: OverlapMap, snap: VertexSnap, orig: [Coordinate], line: RouteLine, run: (a: Int, b: Int),
+        identity: Int, groupKey: String, runLine: [Coordinate]
+    ) -> Corridor {
+        let axis = corridorRunShiftAxis(
+            overlap: overlap, snap: snap, orig: orig,
+            segKeys: line.segKeys, ra: run.a, rb: run.b)
+        let ids = overlap.sharedSets[identity]
+        let mults = ids.order.map {
+            (
+                trainId: $0,
+                mult: Double(ids.slot(of: $0)) - Double(ids.count - 1) / 2
+            )
+        }
+        return Corridor(
+            sx: axis.dy / axis.len / axis.coslatRef,
+            sy: -axis.dx / axis.len,
+            mults: mults,
+            line: runLine,
+            lines: [runLine],
+            pa: orig[run.a],
+            pb: orig[run.b],
+            latRef: axis.latRef,
+            signature: "",
+            curveEndpointNodeKeys: [],
+            nearParallel: overlap.nearGroupInfo(groupKey),
+            corridorJoins: [],
+            pickBridges: [],
+            curve: nil)
+    }
+
+    private static func rebuildRouteRecordCorridors(
+        groupInfo: inout OrderedMap<Corridor>, records: inout [Record],
+        snap: VertexSnap, settings: FitCurveSettings, spacingPx: Double
+    ) {
         // ── §2 one shift axis per contiguous CORRIDOR ──
         // A single visual corridor is usually split into many runs, because the
         // source geometry is chopped into per-feature LineStrings — so each run
@@ -2917,145 +3227,17 @@ public enum OverlapLanes {
             var corridorAliases: [String: String] = [:]
             var corridorMasters = OrderedSet()
 
-            func usePerRunCurves(_ c: Component) {
-                for k in c.keys {
-                    var g = groupInfo[k]!
-                    corridorAliases[k] = k
-                    corridorMasters.insert(k)
-                    g.corridorJoins = []
-                    g.curveEndpointNodeKeys = [
-                        snap.nodeKey(g.line[0]), snap.nodeKey(g.line[g.line.count - 1]),
-                    ]
-                    g.curve = smoothStandaloneCorridorRun(
-                        g.line, isClosed: false, settings: settings)
-                    groupInfo[k] = g
-                }
-            }
-
-            for (_, c) in components.entries {
-                let componentJoins = joins.filter {
-                    c.keySet.contains($0.a.key) && c.keySet.contains($0.b.key)
-                }
-                let lone = c.keys.count == 1 ? groupInfo[c.keys[0]] : nil
-                let isClosed =
-                    (c.keys.count > 1 && componentJoins.count == c.keys.count)
-                    || (lone.map {
-                        $0.line.count > 3
-                            && Geometry.distanceMeters($0.pa, $0.pb) <= snapMeters
-                    } ?? false)
-                if isClosed {
-                    // An open B-spline would insert an arbitrary seam into this
-                    // cycle. A multi-run cycle can keep its open member runs
-                    // independently; a single self-closing run has no safe seam
-                    // at all, so it uses only its static group vector.
-                    if lone != nil {
-                        let key = c.keys[0]
-                        var g = groupInfo[key]!
-                        corridorAliases[key] = key
-                        corridorMasters.insert(key)
-                        g.corridorJoins = []
-                        g.curve = smoothStandaloneCorridorRun(
-                            g.line, isClosed: true, settings: settings)
-                        groupInfo[key] = g
-                    } else {
-                        usePerRunCurves(c)
-                    }
-                    continue
-                }
-                // The smoothed corridor centreline: chain the member runs end
-                // to end and normalise into a very smooth curve. The renderer
-                // derives the fan's shift direction from this curve's LOCAL
-                // perpendicular under the pointer, so the direction turns
-                // smoothly as the pointer moves.
-                let chain = buildCorridorChain(
-                    keys: c.keys, keySet: c.keySet, joins: joins,
-                    lineFor: { groupInfo[$0]?.line })
-                if chain == nil && c.keys.count > 1 {
-                    // No continuable chain could be assembled at all, so keep
-                    // independently fitted per-run curves.
-                    usePerRunCurves(c)
-                    continue
-                }
-                let curve = chain.flatMap { smoothCorridorCurve($0, settings: settings) }
-                let canonicalKey = jsSorted(c.keys)[0]
-                var master = groupInfo[canonicalKey]!
-                if let chain {
-                    master.curveEndpointNodeKeys = [
-                        snap.nodeKey(chain[0]), snap.nodeKey(chain[chain.count - 1]),
-                    ]
-                }
-                let nearInfos = c.keys.compactMap { groupInfo[$0]?.nearParallel }
-                if !nearInfos.isEmpty {
-                    master.nearParallel = NearParallelInfo(
-                        pairCount: nearInfos.map(\.pairCount).max() ?? 0,
-                        maxSeparationMeters: nearInfos.map(\.maxSeparationMeters).max() ?? 0,
-                        thresholdMeters: nearInfos.map(\.thresholdMeters).max() ?? 0)
-                }
-                groupInfo[canonicalKey] = master
-                if curve == nil && c.keys.count > 1 {
-                    // The unified candidate failed at least one final hard
-                    // constraint. Preserve independently validated runs rather
-                    // than publish a geometrically invalid shared direction
-                    // field.
-                    usePerRunCurves(c)
-                    continue
-                }
-                corridorMasters.insert(canonicalKey)
-                for k in c.keys { corridorAliases[k] = canonicalKey }
-                master = groupInfo[canonicalKey]!
-                master.corridorJoins = componentJoins.filter { $0.metres > 0.05 }
-                groupInfo[canonicalKey] = master
-                if let curve {
-                    for k in c.keys {
-                        var g = groupInfo[k]!
-                        g.curve = curve
-                        groupInfo[k] = g
-                    }
-                }
-                if c.keys.count < 2 { continue }  // a lone run keeps its own chord
-                guard let axis = unifiedCorridorShiftAxis(c) else { continue }
-                for k in c.keys {
-                    var g = groupInfo[k]!
-                    g.sx = axis.sx
-                    g.sy = axis.sy
-                    groupInfo[k] = g
-                }
-            }
-
+            fitRouteRecordComponents(components: components, joins: joins, groupInfo: &groupInfo,
+                corridorAliases: &corridorAliases, corridorMasters: &corridorMasters, snap: snap, settings: settings)
             // Collapsing all runs of one continuous corridor onto ONE
             // interaction key is the point of the pass: before it, only the
             // curve was shared, so an open fan moved the current run's pick
             // lane and left the adjacent run on the true track — and crossing
             // the boundary produced a miss/collapse/reopen flash.
-            var representative: [String: Int] = [:]
-            for index in records.indices {
-                let r = records[index]
-                guard r.overlapCount > 1, !r.groupKey.isEmpty else { continue }
-                let canonicalKey = corridorAliases[r.groupKey] ?? r.groupKey
-                records[index].groupKey = canonicalKey
-                if let g = groupInfo[canonicalKey] {
-                    records[index].shiftX = g.sx
-                    records[index].shiftY = g.sy
-                }
-                let rk = canonicalKey + "::" + r.trainId
-                if representative[rk] == nil { representative[rk] = index }
-            }
-            for canonicalKey in corridorMasters.order {
-                var g = groupInfo[canonicalKey]!
-                g.pickBridges = []
-                for join in g.corridorJoins {
-                    for entry in g.mults {
-                        guard let index = representative[canonicalKey + "::" + entry.trainId]
-                        else { continue }
-                        g.pickBridges.append(
-                            PickBridge(
-                                path: [join.a.p, join.b.p], trainId: entry.trainId,
-                                recordIndex: index, laneMult: entry.mult,
-                                pickWidth: Swift.max(spacingPx, 8)))
-                    }
-                }
-                groupInfo[canonicalKey] = g
-            }
+            let representative = canonicalizeRouteRecordGroups(records: &records, groupInfo: groupInfo,
+                corridorAliases: corridorAliases)
+            buildRouteRecordPickBridges(corridorMasters: corridorMasters, groupInfo: &groupInfo,
+                representative: representative, spacingPx: spacingPx)
             // Only canonical entries stay addressable by the renderer.
             for key in groupInfo.keys {
                 if let canonicalKey = corridorAliases[key], canonicalKey != key {
@@ -3063,7 +3245,11 @@ public enum OverlapLanes {
                 }
             }
         }
+    }
 
+    private static func assignRouteRecordPainterOrder(
+        records: inout [Record], drawnLenByTid: [String: Double], rank: [String: Int]
+    ) {
         // ── §3 static painter's order (higher = on top) ──
         // The sort key overrides feature order inside the route layers, so the
         // emphasis tier — dimmed off-date rides under the active date's — rides
@@ -3094,27 +3280,196 @@ public enum OverlapLanes {
                 (records[index].nopick ? 0 : routeSortTier)
                 + Double(sortRank[records[index].trainId] ?? 0)
         }
-
-        return RecordBundle(
-            records: records, expandRecords: expandRecords,
-            corridors: groupInfo.entries.map { (key: $0.key, corridor: $0.value) },
-            spacingPx: spacingPx, hasOverlaps: hasOverlaps)
     }
 
-    /// Keeps distinct geometry for an interaction key met on more than one
-    /// physical run. Two run lines are the same run when both endpoints match
-    /// within 5 cm, in either direction.
-    static func mergeRunLineIntoGroup(_ gi: inout Corridor, runLine: [Coordinate]) {
-        let duplicate = gi.lines.contains { other in
-            let same =
-                Geometry.distanceMeters(other[0], runLine[0]) <= 0.05
-                && Geometry.distanceMeters(
-                    other[other.count - 1], runLine[runLine.count - 1]) <= 0.05
-            let reverse =
-                Geometry.distanceMeters(other[0], runLine[runLine.count - 1]) <= 0.05
-                && Geometry.distanceMeters(other[other.count - 1], runLine[0]) <= 0.05
-            return same || reverse
+    private static func usePerRunCorridorCurves(
+        _ c: Component, groupInfo: inout OrderedMap<Corridor>, corridorAliases: inout [String: String],
+        corridorMasters: inout OrderedSet, snap: VertexSnap, settings: FitCurveSettings
+    ) {
+        for k in c.keys {
+            var g = groupInfo[k]!
+            corridorAliases[k] = k
+            corridorMasters.insert(k)
+            g.corridorJoins = []
+            g.curveEndpointNodeKeys = [
+                snap.nodeKey(g.line[0]), snap.nodeKey(g.line[g.line.count - 1]),
+            ]
+            g.curve = smoothStandaloneCorridorRun(
+                g.line, isClosed: false, settings: settings)
+            groupInfo[k] = g
         }
-        if !duplicate { gi.lines.append(runLine) }
     }
+
+    private static func fitRouteRecordComponents(
+        components: OrderedMap<Component>, joins: [Join], groupInfo: inout OrderedMap<Corridor>,
+        corridorAliases: inout [String: String], corridorMasters: inout OrderedSet,
+        snap: VertexSnap, settings: FitCurveSettings
+    ) {
+        for (_, c) in components.entries {
+            fitRouteRecordComponent(c, joins: joins, groupInfo: &groupInfo, corridorAliases: &corridorAliases,
+                corridorMasters: &corridorMasters, snap: snap, settings: settings)
+        }
+    }
+
+    private static func fitRouteRecordComponent(
+        _ c: Component, joins: [Join], groupInfo: inout OrderedMap<Corridor>,
+        corridorAliases: inout [String: String], corridorMasters: inout OrderedSet,
+        snap: VertexSnap, settings: FitCurveSettings
+    ) {
+        let componentJoins = joins.filter {
+            c.keySet.contains($0.a.key) && c.keySet.contains($0.b.key)
+        }
+        if handleClosedRouteRecordComponent(c, componentJoins: componentJoins, groupInfo: &groupInfo,
+            corridorAliases: &corridorAliases, corridorMasters: &corridorMasters, snap: snap, settings: settings) { return }
+        // The smoothed corridor centreline: chain the member runs end
+        // to end and normalise into a very smooth curve. The renderer
+        // derives the fan's shift direction from this curve's LOCAL
+        // perpendicular under the pointer, so the direction turns
+        // smoothly as the pointer moves.
+        let chain = buildCorridorChain(
+            keys: c.keys, keySet: c.keySet, joins: joins,
+            lineFor: { groupInfo[$0]?.line })
+        if chain == nil && c.keys.count > 1 {
+            // No continuable chain could be assembled at all, so keep
+            // independently fitted per-run curves.
+            usePerRunCorridorCurves(c, groupInfo: &groupInfo, corridorAliases: &corridorAliases, corridorMasters: &corridorMasters, snap: snap, settings: settings)
+            return
+        }
+        let curve = chain.flatMap { smoothCorridorCurve($0, settings: settings) }
+        let canonicalKey = jsSorted(c.keys)[0]
+        prepareRouteRecordMaster(c, canonicalKey: canonicalKey, chain: chain, groupInfo: &groupInfo, snap: snap)
+        if curve == nil && c.keys.count > 1 {
+            // The unified candidate failed at least one final hard
+            // constraint. Preserve independently validated runs rather
+            // than publish a geometrically invalid shared direction
+            // field.
+            usePerRunCorridorCurves(c, groupInfo: &groupInfo, corridorAliases: &corridorAliases, corridorMasters: &corridorMasters, snap: snap, settings: settings)
+            return
+        }
+        publishRouteRecordComponent(c, canonicalKey: canonicalKey, componentJoins: componentJoins, curve: curve,
+            groupInfo: &groupInfo, corridorAliases: &corridorAliases, corridorMasters: &corridorMasters)
+    }
+
+    private static func handleClosedRouteRecordComponent(
+        _ c: Component, componentJoins: [Join], groupInfo: inout OrderedMap<Corridor>,
+        corridorAliases: inout [String: String], corridorMasters: inout OrderedSet,
+        snap: VertexSnap, settings: FitCurveSettings
+    ) -> Bool {
+        let lone = c.keys.count == 1 ? groupInfo[c.keys[0]] : nil
+        let isClosed =
+            (c.keys.count > 1 && componentJoins.count == c.keys.count)
+            || (lone.map {
+                $0.line.count > 3
+                    && Geometry.distanceMeters($0.pa, $0.pb) <= snapMeters
+            } ?? false)
+        if isClosed {
+            // An open B-spline would insert an arbitrary seam into this
+            // cycle. A multi-run cycle can keep its open member runs
+            // independently; a single self-closing run has no safe seam
+            // at all, so it uses only its static group vector.
+            if lone != nil {
+                let key = c.keys[0]
+                var g = groupInfo[key]!
+                corridorAliases[key] = key
+                corridorMasters.insert(key)
+                g.corridorJoins = []
+                g.curve = smoothStandaloneCorridorRun(
+                    g.line, isClosed: true, settings: settings)
+                groupInfo[key] = g
+            } else {
+                usePerRunCorridorCurves(c, groupInfo: &groupInfo, corridorAliases: &corridorAliases, corridorMasters: &corridorMasters, snap: snap, settings: settings)
+            }
+            return true
+        }
+        return false
+    }
+
+    private static func prepareRouteRecordMaster(
+        _ c: Component, canonicalKey: String, chain: [Coordinate]?,
+        groupInfo: inout OrderedMap<Corridor>, snap: VertexSnap
+    ) {
+        var master = groupInfo[canonicalKey]!
+        if let chain {
+            master.curveEndpointNodeKeys = [
+                snap.nodeKey(chain[0]), snap.nodeKey(chain[chain.count - 1]),
+            ]
+        }
+        let nearInfos = c.keys.compactMap { groupInfo[$0]?.nearParallel }
+        if !nearInfos.isEmpty {
+            master.nearParallel = NearParallelInfo(
+                pairCount: nearInfos.map(\.pairCount).max() ?? 0,
+                maxSeparationMeters: nearInfos.map(\.maxSeparationMeters).max() ?? 0,
+                thresholdMeters: nearInfos.map(\.thresholdMeters).max() ?? 0)
+        }
+        groupInfo[canonicalKey] = master
+    }
+
+    private static func publishRouteRecordComponent(
+        _ c: Component, canonicalKey: String, componentJoins: [Join], curve: FittedCurve?,
+        groupInfo: inout OrderedMap<Corridor>, corridorAliases: inout [String: String],
+        corridorMasters: inout OrderedSet
+    ) {
+        corridorMasters.insert(canonicalKey)
+        for k in c.keys { corridorAliases[k] = canonicalKey }
+        var master = groupInfo[canonicalKey]!
+        master.corridorJoins = componentJoins.filter { $0.metres > 0.05 }
+        groupInfo[canonicalKey] = master
+        if let curve {
+            for k in c.keys {
+                var g = groupInfo[k]!
+                g.curve = curve
+                groupInfo[k] = g
+            }
+        }
+        if c.keys.count < 2 { return }  // a lone run keeps its own chord
+        guard let axis = unifiedCorridorShiftAxis(c) else { return }
+        for k in c.keys {
+            var g = groupInfo[k]!
+            g.sx = axis.sx
+            g.sy = axis.sy
+            groupInfo[k] = g
+        }
+    }
+
+    private static func canonicalizeRouteRecordGroups(
+        records: inout [Record], groupInfo: OrderedMap<Corridor>, corridorAliases: [String: String]
+    ) -> [String: Int] {
+        var representative: [String: Int] = [:]
+        for index in records.indices {
+            let r = records[index]
+            guard r.overlapCount > 1, !r.groupKey.isEmpty else { continue }
+            let canonicalKey = corridorAliases[r.groupKey] ?? r.groupKey
+            records[index].groupKey = canonicalKey
+            if let g = groupInfo[canonicalKey] {
+                records[index].shiftX = g.sx
+                records[index].shiftY = g.sy
+            }
+            let rk = canonicalKey + "::" + r.trainId
+            if representative[rk] == nil { representative[rk] = index }
+        }
+        return representative
+    }
+
+    private static func buildRouteRecordPickBridges(
+        corridorMasters: OrderedSet, groupInfo: inout OrderedMap<Corridor>,
+        representative: [String: Int], spacingPx: Double
+    ) {
+        for canonicalKey in corridorMasters.order {
+            var g = groupInfo[canonicalKey]!
+            g.pickBridges = []
+            for join in g.corridorJoins {
+                for entry in g.mults {
+                    guard let index = representative[canonicalKey + "::" + entry.trainId]
+                    else { continue }
+                    g.pickBridges.append(
+                        PickBridge(
+                            path: [join.a.p, join.b.p], trainId: entry.trainId,
+                            recordIndex: index, laneMult: entry.mult,
+                            pickWidth: Swift.max(spacingPx, 8)))
+                }
+            }
+            groupInfo[canonicalKey] = g
+        }
+    }
+
 }

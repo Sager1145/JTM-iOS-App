@@ -87,3 +87,19 @@ PhaseC commit4fe45cd91e4cf603ffd9b17935a402f499ad98e7 pushed; origin/main verifi
 PhaseD six files separate local search, trip planning, train validation/JSON parsing, and transfer-guide parsing/text/train conversion. Independent reviews passed including all28 validator error strings/precedence, scalar folding and graph/queue/memo ordering. Original121 functions across10 suites PASS before/after; sealed657 matchingfixtures. Quality233 inherited,11 removed in D,zero new; format and changed/new usual10/40 PASS. Supported builds complete. Focused process peaks recorded in architecture-phaseD-{baseline,candidate}-guarded.json; no whole-App reduction claim. Standing authorization permits locked delivery.
 
 PhaseD delivery preflight stopped before shared writes on overlapping pre-existing TripRoutePlanner.swift edits (date/through-service extensions). Preserve that live file byte-for-byte; commit only validated frozen source using alternate index. Working copy may differ from accepted HEAD. Source/tests/binary receipts establish accepted Git blobs, not live dirty-source acceptance.
+
+## Pushed PhaseD; remaining frozen gates
+
+PhaseD commitfe7dd9da27d6d18533c16cea478c2a622c85b6a5 pushed and origin verified under shared lock. Original121 functions pass; candidate max observed103318464bytes vs baseline102024104bytes in selected suites, which does not establish smaller footprint. TripRoutePlanner live bytes preserved entirely because of pre-existing overlapping feature edits; accepted HEAD contains only tested extraction. Normal unrelated index entries preserved.
+
+PhaseE initial4th suite failed identically before/after due missing sample-data manifest. Failed reports retained; accepted sample-data inputs copied/sealed and v2 original runs active. PhaseF eight files static quality176 inherited,25 removed,zero new; independent semantic reviews pass, compiled/test acceptance pending. Root independently reviewed display retraces, canonical fit fallback, station smoothing and interval search; exact order/arithmetic/cancellation and original buffers retained. PhaseG frozen ContinuousStroke extraction active.
+
+## App folder migration inventory and remaining prerequisite
+
+Read-only accepted fe7dd9da inventory saved outputs/refactor-20261009-resume/architecture-app-folder-migration-inventory.md: all167 Appfiles uniquely assigned across13 existing ownership groups, proposed exact destinations and36 path-dependent consumers. Xcode synchronized membership and manifest verifier support nested folders. Active map/UI/performance owners still have conflicting files; moves must be coordinated after their frozen deliveries. Current quality-debt comparator explicitly treats renames as new identities. A reviewed exact-byte rename identity mechanism is prerequisite; no source moves or lint baseline reset performed.
+
+PhaseE v2 twelve suites still active, route/sample-heavy junction group under2GiB owned-process guard. PhaseF supported build complete,16 focused suites running before/after; local ownership282 PASS. PhaseG completed extraction/compile pending; original62 functions across8 curve/display/overlap/smoothing suites prepared. Full parent package run still first Express census (55/337 cases at check), incomplete. No broader coverage or whole-App acceptance.
+
+## PhaseE validated for standing-authorized delivery
+
+RouteSolver, OverlapLanes and JourneyCompletion: original 107 functions across 12 suites PASS before/after. Exact original selectors and argument cases retained. Quality 201 inherited, 32 removed in this phase, zero new; format/ownership/changed-new usual10/40 and independent static review PASS. Candidate/baseline observed focused peaks {'baseline': 789005824, 'candidate': 784795112} bytes; short unmeasured cases remain in receipts. No complete-package/global/App coverage or strict whole-App footprint claim.

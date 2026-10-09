@@ -338,12 +338,47 @@ public enum RouteSolver {
             name = Stations.stopName(stop)
             code = Stations.stopStationCode(stop)
         }
-        // A fixed code is the stable station identity across a rename. The
-        // ordinary station index still checks the written name first so a
-        // genuinely wrong name/code pair can fall back to its name pool. Keep
-        // that safeguard, but when this written name is known inside the code
-        // pool and its variants are all inactive on the ride date, use the
-        // date-valid same-code predecessor/successor variants instead.
+        restoreDatedCodeIdentity(&candidates, name: name, code: code, index: index, rideDate: rideDate)
+        if pinnedMembershipIsRetired(
+            name: name, code: code, index: index, rideDate: rideDate,
+            sectionLineNames: sectionLineNames, sectionOperatorNames: sectionOperatorNames)
+        {
+            return []
+        }
+        guard !name.isEmpty, let code, !code.isEmpty, !candidates.isEmpty else {
+            return candidates
+        }
+
+        let sameNameStop = Stations.Stop(name: name)
+        let sameNameCandidates = index.candidateIndices(for: .stop(sameNameStop))
+        let sameNamePreferred = filterStationsByPreferredInstitution(
+            sameNameCandidates, in: index, allowedCodes: allowedCodes)
+        let nearby = filterStationCandidatesNear(
+            sameNamePreferred, referenceIndices: candidates, in: index)
+        let sectionLines = Set(sectionLineNames)
+        let additions = sectionLines.isEmpty ? nearby : nearby.filter {
+            sectionLines.contains(Stations.stationLineName(index.features[$0]))
+        }
+        if !additions.isEmpty {
+            return dedupeStationIndices(candidates + additions, in: index)
+        }
+        // A fixed code anchors the physical station even when its operator
+        // does not match the preferred institution. Expanding nationwide here
+        // can send a cross-company service to a distant same-name JR station
+        // (for example 高田 in Niigata to 高田 in Nara).
+        return candidates
+    }
+
+    // A fixed code is the stable station identity across a rename. The
+    // ordinary station index still checks the written name first so a
+    // genuinely wrong name/code pair can fall back to its name pool. Keep
+    // that safeguard, but when this written name is known inside the code
+    // pool and its variants are all inactive on the ride date, use the
+    // date-valid same-code predecessor/successor variants instead.
+    private static func restoreDatedCodeIdentity(
+        _ candidates: inout [Int], name: String, code: String?,
+        index: Stations.Index, rideDate: String?
+    ) {
         if let code, !code.isEmpty, let rideDate,
            RouteGraph.isPlainISODay(rideDate), !name.isEmpty
         {
@@ -375,13 +410,19 @@ public enum RouteSolver {
                 }
             }
         }
-        // A dated old name can remain current at a different operator (梅田
-        // on Osaka Metro after 阪急/阪神 renamed their terminals). If this
-        // section explicitly pins the retired line/operator membership, that
-        // namesake is not a substitute. Keep the full candidate pool whenever
-        // the pinned membership is valid so shared physical stations retain
-        // the existing cross-platform behavior. Fixed codes also retain their
-        // existing stable-identity resolution.
+    }
+
+    // A dated old name can remain current at a different operator (梅田
+    // on Osaka Metro after 阪急/阪神 renamed their terminals). If this
+    // section explicitly pins the retired line/operator membership, that
+    // namesake is not a substitute. Keep the full candidate pool whenever
+    // the pinned membership is valid so shared physical stations retain
+    // the existing cross-platform behavior. Fixed codes also retain their
+    // existing stable-identity resolution.
+    private static func pinnedMembershipIsRetired(
+        name: String, code: String?, index: Stations.Index, rideDate: String?,
+        sectionLineNames: [String], sectionOperatorNames: [String]
+    ) -> Bool {
         if (code ?? "").isEmpty, let rideDate,
            RouteGraph.isPlainISODay(rideDate)
         {
@@ -401,32 +442,11 @@ public enum RouteSolver {
                            validTo: Stations.stationValidTo(feature), on: rideDate)
                    })
                 {
-                    return []
+                    return true
                 }
             }
         }
-        guard !name.isEmpty, let code, !code.isEmpty, !candidates.isEmpty else {
-            return candidates
-        }
-
-        let sameNameStop = Stations.Stop(name: name)
-        let sameNameCandidates = index.candidateIndices(for: .stop(sameNameStop))
-        let sameNamePreferred = filterStationsByPreferredInstitution(
-            sameNameCandidates, in: index, allowedCodes: allowedCodes)
-        let nearby = filterStationCandidatesNear(
-            sameNamePreferred, referenceIndices: candidates, in: index)
-        let sectionLines = Set(sectionLineNames)
-        let additions = sectionLines.isEmpty ? nearby : nearby.filter {
-            sectionLines.contains(Stations.stationLineName(index.features[$0]))
-        }
-        if !additions.isEmpty {
-            return dedupeStationIndices(candidates + additions, in: index)
-        }
-        // A fixed code anchors the physical station even when its operator
-        // does not match the preferred institution. Expanding nationwide here
-        // can send a cross-company service to a distant same-name JR station
-        // (for example 高田 in Niigata to 高田 in Nara).
-        return candidates
+        return false
     }
 
     /// Every graph-node candidate for one physical station record, scored by
@@ -465,47 +485,17 @@ public enum RouteSolver {
             for nearest in RouteGraph.nearbyNodes(source, in: graph, radiusDeg: 0.006, limit: 160) {
                 guard nearest.distance <= stationSnapMaxDistanceMeters,
                       let meta = graph.nodeMeta[nearest.key] else { continue }
-                if nodeIsExcludedInstitution(meta.institutionTypeCodes, excluded: excludedCodes) {
-                    continue
-                }
-                let preferredInstitution = graphNodeHasPreferredInstitution(
-                    meta, preferred: preferredCodes)
-                if hints.requirePreferredInstitution && !preferredInstitution { continue }
-                if !hints.requiredLines.isEmpty
-                    && !RouteGraph.intersects(hints.requiredLines, meta.lineNames) { continue }
-                if !hints.requiredOperators.isEmpty
-                    && !RouteGraph.intersects(hints.requiredOperators, meta.operators) { continue }
-
-                var score = nearest.distance
-                if !stationLine.isEmpty && meta.lineNames.contains(stationLine) { score -= 40 }
-                if !stationOperator.isEmpty && meta.operators.contains(stationOperator) { score -= 15 }
-                if RouteGraph.intersects(hints.preferredLines, meta.lineNames) {
-                    score -= 25
-                } else if !hints.preferredLines.isEmpty {
-                    score += nonPreferredLineStationSnapPenalty
-                }
-                if RouteGraph.intersects(hints.preferredOperators, meta.operators) {
-                    score -= 10
-                } else if !hints.preferredOperators.isEmpty {
-                    score += nonPreferredOperatorStationSnapPenalty
-                }
-                if !preferredInstitution { score += nonPreferredStationSnapPenalty }
-
+                guard let preference = stationNodePreference(
+                    meta: meta, nearestDistance: nearest.distance,
+                    stationLine: stationLine, stationOperator: stationOperator, hints: hints,
+                    preferredCodes: preferredCodes, excludedCodes: excludedCodes) else { continue }
+                let score = preference.score
+                let preferredInstitution = preference.preferredInstitution
                 let candidate = StationNodeCandidate(
                     key: nearest.key, distance: nearest.distance, score: score,
                     hasPreferredInstitution: preferredInstitution,
                     stationIndex: stationIndex)
-                if let previous = byKey[nearest.key] {
-                    if score < previous.candidate.score
-                        || (score == previous.candidate.score
-                            && nearest.distance < previous.candidate.distance)
-                    {
-                        byKey[nearest.key] = (candidate, previous.order)
-                    }
-                } else {
-                    byKey[nearest.key] = (candidate, nextOrder)
-                    nextOrder += 1
-                }
+                retainStationCandidate(candidate, byKey: &byKey, nextOrder: &nextOrder)
             }
         }
 
@@ -518,6 +508,67 @@ public enum RouteSolver {
             }
             return $0.order < $1.order
         }.prefix(16).map(\.candidate)
+    }
+
+    private static func stationNodePreference(
+        meta: RouteGraph.NodeMeta, nearestDistance: Double,
+        stationLine: String, stationOperator: String, hints: SegmentHints,
+        preferredCodes: Set<String>, excludedCodes: Set<String>
+    ) -> (score: Double, preferredInstitution: Bool)? {
+        if nodeIsExcludedInstitution(meta.institutionTypeCodes, excluded: excludedCodes) {
+            return nil
+        }
+        let preferredInstitution = graphNodeHasPreferredInstitution(
+            meta, preferred: preferredCodes)
+        if hints.requirePreferredInstitution && !preferredInstitution { return nil }
+        if !hints.requiredLines.isEmpty
+            && !RouteGraph.intersects(hints.requiredLines, meta.lineNames) { return nil }
+        if !hints.requiredOperators.isEmpty
+            && !RouteGraph.intersects(hints.requiredOperators, meta.operators) { return nil }
+
+        let score = stationNodeScore(
+            distance: nearestDistance, stationLine: stationLine, stationOperator: stationOperator,
+            meta: meta, hints: hints, preferredInstitution: preferredInstitution)
+        return (score, preferredInstitution)
+    }
+
+    private static func stationNodeScore(
+        distance: Double, stationLine: String, stationOperator: String,
+        meta: RouteGraph.NodeMeta, hints: SegmentHints, preferredInstitution: Bool
+    ) -> Double {
+        var score = distance
+        if !stationLine.isEmpty && meta.lineNames.contains(stationLine) { score -= 40 }
+        if !stationOperator.isEmpty && meta.operators.contains(stationOperator) { score -= 15 }
+        if RouteGraph.intersects(hints.preferredLines, meta.lineNames) {
+            score -= 25
+        } else if !hints.preferredLines.isEmpty {
+            score += nonPreferredLineStationSnapPenalty
+        }
+        if RouteGraph.intersects(hints.preferredOperators, meta.operators) {
+            score -= 10
+        } else if !hints.preferredOperators.isEmpty {
+            score += nonPreferredOperatorStationSnapPenalty
+        }
+        if !preferredInstitution { score += nonPreferredStationSnapPenalty }
+
+        return score
+    }
+
+    private static func retainStationCandidate(
+        _ candidate: StationNodeCandidate,
+        byKey: inout [String: (candidate: StationNodeCandidate, order: Int)], nextOrder: inout Int
+    ) {
+        if let previous = byKey[candidate.key] {
+            if candidate.score < previous.candidate.score
+                || (candidate.score == previous.candidate.score
+                    && candidate.distance < previous.candidate.distance)
+            {
+                byKey[candidate.key] = (candidate, previous.order)
+            }
+        } else {
+            byKey[candidate.key] = (candidate, nextOrder)
+            nextOrder += 1
+        }
     }
 
     public static func collectStationCandidateGraphNodes(
@@ -586,186 +637,229 @@ public enum RouteSolver {
         graph: RouteGraph.Graph, stations: [Stations.Feature],
         permitsNode: ((Stations.Feature, Coordinate) -> Bool)? = nil
     ) {
-        struct PlatformMembership {
-            let featureID: String
-            let stationName: String
-            let groupCode: String?
-            let lineName: String
-            let operatorName: String
-            let institutionTypeCode: String
-            let validFrom: String?
-            let validTo: String?
-        }
-        /// Graph snap bookkeeping around one platform membership. Closer snaps
-        /// replace the list; equal distance keeps a distinct validity.
-        struct Info {
-            var key: String
-            var distance: Double
-            var order: Int
-            var membership: PlatformMembership
-        }
-        struct GroupKey: Hashable { var units: [UInt16] }
-
-        func featureID(_ feature: Stations.Feature) -> String {
-            for key in ["id", "history_id"] {
-                if case .string(let text)? = feature.properties[key], !text.isEmpty {
-                    return text
-                }
-            }
-            if let code = Stations.stationCode(feature), !code.isEmpty { return code }
-            return ""
-        }
-        var groups: [GroupKey: [String: [Info]]] = [:]
-        var groupOrder: [GroupKey] = []
-
-        func key(for feature: Stations.Feature) -> GroupKey {
-            if let code = Stations.stationGroupCode(feature), !code.isEmpty {
-                return GroupKey(units: Array("group:\(code)".utf16))
-            }
-            let display = coordinate(Stations.displayCoordinate(feature))
-                ?? Coordinate(lon: 0, lat: 0)
-            let lon = JSNumber.round(display.lon * 10) / 10
-            let lat = JSNumber.round(display.lat * 10) / 10
-            let text = "name:\(Stations.stationName(feature) ?? "")@"
-                + "\(JSNumber.string(lon)),\(JSNumber.string(lat))"
-            return GroupKey(units: Array(text.utf16))
-        }
-
+        var groups: [PlatformGroupKey: [String: [PlatformSnap]]] = [:]
+        var groupOrder: [PlatformGroupKey] = []
         for feature in stations {
             if Task.isCancelled { return }
-            let groupKey = key(for: feature)
+            let groupKey = platformGroupKey(for: feature)
             if groups[groupKey] == nil {
                 groups[groupKey] = [:]
                 groupOrder.append(groupKey)
             }
-            let sources = stationGeometryCoordinates(feature)
-            for source in sources {
-                for nearest in RouteGraph.nearbyNodes(
-                    source, in: graph, radiusDeg: 0.0035, limit: 30)
-                where nearest.distance <= 520 {
-                    if let permitsNode, let point = graph.nodes[nearest.key],
-                       !permitsNode(feature, point) { continue }
-                    let nextOrder = groups[groupKey]!.count
-                    let info = Info(
-                        key: nearest.key, distance: nearest.distance, order: nextOrder,
-                        membership: PlatformMembership(
-                            featureID: featureID(feature),
-                            stationName: Stations.stationName(feature) ?? "",
-                            groupCode: Stations.stationGroupCode(feature),
-                            lineName: Stations.stationLineName(feature),
-                            operatorName: Stations.stationOperator(feature),
-                            institutionTypeCode: Stations.stationInstitutionTypeCode(feature),
-                            validFrom: Stations.stationValidFrom(feature),
-                            validTo: Stations.stationValidTo(feature)))
-                    if let existing = groups[groupKey]![nearest.key], let closest = existing.first {
-                        var kept = info
-                        kept.order = closest.order
-                        if nearest.distance < closest.distance {
-                            groups[groupKey]![nearest.key] = [kept]
-                        } else if nearest.distance == closest.distance,
-                                  !existing.contains(where: {
-                                      $0.membership.validFrom == info.membership.validFrom
-                                          && $0.membership.validTo == info.membership.validTo
-                                  }) {
-                            // Co-located station records may represent different eras.
-                            // Keep each membership instead of letting input order decide
-                            // whether this platform is current or retired.
-                            groups[groupKey]![nearest.key]!.append(kept)
-                        }
-                    } else {
-                        groups[groupKey]![nearest.key] = [info]
-                    }
-                }
-            }
+            collectPlatformSnaps(
+                feature: feature, groupKey: groupKey, graph: graph,
+                permitsNode: permitsNode, groups: &groups)
         }
-
-        struct ConnectorKey: Hashable {
-            let pair: String
-            let validFrom: String?
-            let validTo: String?
-        }
-        var edgeKeys = Set<ConnectorKey>()
+        var edgeKeys = Set<PlatformConnectorKey>()
         var railReachability: [String: Set<String>] = [:]
-        func alreadyJoined(_ a: Info, _ b: Info, coordinate: Coordinate) -> Bool {
-            guard !a.membership.lineName.isEmpty,
-                  a.membership.lineName == b.membership.lineName,
-                  a.membership.operatorName == b.membership.operatorName,
-                  a.membership.validFrom == nil, a.membership.validTo == nil,
-                  b.membership.validFrom == nil, b.membership.validTo == nil else { return false }
-            let cacheKey = a.key + "|" + a.membership.lineName + "|" + a.membership.operatorName
-            if let reachable = railReachability[cacheKey] { return reachable.contains(b.key) }
-            var reachable: Set<String> = [a.key]
-            var pending = [a.key]
-            while let node = pending.popLast() {
-                for edge in graph.adjacency[node] ?? [] {
-                    guard edge.connector == nil, edge.validFrom == nil, edge.validTo == nil,
-                          edge.lineName == a.membership.lineName,
-                          edge.operator == a.membership.operatorName,
-                          let point = graph.nodes[edge.to],
-                          Geometry.distanceMeters(coordinate, point) <= 900,
-                          reachable.insert(edge.to).inserted else { continue }
-                    pending.append(edge.to)
-                }
-            }
-            railReachability[cacheKey] = reachable
-            return reachable.contains(b.key)
-        }
         for groupKey in groupOrder {
             if Task.isCancelled { return }
-            // This reachability is local to one station; retaining every
-            // platform's neighborhood would grow with the whole country.
+            // Reachability remains local to one station.
             railReachability.removeAll(keepingCapacity: true)
-            let nodes = (groups[groupKey]?.values ?? Dictionary<String, [Info]>().values)
-                .sorted {
-                    let a = $0[0], b = $1[0]
-                    return a.distance == b.distance ? a.order < b.order : a.distance < b.distance
-                }.prefix(24)
-            guard nodes.count >= 2 else { continue }
-            let values = Array(nodes)
-            for i in 0..<(values.count - 1) {
-                for j in (i + 1)..<values.count {
-                    for a in values[i] {
-                        for b in values[j] {
-                            if a.key == b.key { continue }
-                            let pairKey = jsSorted([a.key, b.key]).joined(separator: "|")
-                            guard let aCoordinate = graph.nodes[a.key],
-                                  let bCoordinate = graph.nodes[b.key] else { continue }
-                            let gap = Geometry.distanceMeters(aCoordinate, bCoordinate)
-                            if gap > 900 { continue }
-                            // Preserve the surveyed junction path when these
-                            // same-line nodes already meet in the station area.
-                            if alreadyJoined(a, b, coordinate: aCoordinate) { continue }
-                            var codes: [String] = []
-                            for code in [a.membership.institutionTypeCode, b.membership.institutionTypeCode]
-                            where !code.isEmpty && !codes.contains(code) { codes.append(code) }
-                            let connector = RouteGraph.StationConnector(
-                                institutionTypeCodes: codes,
-                                stationName: a.membership.stationName,
-                                groupCode: a.membership.groupCode ?? "")
-                            // ADR 0011: a transfer is valid only while both ends'
-                            // stations are, so the edge carries the intersection.
-                            // lineName and operatorName stay on the membership;
-                            // the connector edge does not copy them yet.
-                            let validFrom = [a.membership.validFrom, b.membership.validFrom].compactMap { $0 }.max()
-                            let validTo = [a.membership.validTo, b.membership.validTo].compactMap { $0 }.min()
-                            if let validFrom, let validTo, validFrom >= validTo { continue }
-                            let edgeKey = ConnectorKey(
-                                pair: pairKey, validFrom: validFrom, validTo: validTo)
-                            guard edgeKeys.insert(edgeKey).inserted else { continue }
-                            let edge = RouteGraph.Edge(
-                                to: b.key, length: max(gap + 180, 0.01),
-                                institutionTypeCode: "", railwayClassCode: "",
-                                lineName: "", operator: "", connector: connector,
-                                validFrom: validFrom, validTo: validTo)
-                            graph.adjacency[a.key, default: []].append(edge)
-                            var reverse = edge
-                            reverse.to = a.key
-                            graph.adjacency[b.key, default: []].append(reverse)
-                        }
+            connectPlatformGroup(
+                groupKey: groupKey, groups: groups, graph: graph,
+                edgeKeys: &edgeKeys, railReachability: &railReachability)
+        }
+    }
+
+    private struct PlatformMembership {
+        let featureID: String
+        let stationName: String
+        let groupCode: String?
+        let lineName: String
+        let operatorName: String
+        let institutionTypeCode: String
+        let validFrom: String?
+        let validTo: String?
+    }
+
+    /// Graph snap bookkeeping around one platform membership. Closer snaps
+    /// replace the list; equal distance keeps a distinct validity.
+    private struct PlatformSnap {
+        var key: String
+        var distance: Double
+        var order: Int
+        var membership: PlatformMembership
+    }
+
+    private struct PlatformGroupKey: Hashable { var units: [UInt16] }
+
+    private static func platformFeatureID(_ feature: Stations.Feature) -> String {
+        for key in ["id", "history_id"] {
+            if case .string(let text)? = feature.properties[key], !text.isEmpty {
+                return text
+            }
+        }
+        if let code = Stations.stationCode(feature), !code.isEmpty { return code }
+        return ""
+    }
+
+    private static func platformGroupKey(for feature: Stations.Feature) -> PlatformGroupKey {
+        if let code = Stations.stationGroupCode(feature), !code.isEmpty {
+            return PlatformGroupKey(units: Array("group:\(code)".utf16))
+        }
+        let display = coordinate(Stations.displayCoordinate(feature))
+            ?? Coordinate(lon: 0, lat: 0)
+        let lon = JSNumber.round(display.lon * 10) / 10
+        let lat = JSNumber.round(display.lat * 10) / 10
+        let text = "name:\(Stations.stationName(feature) ?? "")@"
+            + "\(JSNumber.string(lon)),\(JSNumber.string(lat))"
+        return PlatformGroupKey(units: Array(text.utf16))
+    }
+
+    private struct PlatformConnectorKey: Hashable {
+        let pair: String
+        let validFrom: String?
+        let validTo: String?
+    }
+
+    private static func platformsAlreadyJoined(
+        _ a: PlatformSnap, _ b: PlatformSnap, coordinate: Coordinate, graph: RouteGraph.Graph,
+        railReachability: inout [String: Set<String>]
+    ) -> Bool {
+        guard !a.membership.lineName.isEmpty,
+              a.membership.lineName == b.membership.lineName,
+              a.membership.operatorName == b.membership.operatorName,
+              a.membership.validFrom == nil, a.membership.validTo == nil,
+              b.membership.validFrom == nil, b.membership.validTo == nil else { return false }
+        let cacheKey = a.key + "|" + a.membership.lineName + "|" + a.membership.operatorName
+        if let reachable = railReachability[cacheKey] { return reachable.contains(b.key) }
+        var reachable: Set<String> = [a.key]
+        var pending = [a.key]
+        while let node = pending.popLast() {
+            for edge in graph.adjacency[node] ?? [] {
+                guard edge.connector == nil, edge.validFrom == nil, edge.validTo == nil,
+                      edge.lineName == a.membership.lineName,
+                      edge.operator == a.membership.operatorName,
+                      let point = graph.nodes[edge.to],
+                      Geometry.distanceMeters(coordinate, point) <= 900,
+                      reachable.insert(edge.to).inserted else { continue }
+                pending.append(edge.to)
+            }
+        }
+        railReachability[cacheKey] = reachable
+        return reachable.contains(b.key)
+    }
+
+    private static func collectPlatformSnaps(
+        feature: Stations.Feature, groupKey: PlatformGroupKey, graph: RouteGraph.Graph,
+        permitsNode: ((Stations.Feature, Coordinate) -> Bool)?,
+        groups: inout [PlatformGroupKey: [String: [PlatformSnap]]]
+    ) {
+        let sources = stationGeometryCoordinates(feature)
+        for source in sources {
+            for nearest in RouteGraph.nearbyNodes(
+                source, in: graph, radiusDeg: 0.0035, limit: 30)
+            where nearest.distance <= 520 {
+                if let permitsNode, let point = graph.nodes[nearest.key],
+                   !permitsNode(feature, point) { continue }
+                recordPlatformSnap(
+                    key: nearest.key, distance: nearest.distance, feature: feature,
+                    groupKey: groupKey, groups: &groups)
+            }
+        }
+    }
+
+    private static func recordPlatformSnap(
+        key: String, distance: Double, feature: Stations.Feature, groupKey: PlatformGroupKey,
+        groups: inout [PlatformGroupKey: [String: [PlatformSnap]]]
+    ) {
+        let nextOrder = groups[groupKey]!.count
+        let info = PlatformSnap(
+            key: key, distance: distance, order: nextOrder,
+            membership: PlatformMembership(
+                featureID: platformFeatureID(feature),
+                stationName: Stations.stationName(feature) ?? "",
+                groupCode: Stations.stationGroupCode(feature),
+                lineName: Stations.stationLineName(feature),
+                operatorName: Stations.stationOperator(feature),
+                institutionTypeCode: Stations.stationInstitutionTypeCode(feature),
+                validFrom: Stations.stationValidFrom(feature),
+                validTo: Stations.stationValidTo(feature)))
+        if let existing = groups[groupKey]![key], let closest = existing.first {
+            var kept = info
+            kept.order = closest.order
+            if distance < closest.distance {
+                groups[groupKey]![key] = [kept]
+            } else if distance == closest.distance,
+                      !existing.contains(where: {
+                          $0.membership.validFrom == info.membership.validFrom
+                              && $0.membership.validTo == info.membership.validTo
+                      }) {
+                // Co-located station records may represent different eras.
+                // Keep each membership instead of letting input order decide
+                // whether this platform is current or retired.
+                groups[groupKey]![key]!.append(kept)
+            }
+        } else {
+            groups[groupKey]![key] = [info]
+        }
+    }
+
+    private static func connectPlatformGroup(
+        groupKey: PlatformGroupKey, groups: [PlatformGroupKey: [String: [PlatformSnap]]],
+        graph: RouteGraph.Graph, edgeKeys: inout Set<PlatformConnectorKey>,
+        railReachability: inout [String: Set<String>]
+    ) {
+        let nodes = (groups[groupKey]?.values ?? Dictionary<String, [PlatformSnap]>().values)
+            .sorted {
+                let a = $0[0], b = $1[0]
+                return a.distance == b.distance ? a.order < b.order : a.distance < b.distance
+            }.prefix(24)
+        guard nodes.count >= 2 else { return }
+        let values = Array(nodes)
+        for i in 0..<(values.count - 1) {
+            for j in (i + 1)..<values.count {
+                for a in values[i] {
+                    for b in values[j] {
+                        appendPlatformConnector(
+                            a, b, graph: graph, edgeKeys: &edgeKeys,
+                            railReachability: &railReachability)
                     }
                 }
             }
         }
+    }
+
+    private static func appendPlatformConnector(
+        _ a: PlatformSnap, _ b: PlatformSnap, graph: RouteGraph.Graph,
+        edgeKeys: inout Set<PlatformConnectorKey>, railReachability: inout [String: Set<String>]
+    ) {
+        if a.key == b.key { return }
+        let pairKey = jsSorted([a.key, b.key]).joined(separator: "|")
+        guard let aCoordinate = graph.nodes[a.key],
+              let bCoordinate = graph.nodes[b.key] else { return }
+        let gap = Geometry.distanceMeters(aCoordinate, bCoordinate)
+        if gap > 900 { return }
+        // Preserve the surveyed junction path when these
+        // same-line nodes already meet in the station area.
+        if platformsAlreadyJoined(a, b, coordinate: aCoordinate, graph: graph, railReachability: &railReachability) { return }
+        var codes: [String] = []
+        for code in [a.membership.institutionTypeCode, b.membership.institutionTypeCode]
+        where !code.isEmpty && !codes.contains(code) { codes.append(code) }
+        let connector = RouteGraph.StationConnector(
+            institutionTypeCodes: codes,
+            stationName: a.membership.stationName,
+            groupCode: a.membership.groupCode ?? "")
+        // ADR 0011: a transfer is valid only while both ends'
+        // stations are, so the edge carries the intersection.
+        // lineName and operatorName stay on the membership;
+        // the connector edge does not copy them yet.
+        let validFrom = [a.membership.validFrom, b.membership.validFrom].compactMap { $0 }.max()
+        let validTo = [a.membership.validTo, b.membership.validTo].compactMap { $0 }.min()
+        if let validFrom, let validTo, validFrom >= validTo { return }
+        let edgeKey = PlatformConnectorKey(
+            pair: pairKey, validFrom: validFrom, validTo: validTo)
+        guard edgeKeys.insert(edgeKey).inserted else { return }
+        let edge = RouteGraph.Edge(
+            to: b.key, length: max(gap + 180, 0.01),
+            institutionTypeCode: "", railwayClassCode: "",
+            lineName: "", operator: "", connector: connector,
+            validFrom: validFrom, validTo: validTo)
+        graph.adjacency[a.key, default: []].append(edge)
+        var reverse = edge
+        reverse.to = a.key
+        graph.adjacency[b.key, default: []].append(reverse)
     }
 
     public static func inferSectionRouteConstraints(
@@ -836,6 +930,19 @@ public enum RouteSolver {
         // soft penalty never distinguishes them. With no service list, the
         // common endpoint lines are still the preference.
 
+        return endpointMembershipHints(
+            fromStationIndices: fromStationIndices, toStationIndices: toStationIndices,
+            stations: stations, allowedCodes: allowedCodes, train: train,
+            preferredLines: &preferredLines, preferredOperators: &preferredOperators,
+            explicitLines: explicitLines, explicitOperators: explicitOperators)
+    }
+
+    private static func endpointMembershipHints(
+        fromStationIndices: [Int], toStationIndices: [Int], stations: Stations.Index,
+        allowedCodes: [String], train: TrainContext,
+        preferredLines: inout Set<String>, preferredOperators: inout Set<String>,
+        explicitLines: Set<String>, explicitOperators: Set<String>
+    ) -> SegmentHints {
         let fromPreferred = preferredStationPool(
             fromStationIndices, stations: stations, allowedCodes: allowedCodes)
         let toPreferred = preferredStationPool(
@@ -856,6 +963,68 @@ public enum RouteSolver {
         let commonLines = preferredCommonLines.isEmpty ? allCommonLines : preferredCommonLines
         let commonOperators = preferredCommonOperators.isEmpty
             ? allCommonOperators : preferredCommonOperators
+        applyCommonEndpointPreferences(
+            train: train, commonLines: commonLines, commonOperators: commonOperators,
+            fromPreferredLines: fromPreferredLines, toPreferredLines: toPreferredLines,
+            fromPreferredOperators: fromPreferredOperators, toPreferredOperators: toPreferredOperators,
+            preferredLines: &preferredLines, preferredOperators: &preferredOperators)
+        return assembledSegmentHints(
+            preferredLines: preferredLines, preferredOperators: preferredOperators,
+            explicitLines: explicitLines, explicitOperators: explicitOperators,
+            commonLines: commonLines, commonOperators: commonOperators,
+            allCommonLines: allCommonLines, allCommonOperators: allCommonOperators,
+            preferredCommonLines: preferredCommonLines, preferredCommonOperators: preferredCommonOperators,
+            fromLines: fromLines, toLines: toLines, fromOperators: fromOperators, toOperators: toOperators,
+            fromPreferredLines: fromPreferredLines, toPreferredLines: toPreferredLines,
+            fromPreferredOperators: fromPreferredOperators, toPreferredOperators: toPreferredOperators)
+    }
+
+    private static func assembledSegmentHints(
+        preferredLines: Set<String>,
+        preferredOperators: Set<String>,
+        explicitLines: Set<String>,
+        explicitOperators: Set<String>,
+        commonLines: Set<String>,
+        commonOperators: Set<String>,
+        allCommonLines: Set<String>,
+        allCommonOperators: Set<String>,
+        preferredCommonLines: Set<String>,
+        preferredCommonOperators: Set<String>,
+        fromLines: Set<String>,
+        toLines: Set<String>,
+        fromOperators: Set<String>,
+        toOperators: Set<String>,
+        fromPreferredLines: Set<String>,
+        toPreferredLines: Set<String>,
+        fromPreferredOperators: Set<String>,
+        toPreferredOperators: Set<String>
+    ) -> SegmentHints {
+        return SegmentHints(
+            preferredLines: preferredLines,
+            preferredOperators: preferredOperators,
+            requiredLines: explicitLines,
+            requiredOperators: explicitOperators,
+            explicitRequiredLines: explicitLines,
+            explicitRequiredOperators: explicitOperators,
+            commonLines: commonLines,
+            commonOperators: commonOperators,
+            allCommonLines: allCommonLines,
+            allCommonOperators: allCommonOperators,
+            preferredInstitutionCommonLines: preferredCommonLines,
+            preferredInstitutionCommonOperators: preferredCommonOperators,
+            fromLines: fromLines, toLines: toLines,
+            fromOperators: fromOperators, toOperators: toOperators,
+            fromPreferredLines: fromPreferredLines, toPreferredLines: toPreferredLines,
+            fromPreferredOperators: fromPreferredOperators,
+            toPreferredOperators: toPreferredOperators)
+    }
+
+    private static func applyCommonEndpointPreferences(
+        train: TrainContext, commonLines: Set<String>, commonOperators: Set<String>,
+        fromPreferredLines: Set<String>, toPreferredLines: Set<String>,
+        fromPreferredOperators: Set<String>, toPreferredOperators: Set<String>,
+        preferredLines: inout Set<String>, preferredOperators: inout Set<String>
+    ) {
         let serviceLines = Set(train.preferredLineNames.filter { !$0.isEmpty })
         if serviceLines.isEmpty {
             preferredLines.formUnion(commonLines)
@@ -885,25 +1054,6 @@ public enum RouteSolver {
         {
             preferredOperators.insert(common)
         }
-
-        return SegmentHints(
-            preferredLines: preferredLines,
-            preferredOperators: preferredOperators,
-            requiredLines: explicitLines,
-            requiredOperators: explicitOperators,
-            explicitRequiredLines: explicitLines,
-            explicitRequiredOperators: explicitOperators,
-            commonLines: commonLines,
-            commonOperators: commonOperators,
-            allCommonLines: allCommonLines,
-            allCommonOperators: allCommonOperators,
-            preferredInstitutionCommonLines: preferredCommonLines,
-            preferredInstitutionCommonOperators: preferredCommonOperators,
-            fromLines: fromLines, toLines: toLines,
-            fromOperators: fromOperators, toOperators: toOperators,
-            fromPreferredLines: fromPreferredLines, toPreferredLines: toPreferredLines,
-            fromPreferredOperators: fromPreferredOperators,
-            toPreferredOperators: toPreferredOperators)
     }
 
     public static func buildSegmentRouteSolveAttempts(
@@ -912,71 +1062,86 @@ public enum RouteSolver {
         var attempts: [SegmentHints] = []
         var keys = Set<String>()
 
-        func push(
-            lines: Set<String>? = nil, operators: Set<String>? = nil,
-            preferredLines: Set<String>? = nil,
-            preferredOperators: Set<String>? = nil,
-            home: Bool, mode: String
-        ) {
-            var attempt = base
-            if let lines { attempt.requiredLines = lines }
-            if let operators { attempt.requiredOperators = operators }
-            if let preferredLines { attempt.preferredLines = preferredLines }
-            if let preferredOperators { attempt.preferredOperators = preferredOperators }
-            attempt.requirePreferredInstitution = home
-            attempt.solveMode = mode
-            let key = [
-                mode, home ? "home" : "soft",
-                jsSorted(attempt.requiredLines).joined(separator: ","),
-                jsSorted(attempt.requiredOperators).joined(separator: ","),
-            ].joined(separator: "|")
-            if keys.insert(key).inserted { attempts.append(attempt) }
+        if appendExplicitSolveAttempts(base: base, attempts: &attempts, keys: &keys) {
+            return attempts
         }
+        appendCommonSolveAttempts(base: base, attempts: &attempts, keys: &keys)
+        return attempts
+    }
 
+    private static func appendSolveAttempt(
+        base: SegmentHints, attempts: inout [SegmentHints], keys: inout Set<String>,
+        lines: Set<String>? = nil, operators: Set<String>? = nil,
+        preferredLines: Set<String>? = nil, preferredOperators: Set<String>? = nil,
+        home: Bool, mode: String
+    ) {
+        var attempt = base
+        if let lines { attempt.requiredLines = lines }
+        if let operators { attempt.requiredOperators = operators }
+        if let preferredLines { attempt.preferredLines = preferredLines }
+        if let preferredOperators { attempt.preferredOperators = preferredOperators }
+        attempt.requirePreferredInstitution = home
+        attempt.solveMode = mode
+        let key = [
+            mode, home ? "home" : "soft",
+            jsSorted(attempt.requiredLines).joined(separator: ","),
+            jsSorted(attempt.requiredOperators).joined(separator: ","),
+        ].joined(separator: "|")
+        if keys.insert(key).inserted { attempts.append(attempt) }
+    }
+
+    private static func appendExplicitSolveAttempts(
+        base: SegmentHints, attempts: inout [SegmentHints], keys: inout Set<String>
+    ) -> Bool {
         let explicitLines = base.explicitRequiredLines
         let explicitOperators = base.explicitRequiredOperators
         if !explicitLines.isEmpty {
-            push(lines: explicitLines, operators: explicitOperators, home: true,
+            appendSolveAttempt(base: base, attempts: &attempts, keys: &keys, lines: explicitLines, operators: explicitOperators, home: true,
                  mode: "explicit_section_route_required_home_institution")
-            push(lines: explicitLines, operators: explicitOperators, home: false,
+            appendSolveAttempt(base: base, attempts: &attempts, keys: &keys, lines: explicitLines, operators: explicitOperators, home: false,
                  mode: "explicit_section_route_required_soft_institution")
-            return attempts
+            return true
         }
         if !explicitOperators.isEmpty {
             if !base.commonLines.isEmpty {
-                push(lines: base.commonLines, operators: explicitOperators, home: true,
+                appendSolveAttempt(base: base, attempts: &attempts, keys: &keys, lines: base.commonLines, operators: explicitOperators, home: true,
                      mode: "operator_pinned_common_line_required_home_institution")
-                push(lines: base.commonLines, operators: explicitOperators, home: false,
+                appendSolveAttempt(base: base, attempts: &attempts, keys: &keys, lines: base.commonLines, operators: explicitOperators, home: false,
                      mode: "operator_pinned_common_line_required_soft_institution")
             }
-            push(lines: [], operators: explicitOperators, home: true,
+            appendSolveAttempt(base: base, attempts: &attempts, keys: &keys, lines: [], operators: explicitOperators, home: true,
                  mode: "explicit_operator_required_home_institution")
-            push(lines: [], operators: explicitOperators, home: false,
+            appendSolveAttempt(base: base, attempts: &attempts, keys: &keys, lines: [], operators: explicitOperators, home: false,
                  mode: "explicit_operator_required_soft_institution")
-            return attempts
+            return true
         }
+        return false
+    }
+
+    private static func appendCommonSolveAttempts(
+        base: SegmentHints, attempts: inout [SegmentHints], keys: inout Set<String>
+    ) {
         if !base.commonLines.isEmpty, !base.commonOperators.isEmpty {
-            push(lines: base.commonLines, operators: base.commonOperators, home: true,
+            appendSolveAttempt(base: base, attempts: &attempts, keys: &keys, lines: base.commonLines, operators: base.commonOperators, home: true,
                  mode: "common_line_and_operator_required_home_institution")
         }
         if !base.commonLines.isEmpty {
-            push(lines: base.commonLines, operators: [], home: true,
+            appendSolveAttempt(base: base, attempts: &attempts, keys: &keys, lines: base.commonLines, operators: [], home: true,
                  mode: "common_line_required_home_institution")
         }
         if !base.commonOperators.isEmpty {
-            push(lines: [], operators: base.commonOperators, home: true,
+            appendSolveAttempt(base: base, attempts: &attempts, keys: &keys, lines: [], operators: base.commonOperators, home: true,
                  mode: "common_operator_required_home_institution")
         }
-        push(home: true, mode: "home_institution_soft_line_operator_hints")
+        appendSolveAttempt(base: base, attempts: &attempts, keys: &keys, home: true, mode: "home_institution_soft_line_operator_hints")
         if !base.commonLines.isEmpty {
-            push(lines: base.commonLines, operators: [], home: false,
+            appendSolveAttempt(base: base, attempts: &attempts, keys: &keys, lines: base.commonLines, operators: [], home: false,
                  mode: "common_line_required_other_operator_fallback")
         }
-        push(home: false, mode: (base.commonLines.isEmpty && base.commonOperators.isEmpty)
+        appendSolveAttempt(base: base, attempts: &attempts, keys: &keys, home: false, mode: (base.commonLines.isEmpty && base.commonOperators.isEmpty)
              ? "no_common_line_soft_fallback" : "soft_fallback_after_home_attempts")
-        push(lines: [], operators: [], preferredLines: [], preferredOperators: [], home: true,
+        appendSolveAttempt(base: base, attempts: &attempts, keys: &keys, lines: [], operators: [], preferredLines: [], preferredOperators: [], home: true,
              mode: "institution_only_unbiased_fallback")
-        return attempts
     }
 
     public struct SolvedSection: Sendable, Equatable {
@@ -1363,10 +1528,6 @@ public enum RouteSolver {
         if previous == first
             || sameIdentitySpan(from: previous, to: first, graph: graph, date: rideDate) { return true }
         guard graph.nodes[previous] != nil, graph.nodes[first] != nil else { return false }
-        func identity(_ key: String) -> Substring {
-            guard let separator = key.lastIndex(of: "@") else { return key[...] }
-            return key[..<separator]
-        }
         // Each layer is a multi-source bounded Dijkstra after exactly N reviewed
         // junctions. Reset distance only across a junction, never along rail.
         var sources: Set<String> = [previous]
@@ -1379,45 +1540,64 @@ public enum RouteSolver {
                 let current = pending.remove(at: index)
                 guard current.length == best[current.key] else { continue }
                 if hops > 0, current.key == first { return true }
-                for edge in graph.adjacency[current.key] ?? [] {
-                    guard edge.connector == nil, graph.nodes[edge.to] != nil,
-                          RouteGraph.RailValidity.isValid(
-                            validFrom: edge.validFrom, validTo: edge.validTo, on: rideDate) else { continue }
-                    if let junction = edge.physicalJunction?.junction {
-                        guard hops < 2, !junction.evidence.isEmpty,
-                              junctionGeometryIsValid(junction, edge: edge, current: current.key, graph: graph),
-                              RouteGraph.RailValidity.isValid(validFrom: junction.validFrom,
-                                validTo: junction.validTo, on: rideDate) else { continue }
-                        if junction.kind == .osmConnector {
-                            guard let hop = osmConnectorHop(
-                                from: current.key, junction: junction, graph: graph, rideDate: rideDate)
-                            else { continue }
-                            nextSources.insert(hop.destination)
-                            continue
-                        }
-                        if junction.kind == .osmTrack, junction.endJunction != nil {
-                            nextSources.insert(edge.to)
-                            continue
-                        }
-                        let from = RouteGraph.physicalNodeKey(junction.from.coordinate, identity: junction.from.identity)
-                        let to = RouteGraph.physicalNodeKey(junction.to.coordinate, identity: junction.to.identity)
-                        guard (current.key == from && edge.to == to)
-                            || (current.key == to && edge.to == from) else { continue }
-                        nextSources.insert(edge.to)
-                    } else {
-                        let length = current.length + edge.length
-                        guard identity(current.key) == identity(edge.to),
-                              length <= physicalJunctionMaxApproachMeters,
-                              length < best[edge.to, default: .infinity] else { continue }
-                        best[edge.to] = length
-                        pending.append((edge.to, length))
-                    }
-                }
+                visitBoundaryEdges(
+                    current: current, hops: hops, graph: graph, rideDate: rideDate,
+                    nextSources: &nextSources, best: &best, pending: &pending)
             }
             sources = nextSources
             if sources.isEmpty { break }
         }
         return false
+    }
+
+    private static func visitBoundaryEdges(
+        current: (key: String, length: Double), hops: Int, graph: RouteGraph.Graph, rideDate: String?,
+        nextSources: inout Set<String>, best: inout [String: Double], pending: inout [(key: String, length: Double)]
+    ) {
+        for edge in graph.adjacency[current.key] ?? [] {
+            guard edge.connector == nil, graph.nodes[edge.to] != nil,
+                  RouteGraph.RailValidity.isValid(
+                    validFrom: edge.validFrom, validTo: edge.validTo, on: rideDate) else { continue }
+            if let junction = edge.physicalJunction?.junction {
+                if let destination = reviewedBoundaryDestination(
+                    edge: edge, junction: junction, current: current.key,
+                    hops: hops, graph: graph, rideDate: rideDate)
+                {
+                    nextSources.insert(destination)
+                }
+            } else {
+                let length = current.length + edge.length
+                guard physicalIdentity(current.key) == physicalIdentity(edge.to),
+                      length <= physicalJunctionMaxApproachMeters,
+                      length < best[edge.to, default: .infinity] else { continue }
+                best[edge.to] = length
+                pending.append((edge.to, length))
+            }
+        }
+    }
+
+    private static func reviewedBoundaryDestination(
+        edge: RouteGraph.Edge, junction: RouteGraph.PhysicalJunction, current: String,
+        hops: Int, graph: RouteGraph.Graph, rideDate: String?
+    ) -> String? {
+        guard hops < 2, !junction.evidence.isEmpty,
+              junctionGeometryIsValid(junction, edge: edge, current: current, graph: graph),
+              RouteGraph.RailValidity.isValid(validFrom: junction.validFrom,
+                validTo: junction.validTo, on: rideDate) else { return nil }
+        if junction.kind == .osmConnector {
+            guard let hop = osmConnectorHop(
+                from: current, junction: junction, graph: graph, rideDate: rideDate)
+            else { return nil }
+            return hop.destination
+        }
+        if junction.kind == .osmTrack, junction.endJunction != nil {
+            return edge.to
+        }
+        let from = RouteGraph.physicalNodeKey(junction.from.coordinate, identity: junction.from.identity)
+        let to = RouteGraph.physicalNodeKey(junction.to.coordinate, identity: junction.to.identity)
+        guard (current == from && edge.to == to)
+            || (current == to && edge.to == from) else { return nil }
+        return edge.to
     }
 
     /// When the certified ends of two sections fail ``physicalBoundaryIsProven``,
@@ -1490,24 +1670,7 @@ public enum RouteSolver {
     ) -> Set<String> {
         var codes: Set<String> = [stopCode]
         var groups: Set<String> = []
-        func absorb(_ feature: Stations.Feature) -> Set<String> {
-            let code = trimmedStationCode(Stations.stationCode(feature))
-            let group = trimmedStationCode(Stations.stationGroupCode(feature))
-            var inserted: Set<String> = []
-            if !code.isEmpty, codes.insert(code).inserted { inserted.insert(code) }
-            if !group.isEmpty {
-                if codes.insert(group).inserted { inserted.insert(group) }
-                if groups.insert(group).inserted { inserted.insert(group) }
-            }
-            return inserted
-        }
-        for index in stations.featureIndices(matchingTrimmedCodeOrGroup: stopCode) {
-            let feature = stations.features[index]
-            guard stationFeatureIsCurrent(feature, rideDate: rideDate) else { continue }
-            let code = trimmedStationCode(Stations.stationCode(feature))
-            let group = trimmedStationCode(Stations.stationGroupCode(feature))
-            if code == stopCode || group == stopCode { _ = absorb(feature) }
-        }
+        seedStationGroups(stopCode: stopCode, stations: stations, rideDate: rideDate, codes: &codes, groups: &groups)
         guard !groups.isEmpty else { return codes }
         // Indices are processed in ascending order, each at most once. A
         // min-heap keeps that order without rescanning the whole candidate
@@ -1515,54 +1678,85 @@ public enum RouteSolver {
         var lastProcessedIndex = -1
         var pending: [Int] = []
         var queued = Set<Int>()
-        func push(_ index: Int) {
-            guard index > lastProcessedIndex, queued.insert(index).inserted else { return }
-            pending.append(index)
-            var cursor = pending.count - 1
-            while cursor > 0 {
-                let parent = (cursor - 1) / 2
-                guard pending[cursor] < pending[parent] else { break }
-                pending.swapAt(cursor, parent)
-                cursor = parent
-            }
-        }
-        func pop() -> Int? {
-            guard !pending.isEmpty else { return nil }
-            let first = pending[0]
-            let last = pending.removeLast()
-            if pending.isEmpty { return first }
-            pending[0] = last
-            var cursor = 0
-            while cursor * 2 + 1 < pending.count {
-                let left = cursor * 2 + 1
-                let right = left + 1
-                let child = right < pending.count && pending[right] < pending[left] ? right : left
-                guard pending[child] < pending[cursor] else { break }
-                pending.swapAt(cursor, child)
-                cursor = child
-            }
-            return first
-        }
         for key in codes.union(groups) {
             for index in stations.featureIndices(matchingTrimmedCodeOrGroup: key) {
-                push(index)
+                enqueueStationGroupIndex(index, lastProcessedIndex: lastProcessedIndex, queued: &queued, pending: &pending)
             }
         }
-        while let index = pop() {
+        while let index = popStationGroupIndex(&pending) {
             lastProcessedIndex = index
             let feature = stations.features[index]
             guard stationFeatureIsCurrent(feature, rideDate: rideDate) else { continue }
             let code = trimmedStationCode(Stations.stationCode(feature))
             let group = trimmedStationCode(Stations.stationGroupCode(feature))
             if (!group.isEmpty && groups.contains(group)) || codes.contains(code) {
-                for key in absorb(feature) {
+                for key in absorbStationGroupMembership(feature, codes: &codes, groups: &groups) {
                     for candidate in stations.featureIndices(matchingTrimmedCodeOrGroup: key) {
-                        push(candidate)
+                        enqueueStationGroupIndex(candidate, lastProcessedIndex: lastProcessedIndex, queued: &queued, pending: &pending)
                     }
                 }
             }
         }
         return codes
+    }
+
+    private static func seedStationGroups(
+        stopCode: String, stations: Stations.Index, rideDate: String?,
+        codes: inout Set<String>, groups: inout Set<String>
+    ) {
+        for index in stations.featureIndices(matchingTrimmedCodeOrGroup: stopCode) {
+            let feature = stations.features[index]
+            guard stationFeatureIsCurrent(feature, rideDate: rideDate) else { continue }
+            let code = trimmedStationCode(Stations.stationCode(feature))
+            let group = trimmedStationCode(Stations.stationGroupCode(feature))
+            if code == stopCode || group == stopCode { _ = absorbStationGroupMembership(feature, codes: &codes, groups: &groups) }
+        }
+    }
+
+    private static func absorbStationGroupMembership(
+        _ feature: Stations.Feature, codes: inout Set<String>, groups: inout Set<String>
+    ) -> Set<String> {
+        let code = trimmedStationCode(Stations.stationCode(feature))
+        let group = trimmedStationCode(Stations.stationGroupCode(feature))
+        var inserted: Set<String> = []
+        if !code.isEmpty, codes.insert(code).inserted { inserted.insert(code) }
+        if !group.isEmpty {
+            if codes.insert(group).inserted { inserted.insert(group) }
+            if groups.insert(group).inserted { inserted.insert(group) }
+        }
+        return inserted
+    }
+
+    private static func enqueueStationGroupIndex(
+        _ index: Int, lastProcessedIndex: Int, queued: inout Set<Int>, pending: inout [Int]
+    ) {
+        guard index > lastProcessedIndex, queued.insert(index).inserted else { return }
+        pending.append(index)
+        var cursor = pending.count - 1
+        while cursor > 0 {
+            let parent = (cursor - 1) / 2
+            guard pending[cursor] < pending[parent] else { break }
+            pending.swapAt(cursor, parent)
+            cursor = parent
+        }
+    }
+
+    private static func popStationGroupIndex(_ pending: inout [Int]) -> Int? {
+        guard !pending.isEmpty else { return nil }
+        let first = pending[0]
+        let last = pending.removeLast()
+        if pending.isEmpty { return first }
+        pending[0] = last
+        var cursor = 0
+        while cursor * 2 + 1 < pending.count {
+            let left = cursor * 2 + 1
+            let right = left + 1
+            let child = right < pending.count && pending[right] < pending[left] ? right : left
+            guard pending[child] < pending[cursor] else { break }
+            pending.swapAt(cursor, child)
+            cursor = child
+        }
+        return first
     }
 
     private static func stationFeatureIsCurrent(
@@ -1839,8 +2033,7 @@ public enum RouteSolver {
         anchorIndices: Set<Int> = []
     ) -> [String]? {
         guard coordinates.count >= 2, let first = coordinates.first else { return nil }
-        struct Step { let key: String; let parent: Int? }
-        var steps: [Step] = []
+        var steps: [PhysicalPathStep] = []
         var frontier: [String: Int] = [:]
         // Keys entered by a surveyed rail edge. A zero-length junction copy at
         // the same vertex is not one of these.
@@ -1848,7 +2041,7 @@ public enum RouteSolver {
         let firstCoordinate = Grid.normalizeGraphCoord(first)
         for key in RouteGraph.exactNodeKeys(firstCoordinate, in: graph) {
             frontier[key] = steps.count
-            steps.append(Step(key: key, parent: nil))
+            steps.append(PhysicalPathStep(key: key, parent: nil))
         }
         // Measured off-grid error: max 0.7 m, p99 0.06 m; five-decimal
         // coordinate rounding has a worst-case displacement of about 0.72 m.
@@ -1858,251 +2051,28 @@ public enum RouteSolver {
         var skippedAnchor = false
         let hints = SegmentHints(requiredLines: requiredLines, requiredOperators: requiredOperators)
 
-        func pendingPointsFollowEdge(from a: Coordinate, to b: Coordinate) -> Bool {
-            guard !pending.isEmpty else { return true }
-            let metersPerDegree = 6_371_000.0 * .pi / 180
-            let sx = metersPerDegree * cos((a.lat + b.lat) / 2 * .pi / 180)
-            let dx = (b.lon - a.lon) * sx
-            let dy = (b.lat - a.lat) * metersPerDegree
-            let lengthSquared = dx * dx + dy * dy
-            guard lengthSquared > 0 else { return false }
-            var previousProjection = 0.0
-            for point in pending {
-                let px = (point.lon - a.lon) * sx
-                let py = (point.lat - a.lat) * metersPerDegree
-                let projection = (px * dx + py * dy) / lengthSquared
-                guard projection >= previousProjection, projection <= 1,
-                      hypot(px - projection * dx, py - projection * dy)
-                        <= onEdgeToleranceMeters else { return false }
-                previousProjection = projection
-            }
-            return true
-        }
-
-        // A station-table join that is neither a node nor on a surveyed edge
-        // is not a vertex of the ride. The keys on either side still have to
-        // be one date-valid same-identity walk of at most 520 m.
-        func anchorWithinOneMeter(_ coordinate: Coordinate) -> Bool {
-            for key in frontier.keys {
-                guard let terminal = graph.nodes[key] else { continue }
-                if anchorLiesOnIdentityEdge(
-                    coordinate, terminal: terminal, graph: graph, maxMeters: anchorSpanMeters,
-                    requiredLines: requiredLines, requiredOperators: requiredOperators,
-                    rideDate: rideDate)
-                {
-                    return true
-                }
-            }
-            return false
-        }
-
-        func bridgeSkippedAnchor(to nextCoordinate: Coordinate) -> [String: Int]? {
-            let targets = RouteGraph.exactNodeKeys(nextCoordinate, in: graph)
-            guard !targets.isEmpty else { return nil }
-            var bridged: [String: Int] = [:]
-            for (key, parent) in frontier.sorted(by: { $0.value < $1.value }) {
-                for target in targets {
-                    guard let span = sameIdentitySpanPath(
-                        from: key, to: target, graph: graph, date: rideDate,
-                        maxMeters: anchorSpanMeters) else { continue }
-                    var cursor = parent
-                    for node in span.dropFirst() {
-                        steps.append(Step(key: node, parent: cursor))
-                        cursor = steps.count - 1
-                    }
-                    bridged[target] = cursor
-                    if span.count >= 2 { arrivedByRail.insert(target) }
-                }
-            }
-            return bridged.isEmpty ? nil : bridged
-        }
-
-        /// Nodes within 520 m whose incoming edge passes within 1 m of `anchor`.
-        /// The walk stops on that edge. It does not use `sameIdentitySpan`.
-        func carryTargets(from start: String, anchor: Coordinate) -> Set<String> {
-            let requiredIdentity = physicalIdentity(start)
-            var targets = Set<String>()
-            var queue: [(key: String, length: Double)] = [(start, 0)]
-            var best = [start: 0.0]
-            var index = 0
-            while index < queue.count && index < 64 {
-                let current = queue[index]
-                index += 1
-                guard let origin = graph.nodes[current.key] else { continue }
-                for edge in graph.adjacency[current.key] ?? [] {
-                    let total = current.length + edge.length
-                    guard edge.connector == nil, edge.physicalJunction == nil,
-                          let destination = graph.nodes[edge.to],
-                          physicalIdentity(edge.to) == requiredIdentity,
-                          edgeMatchesRequiredHints(edge, hints: hints),
-                          RouteGraph.RailValidity.isValid(
-                            validFrom: edge.validFrom, validTo: edge.validTo, on: rideDate)
-                    else { continue }
-                    let onAnchor = segmentProjection(anchor, from: origin, to: destination)
-                        .map { $0.t >= 0 && $0.t <= 1 && $0.distance <= onEdgeToleranceMeters } ?? false
-                    if onAnchor, total <= anchorSpanMeters {
-                        targets.insert(edge.to)
-                    }
-                    guard total <= anchorSpanMeters, !onAnchor,
-                          total < best[edge.to, default: .infinity] else { continue }
-                    best[edge.to] = total
-                    queue.append((edge.to, total))
-                }
-            }
-            return targets
-        }
-
-        /// Carry an on-edge station dot along its edge to the next node.
-        /// Nil when that walk is longer than 520 m or is not unique, so the
-        /// caller keeps the direct-edge path (a 700 m edge still certifies).
-        func carryOnEdgeAnchor(_ anchor: Coordinate) -> [String: Int]? {
-            var carried: [String: Int] = [:]
-            let pendingPoints = pending + [anchor]
-            for (key, parent) in frontier.sorted(by: { $0.value < $1.value }) {
-                guard let currentCoordinate = graph.nodes[key] else { continue }
-                for candidateKey in RouteGraph.exactNodeKeys(currentCoordinate, in: graph) {
-                    guard pending.isEmpty || candidateKey == key,
-                          let prefix = physicalContinuationPath(
-                            from: key, to: candidateKey, graph: graph, rideDate: rideDate)
-                    else { continue }
-                    let targets = carryTargets(from: candidateKey, anchor: anchor)
-                    guard let path = onEdgeIdentityPath(
-                        from: candidateKey, targetKeys: targets, pendingPoints: pendingPoints,
-                        graph: graph, rideDate: rideDate, hints: hints,
-                        maxMeters: anchorSpanMeters), path.count >= 2 else { continue }
-                    var cursor = parent
-                    for prefixKey in prefix.dropFirst() {
-                        steps.append(Step(key: prefixKey, parent: cursor))
-                        cursor = steps.count - 1
-                    }
-                    for node in path.dropFirst() {
-                        steps.append(Step(key: node, parent: cursor))
-                        cursor = steps.count - 1
-                    }
-                    if let end = path.last {
-                        carried[end] = cursor
-                        arrivedByRail.insert(end)
-                    }
-                }
-            }
-            return carried.isEmpty ? nil : carried
-        }
-
         for (offset, coordinate) in coordinates.enumerated().dropFirst() {
             guard !Task.isCancelled else { return nil }
-            let nextCoordinate = Grid.normalizeGraphCoord(coordinate)
-            let isNode = !RouteGraph.exactNodeKeys(nextCoordinate, in: graph).isEmpty
-            if !isNode, anchorIndices.contains(offset), offset < coordinates.count - 1 {
-                if !anchorWithinOneMeter(coordinate) {
-                    skippedAnchor = true
-                    continue
-                }
-                if let carried = carryOnEdgeAnchor(coordinate) {
-                    frontier = carried
-                    pending.removeAll(keepingCapacity: true)
-                    skippedAnchor = false
-                    continue
-                }
-            }
-            if isNode, skippedAnchor, pending.isEmpty {
-                guard let bridged = bridgeSkippedAnchor(to: nextCoordinate) else { return nil }
-                frontier = bridged
-                skippedAnchor = false
-                continue
-            }
-            let nearby = isNode ? []
-                : RouteGraph.nearbyNodes(nextCoordinate, in: graph, radiusDeg: 0, limit: Int.max)
-            // nearbyNodes measures from a normalized coordinate. Rounding must
-            // instead be bounded by the original source vertex.
-            let roundedKeys = isNode ? Set<String>() : Set(nearby.compactMap { candidate in
-                graph.nodes[candidate.key].flatMap {
-                    Geometry.distanceMeters(coordinate, $0) <= onEdgeToleranceMeters ? candidate.key : nil
-                }
-            })
-            var next: [String: Int] = [:]
-            // In step order, not dictionary order: when two co-located
-            // identities reach one vertex, the later visit wins `next`, and
-            // a seeded dictionary made that winner differ between launches.
-            for (key, parent) in frontier.sorted(by: { $0.value < $1.value }) {
-                guard let currentCoordinate = graph.nodes[key] else { continue }
-                for candidateKey in RouteGraph.exactNodeKeys(currentCoordinate, in: graph) {
-                    // A buffered point can only be carried by one surveyed edge,
-                    // never by a connector or a reviewed junction transition.
-                    guard pending.isEmpty || candidateKey == key,
-                          let prefix = physicalContinuationPath(
-                            from: key, to: candidateKey, graph: graph, rideDate: rideDate) else { continue }
-                    var prefixParent = parent
-                    for prefixKey in prefix.dropFirst() {
-                        steps.append(Step(key: prefixKey, parent: prefixParent))
-                        prefixParent = steps.count - 1
-                    }
-                    if isNode && currentCoordinate == nextCoordinate && pending.isEmpty {
-                        next[candidateKey] = prefixParent
-                        continue
-                    }
-                    var tookDirectEdge = false
-                    for edge in graph.adjacency[candidateKey] ?? [] {
-                        guard edge.connector == nil, edge.physicalJunction == nil,
-                              let destination = graph.nodes[edge.to],
-                              (isNode ? destination == nextCoordinate : roundedKeys.contains(edge.to)),
-                              !(skippedAnchor && edge.length > anchorSpanMeters),
-                              edgeMatchesRequiredHints(edge, hints: hints),
-                              RouteGraph.RailValidity.isValid(
-                                validFrom: edge.validFrom, validTo: edge.validTo, on: rideDate),
-                              pendingPointsFollowEdge(from: currentCoordinate, to: destination) else { continue }
-                        steps.append(Step(key: edge.to, parent: prefixParent))
-                        next[edge.to] = steps.count - 1
-                        arrivedByRail.insert(edge.to)
-                        tookDirectEdge = true
-                    }
-                    // A station anchor can sit on the identity between two
-                    // nodes that the package polyline does not show as one
-                    // graph edge. Carry it only along the unique same-identity
-                    // walk whose polyline actually passes through the anchor.
-                    if !tookDirectEdge, !pending.isEmpty {
-                        let targets = isNode
-                            ? Set(RouteGraph.exactNodeKeys(nextCoordinate, in: graph))
-                            : roundedKeys
-                        if let path = onEdgeIdentityPath(
-                            from: candidateKey, targetKeys: targets, pendingPoints: pending,
-                            graph: graph, rideDate: rideDate, hints: hints,
-                            maxMeters: 2 * RouteNetwork.endpointSnapMeters)
-                        {
-                            var cursor = prefixParent
-                            for node in path.dropFirst() {
-                                steps.append(Step(key: node, parent: cursor))
-                                cursor = steps.count - 1
-                            }
-                            if let end = path.last {
-                                next[end] = cursor
-                                arrivedByRail.insert(end)
-                            }
-                        }
-                    }
-                }
-            }
-            if next.isEmpty {
-                // An anchor that is itself a graph node (a reviewed osmTrack
-                // through the station dot) can be followed by a display vertex
-                // that skips the track's intermediate points. Those points are
-                // not polyline vertices, so this is not a skipped non-anchor:
-                // the next node still has to be the same identity within 520 m.
-                if isNode, pending.isEmpty, anchorIndices.contains(offset - 1),
-                   let bridged = bridgeSkippedAnchor(to: nextCoordinate) {
-                    frontier = bridged
-                    skippedAnchor = false
-                    continue
-                }
-                guard !isNode else { return nil }
-                pending.append(coordinate)
-            } else {
-                frontier = next
-                pending.removeAll(keepingCapacity: true)
-                skippedAnchor = false
-            }
+            guard advancePhysicalPathVertex(
+                coordinate: coordinate, offset: offset, coordinateCount: coordinates.count,
+                anchorIndices: anchorIndices, graph: graph, rideDate: rideDate, hints: hints,
+                onEdgeToleranceMeters: onEdgeToleranceMeters, anchorSpanMeters: anchorSpanMeters,
+                steps: &steps, frontier: &frontier, arrivedByRail: &arrivedByRail,
+                pending: &pending, skippedAnchor: &skippedAnchor) else { return nil }
         }
+        return completedPhysicalPath(
+            steps: steps, frontier: frontier, arrivedByRail: arrivedByRail,
+            pending: pending, skippedAnchor: skippedAnchor, graph: graph, rideDate: rideDate)
+    }
+
+    private struct PhysicalPathStep { let key: String; let parent: Int? }
+
+    private static func completedPhysicalPath(
+        steps: [PhysicalPathStep], frontier: [String: Int], arrivedByRail: Set<String>,
+        pending: [Coordinate], skippedAnchor: Bool, graph: RouteGraph.Graph, rideDate: String?
+    ) -> [String]? {
         guard pending.isEmpty, !skippedAnchor else { return nil }
-        frontier = droppingTerminalJunctionSiblings(
+        let frontier = droppingTerminalJunctionSiblings(
             frontier, arrivedByRail: arrivedByRail, graph: graph, rideDate: rideDate)
         // Ambiguous identities remain unconfirmed rather than selecting one
         // merely because its coordinates coincide with the recorded path.
@@ -2114,6 +2084,349 @@ public enum RouteSolver {
             index = parent
         }
         return path.reversed()
+    }
+
+    private static func pendingPointsFollowEdge(
+        _ pending: [Coordinate], from a: Coordinate, to b: Coordinate, onEdgeToleranceMeters: Double
+    ) -> Bool {
+        guard !pending.isEmpty else { return true }
+        let metersPerDegree = 6_371_000.0 * .pi / 180
+        let sx = metersPerDegree * cos((a.lat + b.lat) / 2 * .pi / 180)
+        let dx = (b.lon - a.lon) * sx
+        let dy = (b.lat - a.lat) * metersPerDegree
+        let lengthSquared = dx * dx + dy * dy
+        guard lengthSquared > 0 else { return false }
+        var previousProjection = 0.0
+        for point in pending {
+            let px = (point.lon - a.lon) * sx
+            let py = (point.lat - a.lat) * metersPerDegree
+            let projection = (px * dx + py * dy) / lengthSquared
+            guard projection >= previousProjection, projection <= 1,
+                  hypot(px - projection * dx, py - projection * dy)
+                    <= onEdgeToleranceMeters else { return false }
+            previousProjection = projection
+        }
+        return true
+    }
+
+    // A station-table join that is neither a node nor on a surveyed edge
+    // is not a vertex of the ride. The keys on either side still have to
+    // be one date-valid same-identity walk of at most 520 m.
+    private static func anchorWithinOneMeter(
+        _ coordinate: Coordinate, frontier: [String: Int], graph: RouteGraph.Graph,
+        anchorSpanMeters: Double, requiredLines: Set<String>, requiredOperators: Set<String>, rideDate: String?
+    ) -> Bool {
+        for key in frontier.keys {
+            guard let terminal = graph.nodes[key] else { continue }
+            if anchorLiesOnIdentityEdge(
+                coordinate, terminal: terminal, graph: graph, maxMeters: anchorSpanMeters,
+                requiredLines: requiredLines, requiredOperators: requiredOperators,
+                rideDate: rideDate)
+            {
+                return true
+            }
+        }
+        return false
+    }
+
+    private static func bridgeSkippedAnchor(
+        to nextCoordinate: Coordinate, frontier: [String: Int], graph: RouteGraph.Graph, rideDate: String?,
+        anchorSpanMeters: Double, steps: inout [PhysicalPathStep], arrivedByRail: inout Set<String>
+    ) -> [String: Int]? {
+        let targets = RouteGraph.exactNodeKeys(nextCoordinate, in: graph)
+        guard !targets.isEmpty else { return nil }
+        var bridged: [String: Int] = [:]
+        for (key, parent) in frontier.sorted(by: { $0.value < $1.value }) {
+            for target in targets {
+                guard let span = sameIdentitySpanPath(
+                    from: key, to: target, graph: graph, date: rideDate,
+                    maxMeters: anchorSpanMeters) else { continue }
+                var cursor = parent
+                for node in span.dropFirst() {
+                    steps.append(PhysicalPathStep(key: node, parent: cursor))
+                    cursor = steps.count - 1
+                }
+                bridged[target] = cursor
+                if span.count >= 2 { arrivedByRail.insert(target) }
+            }
+        }
+        return bridged.isEmpty ? nil : bridged
+    }
+
+    /// Nodes within 520 m whose incoming edge passes within 1 m of `anchor`.
+    /// The walk stops on that edge. It does not use `sameIdentitySpan`.
+    private static func carryTargets(
+        from start: String, anchor: Coordinate, graph: RouteGraph.Graph, rideDate: String?, hints: SegmentHints,
+        onEdgeToleranceMeters: Double, anchorSpanMeters: Double
+    ) -> Set<String> {
+        let requiredIdentity = physicalIdentity(start)
+        var targets = Set<String>()
+        var queue: [(key: String, length: Double)] = [(start, 0)]
+        var best = [start: 0.0]
+        var index = 0
+        while index < queue.count && index < 64 {
+            let current = queue[index]
+            index += 1
+            guard let origin = graph.nodes[current.key] else { continue }
+            for edge in graph.adjacency[current.key] ?? [] {
+                let total = current.length + edge.length
+                guard edge.connector == nil, edge.physicalJunction == nil,
+                      let destination = graph.nodes[edge.to],
+                      physicalIdentity(edge.to) == requiredIdentity,
+                      edgeMatchesRequiredHints(edge, hints: hints),
+                      RouteGraph.RailValidity.isValid(
+                        validFrom: edge.validFrom, validTo: edge.validTo, on: rideDate)
+                else { continue }
+                let onAnchor = segmentProjection(anchor, from: origin, to: destination)
+                    .map { $0.t >= 0 && $0.t <= 1 && $0.distance <= onEdgeToleranceMeters } ?? false
+                if onAnchor, total <= anchorSpanMeters {
+                    targets.insert(edge.to)
+                }
+                guard total <= anchorSpanMeters, !onAnchor,
+                      total < best[edge.to, default: .infinity] else { continue }
+                best[edge.to] = total
+                queue.append((edge.to, total))
+            }
+        }
+        return targets
+    }
+
+    /// Carry an on-edge station dot along its edge to the next node.
+    /// Nil when that walk is longer than 520 m or is not unique, so the
+    /// caller keeps the direct-edge path (a 700 m edge still certifies).
+    private static func carryOnEdgeAnchor(
+        _ anchor: Coordinate, pending: [Coordinate], frontier: [String: Int], graph: RouteGraph.Graph,
+        rideDate: String?, hints: SegmentHints, onEdgeToleranceMeters: Double, anchorSpanMeters: Double,
+        steps: inout [PhysicalPathStep], arrivedByRail: inout Set<String>
+    ) -> [String: Int]? {
+        var carried: [String: Int] = [:]
+        let pendingPoints = pending + [anchor]
+        for (key, parent) in frontier.sorted(by: { $0.value < $1.value }) {
+            guard let currentCoordinate = graph.nodes[key] else { continue }
+            for candidateKey in RouteGraph.exactNodeKeys(currentCoordinate, in: graph) {
+                guard pending.isEmpty || candidateKey == key,
+                      let prefix = physicalContinuationPath(
+                        from: key, to: candidateKey, graph: graph, rideDate: rideDate)
+                else { continue }
+                let targets = carryTargets(
+                    from: candidateKey, anchor: anchor, graph: graph, rideDate: rideDate, hints: hints,
+                    onEdgeToleranceMeters: onEdgeToleranceMeters, anchorSpanMeters: anchorSpanMeters)
+                guard let path = onEdgeIdentityPath(
+                    from: candidateKey, targetKeys: targets, pendingPoints: pendingPoints,
+                    graph: graph, rideDate: rideDate, hints: hints,
+                    maxMeters: anchorSpanMeters), path.count >= 2 else { continue }
+                var cursor = parent
+                for prefixKey in prefix.dropFirst() {
+                    steps.append(PhysicalPathStep(key: prefixKey, parent: cursor))
+                    cursor = steps.count - 1
+                }
+                for node in path.dropFirst() {
+                    steps.append(PhysicalPathStep(key: node, parent: cursor))
+                    cursor = steps.count - 1
+                }
+                if let end = path.last {
+                    carried[end] = cursor
+                    arrivedByRail.insert(end)
+                }
+            }
+        }
+        return carried.isEmpty ? nil : carried
+    }
+
+    private static func advancePhysicalPathVertex(
+        coordinate: Coordinate, offset: Int, coordinateCount: Int, anchorIndices: Set<Int>,
+        graph: RouteGraph.Graph, rideDate: String?, hints: SegmentHints,
+        onEdgeToleranceMeters: Double, anchorSpanMeters: Double, steps: inout [PhysicalPathStep],
+        frontier: inout [String: Int], arrivedByRail: inout Set<String>,
+        pending: inout [Coordinate], skippedAnchor: inout Bool
+    ) -> Bool {
+        let nextCoordinate = Grid.normalizeGraphCoord(coordinate)
+        let isNode = !RouteGraph.exactNodeKeys(nextCoordinate, in: graph).isEmpty
+        if let consumed = consumePhysicalPathAnchor(
+            coordinate: coordinate, nextCoordinate: nextCoordinate, isNode: isNode,
+            offset: offset, coordinateCount: coordinateCount, anchorIndices: anchorIndices, graph: graph,
+            rideDate: rideDate, hints: hints, onEdgeToleranceMeters: onEdgeToleranceMeters,
+            anchorSpanMeters: anchorSpanMeters, steps: &steps, frontier: &frontier,
+            arrivedByRail: &arrivedByRail, pending: &pending, skippedAnchor: &skippedAnchor)
+        {
+            return consumed
+        }
+        let next = nextPhysicalPathFrontier(
+            coordinate: coordinate, nextCoordinate: nextCoordinate, isNode: isNode,
+            graph: graph, rideDate: rideDate, hints: hints,
+            onEdgeToleranceMeters: onEdgeToleranceMeters, anchorSpanMeters: anchorSpanMeters,
+            frontier: frontier, pending: pending, skippedAnchor: skippedAnchor,
+            steps: &steps, arrivedByRail: &arrivedByRail)
+        if next.isEmpty {
+            // An anchor that is itself a graph node (a reviewed osmTrack
+            // through the station dot) can be followed by a display vertex
+            // that skips the track's intermediate points. Those points are
+            // not polyline vertices, so this is not a skipped non-anchor:
+            // the next node still has to be the same identity within 520 m.
+            if isNode, pending.isEmpty, anchorIndices.contains(offset - 1),
+               let bridged = bridgeSkippedAnchor(
+                to: nextCoordinate, frontier: frontier, graph: graph, rideDate: rideDate,
+                anchorSpanMeters: anchorSpanMeters, steps: &steps, arrivedByRail: &arrivedByRail) {
+                frontier = bridged
+                skippedAnchor = false
+                return true
+            }
+            guard !isNode else { return false }
+            pending.append(coordinate)
+        } else {
+            frontier = next
+            pending.removeAll(keepingCapacity: true)
+            skippedAnchor = false
+        }
+        return true
+    }
+
+    private static func consumePhysicalPathAnchor(
+        coordinate: Coordinate, nextCoordinate: Coordinate, isNode: Bool,
+        offset: Int, coordinateCount: Int, anchorIndices: Set<Int>, graph: RouteGraph.Graph,
+        rideDate: String?, hints: SegmentHints, onEdgeToleranceMeters: Double, anchorSpanMeters: Double,
+        steps: inout [PhysicalPathStep], frontier: inout [String: Int], arrivedByRail: inout Set<String>,
+        pending: inout [Coordinate], skippedAnchor: inout Bool
+    ) -> Bool? {
+        if !isNode, anchorIndices.contains(offset), offset < coordinateCount - 1 {
+            if !anchorWithinOneMeter(
+                coordinate, frontier: frontier, graph: graph, anchorSpanMeters: anchorSpanMeters,
+                requiredLines: hints.requiredLines, requiredOperators: hints.requiredOperators, rideDate: rideDate) {
+                skippedAnchor = true
+                return true
+            }
+            if let carried = carryOnEdgeAnchor(
+                coordinate, pending: pending, frontier: frontier, graph: graph, rideDate: rideDate,
+                hints: hints, onEdgeToleranceMeters: onEdgeToleranceMeters, anchorSpanMeters: anchorSpanMeters,
+                steps: &steps, arrivedByRail: &arrivedByRail) {
+                frontier = carried
+                pending.removeAll(keepingCapacity: true)
+                skippedAnchor = false
+                return true
+            }
+        }
+        if isNode, skippedAnchor, pending.isEmpty {
+            guard let bridged = bridgeSkippedAnchor(
+                to: nextCoordinate, frontier: frontier, graph: graph, rideDate: rideDate,
+                anchorSpanMeters: anchorSpanMeters, steps: &steps, arrivedByRail: &arrivedByRail) else { return false }
+            frontier = bridged
+            skippedAnchor = false
+            return true
+        }
+        return nil
+    }
+
+    private static func nextPhysicalPathFrontier(
+        coordinate: Coordinate, nextCoordinate: Coordinate, isNode: Bool,
+        graph: RouteGraph.Graph, rideDate: String?, hints: SegmentHints,
+        onEdgeToleranceMeters: Double, anchorSpanMeters: Double, frontier: [String: Int],
+        pending: [Coordinate], skippedAnchor: Bool, steps: inout [PhysicalPathStep],
+        arrivedByRail: inout Set<String>
+    ) -> [String: Int] {
+        let nearby = isNode ? []
+            : RouteGraph.nearbyNodes(nextCoordinate, in: graph, radiusDeg: 0, limit: Int.max)
+        // nearbyNodes measures from a normalized coordinate. Rounding must
+        // instead be bounded by the original source vertex.
+        let roundedKeys = isNode ? Set<String>() : Set(nearby.compactMap { candidate in
+            graph.nodes[candidate.key].flatMap {
+                Geometry.distanceMeters(coordinate, $0) <= onEdgeToleranceMeters ? candidate.key : nil
+            }
+        })
+        var next: [String: Int] = [:]
+        // In step order, not dictionary order: when two co-located
+        // identities reach one vertex, the later visit wins `next`, and
+        // a seeded dictionary made that winner differ between launches.
+        for (key, parent) in frontier.sorted(by: { $0.value < $1.value }) {
+            guard let currentCoordinate = graph.nodes[key] else { continue }
+            for candidateKey in RouteGraph.exactNodeKeys(currentCoordinate, in: graph) {
+                visitPhysicalPathCandidate(
+                    key: key, candidateKey: candidateKey, parent: parent,
+                    currentCoordinate: currentCoordinate, nextCoordinate: nextCoordinate, isNode: isNode,
+                    roundedKeys: roundedKeys, graph: graph, rideDate: rideDate, hints: hints,
+                    pending: pending, skippedAnchor: skippedAnchor, anchorSpanMeters: anchorSpanMeters,
+                    onEdgeToleranceMeters: onEdgeToleranceMeters, steps: &steps,
+                    next: &next, arrivedByRail: &arrivedByRail)
+            }
+        }
+        return next
+    }
+
+    private static func visitPhysicalPathCandidate(
+        key: String, candidateKey: String, parent: Int, currentCoordinate: Coordinate,
+        nextCoordinate: Coordinate, isNode: Bool, roundedKeys: Set<String>, graph: RouteGraph.Graph,
+        rideDate: String?, hints: SegmentHints, pending: [Coordinate], skippedAnchor: Bool,
+        anchorSpanMeters: Double, onEdgeToleranceMeters: Double, steps: inout [PhysicalPathStep],
+        next: inout [String: Int], arrivedByRail: inout Set<String>
+    ) {
+        // A buffered point can only be carried by one surveyed edge,
+        // never by a connector or a reviewed junction transition.
+        guard pending.isEmpty || candidateKey == key,
+              let prefix = physicalContinuationPath(
+                from: key, to: candidateKey, graph: graph, rideDate: rideDate) else { return }
+        var prefixParent = parent
+        for prefixKey in prefix.dropFirst() {
+            steps.append(PhysicalPathStep(key: prefixKey, parent: prefixParent))
+            prefixParent = steps.count - 1
+        }
+        if isNode && currentCoordinate == nextCoordinate && pending.isEmpty {
+            next[candidateKey] = prefixParent
+            return
+        }
+        let tookDirectEdge = appendPhysicalPathDirectEdges(
+            candidateKey: candidateKey, prefixParent: prefixParent,
+            currentCoordinate: currentCoordinate, nextCoordinate: nextCoordinate, isNode: isNode,
+            roundedKeys: roundedKeys, graph: graph, rideDate: rideDate, hints: hints,
+            pending: pending, skippedAnchor: skippedAnchor, anchorSpanMeters: anchorSpanMeters,
+            onEdgeToleranceMeters: onEdgeToleranceMeters, steps: &steps, next: &next, arrivedByRail: &arrivedByRail)
+        // A station anchor can sit on the identity between two
+        // nodes that the package polyline does not show as one
+        // graph edge. Carry it only along the unique same-identity
+        // walk whose polyline actually passes through the anchor.
+        if !tookDirectEdge, !pending.isEmpty {
+            let targets = isNode
+                ? Set(RouteGraph.exactNodeKeys(nextCoordinate, in: graph))
+                : roundedKeys
+            if let path = onEdgeIdentityPath(
+                from: candidateKey, targetKeys: targets, pendingPoints: pending,
+                graph: graph, rideDate: rideDate, hints: hints,
+                maxMeters: 2 * RouteNetwork.endpointSnapMeters)
+            {
+                var cursor = prefixParent
+                for node in path.dropFirst() {
+                    steps.append(PhysicalPathStep(key: node, parent: cursor))
+                    cursor = steps.count - 1
+                }
+                if let end = path.last {
+                    next[end] = cursor
+                    arrivedByRail.insert(end)
+                }
+            }
+        }
+    }
+
+    private static func appendPhysicalPathDirectEdges(
+        candidateKey: String, prefixParent: Int, currentCoordinate: Coordinate,
+        nextCoordinate: Coordinate, isNode: Bool, roundedKeys: Set<String>, graph: RouteGraph.Graph,
+        rideDate: String?, hints: SegmentHints, pending: [Coordinate], skippedAnchor: Bool,
+        anchorSpanMeters: Double, onEdgeToleranceMeters: Double, steps: inout [PhysicalPathStep],
+        next: inout [String: Int], arrivedByRail: inout Set<String>
+    ) -> Bool {
+        var tookDirectEdge = false
+        for edge in graph.adjacency[candidateKey] ?? [] {
+            guard edge.connector == nil, edge.physicalJunction == nil,
+                  let destination = graph.nodes[edge.to],
+                  (isNode ? destination == nextCoordinate : roundedKeys.contains(edge.to)),
+                  !(skippedAnchor && edge.length > anchorSpanMeters),
+                  edgeMatchesRequiredHints(edge, hints: hints),
+                  RouteGraph.RailValidity.isValid(
+                    validFrom: edge.validFrom, validTo: edge.validTo, on: rideDate),
+                  pendingPointsFollowEdge(pending, from: currentCoordinate, to: destination, onEdgeToleranceMeters: onEdgeToleranceMeters) else { continue }
+            steps.append(PhysicalPathStep(key: edge.to, parent: prefixParent))
+            next[edge.to] = steps.count - 1
+            arrivedByRail.insert(edge.to)
+            tookDirectEdge = true
+        }
+        return tookDirectEdge
     }
 
     /// At the last vertex, keep the one identity that rode a rail edge and
@@ -2246,8 +2559,66 @@ public enum RouteSolver {
             in: stations, rideDate: train.rideDate)
         guard !fromStations.isEmpty, !toStations.isEmpty else { return nil }
 
-        struct Identity: Hashable { let featureIndex: Int; let reversed: Bool }
-        var identities = Set<Identity>()
+        let matches = officialIntervalMatches(
+            requiredLines: requiredLines, requiredOperators: requiredOperators,
+            fromStations: fromStations, toStations: toStations, stations: stations,
+            intervalIndex: intervalIndex, train: train)
+        guard matches.count == 1 else { return nil }
+        let match = matches[0]
+        if train.institutionFilterMode == "hard", !allowedCodes.isEmpty,
+           !match.institutionTypeCode.isEmpty,
+           !allowedCodes.contains(match.institutionTypeCode) { return nil }
+        if Set(train.policy.hardExcludedInstitutionTypeCodes).contains(match.institutionTypeCode) {
+            return nil
+        }
+        let coordinates = match.reversed ? Array(match.coordinates.reversed()) : match.coordinates
+        guard let first = coordinates.first else { return nil }
+        if let continuityAnchor,
+           Geometry.distanceMeters(continuityAnchor, first) > 60 { return nil }
+        return solvedOfficialInterval(
+            match: match, coordinates: coordinates, fromStations: fromStations, toStations: toStations,
+            segmentIndex: segmentIndex, train: train, country: country, allowedCodes: allowedCodes,
+            requiredLines: requiredLines, requiredOperators: requiredOperators)
+    }
+
+    private struct OfficialIntervalIdentity: Hashable { let featureIndex: Int; let reversed: Bool }
+
+    private static func officialStationPairKey(
+        from: Int, to: Int, line: String, requiredOperators: [String], stations: Stations.Index
+    ) -> String? {
+        let fromOperator = Stations.stationOperator(stations.features[from])
+        let toOperator = Stations.stationOperator(stations.features[to])
+        guard !fromOperator.isEmpty, fromOperator == toOperator,
+              requiredOperators.isEmpty || requiredOperators.contains(fromOperator),
+              let fromCoordinate = coordinate(Stations.displayCoordinate(stations.features[from])),
+              let toCoordinate = coordinate(Stations.displayCoordinate(stations.features[to]))
+        else { return nil }
+        return officialIntervalKey(
+            line: line, operatorName: fromOperator,
+            from: fromCoordinate, to: toCoordinate)
+    }
+
+    private static func appendOfficialIntervalRecords(
+        key: String, intervalIndex: OfficialIntervalIndex, rideDate: String?,
+        identities: inout Set<OfficialIntervalIdentity>, matches: inout [OfficialIntervalIndex.Record]
+    ) {
+        for record in intervalIndex.records[key] ?? [] {
+            guard RouteGraph.RailValidity.isValid(
+                validFrom: record.validFrom, validTo: record.validTo,
+                on: rideDate) else { continue }
+            if identities.insert(.init(
+                featureIndex: record.featureIndex, reversed: record.reversed)).inserted
+            {
+                matches.append(record)
+            }
+        }
+    }
+
+    private static func officialIntervalMatches(
+        requiredLines: [String], requiredOperators: [String], fromStations: [Int], toStations: [Int],
+        stations: Stations.Index, intervalIndex: OfficialIntervalIndex, train: TrainContext
+    ) -> [OfficialIntervalIndex.Record] {
+        var identities = Set<OfficialIntervalIdentity>()
         var matches: [OfficialIntervalIndex.Record] = []
         for line in requiredLines {
             let fromOnLine = fromStations.filter {
@@ -2264,41 +2635,23 @@ public enum RouteSolver {
             }
             for from in fromOnLine {
                 for to in toOnLine {
-                    let fromOperator = Stations.stationOperator(stations.features[from])
-                    let toOperator = Stations.stationOperator(stations.features[to])
-                    guard !fromOperator.isEmpty, fromOperator == toOperator,
-                          requiredOperators.isEmpty || requiredOperators.contains(fromOperator),
-                          let fromCoordinate = coordinate(Stations.displayCoordinate(stations.features[from])),
-                          let toCoordinate = coordinate(Stations.displayCoordinate(stations.features[to]))
-                    else { continue }
-                    let key = officialIntervalKey(
-                        line: line, operatorName: fromOperator,
-                        from: fromCoordinate, to: toCoordinate)
-                    for record in intervalIndex.records[key] ?? [] {
-                        guard RouteGraph.RailValidity.isValid(
-                            validFrom: record.validFrom, validTo: record.validTo,
-                            on: train.rideDate) else { continue }
-                        if identities.insert(.init(
-                            featureIndex: record.featureIndex, reversed: record.reversed)).inserted
-                        {
-                            matches.append(record)
-                        }
-                    }
+                    guard let key = officialStationPairKey(
+                        from: from, to: to, line: line, requiredOperators: requiredOperators,
+                        stations: stations) else { continue }
+                    appendOfficialIntervalRecords(
+                        key: key, intervalIndex: intervalIndex, rideDate: train.rideDate,
+                        identities: &identities, matches: &matches)
                 }
             }
         }
-        guard matches.count == 1 else { return nil }
-        let match = matches[0]
-        if train.institutionFilterMode == "hard", !allowedCodes.isEmpty,
-           !match.institutionTypeCode.isEmpty,
-           !allowedCodes.contains(match.institutionTypeCode) { return nil }
-        if Set(train.policy.hardExcludedInstitutionTypeCodes).contains(match.institutionTypeCode) {
-            return nil
-        }
-        let coordinates = match.reversed ? Array(match.coordinates.reversed()) : match.coordinates
-        guard let first = coordinates.first else { return nil }
-        if let continuityAnchor,
-           Geometry.distanceMeters(continuityAnchor, first) > 60 { return nil }
+        return matches
+    }
+
+    private static func solvedOfficialInterval(
+        match: OfficialIntervalIndex.Record, coordinates: [Coordinate], fromStations: [Int], toStations: [Int],
+        segmentIndex: Int, train: TrainContext, country: String, allowedCodes: [String],
+        requiredLines: [String], requiredOperators: [String]
+    ) -> SolvedSection {
         let length = pathLength(for: coordinates)
         var preferredLines = Set(normalizedHintValues(train.preferredLineNames + requiredLines))
         preferredLines.formUnion(requiredLines)
@@ -2623,177 +2976,253 @@ public enum RouteSolver {
         baseHints.directionExcludedCoordinates = exclusion.coordinates
         baseHints.directionExcludedFamilies = exclusion.families
 
-        struct Best {
-            var pathKeys: [String]
-            var edges: [RouteGraph.Edge]
-            var scoredCost: Double
-            var totalCost: Double
-            var physicalLength: Double
-            var from: StationNodeCandidate
-            var to: StationNodeCandidate
-            var hints: SegmentHints
-            var attemptIndex: Int
-        }
-        func stationCoordinates(_ indices: [Int]) -> [Int: Coordinate] {
-            var result: [Int: Coordinate] = [:]
-            for index in indices {
-                if let coord = coordinate(Stations.displayCoordinate(stations.features[index])) {
-                    result[index] = coord
-                }
+        let fromStationCoordinates = stationCoordinates(fromStations, stations: stations)
+        let toStationCoordinates = stationCoordinates(toStations, stations: stations)
+        guard let best = orderedSectionRouteChoice(
+            baseHints: baseHints, allowedCodes: allowedCodes, fromStations: fromStations, toStations: toStations,
+            stations: stations, graph: graph, train: train, continuityAnchor: continuityAnchor,
+            physicalContinuationKey: physicalContinuationKey, traversalPolicy: traversalPolicy,
+            section: section, fromStationCoordinates: fromStationCoordinates, toStationCoordinates: toStationCoordinates)
+        else { return nil }
+        return solvedSection(
+            best: best, section: section, segmentIndex: segmentIndex, allowedCodes: allowedCodes,
+            fromStations: fromStations, toStations: toStations, stations: stations, graph: graph)
+    }
+
+    private struct SectionRouteChoice {
+        var pathKeys: [String]
+        var edges: [RouteGraph.Edge]
+        var scoredCost: Double
+        var totalCost: Double
+        var physicalLength: Double
+        var from: StationNodeCandidate
+        var to: StationNodeCandidate
+        var hints: SegmentHints
+        var attemptIndex: Int
+    }
+
+    private static func stationCoordinates(_ indices: [Int], stations: Stations.Index) -> [Int: Coordinate] {
+        var result: [Int: Coordinate] = [:]
+        for index in indices {
+            if let coord = coordinate(Stations.displayCoordinate(stations.features[index])) {
+                result[index] = coord
             }
-            return result
         }
-        let fromStationCoordinates = stationCoordinates(fromStations)
-        let toStationCoordinates = stationCoordinates(toStations)
-        func nearestAlternative(
-            _ candidates: [Int: Coordinate], excluding: Int, from anchor: Coordinate
-        ) -> Double? {
-            var nearest: Double?
-            for (index, coord) in candidates where index != excluding {
-                let distance = Geometry.distanceMeters(coord, anchor)
-                if nearest == nil || distance < nearest! { nearest = distance }
-            }
-            return nearest
+        return result
+    }
+
+    private static func nearestAlternative(
+        _ candidates: [Int: Coordinate], excluding: Int, from anchor: Coordinate
+    ) -> Double? {
+        var nearest: Double?
+        for (index, coord) in candidates where index != excluding {
+            let distance = Geometry.distanceMeters(coord, anchor)
+            if nearest == nil || distance < nearest! { nearest = distance }
         }
+        return nearest
+    }
+
+    /// See `endpointAmbiguityDistanceFactor`.
+    private static func endpointIsImplausible(
+        fromStationIndex: Int, toStationIndex: Int, fromAnchored: Bool,
+        section: RouteSection, fromStationCoordinates: [Int: Coordinate], toStationCoordinates: [Int: Coordinate]
+    ) -> Bool {
         let fromIsNameOnly = (section.fromN02StationCode ?? "").isEmpty
         let toIsNameOnly = (section.toN02StationCode ?? "").isEmpty
-        /// See `endpointAmbiguityDistanceFactor`.
-        func endpointIsImplausible(
-            fromStationIndex: Int, toStationIndex: Int, fromAnchored: Bool
-        ) -> Bool {
-            guard fromIsNameOnly || toIsNameOnly,
-                  let fromCoord = fromStationCoordinates[fromStationIndex],
-                  let toCoord = toStationCoordinates[toStationIndex] else { return false }
-            let straight = Geometry.distanceMeters(fromCoord, toCoord)
-            guard straight > endpointAmbiguityMinStraightMeters else { return false }
-            if toIsNameOnly, let alternative = nearestAlternative(
-                toStationCoordinates, excluding: toStationIndex, from: fromCoord),
-               straight > alternative * endpointAmbiguityDistanceFactor { return true }
-            if fromIsNameOnly, !fromAnchored, let alternative = nearestAlternative(
-                fromStationCoordinates, excluding: fromStationIndex, from: toCoord),
-               straight > alternative * endpointAmbiguityDistanceFactor { return true }
-            return false
-        }
-        /// `guarded` is the attempt's best result among those the endpoint
-        /// plausibility guard rejected; it is only used when nothing else
-        /// solves.
-        func runAttempt(
-            hints: SegmentHints, attemptIndex: Int, allowedCodes: [String]
-        ) -> (best: Best?, guarded: Best?) {
-            let excludedInstitutions = train.policy.hardExcludedInstitutionTypeCodes
-            var fromCandidates = cappedStationCandidates(
-                collectStationCandidateGraphNodes(
-                    stationIndices: fromStations, stations: stations, graph: graph,
-                    hints: hints, allowedCodes: allowedCodes,
-                    hardExcludedInstitutionTypeCodes: excludedInstitutions),
-                hints: hints, graph: graph)
-            var fromAnchored = false
-            if let continuityAnchor, physicalContinuationKey == nil {
-                let continuous = fromCandidates.filter {
-                    guard let stationCoordinate = coordinate(Stations.displayCoordinate(
-                        stations.features[$0.stationIndex])) else { return false }
-                    return Geometry.distanceMeters(stationCoordinate, continuityAnchor) <= 60
-                }
-                if !continuous.isEmpty {
-                    fromCandidates = continuous
-                    fromAnchored = true
-                }
+        guard fromIsNameOnly || toIsNameOnly,
+              let fromCoord = fromStationCoordinates[fromStationIndex],
+              let toCoord = toStationCoordinates[toStationIndex] else { return false }
+        let straight = Geometry.distanceMeters(fromCoord, toCoord)
+        guard straight > endpointAmbiguityMinStraightMeters else { return false }
+        if toIsNameOnly, let alternative = nearestAlternative(
+            toStationCoordinates, excluding: toStationIndex, from: fromCoord),
+           straight > alternative * endpointAmbiguityDistanceFactor { return true }
+        if fromIsNameOnly, !fromAnchored, let alternative = nearestAlternative(
+            fromStationCoordinates, excluding: fromStationIndex, from: toCoord),
+           straight > alternative * endpointAmbiguityDistanceFactor { return true }
+        return false
+    }
+
+    private static func replaceWithPhysicalContinuationCandidates(
+        physicalContinuationKey: String, fromStations: [Int], graph: RouteGraph.Graph,
+        train: TrainContext, allowedCodes: [String], excludedInstitutions: [String],
+        fromCandidates: inout [StationNodeCandidate], continuationPaths: inout [String: [String]]
+    ) -> Bool {
+        guard let coordinate = graph.nodes[physicalContinuationKey],
+              let stationIndex = fromStations.first else { return false }
+        // The preceding leg already selected a surveyed endpoint.
+        // Resnapping its station can discard that vertex through the
+        // visual-anchor filter or nearest-candidate limits. Start at
+        // the exact node instead; only reviewed junctions (zero-length,
+        // short-link ≤30 m, or osmConnector with reviewed OSM stubs ≤50 m) can
+        // change identity before this section's line constraints.
+        let possibleKeys = [physicalContinuationKey] + RouteGraph.nearbyNodes(
+            coordinate, in: graph, radiusDeg: 0, limit: Int.max).map(\.key)
+            .filter { $0 != physicalContinuationKey }
+        fromCandidates = possibleKeys.compactMap { key in
+            guard graph.nodes[key] == coordinate,
+                  let path = physicalContinuationPath(
+                    from: physicalContinuationKey, to: key,
+                    graph: graph, rideDate: train.rideDate) else { return nil }
+            continuationPaths[key] = path
+            let codes = graph.nodeMeta[key]?.institutionTypeCodes ?? []
+            if nodeIsExcludedInstitution(codes, excluded: Set(excludedInstitutions)) {
+                return nil
             }
-            var continuationPaths: [String: [String]] = [:]
-            if let physicalContinuationKey {
-                guard let coordinate = graph.nodes[physicalContinuationKey],
-                      let stationIndex = fromStations.first else { return (nil, nil) }
-                // The preceding leg already selected a surveyed endpoint.
-                // Resnapping its station can discard that vertex through the
-                // visual-anchor filter or nearest-candidate limits. Start at
-                // the exact node instead; only reviewed junctions (zero-length,
-                // short-link ≤30 m, or osmConnector with reviewed OSM stubs ≤50 m) can
-                // change identity before this section's line constraints.
-                let possibleKeys = [physicalContinuationKey] + RouteGraph.nearbyNodes(
-                    coordinate, in: graph, radiusDeg: 0, limit: Int.max).map(\.key)
-                    .filter { $0 != physicalContinuationKey }
-                fromCandidates = possibleKeys.compactMap { key in
-                    guard graph.nodes[key] == coordinate,
-                          let path = physicalContinuationPath(
-                            from: physicalContinuationKey, to: key,
-                            graph: graph, rideDate: train.rideDate) else { return nil }
-                    continuationPaths[key] = path
-                    let codes = graph.nodeMeta[key]?.institutionTypeCodes ?? []
-                    if nodeIsExcludedInstitution(codes, excluded: Set(excludedInstitutions)) {
-                        return nil
-                    }
-                    return StationNodeCandidate(
-                        key: key, distance: 0, score: 0,
-                        hasPreferredInstitution: allowedCodes.isEmpty
-                            || !codes.isDisjoint(with: Set(allowedCodes)),
-                        stationIndex: stationIndex)
-                }
+            return StationNodeCandidate(
+                key: key, distance: 0, score: 0,
+                hasPreferredInstitution: allowedCodes.isEmpty
+                    || !codes.isDisjoint(with: Set(allowedCodes)),
+                stationIndex: stationIndex)
+        }
+        return true
+    }
+
+    private static func sectionSourceCandidates(
+        hints: SegmentHints, allowedCodes: [String], fromStations: [Int], stations: Stations.Index,
+        graph: RouteGraph.Graph, train: TrainContext, excludedInstitutions: [String],
+        continuityAnchor: Coordinate?, physicalContinuationKey: String?
+    ) -> (candidates: [StationNodeCandidate], anchored: Bool, continuationPaths: [String: [String]])? {
+        var fromCandidates = cappedStationCandidates(
+            collectStationCandidateGraphNodes(
+                stationIndices: fromStations, stations: stations, graph: graph,
+                hints: hints, allowedCodes: allowedCodes,
+                hardExcludedInstitutionTypeCodes: excludedInstitutions),
+            hints: hints, graph: graph)
+        var fromAnchored = false
+        if let continuityAnchor, physicalContinuationKey == nil {
+            let continuous = fromCandidates.filter {
+                guard let stationCoordinate = coordinate(Stations.displayCoordinate(
+                    stations.features[$0.stationIndex])) else { return false }
+                return Geometry.distanceMeters(stationCoordinate, continuityAnchor) <= 60
+            }
+            if !continuous.isEmpty {
+                fromCandidates = continuous
                 fromAnchored = true
             }
-            let toCandidates = cappedStationCandidates(
-                collectStationCandidateGraphNodes(
-                    stationIndices: toStations, stations: stations, graph: graph,
-                    hints: hints, allowedCodes: allowedCodes,
-                    hardExcludedInstitutionTypeCodes: excludedInstitutions),
-                hints: hints, graph: graph)
-            guard !fromCandidates.isEmpty, !toCandidates.isEmpty else { return (nil, nil) }
-            let fromByKey = Dictionary(uniqueKeysWithValues: fromCandidates.map { ($0.key, $0) })
-            let toByKey = Dictionary(uniqueKeysWithValues: toCandidates.map { ($0.key, $0) })
-            let solved = dijkstra(
-                graph: graph,
-                sourceCandidates: fromCandidates.map { .init(key: $0.key, distance: $0.distance) },
-                targetKeys: Set(toByKey.keys), train: train.policy,
-                allowedCodes: allowedCodes, hints: hints, traversalPolicy: traversalPolicy)
-            var attemptBest: Best?
-            var guardedBest: Best?
-            for result in solved where result.pathKeys.count >= 2 {
-                guard let from = fromByKey[result.sourceKey],
-                      let to = toByKey[result.targetKey],
-                      let fromCoord = graph.nodes[from.key], let toCoord = graph.nodes[to.key]
-                else { continue }
-                let straight = Geometry.distanceMeters(fromCoord, toCoord)
-                let physicalLength = pathLengthMeters(graph: graph, pathKeys: result.pathKeys)
-                let detourLimit = max(straight * 3.8 + 6_000, 12_000)
-                if straight > 1_500 && physicalLength > detourLimit { continue }
-                let snapPenalty = (from.distance + to.distance) * stationSnapCostFactor
-                let totalCost = result.cost + snapPenalty
-                let scoredCost = totalCost + routeLineMismatchPenalty(
-                    edges: result.edges, hints: hints)
-                let prefix = continuationPaths[result.sourceKey] ?? [result.sourceKey]
-                let prefixEdges = zip(prefix, prefix.dropFirst()).compactMap { from, to in
-                    graph.adjacency[from]?.first {
-                        $0.to == to && $0.physicalJunction != nil
-                            && RouteGraph.RailValidity.isValid(
-                                validFrom: $0.validFrom, validTo: $0.validTo, on: train.rideDate)
-                    }
-                }
-                let candidate = Best(
-                    pathKeys: Array(prefix.dropLast()) + result.pathKeys,
-                    edges: prefixEdges + result.edges, scoredCost: scoredCost,
-                    totalCost: totalCost, physicalLength: physicalLength,
-                    from: from, to: to, hints: hints, attemptIndex: attemptIndex)
-                if endpointIsImplausible(
-                    fromStationIndex: from.stationIndex, toStationIndex: to.stationIndex,
-                    fromAnchored: fromAnchored)
-                {
-                    if guardedBest == nil || scoredCost < guardedBest!.scoredCost {
-                        guardedBest = candidate
-                    }
-                    continue
-                }
-                if attemptBest == nil || scoredCost < attemptBest!.scoredCost {
-                    attemptBest = candidate
-                }
-            }
-            return (attemptBest, guardedBest)
         }
+        var continuationPaths: [String: [String]] = [:]
+        if let physicalContinuationKey {
+            guard replaceWithPhysicalContinuationCandidates(
+                physicalContinuationKey: physicalContinuationKey, fromStations: fromStations,
+                graph: graph, train: train, allowedCodes: allowedCodes,
+                excludedInstitutions: excludedInstitutions, fromCandidates: &fromCandidates,
+                continuationPaths: &continuationPaths) else { return nil }
+            fromAnchored = true
+        }
+        return (fromCandidates, fromAnchored, continuationPaths)
+    }
 
-        var best: Best?
-        var guardedFallback: Best?
+    private static func sectionRouteChoice(
+        result: SolvedTarget, fromByKey: [String: StationNodeCandidate], toByKey: [String: StationNodeCandidate],
+        graph: RouteGraph.Graph, train: TrainContext, hints: SegmentHints, attemptIndex: Int,
+        continuationPaths: [String: [String]]
+    ) -> SectionRouteChoice? {
+        guard let from = fromByKey[result.sourceKey],
+              let to = toByKey[result.targetKey],
+              let fromCoord = graph.nodes[from.key], let toCoord = graph.nodes[to.key]
+        else { return nil }
+        let straight = Geometry.distanceMeters(fromCoord, toCoord)
+        let physicalLength = pathLengthMeters(graph: graph, pathKeys: result.pathKeys)
+        let detourLimit = max(straight * 3.8 + 6_000, 12_000)
+        if straight > 1_500 && physicalLength > detourLimit { return nil }
+        let snapPenalty = (from.distance + to.distance) * stationSnapCostFactor
+        let totalCost = result.cost + snapPenalty
+        let scoredCost = totalCost + routeLineMismatchPenalty(
+            edges: result.edges, hints: hints)
+        let prefix = continuationPaths[result.sourceKey] ?? [result.sourceKey]
+        let prefixEdges = zip(prefix, prefix.dropFirst()).compactMap { from, to in
+            graph.adjacency[from]?.first {
+                $0.to == to && $0.physicalJunction != nil
+                    && RouteGraph.RailValidity.isValid(
+                        validFrom: $0.validFrom, validTo: $0.validTo, on: train.rideDate)
+            }
+        }
+        return SectionRouteChoice(
+            pathKeys: Array(prefix.dropLast()) + result.pathKeys,
+            edges: prefixEdges + result.edges, scoredCost: scoredCost,
+            totalCost: totalCost, physicalLength: physicalLength,
+            from: from, to: to, hints: hints, attemptIndex: attemptIndex)
+    }
+
+    private static func bestSectionRouteChoices(
+        solved: [SolvedTarget], fromByKey: [String: StationNodeCandidate], toByKey: [String: StationNodeCandidate],
+        graph: RouteGraph.Graph, train: TrainContext, hints: SegmentHints, attemptIndex: Int,
+        continuationPaths: [String: [String]], fromAnchored: Bool, section: RouteSection,
+        fromStationCoordinates: [Int: Coordinate], toStationCoordinates: [Int: Coordinate]
+    ) -> (best: SectionRouteChoice?, guarded: SectionRouteChoice?) {
+        var attemptBest: SectionRouteChoice?
+        var guardedBest: SectionRouteChoice?
+        for result in solved where result.pathKeys.count >= 2 {
+            guard let candidate = sectionRouteChoice(
+                result: result, fromByKey: fromByKey, toByKey: toByKey, graph: graph,
+                train: train, hints: hints, attemptIndex: attemptIndex, continuationPaths: continuationPaths)
+            else { continue }
+            if endpointIsImplausible(
+                fromStationIndex: candidate.from.stationIndex, toStationIndex: candidate.to.stationIndex,
+                fromAnchored: fromAnchored, section: section,
+                fromStationCoordinates: fromStationCoordinates, toStationCoordinates: toStationCoordinates)
+            {
+                if guardedBest == nil || candidate.scoredCost < guardedBest!.scoredCost {
+                    guardedBest = candidate
+                }
+                continue
+            }
+            if attemptBest == nil || candidate.scoredCost < attemptBest!.scoredCost {
+                attemptBest = candidate
+            }
+        }
+        return (attemptBest, guardedBest)
+    }
+
+    private static func runSectionAttempt(
+        hints: SegmentHints, attemptIndex: Int, allowedCodes: [String], fromStations: [Int], toStations: [Int],
+        stations: Stations.Index, graph: RouteGraph.Graph, train: TrainContext,
+        continuityAnchor: Coordinate?, physicalContinuationKey: String?, traversalPolicy: TraversalPolicy,
+        section: RouteSection, fromStationCoordinates: [Int: Coordinate], toStationCoordinates: [Int: Coordinate]
+    ) -> (best: SectionRouteChoice?, guarded: SectionRouteChoice?) {
+        let excludedInstitutions = train.policy.hardExcludedInstitutionTypeCodes
+        guard let source = sectionSourceCandidates(
+            hints: hints, allowedCodes: allowedCodes, fromStations: fromStations, stations: stations,
+            graph: graph, train: train, excludedInstitutions: excludedInstitutions, continuityAnchor: continuityAnchor, physicalContinuationKey: physicalContinuationKey)
+        else { return (nil, nil) }
+        let fromCandidates = source.candidates
+        let toCandidates = cappedStationCandidates(
+            collectStationCandidateGraphNodes(
+                stationIndices: toStations, stations: stations, graph: graph,
+                hints: hints, allowedCodes: allowedCodes,
+                hardExcludedInstitutionTypeCodes: excludedInstitutions),
+            hints: hints, graph: graph)
+        guard !fromCandidates.isEmpty, !toCandidates.isEmpty else { return (nil, nil) }
+        let fromByKey = Dictionary(uniqueKeysWithValues: fromCandidates.map { ($0.key, $0) })
+        let toByKey = Dictionary(uniqueKeysWithValues: toCandidates.map { ($0.key, $0) })
+        let solved = dijkstra(
+            graph: graph,
+            sourceCandidates: fromCandidates.map { .init(key: $0.key, distance: $0.distance) },
+            targetKeys: Set(toByKey.keys), train: train.policy,
+            allowedCodes: allowedCodes, hints: hints, traversalPolicy: traversalPolicy)
+        return bestSectionRouteChoices(
+            solved: solved, fromByKey: fromByKey, toByKey: toByKey, graph: graph, train: train,
+            hints: hints, attemptIndex: attemptIndex, continuationPaths: source.continuationPaths,
+            fromAnchored: source.anchored, section: section,
+            fromStationCoordinates: fromStationCoordinates, toStationCoordinates: toStationCoordinates)
+    }
+
+    private static func orderedSectionRouteChoice(
+        baseHints: SegmentHints, allowedCodes: [String], fromStations: [Int], toStations: [Int],
+        stations: Stations.Index, graph: RouteGraph.Graph, train: TrainContext,
+        continuityAnchor: Coordinate?, physicalContinuationKey: String?, traversalPolicy: TraversalPolicy,
+        section: RouteSection, fromStationCoordinates: [Int: Coordinate], toStationCoordinates: [Int: Coordinate]
+    ) -> SectionRouteChoice? {
+        var best: SectionRouteChoice?
+        var guardedFallback: SectionRouteChoice?
         let baseAttempts = buildSegmentRouteSolveAttempts(baseHints)
         for (attemptIndex, hints) in baseAttempts.enumerated() {
-            let attempt = runAttempt(
-                hints: hints, attemptIndex: attemptIndex, allowedCodes: allowedCodes)
+            let attempt = runSectionAttempt(
+                hints: hints, attemptIndex: attemptIndex, allowedCodes: allowedCodes, fromStations: fromStations, toStations: toStations,
+                stations: stations, graph: graph, train: train, continuityAnchor: continuityAnchor,
+                physicalContinuationKey: physicalContinuationKey, traversalPolicy: traversalPolicy,
+                section: section, fromStationCoordinates: fromStationCoordinates, toStationCoordinates: toStationCoordinates)
             if guardedFallback == nil { guardedFallback = attempt.guarded }
             if let attemptBest = attempt.best {
                 best = attemptBest
@@ -2820,30 +3249,40 @@ public enum RouteSolver {
             fallback.requirePreferredInstitution = false
             fallback.solveMode = "institution_unpenalised_soft_fallback"
             let fallbackAllowedCodes = RouteGraph.defaultAllowedInstitutionTypeCodes
-            let attempt = runAttempt(
+            let attempt = runSectionAttempt(
                 hints: fallback, attemptIndex: baseAttempts.count,
-                allowedCodes: fallbackAllowedCodes)
+                allowedCodes: fallbackAllowedCodes, fromStations: fromStations, toStations: toStations,
+                stations: stations, graph: graph, train: train, continuityAnchor: continuityAnchor,
+                physicalContinuationKey: physicalContinuationKey, traversalPolicy: traversalPolicy,
+                section: section, fromStationCoordinates: fromStationCoordinates, toStationCoordinates: toStationCoordinates)
             if guardedFallback == nil { guardedFallback = attempt.guarded }
             best = attempt.best
         }
         // Last resort: a result the endpoint guard rejected is better than
         // no route at all (see `endpointAmbiguityDistanceFactor`).
         if best == nil { best = guardedFallback }
-        guard let best else { return nil }
-        func fixedIdentityStationIndex(
-            _ candidates: [Int], requestedCode: String?, routingIndex: Int
-        ) -> Int {
-            guard let requestedCode, !requestedCode.isEmpty else { return routingIndex }
-            return candidates.first {
-                Stations.stationCode(stations.features[$0]) == requestedCode
-            } ?? routingIndex
-        }
+        return best
+    }
+
+    private static func fixedIdentityStationIndex(
+        _ candidates: [Int], requestedCode: String?, routingIndex: Int, stations: Stations.Index
+    ) -> Int {
+        guard let requestedCode, !requestedCode.isEmpty else { return routingIndex }
+        return candidates.first {
+            Stations.stationCode(stations.features[$0]) == requestedCode
+        } ?? routingIndex
+    }
+
+    private static func solvedSection(
+        best: SectionRouteChoice, section: RouteSection, segmentIndex: Int, allowedCodes: [String],
+        fromStations: [Int], toStations: [Int], stations: Stations.Index, graph: RouteGraph.Graph
+    ) -> SolvedSection? {
         let fromIdentityIndex = fixedIdentityStationIndex(
             fromStations, requestedCode: section.fromN02StationCode,
-            routingIndex: best.from.stationIndex)
+            routingIndex: best.from.stationIndex, stations: stations)
         let toIdentityIndex = fixedIdentityStationIndex(
             toStations, requestedCode: section.toN02StationCode,
-            routingIndex: best.to.stationIndex)
+            routingIndex: best.to.stationIndex, stations: stations)
         // A passenger-graph result is never drawable railway geometry.
         guard best.edges.allSatisfy({ $0.connector == nil }) else { return nil }
         let rawCoordinates = best.pathKeys.compactMap { graph.nodes[$0] }
@@ -3069,14 +3508,9 @@ public enum RouteSolver {
         traversalPolicy: TraversalPolicy = .physicalRail
     ) -> [SolvedTarget] {
         guard !sourceCandidates.isEmpty, !targetKeys.isEmpty, !Task.isCancelled else { return [] }
-        if traversalPolicy == .physicalRail,
-           !sourceCandidates.contains(where: { targetKeys.contains($0.key) }) {
-            guard let components = graph.physicalRailComponents() else { return [] }
-            let sourceComponents = Set(sourceCandidates.compactMap { components[$0.key] })
-            guard targetKeys.contains(where: { key in
-                components[key].map { sourceComponents.contains($0) } ?? false
-            }) else { return [] }
-        }
+        guard dijkstraSourcesReachTargets(
+            graph: graph, sourceCandidates: sourceCandidates, targetKeys: targetKeys,
+            traversalPolicy: traversalPolicy) else { return [] }
         let preferredCodes = Set(allowedCodes.filter { !$0.isEmpty })
         let excludedInstitutions = Set(train.hardExcludedInstitutionTypeCodes.filter { !$0.isEmpty })
         let hardInstitutionFilter = train.institutionFilterMode == "hard"
@@ -3094,6 +3528,77 @@ public enum RouteSolver {
         var seedCost: [DijkstraState: Double] = [:]
         var heap = MinHeap()
 
+        seedDijkstraSources(
+            sourceCandidates, requiresPhysicalRail: requiresPhysicalRail,
+            distance: &distance, sourceOf: &sourceOf, seedCost: &seedCost, heap: &heap)
+
+        var settled: [(targetState: DijkstraState, settledCost: Double)] = []
+        guard settleDijkstraTargets(
+            graph: graph, targetKeys: targetKeys, train: train, hints: hints, traversalPolicy: traversalPolicy,
+            excludedInstitutions: excludedInstitutions, preferredCodes: preferredCodes,
+            hardInstitutionFilter: hardInstitutionFilter, distance: &distance, previous: &previous,
+            previousEdgeIndex: &previousEdgeIndex, sourceOf: &sourceOf, heap: &heap, settled: &settled)
+        else { return [] }
+
+        return solvedDijkstraTargets(
+            settled: settled, graph: graph, sourceOf: sourceOf, seedCost: seedCost,
+            previous: previous, previousEdgeIndex: previousEdgeIndex)
+    }
+
+    private static func settleDijkstraTargets(
+        graph: RouteGraph.Graph, targetKeys: Set<String>, train: TrainPolicy, hints: SegmentHints,
+        traversalPolicy: TraversalPolicy, excludedInstitutions: Set<String>, preferredCodes: Set<String>,
+        hardInstitutionFilter: Bool, distance: inout [DijkstraState: Double],
+        previous: inout [DijkstraState: DijkstraState], previousEdgeIndex: inout [DijkstraState: Int],
+        sourceOf: inout [DijkstraState: DijkstraState], heap: inout MinHeap,
+        settled: inout [(targetState: DijkstraState, settledCost: Double)]
+    ) -> Bool {
+        var visited = Set<DijkstraState>()
+        var remaining = targetKeys
+        var iterations = 0
+
+        // ADR 0011: shape-check the ride date once, not per edge.
+        let rideDate: String? = train.rideDate.flatMap { RouteGraph.isPlainISODay($0) ? $0 : nil }
+        while !heap.isEmpty && !remaining.isEmpty {
+            if iterations & 255 == 0, Task.isCancelled { return false }
+            iterations += 1
+            guard let current = heap.pop() else { break }
+            guard visited.insert(current.state).inserted else { continue }
+            if current.state.usedRequiredRail,
+               remaining.remove(current.state.key) != nil
+            {
+                settled.append((current.state, current.priority))
+            }
+            relaxDijkstraEdges(
+                current: current, graph: graph, train: train, hints: hints, traversalPolicy: traversalPolicy,
+                excludedInstitutions: excludedInstitutions, preferredCodes: preferredCodes,
+                hardInstitutionFilter: hardInstitutionFilter, rideDate: rideDate, distance: &distance,
+                previous: &previous, previousEdgeIndex: &previousEdgeIndex, sourceOf: &sourceOf, heap: &heap)
+        }
+
+        return true
+    }
+
+    private static func dijkstraSourcesReachTargets(
+        graph: RouteGraph.Graph, sourceCandidates: [Candidate], targetKeys: Set<String>,
+        traversalPolicy: TraversalPolicy
+    ) -> Bool {
+        if traversalPolicy == .physicalRail,
+           !sourceCandidates.contains(where: { targetKeys.contains($0.key) }) {
+            guard let components = graph.physicalRailComponents() else { return false }
+            let sourceComponents = Set(sourceCandidates.compactMap { components[$0.key] })
+            guard targetKeys.contains(where: { key in
+                components[key].map { sourceComponents.contains($0) } ?? false
+            }) else { return false }
+        }
+        return true
+    }
+
+    private static func seedDijkstraSources(
+        _ sourceCandidates: [Candidate], requiresPhysicalRail: Bool,
+        distance: inout [DijkstraState: Double], sourceOf: inout [DijkstraState: DijkstraState],
+        seedCost: inout [DijkstraState: Double], heap: inout MinHeap
+    ) {
         for candidate in sourceCandidates {
             let initial = candidate.distance * stationSnapCostFactor
             let state = DijkstraState(
@@ -3105,58 +3610,54 @@ public enum RouteSolver {
                 heap.push(Item(state: state, priority: initial))
             }
         }
+    }
 
-        var visited = Set<DijkstraState>()
-        var remaining = targetKeys
-        var settled: [(targetState: DijkstraState, settledCost: Double)] = []
-        var iterations = 0
+    private static func relaxDijkstraEdges(
+        current: Item, graph: RouteGraph.Graph, train: TrainPolicy, hints: SegmentHints,
+        traversalPolicy: TraversalPolicy, excludedInstitutions: Set<String>, preferredCodes: Set<String>,
+        hardInstitutionFilter: Bool, rideDate: String?, distance: inout [DijkstraState: Double],
+        previous: inout [DijkstraState: DijkstraState], previousEdgeIndex: inout [DijkstraState: Int],
+        sourceOf: inout [DijkstraState: DijkstraState], heap: inout MinHeap
+    ) {
+        for (edgeIndex, edge) in (graph.adjacency[current.state.key] ?? []).enumerated() {
+            guard traversalPolicy.permits(edge),
+                !edgeUsesExcludedInstitution(edge, excluded: excludedInstitutions),
+                directionPermits(edge, hints: hints, graph: graph),
+                !hardInstitutionFilter
+                || edgeHasPreferredInstitution(edge, allowed: preferredCodes),
+                edgeMatchesRequiredHints(edge, hints: hints, traversalPolicy: traversalPolicy),
+                RouteGraph.RailValidity.isValid(
+                    validFrom: edge.validFrom, validTo: edge.validTo, onPlainDay: rideDate)
+            else { continue }
 
-        // ADR 0011: shape-check the ride date once, not per edge.
-        let rideDate: String? = train.rideDate.flatMap { RouteGraph.isPlainISODay($0) ? $0 : nil }
-        while !heap.isEmpty && !remaining.isEmpty {
-            if iterations & 255 == 0, Task.isCancelled { return [] }
-            iterations += 1
-            guard let current = heap.pop() else { break }
-            guard visited.insert(current.state).inserted else { continue }
-            if current.state.usedRequiredRail,
-               remaining.remove(current.state.key) != nil
-            {
-                settled.append((current.state, current.priority))
+            var weight = edge.length
+            if edge.connector == nil && edge.physicalJunction == nil {
+                weight += institutionPreferencePenalty(
+                    for: edge, preferred: preferredCodes, train: train)
+                weight += nonPreferredLineOperatorPenalty(
+                    for: edge,
+                    preferredLines: hints.preferredLines,
+                    preferredOperators: hints.preferredOperators)
             }
-            for (edgeIndex, edge) in (graph.adjacency[current.state.key] ?? []).enumerated() {
-                guard traversalPolicy.permits(edge),
-                    !edgeUsesExcludedInstitution(edge, excluded: excludedInstitutions),
-                    directionPermits(edge, hints: hints, graph: graph),
-                    !hardInstitutionFilter
-                    || edgeHasPreferredInstitution(edge, allowed: preferredCodes),
-                    edgeMatchesRequiredHints(edge, hints: hints, traversalPolicy: traversalPolicy),
-                    RouteGraph.RailValidity.isValid(
-                        validFrom: edge.validFrom, validTo: edge.validTo, onPlainDay: rideDate)
-                else { continue }
-
-                var weight = edge.length
-                if edge.connector == nil && edge.physicalJunction == nil {
-                    weight += institutionPreferencePenalty(
-                        for: edge, preferred: preferredCodes, train: train)
-                    weight += nonPreferredLineOperatorPenalty(
-                        for: edge,
-                        preferredLines: hints.preferredLines,
-                        preferredOperators: hints.preferredOperators)
-                }
-                let nextCost = current.priority + weight
-                let nextState = DijkstraState(
-                    key: edge.to,
-                    usedRequiredRail: current.state.usedRequiredRail || (edge.connector == nil && edge.physicalJunction == nil))
-                if nextCost < (distance[nextState] ?? .infinity) {
-                    distance[nextState] = nextCost
-                    previous[nextState] = current.state
-                    previousEdgeIndex[nextState] = edgeIndex
-                    sourceOf[nextState] = sourceOf[current.state]
-                    heap.push(Item(state: nextState, priority: nextCost))
-                }
+            let nextCost = current.priority + weight
+            let nextState = DijkstraState(
+                key: edge.to,
+                usedRequiredRail: current.state.usedRequiredRail || (edge.connector == nil && edge.physicalJunction == nil))
+            if nextCost < (distance[nextState] ?? .infinity) {
+                distance[nextState] = nextCost
+                previous[nextState] = current.state
+                previousEdgeIndex[nextState] = edgeIndex
+                sourceOf[nextState] = sourceOf[current.state]
+                heap.push(Item(state: nextState, priority: nextCost))
             }
         }
+    }
 
+    private static func solvedDijkstraTargets(
+        settled: [(targetState: DijkstraState, settledCost: Double)], graph: RouteGraph.Graph,
+        sourceOf: [DijkstraState: DijkstraState], seedCost: [DijkstraState: Double],
+        previous: [DijkstraState: DijkstraState], previousEdgeIndex: [DijkstraState: Int]
+    ) -> [SolvedTarget] {
         return settled.compactMap { entry in
             guard let sourceState = sourceOf[entry.targetState] else { return nil }
             return SolvedTarget(
