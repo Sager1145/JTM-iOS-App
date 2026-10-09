@@ -995,3 +995,49 @@ source, preserving its other bytes and original staged logo deletions.
 Receipts: workspace-accessibility-shape-main35-*;
 layout-scroll-probe-main35-analysis.json; map-normal-main35-serialized.json;
 map-current-vm-300-validation.json. No complete-refactor claim.
+
+
+## Phase37 — reconcile the marker census with the committed pass-through correction
+
+Fresh whole-package verification passed102 suites, then stopped honestly at
+StationDisplayParityTests. Every marker feature still matched JavaScript and
+1104 named markers passed; only the stale3120 total-record census failed at
+3119. This is not a production regression from the current memory refactor.
+
+Exact lineage: d911647b changes Sakura770's Shin-Iwakuni passenger_stop to
+pass_through; b8e5d065 regenerates the fixture. The entire multiset difference
+is that one station's stop+stop-center pair becoming one pass/pass marker.
+All other countries and records remain unchanged. The frozen/current fixture
+SHA256 is8bdbc66ab19a42420038169af45a423cf06438a89696a3a2870d79fc3b7cad78;
+the corresponding committed store SHA256 is
+98a9776006fb1a70211f14f20bcb25bd7ff3b5d9b560e823560b45b67dfe7cb5.
+
+Update the census to3119 and add a focused regression: Sakura770 has exactly
+one Shin-Iwakuni marker, category/role pass/pass, at the recorded coordinate.
+Preserve exact code-unit comparisons of every feature, the1104 named-marker
+gate and all existing negative controls. No product, railway data or golden
+fixture is modified. Instrumented package build and all22 StationDisplay
+tests PASS. Pinned quality has zero new findings and format PASS. Source
+changes are integrated independently of concurrent CLI edits and staging.
+
+This bounded fix is not full coverage acceptance. The failed171-suite run
+and all profiles remain immutable evidence; a fresh full inventory now has
+1446 functions in171 suites and must complete before global/Domain claims.
+The test-only Statistics footer navigation candidate failed and is not
+adopted. Whole-map budget failure is also reproduced without footprint or
+xctrace: direct public kernel current2250756368/lifetimepeak2253377808bytes.
+The earlier direct-counter consistency failure is retained, not passed.
+The kernel reads lifetime peak before current footprint, so the scratch
+successor retains both raw counters and guards their maximum; see
+[Apple's implementation](https://github.com/apple-oss-distributions/xnu/blob/main/bsd/kern/kern_resource.c).
+Neither sampler replacement nor memory acceptance is claimed.
+
+Instruments All Allocations inspection/export now retains freed events in a
+separate owned trace copy:770 transient1.02MiB allocations total820019200bytes,
+with sampled native overlay texture→Metal simulator→XPC allocation stacks.
+This is one observed population, not attribution of the entire peak. The
+whole-map strict reduction, Stats footer, RouteStress, full platform/global
+coverage, M, leaks and original launch/first-map/stall/build targets stay open.
+Receipts: station-marker-census-main36-*; package-main33-isolated-coverage.*;
+map-kernel-counter-main35-*; map-current-vm-300-all-allocations-*.
+No complete-refactor claim.

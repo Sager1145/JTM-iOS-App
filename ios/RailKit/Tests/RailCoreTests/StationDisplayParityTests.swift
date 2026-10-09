@@ -828,13 +828,30 @@ struct StationDisplayParityTests {
                 if !features[index].name.isEmpty { totalNamed += 1 }
             }
         }
-        // Removing unsupported untimed passes removes 963 marker records;
-        // every remaining feature still has its exact JavaScript comparison.
-        #expect(totalRecords == 3120, "3,120 marker records, got \(totalRecords)")
+        // Removing unsupported untimed passes removed 963 marker records.
+        // Sakura770's reviewed Shin-Iwakuni stop-to-pass correction replaces
+        // two stop markers with one pass; exact JavaScript comparisons remain.
+        #expect(totalRecords == 3119, "3,119 marker records, got \(totalRecords)")
         // Two fifths of them: a station reached by several trains ships one
         // record per train and one of those wins, and every intermediate stop
         // also ships a stop-center that can never win at all.
         #expect(totalNamed == 1104, "1,104 of them carry a name, got \(totalNamed)")
+    }
+
+    @Test("Sakura770 passes Shin-Iwakuni without a passenger stop-center")
+    func sakuraShinIwakuniPass() throws {
+        let japan = try #require(Self.fixture.rides.first { $0.country == "jp" })
+        let rows = japan.records.filter {
+            let cells = Self.cells($0)
+            return Self.same(cells[11], "20260719_04_sakura770")
+                && Self.same(cells[2], "新岩国")
+        }
+        let records = try rows.map(Self.record)
+        #expect(records.count == 1)
+        let record = try #require(records.first)
+        #expect(Self.same(record.category, "pass"))
+        #expect(Self.same(record.role, "pass"))
+        #expect(record.position == Coordinate(lon: 132.149695, lat: 34.16485))
     }
 
     /// 東京 is 24 marker records across the Japanese store, and exactly one of
