@@ -40,7 +40,7 @@ final class MapCameraIntentTests: XCTestCase {
     func testSelectedJourneyDoesNotReframeAfterLayoutReplacementOrStatistics() throws {
         XCUIDevice.shared.orientation = .portrait
         defer { XCUIDevice.shared.orientation = .portrait }
-        let app = launch(tab: "all", stage: "compact", selected: "20260703_01_haruka")
+        let app = launch(tab: "all", stage: "compact", selected: "20260703_01_haruka", camera: nil)
         let status = app.staticTexts["railMapRenderStatus"]
         try waitFor(status) {
             self.number("targetRideReady", $0) == 1
@@ -173,7 +173,7 @@ final class MapCameraIntentTests: XCTestCase {
 
     private func launch(tab: String, stage: String, selected: String? = nil,
                         autoFocus: Bool = true,
-                        camera: String = "40.735,-74.027,0.016", region: String? = nil,
+                        camera: String? = "40.735,-74.027,0.016", region: String? = nil,
                         layers: String = "routes,focus") -> XCUIApplication {
         let app = XCUIApplication()
         app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
@@ -188,7 +188,9 @@ final class MapCameraIntentTests: XCTestCase {
         app.launchEnvironment["RAILMAP_UI_TEST_QUERY"] = "haruka"
         app.launchEnvironment["RAILMAP_UI_TEST_READY_RIDE"] = "20260703_01_haruka"
         app.launchEnvironment["RAILMAP_UI_TEST_LAYERS"] = layers
-        app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = camera
+        if let camera {
+            app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = camera
+        }
         app.launchEnvironment["RAILMAP_UI_TEST_SELECT"] = selected
         app.launchEnvironment["RAILMAP_UI_TEST_GESTURE_TARGET"] = "1"
         app.launch()

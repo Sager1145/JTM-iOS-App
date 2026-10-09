@@ -885,3 +885,28 @@ Domain coverage, five-region paired performance, leaks, launch/firstmap/stalls,
 platform/layout and M gates remain OPEN; full refactor is not complete.
 Receipts are local compact-edge-release-serialized-memory*, compact-edge-main32*,
 history-compact-edge-main27-suite64 and earlier failed comparisons.
+
+
+## Phase34 — isolate initial selected-journey camera intent in regression test
+
+The selected-journey layout/statistics regression requested Haruka autofocus
+and a delayed DEBUG New York camera override in the same launch. Omit only that
+contradictory override in this one case. The launch helper accepts an optional
+camera while retaining the same default New York value for every other call.
+All original assertion bodies, timeout values, fixture, production focus logic
+and six other test bodies remain byte-identical; structural proof reverses the
+single camera:nil argument to recover the exact original failed test body.
+This establishes a coherent initial intent, not a proven production race fix;
+the earlier1fail6pass sample remains historical evidence.
+
+Current accepted Main33 Debug candidate build PASS. All7 camera tests PASS
+(39.556/15.539/27.983/12.365/15.230/13.579/20.369s), original public route/focus/
+region/endpoint and layout/statistics assertions unchanged.100 actual footprint
+samples, seven expected fresh App PIDs, peak800935272B, no2GiB breach.
+510-file pinned quality270 inherited/zero new lint debt and format PASS. Test
+launch preparation changes no production state, memory owners or physical proof.
+Main33 pinned quality CI37963499759 SUCCESS; full package inventory1445functions/
+171suites is running on fresh Main33 instrumentation, not yet full coverage PASS.
+Full-map memory, layout/platform/M and original performance goals remain open.
+Local receipts: camera-intent-main33-*, candidate structural-proof.json;
+Main33 complete package work is package-main33-isolated-coverage*.
