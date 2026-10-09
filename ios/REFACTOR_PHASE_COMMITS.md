@@ -825,3 +825,13 @@ layout, platforms and M remain open. Public VM-only Instruments diagnostic uses
 a separate owned device and original Main26 baseline; none of that diagnostic
 or rejected compact Edge is included in this commit. Temporary execution
 receipts: share-selected-route-readiness-v2-* and sharing-export-probe-*.
+
+
+## Phase32 — preserve the native verifier executable mode
+
+Phase31's isolated index accidentally recorded ios/verify.sh as100644 instead
+of its original100755. Restore only that executable bit; exact committed
+script blob unchanged. Preserve the live CLI script bytes and staged logo
+deletions. Source/content checks and original UI remain Phase31's evidence;
+this correction adds no App or memory behavior. Verify prior/current tree
+modes, executable live script and unchanged blob, plus bash syntax.
