@@ -2538,22 +2538,21 @@ public enum RouteSolver {
         return !hints.directionExcludedFamilies.contains(edge.operator + "\0" + edge.lineName)
     }
 
-    /// Solve one itinerary section, including station expansion, candidate
-    /// snapping, ordered hint fallbacks, detour rejection and endpoint
-    /// completion. A nil result means no real rail geometry connected the two
-    /// endpoints; it never manufactures a straight-line fallback.
-    public static func solveSection(
+    private struct PreparedSectionEndpoints {
+        let section: RouteSection
+        let allowedCodes: [String]
+        let fromStations: [Int]
+        let toStations: [Int]
+    }
+
+    /// Reject unavailable endpoints before allocating any route graph, using
+    /// the same normalization, expansion and date filtering as the solver.
+    private static func prepareSectionEndpoints(
         _ rawSection: RouteSection,
-        segmentIndex: Int,
         train: TrainContext,
         country: String,
-        graph: RouteGraph.Graph,
-        stations: Stations.Index,
-        continuityAnchor: Coordinate? = nil,
-        physicalContinuationKey: String? = nil,
-        traversalPolicy: TraversalPolicy = .physicalRail,
-        directionNetwork: RouteNetwork? = nil
-    ) -> SolvedSection? {
+        stations: Stations.Index
+    ) -> PreparedSectionEndpoints? {
         var section = rawSection
         if section.from?.isEmpty != false {
             section.from = stations.name(forCode: section.fromN02StationCode)
@@ -2586,6 +2585,34 @@ public enum RouteSolver {
                 sectionOperatorNames: section.operatorNames ?? [], rideDate: train.rideDate),
             in: stations, rideDate: train.rideDate)
         guard !fromStations.isEmpty, !toStations.isEmpty else { return nil }
+        return PreparedSectionEndpoints(
+            section: section, allowedCodes: allowedCodes,
+            fromStations: fromStations, toStations: toStations)
+    }
+
+    /// Solve one itinerary section, including station expansion, candidate
+    /// snapping, ordered hint fallbacks, detour rejection and endpoint
+    /// completion. A nil result means no real rail geometry connected the two
+    /// endpoints; it never manufactures a straight-line fallback.
+    public static func solveSection(
+        _ rawSection: RouteSection,
+        segmentIndex: Int,
+        train: TrainContext,
+        country: String,
+        graph: RouteGraph.Graph,
+        stations: Stations.Index,
+        continuityAnchor: Coordinate? = nil,
+        physicalContinuationKey: String? = nil,
+        traversalPolicy: TraversalPolicy = .physicalRail,
+        directionNetwork: RouteNetwork? = nil
+    ) -> SolvedSection? {
+        guard let endpoints = prepareSectionEndpoints(
+            rawSection, train: train, country: country, stations: stations)
+        else { return nil }
+        let section = endpoints.section
+        let allowedCodes = endpoints.allowedCodes
+        let fromStations = endpoints.fromStations
+        let toStations = endpoints.toStations
 
         var baseHints = buildSegmentRouteHints(
             section: section,
@@ -2856,8 +2883,10 @@ public enum RouteSolver {
         directionNetwork: RouteNetwork? = nil
     ) -> SolvedSection? {
         guard !Task.isCancelled else { return nil }
-        guard let bbox = sectionEndpointBBox(
+        guard let endpoints = prepareSectionEndpoints(
             section, train: train, country: country, stations: stations)
+        else { return nil }
+        guard let bbox = sectionEndpointBBox(endpoints, stations: stations)
         else {
             return solveSection(
                 section, segmentIndex: segmentIndex, train: train, country: country,
@@ -3157,39 +3186,10 @@ public enum RouteSolver {
     }
 
     private static func sectionEndpointBBox(
-        _ rawSection: RouteSection,
-        train: TrainContext,
-        country: String,
+        _ endpoints: PreparedSectionEndpoints,
         stations: Stations.Index
     ) -> RouteGraph.BBox? {
-        var section = rawSection
-        if section.from?.isEmpty != false {
-            section.from = stations.name(forCode: section.fromN02StationCode)
-        }
-        if section.to?.isEmpty != false {
-            section.to = stations.name(forCode: section.toN02StationCode)
-        }
-        let cacheTrain = RouteGraph.CacheKeyTrain(
-            trainType: train.trainType, company: train.company,
-            preferredLineNames: train.preferredLineNames,
-            preferredOperatorNames: train.preferredOperatorNames,
-            allowedInstitutionTypeCodes: train.allowedInstitutionTypeCodes,
-            institutionFilterMode: train.institutionFilterMode)
-        let allowed = RouteGraph.allowedInstitutionTypeCodes(cacheTrain, country: country)
-        let lines = (section.lineNames ?? []).filter { !$0.isEmpty }
-        let from = filterStationCandidatesByRideDate(
-            resolveRouteEndpointStationCandidates(
-                .stop(.init(name: section.from, n02StationCode: section.fromN02StationCode)),
-                in: stations, allowedCodes: allowed, sectionLineNames: lines,
-                sectionOperatorNames: section.operatorNames ?? [], rideDate: train.rideDate),
-            in: stations, rideDate: train.rideDate)
-        let to = filterStationCandidatesByRideDate(
-            resolveRouteEndpointStationCandidates(
-                .stop(.init(name: section.to, n02StationCode: section.toN02StationCode)),
-                in: stations, allowedCodes: allowed, sectionLineNames: lines,
-                sectionOperatorNames: section.operatorNames ?? [], rideDate: train.rideDate),
-            in: stations, rideDate: train.rideDate)
-        let coordinates = (from + to).compactMap {
+        let coordinates = (endpoints.fromStations + endpoints.toStations).compactMap {
             coordinate(Stations.displayCoordinate(stations.features[$0]))
         }
         guard let first = coordinates.first else { return nil }

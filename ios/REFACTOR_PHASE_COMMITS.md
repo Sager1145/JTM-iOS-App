@@ -125,7 +125,7 @@ No simulator or external CLI process was stopped during this phase.
 
 ## Phase 7: statistics index lifetime and merge allocation
 
-Status: validated for independent commit/push.
+Status: committed and pushed as `15662ea1`.
 
 One completed index slot covers country, merged and scoped results. Independent
 build admission includes display augmentation, and N02 denominator counts travel
@@ -146,6 +146,26 @@ per version, identical frozen inputs except index source): median stable footpri
 App snapshot; it does not establish launch, rendering or leak goals for this commit.
 The latest compiler-memo Release build and public statistics flow passed separately.
 Receipts: `edge-phase-head-build.log`, `release-merge-allocation/`.
+
+## Phase 8: endpoint availability before graph allocation
+
+Status: validated for independent commit/push; existing historical data issue remains.
+
+Extracts the existing endpoint normalization, code/name expansion, institution
+filter and date availability into one shared preparation function. On-demand
+queries with absent or unavailable endpoints now return before graph allocation;
+viable endpoints retain the same physical solve and fallback behavior.
+
+Validation: clean-main plus the source/test passes 22 preflight and physical
+routing tests in two suites, including zero build callbacks for unavailable
+endpoints and named/code-only viable paths. A broader dated suite reported three
+Donan assertions on the frozen ongoing-CLI data snapshot. Restoring the main
+solver and rerunning the same case reproduces exactly those three assertions;
+this phase does not resolve that pending data/source compatibility issue.
+Complete native history on the full ongoing-CLI source snapshot passed separately
+in Phase 2. Do not infer clean-main full-suite acceptance from that result.
+Receipts: `endpoint-phase-focused-test.log`, `endpoint-phase-head-test.log`,
+`endpoint-phase-baseline-donan.log` (baseline/candidate both exit 1 for that case).
 
 ## Remaining delivery phases
 
