@@ -64,7 +64,7 @@ Receipts: `application-coverage-test.log`, `application-coverage-export/manifest
 
 ## Phase 4: pinned advisory quality and scoped coverage CI
 
-Status: validated locally for independent commit/push; hosted CI execution pending.
+Status: committed and pushed as `e80194eb`; hosted CI execution pending.
 
 Pins official SwiftLint 0.65.1 and SwiftFormat 0.63.1 portable release binaries;
 checks their actual versions before running readonly checks. JSON retains real
@@ -85,6 +85,23 @@ Expanded package regression after Phase 2 is still not accepted: its owned runne
 was stopped at sampled 2,327,481,248 bytes. The complete 23-test native history
 suite separately passes (53.379s), peak 1,113,163,432 bytes. Keep legacy browser
 and remaining package allocation diagnosis open; assertions remain unchanged.
+
+## Phase 5: isolated physical route validation use case
+
+Status: validated for independent commit/push.
+
+Moves ordered snapshot route-proof and historical-availability rules into
+RailApplication. Failed, cancelled, incomplete or mismatched resolver responses
+cannot confirm a draft or prove historical closure; cancellation propagates.
+Pending drafts are confirmed only in the local probe copy, with no mutation of
+caller data. Platform adoption is delivered separately with its UI integration.
+
+Validation: clean-main package plus only this helper/test passes 35 Application
+tests in five suites. Cases cover order, missing drafts, undated availability,
+wrong reply count, ordinary failures and cancellation before/after ignored work.
+Phase 3's real coverage maps every changed executable helper line. Ownership
+adds only the helper's RailApplication entry; concurrent CLI mappings stay local.
+Receipt: `application-phase-head-test.log`.
 
 ## Remaining delivery phases
 

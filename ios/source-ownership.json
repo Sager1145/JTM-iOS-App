@@ -508,7 +508,8 @@
         "ios/RailKit/Sources/RailApplication/ImportPreflight.swift",
         "ios/RailKit/Sources/RailApplication/ImportStaging.swift",
         "ios/RailKit/Sources/RailApplication/MileageMatching.swift",
-        "ios/RailKit/Sources/RailApplication/RideDraftValidation.swift"
+        "ios/RailKit/Sources/RailApplication/RideDraftValidation.swift",
+        "ios/RailKit/Sources/RailApplication/TripRouteValidation.swift"
       ]
     }
   ]
