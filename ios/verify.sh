@@ -138,6 +138,10 @@ if [ "$run_swift" = 1 ]; then
         || fail "timetable quick-match lifecycle"
     python3 "$here/tools/verify-route-caches.py" "$scratch" \
         || fail "route and map cache invalidation"
+    python3 "$here/tools/verify-input-plumbing.py" \
+        || fail "solver input and carried graph lifetime"
+    python3 "$here/tools/verify-route-availability.py" "$scratch" \
+        || fail "read-only dated physical route availability"
     python3 "$here/tools/verify-physical-section-continuity.py" "$scratch" \
         || fail "physical route section continuity and mileage scope"
     python3 "$here/tools/verify-passport-distance.py" "$scratch" \

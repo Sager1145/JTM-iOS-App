@@ -279,6 +279,14 @@
         {
           "id": "resource-revisions",
           "command": "python3 -m unittest discover -s ios/tools/tests -p test_rail_resource_revisions.py"
+        },
+        {
+          "id": "input-graph-lifetime",
+          "command": "python3 ios/tools/verify-input-plumbing.py"
+        },
+        {
+          "id": "dated-route-availability",
+          "command": "python3 ios/tools/verify-route-availability.py /tmp/jtm-verify"
         }
       ],
       "sources": [

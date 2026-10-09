@@ -91,6 +91,16 @@ enum NewTripStrings {
             .ja: "これらの駅を結ぶ経路が複数あります。1つ選んでください",
             .en: "Multiple routes connect these stations — choose one",
         ],
+        "ios.newTrip.corridorsHiddenByDate": [
+            .zhHans: "部分路线因在该日期尚未开通而被隐藏。",
+            .zhHant: "部分路線因在該日期尚未開通而被隱藏。",
+            .ja: "この日にまだ開業していなかった一部の経路は表示されていません。",
+            .en: "Some routes are hidden because they were not open on this date.",
+        ],
+        "ios.newTrip.noCorridorOnDate": [
+            .zhHans: "该日期没有已开通的路线。", .zhHant: "該日期沒有已開通的路線。",
+            .ja: "この日に開業していた経路はありません。", .en: "No route was open on this date.",
+        ],
         "ios.newTrip.stationCount": [
             .zhHans: "{count}个车站", .zhHant: "{count}個車站",
             .ja: "{count}駅", .en: "{count} stations",

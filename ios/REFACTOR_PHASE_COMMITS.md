@@ -281,7 +281,7 @@ Receipts: `service-pattern-native-bounded*`, `service-pattern-clean-main*`.
 
 ## Phase 14: sharing export ownership and scoped render identity
 
-Status: independently validated for this main delivery.
+Status: committed and pushed as `21c60b79`.
 
 Adopts the CLI share composer and its necessary statistics-card rendering inputs
 as a reviewable, independently built integration. Sharing now opens a composer
@@ -310,6 +310,39 @@ bounds and this flow do not establish whole-App peak memory or full sharing/UI
 matrix acceptance. Receipts: `share-phase-main-ui.log` / xcresult,
 `share-phase-main-release.log`, `share-phase-main-controller.log`,
 `share-phase-main-boundaries.log`, `share-phase-main-delivery.json`.
+
+## Phase 15: platform dated route proof and pending drafts
+
+Status: independently validated for this main delivery.
+
+Connects NewTrip's immutable corridor snapshot to the existing Application
+physical validation use case. Draft construction is shared by probing and saving;
+only a matching dated physical proof marks a saved corridor confirmed. Unproven
+candidates stay pending and no unproven distance is presented as solved mileage.
+A train-number/day change invalidates prior proof. Historical validation retains
+a dated-valid route even when today's undated route is unavailable, and hides
+only the opposite proven date mismatch with localized explanation.
+
+Batch availability uses Main's physical solver with no publication/cache writes.
+Each scope owns one graph and its original immutable inputs for both independent
+snapshots, then releases before the next scope. Original caller order and local
+cancellation are preserved. The new portable 22-case availability harness and
+existing carried-input lifetime harness are registered in native verification.
+CLI worker, timetable, history-format and selection changes remain excluded.
+
+Validation: actual candidate availability passes 22 controlled cases; production
+input/graph plumbing passes three ownership/order scenarios. Boundary inventory
+280, seven checker tests and permanent typography bounds pass. Main Debug App
+build and public empty/disabled save, multiple corridor choice, and no-number
+save flows pass (19.789s, 67.583s, 36.138s). Release arm64/x86_64 passes separately.
+An initial build exposed the CLI-only history identityPeriods API; that loop is
+removed, preserving Main-supported section/station/retirement/junction opening
+bounds. The initial failed receipt remains. These public flows do not substitute
+for the remaining historical-date device matrix or complete release acceptance.
+Receipts: `date-phase-main-build.log` (initial failure),
+`date-phase-main-build-fixed.log`, `date-phase-main-release.log`,
+`date-phase-main-ui.log` / xcresult, `date-phase-main-availability.log`,
+`date-phase-main-plumbing.log`, `date-phase-main-boundaries.log`.
 
 ## Remaining delivery phases
 

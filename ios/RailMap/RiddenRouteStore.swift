@@ -459,6 +459,107 @@ final class RiddenRouteStore {
         resolutionTickets.removeAll()
     }
 
+    /// Whether this region can answer date-specific route questions.
+    nonisolated static func hasDatedNetwork(region: String) -> Bool {
+        railHistoryURL(region: region) != nil
+    }
+
+    struct RouteAvailability: Sendable {
+        let undatedResolved: Bool
+        let datedResolved: Bool
+    }
+
+    /// Probe together so both passes reuse one mutable graph and never publish or persist.
+    @concurrent nonisolated static func routeAvailabilities(
+        _ datedTrains: [Train]
+    ) async throws -> [RouteAvailability] {
+        try Task.checkCancellation()
+        var byScope: [RouteScope: [(Int, Train)]] = [:]
+        for (index, train) in datedTrains.enumerated() {
+            try Task.checkCancellation()
+            byScope[RouteScope(train), default: []].append((index, train))
+        }
+
+        // This helper's graph lifetime ends before the next scope loads inputs.
+        func resolvedScope(
+            _ scope: RouteScope, entries: [(Int, Train)]
+        ) async throws -> [(Int, RouteAvailability)] {
+            var graphStore: UncheckedGraphStoreBox?
+            var providedInputs: SolverInputs?
+            func resolved(dated: Bool) async throws -> [Bool] {
+                var answers = [Bool](repeating: false, count: entries.count)
+                var missing: [(Int, Train)] = []
+                for (position, entry) in entries.enumerated() {
+                    try Task.checkCancellation()
+                    var train = entry.1
+                    if !dated { train.date = nil }
+                    let ride = loadCached([train], country: scope.code).rides.first
+                    try Task.checkCancellation()
+                    if let ride {
+                        answers[position] = ride.route.isResolved
+                    } else {
+                        missing.append((position, train))
+                    }
+                }
+                guard !missing.isEmpty else { return answers }
+                try Task.checkCancellation()
+                if graphStore == nil {
+                    let inputs = try await SolverInputCache.shared.inputs(scope: scope)
+                    try Task.checkCancellation()
+                    let displayNetwork = try? await DisplayNetworkCache.shared.network(scope: scope)
+                    try Task.checkCancellation()
+                    graphStore = UncheckedGraphStoreBox(store: fallbackGraphStore(
+                        inputs: inputs, displayNetwork: displayNetwork))
+                    providedInputs = inputs
+                }
+                guard let graphStore, let inputs = providedInputs else { return answers }
+                let pending = missing
+                try Task.checkCancellation()
+                let solved = try await RouteSolveLimiter.shared.withPermit {
+                    var results: [(Int, Bool)] = []
+                    results.reserveCapacity(pending.count)
+                    for (position, train) in pending {
+                        try Task.checkCancellation()
+                        let ride = try await solveMissingWithPermit(
+                            [train], scope: scope, allowLegacy: true,
+                            graphStore: graphStore.store, providedInputs: inputs,
+                            rejectPrecomputed: { _ in },
+                            publish: { _ in }, saveRoutes: false).first
+                        try Task.checkCancellation()
+                        results.append((position, ride?.route.isResolved == true))
+                    }
+                    return results
+                }
+                try Task.checkCancellation()
+                for (position, value) in solved { answers[position] = value }
+                return answers
+            }
+
+            let undated = try await resolved(dated: false)
+            try Task.checkCancellation()
+            // Historical railway can be unavailable undated but valid on the
+            // ride date. Always validate the dated snapshot independently.
+            let dated = try await resolved(dated: true)
+            try Task.checkCancellation()
+            return entries.indices.map {
+                (entries[$0].0, RouteAvailability(
+                    undatedResolved: undated[$0], datedResolved: dated[$0]))
+            }
+        }
+
+        var result = [RouteAvailability](repeating: .init(
+            undatedResolved: false, datedResolved: false), count: datedTrains.count)
+        for scope in RouteScope.ordered(byScope.keys) {
+            try Task.checkCancellation()
+            guard let entries = byScope[scope] else { continue }
+            let scoped = try await resolvedScope(scope, entries: entries)
+            try Task.checkCancellation()
+            for (index, availability) in scoped { result[index] = availability }
+        }
+        try Task.checkCancellation()
+        return result
+    }
+
     /// One journey through the same cache-then-solve path a full load uses.
     ///
     /// `nil` means the journey asked for no sections at all, which the caller
@@ -1236,7 +1337,8 @@ final class RiddenRouteStore {
         graphStore: RouteGraph.RouteGraphStore? = nil,
         providedInputs: SolverInputs? = nil,
         rejectPrecomputed: @Sendable (String) async -> Void,
-        publish: @Sendable ([DrawnRide]) async -> Void
+        publish: @Sendable ([DrawnRide]) async -> Void,
+        saveRoutes: Bool = true
     ) async throws -> [DrawnRide] {
         guard trains.contains(where: { !$0.requiresRouteConfirmation }) else { return [] }
         let country = scope.code
@@ -1515,7 +1617,7 @@ final class RiddenRouteStore {
                 train, country: country, segments: segments, expectedSections: sections,
                 physicalGaps: physicalGaps)
             rides.append(ride)
-            if !segments.isEmpty,
+            if saveRoutes, !segments.isEmpty,
                let digest = routeCacheDigest(canonical, raw: train, country: country) {
                 try? saveCache(ride, digest: digest, country: country, resourceScope: scope.key)
             }
@@ -1570,6 +1672,57 @@ final class RiddenRouteStore {
         }
         historyStateCache.withLock { $0[region] = state }
         return state
+    }
+
+    private enum LatestValidFromState: Sendable {
+        case none
+        case value(String)
+    }
+
+    private nonisolated static let latestValidFromCache = OSAllocatedUnfairLock(
+        initialState: [String: LatestValidFromState]())
+
+    /// The newest possible opening bounds whether an older date can differ from today.
+    nonisolated static func latestValidFrom(region: String) -> String? {
+        if let cached = latestValidFromCache.withLock({ $0[region] }) {
+            if case .value(let value) = cached { return value }
+            return nil
+        }
+        var values: [String] = []
+        func append(_ value: String?) {
+            guard let value, Dates.normalizeDateString(value) == value else { return }
+            values.append(value)
+        }
+        if case .loaded(let overlay, _) = historyState(region: region) {
+            for section in overlay.sections { append(section.properties.validFrom) }
+            for station in overlay.stations { append(Stations.stationValidFrom(station)) }
+            for retirement in overlay.retirements {
+                let bounds = RailServiceValidity.bounds(
+                    service: retirement.serviceValidity,
+                    infrastructure: retirement.infrastructureValidity,
+                    validFrom: retirement.validFrom, validTo: retirement.validTo,
+                    hasLegacy: retirement.validFrom != nil || retirement.validTo != nil)
+                append(bounds.0)
+            }
+        }
+        if region == Region.jp.code {
+            for pattern in JapanThroughServices.patterns {
+                append(pattern.validFrom)
+                for leg in pattern.legs { append(leg.validFrom) }
+            }
+            for connector in JapanThroughServices.connectors { append(connector.validFrom) }
+        }
+        if let url = Bundle.main.url(
+            forResource: "physical-rail-junctions", withExtension: "json"),
+           let registry = try? PhysicalRailJunctionRegistry(data: Data(contentsOf: url)) {
+            for junction in registry.junctions(for: region) { append(junction.validFrom) }
+        }
+        let latest = values.max()
+        latestValidFromCache.withLock {
+            $0[region] = latest.map(LatestValidFromState.value)
+                ?? LatestValidFromState.none
+        }
+        return latest
     }
 
     /// Stamp history before any graph or station index is built. A broken

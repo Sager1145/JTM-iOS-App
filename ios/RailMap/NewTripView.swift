@@ -1,3 +1,4 @@
+import RailApplication
 import RailCore
 import SwiftUI
 
@@ -44,6 +45,8 @@ struct NewTripView: View {
     @State private var outcome: TripRoutePlanner.Outcome?
     /// `routeIdentity` that `outcome` was planned for. A newer identity makes the outcome stale.
     @State private var plannedIdentity = ""
+    @State private var physicallyResolvedCorridorIDs: Set<String> = []
+    @State private var corridorsRemovedByDate = false
     @State private var searching = false
     @State private var selectedCorridorID: String?
     @State private var autofillFailed = false
@@ -165,6 +168,8 @@ struct NewTripView: View {
             package = nil
             outcome = nil
             plannedIdentity = ""
+            physicallyResolvedCorridorIDs.removeAll()
+            corridorsRemovedByDate = false
             selectedCorridorID = nil
             autofillFailed = false
             loadFailed = false
@@ -583,6 +588,16 @@ struct NewTripView: View {
                     }
                 }
             }
+            if corridorsRemovedByDate {
+                Text(text(
+                    corridors.isEmpty ? "noCorridorOnDate" : "corridorsHiddenByDate",
+                    fallback: corridors.isEmpty
+                        ? "No route was open on this date."
+                        : "Some routes are hidden because they were not open on this date."))
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
         case .disconnected(let junctions):
             VStack(alignment: .leading, spacing: 8) {
                 routeError(disconnectedMessage(junctions))
@@ -747,6 +762,8 @@ struct NewTripView: View {
             destinationLine?.id ?? "",
             trainType,
             companyName,
+            trainNumber,
+            dayString(departure),
             package == nil ? "0" : "1",
             allowUnverifiedConnections ? "1" : "0",
         ].joined(separator: "\u{1f}")
@@ -868,6 +885,8 @@ struct NewTripView: View {
         let identity = routeIdentity
         outcome = nil
         plannedIdentity = ""
+        physicallyResolvedCorridorIDs.removeAll()
+        corridorsRemovedByDate = false
         selectedCorridorID = nil
         autofillFailed = false
         guard let origin, let destination, let package else {
@@ -880,6 +899,7 @@ struct NewTripView: View {
         let allowUnverifiedConnections = allowUnverifiedConnections
         let originLineID = originLine?.id
         let destinationLineID = destinationLine?.id
+        let rideDate = dayString(departure)
         let trainType = trainType
         let operatorName = companyName.isEmpty
             ? nil
@@ -903,10 +923,46 @@ struct NewTripView: View {
             worker.cancel()
         }
         guard !Task.isCancelled, identity == routeIdentity else { return }
+        var publishedResult = result
+        var removedByDate = false
+        var physicallyResolvedIDs: Set<String> = []
+        if case .corridors(let corridors) = result {
+            let hasDatedNetwork = RiddenRouteStore.hasDatedNetwork(region: region.code)
+            let latestValidFrom = hasDatedNetwork
+                ? RiddenRouteStore.latestValidFrom(region: region.code) : nil
+            let normalizedRideDate = Dates.normalizeDateString(rideDate)
+            // Today's network cannot reject a date after its newest opening.
+            let needsDateValidation = hasDatedNetwork && (
+                normalizedRideDate != rideDate
+                    || latestValidFrom.map { rideDate < $0 } == true)
+            if needsDateValidation {
+                let candidates = corridors.map {
+                    TripRouteValidation.Candidate(id: $0.id, train: draft(for: $0))
+                }
+                do {
+                    let validation = try await TripRouteValidation.validate(candidates: candidates) { trains in
+                        try await RiddenRouteStore.routeAvailabilities(trains).map {
+                            .init(datedResolved: $0.datedResolved, undatedResolved: $0.undatedResolved)
+                        }
+                    }
+                    physicallyResolvedIDs = validation.physicallyResolvedIDs
+                    let filtered = corridors.filter { validation.retainedIDs.contains($0.id) }
+                    removedByDate = filtered.count < corridors.count
+                    publishedResult = .corridors(filtered)
+                } catch is CancellationError {
+                    return
+                } catch {
+                    // Preserve candidates for manual confirmation when proof is unavailable.
+                }
+            }
+            guard !Task.isCancelled, identity == routeIdentity else { return }
+        }
+        physicallyResolvedCorridorIDs = physicallyResolvedIDs
         plannedIdentity = identity
-        outcome = result
+        outcome = publishedResult
+        corridorsRemovedByDate = removedByDate
         searching = false
-        if case .corridors(let corridors) = result, corridors.count == 1 {
+        if case .corridors(let corridors) = publishedResult, corridors.count == 1 {
             selectedCorridorID = corridors[0].id
         }
     }
@@ -940,7 +996,25 @@ struct NewTripView: View {
             onSave(draft)
             return
         }
-        guard canSave, let origin, let destination, let corridor = selectedCorridor else { return }
+        guard canSave, let corridor = selectedCorridor else { return }
+        guard let draft = draft(for: corridor) else {
+            autofillFailed = true
+            return
+        }
+        let issues = RideDraftValidation.issues(
+            for: draft, originalID: train.id, existingIDs: RideStatusCenter.shared.trainIDs)
+        let blocking = issues.blocking
+        guard blocking.isEmpty else {
+            saveIssues = blocking
+            return
+        }
+        saveIssues = []
+        onSave(draft)
+    }
+
+    /// Build exactly the candidate that saving this corridor would persist.
+    private func draft(for corridor: TripRoutePlanner.Corridor) -> Train? {
+        guard let origin, let destination else { return nil }
         var draft = train
         draft.region = region.code
         // Same mapping StationPickerView uses: CatalogStation.key.sourceCode.
@@ -956,13 +1030,13 @@ struct NewTripView: View {
                 stopType: "destination",
                 rideSegment: true),
         ]
-        // requiresConfirmation is ignored because the draft only has two endpoint stops.
+        // Only endpoint stops are replaced here. Physical confirmation comes
+        // from the resolver result for this exact planning input.
         guard let proposal = LocalJourneyAutofill.proposal(train: draft, choice: corridor.choice),
-              proposal.train.stops.count >= 2 else {
-            autofillFailed = true
-            return
-        }
+              proposal.train.stops.count >= 2 else { return nil }
         draft = proposal.train
+        draft.routeConfirmation = plannedIdentity == routeIdentity
+            && physicallyResolvedCorridorIDs.contains(corridor.id) ? .confirmed : .pending
         draft.region = region.code
         draft.date = dayString(departure)
         let last = draft.stops.count - 1
@@ -981,15 +1055,7 @@ struct NewTripView: View {
         }
         draft.origin = origin.name
         draft.destination = destination.name
-        let issues = RideDraftValidation.issues(
-            for: draft, originalID: train.id, existingIDs: RideStatusCenter.shared.trainIDs)
-        let blocking = issues.blocking
-        guard blocking.isEmpty else {
-            saveIssues = blocking
-            return
-        }
-        saveIssues = []
-        onSave(draft)
+        return draft
     }
 
     private func validationMessage(_ issue: RideDraftIssue) -> String {
@@ -999,7 +1065,9 @@ struct NewTripView: View {
 
     private func stationCountText(_ corridor: TripRoutePlanner.Corridor) -> String {
         let count = String(corridor.passStationCount)
-        guard let kilometers = kilometerString(corridor.distanceKm) else {
+        guard plannedIdentity == routeIdentity,
+              physicallyResolvedCorridorIDs.contains(corridor.id),
+              let kilometers = kilometerString(corridor.distanceKm) else {
             return text("stationCount", fallback: "{count} stations", ["count": .string(count)])
         }
         return text(
