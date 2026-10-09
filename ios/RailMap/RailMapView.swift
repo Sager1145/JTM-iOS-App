@@ -48,68 +48,6 @@ import SwiftUI
     return best?.coordinate
 }
 
-/// A tiny screen-space collision index for labels the app owns.
-///
-/// MapKit's annotation collision pass also competes with the basemap's labels.
-/// Giving our station names a priority low enough to collide made every name in
-/// a dense city disappear behind Apple's road labels; making them `.required`
-/// kept the names, but also disabled collision handling between our own names.
-/// This grid separates those two questions: it thins only JTM labels before
-/// they reach MapKit, then the accepted labels can remain stable above the map.
-private struct MapLabelCollisionGrid {
-    private struct Cell: Hashable {
-        let column: Int
-        let row: Int
-    }
-
-    private static let cellSize: CGFloat = 96
-    private static let horizontalPadding: CGFloat = 8
-    private static let verticalPadding: CGFloat = 6
-    private var boxesByCell: [Cell: [CGRect]] = [:]
-
-    mutating func insertIfClear(_ box: CGRect) -> Bool {
-        guard box.width > 0, box.height > 0 else { return false }
-        let padded = box.insetBy(
-            dx: -Self.horizontalPadding, dy: -Self.verticalPadding)
-        let columns = cellRange(from: padded.minX, through: padded.maxX)
-        let rows = cellRange(from: padded.minY, through: padded.maxY)
-
-        for column in columns {
-            for row in rows {
-                let cell = Cell(column: column, row: row)
-                if boxesByCell[cell, default: []].contains(where: {
-                    $0.intersects(padded)
-                }) {
-                    return false
-                }
-            }
-        }
-        for column in columns {
-            for row in rows {
-                boxesByCell[Cell(column: column, row: row), default: []].append(padded)
-            }
-        }
-        return true
-    }
-
-    /// Endpoint cards stay visible even when two of them overlap. Reserve both
-    /// boxes so later station names cannot be admitted on top of either card.
-    mutating func reserve(_ box: CGRect) {
-        guard box.width > 0, box.height > 0 else { return }
-        let padded = box.insetBy(
-            dx: -Self.horizontalPadding, dy: -Self.verticalPadding)
-        for column in cellRange(from: padded.minX, through: padded.maxX) {
-            for row in cellRange(from: padded.minY, through: padded.maxY) {
-                boxesByCell[Cell(column: column, row: row), default: []].append(padded)
-            }
-        }
-    }
-
-    private func cellRange(from lower: CGFloat, through upper: CGFloat) -> ClosedRange<Int> {
-        Int(floor(lower / Self.cellSize))...Int(floor(upper / Self.cellSize))
-    }
-}
-
 struct RailMapView: View {
     var lines: [RailNetworkStore.DrawnLine]
     var stations: [RailNetworkStore.DrawnStation]
@@ -689,11 +627,7 @@ struct RailMapView: View {
             /// The installed selection includes every drawable segment, even
             /// outside the padded viewport. A new pick must expand its route once.
             private var fullyBuiltSelectedRideID: String?
-            private var stationLineCountsByCountry: [String: [String: Int]] = [:]
-            private var endpointStationPositionsByCountry:
-                [String: [String: MapEndpointLabels.StationPosition]] = [:]
-            private var stationImportanceTask: Task<Void, Never>?
-            private var stationImportanceCountry: String?
+            private let selectedStationSnapshots = MapSelectedStationSnapshotController()
             private struct LineInputs: Equatable, Sendable {
                 let contentID: UUID
                 let anchors: [Int]
@@ -1282,9 +1216,7 @@ struct RailMapView: View {
             /// dismantling runs, so shared hooks are cleared only while they still
             /// identify this coordinator or this exact map view.
             func tearDown(_ dismantledMapView: MKMapView) {
-                stationImportanceTask?.cancel()
-                stationImportanceTask = nil
-                stationImportanceCountry = nil
+                selectedStationSnapshots.tearDown()
                 cameraRebuildTask?.cancel()
                 cameraRebuildTask = nil
                 stationLabels.tearDown()
@@ -1630,7 +1562,7 @@ struct RailMapView: View {
                         worker.cancel()
                     }
                     guard let self else { return }
-                    func clearPreparationIfCurrent() {
+                    @MainActor func clearPreparationIfCurrent() {
                         guard self.geometryPreparationID == requestID else { return }
                         self.geometryPreparation = nil
                         self.geometryPreparationKey = nil
@@ -2299,42 +2231,32 @@ struct RailMapView: View {
             /// Load only station identities, so hub priority remains available
             /// with the network hidden or its viewport geometry evicted.
             private func prepareSelectedStationImportance(on mapView: MKMapView) {
-                guard let ride = rides.first(where: { $0.id == selectedTrainID }) else {
-                    stationImportanceTask?.cancel()
-                    stationImportanceTask = nil
-                    stationImportanceCountry = nil
-                    return
-                }
-                let country = ride.country
-                guard stationLineCountsByCountry[country] == nil,
-                      stationImportanceCountry != country else { return }
-                stationImportanceTask?.cancel()
-                stationImportanceCountry = country
-                stationImportanceTask = Task { @MainActor [weak self, weak mapView] in
-                    let snapshot = await MapRideStationImportance.shared.snapshot(for: country)
-                    guard !Task.isCancelled, let self, let mapView,
-                          self.mapView === mapView else { return }
-                    self.stationImportanceTask = nil
-                    self.stationImportanceCountry = nil
-                    self.stationLineCountsByCountry[country] = snapshot.lineCounts
-                    self.endpointStationPositionsByCountry[country] = snapshot.endpointPositions
-                    if let selected = self.rides.first(where: { $0.id == self.selectedTrainID }) {
-                        self.controller?.selectionRegion = self.selectionRegion(for: selected)
-                    }
-                    self.focusPendingJourney(on: mapView)
-                    if self.isManipulating || self.playback?.isActive == true
-                        || self.playbackLayer.lastSnapshot != nil
-                        || self.rebuildDeferredByGesture || self.rebuildDeferredByPlayback
-                        || self.annotationsNeedRefresh || self.pendingStrokeRefs != nil
-                        || self.lastCameraChange.map({ ContinuousClock.now - $0 < .milliseconds(120) }) == true {
-                        self.annotationsNeedRefresh = true
-                        self.rebuildOwed(on: mapView)
-                    } else if let context = self.markerBuildContext {
-                        self.buildMarkers(context, on: mapView)
-                    } else {
-                        self.rebuildOwed(on: mapView)
-                    }
-                }
+                let country = rides.first(where: { $0.id == selectedTrainID })?.country
+                selectedStationSnapshots.prepare(
+                    country: country,
+                    isCurrentMount: { [weak self, weak mapView] in
+                        guard let self, let mapView else { return false }
+                        return self.mapView === mapView
+                    },
+                    didLoad: { [weak self, weak mapView] in
+                        guard let self, let mapView, self.mapView === mapView else { return }
+                        if let selected = self.rides.first(where: { $0.id == self.selectedTrainID }) {
+                            self.controller?.selectionRegion = self.selectionRegion(for: selected)
+                        }
+                        self.focusPendingJourney(on: mapView)
+                        if self.isManipulating || self.playback?.isActive == true
+                            || self.playbackLayer.lastSnapshot != nil
+                            || self.rebuildDeferredByGesture || self.rebuildDeferredByPlayback
+                            || self.annotationsNeedRefresh || self.pendingStrokeRefs != nil
+                            || self.lastCameraChange.map({ ContinuousClock.now - $0 < .milliseconds(120) }) == true {
+                            self.annotationsNeedRefresh = true
+                            self.rebuildOwed(on: mapView)
+                        } else if let context = self.markerBuildContext {
+                            self.buildMarkers(context, on: mapView)
+                        } else {
+                            self.rebuildOwed(on: mapView)
+                        }
+                })
             }
 
             private func knownEndpointPosition(
@@ -2342,13 +2264,13 @@ struct RailMapView: View {
             ) -> Coordinate? {
                 MapEndpointLabels.stationPosition(
                     for: stop, country: ride.country, on: ride.daySpan.date,
-                    in: endpointStationPositionsByCountry[ride.country] ?? [:])
+                    in: selectedStationSnapshots.snapshot(for: ride.country)?.endpointPositions ?? [:])
             }
 
             /// Frame known stops alongside available railway. These points do
             /// not become strokes, route continuity, or measured distance.
             private func selectionRegion(for ride: RiddenRouteStore.DrawnRide) -> MKCoordinateRegion? {
-                guard endpointStationPositionsByCountry[ride.country] != nil else { return nil }
+                guard selectedStationSnapshots.snapshot(for: ride.country) != nil else { return nil }
                 let endpoints = [MapEndpointLabels.Kind.origin, .destination].compactMap { kind in
                     MapEndpointLabels.endpointStop(of: ride, kind: kind) {
                         knownEndpointPosition(for: $0, of: ride)
@@ -2364,7 +2286,7 @@ struct RailMapView: View {
                       let request = controller.pendingAutoFocusRequest(matching: controller.autoFocusRequest),
                       case .journey(let id) = request.target, selectedTrainID == id,
                       let ride = rides.first(where: { $0.id == id }),
-                      endpointStationPositionsByCountry[ride.country] != nil,
+                      selectedStationSnapshots.snapshot(for: ride.country) != nil,
                       controller.isMapReady,
                       mapView.bounds.width > 1, mapView.bounds.height > 1,
                       playback?.isActive != true else { return }
@@ -2719,7 +2641,7 @@ struct RailMapView: View {
                             let value = max(
                                 connectionsByPlace[
                                     "\(placeKey.region)|\(placeKey.stationCode)"] ?? 0,
-                                stationLineCountsByCountry[placeKey.region]?[placeKey.stationCode] ?? 0)
+                                selectedStationSnapshots.snapshot(for: placeKey.region)?.lineCounts[placeKey.stationCode] ?? 0)
                             connectionCounts[placeKey] = value
                             connectionCount = value
                         }

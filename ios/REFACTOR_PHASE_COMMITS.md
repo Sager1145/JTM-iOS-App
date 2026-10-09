@@ -169,7 +169,7 @@ Receipts: `endpoint-phase-focused-test.log`, `endpoint-phase-head-test.log`,
 
 ## Phase 9: production-sized endpoint census cache ownership
 
-Status: memory/ownership validation complete; functional registry failure remains.
+Status: committed and pushed as `ece1eddf`; functional registry failure remains.
 
 Real-data endpoint/census helpers use the production bounded graph policy rather
 than retaining every region/corridor/full graph. Inputs, comparisons, route
@@ -185,6 +185,34 @@ census remains unresolved. The same graph-policy ownership/geometry invariants
 are covered by Phase 2's cache equivalence tests. Full-suite status is separate.
 Receipts: `census-bounded.log`, `census-bounded-summary.json`,
 `package-native-production-graph-summary.json`.
+
+## Phase 10: map label and selected-station responsibility extraction
+
+Status: validated for main delivery.
+
+Moves the collision grid unchanged into its own source and isolates selected
+station snapshot tasks/cache lifetime from the map coordinator. Teardown clears
+snapshots; request tickets reject noncooperative completions after country,
+selection or mount changes. Existing camera, annotation refresh and geometry
+behavior stay in the coordinator. The nested preparation cleanup is explicitly
+MainActor-isolated. Concurrent CLI annotation/restyle instrumentation is excluded.
+
+Validation: actual collision grid passes explicit boundary/padding/reservation
+cases and 600 oracle comparisons. The actual snapshot controller passes cache,
+coalescing, country change, cleared selection, replaced mount, teardown, stale
+completion and exactly-once callback checks. The clean-main Release App build passes for arm64 and x86_64 using HEAD plus
+only these map sources; full platform/performance acceptance remains separate.
+Receipts: `map-phase-label-grid.log`, `map-phase-selected-snapshot.log`,
+`map-phase-head-build.log`.
+
+The remaining package regression was stopped at 2,431,373,008 bytes (exit 143;
+owned-runner memory guard exit 2). A process-lifetime Sonic national graph and
+other static fixture owners remain live across suites. The last buffered catalog
+line does not identify the allocating test. Localization/Presentation missing
+fixture paths and StoreOperations byte mismatches are also recorded. This is
+not a completed suite. The serialized share lifecycle's 46 checks pass and the
+App builds, but the public export test fails during preview invalidation; its
+source-key/lifecycle cause is being traced before delivery.
 
 ## Remaining delivery phases
 
