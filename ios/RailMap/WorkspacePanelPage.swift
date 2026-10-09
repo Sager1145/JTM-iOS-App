@@ -26,23 +26,27 @@ struct WorkspacePanelPage<Header: View, Content: View>: View {
 /// the measured obstruction, so its final row can move clear of the bar.
 private struct WorkspacePanelViewport<Content: View>: View {
     let content: Content
+    @Environment(PanelMorph.self) private var morph: PanelMorph?
     @State private var tabBarOcclusion: CGFloat = 0
 
     var body: some View {
         GeometryReader { geometry in
-            // Visibility follows the space actually above the system bar,
-            // rather than a sheet-stage estimate from a different coordinate
-            // space. Keep the page mounted throughout resizing.
-            let showsContent = geometry.size.height - tabBarOcclusion > 1
+            // Compact shows only the header, while the mounted viewport keeps
+            // its scroll position. Expanded content also needs usable space
+            // above the full measured tab-bar clearance.
+            let clearance = SystemTabBarScrollClearance(occlusion: tabBarOcclusion)
+            let showsContent = morph?.stage != .compact
+                && geometry.size.height - clearance.bottomMargin > 1
             content
                 .frame(
                     width: geometry.size.width,
                     height: geometry.size.height,
                     alignment: .top)
-                .modifier(SystemTabBarScrollClearance(occlusion: tabBarOcclusion))
+                .modifier(clearance)
                 // Keep the content mounted, including its scroll position.
                 // Compact leaves this viewport under the system tab bar.
                 .allowsHitTesting(showsContent)
+                .disabled(morph?.stage == .compact)
                 .accessibilityHidden(!showsContent)
                 .accessibilityElement(children: .contain)
                 .accessibilityIdentifier("workspaceMenuViewport")
@@ -65,11 +69,16 @@ private struct WorkspacePanelViewport<Content: View>: View {
 private struct SystemTabBarScrollClearance: ViewModifier {
     let occlusion: CGFloat
 
+    var bottomMargin: CGFloat {
+        if #available(iOS 26.0, *) { return occlusion + 13 }
+        return 0
+    }
+
     func body(content: Content) -> some View {
         if #available(iOS 26.0, *) {
-            // The 12-point content gap is separate from the measured bar;
-            // it lets the final card's full edge clear the floating glass.
-            content.contentMargins(.bottom, occlusion + 12, for: .scrollContent)
+            // One extra point preserves the required 12-point gap when the
+            // system bar and scroll-content edges land on fractional points.
+            content.contentMargins(.bottom, bottomMargin, for: .scrollContent)
         } else {
             content
         }

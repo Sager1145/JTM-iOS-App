@@ -310,6 +310,8 @@ struct RailWorkspaceView: View {
             // draw a solid bar and keep the page above it. The root proxy
             // only sees the home indicator.
         }
+        // Detents describe the window; keyboard avoidance belongs to the presented content.
+        .ignoresSafeArea(.keyboard, edges: .bottom)
         .focusedSceneValue(\.railCommandBridge, railCommands)
         .onAppear(perform: installRailCommands)
         .onChange(of: stageSelection) { _, _ in installRailCommands() }

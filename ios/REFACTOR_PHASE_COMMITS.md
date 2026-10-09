@@ -910,3 +910,47 @@ Main33 pinned quality CI37963499759 SUCCESS; full package inventory1445functions
 Full-map memory, layout/platform/M and original performance goals remain open.
 Local receipts: camera-intent-main33-*, candidate structural-proof.json;
 Main33 complete package work is package-main33-isolated-coverage*.
+
+
+## Phase35 — keep resident sheet detents stable while the keyboard opens
+
+The root GeometryReader previously contracted from approximately778 to484
+points when Search took the keyboard. Medium and the selected height detent
+changed with it; the native field then lost focus during a compact feedback
+sample before any characters arrived. Keep this presenter's bottom keyboard
+safe area independent of its window metrics. Presented content retains its
+own system keyboard behavior. Preserve the genuine drag stream and existing
+150ms predecessor filter; no notification observers, timers, caches or probe
+logging enter production.
+
+The viewport uses its logical compact stage and full tab clearance while
+remaining mounted, disables only at Compact, and reserves13points above the
+measured glass obstruction to satisfy the original12point fractional gap.
+The earlier viewport-only candidate and diagnostic logging passes remain
+rejected; low-impact native OSLog captured the actual failure. Keyboard will
+hide preceded compact acceptance, so the chronology does not attribute the
+initial dismissal solely to the disabled gate.
+
+Validation: normal Main34+candidate Debug binary, three predefined serial
+original All clearance/compact Search/repeated drag runs: all9 checks PASS.
+Original shared-date/25:10 next-day navigation, add-stop cancel and typed
+line/date editing all PASS; original shared-date case repeated once PASS.
+Dedicated iPad original wide compact reopening/Search, title toggle and
+header gesture checks PASS. Original test bodies, assertions, deadlines,
+fixture, Dynamic Type and orientation constraints are unchanged. Debug and
+arm64+x86_64 Release build-for-testing PASS.510 Swift files retain270 inherited
+lint findings with zero new findings; format PASS.
+
+These are bounded correctness/budget observations, not paired performance,
+global memory, leak or full platform acceptance. Phase33's scoped strict
+settled/peak reductions remain scoped. Full171suite/1445function fresh
+coverage, whole-map2GiB failures, route stress final-batch identity, remaining
+layout/platform/M and original launch/first-map/stall/build goals stay open.
+Grok's bounded RouteStress extraction reached its turn limit without a full
+result; Sol review established that actual stress fixtures have no explicit
+pending records and missing raw sections normalize, so no count assertion is
+relaxed and no geometry is fabricated. CLI dirty code/data and original staged
+logo deletions are preserved separately from the frozen accepted source.
+Local receipts: workspace-stable-keyboard-main34-*,
+layout-oslog-focus-trace-main32-analysis.json; failed/disabled probe receipts
+remain available. No complete-refactor claim.
