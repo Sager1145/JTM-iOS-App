@@ -120,11 +120,17 @@ struct StationIntervalResolverTests {
     @Test func budgetAndCancellationCannotCertifyTheFirstFoundPath() throws {
         let resolver = try fixture([row("direct", ["A", "D"]), row("long", ["A", "B", "C", "D"])])
         #expect(resolver.resolve(stationCodes: ["A", "D"], requiredLineNames: ["Family"],
-            maximumExaminedStates: 1) == .unsupported)
+            maximumExaminedStates: 1) == .ambiguous)
         #expect(resolver.resolve(stationCodes: ["A", "D"], requiredLineNames: ["Family"],
             maximumExaminedStates: 0) == .unsupported)
         #expect(resolver.resolve(stationCodes: ["A", "D"], requiredLineNames: ["Family"],
             isCancelled: { true }) == .unsupported)
+    }
+
+    @Test func truncatedSearchWithAFoundMatchStaysAmbiguous() throws {
+        let resolver = try fixture([row("direct", ["A", "D"]), row("long", ["A", "B", "C", "D"])])
+        #expect(resolver.resolve(stationCodes: ["A", "D"], requiredLineNames: ["Family"],
+            maximumExaminedStates: 1) == .ambiguous)
     }
 
     @Test func sourceOccurrencesCannotTeleportBetweenRepeatedStationCodes() throws {

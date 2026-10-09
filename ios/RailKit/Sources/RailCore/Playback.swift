@@ -485,6 +485,61 @@ public enum Playback {
             arrivals.insert(index + 1)
         }
 
+        // Index the run boundaries once. The old endpoint preservation below
+        // searched every run for every stop, which made compilation quadratic
+        // on long all-stops services. Keep the original tie-breaking exactly:
+        // arrivals choose the first run in forward order, departures the first
+        // in reverse order.
+        struct Endpoint {
+            let distance: Double
+            let runIndex: Int
+            let coordinate: Coordinate
+        }
+        let incomingEndpoints = runs.enumerated().compactMap { index, run -> Endpoint? in
+            guard run.total > 0, let coordinate = run.coords.last else { return nil }
+            return Endpoint(
+                distance: run.offset + run.total, runIndex: index, coordinate: coordinate)
+        }.sorted {
+            ($0.distance, $0.runIndex) < ($1.distance, $1.runIndex)
+        }
+        let outgoingEndpoints = runs.enumerated().compactMap { index, run -> Endpoint? in
+            guard run.total > 0, let coordinate = run.coords.first else { return nil }
+            return Endpoint(distance: run.offset, runIndex: index, coordinate: coordinate)
+        }.sorted {
+            ($0.distance, $0.runIndex) < ($1.distance, $1.runIndex)
+        }
+
+        func endpoint(
+            near distance: Double, in endpoints: [Endpoint], preferLastRun: Bool
+        ) -> Coordinate? {
+            let tolerance = 0.000001
+            var low = 0
+            var high = endpoints.count
+            while low < high {
+                let middle = (low + high) >> 1
+                if endpoints[middle].distance < distance - tolerance {
+                    low = middle + 1
+                } else {
+                    high = middle
+                }
+            }
+            var match: Endpoint?
+            var index = low
+            while index < endpoints.count,
+                  endpoints[index].distance <= distance + tolerance {
+                let candidate = endpoints[index]
+                if abs(candidate.distance - distance) <= tolerance,
+                   match == nil
+                    || (preferLastRun
+                        ? candidate.runIndex > match!.runIndex
+                        : candidate.runIndex < match!.runIndex) {
+                    match = candidate
+                }
+                index += 1
+            }
+            return match?.coordinate
+        }
+
         var stations: [Station] = []
         for stopIndex in order.sorted() {
             guard stopIndex < stops.count else { continue }  // `stops[i]` → undefined
@@ -498,14 +553,14 @@ public enum Playback {
                 // Hop arc sums and run arc sums can differ by a rounding step.
                 // Match endpoints within a micrometre rather than requiring
                 // exact Double equality at a potentially national-scale arc.
-                if arrivals.contains(stopIndex), let incoming = runs.first(where: {
-                    $0.total > 0 && abs($0.offset + $0.total - s) <= 0.000001
-                }) {
-                    coordinate = incoming.coords.last
-                } else if !arrivals.contains(stopIndex), let outgoing = runs.reversed().first(where: {
-                    $0.total > 0 && abs($0.offset - s) <= 0.000001
-                }) {
-                    coordinate = outgoing.coords.first
+                if arrivals.contains(stopIndex),
+                   let incoming = endpoint(
+                    near: s, in: incomingEndpoints, preferLastRun: false) {
+                    coordinate = incoming
+                } else if !arrivals.contains(stopIndex),
+                          let outgoing = endpoint(
+                            near: s, in: outgoingEndpoints, preferLastRun: true) {
+                    coordinate = outgoing
                 }
             }
             guard let coord = coordinate else { continue }

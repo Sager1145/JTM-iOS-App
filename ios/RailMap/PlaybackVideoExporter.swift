@@ -44,6 +44,9 @@ final class PlaybackVideoExporter {
     @ObservationIgnored private var captureLink: CADisplayLink?
     @ObservationIgnored private var captureTarget: CaptureTarget?
     @ObservationIgnored private var latestSnapshot: PlaybackMapSnapshot?
+#if DEBUG
+    @ObservationIgnored private var droppedHierarchyFrames = 0
+#endif
     @ObservationIgnored private var outputSize = CGSize.zero
     /// The rectangle of the map being filmed, in the map view's own points.
     /// The whole view until a shape narrows it — see `VideoExportSettings`.
@@ -105,6 +108,26 @@ final class PlaybackVideoExporter {
         }
     }
 
+    /// Pixels per point for a filmed frame.
+    ///
+    /// The map's window scene is the scale that window is actually on, which
+    /// is the number an iPhone already used when its window existed. With no
+    /// window, Catalyst cannot trust a screen scale — the old `UIScreen.main`
+    /// fallback is the compatibility screen — so the film uses 2. Every other
+    /// device uses the view's trait scale, and 3 only when that scale is still
+    /// unspecified, which is the previous nil-window guess.
+    static func displayScale(of mapView: UIView?) -> CGFloat {
+        if let scale = mapView?.window?.windowScene?.screen.scale, scale > 0 {
+            return scale
+        }
+        #if targetEnvironment(macCatalyst)
+        return 2
+        #else
+        let traitScale = mapView?.traitCollection.displayScale ?? 0
+        return traitScale > 0 ? traitScale : 3
+        #endif
+    }
+
     func start(
         playback: PlaybackController,
         mapView: UIView,
@@ -137,7 +160,7 @@ final class PlaybackVideoExporter {
                 : CGRect(origin: .zero, size: mapView.bounds.size)
             let plan = settings.plan(
                 sourceRect: source,
-                displayScale: mapView.window?.screen.scale ?? UIScreen.main.scale)
+                displayScale: Self.displayScale(of: mapView))
             let size = plan.size
             crop = plan.crop
             let url = FileManager.default.temporaryDirectory
@@ -288,9 +311,14 @@ final class PlaybackVideoExporter {
         UIGraphicsPushContext(context)
         let captured = mapView.drawHierarchy(in: mapView.bounds, afterScreenUpdates: false)
         UIGraphicsPopContext()
-        guard captured else {
-            context.restoreGState()
-            return
+        if !captured {
+#if DEBUG
+            droppedHierarchyFrames += 1
+#endif
+            // In particular on Catalyst, MapKit can decline the hierarchy
+            // snapshot even though its layer tree is available. Rendering the
+            // layer is preferable to silently dropping the timestamp.
+            mapView.layer.render(in: context)
         }
         drawCaption(snapshot, in: context, layout: layout)
         context.restoreGState()
@@ -453,6 +481,7 @@ final class PlaybackVideoExporter {
             return
         }
         if writer.status == .completed {
+            logDroppedHierarchyFrames()
             resetWriter()
             if !partial { progress = 1 }
             state = .finished(outputURL, partial: partial)
@@ -471,8 +500,19 @@ final class PlaybackVideoExporter {
         playback?.onFinish = nil
         playback?.stop()
         if let outputURL { try? FileManager.default.removeItem(at: outputURL) }
+        logDroppedHierarchyFrames()
         resetWriter()
         state = .failed(error.localizedDescription)
+    }
+
+    private func logDroppedHierarchyFrames() {
+#if DEBUG
+        guard droppedHierarchyFrames > 0 else { return }
+        print(
+            "PlaybackVideoExporter: drawHierarchy dropped \(droppedHierarchyFrames) "
+                + "frame(s); layer.render fallback was used.")
+        droppedHierarchyFrames = 0
+#endif
     }
 
     private func resetWriter() {

@@ -90,6 +90,31 @@ struct JunctionApproachTests {
         ])))
     }
 
+    @Test("Multi-edge junction candidates are deterministic path endpoints")
+    func deterministicMultiEdgeJunctionEndpoints() throws {
+        let junction = RouteGraph.PhysicalJunction(
+            id: "multi-edge",
+            from: .init(identity: identity("West"), coordinate: point(0)),
+            to: .init(identity: identity("East"), coordinate: point(400)),
+            evidence: ["way 1"], kind: .osmConnector,
+            path: [point(20), point(140), point(260), point(380)],
+            source: .init(provider: "OpenStreetMap", license: "ODbL-1.0", ways: [1],
+                retrieved: "2026-10-07", cache: "test"),
+            attachMeters: .init(from: 20, to: 20))
+        let west = rail(-200, 0, "West")
+        let east = rail(400, 600, "East")
+        let expected = [key(0, "West"), key(400, "East")].sorted()
+
+        let forward = RouteGraph.build(from: [west, east], junctions: [junction])
+        let reverse = RouteGraph.build(from: [east, west], junctions: [junction])
+        let forwardEntry = try #require(forward.physicalJunctionEdges().first)
+        let reverseEntry = try #require(reverse.physicalJunctionEdges().first)
+
+        #expect(forwardEntry.endpointKeys == expected)
+        #expect(reverseEntry.endpointKeys == expected)
+        #expect(forwardEntry.endpointKeys == reverseEntry.endpointKeys)
+    }
+
     @Test("Reviewed junction approaches are bounded on both sides and date-valid")
     func approaches() {
         for (left, right, expected) in [(300.0, 300.0, true), (1600, 300, false), (300, 1600, false)] {

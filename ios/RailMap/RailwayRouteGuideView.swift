@@ -149,6 +149,7 @@ struct RailwayRouteCorrectionView: View {
         loading = true
         let package = package
         let trainType = train.trainType
+        let serviceDate = Dates.normalizeDateString(train.date)
         let excluded = excludedStationCodes
         let required = train.stops[(from?.index ?? 0)...(to?.index ?? 0)]
             .filter { $0.routeEditing?.generatedBy == nil || $0.n02StationCode == search.origin || $0.n02StationCode == search.destination }
@@ -173,7 +174,7 @@ struct RailwayRouteCorrectionView: View {
             func allows(_ from: CompactPackage.Line, _ to: CompactPackage.Line, _ code: String) -> Bool {
                 let key = from.id + "\u{1F}" + to.id + "\u{1F}" + code
                 if let known = memo[key] { return known }
-                let value = TripConnectivity.allows(from: from, to: to, atStationCode: code)
+                let value = TripConnectivity.allows(from: from, to: to, atStationCode: code, on: serviceDate)
                 memo[key] = value
                 return value
             }
@@ -656,10 +657,6 @@ struct RailwayRouteGuideView: View {
         .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(.background, in: RoundedRectangle(cornerRadius: 16))
-        // A container identifier otherwise replaces each stop's own identifier,
-        // so the reviewed station code is no longer addressable.
-        .accessibilityElement(children: .contain)
-        .accessibilityIdentifier("routeGuideProjectedStops")
     }
 
     private var actions: some View {
@@ -868,7 +865,72 @@ struct RailwayGuideGeometry {
         }
         self.intervals = intervals
         self.stations = stations
+        self.fingerprint = Fingerprint(intervals: intervals, stations: stations)
     }
+
+    /// Taken once, when the geometry is built. ``RailwayGuideMap`` copies this
+    /// into its cache key instead of counting vertices: a history-era rebuild
+    /// can keep the same interval count and replace the coordinates.
+    struct Fingerprint: Hashable {
+        struct Interval: Hashable {
+            var code: String
+            var count: Int
+            var firstLatitude: Int
+            var firstLongitude: Int
+            var lastLatitude: Int
+            var lastLongitude: Int
+            /// Mix of every vertex, so a middle-only reshape still misses the cache.
+            var vertices: Int
+        }
+
+        struct Station: Hashable {
+            var code: String
+            var latitude: Int
+            var longitude: Int
+        }
+
+        var intervals: [Interval]
+        var stations: [Station]
+
+        init(
+            intervals: [String: [CLLocationCoordinate2D]],
+            stations: [String: CLLocationCoordinate2D]
+        ) {
+            self.intervals = intervals.keys.sorted().compactMap { code in
+                guard let coordinates = intervals[code],
+                      let first = coordinates.first, let last = coordinates.last else { return nil }
+                return Interval(
+                    code: code, count: coordinates.count,
+                    firstLatitude: Self.microdegrees(first.latitude),
+                    firstLongitude: Self.microdegrees(first.longitude),
+                    lastLatitude: Self.microdegrees(last.latitude),
+                    lastLongitude: Self.microdegrees(last.longitude),
+                    vertices: Self.mix(coordinates))
+            }
+            self.stations = stations.keys.sorted().compactMap { code in
+                guard let coordinate = stations[code] else { return nil }
+                return Station(
+                    code: code,
+                    latitude: Self.microdegrees(coordinate.latitude),
+                    longitude: Self.microdegrees(coordinate.longitude))
+            }
+        }
+
+        private static func microdegrees(_ degrees: CLLocationDegrees) -> Int {
+            Int((degrees * 1_000_000).rounded())
+        }
+
+        private static func mix(_ coordinates: [CLLocationCoordinate2D]) -> Int {
+            var hash = coordinates.count
+            for coordinate in coordinates {
+                hash = (hash &* 16_777_619) ^ microdegrees(coordinate.latitude)
+                hash = (hash &* 16_777_619) ^ microdegrees(coordinate.longitude)
+            }
+            return hash
+        }
+    }
+
+    let fingerprint: Fingerprint
 }
 
 struct RailwayGuideMap: View {
@@ -879,90 +941,34 @@ struct RailwayGuideMap: View {
     let geometryWarning: String
     var onSelect: ((String) -> Void)? = nil
 
-    private var common: Set<String> {
-        guard let first = choices.first else { return [] }
-        return choices.dropFirst().reduce(Set(first.sectionCodes)) { $0.intersection($1.sectionCodes) }
+    /// Cheap identity for ``model``. Geometry is not `Equatable`. The fingerprint
+    /// is built with the geometry, so a body does not walk the vertices, and a
+    /// coordinate change with the same counts still misses the cache.
+    private var guideMapKey: GuideMapKey {
+        GuideMapKey(
+            choiceIDs: choices.map(\.id),
+            sectionCodes: choices.map(\.sectionCodes),
+            stationCounts: choices.map(\.stations.count),
+            stations: choices.flatMap { choice in
+                choice.stations.map { "\($0.code)\u{1f}\($0.name)" }
+            },
+            geometry: geometry.fingerprint,
+            selectedID: selectedID)
     }
 
-    private var strokes: [Stroke] {
-        let common = common
-        var result: [Stroke] = []
-        var drawnCommon: Set<String> = []
-        for (index, choice) in choices.enumerated() {
-            for (occurrence, code) in choice.sectionCodes.enumerated() {
-                guard let coordinates = geometry.intervals[code] else { continue }
-                let shared = choices.count > 1 && common.contains(code)
-                if shared && !drawnCommon.insert(code).inserted { continue }
-                result.append(Stroke(
-                    id: choice.id + "|\(occurrence)", coordinates: coordinates,
-                    number: index + 1, shared: shared,
-                    selected: choice.id == selectedID || choices.count == 1))
-            }
-        }
-        // Draw the selected alignment over the other options without moving the camera.
-        return result.sorted { !$0.selected && $1.selected }
-    }
-
-    private var markers: [Marker] {
-        let common = common
-        return choices.enumerated().compactMap { index, choice in
-            guard !choice.sectionCodes.isEmpty else { return nil }
-            let distinguishing = choice.sectionCodes.first { !common.contains($0) }
-                ?? choice.sectionCodes[choice.sectionCodes.count / 2]
-            guard let coordinates = geometry.intervals[distinguishing], !coordinates.isEmpty else { return nil }
-            return Marker(id: choice.id, number: index + 1, coordinate: coordinates[coordinates.count / 2])
-        }
-    }
-
-    private var endpoints: [Endpoint] {
-        guard let choice = choices.first, let origin = choice.stations.first,
-              let destination = choice.stations.last else { return [] }
-        return [("origin", origin), ("destination", destination)].compactMap { id, visit in
-            guard let coordinate = geometry.stations[visit.code] else { return nil }
-            return Endpoint(id: id, name: localization.stationName(visit.name, code: visit.code), coordinate: coordinate)
-        }
-    }
-
-    private var missingGeometry: Bool {
-        choices.contains { choice in choice.sectionCodes.contains { geometry.intervals[$0] == nil } }
-    }
-
-    private var region: MKCoordinateRegion {
-        // The bounds depend on all candidates, never on the previewed card.
-        let coordinates = choices.flatMap { choice in
-            choice.sectionCodes.flatMap { geometry.intervals[$0] ?? [] }
-        }
-        guard let first = coordinates.first else {
-            let stationCoordinates = choices.flatMap(\.stations).compactMap { geometry.stations[$0.code] }
-            guard let anchor = stationCoordinates.first else {
-                return MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 35.7, longitude: 139.7),
-                                          span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
-            }
-            return MKCoordinateRegion(center: anchor, span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
-        }
-        var minLat = first.latitude, maxLat = first.latitude
-        var minLon = first.longitude, maxLon = first.longitude
-        for coordinate in coordinates {
-            minLat = min(minLat, coordinate.latitude)
-            maxLat = max(maxLat, coordinate.latitude)
-            minLon = min(minLon, coordinate.longitude)
-            maxLon = max(maxLon, coordinate.longitude)
-        }
-        return MKCoordinateRegion(
-            center: CLLocationCoordinate2D(latitude: (minLat + maxLat) / 2, longitude: (minLon + maxLon) / 2),
-            span: MKCoordinateSpan(latitudeDelta: max(0.012, (maxLat - minLat) * 1.35),
-                                   longitudeDelta: max(0.012, (maxLon - minLon) * 1.35)))
-    }
+    @State private var model: GuideMapModel?
 
     var body: some View {
+        let key = guideMapKey
+        let model = presentedModel(for: key)
         VStack(alignment: .leading, spacing: 6) {
-            Map(initialPosition: .region(region), interactionModes: [.pan, .zoom]) {
-                ForEach(strokes) { stroke in
+            Map(initialPosition: .region(model.region), interactionModes: [.pan, .zoom]) {
+                ForEach(model.strokes) { stroke in
                     MapPolyline(coordinates: stroke.coordinates)
                         .stroke(stroke.shared ? Color.secondary.opacity(0.55) : Self.color(stroke.number).opacity(stroke.selected ? 1 : 0.65),
                                 style: StrokeStyle(lineWidth: stroke.selected && !stroke.shared ? 6 : 4, lineCap: .round, lineJoin: .round))
                 }
-                ForEach(markers) { marker in
+                ForEach(model.markers) { marker in
                     Annotation("", coordinate: marker.coordinate) {
                         Button { onSelect?(marker.id) } label: {
                             Text("\(marker.number)")
@@ -982,8 +988,9 @@ struct RailwayGuideMap: View {
                         .accessibilityIdentifier("routeGuideMapOption-\(marker.number)")
                     }
                 }
-                ForEach(endpoints) { endpoint in
-                    Annotation(endpoint.name, coordinate: endpoint.coordinate, anchor: .bottom) {
+                ForEach(model.endpoints) { endpoint in
+                    Annotation(localization.stationName(endpoint.sourceName, code: endpoint.code),
+                               coordinate: endpoint.coordinate, anchor: .bottom) {
                         Image(systemName: "mappin.circle.fill")
                             .font(.title2)
                             .foregroundStyle(.primary)
@@ -995,11 +1002,30 @@ struct RailwayGuideMap: View {
             .frame(height: 260)
             .clipShape(RoundedRectangle(cornerRadius: 16))
             .accessibilityIdentifier("routeGuideMap")
-            if missingGeometry {
+            if model.missingGeometry {
                 Label(geometryWarning, systemImage: "exclamationmark.triangle")
                     .font(.caption).foregroundStyle(.secondary)
             }
         }
+        .onChange(of: key) { _, newKey in
+            refreshModel(for: newKey)
+        }
+        .task(id: key) {
+            refreshModel(for: key)
+        }
+    }
+
+    /// The stored model when it still matches, otherwise a build used for this
+    /// frame so the first render (and the frame an input changes) matches the
+    /// uncached map. ``refreshModel(for:)`` writes that build into ``model``.
+    private func presentedModel(for key: GuideMapKey) -> GuideMapModel {
+        if let model, model.key == key { return model }
+        return GuideMapModel.make(choices: choices, geometry: geometry, selectedID: selectedID, key: key)
+    }
+
+    private func refreshModel(for key: GuideMapKey) {
+        guard model?.key != key else { return }
+        model = GuideMapModel.make(choices: choices, geometry: geometry, selectedID: selectedID, key: key)
     }
 
     static func color(_ number: Int) -> Color {
@@ -1007,24 +1033,139 @@ struct RailwayGuideMap: View {
         return palette[(max(1, number) - 1) % palette.count]
     }
 
-    private struct Stroke: Identifiable {
-        let id: String
-        let coordinates: [CLLocationCoordinate2D]
-        let number: Int
-        let shared: Bool
-        let selected: Bool
+    /// Ids, the chosen section codes, and a geometry fingerprint.
+    /// `RailwayGuideGeometry` holds every surveyed vertex and is not
+    /// `Equatable`; equal interval counts are not the same geometry.
+    private struct GuideMapKey: Hashable {
+        var choiceIDs: [String]
+        var sectionCodes: [[String]]
+        var stationCounts: [Int]
+        var stations: [String]
+        var geometry: RailwayGuideGeometry.Fingerprint
+        var selectedID: String?
     }
 
-    private struct Marker: Identifiable {
-        let id: String
-        let number: Int
-        let coordinate: CLLocationCoordinate2D
-    }
+    /// Strokes, markers, endpoints, the camera region, and the missing-geometry
+    /// flag, built once per ``GuideMapKey`` instead of on every body.
+    private struct GuideMapModel {
+        struct Stroke: Identifiable {
+            let id: String
+            let coordinates: [CLLocationCoordinate2D]
+            let number: Int
+            let shared: Bool
+            let selected: Bool
+        }
 
-    private struct Endpoint: Identifiable {
-        let id: String
-        let name: String
-        let coordinate: CLLocationCoordinate2D
+        struct Marker: Identifiable {
+            let id: String
+            let number: Int
+            let coordinate: CLLocationCoordinate2D
+        }
+
+        /// `sourceName` is the package name. The map localizes it at render
+        /// time so a language change does not rebuild the geometry.
+        struct Endpoint: Identifiable {
+            let id: String
+            let sourceName: String
+            let code: String
+            let coordinate: CLLocationCoordinate2D
+        }
+
+        let key: GuideMapKey
+        let strokes: [Stroke]
+        let markers: [Marker]
+        let endpoints: [Endpoint]
+        let missingGeometry: Bool
+        let region: MKCoordinateRegion
+
+        static func make(
+            choices: [RailwayRouteChoices.Choice],
+            geometry: RailwayGuideGeometry,
+            selectedID: String?,
+            key: GuideMapKey
+        ) -> GuideMapModel {
+            let common: Set<String> = {
+                guard let first = choices.first else { return [] }
+                return choices.dropFirst().reduce(Set(first.sectionCodes)) {
+                    $0.intersection($1.sectionCodes)
+                }
+            }()
+
+            var strokes: [Stroke] = []
+            var drawnCommon: Set<String> = []
+            for (index, choice) in choices.enumerated() {
+                for (occurrence, code) in choice.sectionCodes.enumerated() {
+                    guard let coordinates = geometry.intervals[code] else { continue }
+                    let shared = choices.count > 1 && common.contains(code)
+                    if shared && !drawnCommon.insert(code).inserted { continue }
+                    strokes.append(Stroke(
+                        id: choice.id + "|\(occurrence)", coordinates: coordinates,
+                        number: index + 1, shared: shared,
+                        selected: choice.id == selectedID || choices.count == 1))
+                }
+            }
+            // Draw the selected alignment over the other options without moving the camera.
+            strokes.sort { !$0.selected && $1.selected }
+
+            let markers: [Marker] = choices.enumerated().compactMap { index, choice in
+                guard !choice.sectionCodes.isEmpty else { return nil }
+                let distinguishing = choice.sectionCodes.first { !common.contains($0) }
+                    ?? choice.sectionCodes[choice.sectionCodes.count / 2]
+                guard let coordinates = geometry.intervals[distinguishing], !coordinates.isEmpty else { return nil }
+                return Marker(id: choice.id, number: index + 1, coordinate: coordinates[coordinates.count / 2])
+            }
+
+            let endpoints: [Endpoint] = {
+                guard let choice = choices.first, let origin = choice.stations.first,
+                      let destination = choice.stations.last else { return [] }
+                return [("origin", origin), ("destination", destination)].compactMap { id, visit in
+                    guard let coordinate = geometry.stations[visit.code] else { return nil }
+                    return Endpoint(id: id, sourceName: visit.name, code: visit.code, coordinate: coordinate)
+                }
+            }()
+
+            let missingGeometry = choices.contains { choice in
+                choice.sectionCodes.contains { geometry.intervals[$0] == nil }
+            }
+
+            return GuideMapModel(
+                key: key,
+                strokes: strokes,
+                markers: markers,
+                endpoints: endpoints,
+                missingGeometry: missingGeometry,
+                region: region(choices: choices, geometry: geometry))
+        }
+
+        private static func region(
+            choices: [RailwayRouteChoices.Choice],
+            geometry: RailwayGuideGeometry
+        ) -> MKCoordinateRegion {
+            // The bounds depend on all candidates, never on the previewed card.
+            let coordinates = choices.flatMap { choice in
+                choice.sectionCodes.flatMap { geometry.intervals[$0] ?? [] }
+            }
+            guard let first = coordinates.first else {
+                let stationCoordinates = choices.flatMap(\.stations).compactMap { geometry.stations[$0.code] }
+                guard let anchor = stationCoordinates.first else {
+                    return MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 35.7, longitude: 139.7),
+                                              span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
+                }
+                return MKCoordinateRegion(center: anchor, span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
+            }
+            var minLat = first.latitude, maxLat = first.latitude
+            var minLon = first.longitude, maxLon = first.longitude
+            for coordinate in coordinates {
+                minLat = min(minLat, coordinate.latitude)
+                maxLat = max(maxLat, coordinate.latitude)
+                minLon = min(minLon, coordinate.longitude)
+                maxLon = max(maxLon, coordinate.longitude)
+            }
+            return MKCoordinateRegion(
+                center: CLLocationCoordinate2D(latitude: (minLat + maxLat) / 2, longitude: (minLon + maxLon) / 2),
+                span: MKCoordinateSpan(latitudeDelta: max(0.012, (maxLat - minLat) * 1.35),
+                                       longitudeDelta: max(0.012, (maxLon - minLon) * 1.35)))
+        }
     }
 }
 

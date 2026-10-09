@@ -79,9 +79,13 @@ struct MapNetworkBuildState {
 
 /// Zoom-dependent network geometry and ride-overlay caches.
 ///
-/// The coordinator decides what should be drawn. This object owns how long a
-/// prepared geometry value remains valid and clears the complete cache family
-/// whenever its shared projection key changes.
+/// The coordinator decides what should be drawn. Prepared strokes, line builds
+/// and ride polylines are kept for up to three stroke-bucket frames and reused
+/// when the camera returns to a recent bucket. Accessors read and write the
+/// current frame. `retainLineBuilds`, `retainRidePolylines` and
+/// `clearRidePolylines` apply to every cached frame, so invalidated content
+/// cannot come back from an older entry. `frameStrokes` is the geometry
+/// installed for the camera frame in progress and is not stored per entry.
 @MainActor
 final class MapNetworkGeometryCache {
     typealias BuiltStroke = (
@@ -89,18 +93,36 @@ final class MapNetworkGeometryCache {
         mapPointsPerScreenPoint: Double
     )
 
+    private struct FrameEntry {
+        var strokeBuilds: [String: ContinuousStrokeBuild] = [:]
+        var lineBuilds: [String: LineBuild] = [:]
+        var ridePolylines: [String: MKPolyline] = [:]
+    }
+
+    private static let frameCapacity = 3
+
     private var frameKey = ""
-    private var strokeBuilds: [String: ContinuousStrokeBuild] = [:]
-    private var lineBuilds: [String: LineBuild] = [:]
-    private var ridePolylines: [String: MKPolyline] = [:]
+    private var entries: [String: FrameEntry] = [:]
+    /// Most recent last.
+    private var recentKeys: [String] = []
     private var frameStrokes: [String: BuiltStroke] = [:]
 
+    private var currentEntry: FrameEntry {
+        entries[frameKey] ?? FrameEntry()
+    }
+
     func beginFrame(key: String) {
-        if frameKey != key {
-            frameKey = key
-            strokeBuilds.removeAll(keepingCapacity: true)
-            lineBuilds.removeAll(keepingCapacity: true)
-            ridePolylines.removeAll(keepingCapacity: true)
+        if entries[key] == nil {
+            entries[key] = FrameEntry()
+        }
+        frameKey = key
+        if let index = recentKeys.firstIndex(of: key) {
+            recentKeys.remove(at: index)
+        }
+        recentKeys.append(key)
+        while recentKeys.count > Self.frameCapacity {
+            let evicted = recentKeys.removeFirst()
+            entries.removeValue(forKey: evicted)
         }
     }
 
@@ -109,7 +131,9 @@ final class MapNetworkGeometryCache {
     }
 
     func clearRidePolylines() {
-        ridePolylines.removeAll(keepingCapacity: true)
+        for key in Array(entries.keys) {
+            entries[key]?.ridePolylines.removeAll(keepingCapacity: true)
+        }
     }
 
     static func ridePolylineKey(
@@ -120,35 +144,47 @@ final class MapNetworkGeometryCache {
     }
 
     func retainRidePolylines(withKeys keys: Set<String>) {
-        ridePolylines = ridePolylines.filter { keys.contains($0.key) }
+        for key in Array(entries.keys) {
+            if let kept = entries[key]?.ridePolylines.filter({ keys.contains($0.key) }) {
+                entries[key]?.ridePolylines = kept
+            }
+        }
     }
 
     func retainLineBuilds(withIDs ids: Set<String>) {
-        strokeBuilds = strokeBuilds.filter { ids.contains($0.key) }
-        lineBuilds = lineBuilds.filter { ids.contains($0.key) }
+        for key in Array(entries.keys) {
+            if let kept = entries[key]?.strokeBuilds.filter({ ids.contains($0.key) }) {
+                entries[key]?.strokeBuilds = kept
+            }
+            if let kept = entries[key]?.lineBuilds.filter({ ids.contains($0.key) }) {
+                entries[key]?.lineBuilds = kept
+            }
+        }
         clearRidePolylines()
     }
 
-    var preparedStrokes: [String: ContinuousStrokeBuild] { strokeBuilds }
+    var preparedStrokes: [String: ContinuousStrokeBuild] { currentEntry.strokeBuilds }
 
-    func hasStrokeBuild(for id: String) -> Bool { strokeBuilds[id] != nil }
-    func hasLineBuild(for id: String) -> Bool { lineBuilds[id] != nil }
+    func hasStrokeBuild(for id: String) -> Bool { currentEntry.strokeBuilds[id] != nil }
+    func hasLineBuild(for id: String) -> Bool { currentEntry.lineBuilds[id] != nil }
 
     func storePrepared(_ result: MapLineGeometry.Prepared, key: String) -> Bool {
         guard key == frameKey else { return false }
-        strokeBuilds.merge(result.strokes) { _, new in new }
-        lineBuilds.merge(result.lines) { _, new in new }
+        // Mutate in place: copying an entry out and back would copy its
+        // dictionaries on every store.
+        entries[frameKey, default: FrameEntry()].strokeBuilds.merge(result.strokes) { _, new in new }
+        entries[frameKey, default: FrameEntry()].lineBuilds.merge(result.lines) { _, new in new }
         return true
     }
 
-    func strokeBuild(for id: String) -> ContinuousStrokeBuild? { strokeBuilds[id] }
+    func strokeBuild(for id: String) -> ContinuousStrokeBuild? { currentEntry.strokeBuilds[id] }
 
     func lineBuild(for id: String) -> LineBuild? {
-        lineBuilds[id]
+        currentEntry.lineBuilds[id]
     }
 
     func store(_ build: LineBuild, for id: String) {
-        lineBuilds[id] = build
+        entries[frameKey, default: FrameEntry()].lineBuilds[id] = build
     }
 
     func storeStroke(_ value: BuiltStroke, for id: String) {
@@ -164,11 +200,11 @@ final class MapNetworkGeometryCache {
     }
 
     func ridePolyline(for key: String) -> MKPolyline? {
-        ridePolylines[key]
+        currentEntry.ridePolylines[key]
     }
 
     func storeRidePolyline(_ polyline: MKPolyline, for key: String) {
-        ridePolylines[key] = polyline
+        entries[frameKey, default: FrameEntry()].ridePolylines[key] = polyline
     }
 }
 
@@ -300,8 +336,13 @@ final class MapOverlayInstaller {
         detailTransitionDuration: TimeInterval? = nil,
         alphaTransitionDuration: TimeInterval? = nil
     ) {
-        // A newer install supersedes any replacement still waiting to render.
+        // A newer install supersedes any replacement still waiting to render,
+        // except network geometry whose replacement has no renderer yet:
+        // removing it now would blank those railways until MapKit draws the
+        // new tiles. Its own deadline in `checkHandoff` still retires it.
         for (key, batch) in handoffs {
+            if batch.originalKey.hasPrefix("network"),
+               !styles.hasRenderer(forKey: batch.originalKey) { continue }
             mapView.removeOverlay(batch.overlay)
             styles.forget([batch.overlay])
             handoffs.removeValue(forKey: key)
@@ -348,7 +389,8 @@ final class MapOverlayInstaller {
             }
             if alphaTransitionDuration != 0,
                (key.hasPrefix("ride|") || key.hasPrefix("ride-xday|")
-                || key.hasPrefix("ride-casing|") || key.hasPrefix("ride-xday-casing|")),
+                || key.hasPrefix("ride-casing|") || key.hasPrefix("ride-xday-casing|")
+                || key.hasPrefix("network")),
                desiredKeys.contains(key), let multi = overlay as? MKMultiPolyline {
                 let exitKey = "handoff|\(UUID().uuidString)"
                 styles.rekey(from: key, to: exitKey)
@@ -483,3 +525,36 @@ final class MapGestureFrameProbe {
 
 }
 #endif
+
+/// Geometry projection for one stroke bucket. Screen-space geometry (lane
+/// offsets, jog tapers, fillets, decimation) is built at the bucket's nominal
+/// zoom, as the web renderer does, so zooms inside one bucket and returns to a
+/// recent bucket reuse prepared geometry and overlay identities. Renderer
+/// widths keep following the live zoom.
+@MainActor
+struct MapGeometryFrame {
+    let bucket: Int
+    let nominalZoom: Double
+    let mapPointsPerScreenPoint: Double
+    let scale: CGFloat
+    let key: String
+
+    init(
+        zoom: Double,
+        laneLOD: (bucket: Int, scale: Double),
+        eraKey: String,
+        on mapView: MKMapView
+    ) {
+        let bucket = MapRebuildPolicy.strokeBucket(zoom: zoom)
+        let nominalZoom = MapRebuildPolicy.nominalZoom(bucket: bucket)
+        self.bucket = bucket
+        self.nominalZoom = nominalZoom
+        // Inverse of `MapProjection.zoomLevel`: world width / (256 × 2^zoom).
+        self.mapPointsPerScreenPoint = MKMapSize.world.width / (256 * exp2(nominalZoom))
+        self.scale = MapProjection.quantised(
+            RailStyle.scale(atZoom: nominalZoom), on: mapView)
+        // The quantised scale carries the display scale, so a window moved
+        // to a different screen does not reuse geometry rounded for the other.
+        self.key = "\(bucket)|\(self.scale)|\(laneLOD.bucket)|\(laneLOD.scale)|\(eraKey)"
+    }
+}

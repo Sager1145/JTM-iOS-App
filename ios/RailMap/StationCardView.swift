@@ -2,6 +2,7 @@ import MapKit
 import RailCore
 import RailPresentation
 import SwiftUI
+import UIKit
 
 /// One station, as the sheet presents it.
 ///
@@ -113,6 +114,7 @@ struct StationCardView: View {
     /// the service has no such station — the two are deliberately the same
     /// state here, because the answer to both is the same link.
     @State private var place: StationPlaceStore.Place?
+    @State private var shareRequest: StationShareRequest?
     @State private var detailDetent: PresentationDetent = .medium
     @State private var lineIsShown = false
     @State private var sheetHeight: CGFloat = 0
@@ -258,6 +260,9 @@ struct StationCardView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(.hidden, for: .navigationBar)
         }
+        .sheet(item: $shareRequest) { request in
+            StationActivitySheet(request: request)
+        }
         // Keyed on the station rather than run once, because one sheet is
         // reused for the next station the reader taps: the card is a value the
         // presentation swaps, and a `task` with no id would hold the first
@@ -278,7 +283,11 @@ struct StationCardView: View {
         } action: { measurements in
             sheetContentHeight = measurements.height
             sheetHeight = measurements.height + measurements.bottomInset
+            #if targetEnvironment(macCatalyst)
+            if lineIsShown { controller.journeyMenuBottomObstruction = 0 }
+            #else
             if lineIsShown { controller.journeyMenuBottomObstruction = sheetHeight }
+            #endif
             focusLineIfReady()
         }
         .onDisappear { controller.journeyMenuBottomObstruction = nil }
@@ -294,10 +303,14 @@ struct StationCardView: View {
             title: card.displayName,
             subtitle: localization.text(card.region.localizationKey, fallback: card.region.fallbackName)
         ) {
-            ShareLink(item: appleMapsURL, subject: Text(card.displayName), message: Text(card.displayName)) {
-                SheetIconLabel(systemImage: "square.and.arrow.up")
+            SheetIconButton(
+                systemImage: "square.and.arrow.up",
+                accessibilityLabel: Text(localization.text("ios.share", fallback: "Share"))
+            ) {
+                // Present from this station's sheet host, with a snapshot of
+                // the resolved place; the resident workspace is already modal.
+                shareRequest = StationShareRequest(url: appleMapsURL, name: card.displayName)
             }
-            .accessibilityLabel(localization.text("ios.share", fallback: "Share"))
             .accessibilityIdentifier("stationCardShare")
             SheetCloseButton(
                 accessibilityLabel: Text(localization.text("ios.close", fallback: "Close")),
@@ -330,7 +343,11 @@ struct StationCardView: View {
             || sheetContentHeight <= WorkspaceMenuMetrics.journeyCompactHeight + 1 else { return }
         #endif
         pendingLineFocus = nil
+        #if targetEnvironment(macCatalyst)
+        controller.journeyMenuBottomObstruction = 0
+        #else
         controller.journeyMenuBottomObstruction = sheetHeight
+        #endif
         controller.fit(rect)
     }
 
@@ -401,5 +418,44 @@ private struct StationCardLineRow: View {
             color: Color(hex: row.color) ?? Color(.systemGray),
             systemImage: nil,
             side: 28)
+    }
+}
+
+/// Own the native activity presentation at the station sheet, rather than
+/// asking ShareLink's workspace presenter to present over an existing modal.
+private struct StationShareRequest: Identifiable {
+    let url: URL
+    let name: String
+    var id: String { url.absoluteString }
+}
+
+private struct StationActivitySheet: UIViewControllerRepresentable {
+    let request: StationShareRequest
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        UIActivityViewController(
+            activityItems: [request.name, StationActivityItem(request: request)],
+            applicationActivities: nil)
+    }
+
+    func updateUIViewController(_ controller: UIActivityViewController, context: Context) { }
+}
+
+private final class StationActivityItem: NSObject, UIActivityItemSource {
+    let request: StationShareRequest
+
+    init(request: StationShareRequest) { self.request = request }
+
+    func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
+        request.url
+    }
+
+    func activityViewController(_ activityViewController: UIActivityViewController,
+                                itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
+        request.url
+    }
+
+    func activityViewController(_ activityViewController: UIActivityViewController,
+                                subjectForActivityType activityType: UIActivity.ActivityType?) -> String {
+        request.name
     }
 }

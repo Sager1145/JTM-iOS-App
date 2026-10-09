@@ -62,6 +62,11 @@ final class MapPlaybackLayer {
     private var trainID: String?
     private var renderedDoneCount = 0
     private var completedStepCount = 0
+    private var cachedStepIndex: Int?
+    private var partialStepIndex: Int?
+    private var partialHeadPoint: MKMapPoint?
+    private var partialColor: UIColor?
+    private var wasPlaying = false
     private var lastDistance = -Double.infinity
     private var steps: [TrailStep] = []
 
@@ -75,11 +80,23 @@ final class MapPlaybackLayer {
     func render(_ snapshot: PlaybackMapSnapshot?, on mapView: MKMapView) -> Bool {
         lastSnapshot = snapshot
         guard let snapshot else {
+            wasPlaying = false
             clear(on: mapView)
             return true
         }
         paint(snapshot, on: mapView, applyCamera: snapshot.autoFocus)
         return false
+    }
+
+    /// Pausing stops the display link without publishing another frame. Replace
+    /// a sub-point-coalesced partial once more so the held trail is exact.
+    func playbackStateChanged(on mapView: MKMapView) {
+        let isPlaying = playback?.isPlaying == true
+        guard wasPlaying, !isPlaying, let lastSnapshot else {
+            wasPlaying = isPlaying
+            return
+        }
+        paint(lastSnapshot, on: mapView, applyCamera: false, forceExactPartial: true)
     }
 
     /// Re-mount the current frame after a rebuild removed every overlay.
@@ -89,7 +106,7 @@ final class MapPlaybackLayer {
     /// the reader for it.
     func repaint(on mapView: MKMapView) {
         guard let lastSnapshot else { return }
-        paint(lastSnapshot, on: mapView, applyCamera: false)
+        paint(lastSnapshot, on: mapView, applyCamera: false, forceExactPartial: true)
     }
 
     /// Take the whole trail off the map and forget every object in it.
@@ -114,21 +131,27 @@ final class MapPlaybackLayer {
     }
 
     private func paint(
-        _ snapshot: PlaybackMapSnapshot, on mapView: MKMapView, applyCamera: Bool
+        _ snapshot: PlaybackMapSnapshot, on mapView: MKMapView, applyCamera: Bool,
+        forceExactPartial: Bool = false
     ) {
         let color = UIColor(railHex: snapshot.path.color) ?? .systemBlue
+        let isSeek = snapshot.frame.distance < lastDistance
+        let styleChanged = partialColor?.isEqual(color) == false
         syncDone(snapshot.done, fallbackColor: color, on: mapView)
 
         // A new train (or a backwards seek/restart) is the only time the
         // current trail and its station objects are replaced. Ordinary
         // display-link frames retain every completed segment and mutate the
         // handful of objects that actually moved.
-        if trainID != snapshot.path.trainID || snapshot.frame.distance < lastDistance {
+        if trainID != snapshot.path.trainID || isSeek {
             resetCurrent(on: mapView)
             prepareCurrent(snapshot, color: color, on: mapView)
         }
         appendCompletedSteps(through: snapshot.frame.distance, color: color, on: mapView)
-        updatePartial(snapshot, color: color, on: mapView)
+        updatePartial(
+            snapshot, color: color, allowSubpointSkip: !forceExactPartial
+                && playback?.isPlaying == true && !isSeek && !styleChanged,
+            on: mapView)
 
         // The head and the camera in ONE transaction, with implicit actions
         // off, because they are two halves of one statement: the train is
@@ -167,6 +190,7 @@ final class MapPlaybackLayer {
         CATransaction.commit()
 
         lastDistance = snapshot.frame.distance
+        wasPlaying = playback?.isPlaying == true
         playback?.mapRendererViewSize = mapView.bounds.size
     }
 
@@ -295,6 +319,9 @@ final class MapPlaybackLayer {
         trainID = snapshot.path.trainID
         lastDistance = -Double.infinity
         completedStepCount = 0
+        cachedStepIndex = nil
+        partialStepIndex = nil
+        partialHeadPoint = nil
         steps = snapshot.path.runs.enumerated().flatMap { element -> [TrailStep] in
             let (runIndex, run) = element
             guard run.coords.count >= 2, run.cum.count == run.coords.count else { return [] }
@@ -360,8 +387,30 @@ final class MapPlaybackLayer {
     /// The only overlay replaced on an ordinary frame: the short unfinished
     /// line from the last fixed sample to the moving head.
     private func updatePartial(
-        _ snapshot: PlaybackMapSnapshot, color: UIColor, on mapView: MKMapView
+        _ snapshot: PlaybackMapSnapshot, color: UIColor, allowSubpointSkip: Bool,
+        on mapView: MKMapView
     ) {
+        guard let head = snapshot.frame.head else {
+            removePartial(on: mapView)
+            return
+        }
+        let currentRun = snapshot.frame.runProgress.index
+        guard let stepIndex = currentStepIndex(
+            at: snapshot.frame.distance, inRun: currentRun),
+              steps[stepIndex].run.coords.first != head else {
+            removePartial(on: mapView)
+            return
+        }
+        let headPoint = MKMapPoint(head.clLocation)
+        if allowSubpointSkip, partialStepIndex == stepIndex,
+           let previousHeadPoint = partialHeadPoint,
+           mapView.bounds.width > 0 {
+            let mapPointsPerScreenPoint = mapView.visibleMapRect.width / Double(mapView.bounds.width)
+            if previousHeadPoint.distance(to: headPoint) < mapPointsPerScreenPoint {
+                return
+            }
+        }
+
         let previous = partialOverlay
         partialOverlay = nil
         defer {
@@ -384,13 +433,7 @@ final class MapPlaybackLayer {
                 }
             }
         }
-        guard let head = snapshot.frame.head else { return }
-        let currentRun = snapshot.frame.runProgress.index
-        guard let step = steps.first(where: {
-            $0.runIndex == currentRun
-                && $0.startDistance <= snapshot.frame.distance
-                && $0.endDistance > snapshot.frame.distance
-        }), step.run.coords.first != head else { return }
+        let step = steps[stepIndex]
         var coordinates = Playback.trailCoordinates(
             in: step.run, fromDistance: step.startDistance,
             throughDistance: snapshot.frame.distance)
@@ -406,7 +449,66 @@ final class MapPlaybackLayer {
             color: color, widthToken: Self.trailWidth,
             alpha: 0.18 + 0.82 * step.fraction)
         partialOverlay = line
+        partialStepIndex = stepIndex
+        partialHeadPoint = headPoint
+        partialColor = color
         mapView.addOverlay(line, level: .aboveLabels)
+    }
+
+    private func currentStepIndex(at distance: Double, inRun runIndex: Int) -> Int? {
+        if var index = cachedStepIndex, distance >= lastDistance {
+            while steps.indices.contains(index) {
+                let step = steps[index]
+                if step.runIndex == runIndex,
+                   step.startDistance <= distance, step.endDistance > distance {
+                    cachedStepIndex = index
+                    return index
+                }
+                guard step.endDistance <= distance || step.runIndex < runIndex else { break }
+                index += 1
+            }
+        }
+
+        var lower = 0
+        var upper = steps.count
+        while lower < upper {
+            let middle = lower + (upper - lower) / 2
+            if steps[middle].endDistance <= distance {
+                lower = middle + 1
+            } else {
+                upper = middle
+            }
+        }
+        guard steps.indices.contains(lower) else {
+            cachedStepIndex = nil
+            return nil
+        }
+        let step = steps[lower]
+        guard step.runIndex == runIndex,
+              step.startDistance <= distance, step.endDistance > distance else {
+            cachedStepIndex = nil
+            return nil
+        }
+        cachedStepIndex = lower
+        return lower
+    }
+
+    private func removePartial(on mapView: MKMapView) {
+        guard let previous = partialOverlay else {
+            partialStepIndex = nil
+            partialHeadPoint = nil
+            partialColor = nil
+            return
+        }
+        partialOverlay = nil
+        partialStepIndex = nil
+        partialHeadPoint = nil
+        partialColor = nil
+        mapView.removeOverlay(previous)
+        if let key = previous.title ?? nil {
+            overlayStyles.forgetRenderer(forKey: key)
+            overlayStyles.forgetStyle(forKey: key)
+        }
     }
 
     private func updateAnnotations(
@@ -453,6 +555,10 @@ final class MapPlaybackLayer {
         headAnnotation = nil
         trainID = nil
         completedStepCount = 0
+        cachedStepIndex = nil
+        partialStepIndex = nil
+        partialHeadPoint = nil
+        partialColor = nil
         lastDistance = -Double.infinity
         steps = []
     }

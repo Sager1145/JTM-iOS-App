@@ -309,7 +309,7 @@ final class RideStationOverlayRenderer: MKOverlayRenderer {
         let lineWidth: CGFloat
         let fill: CGColor
         let stroke: CGColor
-        let alpha: CGFloat
+        var alpha: CGFloat
         let coreRadius: CGFloat?
         let coreColor: CGColor?
 
@@ -346,7 +346,9 @@ final class RideStationOverlayRenderer: MKOverlayRenderer {
     // MapKit tile drawing reads only the locked immutable circle snapshot.
     private var markers: [String: Marker] = [:]
     private var markerOrder: [String] = []
+    private var activeFadeKeys: Set<String> = []
     private var circles: [Circle] = []
+    private var circleIndexByKey: [String: Int] = [:]
     // Keep former painted positions too: an outgoing dot's tile must still
     // receive an empty redraw after its fade ends. The renderer's lifetime
     // bounds this history to the single shared station canvas.
@@ -385,7 +387,7 @@ final class RideStationOverlayRenderer: MKOverlayRenderer {
         guard let overlay = overlay as? RideStationOverlay else { return }
         let duration = max(0, duration)
         let now = CACurrentMediaTime()
-        sampleFades(at: now)
+        _ = sampleFades(at: now)
         if duration == 0 {
             batchArrival = nil
             alpha = 1
@@ -465,42 +467,56 @@ final class RideStationOverlayRenderer: MKOverlayRenderer {
             order.append(key)
         }
         markerOrder = order
+        activeFadeKeys = Set(markers.compactMap { key, marker in
+            marker.fade == nil ? nil : key
+        })
         publishCircles()
         updateClock()
     }
 
-    private func sampleFades(at now: TimeInterval) {
+    private func sampleFades(at now: TimeInterval) -> (changed: Set<String>, removed: Bool) {
         if let fade = batchArrival {
             let fraction = min(1, max(0, (now - fade.startedAt) / fade.duration))
             alpha = fade.from + (fade.to - fade.from) * RailMotion.mapHighlightProgress(fraction)
             if fraction >= 1 { batchArrival = nil }
         }
-        for key in markerOrder {
+        var changed: Set<String> = []
+        var finished: Set<String> = []
+        var removed = false
+        for key in activeFadeKeys {
             guard var marker = markers[key], let fade = marker.fade else { continue }
             let fraction = min(1, max(0, (now - fade.startedAt) / fade.duration))
             marker.alpha = fade.from + (fade.to - fade.from)
                 * RailMotion.mapHighlightProgress(fraction)
+            changed.insert(key)
             if fraction >= 1 {
+                finished.insert(key)
                 if marker.retiring {
                     markers.removeValue(forKey: key)
+                    removed = true
                     continue
                 }
                 marker.fade = nil
             }
             markers[key] = marker
         }
-        markerOrder.removeAll { markers[$0] == nil }
+        activeFadeKeys.subtract(finished)
+        if removed { markerOrder.removeAll { markers[$0] == nil } }
+        return (changed, removed)
     }
 
     private func advance(at now: TimeInterval) {
-        let changesPaint = markers.values.contains { $0.fade != nil }
-        sampleFades(at: now)
-        if changesPaint { publishCircles() }
+        let changes = sampleFades(at: now)
+        if changes.removed {
+            publishCircles()
+        } else if !changes.changed.isEmpty {
+            updateFadingCircles(for: changes.changed)
+        }
         updateClock()
     }
 
     private func updateClock() {
-        if batchArrival != nil || markers.values.contains(where: { $0.fade != nil }) {
+        if batchArrival != nil || !activeFadeKeys.isEmpty {
             guard displayLink == nil else { return }
             frameTarget.renderer = self
             let link = CADisplayLink(target: frameTarget, selector: #selector(FrameTarget.tick(_:)))
@@ -513,8 +529,10 @@ final class RideStationOverlayRenderer: MKOverlayRenderer {
     }
 
     private func publishCircles() {
+        var updatedIndices: [String: Int] = [:]
         let updated = markerOrder.compactMap { key -> Circle? in
             guard let marker = markers[key] else { return nil }
+            updatedIndices[key] = updatedIndices.count
             let station = marker.station
             return Circle(point: MKMapPoint(station.coordinate),
                           radius: max(0.5, station.drawnRadiusToken(atZoom: zoom) * scale),
@@ -526,11 +544,13 @@ final class RideStationOverlayRenderer: MKOverlayRenderer {
         }
         circleLock.lock()
         guard circles != updated else {
+            circleIndexByKey = updatedIndices
             circleLock.unlock()
             return
         }
         let previous = circles
         circles = updated
+        circleIndexByKey = updatedIndices
         for circle in updated {
             paintCoverage = paintCoverage.union(MKMapRect(
                 x: circle.point.x, y: circle.point.y, width: 0, height: 0))
@@ -538,6 +558,50 @@ final class RideStationOverlayRenderer: MKOverlayRenderer {
         }
         circleLock.unlock()
         invalidateChangedCircles(previous: previous, updated: updated)
+    }
+
+    private func updateFadingCircles(for keys: Set<String>) {
+        guard zoom.isFinite else {
+            publishCircles()
+            return
+        }
+        let mapPointsPerScreenPoint = MKMapSize.world.width / (256 * pow(2, zoom))
+        var updates: [(index: Int, alpha: CGFloat)] = []
+        for key in keys {
+            guard let marker = markers[key], let index = circleIndexByKey[key],
+                  circles.indices.contains(index) else {
+                publishCircles()
+                return
+            }
+            updates.append((index, marker.alpha))
+        }
+        var changed: [Circle] = []
+        circleLock.lock()
+        for update in updates {
+            guard circles[update.index].alpha != update.alpha else { continue }
+            circles[update.index].alpha = update.alpha
+            changed.append(circles[update.index])
+        }
+        circleLock.unlock()
+        guard !changed.isEmpty else { return }
+        if changed.count > 64 {
+            var union = MKMapRect.null
+            var maxRadius: CGFloat = 0
+            for circle in changed {
+                union = union.union(MKMapRect(
+                    x: circle.point.x, y: circle.point.y, width: 0, height: 0))
+                maxRadius = max(maxRadius, circle.radius)
+            }
+            let padding = Double(maxRadius) * mapPointsPerScreenPoint * 2
+            setNeedsDisplay(union.insetBy(dx: -padding, dy: -padding))
+            return
+        }
+        for circle in changed {
+            let padding = Double(circle.radius) * mapPointsPerScreenPoint * 2
+            let rect = MKMapRect(
+                x: circle.point.x, y: circle.point.y, width: 0, height: 0)
+            setNeedsDisplay(rect.insetBy(dx: -padding, dy: -padding))
+        }
     }
 
     // A fade only ever moves a handful of dots, so invalidating the whole
@@ -817,9 +881,14 @@ final class MapAnnotationReconciler {
             added.append(candidate)
             return candidate
         }
+        // One MapKit update for every annotation that is not riding out a fade.
+        var immediateRemovals: [MKAnnotation] = []
         for removed in available.values.flatMap({ $0 }) {
-            retire(removed, on: mapView, duration: duration)
+            if !retire(removed, on: mapView, duration: duration) {
+                immediateRemovals.append(removed)
+            }
         }
+        if !immediateRemovals.isEmpty { mapView.removeAnnotations(immediateRemovals) }
         if !added.isEmpty { mapView.addAnnotations(added) }
         return installed
     }
@@ -870,14 +939,15 @@ final class MapAnnotationReconciler {
         mapView.removeAnnotations(retiring.map(\.annotation))
     }
 
+    /// Starts an exit fade when the view can animate out.
+    /// Returns false when the caller should remove the annotation in this reconcile.
     private func retire(_ annotation: MKAnnotation, on mapView: MKMapView,
-                        duration: TimeInterval) {
+                        duration: TimeInterval) -> Bool {
         let id = ObjectIdentifier(annotation)
         arrivals.removeValue(forKey: id)
         guard duration > 0, !(annotation is DraftStopAnnotation),
               let view = mapView.view(for: annotation) else {
-            mapView.removeAnnotation(annotation)
-            return
+            return false
         }
         let departure = Departure(annotation: annotation, token: UUID(),
                                   interactionEnabled: view.isUserInteractionEnabled)
@@ -892,6 +962,7 @@ final class MapAnnotationReconciler {
             }
             mapView?.removeAnnotation(annotation)
         }
+        return true
     }
 
     private func fade(_ view: MKAnnotationView, to alpha: CGFloat,

@@ -121,6 +121,17 @@ struct JourneyListRow: View {
 
     @ViewBuilder
     private var contextMenuItems: some View {
+        // The leading swipe, on the pointer menu as well: a trackpad has no
+        // swipe edge, and the label, icon, and closure stay the swipe's own.
+        let ridden = RideLedger.hasBeenRidden(train)
+        Button {
+            setRidden(!ridden)
+        } label: {
+            Label(
+                localization.editorText(
+                    ridden ? "ios.detail.markNotRidden" : "ios.detail.confirmRidden"),
+                systemImage: ridden ? "circle.dashed" : "checkmark.circle")
+        }
         Button {
             PresentationHost.afterTeardown { showsGroupAssignment = true }
         } label: {

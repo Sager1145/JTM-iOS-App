@@ -13,6 +13,14 @@ private struct TimetableTripDetailView: View {
     private static let database = TrainTimetableDatabase.bundled()
 
     var body: some View {
+        let stopsByStationID = trip.stops.reduce(
+            into: [String: TrainTimetableDatabase.StopTime]()) { result, stop in
+                if result[stop.station.id] == nil { result[stop.station.id] = stop }
+            }
+        let stopsBySequence = trip.stops.reduce(
+            into: [Int: TrainTimetableDatabase.StopTime]()) { result, stop in
+                if result[stop.sequence] == nil { result[stop.sequence] = stop }
+            }
         NavigationStack {
             List {
                 Section {
@@ -93,8 +101,8 @@ private struct TimetableTripDetailView: View {
                         ForEach(trip.lineSegments) { segment in
                             VStack(alignment: .leading, spacing: 5) {
                                 Text(segment.lineName)
-                                if let from = trip.stops.first(where: { $0.station.id == segment.fromStationID }),
-                                   let to = trip.stops.first(where: { $0.station.id == segment.toStationID }) {
+                                if let from = stopsByStationID[segment.fromStationID],
+                                   let to = stopsByStationID[segment.toStationID] {
                                     Text("\(from.station.name) → \(to.station.name)")
                                         .font(.caption).foregroundStyle(.secondary)
                                 }
@@ -107,8 +115,8 @@ private struct TimetableTripDetailView: View {
                         ForEach(trip.operatorSegments) { segment in
                             VStack(alignment: .leading, spacing: 5) {
                                 Text(segment.displayName)
-                                if let from = trip.stops.first(where: { $0.sequence == segment.fromSequence }),
-                                   let to = trip.stops.first(where: { $0.sequence == segment.toSequence }) {
+                                if let from = stopsBySequence[segment.fromSequence],
+                                   let to = stopsBySequence[segment.toSequence] {
                                     Text("\(from.station.name) → \(to.station.name)")
                                         .font(.caption).foregroundStyle(.secondary)
                                 }
@@ -471,6 +479,8 @@ struct ServicePatternPickerView: View {
     @State private var timetableQueryFailed = false
     @State private var inspectedTrip: TrainTimetableDatabase.Trip?
     @State private var showsTrainResearch = false
+    @State private var searchSnapshot = SearchSnapshot.empty
+    @State private var searchGeneration = 0
 
     private static let japaneseTimetableDatabase = TrainTimetableDatabase.bundled()
     private var timetableDatabase: TrainTimetableDatabase? {
@@ -509,34 +519,137 @@ struct ServicePatternPickerView: View {
         let departureTime: String?
     }
 
-    private var legacyMatches: [TrainServicePatterns.Pattern] {
-        let search = TimetableSearch(query)
-        return TrainServicePatterns.search("", region: region, filter: .init(
-            company: companyFilter, status: .any, line: lineFilter, rideDate: rideDate))
-            .filter { search.matches($0) }
+    private struct SearchGroup: Sendable {
+        let name: String
+        let companyLabel: String
+        let patterns: [TrainServicePatterns.Pattern]
     }
 
-    private var exactMatches: [TrainServicePatterns.Pattern] {
-        let search = TimetableSearch(query)
-        return timetablePatterns.filter { pattern in
-            if let companyFilter, !OperatorIdentity.sameCompany(pattern.company, companyFilter) { return false }
-            if let lineFilter {
+    /// Filters that decide which rows are legal to select. Query text is not
+    /// one of them: a debounced query may keep the previous rows on screen.
+    private struct SearchFilters: Equatable, Sendable {
+        var region: String
+        var rideDate: String?
+        var companyFilter: String?
+        var lineFilter: String?
+        var showsAllHistory: Bool
+    }
+
+    private struct SearchSnapshot: Sendable {
+        let groups: [SearchGroup]
+        let incompleteTrips: [TrainTimetableDatabase.Trip]
+        let unknownPatterns: [TrainServicePatterns.Pattern]
+        let outsidePatterns: [TrainServicePatterns.Pattern]
+        let companyLabels: [String]
+        let lineNames: [String]
+        /// `searchGeneration` this result belongs to. `-1` until the first build,
+        /// so the list is loading rather than "no results" at launch and after
+        /// a timetable reload bumps the generation.
+        let generation: Int
+        let filters: SearchFilters
+
+        static let empty = SearchSnapshot(
+            groups: [], incompleteTrips: [], unknownPatterns: [], outsidePatterns: [],
+            companyLabels: [], lineNames: [],
+            generation: -1,
+            filters: SearchFilters(
+                region: "", rideDate: nil, companyFilter: nil, lineFilter: nil,
+                showsAllHistory: false))
+    }
+
+    private struct SearchKey: Hashable {
+        let query: String
+        let region: String
+        let rideDate: String?
+        let companyFilter: String?
+        let lineFilter: String?
+        let showsAllHistory: Bool
+        let language: String
+        let generation: Int
+    }
+
+    private struct SearchInput: Sendable {
+        let query: String
+        let region: String
+        let rideDate: String?
+        let companyFilter: String?
+        let lineFilter: String?
+        let showsAllHistory: Bool
+        let language: String
+        let timetablePatterns: [TrainServicePatterns.Pattern]
+        let timetableDetails: [String: TimetableDetail]
+        let timetableTripsByPatternID: [String: TrainTimetableDatabase.Trip]
+        let incompleteTimetableTrips: [TrainTimetableDatabase.Trip]
+        let timetableCoverage: TrainTimetableDatabase.Coverage?
+        let timetableTripCount: Int
+        let incompleteTimetableTripCount: Int
+        let timetableQueryFailed: Bool
+        let generation: Int
+    }
+
+    private var searchKey: SearchKey {
+        SearchKey(
+            query: query, region: region, rideDate: rideDate,
+            companyFilter: companyFilter, lineFilter: lineFilter,
+            showsAllHistory: showsAllHistory,
+            language: localization.language.rawValue, generation: searchGeneration)
+    }
+
+    private var currentFilters: SearchFilters {
+        SearchFilters(
+            region: region, rideDate: rideDate, companyFilter: companyFilter,
+            lineFilter: lineFilter, showsAllHistory: showsAllHistory)
+    }
+
+    private var searchSnapshotMatchesGeneration: Bool {
+        searchSnapshot.generation == searchGeneration
+    }
+
+    private var searchSnapshotMatchesFilters: Bool {
+        searchSnapshot.filters == currentFilters
+    }
+
+    /// Timetable loading, or the snapshot on screen is not the one for this
+    /// generation or these filters. The empty-results row must wait for that
+    /// snapshot; otherwise the frame after `loadTimetable` says "no results".
+    private var showsSearchLoading: Bool {
+        isLoadingTimetable || !searchSnapshotMatchesGeneration || !searchSnapshotMatchesFilters
+    }
+
+    /// Stale rows stay visible across a query debounce. They do not stay
+    /// tappable across a filter or timetable change.
+    private var allowsResultSelection: Bool {
+        searchSnapshotMatchesGeneration && searchSnapshotMatchesFilters && !isLoadingTimetable
+    }
+
+    private func companyDisplayName(_ code: String) -> String {
+        OperatorIdentity.displayName(code: code, language: localization.language.rawValue) ?? code
+    }
+
+    nonisolated private static func makeSearchSnapshot(_ input: SearchInput) -> SearchSnapshot {
+        let search = TimetableSearch(input.query)
+        let legacyMatches = TrainServicePatterns.search("", region: input.region, filter: .init(
+            company: input.companyFilter, status: .any, line: input.lineFilter,
+            rideDate: input.rideDate))
+            .filter { search.matches($0) }
+        let exactMatches = input.timetablePatterns.filter { pattern in
+            if let companyFilter = input.companyFilter,
+               !OperatorIdentity.sameCompany(pattern.company, companyFilter) { return false }
+            if let lineFilter = input.lineFilter {
                 let line = TrainServiceBranding.canonicalLineName(lineFilter)
                 guard pattern.lines.contains(where: {
                     TrainServiceBranding.canonicalLineName($0) == line
                 }) else { return false }
             }
-            if let trip = timetableTripsByPatternID[pattern.id] { return search.matches(trip) }
+            if let trip = input.timetableTripsByPatternID[pattern.id] { return search.matches(trip) }
             return search.matches(pattern)
         }
-    }
-
-    private var incompleteTripMatches: [TrainTimetableDatabase.Trip] {
-        let search = TimetableSearch(query)
-        return incompleteTimetableTrips.filter { trip in
-            if let companyFilter,
-               !trip.operatorSegments.contains(where: { OperatorIdentity.sameCompany($0.displayName, companyFilter) }) { return false }
-            if let lineFilter {
+        let incompleteTrips = input.incompleteTimetableTrips.filter { trip in
+            if let companyFilter = input.companyFilter,
+               !trip.operatorSegments.contains(where: {
+                   OperatorIdentity.sameCompany($0.displayName, companyFilter)
+               }) { return false }
+            if let lineFilter = input.lineFilter {
                 let line = TrainServiceBranding.canonicalLineName(lineFilter)
                 guard trip.lineSegments.contains(where: {
                     TrainServiceBranding.canonicalLineName($0.lineName) == line
@@ -544,74 +657,91 @@ struct ServicePatternPickerView: View {
             }
             return search.matches(trip)
         }
-    }
-
-    private var knownMatches: [TrainServicePatterns.Pattern] {
-        guard region == "jp", rideDate != nil else { return legacyMatches }
-        if !timetablePatterns.isEmpty { return exactMatches }
-        if timetableCoverage == .verified && timetableTripCount == 0 { return [] }
-        return []
-    }
-
-    private var unknownMatches: [TrainServicePatterns.Pattern] {
-        guard region == "jp", rideDate != nil else { return [] }
-        return legacyMatches.filter { pattern in
-            guard let rideDate else { return false }
-            return pattern.applicability(on: rideDate) != .notApplicable
-                && (shouldShowLegacyFallback || !isJROrNationalRailway(pattern))
+        let knownMatches: [TrainServicePatterns.Pattern]
+        if input.region != "jp" || input.rideDate == nil {
+            knownMatches = legacyMatches
+        } else if !input.timetablePatterns.isEmpty {
+            knownMatches = exactMatches
+        } else {
+            knownMatches = []
         }
-    }
-
-    private var outsideMatches: [TrainServicePatterns.Pattern] {
-        guard let rideDate, showsAllHistory else { return [] }
-        return legacyMatches.filter { $0.applicability(on: rideDate) == .notApplicable }
-    }
-
-    private var shouldShowLegacyFallback: Bool {
-        guard rideDate != nil else { return false }
-        return timetableQueryFailed
-            || timetableCoverage != .verified
-            || incompleteTimetableTripCount > 0
-            || (timetableTripCount > 0 && timetablePatterns.isEmpty)
-    }
-
-    private var companyLabels: [String] {
-        let names = TrainServicePatterns.companyLabels(region: region)
-            + timetablePatterns.map(\.companyLabel).filter { !$0.isEmpty }
-            + incompleteTimetableTrips.flatMap { $0.operatorSegments.map(\.displayName) }
-        return Array(Set(names.flatMap { name -> [String] in
+        let shouldShowLegacyFallback = input.rideDate != nil
+            && (input.timetableQueryFailed
+                || input.timetableCoverage != .verified
+                || input.incompleteTimetableTripCount > 0
+                || (input.timetableTripCount > 0 && input.timetablePatterns.isEmpty))
+        let unknownPatterns: [TrainServicePatterns.Pattern]
+        if input.region == "jp", let rideDate = input.rideDate {
+            unknownPatterns = legacyMatches.filter { pattern in
+                pattern.applicability(on: rideDate) != .notApplicable
+                    && (shouldShowLegacyFallback || !isJROrNationalRailway(pattern))
+            }
+        } else {
+            unknownPatterns = []
+        }
+        let outsidePatterns: [TrainServicePatterns.Pattern]
+        if let rideDate = input.rideDate, input.showsAllHistory {
+            outsidePatterns = legacyMatches.filter {
+                $0.applicability(on: rideDate) == .notApplicable
+            }
+        } else {
+            outsidePatterns = []
+        }
+        let companyNames = TrainServicePatterns.companyLabels(region: input.region)
+            + input.timetablePatterns.map(\.companyLabel).filter { !$0.isEmpty }
+            + input.incompleteTimetableTrips.flatMap { $0.operatorSegments.map(\.displayName) }
+        let companyLabels = Array(Set(companyNames.flatMap { name -> [String] in
             name.components(separatedBy: "/").map {
                 let part = $0.trimmingCharacters(in: .whitespacesAndNewlines)
                 return OperatorIdentity.code(for: part) ?? part
             }.filter { !$0.isEmpty }
-        })).sorted { companyDisplayName($0).localizedStandardCompare(companyDisplayName($1)) == .orderedAscending }
-    }
-
-    private func companyDisplayName(_ code: String) -> String {
-        OperatorIdentity.displayName(code: code, language: localization.language.rawValue) ?? code
-    }
-
-    private var lineNames: [String] {
-        Array(Set(
-            TrainServicePatterns.lineNames(region: region) + timetablePatterns.flatMap(\.lines)
-                + incompleteTimetableTrips.flatMap { $0.lineSegments.map(\.lineName) }
+        })).sorted {
+            companyDisplayName($0, language: input.language)
+                .localizedStandardCompare(companyDisplayName($1, language: input.language))
+                == .orderedAscending
+        }
+        let lineNames = Array(Set(
+            TrainServicePatterns.lineNames(region: input.region)
+                + input.timetablePatterns.flatMap(\.lines)
+                + input.incompleteTimetableTrips.flatMap { $0.lineSegments.map(\.lineName) }
         )).sorted()
-    }
-
-    private var groups: [(name: String, companyLabel: String, patterns: [TrainServicePatterns.Pattern])] {
         var order: [String] = []
         var byName: [String: [TrainServicePatterns.Pattern]] = [:]
         for pattern in knownMatches {
-            let name = timetableDetails[pattern.id]?.serviceName ?? pattern.name
+            let name = input.timetableDetails[pattern.id]?.serviceName ?? pattern.name
             if byName[name] == nil { order.append(name) }
             byName[name, default: []].append(pattern)
         }
-        return order.map { name in
-            (name: name, companyLabel: byName[name]?.first?.companyLabel ?? "", patterns: byName[name] ?? [])
+        let groups = order.map { name in
+            SearchGroup(name: name, companyLabel: byName[name]?.first?.companyLabel ?? "",
+                        patterns: byName[name] ?? [])
+        }
+        return SearchSnapshot(
+            groups: groups, incompleteTrips: incompleteTrips,
+            unknownPatterns: unknownPatterns, outsidePatterns: outsidePatterns,
+            companyLabels: companyLabels, lineNames: lineNames,
+            generation: input.generation,
+            filters: SearchFilters(
+                region: input.region, rideDate: input.rideDate,
+                companyFilter: input.companyFilter, lineFilter: input.lineFilter,
+                showsAllHistory: input.showsAllHistory))
+    }
+
+    nonisolated private static func companyDisplayName(_ code: String, language: String) -> String {
+        OperatorIdentity.displayName(code: code, language: language) ?? code
+    }
+
+    nonisolated private static func isJROrNationalRailway(
+        _ pattern: TrainServicePatterns.Pattern
+    ) -> Bool {
+        pattern.company.split(separator: "/").contains { component in
+            jrAndNationalOperatorNames.contains(
+                component.trimmingCharacters(in: .whitespacesAndNewlines))
         }
     }
 
     var body: some View {
+        let results = searchSnapshot
         NavigationStack {
             List {
                 Section {
@@ -629,7 +759,7 @@ struct ServicePatternPickerView: View {
                     }
                     Text(localization.editorText("ios.editor.timetableSearchHelp"))
                         .font(.caption).foregroundStyle(.secondary)
-                    if isLoadingTimetable {
+                    if showsSearchLoading {
                         ProgressView(localization.editorText("ios.editor.timetableSearching"))
                     }
                     if let rideDate {
@@ -651,7 +781,7 @@ struct ServicePatternPickerView: View {
                     HStack {
                         Menu {
                             Button("すべての会社") { companyFilter = nil }
-                            ForEach(companyLabels, id: \.self) { label in
+                            ForEach(results.companyLabels, id: \.self) { label in
                                 Button(companyDisplayName(label)) { companyFilter = label }
                             }
                         } label: {
@@ -664,7 +794,7 @@ struct ServicePatternPickerView: View {
 
                         Menu {
                             Button("すべての路線") { lineFilter = nil }
-                            ForEach(lineNames, id: \.self) { line in
+                            ForEach(results.lineNames, id: \.self) { line in
                                 Button(line) { lineFilter = line }
                             }
                         } label: {
@@ -681,37 +811,40 @@ struct ServicePatternPickerView: View {
                     }
                     .accessibilityIdentifier("servicePatternChatGPTQuery")
                 }
-                ForEach(groups, id: \.name) { group in
-                    Section(header: Text("\(group.name) · \(group.companyLabel)")) {
-                        ForEach(group.patterns) { pattern in
-                            patternRow(pattern)
-                        }
-                    }
-                }
-                if !incompleteTripMatches.isEmpty {
-                    Section(localization.editorText("ios.editor.timetablePublishedDraft")) {
-                        ForEach(incompleteTripMatches) { trip in
-                            VStack(alignment: .leading, spacing: 8) {
-                                incompleteTripRow(trip)
-                                Button("停車駅・時刻を確認") { inspectedTrip = trip }
-                                    .buttonStyle(.borderless)
-                                    .accessibilityIdentifier("timetableDetails-\(trip.id)")
+                if searchSnapshotMatchesGeneration {
+                    ForEach(results.groups, id: \.name) { group in
+                        Section(header: Text("\(group.name) · \(group.companyLabel)")) {
+                            ForEach(group.patterns) { pattern in
+                                patternRow(pattern)
                             }
                         }
                     }
-                }
-                if !unknownMatches.isEmpty {
-                    Section("互換パターン（当日ダイヤ未確認）") {
-                        ForEach(unknownMatches) { pattern in patternRow(pattern) }
+                    if !results.incompleteTrips.isEmpty {
+                        Section(localization.editorText("ios.editor.timetablePublishedDraft")) {
+                            ForEach(results.incompleteTrips) { trip in
+                                VStack(alignment: .leading, spacing: 8) {
+                                    incompleteTripRow(trip)
+                                    Button("停車駅・時刻を確認") { inspectedTrip = trip }
+                                        .buttonStyle(.borderless)
+                                        .disabled(!allowsResultSelection)
+                                        .accessibilityIdentifier("timetableDetails-\(trip.id)")
+                                }
+                            }
+                        }
+                    }
+                    if !results.unknownPatterns.isEmpty {
+                        Section("互換パターン（当日ダイヤ未確認）") {
+                            ForEach(results.unknownPatterns) { pattern in patternRow(pattern) }
+                        }
+                    }
+                    if !results.outsidePatterns.isEmpty {
+                        Section("乗車日の対象外・有効期間未確認") {
+                            ForEach(results.outsidePatterns) { pattern in patternRow(pattern) }
+                        }
                     }
                 }
-                if !outsideMatches.isEmpty {
-                    Section("乗車日の対象外・有効期間未確認") {
-                        ForEach(outsideMatches) { pattern in patternRow(pattern) }
-                    }
-                }
-                if !isLoadingTimetable && groups.isEmpty && incompleteTripMatches.isEmpty
-                    && unknownMatches.isEmpty && outsideMatches.isEmpty
+                if allowsResultSelection && results.groups.isEmpty && results.incompleteTrips.isEmpty
+                    && results.unknownPatterns.isEmpty && results.outsidePatterns.isEmpty
                 {
                     Text(timetableCoverage == .verified && timetableTripCount == 0
                          ? "この日は運行予定の特急がありません"
@@ -729,6 +862,7 @@ struct ServicePatternPickerView: View {
                 }
             }
             .task(id: "\(region):\(rideDate ?? "")") { await loadTimetable() }
+            .task(id: searchKey) { await updateSearchSnapshot() }
             .sheet(isPresented: $showsTrainResearch) {
                 TrainResearchView(region: region, query: query, rideDate: rideDate)
             }
@@ -771,6 +905,7 @@ struct ServicePatternPickerView: View {
             }
         }
         .frame(minHeight: 44)
+        .disabled(!allowsResultSelection)
     }
 
     private func select(_ pattern: TrainServicePatterns.Pattern, reversed: Bool) {
@@ -938,6 +1073,7 @@ struct ServicePatternPickerView: View {
         timetableTripCount = 0
         incompleteTimetableTripCount = 0
         timetableQueryFailed = false
+        searchGeneration += 1
         guard region == "jp", let rideDate, let database = timetableDatabase else { return }
 
         do {
@@ -961,16 +1097,45 @@ struct ServicePatternPickerView: View {
                     serviceName: trip.service.canonicalName,
                     departureTime: trip.origin?.departureTime ?? trip.origin?.arrivalTime)
             }
+            searchGeneration += 1
         } catch {
             guard !Task.isCancelled else { return }
             timetableQueryFailed = true
+            searchGeneration += 1
         }
     }
 
-    private func isJROrNationalRailway(_ pattern: TrainServicePatterns.Pattern) -> Bool {
-        pattern.company.split(separator: "/").contains { component in
-            Self.jrAndNationalOperatorNames.contains(
-                component.trimmingCharacters(in: .whitespacesAndNewlines))
+    @MainActor private func updateSearchSnapshot() async {
+        let queryIsEmpty = query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        if !queryIsEmpty {
+            do { try await Task.sleep(for: .milliseconds(150)) }
+            catch { return }
         }
+        guard !Task.isCancelled else { return }
+        let input = SearchInput(
+            query: query, region: region, rideDate: rideDate,
+            companyFilter: companyFilter, lineFilter: lineFilter,
+            showsAllHistory: showsAllHistory, language: localization.language.rawValue,
+            timetablePatterns: timetablePatterns, timetableDetails: timetableDetails,
+            timetableTripsByPatternID: timetableTripsByPatternID,
+            incompleteTimetableTrips: incompleteTimetableTrips,
+            timetableCoverage: timetableCoverage, timetableTripCount: timetableTripCount,
+            incompleteTimetableTripCount: incompleteTimetableTripCount,
+            timetableQueryFailed: timetableQueryFailed,
+            generation: searchGeneration)
+        // An empty query is the list the reader is already looking at. Hopping
+        // it off the main actor leaves a frame of the previous snapshot.
+        let snapshot: SearchSnapshot
+        if queryIsEmpty {
+            snapshot = Self.makeSearchSnapshot(input)
+        } else {
+            snapshot = await Task.detached(priority: .userInitiated) {
+                Self.makeSearchSnapshot(input)
+            }.value
+        }
+        guard !Task.isCancelled else { return }
+        guard snapshot.generation == searchGeneration,
+              snapshot.filters == currentFilters else { return }
+        searchSnapshot = snapshot
     }
 }

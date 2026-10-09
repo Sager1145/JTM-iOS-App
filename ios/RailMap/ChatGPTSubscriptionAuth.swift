@@ -685,6 +685,7 @@ private struct ChatGPTSubscriptionKeychainStorage: ChatGPTSubscriptionCredential
             kSecAttrService as String: service,
             kSecAttrAccount as String: account,
             kSecAttrSynchronizable as String: kCFBooleanFalse as Any,
+            kSecUseDataProtectionKeychain as String: true,
         ]
     }
 }

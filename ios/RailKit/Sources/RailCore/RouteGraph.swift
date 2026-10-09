@@ -1067,7 +1067,10 @@ public enum RouteGraph {
     public final class Graph {
         /// Node key → its quantised coordinate.
         public var nodes: [String: Coordinate] = [:] {
-            didSet { physicalRailComponentCache = nil }
+            didSet {
+                physicalRailComponentCache = nil
+                physicalJunctionEdgeCache = nil
+            }
         }
         public var rejectedPhysicalJunctionIDs: [String] = []
         /// Parallel to ``rejectedPhysicalJunctionIDs``: why that entry was not added.
@@ -1075,9 +1078,15 @@ public enum RouteGraph {
         /// Node key → its edges, **in insertion order**. Dijkstra relaxes an
         /// adjacency list in order, so this is a sequence, not a set.
         public var adjacency: [String: [Edge]] = [:] {
-            didSet { physicalRailComponentCache = nil }
+            didSet {
+                physicalRailComponentCache = nil
+                physicalJunctionEdgeCache = nil
+            }
         }
         private var physicalRailComponentCache: [String: Int]?
+        private var physicalJunctionEdgeCache: [(
+            junction: PhysicalJunction, endpointKeys: [String]
+        )]?
         /// `graphGridKey` cell → the node keys in it, in insertion order.
         /// ``nearbyNodes`` leans on that order to break distance ties.
         public var grid: [String: [String]] = [:]
@@ -1089,6 +1098,48 @@ public enum RouteGraph {
         init(cellSize: Double) { self.cellSize = cellSize }
 
         public var nodeCount: Int { nodes.count }
+
+        func physicalJunctionEdges() -> [(
+            junction: PhysicalJunction, endpointKeys: [String]
+        )] {
+            if let physicalJunctionEdgeCache { return physicalJunctionEdgeCache }
+            var junctions: [String: PhysicalJunction] = [:]
+            var neighbors: [String: [String: Set<String>]] = [:]
+            for (from, edges) in adjacency {
+                for edge in edges {
+                    guard let junction = edge.physicalJunction?.junction else { continue }
+                    junctions[junction.id] = junction
+                    neighbors[junction.id, default: [:]][from, default: []].insert(edge.to)
+                    neighbors[junction.id, default: [:]][edge.to, default: []].insert(from)
+                }
+            }
+            let result = junctions.keys.sorted().compactMap { id -> (
+                junction: PhysicalJunction, endpointKeys: [String]
+            )? in
+                guard let junction = junctions[id] else { return nil }
+                var endpointKeys = Set<String>()
+                if let chainKeys = junction.chainNodeKeys() {
+                    if let first = chainKeys.first, nodes[first] != nil { endpointKeys.insert(first) }
+                    if let last = chainKeys.last, nodes[last] != nil { endpointKeys.insert(last) }
+                    if let endJunction = junction.endJunction {
+                        let foreignKey = RouteGraph.physicalNodeKey(
+                            endJunction.coordinate, identity: endJunction.identity)
+                        if nodes[foreignKey] != nil { endpointKeys.insert(foreignKey) }
+                    }
+                } else {
+                    let junctionNeighbors = neighbors[id] ?? [:]
+                    endpointKeys.formUnion(junctionNeighbors.compactMap { key, adjacent in
+                        adjacent.count == 1 && nodes[key] != nil ? key : nil
+                    })
+                    if endpointKeys.isEmpty {
+                        endpointKeys.formUnion(junctionNeighbors.keys.filter { nodes[$0] != nil })
+                    }
+                }
+                return (junction, endpointKeys.sorted())
+            }
+            physicalJunctionEdgeCache = result
+            return result
+        }
 
         /// Weak components of surveyed rail and approved physical junctions.
         /// These ignore direction, dates and route filters: sharing a component
@@ -1706,6 +1757,7 @@ extension RouteGraph {
         private var regionalOrder: [String] = []
         private var residentNodes = 0
         private var corridorGraphs: [(indices: [Int], graph: Graph)] = []
+        private var junctionCellSets: [(points: [Coordinate], cells: Set<String>)]?
 
         public init(sections: [SectionFeature], policy: BuildPolicy = .physicalRailway,
                     junctions: [PhysicalJunction] = [],
@@ -1725,6 +1777,22 @@ extension RouteGraph {
             regionalOrder.removeAll()
             residentNodes = 0
             corridorGraphs.removeAll()
+            junctionCellSets = nil
+        }
+
+        private func cell(_ coordinate: Coordinate) -> String {
+            JSNumber.string((coordinate.lon / railIndexCellDeg).rounded(.down)) + ","
+                + JSNumber.string((coordinate.lat / railIndexCellDeg).rounded(.down))
+        }
+
+        private func cachedJunctionCellSets() -> [(points: [Coordinate], cells: Set<String>)] {
+            if let junctionCellSets { return junctionCellSets }
+            let computed = junctions.map { junction in
+                let points = [junction.from.coordinate, junction.to.coordinate] + (junction.path ?? [])
+                return (points, Set(points.map(cell)))
+            }
+            junctionCellSets = computed
+            return computed
         }
 
         /// Cached per-feature bboxes — the JavaScript stashes these on the
@@ -1915,20 +1983,16 @@ extension RouteGraph {
             // anchor sits farther than `meters` away. Any junction touching
             // the corridor brings its own endpoints, so the proof never
             // depends on how far the graph happens to extend.
-            func cell(_ c: Coordinate) -> String {
-                JSNumber.string((c.lon / railIndexCellDeg).rounded(.down)) + ","
-                    + JSNumber.string((c.lat / railIndexCellDeg).rounded(.down))
-            }
             var points = coordinates
             var cells = Set(coordinates.map(cell))
-            var pending = junctions.map { [$0.from.coordinate, $0.to.coordinate] + ($0.path ?? []) }
+            var pending = cachedJunctionCellSets()
             var grew = true
             while grew {
                 grew = false
-                pending.removeAll { junctionPoints in
-                    guard junctionPoints.contains(where: { cells.contains(cell($0)) }) else { return false }
-                    points += junctionPoints
-                    cells.formUnion(junctionPoints.map(cell))
+                pending.removeAll { junction in
+                    guard !junction.cells.isDisjoint(with: cells) else { return false }
+                    points += junction.points
+                    cells.formUnion(junction.cells)
                     grew = true
                     return true
                 }

@@ -219,8 +219,8 @@ struct StatisticsDashboardContent: View {
                 // inside the workspace's one ScrollView, and nesting a second
                 // lazy container inside it defeats both.
                 VStack(spacing: 16) {
-                    if progressVisible, let progress = statistics.progress {
-                        StatisticsProgressSummary(progress: progress)
+                    if progressVisible {
+                        StatisticsProgressView(store: statistics)
                             // The one card on this screen that arrives and
                             // leaves on its own, and the cards below it shift
                             // by its full height when it does. §9.4's short
@@ -301,25 +301,63 @@ struct StatisticsDashboardContent: View {
                     .padding(.vertical, 40)
             }
         }
-        .task(id: statistics.progress == nil) {
-            // Both writes are animated, not just the arrival. The card leaving
-            // is the moment the five result cards take its place, and an
-            // unanimated departure is the one the reader actually sees as a
-            // jump — the arrival happens 400 ms into a wait nobody is watching
-            // closely.
-            //
-            // `withAnimation` rather than `.animation(_:value:)` on the card:
-            // the value that changes is this view's own state and the thing
-            // that must animate is a MOUNT, and a transition is inert unless
-            // the insertion happens inside an animated transaction. The same
-            // split `RideCard` makes for its detail body.
-            guard statistics.progress != nil else {
-                withAnimation(settle) { progressVisible = false }
-                return
+        .background {
+            // Mounted for the whole section, including the unloaded branch, so
+            // the 400 ms gate keeps the same clock it had on this group.
+            StatisticsProgressGate(store: statistics, progressVisible: $progressVisible)
+                .allowsHitTesting(false)
+        }
+    }
+
+    /// The progress card. Reading ``MileageStatisticsStore/progress`` stays in
+    /// this view and in ``StatisticsProgressGate``; the dashboard reads
+    /// ``progressVisible`` instead, so a progress tick does not rebuild the cards.
+    private struct StatisticsProgressView: View {
+        var store: MileageStatisticsStore
+
+        var body: some View {
+            if let progress = store.progress {
+                StatisticsProgressSummary(progress: progress)
             }
-            try? await Task.sleep(for: .milliseconds(400))
-            let visible = statistics.progress != nil
-            withAnimation(settle) { progressVisible = visible }
+        }
+    }
+
+    /// Owns the show/hide delay. Reading `progress` here does not rebuild the
+    /// statistic cards.
+    private struct StatisticsProgressGate: View {
+        var store: MileageStatisticsStore
+        @Binding var progressVisible: Bool
+        @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+        var body: some View {
+            Color.clear
+                .frame(width: 0, height: 0)
+                .allowsHitTesting(false)
+                .accessibilityHidden(true)
+                .task(id: store.progress == nil) {
+                    // Both writes are animated, not just the arrival. The card leaving
+                    // is the moment the five result cards take its place, and an
+                    // unanimated departure is the one the reader actually sees as a
+                    // jump — the arrival happens 400 ms into a wait nobody is watching
+                    // closely.
+                    //
+                    // `withAnimation` rather than `.animation(_:value:)` on the card:
+                    // the value that changes is this view's own state and the thing
+                    // that must animate is a MOUNT, and a transition is inert unless
+                    // the insertion happens inside an animated transaction. The same
+                    // split `RideCard` makes for its detail body.
+                    guard store.progress != nil else {
+                        withAnimation(settle) { progressVisible = false }
+                        return
+                    }
+                    try? await Task.sleep(for: .milliseconds(400))
+                    let visible = store.progress != nil
+                    withAnimation(settle) { progressVisible = visible }
+                }
+        }
+
+        private var settle: Animation {
+            RailMotion.animation(RailMotion.replace, reduceMotion: reduceMotion)
         }
     }
 

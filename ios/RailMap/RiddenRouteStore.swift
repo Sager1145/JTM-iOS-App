@@ -261,6 +261,7 @@ final class RiddenRouteStore {
         // ~150 ms for the length of the load. Partial results are coalesced
         // instead; the final result below still lands at once.
         let partials = PartialRidePublication()
+        let inbox = PartialRideInbox()
         loadTask = Task(priority: .userInitiated) {
             do {
                 let primed = await Self.loadPreferred(id: preferredTrainID, wanted: pending)
@@ -278,19 +279,23 @@ final class RiddenRouteStore {
                     wanted: pending, requestedOrder: wantedIDs,
                     preferredTrainID: preferredTrainID, primed: primed
                 ) { partial in
-                    await MainActor.run {
-                        guard !Task.isCancelled, self.loadRevision == revision else { return }
-                        partials.submit(partial) { partial in
-                            guard self.loadRevision == revision else { return }
-                            self.rides = self.ordered(retained + partial)
-                            self.visibleRides = self.rides.filter(\.visible)
-                            for ride in partial { self.completedInputs[ride.id] = wanted[ride.id] }
-                            RideStatusCenter.shared.publish(
-                                entries: Self.statusEntries(for: self.rides, wanted: []), phase: .loading)
-                            TraversedLineDetector.shared.publishSelected(rides: self.rides)
+                    if inbox.post(partial) {
+                        Task { @MainActor in
+                            guard let p = inbox.take(),
+                                  self.loadRevision == revision else { return }
+                            partials.submit(p) { partial in
+                                guard self.loadRevision == revision else { return }
+                                self.rides = self.ordered(retained + partial)
+                                self.visibleRides = self.rides.filter(\.visible)
+                                for ride in partial { self.completedInputs[ride.id] = wanted[ride.id] }
+                                RideStatusCenter.shared.publish(
+                                    entries: Self.statusEntries(for: self.rides, wanted: []), phase: .loading)
+                                TraversedLineDetector.shared.publishSelected(rides: self.rides)
+                            }
                         }
                     }
                 }
+                inbox.close()
                 partials.cancel()
                 try Task.checkCancellation()
                 guard loadRevision == revision else { return }
@@ -305,11 +310,13 @@ final class RiddenRouteStore {
                 detectTraversedLines()
                 Self.sweepRouteCacheOnce()
             } catch is CancellationError {
+                inbox.close()
                 partials.cancel()
                 if loadRevision == revision { loadingInputs = nil; loadTask = nil }
                 return
             } catch {
                 // What was solved before the failure is still worth drawing.
+                inbox.close()
                 partials.applyPending()
                 guard loadRevision == revision else { return }
                 loadingInputs = nil
@@ -529,7 +536,9 @@ final class RiddenRouteStore {
         publish: @Sendable ([DrawnRide]) async -> Void = { _ in }
     ) async throws -> [DrawnRide] {
         var result: [DrawnRide] = primed.map { [$0] } ?? []
-        var unresolved: [(scope: RouteScope, trains: [Train])] = []
+        var unresolved: [(
+            scope: RouteScope, trains: [Train], graphStore: RouteGraph.RouteGraphStore?
+        )] = []
         var seen: Set<String> = []
         let remaining = requestedOrder.compactMap { id -> Train? in
             guard seen.insert(id).inserted, let train = wanted[id],
@@ -556,7 +565,7 @@ final class RiddenRouteStore {
             guard let trains = byScope[scope] else { continue }
             let cached = await loadCachedConcurrently(trains, country: scope.code)
             result += cached.rides
-            if !cached.missing.isEmpty { unresolved.append((scope, cached.missing)) }
+            if !cached.missing.isEmpty { unresolved.append((scope, cached.missing, nil)) }
         }
 
         // Everything the on-disk cache could answer, on the map before a
@@ -577,15 +586,30 @@ final class RiddenRouteStore {
                batch.trains.contains { $0.id == preferredTrainID }
            }),
            let preferred = unresolved[index].trains.first(where: { $0.id == preferredTrainID }) {
+            let scope = unresolved[index].scope
+            let inputs = try await SolverInputCache.shared.inputs(scope: scope)
+            let displayNetwork = try? await DisplayNetworkCache.shared.network(scope: scope)
+            let graphStore = fallbackGraphStore(inputs: inputs, displayNetwork: displayNetwork)
+            unresolved[index].graphStore = graphStore
             result = try await decodeUncached(
-                [preferred], scope: unresolved[index].scope, previous: result, publish: publish)
+                [preferred], scope: scope, previous: result, graphStore: graphStore,
+                publish: publish)
             unresolved[index].trains.removeAll { $0.id == preferredTrainID }
         }
 
         // All other journeys retain requested order within the ordered scopes.
-        for (scope, trains) in unresolved where !trains.isEmpty {
+        for index in unresolved.indices where !unresolved[index].trains.isEmpty {
+            let scope = unresolved[index].scope
+            let trains = unresolved[index].trains
+            if unresolved[index].graphStore == nil {
+                let inputs = try await SolverInputCache.shared.inputs(scope: scope)
+                let displayNetwork = try? await DisplayNetworkCache.shared.network(scope: scope)
+                unresolved[index].graphStore = fallbackGraphStore(
+                    inputs: inputs, displayNetwork: displayNetwork)
+            }
             result = try await decodeUncached(
-                trains, scope: scope, previous: result, publish: publish)
+                trains, scope: scope, previous: result,
+                graphStore: unresolved[index].graphStore, publish: publish)
         }
         return result
     }
@@ -593,6 +617,7 @@ final class RiddenRouteStore {
     /// The shared inference, dataset, and solver pipeline after a cache miss.
     @concurrent private nonisolated static func decodeUncached(
         _ trains: [Train], scope: RouteScope, previous: [DrawnRide],
+        graphStore: RouteGraph.RouteGraphStore? = nil,
         publish: @Sendable ([DrawnRide]) async -> Void
     ) async throws -> [DrawnRide] {
         try Task.checkCancellation()
@@ -601,11 +626,11 @@ final class RiddenRouteStore {
             trains.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
         // A fresh JS precompute remains a valid legacy fallback, but cannot
         // decide a different physical route before station inference.
-        // This inexpensive pass never initializes a coordinate graph.
+        // Both solver passes share this scope's graph and its corridor memos.
         let previous = result
         let rejections = PrecomputedRouteRejections()
         let inferred = try await solveMissing(
-            trains, scope: scope, allowLegacy: false,
+            trains, scope: scope, allowLegacy: false, graphStore: graphStore,
             rejectPrecomputed: { await rejections.reject($0) }) { partial in
                 await publish(previous + partial)
             }
@@ -625,7 +650,8 @@ final class RiddenRouteStore {
         if !missing.isEmpty {
             let previous = result
             result += try await solveMissing(
-                trains.filter { missing[$0.id] != nil }, scope: scope, publish: { partial in
+                trains.filter { missing[$0.id] != nil }, scope: scope,
+                graphStore: graphStore, publish: { partial in
                     await publish(previous + partial)
                 })
         }
@@ -934,31 +960,76 @@ final class RiddenRouteStore {
     @concurrent private nonisolated static func solveMissing(
         _ trains: [Train], scope: RouteScope,
         allowLegacy: Bool = true,
+        graphStore: RouteGraph.RouteGraphStore? = nil,
         rejectPrecomputed: @Sendable (String) async -> Void = { _ in },
         publish: @Sendable ([DrawnRide]) async -> Void = { _ in }
     ) async throws -> [DrawnRide] {
-        try await RouteSolveLimiter.shared.withPermit {
+        let graphStoreBox = graphStore.map(UncheckedGraphStoreBox.init)
+        return try await RouteSolveLimiter.shared.withPermit {
             try await solveMissingWithPermit(trains, scope: scope, allowLegacy: allowLegacy,
+                                             graphStore: graphStoreBox?.store,
                                              rejectPrecomputed: rejectPrecomputed, publish: publish)
         }
+    }
+
+    /// The load path awaits each pass in sequence, so this mutable memoized
+    /// store is captured by one permit operation and is never used concurrently.
+    private struct UncheckedGraphStoreBox: @unchecked Sendable {
+        let store: RouteGraph.RouteGraphStore
     }
 
     private struct SolverInputs: Sendable {
         let sections: [RouteGraph.SectionFeature]
         let stationCollection: Stations.FeatureCollection
         let stationIndex: Stations.Index
-        let officialIntervals: RouteSolver.OfficialIntervalIndex
         let physicalJunctions: [RouteGraph.PhysicalJunction]
     }
 
     /// Immutable source/history inputs are shared by edits and batch loads.
-    /// Mutable graphs stay private to the permitted job and are created only
-    /// when a section cannot be resolved from physical station intervals.
+    /// Mutable graphs stay private to one sequential scope load.
     private actor SolverInputCache {
         static let shared = SolverInputCache()
         private var ready: [String: SolverInputs] = [:]
         private var order: [String] = []
         private var running: [String: Task<SolverInputs, Error>] = [:]
+        private var indexes: [String: (StationRouteEligibility, StationIntervalResolver)] = [:]
+        private var intervalIndexes: [String: Task<RouteSolver.OfficialIntervalIndex, Never>] = [:]
+
+        /// Only the legacy fallback reads the official interval index, and
+        /// building it is the largest single cost of a cold load (~1.8 s for
+        /// Japan on a Mac). Sections with recorded physical intervals never
+        /// pay for it.
+        func officialIntervals(
+            scope: RouteScope, inputs: SolverInputs
+        ) async -> RouteSolver.OfficialIntervalIndex {
+            let revision = RiddenRouteStore.resourceRevisions?.revision(for: scope.key) ?? "unversioned"
+            let key = scope.key + ":" + revision
+            if let task = intervalIndexes[key] { return await task.value }
+            let sections = inputs.sections
+            let task = Task.detached(priority: .userInitiated) {
+                RouteSolver.OfficialIntervalIndex(sections: sections)
+            }
+            if intervalIndexes.count >= 2 { intervalIndexes.removeAll() }
+            intervalIndexes[key] = task
+            return await task.value
+        }
+
+        /// Both are linear passes over every section, station and interval;
+        /// a one-journey edit should not pay for them again.
+        func networkIndexes(
+            scope: RouteScope, network: RouteNetwork, inputs: SolverInputs
+        ) -> (StationRouteEligibility, StationIntervalResolver) {
+            let revision = RiddenRouteStore.resourceRevisions?.revision(for: scope.key) ?? "unversioned"
+            let key = scope.key + ":" + revision
+            if let ready = indexes[key] { return ready }
+            let built = (
+                StationRouteEligibility(network: network, sections: inputs.sections,
+                                        stations: inputs.stationCollection.features),
+                StationIntervalResolver(network: network))
+            if indexes.count >= 2 { indexes.removeAll() }
+            indexes[key] = built
+            return built
+        }
 
         func inputs(scope: RouteScope) async throws -> SolverInputs {
             let revision = RiddenRouteStore.resourceRevisions?.revision(for: scope.key) ?? "unversioned"
@@ -1020,16 +1091,16 @@ final class RiddenRouteStore {
         }
         let registry = try PhysicalRailJunctionRegistry(data: Data(contentsOf: registryURL))
         let junctions = scope.regions.flatMap { registry.junctions(for: $0.code) }
-        let officialIntervals = RouteSolver.OfficialIntervalIndex(sections: sections)
         return SolverInputs(sections: sections, stationCollection: stationCollection,
-                            stationIndex: stationIndex, officialIntervals: officialIntervals, physicalJunctions: junctions)
+                            stationIndex: stationIndex, physicalJunctions: junctions)
     }
 
     private nonisolated static func fallbackGraphStore(
         inputs: SolverInputs, displayNetwork: RouteNetwork?
     ) -> RouteGraph.RouteGraphStore {
         let sections = inputs.sections
-        let graphStore = RouteGraph.RouteGraphStore(sections: sections, policy: .physicalRailway, junctions: inputs.physicalJunctions)
+        let graphStore = RouteGraph.RouteGraphStore(
+            sections: sections, policy: .physicalRailway, junctions: inputs.physicalJunctions)
         return graphStore
     }
 
@@ -1129,6 +1200,7 @@ final class RiddenRouteStore {
     @concurrent private nonisolated static func solveMissingWithPermit(
         _ trains: [Train], scope: RouteScope,
         allowLegacy: Bool,
+        graphStore: RouteGraph.RouteGraphStore? = nil,
         rejectPrecomputed: @Sendable (String) async -> Void,
         publish: @Sendable ([DrawnRide]) async -> Void
     ) async throws -> [DrawnRide] {
@@ -1137,12 +1209,14 @@ final class RiddenRouteStore {
         let displayNetwork = try? await DisplayNetworkCache.shared.network(scope: scope)
         let inputs = try await SolverInputCache.shared.inputs(scope: scope)
         let stationIndex = inputs.stationIndex
-        let officialIntervals = inputs.officialIntervals
-        let eligibility = displayNetwork.map {
-            StationRouteEligibility(network: $0, sections: inputs.sections, stations: inputs.stationCollection.features)
+        var officialIntervals: RouteSolver.OfficialIntervalIndex?
+        var eligibility: StationRouteEligibility?
+        var intervalResolver: StationIntervalResolver?
+        if let displayNetwork {
+            (eligibility, intervalResolver) = await SolverInputCache.shared.networkIndexes(
+                scope: scope, network: displayNetwork, inputs: inputs)
         }
-        let intervalResolver = displayNetwork.map(StationIntervalResolver.init(network:))
-        var graphStore: RouteGraph.RouteGraphStore?
+        var graphStore = graphStore
 
         var rides: [DrawnRide] = []
         for train in trains {
@@ -1255,9 +1329,13 @@ final class RiddenRouteStore {
                 if graphStore == nil {
                     graphStore = fallbackGraphStore(inputs: inputs, displayNetwork: displayNetwork)
                 }
+                if officialIntervals == nil {
+                    officialIntervals = await SolverInputCache.shared.officialIntervals(
+                        scope: scope, inputs: inputs)
+                }
                 var solved = RouteSolver.solveOfficialInterval(
                     section, segmentIndex: index, train: context, country: country,
-                    allowedCodes: allowedCodes, intervalIndex: officialIntervals,
+                    allowedCodes: allowedCodes, intervalIndex: officialIntervals!,
                     stations: stationIndex, continuityAnchor: anchor)
                     ?? RouteSolver.solveSectionOnDemand(
                         section, segmentIndex: index, train: context, country: country,
@@ -2134,6 +2212,51 @@ private actor DatasetPartIndex {
 
         struct TrainIdentity: Decodable {
             let id: String
+        }
+    }
+}
+
+/// Latest solver partial, posted off the main actor. ``post`` returns true only
+/// for the caller that must schedule the drain; later posts replace ``latest``
+/// until that drain runs. ``close`` drops anything still held so a partial
+/// cannot land after the load's final result. ``PartialRidePublication`` still
+/// coalesces the actual apply.
+private final class PartialRideInbox: Sendable {
+    private struct State: Sendable {
+        var latest: [RiddenRouteStore.DrawnRide]?
+        var drainScheduled = false
+        var closed = false
+    }
+
+    private let lock = OSAllocatedUnfairLock(initialState: State())
+
+    /// Stores the newest partial. True only when this caller should schedule a drain.
+    func post(_ rides: [RiddenRouteStore.DrawnRide]) -> Bool {
+        lock.withLock { state in
+            guard !state.closed else { return false }
+            state.latest = rides
+            guard !state.drainScheduled else { return false }
+            state.drainScheduled = true
+            return true
+        }
+    }
+
+    /// The newest partial, or nil once ``close`` has run. Clears the slot either way
+    /// when still open, and allows the next ``post`` to schedule another drain.
+    func take() -> [RiddenRouteStore.DrawnRide]? {
+        lock.withLock { state in
+            guard !state.closed else { return nil }
+            let rides = state.latest
+            state.latest = nil
+            state.drainScheduled = false
+            return rides
+        }
+    }
+
+    func close() {
+        lock.withLock { state in
+            state.closed = true
+            state.latest = nil
         }
     }
 }

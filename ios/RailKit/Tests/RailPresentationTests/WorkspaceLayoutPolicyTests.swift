@@ -50,6 +50,16 @@ struct WorkspaceLayoutPolicyTests {
         #expect(policy.mode == testCase.expected)
     }
 
+    @Test("Mac Catalyst always uses the docked-card composition")
+    func macCatalystComposition() {
+        let policy = WorkspaceLayoutPolicy(
+            width: 390,
+            height: 844,
+            isMacCatalyst: true)
+
+        #expect(policy.mode == .sideBySide)
+    }
+
     @Test(
         "Reading column follows orientation and useful-width limits",
         arguments: [

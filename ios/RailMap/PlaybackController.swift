@@ -176,6 +176,7 @@ final class PlaybackController {
     @ObservationIgnored weak var mapRenderer: PlaybackMapRendering?
     @ObservationIgnored var onFrame: ((PlaybackMapSnapshot) -> Void)?
     @ObservationIgnored var onFinish: (() -> Void)?
+    @ObservationIgnored var onPreparationFailure: (() -> Void)?
     /// A ride segment's ACTUALLY drawn coordinates, when the caller can say —
     /// `RailMapView.Coordinator.drawnCoordinates(of:ride:)`, which resolves
     /// the segment against this frame's continuous-stroke chains
@@ -188,14 +189,37 @@ final class PlaybackController {
     /// smallest hook is a closure the map view sets once it exists to be
     /// asked. Takes the ride alongside its segment because the resolver is
     /// keyed and cached per ride. `nil` (the default, and the answer whenever
-    /// no map has attached yet) keeps ``playbackFeatures`` exactly what it
+    /// no map has attached yet) keeps the stored segment coordinates exactly what it
     /// always was: `segment.coordinates`.
     @ObservationIgnored var drawnCoordinates:
         ((RiddenRouteStore.DrawnRide, RiddenRouteStore.DrawnSegment) -> [Coordinate])?
 
-    private struct Entry {
+    private struct Entry: Sendable {
         let train: Train
         let path: Playback.Path
+    }
+
+    private struct StationKey: Hashable, Sendable {
+        let name: String
+        let code: String?
+    }
+
+    private struct FeatureSeed: Sendable {
+        let segmentIndex: Int
+        let partIndex: Int
+        let coordinates: [Coordinate]
+    }
+
+    private struct CompileInput: Sendable {
+        let train: Train
+        let stops: [Statistics.Stop]
+        let features: [FeatureSeed]
+        let localizedStations: [StationKey: String]
+    }
+
+    private struct CompiledQueue: Sendable {
+        let entries: [Entry]
+        let plan: Playback.Plan
     }
 
     @ObservationIgnored private var queue: [Entry] = []
@@ -212,6 +236,9 @@ final class PlaybackController {
     /// the hold between two journeys, because a stop has to cancel both and a
     /// skip only the second.
     @ObservationIgnored private var cameraTask: Task<Void, Never>?
+    @ObservationIgnored private var compileTask: Task<Void, Never>?
+    @ObservationIgnored private var preparationGeneration = 0
+    @ObservationIgnored private var beginWhenPrepared = false
     /// Whether ``cameraTask`` is currently the intro ease rather than the
     /// opening overview or the closing panorama. `.armed` covers both "waiting
     /// for the reader to press play" and "already flying onto the first
@@ -243,7 +270,7 @@ final class PlaybackController {
     /// What a run over these journeys would cost, WITHOUT arming one.
     ///
     /// The export options sheet asks this while a run may already be playing,
-    /// and it used to ask it through ``prepare(trains:rides:reducedMotion:)`` —
+    /// and it used to ask it through synchronous queue preparation —
     /// which freezes the queue. Mid-run that replaced a queue of forty with the
     /// one journey `playbackScope` narrows to while playing, without moving
     /// `queueIndex`: `tick`'s `queue.indices.contains(queueIndex)` then failed
@@ -253,27 +280,20 @@ final class PlaybackController {
     func estimate(
         trains: [Train], rides: [RiddenRouteStore.DrawnRide], reducedMotion: Bool? = nil
     ) -> Playback.Plan {
-        nativePlan(
-            compiled: compile(trains: trains, rides: rides).compiled,
-            reducedMotion: reducedMotion ?? self.reducedMotion)
-    }
-
-    func prepare(
-        trains: [Train], rides: [RiddenRouteStore.DrawnRide], reducedMotion: Bool
-    ) -> Playback.Plan {
-        let built = compile(trains: trains, rides: rides)
-        let result = nativePlan(compiled: built.compiled, reducedMotion: reducedMotion)
-        queue = built.entries
-        queueCount = built.entries.count
-        plan = result
-        self.reducedMotion = reducedMotion
-        return result
+        // This remains the one synchronous path: VideoExportFlow must put the
+        // exact duration into the options sheet before presenting it. Playback
+        // preparation itself, which is the latency-sensitive path, is detached.
+        let compiled = Self.compile(inputs: compileInputs(trains: trains, rides: rides)).compiled
+        return Self.nativePlan(
+            compiled: compiled, reducedMotion: reducedMotion ?? self.reducedMotion, speed: speed)
     }
 
     /// The pure Web parity estimate deliberately preserves its original
     /// omissions. Native filming includes opening/intro/finale camera moves
     /// and a fixed terminus hold after EVERY journey, independent of speed.
-    private func nativePlan(compiled: [Playback.Path?], reducedMotion: Bool) -> Playback.Plan {
+    private nonisolated static func nativePlan(
+        compiled: [Playback.Path?], reducedMotion: Bool, speed: Double
+    ) -> Playback.Plan {
         var result = Playback.plan(compiled: compiled, speed: speed)
         guard result.trains > 0 else { result.seconds = 0; return result }
         let running = compiled.compactMap { $0 }.reduce(0) { $0 + $1.duration } / speed
@@ -288,12 +308,11 @@ final class PlaybackController {
     /// Every journey's path, and the queue of those that produced one.
     ///
     /// Pure: it reads the stores it is handed and writes nothing here, which is
-    /// what lets ``estimate(trains:rides:)`` and
-    /// ``prepare(trains:rides:reducedMotion:)`` share it without sharing the
-    /// second one's side effects.
-    private func compile(
+    /// what lets estimation and preparation share the same immutable snapshot
+    /// without sharing the latter's queue side effects.
+    private func compileInputs(
         trains: [Train], rides: [RiddenRouteStore.DrawnRide]
-    ) -> (compiled: [Playback.Path?], entries: [Entry]) {
+    ) -> [CompileInput] {
         // `uniquingKeysWith`, not `uniqueKeysWithValues`, and for the reason
         // `RiddenRouteStore.load` and `RailNetworkStore` both give at their own
         // id tables: a duplicate id is a data fault to draw, not a reason to
@@ -305,28 +324,60 @@ final class PlaybackController {
         // front of this line, and pressing 播放行程 was a crash.
         let ridesByID = Dictionary(
             rides.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
+        return trains.map { train in
+            let region = Region.resolved(train)
+            let localizedStations = Dictionary(
+                train.stops.map { stop in
+                    let key = StationKey(name: stop.name, code: stop.n02StationCode)
+                    let localized = localization?.stationName(
+                        stop.name, code: stop.n02StationCode, region: region) ?? stop.name
+                    return (key, localized)
+                },
+                uniquingKeysWith: { first, _ in first })
+            let stops = train.stops.map {
+                Statistics.Stop(
+                    arrival: $0.arrival, departure: $0.departure,
+                    stopType: $0.stopType, rideSegment: $0.rideSegment)
+            }
+            let ride = ridesByID[train.id]
+            let features = ride?.segments.map { segment in
+                FeatureSeed(
+                    segmentIndex: segment.segmentIndex,
+                    partIndex: segment.partIndex,
+                    coordinates: ride.flatMap { drawnCoordinates?($0, segment) }
+                        ?? segment.coordinates)
+            } ?? []
+            return CompileInput(
+                train: train, stops: stops, features: features,
+                localizedStations: localizedStations)
+        }
+    }
+
+    private nonisolated static func compile(
+        inputs: [CompileInput]
+    ) -> (compiled: [Playback.Path?], entries: [Entry]) {
         var compiled: [Playback.Path?] = []
         var entries: [Entry] = []
-        for train in trains {
-            let region = Region.resolved(train)
-            let path = ridesByID[train.id].flatMap { ride in
-                Playback.compile(
-                    train: train,
-                    features: playbackFeatures(train: train, ride: ride),
-                    preserveStationEndpoints: true,
-                    // `assumeIsolated` rather than an isolated closure: this
-                    // method is already on the main actor and `compile` is a
-                    // synchronous pure function, so the closure runs where it
-                    // was made — but its parameter type cannot say so.
-                    localize: { name, code in
-                        MainActor.assumeIsolated {
-                            self.localization?.stationName(
-                                name, code: code, region: region) ?? name
-                        }
-                    })
+        for input in inputs {
+            if Task.isCancelled { return (compiled, entries) }
+            let features = input.features.sorted {
+                ($0.segmentIndex, $0.partIndex) < ($1.segmentIndex, $1.partIndex)
+            }.map { feature in
+                Playback.RiddenFeature(
+                    geometry: .lineString(feature.coordinates),
+                    rideSegment: Statistics.isRideSegment(
+                        input.stops, segmentIndex: feature.segmentIndex),
+                    segmentIndex: Double(feature.segmentIndex))
             }
+            let path = Playback.compile(
+                train: input.train,
+                features: features,
+                preserveStationEndpoints: true,
+                localize: { name, code in
+                    input.localizedStations[StationKey(name: name, code: code)] ?? name
+                })
             compiled.append(path)
-            if let path { entries.append(Entry(train: train, path: path)) }
+            if let path { entries.append(Entry(train: input.train, path: path)) }
         }
         return (compiled, entries)
     }
@@ -344,17 +395,52 @@ final class PlaybackController {
         stop(clearPlan: false)
         restoreSelectedTrainID = restoringSelection
         doneTrails = []
-        let result = prepare(trains: trains, rides: rides, reducedMotion: reducedMotion)
+        guard !trains.isEmpty else {
+            phase = .idle
+            restoreSelectedTrainID = nil
+            return false
+        }
+        phase = .armed
+        plan = nil
+        queueCount = trains.count
+        self.reducedMotion = reducedMotion
+        let inputs = compileInputs(trains: trains, rides: rides)
+        let generation = preparationGeneration
+        let capturedSpeed = speed
+        compileTask = Task.detached(priority: .userInitiated) { [weak self] in
+            let compiled = Self.compile(inputs: inputs)
+            guard !Task.isCancelled else { return }
+            let plan = Self.nativePlan(
+                compiled: compiled.compiled, reducedMotion: reducedMotion,
+                speed: capturedSpeed)
+            let built = CompiledQueue(
+                entries: compiled.entries, plan: plan)
+            await MainActor.run {
+                guard !Task.isCancelled, let self,
+                      generation == self.preparationGeneration else { return }
+                self.compileTask = nil
+                self.install(
+                    built, reducedMotion: reducedMotion, autoBegin: autoBegin)
+            }
+        }
+        return true
+    }
+
+    private func install(
+        _ built: CompiledQueue, reducedMotion: Bool, autoBegin: Bool
+    ) {
+        queue = built.entries
+        queueCount = built.entries.count
+        plan = built.plan
+        self.reducedMotion = reducedMotion
         // Nothing in the selection has ridden geometry: back to idle rather
         // than `.ended`, which would leave a blank transport on screen with
         // no exit but the ✕.
-        guard result.trains > 0 else {
+        guard built.plan.trains > 0 else {
             phase = .idle
-            // No transport means no ✕ to consume it; left set, a later
-            // stop would yank the selection back to a train the reader
-            // moved on from.
             restoreSelectedTrainID = nil
-            return false
+            onPreparationFailure?()
+            return
         }
         queueIndex = 0
         resetProgress(to: 0)
@@ -384,7 +470,9 @@ final class PlaybackController {
             coordinates: Self.sampled(queue.flatMap { $0.path.runs.flatMap(\.coords) }),
             maxZoom: Playback.Tuning.overviewMaxZoom,
             animated: !reducedMotion)
-        guard autoBegin else { return true }
+        let shouldBegin = autoBegin || beginWhenPrepared
+        beginWhenPrepared = false
+        guard shouldBegin else { return }
         cameraTask?.cancel()
         cameraTask = Task { [weak self] in
             // The `+ 120` is the web app's: the move has to have LANDED, not
@@ -393,12 +481,15 @@ final class PlaybackController {
             guard !Task.isCancelled else { return }
             self?.begin()
         }
-        return true
     }
 
     /// Pressing play on an armed run.
     func begin() {
         guard phase == .armed else { return }
+        guard compileTask == nil else {
+            beginWhenPrepared = true
+            return
+        }
         cameraTask?.cancel()
         cameraTask = nil
         beginCurrent(intro: true)
@@ -472,6 +563,10 @@ final class PlaybackController {
     }
 
     func stop(clearPlan: Bool = true) {
+        compileTask?.cancel()
+        compileTask = nil
+        preparationGeneration &+= 1
+        beginWhenPrepared = false
         transitionTask?.cancel()
         cameraTask?.cancel()
         cameraTask = nil
@@ -768,24 +863,6 @@ final class PlaybackController {
     // away on another executor, Swift schedules cleanup on the main actor.
     isolated deinit {
         displayLink?.invalidate()
-    }
-
-    private func playbackFeatures(
-        train: Train, ride: RiddenRouteStore.DrawnRide
-    ) -> [Playback.RiddenFeature] {
-        let stops = train.stops.map {
-            Statistics.Stop(
-                arrival: $0.arrival, departure: $0.departure,
-                stopType: $0.stopType, rideSegment: $0.rideSegment)
-        }
-        return ride.segments.sorted {
-            ($0.segmentIndex, $0.partIndex) < ($1.segmentIndex, $1.partIndex)
-        }.map { segment in
-            Playback.RiddenFeature(
-                geometry: .lineString(drawnCoordinates?(ride, segment) ?? segment.coordinates),
-                rideSegment: Statistics.isRideSegment(stops, segmentIndex: segment.segmentIndex),
-                segmentIndex: Double(segment.segmentIndex))
-        }
     }
 
     private final class ClockTarget: NSObject {

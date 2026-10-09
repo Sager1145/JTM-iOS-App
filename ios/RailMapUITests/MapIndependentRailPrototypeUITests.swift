@@ -38,6 +38,7 @@ final class MapIndependentRailPrototypeUITests: XCTestCase {
     }
 
     func testGesturesAndViewportResizeAgainstNativePresentation() throws {
+#if !targetEnvironment(macCatalyst)
         XCUIDevice.shared.orientation = .portrait
         defer { XCUIDevice.shared.orientation = .portrait }
         let app = launch(trace: false)
@@ -76,6 +77,9 @@ final class MapIndependentRailPrototypeUITests: XCTestCase {
         XCTAssertLessThanOrEqual(value("pairedP95Ms", metrics), 16)
         XCTAssertLessThanOrEqual(value("projectionP95Ms", metrics), 8)
         XCTAssertLessThanOrEqual(value("maxFrameGapMs", metrics), 150)
+#else
+        throw XCTSkip("Pinch/rotate gestures are unavailable on Mac Catalyst")
+#endif
     }
 
     func testNativePolylineRasterFrameProbe() throws {

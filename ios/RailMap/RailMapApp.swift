@@ -1,3 +1,4 @@
+import Observation
 import SwiftUI
 import UIKit
 
@@ -40,6 +41,7 @@ struct RailMapApp: App {
                 .dynamicTypeSize(AppTypographyPolicy.supportedSizes)
                 .preferredColorScheme(preferredColorScheme)
         }
+        .commands { RailMapCommands() }
     }
 
     // There is no `RAILMAP_UI_TEST_REDUCE_MOTION` hook, and there cannot be
@@ -80,6 +82,104 @@ struct RailMapApp: App {
         case "light": .light
         case "dark": .dark
         default: nil
+        }
+    }
+}
+
+/// Actions the workspace publishes for the menu bar and the hardware keyboard.
+///
+/// A class, held once by the workspace and handed up with `focusedSceneValue`,
+/// so a scene command can call the live handler without a new value on every
+/// frame of a sheet drag. Titles are copied when the stage or language changes.
+///
+/// `@Observable` because `Commands` keeps this same instance for the life of
+/// the scene. A plain class mutated in place never re-evaluates that body, so
+/// the items stayed disabled at their launch values and the panel title stayed
+/// on whatever was copied first. The closures are not menu state.
+@MainActor
+@Observable
+final class RailCommandBridge {
+    var newJourneyTitle = "New journey"
+    var searchTitle = "Search"
+    var zoomInTitle = "Zoom in"
+    var zoomOutTitle = "Zoom out"
+    var togglePanelTitle = "Expand panel"
+    var canPerform = false
+    /// New Journey and Search. False while a sheet with its own editor or
+    /// search is up, so ⌘N and ⌘F do not run on the workspace underneath.
+    var canCreateOrSearch = false
+
+    @ObservationIgnored var performNewJourney: (@MainActor () -> Void)?
+    @ObservationIgnored var performSearch: (@MainActor () -> Void)?
+    @ObservationIgnored var performZoomIn: (@MainActor () -> Void)?
+    @ObservationIgnored var performZoomOut: (@MainActor () -> Void)?
+    @ObservationIgnored var performTogglePanel: (@MainActor () -> Void)?
+
+    func newJourney() { performNewJourney?() }
+    func search() { performSearch?() }
+    func zoomIn() { performZoomIn?() }
+    func zoomOut() { performZoomOut?() }
+    func togglePanel() { performTogglePanel?() }
+}
+
+private struct RailCommandBridgeKey: FocusedValueKey {
+    typealias Value = RailCommandBridge
+}
+
+extension FocusedValues {
+    var railCommandBridge: RailCommandBridge? {
+        get { self[RailCommandBridgeKey.self] }
+        set { self[RailCommandBridgeKey.self] = newValue }
+    }
+}
+
+/// App-level shortcuts. They have to live on the scene: a hidden button inside
+/// the journey list never runs from Passport, and it never appears in the Mac
+/// menu bar or the iPad ⌘ overlay.
+private struct RailMapCommands: Commands {
+    @FocusedValue(\.railCommandBridge) private var bridge
+
+    var body: some Commands {
+        CommandGroup(replacing: .newItem) {
+            Button(bridge?.newJourneyTitle ?? "New journey") {
+                bridge?.newJourney()
+            }
+            .keyboardShortcut("n", modifiers: .command)
+            .disabled(bridge?.canPerform != true || bridge?.canCreateOrSearch != true)
+        }
+        CommandGroup(after: .toolbar) {
+            Button(bridge?.searchTitle ?? "Search") {
+                bridge?.search()
+            }
+            .keyboardShortcut("f", modifiers: .command)
+            .disabled(bridge?.canPerform != true || bridge?.canCreateOrSearch != true)
+
+            // "+" is Shift-"=" on most layouts, so both are bound. One menu
+            // title, two key equivalents — the same pair the hidden buttons used.
+            Button(bridge?.zoomInTitle ?? "Zoom in") {
+                bridge?.zoomIn()
+            }
+            .keyboardShortcut("+", modifiers: .command)
+            .disabled(bridge?.canPerform != true)
+            Button(bridge?.zoomInTitle ?? "Zoom in") {
+                bridge?.zoomIn()
+            }
+            .keyboardShortcut("=", modifiers: .command)
+            .disabled(bridge?.canPerform != true)
+
+            Button(bridge?.zoomOutTitle ?? "Zoom out") {
+                bridge?.zoomOut()
+            }
+            .keyboardShortcut("-", modifiers: .command)
+            .disabled(bridge?.canPerform != true)
+
+            Divider()
+
+            Button(bridge?.togglePanelTitle ?? "Expand panel") {
+                bridge?.togglePanel()
+            }
+            .keyboardShortcut("s", modifiers: [.command, .option])
+            .disabled(bridge?.canPerform != true)
         }
     }
 }

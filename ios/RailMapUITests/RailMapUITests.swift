@@ -21,16 +21,34 @@ final class RailMapUITests: XCTestCase {
             let day = app.buttons.matching(NSPredicate(
                 format: "label CONTAINS %@", "2026-07-03")).firstMatch
             XCTAssertTrue(day.waitForExistence(timeout: 5))
+            // Native menus expose offscreen entries before they can receive
+            // a tap. Reveal the actual date rather than letting tap's
+            // implicit scroll leave the menu open over the panel.
+            for _ in 0..<6 {
+                if day.isHittable { break }
+                let menus = app.collectionViews
+                XCTAssertGreaterThan(menus.count, 0)
+                menus.element(boundBy: menus.count - 1).swipeUp()
+            }
+            XCTAssertTrue(day.isHittable)
             day.tap()
+            let selectedDate = XCTNSPredicateExpectation(
+                predicate: NSPredicate(format: "value CONTAINS %@", "2026-07-03"),
+                object: date)
+            XCTAssertEqual(XCTWaiter.wait(for: [selectedDate], timeout: 5), .completed)
 
             let viewport = element("workspaceMenuViewport", in: app)
             let tabs = app.tabBars.firstMatch
             let last = element("journeyRow-20260703_03_tokaido_main_local", in: app)
             for _ in 0..<6 {
-                if last.exists && last.isHittable,
-                   last.frame.minY >= viewport.frame.minY,
-                   last.frame.maxY <= tabs.frame.minY - 12 { break }
-                viewport.swipeUp()
+                if last.exists {
+                    let frame = last.frame
+                    if !frame.isEmpty,
+                       frame.minY >= viewport.frame.minY,
+                       frame.maxY <= tabs.frame.minY - 12,
+                       last.isHittable { break }
+                }
+                scrollMenuUp(viewport, above: tabs, in: app)
             }
             print("[tab-clearance] viewport=\(viewport.frame) value=\(String(describing: viewport.value)) tab=\(tabs.frame) last=\(last.frame)")
             XCTAssertTrue(last.exists)
@@ -132,11 +150,34 @@ final class RailMapUITests: XCTestCase {
         let viewport = element("workspaceMenuViewport", in: app)
         XCTAssertTrue(tabs.waitForExistence(timeout: 8))
         XCTAssertTrue(viewport.waitForExistence(timeout: 8))
+        // The header enables sharing when the computed statistics publish.
+        // Do not spend the reveal budget on the temporary loading layout.
+        let share = element("statisticsShareButton", in: app)
+        XCTAssertTrue(share.waitForExistence(timeout: 8))
+        let ready = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "enabled == true"), object: share)
+        XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 90), .completed,
+                       "Statistics must publish before scrolling the completed dashboard.")
         let note = element("passportShareNote", in: app)
         for _ in 0..<12 {
-            if note.exists && note.isHittable,
-               note.frame.maxY <= tabs.frame.minY { break }
-            viewport.swipeUp()
+            if note.exists {
+                let frame = note.frame
+                if !frame.isEmpty,
+                   frame.minY >= viewport.frame.minY,
+                   frame.maxY <= tabs.frame.minY,
+                   note.isHittable { break }
+            }
+            // Flick this long dashboard inside its readable viewport, clear
+            // of the floating tabs. Other panel tests keep their own drag.
+            let frame = viewport.frame
+            let top = frame.minY + 20
+            let bottom = min(frame.maxY, tabs.frame.minY) - 20
+            XCTAssertGreaterThan(bottom, top)
+            let origin = app.coordinate(withNormalizedOffset: .zero)
+            let start = origin.withOffset(CGVector(dx: frame.midX, dy: bottom))
+            let end = origin.withOffset(CGVector(dx: frame.midX, dy: top))
+            start.press(forDuration: 0.05, thenDragTo: end,
+                        withVelocity: .fast, thenHoldForDuration: 0)
         }
         print("[tab-clearance] viewport=\(viewport.frame) value=\(String(describing: viewport.value)) tab=\(tabs.frame) noteExists=\(note.exists) note=\(note.exists ? String(describing: note.frame) : "absent")")
         XCTAssertTrue(note.exists)
@@ -148,7 +189,23 @@ final class RailMapUITests: XCTestCase {
         attach(app, named: "menu-bottom-content-visible")
     }
 
+    /// The viewport draws under floating system tabs; its default swipe
+    /// starts in that covered strip. Drag only inside the readable content.
+    private func scrollMenuUp(
+        _ viewport: XCUIElement, above tabs: XCUIElement, in app: XCUIApplication
+    ) {
+        let frame = viewport.frame
+        let top = frame.minY + 20
+        let bottom = min(frame.maxY, tabs.frame.minY) - 20
+        XCTAssertGreaterThan(bottom, top)
+        let origin = app.coordinate(withNormalizedOffset: .zero)
+        let start = origin.withOffset(CGVector(dx: frame.midX, dy: bottom))
+        let end = origin.withOffset(CGVector(dx: frame.midX, dy: top))
+        start.press(forDuration: 0.05, thenDragTo: end)
+    }
+
     func testCompactSelectedJourneyPresentsOriginalCard() throws {
+#if !targetEnvironment(macCatalyst)
         try XCTSkipUnless(UIDevice.current.userInterfaceIdiom == .phone)
         let app = launch(tab: "all", stage: "compact",
                          selectedJourney: "20260703_01_haruka", sample: "train-store",
@@ -169,6 +226,9 @@ final class RailMapUITests: XCTestCase {
         close.tap()
         XCTAssertTrue(close.waitForNonExistence(timeout: 8))
         XCTAssertTrue(element("panelHeader", in: app).waitForExistence(timeout: 8))
+#else
+        throw XCTSkip("Pinch/rotate gestures are unavailable on Mac Catalyst")
+#endif
     }
 
     func testCompactHeaderDragRevealsTheDestinationContent() throws {
@@ -192,6 +252,7 @@ final class RailMapUITests: XCTestCase {
         XCTAssertTrue(
             element("journeySearchField", in: app).waitForExistence(timeout: 8),
             "Dragging the non-interactive header must move the resident system sheet.")
+        assertSearchAcceptsInput(in: app)
         attach(app, named: "iphone-menu-reopened")
     }
 
@@ -241,8 +302,9 @@ final class RailMapUITests: XCTestCase {
         XCTAssertTrue(element("journeySearchField", in: app).waitForExistence(timeout: 8))
     }
 
-    /// System sheets resize natively; docked menus resize through their toggle.
-    /// Neither path changes the title's text or font geometry.
+    /// System sheets resize natively. A docked iPad or Mac menu cycles
+    /// compact → half → full through its toggle. Neither path changes the
+    /// title's text or font geometry.
     private func assertRepeatedHeaderDrags(isDocked: Bool) throws {
         let app = launch(tab: "search", stage: "compact")
         let header = element("panelHeader", in: app)
@@ -260,32 +322,74 @@ final class RailMapUITests: XCTestCase {
         #endif
 
         for cycle in 1...2 {
-            if isDocked { stage.tap() } else { dragHeader(header, by: -360) }
-            XCTAssertTrue(search.waitForExistence(timeout: 8), "Expanding the panel must reveal Search.")
-            XCTAssertEqual(header.label, originalLabel)
-            XCTAssertEqual(header.frame.height, originalHeight, accuracy: 1)
-            let openTop = header.frame.minY
-            XCTAssertLessThan(openTop, compactTop - 80, "The menu must physically expand after an upward drag.")
-            if isDocked { XCTAssertNotEqual(stage.value as? String, "compact") }
-            attach(app, named: "\(device)-drag-open-\(cycle)")
+            if isDocked {
+                // compact → medium → expanded → compact. The toggle's
+                // accessibility value is the `SheetStage` case name.
+                stage.tap()
+                expectation(for: NSPredicate { _, _ in
+                    header.frame.minY < compactTop - 80
+                        && (stage.value as? String) == "medium"
+                }, evaluatedWith: header)
+                waitForExpectations(timeout: 8)
+                XCTAssertTrue(search.waitForExistence(timeout: 8), "Expanding the panel must reveal Search.")
+                XCTAssertEqual(header.label, originalLabel)
+                XCTAssertEqual(header.frame.height, originalHeight, accuracy: 1)
+                let mediumTop = header.frame.minY
+                XCTAssertLessThan(mediumTop, compactTop - 80, "The menu must reach the half stop.")
+                XCTAssertEqual(stage.value as? String, "medium")
+                attach(app, named: "\(device)-drag-medium-\(cycle)")
 
-            let headerFrame = header.frame
-            let screen = app.frame
-            let downwardDistance = min(
-                compactTop - headerFrame.minY + 70,
-                screen.maxY - headerFrame.midY - 24)
-            XCTAssertGreaterThan(downwardDistance, 100)
-            if isDocked { stage.tap() } else { dragHeader(header, by: downwardDistance) }
-            expectation(for: NSPredicate { _, _ in
-                abs(header.frame.minY - compactTop) <= 28
-            }, evaluatedWith: header)
-            waitForExpectations(timeout: 8)
-            XCTAssertFalse(search.isHittable, "Collapsed Search must not overlap the tab bar.")
-            XCTAssertGreaterThan(header.frame.minY, openTop + 80)
-            XCTAssertEqual(header.frame.minY, compactTop, accuracy: 28)
-            XCTAssertEqual(header.frame.height, originalHeight, accuracy: 1)
-            if isDocked { XCTAssertEqual(stage.value as? String, "compact") }
-            attach(app, named: "\(device)-drag-closed-\(cycle)")
+                stage.tap()
+                expectation(for: NSPredicate { _, _ in
+                    header.frame.minY < mediumTop - 80
+                        && (stage.value as? String) == "expanded"
+                }, evaluatedWith: header)
+                waitForExpectations(timeout: 8)
+                XCTAssertEqual(header.label, originalLabel)
+                XCTAssertEqual(header.frame.height, originalHeight, accuracy: 1)
+                let fullTop = header.frame.minY
+                XCTAssertLessThan(fullTop, mediumTop - 80, "The menu must reach the full stop.")
+                XCTAssertEqual(stage.value as? String, "expanded")
+                attach(app, named: "\(device)-drag-open-\(cycle)")
+
+                stage.tap()
+                expectation(for: NSPredicate { _, _ in
+                    abs(header.frame.minY - compactTop) <= 28
+                }, evaluatedWith: header)
+                waitForExpectations(timeout: 8)
+                XCTAssertFalse(search.isHittable, "Collapsed Search must not overlap the tab bar.")
+                XCTAssertGreaterThan(header.frame.minY, fullTop + 80)
+                XCTAssertEqual(header.frame.minY, compactTop, accuracy: 28)
+                XCTAssertEqual(header.frame.height, originalHeight, accuracy: 1)
+                XCTAssertEqual(header.label, originalLabel)
+                XCTAssertEqual(stage.value as? String, "compact")
+                attach(app, named: "\(device)-drag-closed-\(cycle)")
+            } else {
+                dragHeader(header, by: -360)
+                XCTAssertTrue(search.waitForExistence(timeout: 8), "Expanding the panel must reveal Search.")
+                XCTAssertEqual(header.label, originalLabel)
+                XCTAssertEqual(header.frame.height, originalHeight, accuracy: 1)
+                let openTop = header.frame.minY
+                XCTAssertLessThan(openTop, compactTop - 80, "The menu must physically expand after an upward drag.")
+                attach(app, named: "\(device)-drag-open-\(cycle)")
+
+                let headerFrame = header.frame
+                let screen = app.frame
+                let downwardDistance = min(
+                    compactTop - headerFrame.minY + 70,
+                    screen.maxY - headerFrame.midY - 24)
+                XCTAssertGreaterThan(downwardDistance, 100)
+                dragHeader(header, by: downwardDistance)
+                expectation(for: NSPredicate { _, _ in
+                    abs(header.frame.minY - compactTop) <= 28
+                }, evaluatedWith: header)
+                waitForExpectations(timeout: 8)
+                XCTAssertFalse(search.isHittable, "Collapsed Search must not overlap the tab bar.")
+                XCTAssertGreaterThan(header.frame.minY, openTop + 80)
+                XCTAssertEqual(header.frame.minY, compactTop, accuracy: 28)
+                XCTAssertEqual(header.frame.height, originalHeight, accuracy: 1)
+                attach(app, named: "\(device)-drag-closed-\(cycle)")
+            }
         }
 
         let tabs = app.tabBars.firstMatch
@@ -657,7 +761,18 @@ final class RailMapUITests: XCTestCase {
         expectation(for: NSPredicate(format: "value != %@", "compact"), evaluatedWith: toggle)
         waitForExpectations(timeout: 8)
         XCTAssertTrue(element("journeySearchField", in: app).waitForExistence(timeout: 8))
+        assertSearchAcceptsInput(in: app)
         attach(app, named: "ipad-compact-menu-reopened")
+    }
+
+    private func assertSearchAcceptsInput(in app: XCUIApplication) {
+        let field = element("journeySearchField", in: app)
+        XCTAssertTrue(field.isEnabled)
+        XCTAssertTrue(field.isHittable)
+        field.tap()
+        field.typeText("Tokyo")
+        XCTAssertEqual(field.value as? String, "Tokyo",
+                       "The reopened native text field must accept input.")
     }
 
     private func attach(_ app: XCUIApplication, named name: String) {

@@ -46,11 +46,22 @@ final class MapZoomPerformanceTests: XCTestCase {
         rotateBeforeZoom: Bool = false,
         rotateMapBeforeZoom: Bool = false, requiredRecords: Int? = nil
     ) throws {
+#if !targetEnvironment(macCatalyst)
         XCUIDevice.shared.orientation = .portrait
         defer { XCUIDevice.shared.orientation = .portrait }
         let app = launch(camera: camera)
         if requiredRecords != nil {
             MapSampleUITestSupport.importAllSamples(in: app)
+            // Warm the route cache in this session so the relaunch measures zoom, not a cold solve.
+            let warmupInventory = app.staticTexts["journeyLoadInventory"]
+            XCTAssertTrue(warmupInventory.waitForExistence(timeout: 10))
+            let warmed = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+                let loaded = RenderSnapshot(warmupInventory.label)
+                return loaded.integerIfPresent("registered") == requiredRecords
+                    && loaded.fields["phase"] == "loaded"
+            }, object: nil)
+            XCTAssertEqual(XCTWaiter.wait(for: [warmed], timeout: 900), .completed,
+                           "The route cache must be warm before relaunch: \(warmupInventory.label)")
             app.terminate()
             app.launch()
         }
@@ -170,6 +181,9 @@ final class MapZoomPerformanceTests: XCTestCase {
             try settled.integer("covered"), 1,
             "The installed network geometry did not cover the settled viewport.")
         attach(XCUIScreen.main.screenshot(), named: "\(attachmentName)-final")
+#else
+        throw XCTSkip("Pinch/rotate gestures are unavailable on Mac Catalyst")
+#endif
     }
 
     private func launch(camera: Camera) -> XCUIApplication {

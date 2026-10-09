@@ -161,6 +161,12 @@ final class MapIndependentRailPrototype: UIView {
 
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
+    /// The run loop retains the display link after the view is released.
+    /// ``tearDown()`` is the normal path; this covers the view leaving without it.
+    isolated deinit {
+        link?.invalidate()
+    }
+
     private static let transparentReferenceImage: UIImage = {
         let format = UIGraphicsImageRendererFormat()
         format.opaque = false

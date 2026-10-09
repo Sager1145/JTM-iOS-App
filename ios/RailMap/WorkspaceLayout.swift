@@ -61,7 +61,16 @@ struct WorkspaceLayoutMetrics: Equatable {
     private var policy: WorkspaceLayoutPolicy {
         WorkspaceLayoutPolicy(
             width: Double(containerSize.width),
-            height: Double(containerSize.height))
+            height: Double(containerSize.height),
+            isMacCatalyst: isMacCatalyst)
+    }
+
+    private var isMacCatalyst: Bool {
+        #if targetEnvironment(macCatalyst)
+        true
+        #else
+        false
+        #endif
     }
 
     var mode: WorkspaceLayoutMode {

@@ -183,7 +183,8 @@ public struct StationIntervalResolver: Sendable {
         }
         var pending: [State] = []
         var examined = 0
-        var found: [[DirectedInterval]] = []
+        var truncated = false
+        var found: Set<[DirectedInterval]> = []
         var selections: [Selection] = []
         var incompleteCandidate = false
         let permittedIDs = Set(requiredLineIDs)
@@ -203,8 +204,7 @@ public struct StationIntervalResolver: Sendable {
             if reachesVisit && stage == stationCodes.count - 1 {
                 if incomplete { incompleteCandidate = true; return }
                 let identity = legs.flatMap { $0 }
-                if !found.contains(identity) {
-                    found.append(identity)
+                if found.insert(identity).inserted {
                     let chosen = Selection(stationCodes: stationCodes, legIntervals: legs)
                     selections.append(chosen)
                 }
@@ -227,20 +227,23 @@ public struct StationIntervalResolver: Sendable {
 
         // Count every examined edge, including completed and rejected paths.
         func admitsAnotherState() -> Bool {
-            guard !isCancelled(), examined < maximumExaminedStates else { return false }
+            guard !isCancelled() else { return false }
+            guard examined < maximumExaminedStates else {
+                truncated = true
+                return false
+            }
             examined += 1
             return true
         }
         for edge in adjacency[stationCodes[0]] ?? [] where families.contains(edge.family)
             && (permittedIDs.isEmpty || permittedIDs.contains(edge.identity.lineID)) {
-            guard admitsAnotherState() else { return .unsupported }
+            guard admitsAnotherState() else { break }
             append(edge, after: nil)
         }
-        while let state = pending.popLast() {
-            guard !isCancelled() else { return .unsupported }
+        search: while !truncated, !isCancelled(), let state = pending.popLast() {
             for edge in adjacency[state.previous.toCode] ?? [] where edge.family == state.previous.family
                 && (permittedIDs.isEmpty || permittedIDs.contains(edge.identity.lineID)) {
-                guard admitsAnotherState() else { return .unsupported }
+                guard admitsAnotherState() else { break search }
                 // Changing rows can only use the same station code. A non-exact
                 // endpoint remains an incomplete candidate, never a real join.
                 guard edge.from.row != state.previous.to.row || edge.from == state.previous.to else { continue }
@@ -252,6 +255,8 @@ public struct StationIntervalResolver: Sendable {
             }
         }
         guard !isCancelled(), !incompleteCandidate else { return .unsupported }
+        // A capped search cannot prove the matches it already found are exhaustive.
+        if truncated { return selections.isEmpty ? .unsupported : .ambiguous }
         func preferred(_ selections: [Selection]) -> Selection? {
             if selections.count <= 1 { return selections.first }
             let adjacent = selections.filter { $0.legIntervals.allSatisfy { $0.count == 1 } }

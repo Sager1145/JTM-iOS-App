@@ -16,6 +16,7 @@ public enum WorkspaceLayoutMode: Equatable, Sendable {
 public struct WorkspaceLayoutPolicy: Equatable, Sendable {
     public var width: Double
     public var height: Double
+    public var isMacCatalyst: Bool
 
     private static let minimumPanelWidth = 300.0
     private static let idealPanelFraction = 0.34
@@ -33,9 +34,10 @@ public struct WorkspaceLayoutPolicy: Equatable, Sendable {
     /// draws the card cannot drift apart on what "the card's gutter" means.
     public static let dockInset = 16.0
 
-    public init(width: Double, height: Double) {
+    public init(width: Double, height: Double, isMacCatalyst: Bool = false) {
         self.width = width
         self.height = height
+        self.isMacCatalyst = isMacCatalyst
     }
 
     /// A tall/narrow window gets the phone's resident sheet. A landscape
@@ -57,6 +59,10 @@ public struct WorkspaceLayoutPolicy: Equatable, Sendable {
     /// as a usable map, or the reader gets a sliver wedged against the
     /// card with no gutter of its own.
     public var mode: WorkspaceLayoutMode {
+        if isMacCatalyst {
+            return .sideBySide
+        }
+
         let twoColumnThreshold =
             Self.minimumPanelWidth
             + minimumMapWidthForComposition

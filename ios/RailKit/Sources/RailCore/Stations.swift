@@ -755,6 +755,7 @@ public enum Stations {
         public let features: [Feature]
         private let candidates: [CodeUnits: [Int]]
         private let nameByCode: [CodeUnits: String]
+        private let indicesByTrimmedCodeOrGroup: [String: [Int]]
 
         public init(_ collection: FeatureCollection) { self.init(collection.features) }
 
@@ -762,6 +763,7 @@ public enum Stations {
             self.features = features
             var candidates: [CodeUnits: [Int]] = [:]
             var nameByCode: [CodeUnits: String] = [:]
+            var indicesByTrimmedCodeOrGroup: [String: [Int]] = [:]
             for (index, feature) in features.enumerated() {
                 let name = stationName(feature)
                 let code = stationCode(feature)
@@ -771,9 +773,18 @@ public enum Stations {
                 // Last writer wins, as `Map.prototype.set` does — two features
                 // sharing a code are a data question, not a resolution one.
                 if let code { nameByCode[CodeUnits(code)] = name ?? "" }
+                var indexedCodes = Set<String>()
+                for value in [code, stationGroupCode(feature)] {
+                    let trimmed = value?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+                    if !trimmed.isEmpty { indexedCodes.insert(trimmed) }
+                }
+                for indexedCode in indexedCodes {
+                    indicesByTrimmedCodeOrGroup[indexedCode, default: []].append(index)
+                }
             }
             self.candidates = candidates
             self.nameByCode = nameByCode
+            self.indicesByTrimmedCodeOrGroup = indicesByTrimmedCodeOrGroup
         }
 
         /// How many distinct keys the pass produced. A port that keys on
@@ -781,6 +792,10 @@ public enum Stations {
         /// spellings JavaScript keeps apart.
         public var keyCount: Int { candidates.count }
         public var codeCount: Int { nameByCode.count }
+
+        public func featureIndices(matchingTrimmedCodeOrGroup key: String) -> [Int] {
+            indicesByTrimmedCodeOrGroup[key] ?? []
+        }
 
         /// N02_005c → N02_005. The station name is a per-station constant kept
         /// once on each stop; route sections carry only codes and resolve their

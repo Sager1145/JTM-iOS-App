@@ -65,12 +65,17 @@ func mapCoordinateChunks(
 /// Construct MapKit reference objects only on the main actor, immediately
 /// before they enter the mounted-geometry cache.
 @MainActor
+private func mapPolylineChunk(
+    _ chunk: [CLLocationCoordinate2D]
+) -> MKPolyline {
+    MKPolyline(coordinates: chunk, count: chunk.count)
+}
+
+@MainActor
 func mapPolylineChunks(
     _ chunks: [[CLLocationCoordinate2D]]
 ) -> [MKPolyline] {
-    chunks.map { chunk in
-        MKPolyline(coordinates: chunk, count: chunk.count)
-    }
+    chunks.map(mapPolylineChunk)
 }
 
 /// One family's simplified polylines for one `LineBuild`, and the colour
@@ -654,6 +659,65 @@ enum MapLineGeometry {
                 polylines: mapPolylineChunks(prepared.coordinateChunks),
                 historicalPolylines: mapPolylineChunks(prepared.historicalCoordinateChunks),
                 familyPolylines: families)
+        }
+        return result
+    }
+
+    /// Publish native MapKit geometry without monopolising one main-actor turn.
+    /// Each chunk is still created and appended in the synchronous path's order.
+    @MainActor
+    static func materialize(
+        _ geometry: PreparedGeometry, budget: Duration = .milliseconds(5)
+    ) async -> Prepared? {
+        let clock = ContinuousClock()
+        var lastYield = clock.now
+        func yieldIfNeeded() async -> Bool {
+            guard clock.now - lastYield >= budget else { return true }
+            await Task.yield()
+            guard !Task.isCancelled else { return false }
+            lastYield = clock.now
+            return true
+        }
+
+        var result = Prepared(strokes: geometry.strokes)
+        result.lines.reserveCapacity(geometry.lines.count)
+        for (id, prepared) in geometry.lines {
+            var families: [String: FamilyRunBuild] = [:]
+            families.reserveCapacity(prepared.familyCoordinateChunks.count)
+            for (key, family) in prepared.familyCoordinateChunks {
+                var familyPolylines: [MKPolyline] = []
+                familyPolylines.reserveCapacity(family.coordinateChunks.count)
+                for chunk in family.coordinateChunks {
+                    familyPolylines.append(mapPolylineChunk(chunk))
+                    guard await yieldIfNeeded() else { return nil }
+                }
+                families[key] = FamilyRunBuild(
+                    colorHex: family.colorHex,
+                    colorDarkHex: family.colorDarkHex,
+                    polylines: familyPolylines)
+                guard await yieldIfNeeded() else { return nil }
+            }
+
+            var polylines: [MKPolyline] = []
+            polylines.reserveCapacity(prepared.coordinateChunks.count)
+            for chunk in prepared.coordinateChunks {
+                polylines.append(mapPolylineChunk(chunk))
+                guard await yieldIfNeeded() else { return nil }
+            }
+
+            var historicalPolylines: [MKPolyline] = []
+            historicalPolylines.reserveCapacity(prepared.historicalCoordinateChunks.count)
+            for chunk in prepared.historicalCoordinateChunks {
+                historicalPolylines.append(mapPolylineChunk(chunk))
+                guard await yieldIfNeeded() else { return nil }
+            }
+
+            result.lines[id] = LineBuild(
+                line: prepared.line,
+                polylines: polylines,
+                historicalPolylines: historicalPolylines,
+                familyPolylines: families)
+            guard await yieldIfNeeded() else { return nil }
         }
         return result
     }

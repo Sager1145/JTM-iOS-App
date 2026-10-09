@@ -1929,6 +1929,15 @@ struct RideEditorView: View {
                         region: Region.resolved(draft),
                         localization: localization)
                 }
+                .contextMenu {
+                    Button(role: .destructive) {
+                        deleteRouteSections(at: IndexSet(integer: index))
+                    } label: {
+                        Label(
+                            localization.countryText("btn.delete", fallback: "Delete"),
+                            systemImage: "trash")
+                    }
+                }
             }
             .onDelete(perform: deleteRouteSections)
             .onMove(perform: moveRouteSections)

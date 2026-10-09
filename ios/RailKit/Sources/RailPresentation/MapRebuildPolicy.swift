@@ -8,6 +8,18 @@ import RailCore
 public struct MapRebuildPolicy: Equatable, Sendable {
     public static let laneZoomDelta: Double = 0.125
 
+    /// Stroke geometry is rebuilt when the camera crosses a bucket of this
+    /// width. Mirrors `STROKE_REBUILD_ZOOM_STEP` in `app/public/railmap.js`.
+    public static let strokeZoomStep: Double = 0.125
+
+    public static func strokeBucket(zoom: Double) -> Int {
+        Int((zoom / strokeZoomStep).rounded())
+    }
+
+    public static func nominalZoom(bucket: Int) -> Double {
+        Double(bucket) * strokeZoomStep
+    }
+
     public var zoom: Double
     public var visibilityBucket: Int
     public var viewportWidth: Double
@@ -51,7 +63,7 @@ public struct MapRebuildPolicy: Equatable, Sendable {
 
     public var shouldRebuild: Bool {
         let laneScaleMoved = hasLanedLines
-            && abs(zoom - (builtLaneZoom ?? -Double.infinity)) >= Self.laneZoomDelta
+            && Self.strokeBucket(zoom: zoom) != builtLaneZoom.map { Self.strokeBucket(zoom: $0) }
         let laneLODBucketMoved = hasLanedLines
             && LaneLOD.resolve(zoom: zoom, previousBucket: builtLaneLODBucket).bucket
                 != builtLaneLODBucket

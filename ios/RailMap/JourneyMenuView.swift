@@ -109,10 +109,12 @@ struct WorkspaceJourneyMenu: View {
             }
         }
         .onDisappear { controller.journeyMenuBottomObstruction = nil }
+        #if !targetEnvironment(macCatalyst)
         .presentationDetents(
             dynamicTypeSize.isAccessibilitySize
                 ? [.large] : [.height(WorkspaceMenuMetrics.journeyCompactHeight), .medium, .large],
             selection: $detent)
+        #endif
         .presentationDragIndicator(.hidden)
         .railMenuPresentationCornerRadius()
         .presentationContentInteraction(.scrolls)
@@ -136,10 +138,11 @@ struct WorkspaceJourneyMenu: View {
 
     /// Fit only after the sheet reports its lowest available visible edge.
     private func focusIfReady() {
-        guard focusRequested, menuMeasurements.height > 0,
-              dynamicTypeSize.isAccessibilitySize
-                || menuMeasurements.height <= WorkspaceMenuMetrics.journeyCompactHeight + 1,
-              let train else { return }
+        guard focusRequested, menuMeasurements.height > 0, let train else { return }
+        #if !targetEnvironment(macCatalyst)
+        guard dynamicTypeSize.isAccessibilitySize
+            || menuMeasurements.height <= WorkspaceMenuMetrics.journeyCompactHeight + 1 else { return }
+        #endif
         focusRequested = false
         controller.journeyMenuBottomObstruction =
             menuMeasurements.height + menuMeasurements.bottomInset

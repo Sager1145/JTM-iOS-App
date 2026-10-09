@@ -51,23 +51,38 @@ struct MapRebuildPolicyTests {
         #expect(policy(builtViewportWidth: nil).shouldRebuild)
     }
 
-    @Test("Laned geometry rebuilds at the scale delta boundary")
+    @Test("Laned geometry rebuilds only when the stroke zoom bucket changes")
     func laneScaleBoundary() {
+        // 10 and 10.06 both round to bucket 80 at a step of 0.125.
+        #expect(MapRebuildPolicy.strokeBucket(zoom: 10) == 80)
+        #expect(MapRebuildPolicy.strokeBucket(zoom: 10.06) == 80)
+        #expect(MapRebuildPolicy.nominalZoom(bucket: 80) == 10)
         #expect(policy(
-            zoom: 10.124,
+            zoom: 10.06,
             visibilityBucket: 10,
             builtZoomBucket: 10,
             builtVisibilityBucket: 10,
             hasLanedLines: true,
             builtLaneZoom: 10,
             builtLaneLODBucket: 1).shouldRebuild == false)
+        // 10.07 rounds to bucket 81, so the boundary itself rebuilds.
+        #expect(MapRebuildPolicy.strokeBucket(zoom: 10.07) == 81)
         #expect(policy(
-            zoom: 10.125,
+            zoom: 10.07,
             visibilityBucket: 10,
             builtZoomBucket: 10,
             builtVisibilityBucket: 10,
             hasLanedLines: true,
             builtLaneZoom: 10,
+            builtLaneLODBucket: 1).shouldRebuild)
+        // No installed lane zoom is a different bucket from the live camera.
+        #expect(policy(
+            zoom: 10,
+            visibilityBucket: 10,
+            builtZoomBucket: 10,
+            builtVisibilityBucket: 10,
+            hasLanedLines: true,
+            builtLaneZoom: nil,
             builtLaneLODBucket: 1).shouldRebuild)
     }
 

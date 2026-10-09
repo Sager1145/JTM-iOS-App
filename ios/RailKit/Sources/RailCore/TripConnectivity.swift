@@ -5,28 +5,19 @@ public enum TripConnectivity {
 
     /// Whether one train can continue between these lines at the junction.
     public static func link(from: CompactPackage.Line, to: CompactPackage.Line,
-                            atStationCode stationCode: String) -> Link {
+                            atStationCode stationCode: String, on date: String? = nil) -> Link {
+        link(from: from, to: to, atStationCode: stationCode, on: date, patterns: JapanThroughServices.patterns)
+    }
+
+    static func link(from: CompactPackage.Line, to: CompactPackage.Line,
+                     atStationCode stationCode: String, on date: String?,
+                     patterns: [JapanThroughServices.Pattern],
+                     connectors: [JapanThroughServices.Connector] = JapanThroughServices.connectors) -> Link {
         if from.id == to.id { return .sameLine }
         if !JapanThroughServices.continuationCodes(
-            fromLineID: from.id, toLineID: to.id, atStationCode: stationCode).isEmpty {
+            fromLineID: from.id, toLineID: to.id, atStationCode: stationCode,
+            on: date, patterns: patterns, connectors: connectors).isEmpty {
             return .throughService
-        }
-        // Catalog junction aliases may differ from the package station code,
-        // so also accept adjacent legs — but only at the station where those
-        // legs actually join. Two legs that run side by side (総武線-3 and
-        // 東海道線 between 東京 and 品川) must not join at an intermediate
-        // station such as 新橋.
-        for pattern in JapanThroughServices.patterns {
-            for (a, b) in zip(pattern.legs, pattern.legs.dropFirst()) {
-                let firstIDs = [a.lineID] + (a.reverseLineID.map { [$0] } ?? [])
-                let secondIDs = [b.lineID] + (b.reverseLineID.map { [$0] } ?? [])
-                let joins: Set<String> = [a.toStationCode, b.fromStationCode]
-                guard joins.contains(stationCode) else { continue }
-                if (firstIDs.contains(from.id) && secondIDs.contains(to.id))
-                    || (firstIDs.contains(to.id) && secondIDs.contains(from.id)) {
-                    return .throughService
-                }
-            }
         }
         func isTerminal(_ line: CompactPackage.Line) -> Bool {
             !line.isLoop && (line.stations.first?.id == stationCode || line.stations.last?.id == stationCode)
@@ -45,7 +36,7 @@ public enum TripConnectivity {
     }
 
     public static func allows(from: CompactPackage.Line, to: CompactPackage.Line,
-                              atStationCode stationCode: String) -> Bool {
-        link(from: from, to: to, atStationCode: stationCode) != .none
+                              atStationCode stationCode: String, on date: String? = nil) -> Bool {
+        link(from: from, to: to, atStationCode: stationCode, on: date) != .none
     }
 }

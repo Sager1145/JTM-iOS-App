@@ -626,7 +626,6 @@ public enum ContinuousStroke {
                                y: d1 * tangent(before.y, a.y, b.y, d0, d1))
                 let t1 = Point(x: d1 * tangent(a.x, b.x, after.x, d1, d2),
                                y: d1 * tangent(a.y, b.y, after.y, d1, d2))
-                let edge = hypot(b.x - a.x, b.y - a.y)
                 let curve = sampleCubic(a, b, t0, t1)
                 let allowance = max(curveMaxDeviationPx, curveMaxDeviationMetres / metresPerPx)
                 // Check against the original surveyed span, including tiny

@@ -128,6 +128,11 @@ struct ContentView: View {
         .environment(network)
         .environment(displaySettings)
         .task {
+            Task.detached(priority: .utility) {
+                _ = TrainServicePatterns.patterns
+                _ = TrainServiceBranding.services
+                _ = OperatorIdentity.displayName(code: "", language: "en")
+            }
             // Every region, once, at launch. Nothing waits for a region to be
             // chosen because there is nothing to choose.
             //

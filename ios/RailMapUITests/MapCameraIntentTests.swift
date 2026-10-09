@@ -5,6 +5,7 @@ final class MapCameraIntentTests: XCTestCase {
     override func setUp() { continueAfterFailure = false }
 
     func testSelectedJourneyKeepsWholeRouteWhilePanningAndZoomingAway() throws {
+#if !targetEnvironment(macCatalyst)
         let app = launch(tab: "all", stage: "compact", selected: "20260703_01_haruka",
                          autoFocus: false, layers: "")
         let status = app.staticTexts["railMapRenderStatus"]
@@ -31,6 +32,9 @@ final class MapCameraIntentTests: XCTestCase {
             self.number("distance", $0) > distance * 1.2 && self.number("covered", $0) == 1
         }
         XCTAssertEqual(number("installedTargetRouteParts", status.label), expected)
+#else
+        throw XCTSkip("Pinch/rotate gestures are unavailable on Mac Catalyst")
+#endif
     }
 
     func testSelectedJourneyDoesNotReframeAfterLayoutReplacementOrStatistics() throws {

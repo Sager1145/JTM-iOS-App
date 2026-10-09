@@ -6,6 +6,7 @@ final class MapDetailLevelTests: XCTestCase {
     override func setUp() { continueAfterFailure = false }
 
     func testWidestViewKeepsHighSpeedNetworkAndRestoresLayer() throws {
+#if !targetEnvironment(macCatalyst)
         let app = launch(camera: "37,138,160")
         let status = app.staticTexts["railMapRenderStatus"]
         XCTAssertTrue(status.waitForExistence(timeout: 15))
@@ -38,9 +39,13 @@ final class MapDetailLevelTests: XCTestCase {
         try waitFor(status) { self.number("backbones", $0) >= 9 }
         XCTAssertEqual(number("lines", status.label), number("lines", widest))
         attach(app, status: status.label, name: "maximum-map-layer-restored")
+#else
+        throw XCTSkip("Pinch/rotate gestures are unavailable on Mac Catalyst")
+#endif
     }
 
     func testRotationPreservesScaleAndRailwayDetail() throws {
+#if !targetEnvironment(macCatalyst)
         let app = launch(camera: "35.68,139.75,0.12")
         let status = app.staticTexts["railMapRenderStatus"]
         XCTAssertTrue(status.waitForExistence(timeout: 15))
@@ -59,6 +64,9 @@ final class MapDetailLevelTests: XCTestCase {
         XCTAssertEqual(number("camera", status.label), number("camera", before), accuracy: 0.08)
         assertViewportAdjustedDetail(status.label)
         attach(app, status: status.label, name: "rotation-detail-scale")
+#else
+        throw XCTSkip("Pinch/rotate gestures are unavailable on Mac Catalyst")
+#endif
     }
 
     private func assertViewportAdjustedDetail(

@@ -1490,28 +1490,76 @@ public enum RouteSolver {
     ) -> Set<String> {
         var codes: Set<String> = [stopCode]
         var groups: Set<String> = []
-        func absorb(_ feature: Stations.Feature) {
+        func absorb(_ feature: Stations.Feature) -> Set<String> {
             let code = trimmedStationCode(Stations.stationCode(feature))
             let group = trimmedStationCode(Stations.stationGroupCode(feature))
-            if !code.isEmpty { codes.insert(code) }
+            var inserted: Set<String> = []
+            if !code.isEmpty, codes.insert(code).inserted { inserted.insert(code) }
             if !group.isEmpty {
-                codes.insert(group)
-                groups.insert(group)
+                if codes.insert(group).inserted { inserted.insert(group) }
+                if groups.insert(group).inserted { inserted.insert(group) }
             }
+            return inserted
         }
-        for feature in stations.features {
+        for index in stations.featureIndices(matchingTrimmedCodeOrGroup: stopCode) {
+            let feature = stations.features[index]
             guard stationFeatureIsCurrent(feature, rideDate: rideDate) else { continue }
             let code = trimmedStationCode(Stations.stationCode(feature))
             let group = trimmedStationCode(Stations.stationGroupCode(feature))
-            if code == stopCode || group == stopCode { absorb(feature) }
+            if code == stopCode || group == stopCode { _ = absorb(feature) }
         }
         guard !groups.isEmpty else { return codes }
-        for feature in stations.features {
+        // Indices are processed in ascending order, each at most once. A
+        // min-heap keeps that order without rescanning the whole candidate
+        // set on every step.
+        var lastProcessedIndex = -1
+        var pending: [Int] = []
+        var queued = Set<Int>()
+        func push(_ index: Int) {
+            guard index > lastProcessedIndex, queued.insert(index).inserted else { return }
+            pending.append(index)
+            var cursor = pending.count - 1
+            while cursor > 0 {
+                let parent = (cursor - 1) / 2
+                guard pending[cursor] < pending[parent] else { break }
+                pending.swapAt(cursor, parent)
+                cursor = parent
+            }
+        }
+        func pop() -> Int? {
+            guard !pending.isEmpty else { return nil }
+            let first = pending[0]
+            let last = pending.removeLast()
+            if pending.isEmpty { return first }
+            pending[0] = last
+            var cursor = 0
+            while cursor * 2 + 1 < pending.count {
+                let left = cursor * 2 + 1
+                let right = left + 1
+                let child = right < pending.count && pending[right] < pending[left] ? right : left
+                guard pending[child] < pending[cursor] else { break }
+                pending.swapAt(cursor, child)
+                cursor = child
+            }
+            return first
+        }
+        for key in codes.union(groups) {
+            for index in stations.featureIndices(matchingTrimmedCodeOrGroup: key) {
+                push(index)
+            }
+        }
+        while let index = pop() {
+            lastProcessedIndex = index
+            let feature = stations.features[index]
             guard stationFeatureIsCurrent(feature, rideDate: rideDate) else { continue }
             let code = trimmedStationCode(Stations.stationCode(feature))
             let group = trimmedStationCode(Stations.stationGroupCode(feature))
             if (!group.isEmpty && groups.contains(group)) || codes.contains(code) {
-                absorb(feature)
+                for key in absorb(feature) {
+                    for candidate in stations.featureIndices(matchingTrimmedCodeOrGroup: key) {
+                        push(candidate)
+                    }
+                }
             }
         }
         return codes
@@ -1542,11 +1590,14 @@ public enum RouteSolver {
         }
         var snaps: [(key: String, distance: Double, order: Int)] = []
         var order = 0
-        for feature in stations.features {
+        var matchingFeatureIndices = Set<Int>()
+        for code in stopCodes {
+            matchingFeatureIndices.formUnion(
+                stations.featureIndices(matchingTrimmedCodeOrGroup: code))
+        }
+        for index in matchingFeatureIndices.sorted() {
+            let feature = stations.features[index]
             guard stationFeatureIsCurrent(feature, rideDate: rideDate) else { continue }
-            let code = trimmedStationCode(Stations.stationCode(feature))
-            let group = trimmedStationCode(Stations.stationGroupCode(feature))
-            guard stopCodes.contains(code) || stopCodes.contains(group) else { continue }
             for source in stationGeometryCoordinates(feature) {
                 for nearest in RouteGraph.nearbyNodes(
                     source, in: graph, radiusDeg: 0.006, limit: 160)
@@ -1562,18 +1613,15 @@ public enum RouteSolver {
         }
         for snap in snaps { add(snap.key) }
         var junctions: [(id: String, key: String)] = []
-        var seenJunctions = Set<String>()
-        for (fromKey, edges) in graph.adjacency {
-            for edge in edges {
-                guard let junction = edge.physicalJunction?.junction,
-                      seenJunctions.insert(junction.id).inserted,
-                      !junction.evidence.isEmpty,
-                      junctionServesStop(junction, stopCodes: stopCodes, stopName: stopName),
-                      RouteGraph.RailValidity.isValid(
-                        validFrom: junction.validFrom, validTo: junction.validTo, on: rideDate)
-                else { continue }
-                junctions.append((junction.id, fromKey))
-                junctions.append((junction.id, edge.to))
+        for entry in graph.physicalJunctionEdges() {
+            let junction = entry.junction
+            guard !junction.evidence.isEmpty,
+                  junctionServesStop(junction, stopCodes: stopCodes, stopName: stopName),
+                  RouteGraph.RailValidity.isValid(
+                    validFrom: junction.validFrom, validTo: junction.validTo, on: rideDate)
+            else { continue }
+            for key in entry.endpointKeys {
+                junctions.append((junction.id, key))
             }
         }
         junctions.sort { lhs, rhs in
@@ -1615,8 +1663,12 @@ public enum RouteSolver {
     }
 
     /// Resolve the entire compatible station run so later via stations can
-    /// distinguish an earlier branch. Preferences and journey IDs never turn
-    /// multiple physical choices into a unique inferred choice.
+    /// distinguish an earlier branch. Journey preferences and journey IDs never
+    /// turn multiple physical choices into a unique inferred choice. An
+    /// adjacency or length preference does: when several sourced matches
+    /// remain, exactly one adjacent match — every leg a single interval — is
+    /// inferred, and otherwise exactly one shortest match is inferred. Any
+    /// other tie stays ambiguous.
     public static func inferStationSections(
         _ sections: [RouteSection], resolver: StationIntervalResolver?, network: RouteNetwork?,
         eligibility: StationRouteEligibility?, allowedCodes: [String], hard: Bool

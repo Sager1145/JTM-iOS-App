@@ -9,6 +9,7 @@ final class BasemapRenderingTests: XCTestCase {
     }
 
     func testBasemapRemainsClearAcrossZoomPanAndRotation() throws {
+#if !targetEnvironment(macCatalyst)
         XCUIDevice.shared.orientation = .portrait
         defer { XCUIDevice.shared.orientation = .portrait }
         let app = XCUIApplication()
@@ -76,6 +77,9 @@ final class BasemapRenderingTests: XCTestCase {
         _ = try waitForImage(app, target: target, name: "basemap-portrait-restored") {
             $0.hasTexture && !$0.hasBlackBlock
         }
+#else
+        throw XCTSkip("Pinch/rotate gestures are unavailable on Mac Catalyst")
+#endif
     }
 
     private func fields(_ text: String) -> [String: String] {

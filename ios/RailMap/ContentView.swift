@@ -216,6 +216,9 @@ struct RailWorkspaceView: View {
     @State private var sheetMeasurements = ResidentSheetMeasurements()
 
     @State private var lastOpenDockStage: SheetStage = .medium
+    /// The scene commands call back into whichever layout is on screen.
+    @State private var panelCommandContext: PanelCommandContext?
+    @State private var railCommands = RailCommandBridge()
 
     /// How tall the map's control rail actually draws, so the fade that keeps
     /// it out from under the status bar knows where its top edge is. See
@@ -274,6 +277,7 @@ struct RailWorkspaceView: View {
                     sideBySideLayout(in: geometry, panelWidth: layout.sidePanelWidth)
                 }
             }
+            .background { phoneKeyboardShortcuts }
             // Capture the presenter as its sheet becomes active. The pin is
             // released by WorkspacePresentations' onDismiss callback, after
             // the system has actually torn the sheet down; clearing it as
@@ -304,6 +308,12 @@ struct RailWorkspaceView: View {
             // draw a solid bar and keep the page above it. The root proxy
             // only sees the home indicator.
         }
+        .focusedSceneValue(\.railCommandBridge, railCommands)
+        .onAppear(perform: installRailCommands)
+        .onChange(of: stageSelection) { _, _ in installRailCommands() }
+        .onChange(of: localization.language) { _, _ in installRailCommands() }
+        .onChange(of: journeyEditor != nil) { _, _ in installRailCommands() }
+        .onChange(of: sheet?.id) { _, _ in installRailCommands() }
         .onChange(of: playback.currentTrainID) { _, id in
             if let id { itineraries.selectedTrainID = id }
         }
@@ -748,7 +758,7 @@ struct RailWorkspaceView: View {
             controller: controller, network: store, importFlow: importFlow,
             videoSettings: videoExport.settings, videoSourceRect: playbackFilmedRect,
             videoSeconds: videoExport.plannedSeconds,
-            videoDisplayScale: controller.mapView?.window?.screen.scale ?? 3,
+            videoDisplayScale: PlaybackVideoExporter.displayScale(of: controller.mapView),
             appearance: $appearance, categoryIndexesAreBuilding: categoryIndexes.isBuilding,
             selectedDateIsAllDates: selectedDate == Dates.allDates,
             presentation: { presentation(for: $0) },
@@ -810,6 +820,10 @@ struct RailWorkspaceView: View {
             playbackContent: playbackBar,
             controls: controlStack(),
             menu: withPresentations(workspaceTabs()))
+            .onAppear { rememberPanelCommand(metrics, docked: false) }
+            .onChange(of: metrics) { _, metrics in
+                rememberPanelCommand(metrics, docked: false)
+            }
     }
 
     /// The detents, for this window AND this text size.
@@ -1795,6 +1809,10 @@ struct RailWorkspaceView: View {
         .onAppear {
             applyDockObstruction(panelWidth, safeAreaLeading: safeAreaLeading)
             applyDockLogoMargin(bottomGap: dockBottomGap, safeAreaBottom: safeAreaBottom)
+            rememberPanelCommand(metrics, docked: true)
+        }
+        .onChange(of: metrics) { _, metrics in
+            rememberPanelCommand(metrics, docked: true)
         }
         .onChange(of: dockBottomGap) { _, gap in
             applyDockLogoMargin(bottomGap: gap, safeAreaBottom: safeAreaBottom)
@@ -1865,33 +1883,146 @@ struct RailWorkspaceView: View {
     }
 
     /// Beside the card so narrow windows retain the phone header's reading
-    /// width. This single control also owns the dock's keyboard shortcut.
+    /// width. ⌘⌥S is the scene command, so this button is only the pointer.
     private func dockPanelToggle(metrics: BottomChromeMetrics) -> some View {
         PanelStageReader { stage in
-            let label = stage == .compact
-                ? localization.text("ios.panel.reopen", fallback: "Expand panel")
-                : localization.text("ios.sheet.collapse", fallback: "Collapse panel")
+            let next = dockToggleTarget(from: stage, metrics: metrics, docked: true)
+            let label = dockToggleLabel(from: stage, metrics: metrics, docked: true)
             SheetIconButton(
-                systemImage: stage == .compact ? "chevron.up" : "chevron.down",
+                systemImage: dockToggleSymbol(from: stage, metrics: metrics, docked: true),
                 accessibilityLabel: Text(label)
             ) {
-                // Accessibility layouts can omit the medium stop. Reopening
-                // must choose an offered open stop, never resolve back to compact.
-                let openStage = metrics.stages.contains(lastOpenDockStage)
-                    && lastOpenDockStage != .compact ? lastOpenDockStage : .expanded
-                settleDock(
-                    at: stage == .compact ? openStage : .compact,
-                    metrics: metrics)
+                settleDock(at: next, metrics: metrics)
             }
             // Match the phone header's chrome glyph ceiling; reading text still
             // follows the full accessibility size range.
             .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
             .railGlass(in: Circle(), interactive: true)
             .help(label)
-            .keyboardShortcut("s", modifiers: [.command, .option])
             .accessibilityIdentifier("dockPanelToggle")
             .accessibilityValue(Text(String(describing: stage)))
         }
+    }
+
+    /// iPad and Catalyst docks walk compact → half → full → compact, so a
+    /// pointer can reach the stop VoiceOver already offers. A phone keeps the
+    /// two-position toggle, including a landscape window wide enough to dock.
+    /// An accessibility size that has no half stop wraps compact → full.
+    private var dockChevronCyclesStops: Bool {
+        #if targetEnvironment(macCatalyst)
+        true
+        #else
+        UIDevice.current.userInterfaceIdiom == .pad
+        #endif
+    }
+
+    private func dockToggleTarget(
+        from stage: SheetStage, metrics: BottomChromeMetrics, docked: Bool
+    ) -> SheetStage {
+        if docked && dockChevronCyclesStops {
+            let current = metrics.available(stage)
+            let stages = metrics.stages
+            guard let index = stages.firstIndex(of: current) else {
+                return stages.first ?? .compact
+            }
+            return stages[(index + 1) % stages.count]
+        }
+        // Accessibility layouts can omit the medium stop. Reopening must
+        // choose an offered open stop, never resolve back to compact.
+        let openStage = metrics.stages.contains(lastOpenDockStage)
+            && lastOpenDockStage != .compact ? lastOpenDockStage : .expanded
+        return stage == .compact ? openStage : .compact
+    }
+
+    private func dockToggleLabel(
+        from stage: SheetStage, metrics: BottomChromeMetrics, docked: Bool
+    ) -> String {
+        let next = dockToggleTarget(from: stage, metrics: metrics, docked: docked)
+        if docked && dockChevronCyclesStops {
+            switch next {
+            case .compact:
+                return localization.text("ios.sheet.collapse", fallback: "Collapse panel")
+            case .medium:
+                return localization.text("ios.sheet.half", fallback: "Half-height panel")
+            case .expanded:
+                return localization.text("ios.sheet.expand", fallback: "Expand panel")
+            }
+        }
+        return stage == .compact
+            ? localization.text("ios.panel.reopen", fallback: "Expand panel")
+            : localization.text("ios.sheet.collapse", fallback: "Collapse panel")
+    }
+
+    private func dockToggleSymbol(
+        from stage: SheetStage, metrics: BottomChromeMetrics, docked: Bool
+    ) -> String {
+        if docked && dockChevronCyclesStops {
+            let next = dockToggleTarget(from: stage, metrics: metrics, docked: docked)
+            return next == .compact ? "chevron.down" : "chevron.up"
+        }
+        return stage == .compact ? "chevron.up" : "chevron.down"
+    }
+
+    private func rememberPanelCommand(_ metrics: BottomChromeMetrics, docked: Bool) {
+        panelCommandContext = PanelCommandContext(metrics: metrics, isDocked: docked)
+        installRailCommands()
+    }
+
+    private func performTogglePanel() {
+        guard let context = panelCommandContext else { return }
+        let stage = context.metrics.available(stageSelection)
+        settleDock(
+            at: dockToggleTarget(from: stage, metrics: context.metrics, docked: context.isDocked),
+            metrics: context.metrics)
+    }
+
+    /// The journey editor (and the search sheets it presents, including
+    /// local fill and the timetable picker) and the import sheet own their
+    /// own fields. Workspace ⌘N / ⌘F would land underneath them.
+    private var presentedEditorOwnsShortcuts: Bool {
+        if journeyEditor != nil { return true }
+        switch sheet {
+        case .newJourney, .edit, .importData:
+            return true
+        case .detail, .videoOptions, .mapInfo, .mapLayers, .station, .chooseRide, .utility, nil:
+            return false
+        }
+    }
+
+    private func installRailCommands() {
+        railCommands.canPerform = true
+        railCommands.canCreateOrSearch = !presentedEditorOwnsShortcuts
+        railCommands.newJourneyTitle = localization.text(
+            "ios.newJourney", fallback: "New journey")
+        railCommands.searchTitle = localization.countryText(
+            "sec.search", fallback: "Search")
+        railCommands.zoomInTitle = localization.text("ios.zoomIn", fallback: "Zoom in")
+        railCommands.zoomOutTitle = localization.text("ios.zoomOut", fallback: "Zoom out")
+        if let context = panelCommandContext {
+            let stage = context.metrics.available(stageSelection)
+            railCommands.togglePanelTitle = dockToggleLabel(
+                from: stage, metrics: context.metrics, docked: context.isDocked)
+        } else {
+            railCommands.togglePanelTitle = localization.text(
+                "ios.panel.reopen", fallback: "Expand panel")
+        }
+        railCommands.performNewJourney = {
+            guard !self.presentedEditorOwnsShortcuts else { return }
+            self.presentJourneyEditor(JourneyEditorLaunch(
+                train: self.newJourneyScaffold(in: self.defaultRegion),
+                isNew: true, originalID: nil))
+        }
+        railCommands.performSearch = {
+            guard !self.presentedEditorOwnsShortcuts else { return }
+            self.selection = .search
+            Task { @MainActor in
+                await Task.yield()
+                self.searchFocused = true
+            }
+        }
+        railCommands.performZoomIn = { self.controller.zoomIn() }
+        railCommands.performZoomOut = { self.controller.zoomOut() }
+        railCommands.performTogglePanel = { self.performTogglePanel() }
     }
 
     private func settleDock(at requested: SheetStage, metrics: BottomChromeMetrics) {
@@ -2185,27 +2316,18 @@ struct RailWorkspaceView: View {
         }
     }
 
-    /// The two shortcuts that have no button of their own (§10.3).
+    /// Space and Escape stay on hidden buttons (§10.3).
     ///
-    /// Zero-opacity buttons rather than commands: `Commands` is a scene-level
-    /// macOS concept, and on iPadOS a keyboard shortcut is delivered to a
-    /// `Button` in the hierarchy. They are hidden from assistive technology —
-    /// a reader using VoiceOver reaches search and the back-step through the
-    /// search field and the panel's own close button, not through two unlabelled
-    /// controls behind the list.
+    /// They belong to this list. Escape clears the journey selection the way a
+    /// tap on empty map does, and Space plays only while focus is outside a
+    /// text field — SwiftUI withholds a modifier-less shortcut from one on its
+    /// own. New Journey, Search, zoom, and the panel toggle are scene commands
+    /// on iPad and Mac. On iPhone those commands never become key commands, so
+    /// `phoneKeyboardShortcuts` on the workspace layout carries them, and only
+    /// on iPhone — a copy here would run the action twice. These two stay
+    /// hidden from VoiceOver.
     @ViewBuilder
     private var keyboardShortcuts: some View {
-        Button(localization.countryText("sec.search", fallback: "Search")) {
-            selection = .search
-            Task { @MainActor in
-                await Task.yield()
-                searchFocused = true
-            }
-        }
-        .keyboardShortcut("f", modifiers: .command)
-        .opacity(0)
-        .accessibilityHidden(true)
-
         // §10.3: Escape clears the journey selection and leaves the reader's
         // date filter and search where they are — the same rule as a tap on
         // empty map (§4.4), and the same code.
@@ -2213,17 +2335,6 @@ struct RailWorkspaceView: View {
             RailMotion.withoutAnimation { selectFromMap([]) }
         }
         .keyboardShortcut(.escape, modifiers: [])
-        .opacity(0)
-        .accessibilityHidden(true)
-
-        // ⌘N and Space used to hang off two toolbar items that the panel
-        // header replaced (§9.5.6). The buttons moved; the shortcuts are the
-        // same two actions and belong wherever the actions are reachable from.
-        Button(localization.text("ios.newJourney", fallback: "New journey")) {
-            presentJourneyEditor(JourneyEditorLaunch(
-                train: newJourneyScaffold(in: defaultRegion), isNew: true, originalID: nil))
-        }
-        .keyboardShortcut("n", modifiers: .command)
         .opacity(0)
         .accessibilityHidden(true)
 
@@ -2242,39 +2353,50 @@ struct RailWorkspaceView: View {
         .keyboardShortcut(.space, modifiers: [])
         .opacity(0)
         .accessibilityHidden(true)
+    }
 
-        // Zoom, which no longer has a button.
-        //
-        // The rail dropped its ± pair because the rail must show all of itself
-        // at Half without scrolling and pinch already covers touch
-        // (`MapControlBar`'s note has the argument). Pinch is not available to
-        // someone driving this from a keyboard, and §10.3 asks the keyboard to
-        // reach the main map operations — so the two controller commands keep a
-        // caller here rather than becoming dead code.
-        //
-        // `.command` with "+" and "-": the plus is typed as `=` on most
-        // layouts, so both are bound, which is what every map app that offers
-        // ⌘+ actually does.
-        Button(localization.text("ios.zoomIn", fallback: "Zoom in")) {
-            controller.zoomIn()
+    /// ⌘N, ⌘F, ⌘+/⌘− and ⌥⌘S for an iPhone hardware keyboard.
+    ///
+    /// `RailMapCommands` owns these on iPad and Mac. SwiftUI scene commands do
+    /// not install key commands on iPhone, so the same actions are hidden
+    /// buttons here, and only when the idiom is phone — a second button on
+    /// iPad or Mac would run the action twice. Gating matches the command
+    /// items: `canPerform` for every action, and `canCreateOrSearch` for New
+    /// Journey and Search.
+    @ViewBuilder
+    private var phoneKeyboardShortcuts: some View {
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            Button(railCommands.newJourneyTitle) { railCommands.newJourney() }
+                .keyboardShortcut("n", modifiers: .command)
+                .disabled(!railCommands.canPerform || !railCommands.canCreateOrSearch)
+                .opacity(0)
+                .accessibilityHidden(true)
+            Button(railCommands.searchTitle) { railCommands.search() }
+                .keyboardShortcut("f", modifiers: .command)
+                .disabled(!railCommands.canPerform || !railCommands.canCreateOrSearch)
+                .opacity(0)
+                .accessibilityHidden(true)
+            Button(railCommands.zoomInTitle) { railCommands.zoomIn() }
+                .keyboardShortcut("+", modifiers: .command)
+                .disabled(!railCommands.canPerform)
+                .opacity(0)
+                .accessibilityHidden(true)
+            Button(railCommands.zoomInTitle) { railCommands.zoomIn() }
+                .keyboardShortcut("=", modifiers: .command)
+                .disabled(!railCommands.canPerform)
+                .opacity(0)
+                .accessibilityHidden(true)
+            Button(railCommands.zoomOutTitle) { railCommands.zoomOut() }
+                .keyboardShortcut("-", modifiers: .command)
+                .disabled(!railCommands.canPerform)
+                .opacity(0)
+                .accessibilityHidden(true)
+            Button(railCommands.togglePanelTitle) { railCommands.togglePanel() }
+                .keyboardShortcut("s", modifiers: [.command, .option])
+                .disabled(!railCommands.canPerform)
+                .opacity(0)
+                .accessibilityHidden(true)
         }
-        .keyboardShortcut("+", modifiers: .command)
-        .opacity(0)
-        .accessibilityHidden(true)
-
-        Button(localization.text("ios.zoomIn", fallback: "Zoom in")) {
-            controller.zoomIn()
-        }
-        .keyboardShortcut("=", modifiers: .command)
-        .opacity(0)
-        .accessibilityHidden(true)
-
-        Button(localization.text("ios.zoomOut", fallback: "Zoom out")) {
-            controller.zoomOut()
-        }
-        .keyboardShortcut("-", modifiers: .command)
-        .opacity(0)
-        .accessibilityHidden(true)
     }
 
     /// One row of the journey list — see ``JourneyListRow``, which is where the
@@ -3256,6 +3378,13 @@ struct RailWorkspaceView: View {
     /// arrive one region at a time and the map draws each as it lands rather
     /// than waiting for Japan.
     private var lines: [RailNetworkStore.DrawnLine] { store.mapLines }
+}
+
+/// Which layout the scene's Toggle Panel command should resize, and with
+/// which detent math. The phone sheet and the dock do not share a height.
+private struct PanelCommandContext: Equatable {
+    var metrics: BottomChromeMetrics
+    var isDocked: Bool
 }
 
 /// Lets an inflexible block scroll rather than overflow.

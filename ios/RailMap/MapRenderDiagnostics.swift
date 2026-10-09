@@ -26,6 +26,14 @@ final class MapRenderDiagnostics {
         let focusRevision: Int
         let focusBottom: CGFloat
         let buildMilliseconds: Int
+        let rideOverlaysMilliseconds: Int
+        let rideCacheMisses: Int
+        let markersMilliseconds: Int
+        let networkOverlaysMilliseconds: Int
+        let teardownMilliseconds: Int
+        let rideScanMilliseconds: Int
+        let materializeMilliseconds: Int
+        let annotationViews: Int
         let builtRect: MKMapRect
         let targetReadiness: String
         let selectedTrainID: String?
@@ -42,11 +50,17 @@ final class MapRenderDiagnostics {
     private var rebuildsDuringGesture = 0
     private var labelPasses = 0
     private var gestureLabelPasses = 0
+    private var labelPassMilliseconds = 0
+    private var labelPassMaxMilliseconds = 0
+    private var gestureLabelPassMaxMilliseconds = 0
+    private var regionTickMaxMilliseconds = 0
+    private var stackingMaxMilliseconds = 0
     private var lineCacheHits = 0
     private var annotationReuses = 0
     private var panCallbacks = 0
     private var lastPanCallback: ContinuousClock.Instant?
     private var maxPanCallbackGapMilliseconds = 0
+    private var markerPhases = ""
 
     func networkVisibilityChanged(_ visible: Bool) {
         networkEnabledAt = visible ? .now : nil
@@ -58,13 +72,28 @@ final class MapRenderDiagnostics {
         if manipulating { rebuildsDuringGesture += 1 }
     }
 
-    func didRunLabelPass(manipulating: Bool) {
+    func didRunLabelPass(manipulating: Bool, milliseconds: Int) {
         labelPasses += 1
-        if manipulating { gestureLabelPasses += 1 }
+        labelPassMilliseconds = milliseconds
+        labelPassMaxMilliseconds = max(labelPassMaxMilliseconds, milliseconds)
+        if manipulating {
+            gestureLabelPasses += 1
+            gestureLabelPassMaxMilliseconds = max(
+                gestureLabelPassMaxMilliseconds, milliseconds)
+        }
+    }
+
+    func didRunRegionTick(milliseconds: Int) {
+        regionTickMaxMilliseconds = max(regionTickMaxMilliseconds, milliseconds)
+    }
+
+    func didRestoreRideMarkerStacking(milliseconds: Int) {
+        stackingMaxMilliseconds = max(stackingMaxMilliseconds, milliseconds)
     }
 
     func reusedLineGeometry() { lineCacheHits += 1 }
     func reusedAnnotations(_ count: Int) { annotationReuses += count }
+    func didBuildMarkerPhases(_ value: String) { markerPhases = value }
 
     func submittedSelection(_ id: String?, date: String) {
         stressSubmittedSelection = id
@@ -104,7 +133,9 @@ final class MapRenderDiagnostics {
         let liveKeys: Set<String> = [
             "camera", "distance", "heading", "centerLat", "centerLon",
             "viewportWidth", "viewportHeight", "panCallbacks", "panMaxGapMs",
-            "gestureFrames", "gestureMaxFrameGapMs", "covered",
+            "gestureFrames", "gestureMaxFrameGapMs", "covered", "labelPassMs",
+            "labelPassMaxMs", "gestureLabelPassMaxMs", "regionTickMaxMs",
+            "stackingMaxMs", "annotationViews",
         ]
         let fields = (status.text ?? "").split(separator: ";").filter { field in
             let key = field.prefix { $0 != ":" }
@@ -124,6 +155,10 @@ final class MapRenderDiagnostics {
             + ";panCallbacks:\(panCallbacks);panMaxGapMs:\(maxPanCallbackGapMilliseconds)"
             + ";gestureFrames:\(gestureFrameProbe.frames);gestureMaxFrameGapMs:\(Int(gestureFrameProbe.maximumGapMilliseconds))"
             + ";covered:\(builtRect.contains(mapView.visibleMapRect) ? 1 : 0)"
+            + ";labelPassMs:\(labelPassMilliseconds);labelPassMaxMs:\(labelPassMaxMilliseconds)"
+            + ";gestureLabelPassMaxMs:\(gestureLabelPassMaxMilliseconds)"
+            + ";regionTickMaxMs:\(regionTickMaxMilliseconds);stackingMaxMs:\(stackingMaxMilliseconds)"
+            + ";annotationViews:\(mapView.annotations.count)"
     }
 
     func updateBasemapStatus(on mapView: MKMapView) {
@@ -188,6 +223,16 @@ final class MapRenderDiagnostics {
         stressSubmittedSelection = snapshot.selectedTrainID
         stressSubmittedDate = snapshot.selectedDate
         updateBasemapStatus(on: mapView)
+        status?.text = (status?.text ?? "")
+            + ";rideOverlaysMs:\(snapshot.rideOverlaysMilliseconds);rideCacheMisses:\(snapshot.rideCacheMisses)"
+            + ";markersMs:\(snapshot.markersMilliseconds);networkOverlaysMs:\(snapshot.networkOverlaysMilliseconds)"
+            + ";teardownMs:\(snapshot.teardownMilliseconds);rideScanMs:\(snapshot.rideScanMilliseconds)"
+            + ";materializeMs:\(snapshot.materializeMilliseconds)"
+            + ";labelPassMs:\(labelPassMilliseconds);labelPassMaxMs:\(labelPassMaxMilliseconds)"
+            + ";gestureLabelPassMaxMs:\(gestureLabelPassMaxMilliseconds)"
+            + ";regionTickMaxMs:\(regionTickMaxMilliseconds);stackingMaxMs:\(stackingMaxMilliseconds)"
+            + ";annotationViews:\(snapshot.annotationViews)"
+            + ";markerPhases:\(markerPhases)"
     }
 
     func publishEmpty(on mapView: MKMapView, targetReadiness: String) {
@@ -202,6 +247,13 @@ final class MapRenderDiagnostics {
                 mapView.bounds.height)
             + targetReadiness
         updateBasemapStatus(on: mapView)
+        status?.text = (status?.text ?? "")
+            + ";rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0"
+            + ";teardownMs:0;rideScanMs:0;materializeMs:0"
+            + ";labelPassMs:\(labelPassMilliseconds);labelPassMaxMs:\(labelPassMaxMilliseconds)"
+            + ";gestureLabelPassMaxMs:\(gestureLabelPassMaxMilliseconds)"
+            + ";regionTickMaxMs:\(regionTickMaxMilliseconds);stackingMaxMs:\(stackingMaxMilliseconds)"
+            + ";annotationViews:\(mapView.annotations.count)"
     }
 
     /// Live inspection of mounted overlays and their MapKit renderers,
