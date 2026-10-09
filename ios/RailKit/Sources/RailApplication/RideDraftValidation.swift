@@ -47,6 +47,20 @@ public enum RideDraftValidation {
     ) -> [Issue] {
         var issues: [Issue] = []
 
+        appendIDIssues(draft, originalID: originalID, existingIDs: existingIDs, issues: &issues)
+        appendIdentityIssues(draft, issues: &issues)
+        appendStopsIssues(draft, issues: &issues)
+        appendRouteSectionIssues(draft, issues: &issues)
+        appendRoutePolicyIssues(draft, issues: &issues)
+        appendStyleIssues(draft, issues: &issues)
+        appendSchemaIssue(draft, issues: &issues)
+
+        return issues
+    }
+
+    private static func appendIDIssues(
+        _ draft: Train, originalID: String, existingIDs: Set<String>, issues: inout [Issue]
+    ) {
         // -- id ------------------------------------------------------------
         let id = draft.id.trimmingCharacters(in: .whitespacesAndNewlines)
         if id.isEmpty {
@@ -61,7 +75,11 @@ public enum RideDraftValidation {
                 Issue(
                     field: .id, severity: .warning, reason: .idTaken(draft.id)))
         }
+    }
 
+    private static func appendIdentityIssues(
+        _ draft: Train, issues: inout [Issue]
+    ) {
         // -- date ----------------------------------------------------------
         if let date = draft.date, date != TrainValidation.undated,
             !Dates.isValidDateString(date)
@@ -80,7 +98,11 @@ public enum RideDraftValidation {
             issues.append(
                 Issue(field: .destination, reason: .destinationRequired))
         }
+    }
 
+    private static func appendStopsIssues(
+        _ draft: Train, issues: inout [Issue]
+    ) {
         // -- stops ---------------------------------------------------------
         if draft.stops.count < 2 {
             issues.append(
@@ -88,35 +110,7 @@ public enum RideDraftValidation {
                     field: .stops, reason: .stopCount(draft.stops.count)))
         }
         for (index, stop) in draft.stops.enumerated() {
-            if isBlank(stop.name) {
-                issues.append(
-                    Issue(field: .stop(index), reason: .stopNameRequired))
-            }
-            if !TrainValidation.stopTypes.contains(stop.stopType) {
-                issues.append(
-                    Issue(field: .stop(index), reason: .stopTypeRule))
-            }
-            if let code = stop.n02StationCode, !code.isEmpty,
-                TrainValidation.stationCodeSystem(code) == nil
-            {
-                issues.append(
-                    Issue(field: .stop(index), reason: .stationCodeRule))
-            }
-            if let platform = stop.platformNumber, platform < 0 {
-                issues.append(
-                    Issue(field: .stop(index), reason: .platformRule))
-            }
-            // The shared file schema deliberately keeps arrival and departure
-            // opaque strings. The editor accepts typed clock text, so it must
-            // apply its stricter grammar here before enabling Save.
-            if case .invalid = EditorTime.parseTime(stop.arrival) {
-                issues.append(
-                    Issue(field: .stop(index), reason: .invalidArrivalTime))
-            }
-            if case .invalid = EditorTime.parseTime(stop.departure) {
-                issues.append(
-                    Issue(field: .stop(index), reason: .invalidDepartureTime))
-            }
+            appendStopIssues(stop, index: index, issues: &issues)
         }
         // The two cross-field rules: neither end of the journey needs both an
         // arrival and a departure.
@@ -128,7 +122,45 @@ public enum RideDraftValidation {
                 Issue(
                     field: .stop(draft.stops.count - 1), reason: .lastStopTimes))
         }
+    }
 
+    private static func appendStopIssues(
+        _ stop: Stop, index: Int, issues: inout [Issue]
+    ) {
+        if isBlank(stop.name) {
+            issues.append(
+                Issue(field: .stop(index), reason: .stopNameRequired))
+        }
+        if !TrainValidation.stopTypes.contains(stop.stopType) {
+            issues.append(
+                Issue(field: .stop(index), reason: .stopTypeRule))
+        }
+        if let code = stop.n02StationCode, !code.isEmpty,
+            TrainValidation.stationCodeSystem(code) == nil
+        {
+            issues.append(
+                Issue(field: .stop(index), reason: .stationCodeRule))
+        }
+        if let platform = stop.platformNumber, platform < 0 {
+            issues.append(
+                Issue(field: .stop(index), reason: .platformRule))
+        }
+        // The shared file schema deliberately keeps arrival and departure
+        // opaque strings. The editor accepts typed clock text, so it must
+        // apply its stricter grammar here before enabling Save.
+        if case .invalid = EditorTime.parseTime(stop.arrival) {
+            issues.append(
+                Issue(field: .stop(index), reason: .invalidArrivalTime))
+        }
+        if case .invalid = EditorTime.parseTime(stop.departure) {
+            issues.append(
+                Issue(field: .stop(index), reason: .invalidDepartureTime))
+        }
+    }
+
+    private static func appendRouteSectionIssues(
+        _ draft: Train, issues: inout [Issue]
+    ) {
         // -- route sections ------------------------------------------------
         // Every rule `validateTrain` applies to a written section, said next
         // to the section rather than at the foot of the form. The editor is
@@ -154,7 +186,11 @@ public enum RideDraftValidation {
                 }
             }
         }
+    }
 
+    private static func appendRoutePolicyIssues(
+        _ draft: Train, issues: inout [Issue]
+    ) {
         // -- route policy --------------------------------------------------
         // The three the editor actually exposes get their own message; the
         // schema constants it does not expose stay with the generic refusal
@@ -172,14 +208,22 @@ public enum RideDraftValidation {
                     Issue(field: .routePolicy, reason: .policyModeRule))
             }
         }
+    }
 
+    private static func appendStyleIssues(
+        _ draft: Train, issues: inout [Issue]
+    ) {
         // -- style ---------------------------------------------------------
         if let color = draft.style?.color, !color.isEmpty,
             !TrainValidation.isValidTrainColor(color)
         {
             issues.append(Issue(field: .color, reason: .colorRule))
         }
+    }
 
+    private static func appendSchemaIssue(
+        _ draft: Train, issues: inout [Issue]
+    ) {
         // -- the authoritative pass ----------------------------------------
         if let message = schemaRefusal(draft) {
             let explained = issues.contains { $0.severity == .error }
@@ -194,8 +238,6 @@ public enum RideDraftValidation {
                         reason: isPolicy ? .policyProblem : .schemaRefusal(message)))
             }
         }
-
-        return issues
     }
 
     /// Whether `TrainValidation` — the shared, fixture-pinned rules — refuses

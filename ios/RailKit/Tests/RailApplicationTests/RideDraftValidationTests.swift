@@ -97,6 +97,43 @@ struct RideDraftValidationTests {
         #expect(issues.map(\.severity) == [.warning, .error, .error])
         #expect(issues.map(\.reason) == [.idTaken("taken"), .numberRequired, .invalidDepartureTime])
     }
+
+    @Test func combinedDiagnosticsPreserveRuleAndSectionOrder() {
+        var draft = Train(
+            id: "taken", date: "2027-13-01", number: " ", origin: " ", destination: " ",
+            stops: [
+                Stop(name: " ", n02StationCode: "?", platformNumber: -1,
+                     arrival: "09:99", departure: "09:99", stopType: "invalid"),
+                Stop(name: "B", arrival: "10:00", departure: "10:01")])
+        draft.routeSections = [
+            RouteSection(fromN02StationCode: "?", toN02StationCode: "?"),
+            RouteSection(from: "A")]
+        draft.routePolicy = TrainValidation.canonicalRoutePolicy(nil)
+        draft.routePolicy?.allowedInstitutionTypeCodes = ["999"]
+        draft.routePolicy?.institutionFilterMode = "invalid"
+        draft.style = TrainStyle(color: "invalid")
+        let issues = RideDraftValidation.issues(
+            for: draft, originalID: "original", existingIDs: ["taken"])
+        #expect(issues.map(\.reason) == [
+            .idTaken("taken"), .dateRule, .numberRequired, .originRequired, .destinationRequired,
+            .stopNameRequired, .stopTypeRule, .stationCodeRule, .platformRule,
+            .invalidArrivalTime, .invalidDepartureTime, .firstStopTimes, .lastStopTimes,
+            .sectionCode(1), .sectionEndpoints(2), .policyCodesRule, .policyModeRule, .colorRule])
+        #expect(issues.map(\.field) == [
+            .id, .date, .number, .origin, .destination,
+            .stop(0), .stop(0), .stop(0), .stop(0), .stop(0), .stop(0), .stop(0), .stop(1),
+            .routeSection(0), .routeSection(1), .routePolicy, .routePolicy, .color])
+        #expect(issues.first?.severity == .warning)
+        #expect(issues.dropFirst().allSatisfy { $0.severity == .error })
+    }
+
+    @Test func singleStopAppliesOnlyTheFirstEndpointTimeRule() {
+        let draft = Train(id: "single", number: "1", origin: "A", destination: "B", stops: [
+            Stop(name: "A", arrival: "09:00", departure: "09:01")])
+        let issues = RideDraftValidation.issues(for: draft, originalID: "single", existingIDs: [])
+        #expect(issues.map(\.field) == [.stops, .stop(0)])
+        #expect(issues.map(\.reason) == [.stopCount(1), .firstStopTimes])
+    }
 }
 
 private extension Array where Element == RideDraftValidation.Issue {

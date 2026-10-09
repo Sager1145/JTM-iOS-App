@@ -386,6 +386,7 @@
         }
       ],
       "sources": [
+        "ios/RailKit/Sources/RailCore/CanonicalTrainStoreJSON.swift",
         "ios/RailKit/Sources/RailCore/ChatGPTSubscriptionProtocol.swift",
         "ios/RailKit/Sources/RailCore/CompactPackage.swift",
         "ios/RailKit/Sources/RailCore/ContinuousStroke.swift",

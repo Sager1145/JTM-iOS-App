@@ -116,29 +116,16 @@ public enum ImportPreflight {
         } catch {
             // A document that will not parse has no rows to point at, so the
             // issue is filed against the root rather than invented onto one.
-            return Report(
-                mode: mode,
-                country: country,
-                schemaVersion: nil,
-                documentCount: 0,
-                added: 0,
-                replaced: 0,
-                kept: currentTrains.count,
-                renames: [],
-                issues: [Issue(row: nil, stop: nil, trainID: nil, detail: message(of: error))])
+            return documentFailure(
+                mode: mode, country: country, kept: currentTrains.count, detail: message(of: error))
         }
 
         let schema: String? =
             if case .string(let version)? = document["schema_version"] { version } else { nil }
         guard case .array(let rows)? = document["trains"] else {
-            return Report(
-                mode: mode, country: country, schemaVersion: schema, documentCount: 0,
-                added: 0, replaced: 0, kept: currentTrains.count, renames: [],
-                issues: [
-                    Issue(
-                        row: nil, stop: nil, trainID: nil,
-                        detail: "trains must be an array.")
-                ])
+            return documentFailure(
+                mode: mode, country: country, kept: currentTrains.count,
+                schemaVersion: schema, detail: "trains must be an array.")
         }
 
         var session = ImportEngine.Session(
@@ -152,6 +139,54 @@ public enum ImportPreflight {
         var renames: [Rename] = []
         var added = 0
 
+        try inspectRows(
+            rows, session: &session, issues: &issues, renames: &renames,
+            added: &added, onProgress: onProgress)
+
+        // The replace door ends in `finalizeProgressiveLoad`, which runs the
+        // ONE authoritative `validateTrainStore` over the rebuilt canonical
+        // store. Skipping it here would leave a document that passes every row
+        // and still fails the commit — the one outcome a preflight exists to
+        // rule out. The append door has no finalize step and therefore no
+        // store-level check to mirror.
+        appendStoreIssues(
+            trains: session.trains, country: country, mode: mode,
+            rowsAreEmpty: rows.isEmpty, issues: &issues)
+
+        return Report(
+            mode: mode,
+            country: country,
+            schemaVersion: schema,
+            documentCount: rows.count,
+            added: added,
+            replaced: mode == .replaceAll ? currentTrains.count : 0,
+            kept: mode == .replaceAll ? 0 : currentTrains.count,
+            renames: renames,
+            issues: issues)
+    }
+
+    private static func documentFailure(
+        mode: Mode, country: String, kept: Int, schemaVersion: String? = nil, detail: String
+    ) -> Report {
+        return Report(
+            mode: mode,
+            country: country,
+            schemaVersion: schemaVersion,
+            documentCount: 0,
+            added: 0,
+            replaced: 0,
+            kept: kept,
+            renames: [],
+            issues: [Issue(row: nil, stop: nil, trainID: nil, detail: detail)])
+    }
+
+    /// Walks the authoritative append door once per row, preserving progress
+    /// after diagnostics and the evolving scratch-store index in each message.
+    private static func inspectRows(
+        _ rows: [TrainValidation.JSON], session: inout ImportEngine.Session,
+        issues: inout [Issue], renames: inout [Rename], added: inout Int,
+        onProgress: @Sendable (Int, Int) -> Void
+    ) throws {
         for (row, raw) in rows.enumerated() {
             try Task.checkCancellation()
             let documentID: String? =
@@ -174,27 +209,17 @@ public enum ImportPreflight {
             }
             onProgress(row + 1, rows.count)
         }
+    }
 
-        // The replace door ends in `finalizeProgressiveLoad`, which runs the
-        // ONE authoritative `validateTrainStore` over the rebuilt canonical
-        // store. Skipping it here would leave a document that passes every row
-        // and still fails the commit — the one outcome a preflight exists to
-        // rule out. The append door has no finalize step and therefore no
-        // store-level check to mirror.
-        if mode == .replaceAll, issues.isEmpty, !rows.isEmpty {
-            do {
-                let canonical = TrainValidation.buildCanonicalTrainStore(
-                    session.trains, country: country, stations: .empty)
-                let encoded = try JSONEncoder().encode(canonical)
-                try TrainValidation.validateTrainStore(
-                    TrainValidation.JSON.parse(String(decoding: encoded, as: UTF8.self)))
-            } catch {
-                issues.append(
-                    Issue(row: nil, stop: nil, trainID: nil, detail: message(of: error)))
-            }
+    private static func appendStoreIssues(
+        trains: [Train], country: String, mode: Mode, rowsAreEmpty: Bool,
+        issues: inout [Issue]
+    ) {
+        if mode == .replaceAll, issues.isEmpty, !rowsAreEmpty {
+            validateReplacement(trains, country: country, issues: &issues)
         }
 
-        if rows.isEmpty {
+        if rowsAreEmpty {
             // Both the JSON-text door and the append door treat an empty
             // document as an error rather than as "replace with nothing".
             issues.append(
@@ -202,17 +227,21 @@ public enum ImportPreflight {
                     row: nil, stop: nil, trainID: nil,
                     detail: "The document contains no trains."))
         }
+    }
 
-        return Report(
-            mode: mode,
-            country: country,
-            schemaVersion: schema,
-            documentCount: rows.count,
-            added: added,
-            replaced: mode == .replaceAll ? currentTrains.count : 0,
-            kept: mode == .replaceAll ? 0 : currentTrains.count,
-            renames: renames,
-            issues: issues)
+    private static func validateReplacement(
+        _ trains: [Train], country: String, issues: inout [Issue]
+    ) {
+        do {
+            let canonical = TrainValidation.buildCanonicalTrainStore(
+                trains, country: country, stations: .empty)
+            let encoded = try JSONEncoder().encode(canonical)
+            try TrainValidation.validateTrainStore(
+                TrainValidation.JSON.parse(String(decoding: encoded, as: UTF8.self)))
+        } catch {
+            issues.append(
+                Issue(row: nil, stop: nil, trainID: nil, detail: message(of: error)))
+        }
     }
 
     // MARK: - message shaping

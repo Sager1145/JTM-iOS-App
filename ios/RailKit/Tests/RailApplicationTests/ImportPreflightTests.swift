@@ -195,6 +195,29 @@ struct ImportPreflightTests {
         #expect(ImportPreflight.message(of: error) == "Train 2: number is required.")
     }
 
+    @Test func localizedErrorUsesItsDiagnosticInsteadOfItsDebugDescription() {
+        let error = PreflightLocalizedFailure(errorDescription: "The selected import could not be read.")
+        #expect(ImportPreflight.message(of: error) == "The selected import could not be read.")
+    }
+
+    @Test func localizedErrorWithoutDiagnosticFallsBackToItsDescription() {
+        let error = PreflightLocalizedFailure(errorDescription: nil)
+        #expect(ImportPreflight.message(of: error) == "Import source is unavailable.")
+    }
+
+    @Test func ordinaryErrorUsesItsDescription() {
+        #expect(ImportPreflight.message(of: PreflightOrdinaryFailure()) == "Import decoding failed.")
+    }
+
+    private struct PreflightLocalizedFailure: LocalizedError, CustomStringConvertible {
+        let errorDescription: String?
+        var description: String { "Import source is unavailable." }
+    }
+
+    private struct PreflightOrdinaryFailure: Error, CustomStringConvertible {
+        var description: String { "Import decoding failed." }
+    }
+
     private func row(_ id: String) -> String {
         """
         {"id":"\(id)","number":"Local","origin":"A","destination":"B","stops":[
