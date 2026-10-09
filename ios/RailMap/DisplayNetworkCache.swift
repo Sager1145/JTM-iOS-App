@@ -1,7 +1,7 @@
 import Foundation
 import RailCore
 
-/// The drawn railway, built once per region and then shared.
+/// The drawn railway, shared while resident; older regions rebuild on demand.
 ///
 /// `RouteNetwork` is what `canonicalizeRouteFeature` re-draws a solved hop
 /// against, and building one means parsing the whole of `<country>-2025.json`
@@ -23,6 +23,17 @@ actor DisplayNetworkCache {
 
     private var networks: [String: RouteNetwork] = [:]
     private var inFlight: [String: Task<RouteNetwork, Error>] = [:]
+    private let buildLimiter = RouteSolveLimiter(limit: 1)
+
+    /// A country and a combined scope share one retention slot. Active callers
+    /// own their immutable network independently of this cache.
+    private func retain(_ network: RouteNetwork, key: String) {
+        networks = [key: network]
+    }
+
+    private func releaseCachedNetwork() {
+        networks.removeAll()
+    }
 
     /// The network one journey is canonicalised against.
     ///
@@ -43,8 +54,20 @@ actor DisplayNetworkCache {
             lines += try await network(country: region.code).lines
         }
         let merged = RouteNetwork(lines: lines)
-        networks[scope.key] = merged
+        retain(merged, key: scope.key)
         return merged
+    }
+
+    /// Layouts the map's own package decode already computed, keyed by
+    /// region: the same file through the same ``DisplayParts``, so ``build``
+    /// can reuse them instead of laying every line out a second time.
+    private var seededParts: [String: (lineIDs: [String], parts: [[[Coordinate]]])] = [:]
+
+    func seed(country: String, lineIDs: [String], parts: [[[Coordinate]]]) {
+        guard networks[country] == nil, inFlight[country] == nil else { return }
+        // Seeds are an optional layout shortcut, not an additional permanent
+        // copy of every country's map geometry.
+        seededParts = [country: (lineIDs, parts)]
     }
 
     /// The network for one region, building it if this is the first ask.
@@ -52,8 +75,20 @@ actor DisplayNetworkCache {
         if let ready = networks[country] { return ready }
         if let running = inFlight[country] { return try await running.value }
 
+        let seeded = seededParts.removeValue(forKey: country)
+        let limiter = buildLimiter
         let task = Task.detached(priority: .userInitiated) {
-            try Self.build(country: country)
+            try await limiter.withPermit {
+                // Release cache ownership only when this build is admitted,
+                // before allocating its replacement, rather than while queued.
+                await self.releaseCachedNetwork()
+                let built = try Self.build(country: country, seeded: seeded)
+                // Publish before handing admission to the next build. Waiters
+                // only consume this result; they cannot reinsert an older
+                // country after its replacement has started allocating.
+                await self.retain(built, key: country)
+                return built
+            }
         }
         inFlight[country] = task
         // Detached, and the in-flight entry is cleared by whoever the build
@@ -62,8 +97,9 @@ actor DisplayNetworkCache {
         // build the next caller is still waiting on.
         do {
             let built = try await task.value
-            if inFlight[country] == task { inFlight[country] = nil }
-            networks[country] = built
+            if inFlight[country] == task {
+                inFlight[country] = nil
+            }
             return built
         } catch {
             if inFlight[country] == task { inFlight[country] = nil }
@@ -71,7 +107,9 @@ actor DisplayNetworkCache {
         }
     }
 
-    private nonisolated static func build(country: String) throws -> RouteNetwork {
+    private nonisolated static func build(
+        country: String, seeded: (lineIDs: [String], parts: [[[Coordinate]]])? = nil
+    ) throws -> RouteNetwork {
         let interval = RailSignpost.data.begin("data.displayNetwork.build")
         defer { RailSignpost.data.end("data.displayNetwork.build", interval) }
         guard let url = Bundle.main.url(
@@ -80,11 +118,15 @@ actor DisplayNetworkCache {
         // Both halves of the package come off one read and one parse; see the
         // single-pass contract in `verify.sh`.
         let loaded = try DisplayParts.LoadedPackage.load(contentsOf: url)
-        return RouteNetwork(lines: loaded.package.lines.map { line in
+        // Reused only when it lines up with this decode line for line.
+        let reuse = seeded.flatMap { seeded in
+            seeded.lineIDs == loaded.package.lines.map(\.id) ? seeded.parts : nil
+        }
+        return RouteNetwork(lines: loaded.package.lines.enumerated().map { index, line in
             RouteNetwork.Line(
                 lineId: line.id, name: line.name, operator: line.operator,
                 isLoop: line.isLoop, alignmentDirection: line.alignmentDirection,
-                parts: DisplayParts.parts(
+                parts: reuse?[index] ?? DisplayParts.parts(
                     for: line, topology: loaded.topologyByLineID[line.id] ?? .init()),
                 intervals: RailIntervalCodes.intervals(for: line), compactLine: line)
         })

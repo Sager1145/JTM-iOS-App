@@ -2,7 +2,10 @@ import Foundation
 
 /// Bounds concurrent route work across stores, including work still winding down after cancellation.
 public actor RouteSolveLimiter {
-    public static let shared = RouteSolveLimiter(limit: 2)
+    // Serialize production solves across stores to prioritize memory. A permit
+    // stays held until the operation exits, so cancelled work cannot overlap
+    // its replacement while its graph is still in use.
+    public static let shared = RouteSolveLimiter(limit: 1)
 
     private struct Waiter {
         let ticket: UUID

@@ -64,7 +64,7 @@ Receipts: `application-coverage-test.log`, `application-coverage-export/manifest
 
 ## Phase 4: pinned advisory quality and scoped coverage CI
 
-Status: committed and pushed as `e80194eb`; hosted CI execution pending.
+Status: committed and pushed as `e80194eb`; hosted quality and scoped coverage CI passed (run `37912326608`).
 
 Pins official SwiftLint 0.65.1 and SwiftFormat 0.63.1 portable release binaries;
 checks their actual versions before running readonly checks. JSON retains real
@@ -88,7 +88,7 @@ and remaining package allocation diagnosis open; assertions remain unchanged.
 
 ## Phase 5: isolated physical route validation use case
 
-Status: validated for independent commit/push.
+Status: committed and pushed as `0a0cd554`.
 
 Moves ordered snapshot route-proof and historical-availability rules into
 RailApplication. Failed, cancelled, incomplete or mismatched resolver responses
@@ -102,6 +102,26 @@ wrong reply count, ordinary failures and cancellation before/after ignored work.
 Phase 3's real coverage maps every changed executable helper line. Ownership
 adds only the helper's RailApplication entry; concurrent CLI mappings stay local.
 Receipt: `application-phase-head-test.log`.
+
+## Phase 6: display-network ownership and serialized route admission
+
+Status: validated for independent commit/push.
+
+Display networks share one completed country/combined-scope retention slot and
+one unused layout seed. Builds coalesce and use an independent single permit;
+old cache ownership releases before replacement allocation. Publication happens
+before admission transfers, preventing late waiters from restoring stale cache
+ownership. Active callers keep their immutable result. Production route solves
+share one global permit until the complete operation exits, including cancellation.
+
+Validation: clean-main plus exactly DisplayNetworkCache and RouteSolveLimiter
+builds the Release Simulator App successfully for arm64 and x86_64. Production
+actor harness passes coalescing, independent cancellation, single build admission,
+release-before-build, seed consumption, scope ordering, active-result survival,
+and failed-build retry. Previous host payload comparison measured 32.58% lower
+resident cache footprint; full production workflow acceptance remains separate.
+Receipts: `cache-phase-head-build.log` and the production actor harness command.
+No simulator or external CLI process was stopped during this phase.
 
 ## Remaining delivery phases
 
