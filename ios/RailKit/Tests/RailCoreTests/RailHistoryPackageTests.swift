@@ -38,11 +38,14 @@ struct RailHistoryPackageTests {
 
         let stationCollection = Stations.FeatureCollection(features: stationFeatures)
         let stations = Stations.Index(stationCollection)
-        let graphStore = RouteGraph.RouteGraphStore(sections: sections)
-        graphStore.augment = { graph, _ in
-            RouteSolver.addStationTransferConnectorEdges(
-                graph: graph, stations: stationCollection.features)
-        }
+        let registry = try! PhysicalRailJunctionRegistry(data: Data(contentsOf:
+            root.appending(path: "app/data/physical-rail-junctions.json")))
+        // Match the production physical graph: reviewed junctions, no passenger
+        // transfer augmentation. Legacy browser audits retain their own graph.
+        let graphStore = RouteGraph.RouteGraphStore(
+            sections: sections, policy: .physicalRailway,
+            junctions: registry.junctions(for: "jp"),
+            cachePolicy: .bounded(maximumNodes: 100_000))
         return Environment(graphStore: graphStore, stations: stations, overlay: overlay)
     }()
 
@@ -52,7 +55,8 @@ struct RailHistoryPackageTests {
     nonisolated(unsafe) static let webParityEnvironment: Environment = {
         let native = Self.environment
         let graphStore = RouteGraph.RouteGraphStore(
-            sections: native.graphStore.sections, policy: .coordinateParity)
+            sections: native.graphStore.sections, policy: .coordinateParity,
+            cachePolicy: .bounded(maximumNodes: 100_000))
         graphStore.augment = { graph, _ in
             RouteSolver.addStationTransferConnectorEdges(
                 graph: graph, stations: native.stations.features)
@@ -72,6 +76,9 @@ struct RailHistoryPackageTests {
         _ section: RouteSection, rideDate: String?
     ) -> BrowserPathAudit? {
         let env = Self.webParityEnvironment
+        // Recompute caches per query so nationwide fixtures do not retain
+        // every compiled region; this deliberately trades test time for memory.
+        defer { env.graphStore.invalidate() }
         let train = Self.train(rideDate: rideDate)
         let allowed = RouteGraph.allowedInstitutionTypeCodes(.init(
             trainType: "", company: "", preferredLineNames: [], preferredOperatorNames: [],
@@ -235,6 +242,8 @@ struct RailHistoryPackageTests {
 
     static func solve(_ section: RouteSection, rideDate: String?) -> RouteSolver.SolvedSection? {
         let env = Self.environment
+        // Release graph and compiled-region memos after each native query too.
+        defer { env.graphStore.invalidate() }
         return RouteSolver.solveSectionOnDemand(
             section, segmentIndex: 0, train: Self.train(rideDate: rideDate), country: "jp",
             graphStore: env.graphStore, stations: env.stations, continuityAnchor: nil)

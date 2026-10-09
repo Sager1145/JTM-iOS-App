@@ -1224,8 +1224,196 @@ public enum RouteGraph {
     /// candidate, never a train-runnable edge.
     public static func build(from features: [SectionFeature], policy: BuildPolicy = .physicalRailway,
                              junctions: [PhysicalJunction] = []) -> Graph {
-        let graph = Graph(cellSize: graphCellSize)
+        build(compiled: CompiledSections(features: features, policy: policy),
+              featureIndices: features.indices, junctions: junctions)
+    }
 
+    final class CompiledSections {
+        struct FeatureRecord {
+            let properties: SectionProperties
+            let historyIDs: [String]
+            let meta: NodeMeta
+            let lineRanges: [Range<Int>]
+        }
+        let features: [SectionFeature]
+        let policy: BuildPolicy
+        var records: [FeatureRecord?]
+        var vertexID: [Int32] = []
+        var vertexKey: [String] = []
+        var vertexCoord: [Coordinate] = []
+        var vertexCell: [String] = []
+        private var ids: [String: Int32] = [:]
+        private var keyOfID: [String] = []
+        var idCount: Int { keyOfID.count }
+        init(features: [SectionFeature], policy: BuildPolicy) {
+            self.features = features
+            self.policy = policy
+            self.records = Array(repeating: nil, count: features.count)
+        }
+
+        @inline(__always) func ensure(_ f: Int) {
+            if records[f] == nil { compile(f) }
+        }
+
+        private func compile(_ f: Int) {
+            let feature = features[f]
+            let properties = feature.properties
+            var meta = NodeMeta()
+            if !properties.lineName.isEmpty { meta.lineNames.insert(properties.lineName) }
+            if !properties.operator.isEmpty { meta.operators.insert(properties.operator) }
+            if !properties.institutionTypeCode.isEmpty { meta.institutionTypeCodes.insert(properties.institutionTypeCode) }
+            if !properties.railwayClassCode.isEmpty { meta.railwayClassCodes.insert(properties.railwayClassCode) }
+            let prefix = policy == .coordinateParity ? "" : feature.physicalTrackIdentity.key + "@"
+            var ranges: [Range<Int>] = []
+            for line in feature.quantisedLines {
+                guard line.count >= 2 else { continue }
+                let start = vertexID.count
+                for coord in line {
+                    let normalized = Grid.normalizeGraphCoord(coord)
+                    let key = policy == .coordinateParity ? Grid.coordKey(normalized)
+                        : prefix + Grid.coordKey(normalized)
+                    if let existing = ids[key] {
+                        let stored = keyOfID[Int(existing)]
+                        vertexID.append(existing)
+                        vertexKey.append(stored.utf8.elementsEqual(key.utf8) ? stored : key)
+                    } else {
+                        let id = Int32(keyOfID.count)
+                        ids[key] = id
+                        keyOfID.append(key)
+                        vertexID.append(id)
+                        vertexKey.append(key)
+                    }
+                    vertexCoord.append(normalized)
+                    vertexCell.append(graphGridKey(normalized, cellSize: graphCellSize))
+                }
+                ranges.append(start..<vertexID.count)
+            }
+            records[f] = FeatureRecord(properties: properties, historyIDs: properties.carriedHistoryIDs,
+                                       meta: meta, lineRanges: ranges)
+        }
+    }
+
+    static func build<S: Sequence>(compiled c: CompiledSections, featureIndices: S,
+                                   junctions: [PhysicalJunction], plans: [JunctionPlan]? = nil) -> Graph where S.Element == Int {
+        let graph = Graph(cellSize: graphCellSize)
+        for f in featureIndices { c.ensure(f) }
+        var localOf = [Int32](repeating: -1, count: c.idCount)
+        var creator: [Int] = []
+        var adjacency: [[Edge]] = []
+        var meta: [NodeMeta] = []
+        var metaStamp: [Int] = []
+        var position = 0
+        for f in featureIndices {
+            position += 1
+            let rec = c.records[f]!
+            let properties = rec.properties
+            let historyIDs = rec.historyIDs
+            for range in rec.lineRanges {
+                for v in range {
+                    let g = Int(c.vertexID[v])
+                    if localOf[g] < 0 {
+                        localOf[g] = Int32(creator.count)
+                        creator.append(v)
+                        adjacency.append([])
+                        meta.append(NodeMeta())
+                        metaStamp.append(0)
+                    }
+                }
+                func record(_ l: Int) {
+                    if metaStamp[l] == position { return }
+                    if metaStamp[l] == 0 {
+                        meta[l] = rec.meta
+                    } else {
+                        if !properties.lineName.isEmpty { meta[l].lineNames.insert(properties.lineName) }
+                        if !properties.operator.isEmpty { meta[l].operators.insert(properties.operator) }
+                        if !properties.institutionTypeCode.isEmpty { meta[l].institutionTypeCodes.insert(properties.institutionTypeCode) }
+                        if !properties.railwayClassCode.isEmpty { meta[l].railwayClassCodes.insert(properties.railwayClassCode) }
+                    }
+                    metaStamp[l] = position
+                }
+                var v = range.lowerBound
+                while v + 1 < range.upperBound {
+                    let a = Int(localOf[Int(c.vertexID[v])])
+                    let b = Int(localOf[Int(c.vertexID[v + 1])])
+                    if a != b {
+                        record(a)
+                        record(b)
+                        let length = Geometry.distanceMeters(c.vertexCoord[creator[a]], c.vertexCoord[creator[b]])
+                        let edge = Edge(
+                            to: c.vertexKey[v + 1],
+                            length: max(length, 0.01),
+                            institutionTypeCode: properties.institutionTypeCode,
+                            railwayClassCode: properties.railwayClassCode,
+                            lineName: properties.lineName,
+                            operator: properties.operator,
+                            connector: nil,
+                            validFrom: properties.validFrom,
+                            validTo: properties.validTo,
+                            historyIDs: historyIDs,
+                            temporalKind: properties.temporalKind)
+                        adjacency[a].append(edge)
+                        var reverse = edge
+                        reverse.to = c.vertexKey[v]
+                        adjacency[b].append(reverse)
+                    }
+                    v += 1
+                }
+            }
+        }
+        let n = creator.count
+        var slot = [String: Int](minimumCapacity: n)
+        var grid: [String: [String]] = [:]
+        for l in 0..<n {
+            let v = creator[l]
+            let key = c.vertexKey[v]
+            slot[key] = l
+            grid[c.vertexCell[v], default: []].append(key)
+        }
+        graph.nodes = slot.mapValues { c.vertexCoord[creator[$0]] }
+        graph.adjacency = slot.mapValues { adjacency[$0] }
+        graph.nodeMeta = slot.mapValues { meta[$0] }
+        graph.grid = grid
+        if c.policy == .physicalRailway {
+            addPhysicalJunctions(to: graph, junctions: junctions, plans: plans)
+        }
+        return graph
+    }
+
+    struct JunctionPlan {
+        let fromKey: String
+        let toKey: String
+        let deadEnd: Bool
+        let staticReason: String?
+        let chainKeys: [String]?
+        let foreignKey: String?
+        init(_ junction: PhysicalJunction) {
+            fromKey = physicalNodeKey(junction.from.coordinate, identity: junction.from.identity)
+            toKey = physicalNodeKey(junction.to.coordinate, identity: junction.to.identity)
+            deadEnd = junction.kind == .osmTrack && junction.terminus?.end == .to
+            let validBounds = [junction.validFrom, junction.validTo].compactMap { $0 }
+                .allSatisfy(isPlainISODay)
+            let orderedBounds = junction.validFrom == nil || junction.validTo == nil
+                || junction.validFrom! < junction.validTo!
+            if junction.id.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                staticReason = "empty id"
+            } else if junction.evidence.isEmpty
+                        || !junction.evidence.allSatisfy({
+                            !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                        }) {
+                staticReason = "missing evidence"
+            } else if !validBounds || !orderedBounds {
+                staticReason = "invalid dates"
+            } else {
+                staticReason = nil
+            }
+            chainKeys = junction.chainNodeKeys()
+            foreignKey = junction.endJunction.map { physicalNodeKey($0.coordinate, identity: $0.identity) }
+        }
+    }
+
+    static func addPhysicalJunctions(to graph: Graph, junctions: [PhysicalJunction], plans: [JunctionPlan]? = nil) {
+        let plans = plans ?? junctions.map(JunctionPlan.init)
+        let policy = BuildPolicy.physicalRailway
         func ensureNode(_ coord: Coordinate, _ identity: TrackIdentity,
                         identityPrefix: String? = nil) -> String {
             // Quantised twice, exactly as the JavaScript does: once by
@@ -1249,63 +1437,6 @@ public enum RouteGraph {
             }
             return key
         }
-
-        func recordNodeMeta(_ key: String, _ properties: SectionProperties) {
-            guard graph.nodeMeta[key] != nil else { return }
-            if !properties.lineName.isEmpty {
-                graph.nodeMeta[key]!.lineNames.insert(properties.lineName)
-            }
-            if !properties.operator.isEmpty {
-                graph.nodeMeta[key]!.operators.insert(properties.operator)
-            }
-            if !properties.institutionTypeCode.isEmpty {
-                graph.nodeMeta[key]!.institutionTypeCodes.insert(properties.institutionTypeCode)
-            }
-            if !properties.railwayClassCode.isEmpty {
-                graph.nodeMeta[key]!.railwayClassCodes.insert(properties.railwayClassCode)
-            }
-        }
-
-        func addRailEdge(_ keyA: String, _ keyB: String, _ properties: SectionProperties,
-                         historyIDs: [String]) {
-            // Two vertices that quantise to one node produce no edge — which
-            // is the whole reason the spelling of a key matters.
-            if keyA == keyB { return }
-            recordNodeMeta(keyA, properties)
-            recordNodeMeta(keyB, properties)
-            let length = Geometry.distanceMeters(graph.nodes[keyA]!, graph.nodes[keyB]!)
-            let edge = Edge(
-                to: keyB,
-                length: max(length, 0.01),
-                institutionTypeCode: properties.institutionTypeCode,
-                railwayClassCode: properties.railwayClassCode,
-                lineName: properties.lineName,
-                operator: properties.operator,
-                connector: nil,
-                validFrom: properties.validFrom,
-                validTo: properties.validTo,
-                historyIDs: historyIDs,
-                temporalKind: properties.temporalKind)
-            graph.adjacency[keyA]!.append(edge)
-            var reverse = edge
-            reverse.to = keyA
-            graph.adjacency[keyB]!.append(reverse)
-        }
-
-        for feature in features {
-            let identity = feature.physicalTrackIdentity
-            let prefix = identity.key + "@"
-            let historyIDs = feature.properties.carriedHistoryIDs
-            for line in feature.quantisedLines {
-                guard line.count >= 2 else { continue }
-                // Each vertex keyed once, in order — the node creation order
-                // (and so grid order) of keying both ends of every edge.
-                let keys = line.map { ensureNode($0, identity, identityPrefix: prefix) }
-                for i in 0..<(keys.count - 1) {
-                    addRailEdge(keys[i], keys[i + 1], feature.properties, historyIDs: historyIDs)
-                }
-            }
-        }
         if policy == .physicalRailway {
             // Surveyed rail-section and history vertices only. Junction and OSM
             // rows add nodes later; acceptance must not see those, or a later
@@ -1316,18 +1447,22 @@ public enum RouteGraph {
                 graph.rejectedPhysicalJunctionIDs.append(junction.id)
                 graph.rejectedPhysicalJunctionReasons.append("\(junction.id): \(reason)")
             }
-            for junction in junctions {
-                let fromKey = physicalNodeKey(junction.from.coordinate, identity: junction.from.identity)
-                let toKey = physicalNodeKey(junction.to.coordinate, identity: junction.to.identity)
-                let validBounds = [junction.validFrom, junction.validTo].compactMap { $0 }
-                    .allSatisfy(isPlainISODay)
-                let orderedBounds = junction.validFrom == nil || junction.validTo == nil
-                    || junction.validFrom! < junction.validTo!
+            for (junction, plan) in zip(junctions, plans) {
+                if let staticReason = plan.staticReason {
+                    reject(junction, staticReason)
+                    continue
+                }
+                let fromKey = plan.fromKey
+                let toKey = plan.toKey
+                let deadEnd = plan.deadEnd
+                guard surveyedNodes[fromKey] != nil, deadEnd || surveyedNodes[toKey] != nil else {
+                    reject(junction, "endpoint is not an existing vertex")
+                    continue
+                }
                 let fromNode = surveyedNodes[fromKey]
                 let toNode = surveyedNodes[toKey]
                 let linkMeters = Geometry.distanceMeters(
                     fromNode ?? junction.from.coordinate, toNode ?? junction.to.coordinate)
-                let deadEnd = junction.kind == .osmTrack && junction.terminus?.end == .to
                 let geometryReason: String? = {
                     switch junction.kind {
                     case .zeroLength:
@@ -1353,20 +1488,11 @@ public enum RouteGraph {
                     }
                 }()
                 let reason: String?
-                if junction.id.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                    reason = "empty id"
-                } else if junction.evidence.isEmpty
-                            || !junction.evidence.allSatisfy({
-                                !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-                            }) {
-                    reason = "missing evidence"
-                } else if !validBounds || !orderedBounds {
-                    reason = "invalid dates"
-                } else if fromNode == nil || (!deadEnd && toNode == nil) {
+                if fromNode == nil || (!deadEnd && toNode == nil) {
                     reason = "endpoint is not an existing vertex"
                 } else if !deadEnd && fromKey == toKey {
                     reason = "endpoints are the same vertex"
-                } else if deadEnd && junction.chainNodeKeys() == nil {
+                } else if deadEnd && plan.chainKeys == nil {
                     reason = "path has fewer than 2 points"
                 } else if let geometryReason {
                     reason = geometryReason
@@ -1395,13 +1521,13 @@ public enum RouteGraph {
                     }
                     let keys: [String]
                     if deadEnd || junction.endJunction != nil {
-                        guard let chained = junction.chainNodeKeys() else {
+                        guard let chained = plan.chainKeys else {
                             reject(junction, "path has fewer than 2 points")
                             continue
                         }
                         keys = chained
                     } else {
-                        keys = junction.chainNodeKeys() ?? [fromKey, toKey]
+                        keys = plan.chainKeys ?? [fromKey, toKey]
                     }
                     let junctionEdge: PhysicalJunctionEdge? = junction.kind == .osmConnector
                         ? .init(junction: junction, institutionTypeCodes: institutions) : nil
@@ -1420,7 +1546,7 @@ public enum RouteGraph {
                     }
                     if junction.kind == .osmTrack, let endJunction = junction.endJunction,
                        let ownKey = endJunction.end == .to ? keys.last : keys.first {
-                        let foreignKey = physicalNodeKey(
+                        let foreignKey = plan.foreignKey ?? physicalNodeKey(
                             endJunction.coordinate, identity: endJunction.identity)
                         guard let ownNode = graph.nodes[ownKey], let foreignNode = graph.nodes[foreignKey],
                               ownKey != foreignKey else {
@@ -1469,7 +1595,6 @@ public enum RouteGraph {
                 graph.adjacency[toKey, default: []].append(edge)
             }
         }
-        return graph
     }
 
     /// `graphGridKey` — which cell of the graph's node grid a coordinate is
@@ -1723,6 +1848,14 @@ public enum RouteGraph {
 
 extension RouteGraph {
 
+    public enum GraphCachePolicy: Sendable {
+        /// Historical cache behavior, retained for parity/export callers.
+        case standard
+        /// Keep at most one graph across full, regional and corridor caches.
+        /// Larger graphs remain available to the caller but are never retained.
+        case bounded(maximumNodes: Int)
+    }
+
     /// The rail-section dataset, its spatial index, the memoised full-network
     /// graph and the LRU of regional subgraphs.
     ///
@@ -1737,6 +1870,7 @@ extension RouteGraph {
     public final class RouteGraphStore {
 
         public let sections: [SectionFeature]
+        private let cachePolicy: GraphCachePolicy
         public let policy: BuildPolicy
         public let junctions: [PhysicalJunction]
 
@@ -1758,14 +1892,80 @@ extension RouteGraph {
         private var residentNodes = 0
         private var corridorGraphs: [(indices: [Int], graph: Graph)] = []
         private var junctionCellSets: [(points: [Coordinate], cells: Set<String>)]?
+        private var compiledSections: CompiledSections?
+        private var junctionPlanCache: [JunctionPlan]?
+
+        private func compiled() -> CompiledSections {
+            if let compiledSections { return compiledSections }
+            let made = CompiledSections(features: sections, policy: policy)
+            compiledSections = made
+            return made
+        }
+
+        private func junctionPlans() -> [JunctionPlan] {
+            if let junctionPlanCache { return junctionPlanCache }
+            let made = junctions.map(JunctionPlan.init)
+            junctionPlanCache = made
+            return made
+        }
+
+        private func build(featureIndices: [Int]) -> Graph {
+            let plans: [JunctionPlan]?
+            if case .physicalRailway = policy {
+                plans = junctionPlans()
+            } else {
+                plans = nil
+            }
+            let graph = RouteGraph.build(compiled: compiled(), featureIndices: featureIndices,
+                                         junctions: junctions, plans: plans)
+            // The compiler memo also grows as requests widen. Do not retain a
+            // country-sized vertex table beside an oversized uncached graph.
+            // Release it before station augmentation and solving allocate work.
+            if case .bounded(let maximumNodes) = cachePolicy,
+               let compiledSections, compiledSections.idCount > maximumNodes {
+                self.compiledSections = nil
+            }
+            return graph
+        }
+
+        var retainedCompiledNodeCount: Int { compiledSections?.idCount ?? 0 }
 
         public init(sections: [SectionFeature], policy: BuildPolicy = .physicalRailway,
                     junctions: [PhysicalJunction] = [],
-                    augment: ((Graph, BBox?) -> Void)? = nil) {
+                    augment: ((Graph, BBox?) -> Void)? = nil,
+                    cachePolicy: GraphCachePolicy = .standard) {
+            if case .bounded(let maximumNodes) = cachePolicy {
+                precondition(maximumNodes > 0, "Graph cache node budget must be positive")
+            }
+            self.cachePolicy = cachePolicy
             self.sections = sections
             self.policy = policy
             self.junctions = junctions
             self.augment = augment
+        }
+
+        /// Release cached graph ownership before allocating its replacement.
+        /// Active callers retain their own graph; eviction cannot truncate it.
+        private func prepareForGraphBuild() {
+            guard case .bounded = cachePolicy else { return }
+            fullGraphCache = nil
+            regionalGraphs.removeAll()
+            regionalOrder.removeAll()
+            residentNodes = 0
+            corridorGraphs.removeAll()
+        }
+
+        private func mayRetain(_ graph: Graph) -> Bool {
+            switch cachePolicy {
+            case .standard: true
+            case .bounded(let maximumNodes): graph.nodeCount <= maximumNodes
+            }
+        }
+
+        /// Includes every graph category, not only regional LRU entries.
+        public var retainedGraphNodeCount: Int {
+            (fullGraphCache?.nodeCount ?? 0) + residentNodes
+                + corridorGraphs.reduce(0) { $0 + $1.graph.nodeCount }
         }
 
         /// Drops every memo. The country switch's single call.
@@ -1778,6 +1978,8 @@ extension RouteGraph {
             residentNodes = 0
             corridorGraphs.removeAll()
             junctionCellSets = nil
+            compiledSections = nil
+            junctionPlanCache = nil
         }
 
         private func cell(_ coordinate: Coordinate) -> String {
@@ -1880,10 +2082,10 @@ extension RouteGraph {
         /// insufficient, never eagerly at startup.
         public func fullGraph() -> Graph {
             if let fullGraphCache { return fullGraphCache }
-            let graph = RouteGraph.build(
-                from: sections, policy: policy, junctions: junctions)
+            prepareForGraphBuild()
+            let graph = build(featureIndices: Array(sections.indices))
             augment?(graph, nil)
-            fullGraphCache = graph
+            if mayRetain(graph) { fullGraphCache = graph }
             return graph
         }
 
@@ -1923,10 +2125,11 @@ extension RouteGraph {
                 regionalOrder.append(key)
                 return cached
             }
-            let graph = RouteGraph.build(
-                from: featuresInBBox(qbbox), policy: policy, junctions: junctions)
+            prepareForGraphBuild()
+            let graph = build(featureIndices: featureIndicesInBBox(qbbox))
             augment?(graph, qbbox)
             graph.regionBBox = qbbox
+            guard mayRetain(graph) else { return graph }
             regionalGraphs[key] = graph
             regionalOrder.append(key)
             residentNodes += graph.nodeCount
@@ -2023,8 +2226,8 @@ extension RouteGraph {
             if let cached = corridorGraphs.first(where: { $0.indices == indices }) {
                 return cached.graph
             }
-            let graph = RouteGraph.build(
-                from: indices.map { sections[$0] }, policy: policy, junctions: junctions)
+            prepareForGraphBuild()
+            let graph = build(featureIndices: indices)
             if let augment, !coordinates.isEmpty {
                 let bbox = RouteGraph.padBBoxMeters(BBox(
                     minX: coordinates.map(\.lon).min()!, minY: coordinates.map(\.lat).min()!,
@@ -2032,6 +2235,7 @@ extension RouteGraph {
                     meters: meters)
                 augment(graph, bbox)
             }
+            guard mayRetain(graph) else { return graph }
             corridorGraphs.append((indices, graph))
             if corridorGraphs.count > 32 { corridorGraphs.removeFirst() }
             return graph

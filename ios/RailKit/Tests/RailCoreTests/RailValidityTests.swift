@@ -24,11 +24,14 @@ final class RailValidityTests: XCTestCase {
             from: root.appending(path: "app/data/rail-history.json"))
         _ = RailHistory.apply(overlay, sections: &sections, stations: &stationFeatures)
         let collection = Stations.FeatureCollection(features: stationFeatures)
-        let graphStore = RouteGraph.RouteGraphStore(sections: sections)
-        graphStore.augment = { graph, _ in
-            RouteSolver.addStationTransferConnectorEdges(
-                graph: graph, stations: collection.features)
-        }
+        let registry = try! PhysicalRailJunctionRegistry(data: Data(contentsOf:
+            root.appending(path: "app/data/physical-rail-junctions.json")))
+        // Match the production physical graph: reviewed junctions, no passenger
+        // transfer augmentation. Legacy browser audits retain their own graph.
+        let graphStore = RouteGraph.RouteGraphStore(
+            sections: sections, policy: .physicalRailway,
+            junctions: registry.junctions(for: "jp"),
+            cachePolicy: .bounded(maximumNodes: 100_000))
         return CodedHistoryEnvironment(
             graphStore: graphStore, stations: Stations.Index(collection))
     }()
@@ -327,6 +330,7 @@ final class RailValidityTests: XCTestCase {
 
     func testCodedDonanEndpointsResolvePreTransferStationVariants() throws {
         let environment = Self.codedHistoryEnvironment
+        defer { environment.graphStore.invalidate() }
         for (name, code) in [("五稜郭", "000440"), ("木古内", "000478")] {
             let candidates = environment.stations.candidateIndices(
                 for: .stop(.init(name: name, n02StationCode: code)))
