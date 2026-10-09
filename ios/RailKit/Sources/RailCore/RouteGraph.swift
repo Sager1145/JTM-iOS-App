@@ -1028,7 +1028,24 @@ public enum RouteGraph {
         /// Non-nil only on the solver's station-transfer edges.
         public var connector: StationConnector?
         /// An evidenced physical junction, distinct from passenger transfers.
-        public var physicalJunction: PhysicalJunctionEdge? = nil
+        public var physicalJunction: PhysicalJunctionEdge? {
+            get { physicalJunctionStorage?.value }
+            set { physicalJunctionStorage = newValue.map(PhysicalJunctionStorage.init) }
+        }
+        private var physicalJunctionStorage: PhysicalJunctionStorage?
+
+        /// Immutable storage keeps edge copies independent when their payload is replaced.
+        private final class PhysicalJunctionStorage: Sendable, Equatable {
+            let value: PhysicalJunctionEdge
+
+            init(_ value: PhysicalJunctionEdge) {
+                self.value = value
+            }
+
+            static func == (lhs: PhysicalJunctionStorage, rhs: PhysicalJunctionStorage) -> Bool {
+                lhs.value == rhs.value
+            }
+        }
         /// ADR 0011 validity bounds, carried from the section (or, for a
         /// station-transfer connector, from the station) this edge came from.
         public var validFrom: String? = nil
@@ -1037,6 +1054,27 @@ public enum RouteGraph {
         /// package track and on station-transfer connectors.
         public var historyIDs: [String] = []
         public var temporalKind: TemporalKind = .current
+
+        init(
+            to: String, length: Double, institutionTypeCode: String,
+            railwayClassCode: String, lineName: String, operator: String,
+            connector: StationConnector? = nil, physicalJunction: PhysicalJunctionEdge? = nil,
+            validFrom: String? = nil, validTo: String? = nil,
+            historyIDs: [String] = [], temporalKind: TemporalKind = .current
+        ) {
+            self.to = to
+            self.length = length
+            self.institutionTypeCode = institutionTypeCode
+            self.railwayClassCode = railwayClassCode
+            self.lineName = lineName
+            self.operator = `operator`
+            self.connector = connector
+            self.physicalJunctionStorage = physicalJunction.map(PhysicalJunctionStorage.init)
+            self.validFrom = validFrom
+            self.validTo = validTo
+            self.historyIDs = historyIDs
+            self.temporalKind = temporalKind
+        }
     }
 
     /// What is known about the railways meeting at one node. Used only for

@@ -835,3 +835,53 @@ script blob unchanged. Preserve the live CLI script bytes and staged logo
 deletions. Source/content checks and original UI remain Phase31's evidence;
 this correction adds no App or memory behavior. Verify prior/current tree
 modes, executable live script and unchanged blob, plus bash syntax.
+
+
+## Phase33 — compact optional physical junction payload on graph edges
+
+Keep public PhysicalJunctionEdge as a value and store the uncommon optional
+payload in a private immutable Sendable box. Copied Edge values share only
+immutable payload storage; setting or clearing the payload creates or releases
+that edge's box. Equality compares complete values, and the internal initializer
+retains prior argument order/defaults. Nil payloads allocate no box. Edge stride
+824→184 bytes; payload stride640 unchanged. No graph references/cycles, cache
+policy, physical topology, surveyed geometry, date validity, pending or mileage
+changes. This reduces storage per ordinary edge without truncating rail data.
+
+Unchanged strict frozen Main27 Release JP Sonic44 + TW airport MRT protocol:
+three fresh-process pairs in predefined alternating order, exact public routes
+then ready All-regions Stats, five final actual footprint samples per trial,
+2GiB guard. All six PASS. Settled medians415501960→412798192B (-0.650723%);
+peak medians1193889224→674319408B (-43.519098%). Before settled samples
+410980000/415501960/416337544; after412798192/414797064/411880688. The small
+settled effect and mixed individual-pair direction remain visible. Before
+binary ae44603fa9b672acee707734e8d78d822378ff3a25a73c8c042d1d66584b31b6;
+after8088045f8a4360e91326cad7a8e7676d99e10c86de0c9e07802581eb20794c43.
+Graph candidate d78122bd71b9c43472041e5b59e45a407b248fd03efe3faf67aa8569f8fc9c3f;
+fixture5de394f3c5be1fe469faf7910cb227bc02b17f04dc8f3af3f46bd320433fb3f7.
+The earlier overlapping-run comparison settled+18.016858% FAIL is preserved,
+not replaced or pooled. The controlled repeat ran after all own builds/UI/traces
+ended, except a brief public VM XML export/stream parse near trial1; no claim of
+globally idle host or CPU/latency improvement. No threshold or trial exclusions.
+
+Prior exact candidate:77 focused topology/value/compiled tests PASS; original
+all25 RailHistoryPackageTests PASS, peak686917168B, versus original baseline
+suite64 guard2204289640B. Rebased exact Main32 integration: both simulator
+architectures Release App/test build PASS; current focused physical/value/Stats
+tests PASS (compact-edge-main32-focused.log and additional-focused.log);
+281 production ownership PASS;510 Swift files270 inherited/zero new lint debt,
+format PASS. Original same two-region public Release correctness sample PASS,
+peak683232352B, 66 samples,
+one verified PID25251. Package measured source versus Main32
+differs only by added stateless presentation StatisticsLineCoverage.swift; Core
+identical to measured candidate. Current integration is not a paired comparison.
+
+Independent value/lifetime review found no actionable defect. Full-map Debug
+regional toggles still failed2344833608B on this candidate (an earlier same
+binary run passed1065373392B); original baseline also failed2365068280B under
+VM-only diagnostics. These distinct Debug/observer runs establish neither
+paired map improvement nor regression. Whole-map2GiB failure, original global/
+Domain coverage, five-region paired performance, leaks, launch/firstmap/stalls,
+platform/layout and M gates remain OPEN; full refactor is not complete.
+Receipts are local compact-edge-release-serialized-memory*, compact-edge-main32*,
+history-compact-edge-main27-suite64 and earlier failed comparisons.
