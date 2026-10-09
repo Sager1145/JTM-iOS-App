@@ -162,6 +162,8 @@ if [ "$run_swift" = 1 ]; then
         || fail "AI request lifecycle harness"
     python3 "$here/tools/verify-share-card-rendering.py" \
         || fail "share request lifecycle harness"
+    python3 "$here/tools/verify-selected-route-readiness.py" \
+        || fail "selected share route readiness harness"
     python3 "$here/tools/verify-station-picker-search-lifecycle.py" "$scratch" \
         || fail "station picker search lifecycle harness"
     echo "  subscription authentication, HTTP and request lifecycle harnesses pass"

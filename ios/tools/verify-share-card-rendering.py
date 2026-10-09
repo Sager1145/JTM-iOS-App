@@ -92,6 +92,7 @@ def view_load_key_source():
     var itineraries = ItineraryStore()
     struct Rides { var rides: [RiddenRouteStore.DrawnRide] = [] }
     var riddenRoutes = Rides()
+    var selectedRoutesReady = true
     var key: String { loadKey }
     var members: [String] { scopedTrains.map(\.id) }
 ''' + text[scope_start:scope_end] + text[key_start:key_end] + "}\n"
@@ -657,6 +658,10 @@ CHECKS = r'''
             .init(id: "wrong-year"), .init(id: "wrong-group"), .init(id: "unridden"),
         ]
         let originalLoadKey = loadView.key
+        loadView.selectedRoutesReady = false
+        check(loadView.key != originalLoadKey,
+              "selected route completion invalidates the render/load trigger")
+        loadView.selectedRoutesReady = true
         check(loadView.members == ["member"],
               "production scoped getter respects scope/date/year/group/ridden selection")
         loadView.riddenRoutes.rides.append(.init(id: "unrelated-publication"))

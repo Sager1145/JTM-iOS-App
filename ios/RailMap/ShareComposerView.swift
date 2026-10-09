@@ -428,11 +428,24 @@ struct ShareComposerView: View {
             filter: { members.ids.contains($0.id) })
     }
 
+    private var selectedRoutesReady: Bool {
+        guard let loaded = itineraries.loaded else { return false }
+        // Area membership depends on solved geometry. Await the selected
+        // country/date candidates before narrowing them to Japanese leaves.
+        return riddenRoutes.hasSettledRoutes(in: loaded.trains) { train in
+            model.effectiveScope.regions.contains(Region.resolved(train))
+                && RideLedger.hasBeenRidden(train)
+                && model.statistics.includesYear(train)
+                && model.statistics.includesJourneyGroup(train)
+                && model.statistics.includesDate(train)
+        }
+    }
+
     private var loadKey: String {
         let memberIDs = Set(scopedTrains.map(\.id))
         let ridesKey = riddenRoutes.rides.filter { memberIDs.contains($0.id) }
             .map { "\($0.id):\($0.geometryDigest)" }.joined(separator: ",")
-        return "\(model.effectiveScope.key)|\(model.statistics.selectedYear.map(String.init) ?? "*")|\(model.statistics.selectedJourneyGroupID ?? "*")|\(model.statistics.dateSelection)|\(itineraries.storeGeneration)|\(ridesKey)"
+        return "\(model.effectiveScope.key)|\(model.statistics.selectedYear.map(String.init) ?? "*")|\(model.statistics.selectedJourneyGroupID ?? "*")|\(model.statistics.dateSelection)|\(itineraries.storeGeneration)|routesReady:\(selectedRoutesReady)|\(ridesKey)"
     }
     private var renderKey: String {
         let cards = model.cards.map { "\($0.id):\($0.span.columns)x\($0.span.rows):\($0.mapZoom):\($0.kind)" }.joined()
@@ -441,7 +454,7 @@ struct ShareComposerView: View {
     }
     private var statisticsReadyForRender: Bool {
         if model.effectiveScope.isEmpty { return itineraries.loaded != nil }
-        guard case .loaded = model.statistics.state else { return false }
+        guard selectedRoutesReady, case .loaded = model.statistics.state else { return false }
         return model.statistics.publishedInputsKey == loadKey
     }
     private var previewPixelSize: CGSize {

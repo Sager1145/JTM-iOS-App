@@ -781,3 +781,47 @@ Supplemental Phase29 LLVM export reports new helper57/57 lines,10/10 functions,
 27/30 regions90%; only StatisticsLineCoverage, not module/Domain/global/App
 coverage. Original full-package memory failure and unsettled Edge candidate
 remain open. Unrelated CLI changes and staged logo deletions preserved.
+
+
+## Phase31 — settle selected route inputs before enabling share export
+
+The original Japan/2026-07-03 export failed intermittently because preview
+rendering completed with two of its three selected routes. A later arrival
+changed loadKey while the enabled Export tap was being synthesized; the button
+action never entered. DEBUG event-order samples preserved2pass1fail; a component
+trace proves fixed scope/date/three train IDs/storeGeneration3, selected rides
+2→3 and only ridesKey changed while the global store remained loading. A passing
+component trace identifies the arrival mechanism; it does not replace the
+previous failed event-order and original baseline receipts.
+
+Read existing completedInputs and active resolutionTickets for current selected
+country/date/year/group/ridden records before narrowing Japanese area membership
+by geometry. Include readiness in loadKey so terminal no-ride completion can
+restart render even when vertices do not change. Keep existing terminal batch
+failure eligible for unknown-distance presentation; never mark failures as
+completed, so explicit retry still resolves unfinished inputs. Unrelated dates,
+countries and active tickets do not delay export. Controller generation/key,
+view ticket, cancellation, single permit and noncooperative buffer ownership
+remain unchanged. No new retained arrays, dictionaries, caches, tasks or graph
+owners; no change to physical proof, pending, mileage or geometry.
+
+Validation: exact final Main30+candidate Debugarm64 Appbuild PASS;281 ownership
+PASS;509-file quality270inherited/zero new debt, format PASS;13 actual-query tiny
+input checks and58 production controller/view lifecycle checks PASS. Original
+IntegratedSharing assertion/90s timeout/navigation unchanged: three SERIAL
+samples PASS39.964, 39.534, 40.387s, 87 actual samples, peak1249971968B,
+expected distinct fresh-process identities and no2GiB breach. Original
+ConsoleSweep testWalkEverySurface PASS177.878s, 129
+samples, peak335448992B. Correctness/latency here is not quiet paired
+RAM/leak acceptance. First helper candidate passed its UI sample but was rejected
+for terminal-failure liveness; failed layout v1/v2 both retain lost-text input
+failure and are not shipped. A mistaken same-device parallel validation was
+stopped using verified owned runner/child PIDs; those two receipts are invalid,
+preserved separately, and never counted among these serial samples.
+
+Main30 pinned quality CI37957246063 SUCCESS; Phase29 quality/parity jobs were
+cancelled by its newer push, not recorded as PASS. Full refactor/memory/coverage,
+layout, platforms and M remain open. Public VM-only Instruments diagnostic uses
+a separate owned device and original Main26 baseline; none of that diagnostic
+or rejected compact Edge is included in this commit. Temporary execution
+receipts: share-selected-route-readiness-v2-* and sharing-export-probe-*.

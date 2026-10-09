@@ -200,6 +200,18 @@ final class RiddenRouteStore {
     private var resolutionTickets: [String: UUID] = [:]
     private var resolutionTasks: [String: Task<Void, Never>] = [:]
 
+    /// Selected records have settled geometry or the existing terminal batch
+    /// failure leaves their distance unknown. This never marks failed inputs
+    /// completed, so an explicit retry still resolves them normally.
+    func hasSettledRoutes(in trains: [Train], matching includes: (Train) -> Bool) -> Bool {
+        let failed: Bool
+        if case .failed = state { failed = true } else { failed = false }
+        return trains.allSatisfy { train in
+            !includes(train) || (resolutionTickets[train.id] == nil
+                && (completedInputs[train.id] == train || failed))
+        }
+    }
+
     /// Solve and draw every ride, whatever region each belongs to.
     ///
     /// The web app is handed one dataset and one country because it has one
