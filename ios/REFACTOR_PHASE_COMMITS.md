@@ -21,7 +21,7 @@ Local receipts: `outputs/refactor-20261009-resume/resource-clean-incremental-fin
 
 ## Phase 2: bounded route graph ownership and native history inputs
 
-Status: validated for independent commit/push.
+Status: committed and pushed as `ed707bef`.
 
 Includes the compiled-section builder prerequisite, one shared bounded graph slot,
 and eviction of oversized compiler memos. Default `.standard` behavior remains
@@ -40,6 +40,27 @@ fixed-workload compiler-memo comparison retains identical route output and lower
 resident footprint by 70.064%; it is not a whole-App measurement.
 Receipts: `graph-phase-head-test.log`, `validity-production-graph.log`, and
 `history-native-production-graph.log` under the local receipt directory above.
+
+## Phase 3: coverage export and honest changed-line reporting
+
+Status: validated for independent commit/push.
+
+Adds sequential LCOV export for existing per-target SwiftPM test binaries and a
+reporter that unions repeated instrumented lines, maps candidate diff lines, and
+fails missing changed-source coverage. Reports retain executable/profile hashes,
+commands, errors, excluded non-executable lines and explicit scoped limitations.
+No test selection is silently treated as full Domain or UI coverage.
+
+Validation: 30 small parser/exporter tests pass. Real instrumented Application
+run passes 35 tests in five suites. All three matching test executables export
+successfully. Application-only result: 445/464 executable lines (95.9052%);
+49/49 changed executable lines (100%), no unmapped changed files. Frozen
+candidate diff is against original `14d2946`; this run includes uncommitted
+Application validation changes and does not claim they have been delivered.
+The supplied 70%/75% scoped reporting thresholds pass; full Core/App coverage
+and the roadmap's final gates still require their complete instrumented suites.
+Receipts: `application-coverage-test.log`, `application-coverage-export/manifest.json`,
+`application-coverage-candidate.diff`, `application-coverage.json`.
 
 ## Remaining delivery phases
 
