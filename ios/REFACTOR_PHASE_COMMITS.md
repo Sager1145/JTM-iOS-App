@@ -677,3 +677,25 @@ quality reports. Unrelated live RideEditor CLI changes are preserved by
 applying only the snapshot insertion; an isolated Git index commits the
 validated Main candidate rather than the rest of that dirty file. Full
 platform/memory acceptance remains open.
+
+
+## Phase27 — original roadmap / matrix reconciliation through Main26
+
+Reconcile accepted phases20–26 into the original S0–S6/M plan and feature
+matrix, preserving historical CLI text and every original acceptance target.
+Main26 push and origin identity verified; pinned quality CI37942955301 SUCCESS.
+Record the new-debt gate separately from167 legacy production findings,
+dedicated UI fixes separately from137-test current matrix, five real regions
+correctness separately from pairedRAM/leaks, and the completed674-inspection
+census separately from still-running169-suite/fullcoverage acceptance.
+
+Preserve failed sparse-junction/one-frame candidates and Main26 DEBUG guard
+peak2205766504B without shipping them or attributing transient allocations
+solely from nearby graph events. M remains unaccepted; exact-reference
+control has confounded measured stroke width. Remaining quiet performance,
+responsibility directories and platform gates stay open. Documentation only;
+no production source, test assertion, fixture, resource or memory gate change.
+
+Validation: receipts and committed source/test identities checked against
+Main26; links resolve to original plan/ledger. Original cached two logo
+deletions and all unrelated CLI working changes are preserved.
