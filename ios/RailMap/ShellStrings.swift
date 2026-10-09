@@ -35,6 +35,18 @@ enum ShellStrings {
         "ios.myRides": [.en: "My Rides", .ja: "自分の乗車記録", .zhHans: "我的行程", .zhHant: "我的行程"],
         "ios.appearance": [.en: "Appearance", .ja: "外観", .zhHans: "外观", .zhHant: "外觀"],
         "ios.map": [.en: "Map", .ja: "地図", .zhHans: "地图", .zhHant: "地圖"],
+        "ios.map.routesIdle": [
+            .en: "Routes not loaded", .ja: "ルート未読み込み", .zhHans: "路线尚未加载", .zhHant: "路線尚未載入",
+        ],
+        "ios.map.routesLoading": [
+            .en: "Loading routes", .ja: "ルートを読み込み中", .zhHans: "正在加载路线", .zhHant: "正在載入路線",
+        ],
+        "ios.map.routesLoaded": [
+            .en: "Routes loaded", .ja: "ルート読み込み完了", .zhHans: "路线已加载", .zhHant: "路線已載入",
+        ],
+        "ios.map.routesFailed": [
+            .en: "Routes could not be loaded", .ja: "ルートを読み込めませんでした", .zhHans: "无法加载路线", .zhHant: "無法載入路線",
+        ],
         "ios.diagnostics": [.en: "Diagnostics", .ja: "診断", .zhHans: "诊断", .zhHant: "診斷"],
         "ios.statistics": [.en: "Statistics", .ja: "統計", .zhHans: "统计", .zhHant: "統計"],
         "ios.recordedJourneys": [.en: "Recorded journeys", .ja: "記録済みの乗車", .zhHans: "已记录行程", .zhHant: "已記錄行程"],

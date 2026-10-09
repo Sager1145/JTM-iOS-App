@@ -366,12 +366,56 @@ boundary audit; buffered output cannot identify the exact final allocating test.
 This remains an open memory failure, not full-package acceptance. Receipts:
 `main-regression-results.json`, `main-regression-memory-summary.json`.
 
+## Phase 17: public Release readiness and honest memory gate
+
+Status: independently validated public route proof; whole-App memory gate failed.
+
+Exposes the real map route-load state through a localized accessibility container,
+retaining native MapKit and annotation accessibility. The Release XCTest opens
+both exact committed JP Sonic44/TW airport MRT journeys, requires each public
+"Route generated" state, and reaches ready All-regions statistics. It expands
+the real public panel before seeking lazy list cells. No DEBUG route confirmations,
+synthetic geometry or test-only readiness surface is used.
+
+Adds the reviewed two-record fixture and a reusable fresh-process Release sampler.
+The sampler uses an explicit dedicated simulator, validates matching Release
+products, records actual physical footprint/peak and source hashes, limits sample
+retention, and returns nonzero unless settled median strictly falls and peak
+median does not increase. Public success alone cannot satisfy this gate.
+
+Validation: frozen phase-12 pair has six public route/Stats passes. Latest c88c5269
+Main with these exact public changes independently builds Release arm64/x86_64
+and passes the public test in 77.876s. Native source boundaries (280 sources),
+seven ownership checks and permanent typography bounds pass. New XCTest has zero
+configured SwiftLint findings and passes pinned scoped SwiftFormat; sampler parses,
+CLI help and actual Release-product validation pass.
+
+The phase-12 production pair uses base 21c60b79, differing only in RiddenRouteStore
+(a48cb27b before, bounded/carried-input implementation after) with common readiness
+changes, exact Main resources and the same real fixture. Three alternating fresh
+process/container trials yield median settled footprint 492,343,136 -> 577,867,424 B
+(+17.37%, FAIL) and median peak 1,532,563,128 -> 1,261,276,688 B (-17.70%). Other owned
+validation ran on this host; this observed failed gate is retained and cannot be
+reported as whole-App memory acceptance. No rollout claim is inferred from peak
+reduction. Receipts: `real-route-app-memory-v4.json`,
+`real-route-memory-comparison-inputs.json`, `release-proof-main-result.json`,
+`release-proof-main-build.log`, `release-proof-main-boundaries.log`.
+
+Follow-up evidence: isolated committed-Main historical browser boundary audit
+passes all its assertions in 718.057s (719.977s runner), peak physical footprint
+1,938,131,584 B under the owned 2 GiB guard. The earlier full-package 2,286,816,064 B
+stop remains unresolved. Frame-leading public-convert M candidate collects native
+raster screenshots but fails alignment: sampled maxima 3-4 device px; frame gap
+347.675ms exceeds 150ms. Candidate remains scratch-only, never default/shipped.
+Receipts: `history-boundary-focused-run-summary.json`,
+`history-boundary-focused-memory-summary.json`, `map-frame-lead-pixels.log`.
+
 ## Remaining delivery phases
 
 - Recover the large historical graph's memory acceptance without changing physical
   connectivity, surveyed geometry, expected routes or mileage assertions.
-- Integrate validated statistics/route/display cache and lifecycle changes as
-  independently buildable commits; include and verify required prerequisites.
+- Complete whole-App memory acceptance for the delivered cache/lifecycle changes;
+  retain the Phase 17 settled-footprint failure while reducing allocator ownership.
 - Add coverage export/reporting and version-pinned advisory lint/format CI, then
   meet and enforce the original coverage/quality goals using complete evidence.
 - Complete remaining UI/platform, launch/render/stall/build/leak measurements.

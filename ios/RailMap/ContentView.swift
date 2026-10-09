@@ -2954,6 +2954,10 @@ struct RailWorkspaceView: View {
                 store.ensure(regionsIntersecting: rect, cameraZoom: visibilityZoom)
             }
         ) { render = $0 }
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel(Text(localization.text("ios.map", fallback: "Map")))
+        .accessibilityIdentifier("railwayMap")
+        .accessibilityValue(Text(mapRouteLoadStatus))
         .ignoresSafeArea()
         // The one place the setting crosses from SwiftUI into the controller.
         //
@@ -2985,6 +2989,19 @@ struct RailWorkspaceView: View {
             }
         }
 #endif
+    }
+
+    private var mapRouteLoadStatus: String {
+        switch riddenRoutes.state {
+        case .idle:
+            return localization.text("ios.map.routesIdle", fallback: "Routes not loaded")
+        case .loading:
+            return localization.text("ios.map.routesLoading", fallback: "Loading routes")
+        case .loaded:
+            return localization.text("ios.map.routesLoaded", fallback: "Routes loaded")
+        case .failed:
+            return localization.text("ios.map.routesFailed", fallback: "Routes could not be loaded")
+        }
     }
 
 #if DEBUG
