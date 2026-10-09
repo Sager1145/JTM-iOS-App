@@ -149,7 +149,7 @@ Receipts: `edge-phase-head-build.log`, `release-merge-allocation/`.
 
 ## Phase 8: endpoint availability before graph allocation
 
-Status: validated for independent commit/push; existing historical data issue remains.
+Status: committed as `9b894f29`; existing historical data issue remains.
 
 Extracts the existing endpoint normalization, code/name expansion, institution
 filter and date availability into one shared preparation function. On-demand
@@ -166,6 +166,25 @@ Complete native history on the full ongoing-CLI source snapshot passed separatel
 in Phase 2. Do not infer clean-main full-suite acceptance from that result.
 Receipts: `endpoint-phase-focused-test.log`, `endpoint-phase-head-test.log`,
 `endpoint-phase-baseline-donan.log` (baseline/candidate both exit 1 for that case).
+
+## Phase 9: production-sized endpoint census cache ownership
+
+Status: memory/ownership validation complete; functional registry failure remains.
+
+Real-data endpoint/census helpers use the production bounded graph policy rather
+than retaining every region/corridor/full graph. Inputs, comparisons, route
+assertions and reviewed-junction rejection checks remain unchanged.
+
+Validation: the guarded 201-ride census completes (836.368s), peak 1,413,089,176
+bytes versus the prior runner stopped at 2,327,481,248 bytes. It reports one
+functional issue: the direct public graph builder rejects five historical
+registry entries (Naoetsu, two Goryokaku entries, Aomori and Tsubata). That check
+calls `RouteGraph.build` directly and does not use the changed graph-store policy.
+The memory acceptance does not turn this functional failure into a PASS; the
+census remains unresolved. The same graph-policy ownership/geometry invariants
+are covered by Phase 2's cache equivalence tests. Full-suite status is separate.
+Receipts: `census-bounded.log`, `census-bounded-summary.json`,
+`package-native-production-graph-summary.json`.
 
 ## Remaining delivery phases
 

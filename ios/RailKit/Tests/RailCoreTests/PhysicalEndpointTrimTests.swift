@@ -245,7 +245,8 @@ struct PhysicalEndpointTrimTests {
             junctions = registry.junctions(for: "jp")
         }
         let graphStore = RouteGraph.RouteGraphStore(
-            sections: sections, policy: .physicalRailway, junctions: junctions)
+            sections: sections, policy: .physicalRailway, junctions: junctions,
+            cachePolicy: .bounded(maximumNodes: 100_000))
         let loaded = try DisplayParts.LoadedPackage.load(
             contentsOf: root.appending(path: "app/public/rail/jp-2025.json"))
         let network = RouteNetwork(lines: loaded.package.lines.map { line in
