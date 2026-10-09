@@ -210,7 +210,7 @@ struct StatisticsDashboardContent: View {
 
     private struct CategoryDetail: Identifiable {
         let category: Statistics.Category
-        let rows: [LineCoverageRow]
+        let rows: [StatisticsLineCoverage.Row]
         var id: Int { category.mask }
     }
 
@@ -1109,15 +1109,9 @@ struct StatisticsDashboardContent: View {
     /// detail section §5.7 puts last. Same rows, same order, same numbers.
     private func lineDetailCard(_ view: Statistics.MileageStatsView) -> some View {
         let sections = view.categories.compactMap { category -> CategoryDetail? in
-            // 新幹線 has only about eleven lines, so listing the unridden ones
-            // keeps a 0% 山形/秋田新幹線 visible; 地下鐵 is small enough for the
-            // same treatment. 在來線 / JR / 私鐵 stay ridden-only, or the list
-            // would be hundreds of 0% rows.
-            let rows = lineCoverageRows(
-                mask: category.mask,
-                includeUnridden: category.mask == Statistics.maskHSR
-                    || category.mask == Statistics.maskMETRO,
-                ridden: view.overall.lineRidByCat)
+            let rows = StatisticsLineCoverage.rows(
+                mask: category.mask, totals: statistics.lineTotals,
+                operators: statistics.lineOperators, ridden: view.overall.lineRidByCat)
             return rows.isEmpty ? nil : CategoryDetail(category: category, rows: rows)
         }
         return Group {
@@ -1154,7 +1148,7 @@ struct StatisticsDashboardContent: View {
         }
     }
 
-    private func lineRow(_ line: LineCoverageRow) -> some View {
+    private func lineRow(_ line: StatisticsLineCoverage.Row) -> some View {
         VStack(alignment: .leading, spacing: 3) {
             adaptiveRow(
                 label: VStack(alignment: .leading, spacing: 1) {
@@ -1184,49 +1178,6 @@ struct StatisticsDashboardContent: View {
         .accessibilityLabel(Text(line.company.isEmpty ? line.name : "\(line.company) \(line.name)"))
         .accessibilityValue(
             Text(coverageSpoken(ridden: line.ridden, total: line.total)))
-    }
-
-    private struct LineCoverageRow: Identifiable {
-        let name: String
-        /// The raw N02 operator, which is what the ORDER is built on.
-        let operatorName: String
-        /// The short label the rows are grouped by, which is what is SHOWN.
-        let company: String
-        let total: Double
-        let ridden: Double
-        var id: String { "\(operatorName)\u{001F}\(name)" }
-        var percent: Double { total > 0 ? 100 * ridden / total : 0 }
-    }
-
-    private func lineCoverageRows(
-        mask: Int, includeUnridden: Bool,
-        ridden: Statistics.OrderedDictionary<String, [Int: Double]>
-    ) -> [LineCoverageRow] {
-        statistics.lineTotals.compactMap { item -> LineCoverageRow? in
-            let total = item.byMask[mask] ?? 0
-            guard total > 0 else { return nil }
-            let riddenKm = ridden[item.name]?[mask] ?? 0
-            guard riddenKm > 0 || includeUnridden else { return nil }
-            let operatorName = statistics.lineOperators[item.name] ?? ""
-            return LineCoverageRow(
-                name: item.name, operatorName: operatorName,
-                company: StatisticsFormat.companyLabel(operatorName),
-                total: total, ridden: riddenKm)
-        }
-        // Group by operating company, then by line within the company, so a
-        // near-100% aggregate can be audited in a stable, readable order
-        // instead of "whatever we rode most". Lines with no known operator
-        // sort last so they cannot split a company's block.
-        .sorted { a, b in
-            if a.operatorName != b.operatorName {
-                if a.operatorName.isEmpty { return false }
-                if b.operatorName.isEmpty { return true }
-                if a.operatorName.localizedStandardCompare(b.operatorName) != .orderedSame {
-                    return StatisticsFormat.linesPrecede(a.operatorName, b.operatorName)
-                }
-            }
-            return StatisticsFormat.linesPrecede(a.name, b.name)
-        }
     }
 
     // MARK: - 乘坐分佈 (the reference's "FLIGHTS PER Year / Month / Weekday")

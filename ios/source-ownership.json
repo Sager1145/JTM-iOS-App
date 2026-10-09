@@ -504,6 +504,7 @@
         "ios/RailKit/Sources/RailPresentation/StationLineSelection.swift",
         "ios/RailKit/Sources/RailPresentation/StationPlaceLink.swift",
         "ios/RailKit/Sources/RailPresentation/StatisticsDateSelection.swift",
+        "ios/RailKit/Sources/RailPresentation/StatisticsLineCoverage.swift",
         "ios/RailKit/Sources/RailPresentation/WorkspaceJourneyRules.swift",
         "ios/RailKit/Sources/RailPresentation/WorkspaceLayoutPolicy.swift"
       ]

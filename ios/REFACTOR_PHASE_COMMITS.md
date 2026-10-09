@@ -718,3 +718,52 @@ valid samples and 2GiB stop are unchanged. No app source, fixture, XCTest
 assertion or memory threshold changes; no comparative RAM claim in this phase.
 The in-progress Edge layout candidate and both its passing and guard-stopped
 map runs remain separate unaccepted evidence until paired validation.
+
+
+## Phase29 — statistics line coverage presentation responsibility
+
+Extract the existing category eligibility, raw-operator grouping, localized
+numeric order, row identity, company label and unrounded mileage percentage
+from StatisticsView into stateless RailPresentation. Caller keeps scoped
+statistics/loading ownership; no new tasks, caches or retained input copies.
+The same compactMap/sorted policy and all six category masks remain intact.
+Register only this source in the ownership manifest; preserve concurrent CLI
+responsibility wording and all unrelated dirty files/staged logo deletions.
+
+Validation on exact Main28 + this seam, without compact Edge: 5 focused test
+functions / 8 cases PASS, including real port fixture; mechanically extracted
+old policy matches sequence, every field and Double bits across all six masks.
+Debug arm64 App build PASS; ownership281 PASS; pinned509-file quality retains
+270 existing findings, zero new debt, format PASS. Original statistics calendar
+62.311s and rhythm/year51.235s PASS. IntegratedSharing failed129.222s waiting
+for exported preview; exact original Main28 baseline also failed, exit65,
+90 samples / one PID / peak1446088520B. Preserve both failures: no sharing
+assertions or timeout changes, no claim of export closure or measured RAM gain.
+Focused validation initially imported a shadowing old RailPresentation module;
+retain that failed build. Corrected Core-only link directory compiled the real
+new helper/tests against byte-identical Main28 Core; 5/8 passed with coverage
+instrumentation. No full Domain/global coverage inference.
+
+Current open evidence: Main28 sampler nine regressions and CI37950156025 pass.
+Original Main18 Core byte-identical to Main28: first63 registered suites pass,
+suite64 original25-test RailHistoryPackageTests stopped at2204289640B; no169-suite
+or full coverage success. Compact Edge candidate stride824→184 and original
+history25 PASS peak686917168B, but Release3+3 settled median438587016→517606616
+(+18.016858%, FAIL), peak1201524168→673287240(-43.963904%); not adopted.
+Same candidate Debug map guard peak2344833608B remains failed. Other owned
+validation overlapped paired run, so no quiet CPU/latency acceptance either.
+
+Remaining Main26 UI24 runs completed:63pass13fail11skip/87; source507 Swift
+identical to Main28. Full137-test/39-class and earlier failures remain open.
+One five-region input failure came from method identifier trailing parentheses
+selecting two-region fixture; preserve failure. Correct committed five-region
+fixture rerun original test PASS112samples/onePID/peak1249725920B. No product
+assertion/fixture/threshold weakened. Original roadmap and matrix reflect these
+limits rather than accumulate local successes into global acceptance.
+
+Local receipts: statistics-line-coverage-main28-{candidate,tests,ui-validation,
+quality,new-debt}, sharing-main28-baseline-validation, compact-edge-release-
+paired-memory, history-compact-edge-main27-suite64, package-main18-isolated-
+coverage-v9, platform-main26-ui-remaining-results and five-region recovery.
+Temporary receipts are execution attachments; this committed summary is durable.
+Full memory, platforms, global coverage, directory migration and M remain open.
