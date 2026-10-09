@@ -7,24 +7,30 @@ import Testing
 /// handling: the 日豊線 requirement must only apply when BOTH endpoints of the
 /// section are on the 日豊線 corridor east of 小倉. West of 小倉 (黒崎, 戸畑,
 /// 博多) the train runs on 鹿児島線, so those legs must still solve.
+@Suite(.serialized)
 struct SonicRouteConstraintTests {
     struct Environment {
-        let graph: RouteGraph.Graph
+        let graphStore: RouteGraph.RouteGraphStore
         let stations: Stations.Index
     }
 
-    nonisolated(unsafe) static let environment: Environment = {
+    // Each solve owns its inputs and memoized graphs only for that call.
+    // Serial cases avoid overlapping national input decoding in other runners.
+    static func environment() -> Environment {
         let root = try! PortFixtures.repositoryRoot()
         let sections = try! RouteGraph.SectionFeatureCollection.load(
             contentsOf: root.appending(path: "app/data/rail-sections.json")).features
         let stationCollection = try! Stations.FeatureCollection.load(
             contentsOf: root.appending(path: "app/data/stations.json"))
         let stations = Stations.Index(stationCollection)
-        let graph = RouteGraph.build(from: sections)
-        RouteSolver.addStationTransferConnectorEdges(
-            graph: graph, stations: stationCollection.features)
-        return Environment(graph: graph, stations: stations)
-    }()
+        let registry = try! PhysicalRailJunctionRegistry(data: Data(contentsOf:
+            root.appending(path: "app/data/physical-rail-junctions.json")))
+        let graphStore = RouteGraph.RouteGraphStore(
+            sections: sections, policy: .physicalRailway,
+            junctions: registry.junctions(for: "jp"),
+            cachePolicy: .bounded(maximumNodes: 100_000))
+        return Environment(graphStore: graphStore, stations: stations)
+    }
 
     static let train = RouteSolver.TrainContext(
         id: "sonic-test", number: "ソニック", trainType: "特急",
@@ -33,11 +39,12 @@ struct SonicRouteConstraintTests {
         allowedInstitutionTypeCodes: nil, institutionFilterMode: "soft")
 
     static func solve(_ from: String, _ to: String) -> RouteSolver.SolvedSection? {
-        let env = Self.environment
+        let env = Self.environment()
         let section = RouteSection(from: from, to: to)
-        return RouteSolver.solveSection(
+        return RouteSolver.solveSectionOnDemand(
             section, segmentIndex: 0, train: Self.train, country: "jp",
-            graph: env.graph, stations: env.stations, continuityAnchor: nil)
+            graphStore: env.graphStore, stations: env.stations,
+            continuityAnchor: nil, traversalPolicy: .physicalRail)
     }
 
     @Test func kurosakiToKokuraSolves() throws {

@@ -188,7 +188,7 @@ Receipts: `census-bounded.log`, `census-bounded-summary.json`,
 
 ## Phase 10: map label and selected-station responsibility extraction
 
-Status: validated for main delivery.
+Status: committed and pushed as `4cb6bdc6`.
 
 Moves the collision grid unchanged into its own source and isolates selected
 station snapshot tasks/cache lifetime from the map coordinator. Teardown clears
@@ -213,6 +213,31 @@ fixture paths and StoreOperations byte mismatches are also recorded. This is
 not a completed suite. The serialized share lifecycle's 46 checks pass and the
 App builds, but the public export test fails during preview invalidation; its
 source-key/lifecycle cause is being traced before delivery.
+
+## Phase 11: scoped native Sonic route-constraint fixtures
+
+Status: validated for main delivery.
+
+The Sonic constraint suite now uses the application's on-demand physical graph,
+reviewed junctions and bounded graph policy. Each solve owns its fixture through
+completion; no national graph remains a static process owner. The suite is
+serialized even when the runner permits other parameter cases in parallel.
+Original train context, full source sections/stations and all four assertions
+are unchanged. Passenger-transfer augmentation is removed from this native test.
+
+Validation: independent clean-main Core plus only this test passes all four
+cases in 15.062s. Frozen ongoing-CLI Core/data A/B also passes all four in both
+versions: original static graph 41.428s / sampled peak 1,979,468,152 bytes;
+candidate 14.817s / sampled peak 762,938,760 bytes (61.46% lower). This is one
+controlled test-process pair, not whole-App memory or launch acceptance.
+Receipts: `sonic-phase-head.log`, `sonic-original-baseline*`,
+`sonic-native-production*`. No source geometry or physical evidence was changed.
+
+Sharing diagnostic runs pass twice (actual PNG, preview and dismissal). The
+trace also records late publication of ride 144 after ride 143: the current
+composer hashes all rides although its statistics/rendered cards use selected
+scope/date members. A focused input-key fix and regression are in progress;
+the earlier public failure remains evidence, not waived by the later passes.
 
 ## Remaining delivery phases
 
