@@ -1,81 +1,69 @@
 import Foundation
 import RailCore
 
-/// The N02 edge index, built once per region and then shared.
-///
-/// Building one means parsing the whole of `rail-sections*.json` and walking
-/// every edge in it — seconds, not milliseconds, which is why the statistics
-/// screen has a `readingNetwork` stage to show for it. The network itself
-/// never changes while the app is running, so building it more than once per
-/// region is pure waste, and there are now two callers that want the same
-/// answer:
-///
-/// - `MileageStatisticsStore`, which rebuilds its numbers whenever the rides
-///   change — and since the shell's route key started covering the whole
-///   record rather than ids and visibility, that is every edit, not only an
-///   add or a delete. Re-reading the network on each one would put seconds
-///   between saving a journey and seeing its statistics move.
-/// - the ridden-line category filter, which classifies a drawn segment by
-///   dominant km over these same edges.
-///
-/// An `actor` rather than a lock: the build is the expensive part and it has
-/// to be joinable, so two callers asking for the same region at once wait on
-/// one build instead of starting two.
+/// Shares one completed statistics index and coalesces active country builds.
+/// Evicted countries rebuild on demand; active callers retain their own value.
 actor EdgeIndexCache {
     static let shared = EdgeIndexCache()
 
-    private var indexes: [String: Statistics.EdgeIndex] = [:]
-    private var inFlight: [String: Task<Statistics.EdgeIndex, Error>] = [:]
-    /// Keep the last multi-region merge as well as its component indexes.
-    /// Returning to All Regions after a single-region visit must not copy
-    /// every edge dictionary again. One slot bounds the extra memory.
-    /// `policy` is `attribution-policy-v2`: a merge cached before in-place
-    /// retirement stayed in the reference-geometry denominator must not be
-    /// reused. Country-list equality is otherwise unchanged, and the ride
-    /// date is not part of this key — the index is date-independent.
-    private var mergedIndex: (countries: [String], policy: String, index: Statistics.EdgeIndex)?
+    private typealias BuiltIndex = (index: Statistics.EdgeIndex, denominatorEdgeCount: Int)
+    private enum CacheKey: Equatable {
+        case country(String)
+        case merged([String], String)
+        case scoped([String], String)
+    }
+    private var completed: (key: CacheKey, value: BuiltIndex)?
+    private var inFlight: [String: Task<BuiltIndex, Error>] = [:]
+    // Independent of route and display admission: country construction awaits
+    // DisplayNetworkCache while holding this permit. Merges acquire it only
+    // after fetching their components, so they never await a nested index build.
+    private let buildLimiter = RouteSolveLimiter(limit: 1)
 
-    /// In-memory identity of one region's index. Not persisted: this actor
-    /// holds indexes only for the life of the process, so there is no disk
-    /// key to extend. The ride date is intentionally absent.
+    private func cached(_ key: CacheKey) -> BuiltIndex? {
+        completed?.key == key ? completed?.value : nil
+    }
+
+    private func releaseCompleted() { completed = nil }
+
+    private func retain(_ value: BuiltIndex, key: CacheKey) {
+        completed = (key, value)
+    }
+
     private nonisolated static func countryCacheKey(_ country: String) -> String {
         "\(country)|attribution-policy-v2"
     }
 
-    /// The index for one region, building it if this is the first ask.
     func index(country: String) async throws -> Statistics.EdgeIndex {
-        let key = Self.countryCacheKey(country)
-        if let ready = indexes[key] { return ready }
-        // Joined rather than started again: the second caller of a region
-        // whose build is already running is exactly the case this exists for.
-        if let running = inFlight[key] { return try await running.value }
+        try await countryIndex(country).index
+    }
 
-        let task = Task.detached(priority: .userInitiated) {
-            let n02 = try Self.build(country: country)
-            // The drawn network behind it — see ``appendingVector(to:network:)``.
-            // `try?` keeps N02 alone as the answer when the package is absent:
-            // a bundle without it can still measure a ride, it just cannot
-            // measure the parts of one that only the package draws.
-            guard let network = try? await DisplayNetworkCache.shared.network(
-                country: country)
-            else { return n02 }
-            return Self.appendingVector(to: n02, network: network)
+    private func countryIndex(_ country: String) async throws -> BuiltIndex {
+        let key = Self.countryCacheKey(country)
+        if let ready = cached(.country(key)) { return ready }
+        if let running = inFlight[key] { return try await running.value }
+        let limiter = buildLimiter
+        let task = Task.detached(priority: .userInitiated) { () async throws -> BuiltIndex in
+            try await limiter.withPermit {
+                await self.releaseCompleted()
+                let n02 = try Self.build(country: country)
+                let count = n02.km.count
+                let index: Statistics.EdgeIndex
+                if let network = try? await DisplayNetworkCache.shared.network(country: country) {
+                    index = Self.appendingVector(to: n02, network: network)
+                } else {
+                    index = n02
+                }
+                let built = (index: index, denominatorEdgeCount: count)
+                // Publish under admission; waiters must not restore an older
+                // country after its replacement has started allocating.
+                await self.retain(built, key: .country(key))
+                return built
+            }
         }
         inFlight[key] = task
-        // Detached, so a caller that is cancelled while waiting does not take
-        // the build down with it — the other caller is still waiting on it.
-        //
-        // The in-flight entry is cleared by whoever the build finishes for,
-        // and only if it is still THIS task. It used to be cleared in a
-        // `defer` on this function, which runs when the *awaiting caller*
-        // leaves — so a caller cancelled mid-wait removed a build that was
-        // still running, and the next ask started a second one over the same
-        // 12 MB of Japanese sections. Cancelling one waiter must not cost the
-        // next one seconds.
         do {
             let built = try await task.value
             if inFlight[key] == task { inFlight[key] = nil }
-            indexes[key] = built
             return built
         } catch {
             if inFlight[key] == task { inFlight[key] = nil }
@@ -83,109 +71,61 @@ actor EdgeIndexCache {
         }
     }
 
-    /// One index covering several regions.
-    ///
-    /// The all-regions statistics scope needs a single index: coverage is a
-    /// fraction of a denominator, and five denominators is five answers rather
-    /// than one. The networks are geographically disjoint, so laying the
-    /// finished indexes side by side is arithmetic rather than a judgement —
-    /// each region's masks were already decided by its OWN country's rules
-    /// when its index was built, and nothing here re-decides them.
-    ///
-    /// The one thing that is not arithmetic is a line NAME. The packages share
-    /// exactly one — 海岸線, which is a Kobe subway line in Japan and a
-    /// Taiwanese main line — and a breakdown keyed on the bare name would fuse
-    /// the two into one row whose kilometres belong to neither. Any name that
-    /// arrives from more than one region is therefore qualified with its
-    /// region, and names that are unique are left exactly as they are so the
-    /// single-region case is untouched.
-    ///
-    /// ## The regions are built concurrently
-    ///
-    /// They are merged in the order they were asked for, but they are BUILT at
-    /// the same time.
-    ///
-    /// The loop this replaces awaited one region before starting the next, so
-    /// the first "全部" statistics of a launch paid five reads and five index
-    /// builds back to back — for five files that share nothing and can be read
-    /// at the same time. Ordering is restored explicitly afterwards because
-    /// `merge` is order-sensitive: it decides which region's spelling of a
-    /// shared line name comes first, and the edge offsets it lays down have to
-    /// match the arrays they index into.
-    ///
-    /// Unbounded over the compact regions; the large ones one at a time.
-    ///
-    /// The note this replaces said a sixth region of Japan's size would be the
-    /// moment to add a limit. That region arrived: the United States is
-    /// 7.1 MB of sections over Japan's 11.8, and the two of them plus Canada
-    /// are 20.5 of the 22.2 MB the seven come to.
-    ///
-    /// Building one index is not a decode of its file — it is the file's
-    /// coordinates as Swift values, the edge table over them, AND the region's
-    /// whole 6–9 MB package underneath for the drawn network the index is
-    /// vectored against (``appendingVector(to:network:)``). Seven of those in
-    /// flight at once holds every large intermediate the app can produce
-    /// simultaneously, and the two that dominate it are exactly the two that
-    /// need the most room. On a phone that peak is the difference between a
-    /// slow screen and a terminated one, and it buys nothing: the wall clock
-    /// of a set whose two big members are CPU-bound is those two, whether they
-    /// overlap or queue.
-    ///
-    /// So: the five compact regions concurrently, because together they are
-    /// smaller than either large one and their latency is the group's; then
-    /// the large ones in catalog order, one at a time. See
-    /// ``Region/DataWeight`` for where the line is drawn and why.
-    ///
-    /// **The merge order is unchanged.** Results are placed by the caller's
-    /// own position and read back in it, exactly as the all-concurrent version
-    /// did — `merge` decides which region's spelling of a shared line name
-    /// comes first and lays down edge offsets that index into the arrays it
-    /// builds, so the order it sees may not become a property of the schedule.
+    /// Preserve the caller's order, including duplicate countries and line-name
+    /// qualification. Components are fetched before admitting the pure merge.
     func merged(countries: [String]) async throws -> Statistics.EdgeIndex {
-        if let mergedIndex,
-            mergedIndex.countries == countries,
-            mergedIndex.policy == "attribution-policy-v2"
-        { return mergedIndex.index }
         guard countries.count > 1 else {
-            // One region needs no group, and none at all still answers what
-            // the sequential version answered: `merge` of nothing.
             guard let only = countries.first else { return Self.merge([]) }
             return Self.merge([(only, try await index(country: only))])
         }
-        var byPosition: [Int: Statistics.EdgeIndex] = [:]
-        // By POSITION rather than by country, so a list that names a country
-        // twice still gets both of its slots filled and the merge still sees
-        // the caller's own sequence.
-        let weighed = countries.enumerated().map {
-            (position: $0, country: $1, weight: Region.dataWeight(country: $1))
+        let key = CacheKey.merged(countries, "attribution-policy-v2")
+        if let ready = cached(key) { return ready.index }
+        var parts: [(country: String, index: Statistics.EdgeIndex)] = []
+        for country in countries {
+            parts.append((country, try await index(country: country)))
         }
+        return try await mergedResult(parts, key: key)
+    }
 
-        try await withThrowingTaskGroup(
-            of: (Int, Statistics.EdgeIndex).self
-        ) { group in
-            for entry in weighed where entry.weight == .compact {
-                group.addTask {
-                    (entry.position, try await self.index(country: entry.country))
-                }
-            }
-            for try await (position, built) in group { byPosition[position] = built }
+    private func mergedResult(
+        _ parts: [(country: String, index: Statistics.EdgeIndex)], key: CacheKey
+    ) async throws -> Statistics.EdgeIndex {
+        try await buildLimiter.withPermit {
+            if let ready = await self.cached(key) { return ready.index }
+            await self.releaseCompleted()
+            let result = Self.merge(parts)
+            await self.retain((result, 0), key: key)
+            return result
         }
+    }
 
-        for entry in weighed where entry.weight == .large {
-            byPosition[entry.position] = try await index(country: entry.country)
+    /// The N02 denominator count travels with its country result. A country
+    /// eviction cannot make Japan clipping count appended display-only edges.
+    func scoped(
+        countries: [String], japanLeaves: Set<JapanAreaLeaf>?
+    ) async throws -> Statistics.EdgeIndex {
+        guard let japanLeaves else { return try await merged(countries: countries) }
+        let leavesKey = japanLeaves.map(\.rawValue).sorted().joined(separator: ",")
+        let key = CacheKey.scoped(countries, leavesKey)
+        if let ready = cached(key) { return ready.index }
+        let japan = try await restrictedJapan(to: japanLeaves)
+        var parts: [(country: String, index: Statistics.EdgeIndex)] = []
+        for country in countries {
+            parts.append((country, country == Region.jp.code ? japan : try await index(country: country)))
         }
+        return try await mergedResult(parts, key: key)
+    }
 
-        // Another caller may have completed this merge while we awaited its
-        // component indexes. Reuse that answer instead of duplicating it.
-        if let mergedIndex,
-            mergedIndex.countries == countries,
-            mergedIndex.policy == "attribution-policy-v2"
-        { return mergedIndex.index }
-        let result = Self.merge(countries.enumerated().compactMap { position, country in
-            byPosition[position].map { (country, $0) }
-        })
-        mergedIndex = (countries, "attribution-policy-v2", result)
-        return result
+    // End the full-country result's lifetime before fetching other regions.
+    // The clipped value retains only the immutable arrays it actually shares.
+    private func restrictedJapan(to leaves: Set<JapanAreaLeaf>) async throws -> Statistics.EdgeIndex {
+        let built = try await countryIndex(Region.jp.code)
+        return try await buildLimiter.withPermit {
+            await self.releaseCompleted()
+            return JapanAreaGrid.restricting(
+                built.index, country: Region.jp.code, to: leaves, grid: .shared,
+                denominatorEdgeCount: built.denominatorEdgeCount)
+        }
     }
 
     nonisolated static func merge(
@@ -217,6 +157,19 @@ actor EdgeIndexCache {
         var historyId: [String?] = []
         var currentNetwork: [Bool] = []
         var variants: [Statistics.EdgeKey: [Int]] = [:]
+        // Allocate final parallel buffers once. Repeated growth briefly keeps
+        // both old and replacement buffers beside all country components.
+        let edgeCount = parts.reduce(0) { $0 + $1.index.km.count }
+        km.reserveCapacity(edgeCount)
+        mask.reserveCapacity(parts.reduce(0) { $0 + $1.index.mask.count })
+        lineName.reserveCapacity(parts.reduce(0) { $0 + $1.index.lineName.count })
+        lineMask.reserveCapacity(parts.reduce(0) { $0 + $1.index.lineMask.count })
+        temporalKind.reserveCapacity(edgeCount)
+        validFrom.reserveCapacity(edgeCount)
+        validTo.reserveCapacity(edgeCount)
+        historyId.reserveCapacity(edgeCount)
+        currentNetwork.reserveCapacity(edgeCount)
+        map.reserveCapacity(parts.reduce(0) { $0 + $1.index.map.count })
         var totalKm = 0.0
         var totalsByMask: [Int: Double] = [:]
         var lineTotByCat = Statistics.OrderedDictionary<String, [Int: Double]>()
@@ -226,7 +179,7 @@ actor EdgeIndexCache {
             let offset = km.count
             km += part.index.km
             mask += part.index.mask
-            lineName += part.index.lineName.map { qualified($0, part.country) }
+            for name in part.index.lineName { lineName.append(qualified(name, part.country)) }
             lineMask += part.index.lineMask
             temporalKind += Self.padded(part.index.temporalKind, count: part.index.km.count, fill: .current)
             validFrom += Self.padded(part.index.validFrom, count: part.index.km.count, fill: nil)
@@ -241,7 +194,11 @@ actor EdgeIndexCache {
             // produce the same one — but `merging` states what happens rather
             // than trusting that, and keeping the FIRST matches the order the
             // regions were asked for.
-            map.merge(part.index.map.mapValues { $0 + offset }) { first, _ in first }
+            // Offset directly into the destination instead of allocating a
+            // complete temporary dictionary. Caller order still wins collisions.
+            for (key, id) in part.index.map where map[key] == nil {
+                map[key] = id + offset
+            }
             for (bucket, value) in part.index.totalsByMask {
                 totalsByMask[bucket, default: 0] += value
             }
@@ -279,7 +236,7 @@ actor EdgeIndexCache {
     /// "is this segment's category hidden?" synchronously and treats a missing
     /// index as "undetermined, stays visible", exactly as the web app does.
     func ready(country: String) -> Statistics.EdgeIndex? {
-        indexes[Self.countryCacheKey(country)]
+        cached(.country(Self.countryCacheKey(country)))?.index
     }
 
     private nonisolated static func build(

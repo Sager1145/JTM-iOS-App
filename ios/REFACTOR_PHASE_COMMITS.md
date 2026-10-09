@@ -105,7 +105,7 @@ Receipt: `application-phase-head-test.log`.
 
 ## Phase 6: display-network ownership and serialized route admission
 
-Status: validated for independent commit/push.
+Status: committed and pushed as `32baee07`.
 
 Display networks share one completed country/combined-scope retention slot and
 one unused layout seed. Builds coalesce and use an independent single permit;
@@ -122,6 +122,30 @@ and failed-build retry. Previous host payload comparison measured 32.58% lower
 resident cache footprint; full production workflow acceptance remains separate.
 Receipts: `cache-phase-head-build.log` and the production actor harness command.
 No simulator or external CLI process was stopped during this phase.
+
+## Phase 7: statistics index lifetime and merge allocation
+
+Status: validated for independent commit/push.
+
+One completed index slot covers country, merged and scoped results. Independent
+build admission includes display augmentation, and N02 denominator counts travel
+with country results. Scoped clipping releases full-country cache ownership before
+another country is fetched. Merge reserves final buffers and inserts first-wins
+keys directly instead of allocating an offset dictionary for every component.
+Caller order, duplicate countries, historical variants and mileage totals remain.
+Includes the existing area-scope types/grid required by the index API, with one
+ownership mapping; the unfinished area UI and unrelated CLI data stay local.
+
+Validation: independent clean-main Release App build for both Simulator architectures
+passes. Actual actor harness passes seven lifetime/ordering/failure scenarios.
+Previous 781 merge-scope comparisons match every result against the original merge.
+Release five-country statistics A/B protocol (three alternating fresh launches
+per version, identical frozen inputs except index source): median stable footprint
+327,453,600 to 239,454,968 bytes (26.8736% lower), median peak 376,441,784 to
+311,413,616 bytes (17.2744% lower). That pair used the earlier frozen complete
+App snapshot; it does not establish launch, rendering or leak goals for this commit.
+The latest compiler-memo Release build and public statistics flow passed separately.
+Receipts: `edge-phase-head-build.log`, `release-merge-allocation/`.
 
 ## Remaining delivery phases
 

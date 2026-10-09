@@ -133,6 +133,7 @@
         "ios/RailMap/PassportStatistics.swift",
         "ios/RailMap/PassportTicketFace.swift",
         "ios/RailMap/PassportWorkspaceView.swift",
+        "ios/RailMap/StatisticsArea.swift",
         "ios/RailMap/StatisticsComponents.swift",
         "ios/RailMap/StatisticsFormatting.swift",
         "ios/RailMap/StatisticsScopePicker.swift",
