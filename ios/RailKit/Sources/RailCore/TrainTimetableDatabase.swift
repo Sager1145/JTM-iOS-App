@@ -355,14 +355,7 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
         private func editorProjection(ridden: Bool) -> EditorProjection? {
             let calls = passengerStops
             if hasCompletePhysicalRoute {
-                let projected = calls.enumerated().map { index, call in
-                    Stop(name: call.station.name, n02StationCode: call.station.currentSourceCode,
-                         platformNumber: Self.editorPlatformNumber(call.platform),
-                         arrival: Self.editorTime(seconds: call.arrivalSeconds, source: call.arrivalTime),
-                         departure: Self.editorTime(seconds: call.departureSeconds, source: call.departureTime),
-                         stopType: index == 0 ? "origin" : index == calls.count - 1 ? "destination" : "passenger_stop",
-                         rideSegment: ridden)
-                }
+                let projected = Self.editorStops(calls, ridden: ridden)
                 return EditorProjection(stops: projected, routeSections: physicalRouteSections)
             }
             guard calls.count >= 2, !lineSegments.isEmpty else { return nil }
@@ -383,6 +376,27 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
                   })
             else { return nil }
 
+            guard let sections = editorSections(calls: calls, chainStations: chainStations,
+                callChainIndices: callChainIndices) else { return nil }
+
+            let projectedStops = Self.editorStops(calls, ridden: ridden)
+            return EditorProjection(stops: projectedStops, routeSections: sections)
+        }
+
+        private static func editorStops(_ calls: [StopTime], ridden: Bool) -> [Stop] {
+            return calls.enumerated().map { index, call in
+                Stop(name: call.station.name, n02StationCode: call.station.currentSourceCode,
+                     platformNumber: Self.editorPlatformNumber(call.platform),
+                     arrival: Self.editorTime(seconds: call.arrivalSeconds, source: call.arrivalTime),
+                     departure: Self.editorTime(seconds: call.departureSeconds, source: call.departureTime),
+                     stopType: index == 0 ? "origin" : index == calls.count - 1 ? "destination" : "passenger_stop",
+                     rideSegment: ridden)
+            }
+    }
+
+        private func editorSections(
+            calls: [StopTime], chainStations: [StationIdentity], callChainIndices: [Int]
+        ) -> [RouteSection]? {
             let operatorNames = Dictionary(
                 operatorSegments.map { ($0.operatorID, $0.displayName) },
                 uniquingKeysWith: { first, _ in first })
@@ -418,15 +432,7 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
                     sectionCodes: segment.sectionCodes.isEmpty ? nil : segment.sectionCodes))
             }
 
-            let projectedStops = calls.enumerated().map { index, call in
-                Stop(name: call.station.name, n02StationCode: call.station.currentSourceCode,
-                     platformNumber: Self.editorPlatformNumber(call.platform),
-                     arrival: Self.editorTime(seconds: call.arrivalSeconds, source: call.arrivalTime),
-                     departure: Self.editorTime(seconds: call.departureSeconds, source: call.departureTime),
-                     stopType: index == 0 ? "origin" : index == calls.count - 1 ? "destination" : "passenger_stop",
-                     rideSegment: ridden)
-            }
-            return EditorProjection(stops: projectedStops, routeSections: sections)
+            return sections
         }
 
         /// A one-day compatibility projection for the existing route editor.
@@ -847,108 +853,125 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
         try Self.validate(serviceDate: query.serviceDate)
         return try withLock {
             let weekday = try Self.weekdayColumn(for: query.serviceDate)
-            var bindings = [query.serviceDate]
-            var predicates: [String] = []
-            if let serviceID = query.serviceID {
-                bindings.append(serviceID)
-                predicates.append("t.service_id = ?\(bindings.count)")
-            }
-            if let tripID = query.tripID {
-                bindings.append(tripID)
-                predicates.append("t.trip_id = ?\(bindings.count)")
-            }
-            if let name = query.serviceName {
-                bindings.append("%\(Self.escapedLike(name))%")
-                let slot = bindings.count
-                predicates.append("""
-                    (s.canonical_name LIKE ?\(slot) ESCAPE '\\' COLLATE NOCASE OR EXISTS (
-                        SELECT 1 FROM service_name_periods snp
-                        WHERE snp.service_id = s.service_id
-                          AND snp.name LIKE ?\(slot) ESCAPE '\\' COLLATE NOCASE
-                          AND snp.valid_from <= ?1
-                          AND (snp.valid_until IS NULL OR ?1 < snp.valid_until)))
-                    """)
-            }
-            let extra = predicates.isEmpty ? "" : " AND " + predicates.joined(separator: " AND ")
+            let (bindings, extra) = Self.tripPredicates(query)
             try validateHolidayCalendarIfNeeded(
                 on: query.serviceDate, extraPredicate: extra, bindings: bindings)
-            let numberExpression = supportsDatedOverrides
-                ? "COALESCE(tno.train_number, t.train_number)" : "t.train_number"
-            let numberJoin = supportsDatedOverrides
-                ? "LEFT JOIN trip_train_number_overrides tno ON tno.trip_id = t.trip_id AND tno.service_date = ?1"
-                : ""
-            let baseRows = try rows("""
-                SELECT t.trip_id, t.timetable_version_id, t.calendar_id,
-                       \(numberExpression), t.public_number, t.direction, t.service_class,
-                       t.operation_group_id, t.notes, tv.completeness, tv.edition_name,
-                       s.service_id, s.canonical_name, s.service_class,
-                       s.historical_generation, s.first_verified_date,
-                       s.last_verified_date, s.jr_scope,
-                       (SELECT en.name FROM service_name_periods en
-                        WHERE en.service_id = s.service_id AND en.language = 'en'
-                          AND en.valid_from <= ?1
-                          AND (en.valid_until IS NULL OR ?1 < en.valid_until)
-                        ORDER BY en.valid_from DESC LIMIT 1)
-                FROM trips t
-                \(numberJoin)
-                JOIN timetable_versions tv
-                  ON tv.timetable_version_id = t.timetable_version_id
-                JOIN services s ON s.service_id = t.service_id
-                JOIN calendars c ON c.calendar_id = t.calendar_id
-                WHERE tv.effective_from <= ?1
-                  AND (tv.effective_until IS NULL OR ?1 < tv.effective_until)
-                  AND (
-                    EXISTS (SELECT 1 FROM calendar_exceptions ce
-                            WHERE ce.calendar_id = c.calendar_id
-                              AND ce.service_date = ?1 AND ce.exception_type = 'add')
-                    OR (c.valid_from <= ?1
-                        AND (c.valid_until IS NULL OR ?1 < c.valid_until)
-                        AND (CASE
-                          WHEN c.holiday_policy = 'treat_as_sunday'
-                           AND EXISTS (SELECT 1 FROM holiday_dates hd WHERE hd.service_date = ?1)
-                          THEN c.sunday ELSE c.\(weekday) END) = 1 AND NOT EXISTS (
-                        SELECT 1 FROM calendar_exceptions ce
+            let baseRows = try tripBaseRows(weekday: weekday, extra: extra, bindings: bindings)
+            return try assembleTrips(baseRows, serviceDate: query.serviceDate)
+        }
+    }
+
+    private static func tripPredicates(_ query: Query) -> (bindings: [String], extra: String) {
+        var bindings = [query.serviceDate]
+        var predicates: [String] = []
+        if let serviceID = query.serviceID {
+            bindings.append(serviceID)
+            predicates.append("t.service_id = ?\(bindings.count)")
+        }
+        if let tripID = query.tripID {
+            bindings.append(tripID)
+            predicates.append("t.trip_id = ?\(bindings.count)")
+        }
+        if let name = query.serviceName {
+            bindings.append("%\(Self.escapedLike(name))%")
+            let slot = bindings.count
+            predicates.append("""
+                (s.canonical_name LIKE ?\(slot) ESCAPE '\\' COLLATE NOCASE OR EXISTS (
+                    SELECT 1 FROM service_name_periods snp
+                    WHERE snp.service_id = s.service_id
+                      AND snp.name LIKE ?\(slot) ESCAPE '\\' COLLATE NOCASE
+                      AND snp.valid_from <= ?1
+                      AND (snp.valid_until IS NULL OR ?1 < snp.valid_until)))
+                """)
+        }
+        let extra = predicates.isEmpty ? "" : " AND " + predicates.joined(separator: " AND ")
+        return (bindings, extra)
+    }
+
+    private func tripNumberSQL() -> (expression: String, join: String) {
+        let numberExpression = supportsDatedOverrides
+            ? "COALESCE(tno.train_number, t.train_number)" : "t.train_number"
+        let numberJoin = supportsDatedOverrides
+            ? "LEFT JOIN trip_train_number_overrides tno ON tno.trip_id = t.trip_id AND tno.service_date = ?1"
+            : ""
+        return (numberExpression, numberJoin)
+    }
+
+    private func tripBaseRows(weekday: String, extra: String, bindings: [String]) throws -> [Row] {
+        let (numberExpression, numberJoin) = tripNumberSQL()
+        return try rows("""
+            SELECT t.trip_id, t.timetable_version_id, t.calendar_id,
+                   \(numberExpression), t.public_number, t.direction, t.service_class,
+                   t.operation_group_id, t.notes, tv.completeness, tv.edition_name,
+                   s.service_id, s.canonical_name, s.service_class,
+                   s.historical_generation, s.first_verified_date,
+                   s.last_verified_date, s.jr_scope,
+                   (SELECT en.name FROM service_name_periods en
+                    WHERE en.service_id = s.service_id AND en.language = 'en'
+                      AND en.valid_from <= ?1
+                      AND (en.valid_until IS NULL OR ?1 < en.valid_until)
+                    ORDER BY en.valid_from DESC LIMIT 1)
+            FROM trips t
+            \(numberJoin)
+            JOIN timetable_versions tv
+              ON tv.timetable_version_id = t.timetable_version_id
+            JOIN services s ON s.service_id = t.service_id
+            JOIN calendars c ON c.calendar_id = t.calendar_id
+            WHERE tv.effective_from <= ?1
+              AND (tv.effective_until IS NULL OR ?1 < tv.effective_until)
+              AND (
+                EXISTS (SELECT 1 FROM calendar_exceptions ce
                         WHERE ce.calendar_id = c.calendar_id
-                          AND ce.service_date = ?1 AND ce.exception_type = 'remove'))
-                  )
-                  \(extra)
-                ORDER BY s.canonical_name, \(numberExpression), t.trip_id
-                """, bindings: bindings)
+                          AND ce.service_date = ?1 AND ce.exception_type = 'add')
+                OR (c.valid_from <= ?1
+                    AND (c.valid_until IS NULL OR ?1 < c.valid_until)
+                    AND (CASE
+                      WHEN c.holiday_policy = 'treat_as_sunday'
+                       AND EXISTS (SELECT 1 FROM holiday_dates hd WHERE hd.service_date = ?1)
+                      THEN c.sunday ELSE c.\(weekday) END) = 1 AND NOT EXISTS (
+                    SELECT 1 FROM calendar_exceptions ce
+                    WHERE ce.calendar_id = c.calendar_id
+                      AND ce.service_date = ?1 AND ce.exception_type = 'remove'))
+              )
+              \(extra)
+            ORDER BY s.canonical_name, \(numberExpression), t.trip_id
+            """, bindings: bindings)
+    }
 
-            guard !baseRows.isEmpty else { return [] }
-            let tripIDs = baseRows.map { $0.string(0) }
-            let stopsByTrip = try loadStops(tripIDs: tripIDs, serviceDate: query.serviceDate)
-            let symbolsByTrip = try loadTimetableSymbols(tripIDs: tripIDs)
-            let linesByTrip = try loadLineSegments(
-                tripIDs: tripIDs, serviceDate: query.serviceDate)
-            let operatorsByTrip = try loadOperatorSegments(
-                tripIDs: tripIDs, serviceDate: query.serviceDate)
-            let physicalByTrip = try loadPhysicalRoutes(tripIDs: tripIDs)
-            let factsByTrip = try loadFactCompleteness(tripIDs: tripIDs)
+    private func assembleTrips(_ baseRows: [Row], serviceDate: String) throws -> [Trip] {
+        guard !baseRows.isEmpty else { return [] }
+        let tripIDs = baseRows.map { $0.string(0) }
+        let stopsByTrip = try loadStops(tripIDs: tripIDs, serviceDate: serviceDate)
+        let symbolsByTrip = try loadTimetableSymbols(tripIDs: tripIDs)
+        let linesByTrip = try loadLineSegments(
+            tripIDs: tripIDs, serviceDate: serviceDate)
+        let operatorsByTrip = try loadOperatorSegments(
+            tripIDs: tripIDs, serviceDate: serviceDate)
+        let physicalByTrip = try loadPhysicalRoutes(tripIDs: tripIDs)
+        let factsByTrip = try loadFactCompleteness(tripIDs: tripIDs)
 
-            return baseRows.map { row in
-                let id = row.string(0)
-                let service = Service(
-                    id: row.string(11), canonicalName: row.string(12),
-                    englishName: row.optionalString(18),
-                    serviceClass: row.string(13), historicalGeneration: row.int(14),
-                    firstVerifiedDate: row.optionalString(15), lastVerifiedDate: row.optionalString(16),
-                    jrScope: row.string(17), matchingName: nil)
-                return Trip(
-                    id: id, serviceDate: query.serviceDate,
-                    timetableVersionID: row.string(1), timetableEditionName: row.string(10),
-                    service: service,
-                    calendarID: row.string(2), trainNumber: row.string(3),
-                    publicNumber: row.optionalString(4), direction: row.optionalString(5),
-                    serviceClass: row.string(6), operationGroupID: row.optionalString(7),
-                    notes: row.optionalString(8),
-                    timetableCompleteness: Coverage(databaseValue: row.optionalString(9)),
-                    factCompleteness: factsByTrip[id] ?? [:],
-                    stops: stopsByTrip[id] ?? [], timetableSymbols: symbolsByTrip[id] ?? [],
-                    lineSegments: linesByTrip[id] ?? [],
-                    operatorSegments: operatorsByTrip[id] ?? [],
-                    physicalRouteSections: physicalByTrip[id] ?? [])
-            }
+        return baseRows.map { row in
+            let id = row.string(0)
+            let service = Service(
+                id: row.string(11), canonicalName: row.string(12),
+                englishName: row.optionalString(18),
+                serviceClass: row.string(13), historicalGeneration: row.int(14),
+                firstVerifiedDate: row.optionalString(15), lastVerifiedDate: row.optionalString(16),
+                jrScope: row.string(17), matchingName: nil)
+            return Trip(
+                id: id, serviceDate: serviceDate,
+                timetableVersionID: row.string(1), timetableEditionName: row.string(10),
+                service: service,
+                calendarID: row.string(2), trainNumber: row.string(3),
+                publicNumber: row.optionalString(4), direction: row.optionalString(5),
+                serviceClass: row.string(6), operationGroupID: row.optionalString(7),
+                notes: row.optionalString(8),
+                timetableCompleteness: Coverage(databaseValue: row.optionalString(9)),
+                factCompleteness: factsByTrip[id] ?? [:],
+                stops: stopsByTrip[id] ?? [], timetableSymbols: symbolsByTrip[id] ?? [],
+                lineSegments: linesByTrip[id] ?? [],
+                operatorSegments: operatorsByTrip[id] ?? [],
+                physicalRouteSections: physicalByTrip[id] ?? [])
         }
     }
 

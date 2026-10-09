@@ -84,51 +84,10 @@ public enum JapanThroughServices {
                             connectors: [Connector] = JapanThroughServices.connectors) -> [RailwayRouteChoices.Choice] {
             let legs = legs(on: date)
             guard originCode != destinationCode, !legs.isEmpty else { return [] }
-            struct Step {
-                let line: CompactPackage.Line?
-                let intervalIndex: Int?
-                let from: CompactPackage.Station
-                let to: CompactPackage.Station
-                let direction: Int
-                let reverseLine: CompactPackage.Line?
-                let connector: Connector?
-            }
             var steps: [Step] = []
             for (legIndex, leg) in legs.enumerated() {
-                guard let line = package.lines.first(where: { $0.id == leg.lineID }),
-                      let start = line.stations.firstIndex(where: { $0.id == leg.fromStationCode }),
-                      let end = line.stations.firstIndex(where: { $0.id == leg.toStationCode }),
-                      start != end else { return [] }
-                if let previous = steps.last, previous.to.id != leg.fromStationCode {
-                    guard legIndex > 0 else { return [] }
-                    let previousLeg = legs[legIndex - 1]
-                    let firstIDs = [previousLeg.lineID] + (previousLeg.reverseLineID.map { [$0] } ?? [])
-                    let secondIDs = [leg.lineID] + (leg.reverseLineID.map { [$0] } ?? [])
-                    guard let connector = connectors.first(where: {
-                        $0.joins(firstIDs, at: previous.to.id,
-                                 to: secondIDs, at: leg.fromStationCode, on: date)
-                    }) else { return [] }
-                    steps.append(Step(line: nil, intervalIndex: nil, from: previous.to,
-                                      to: line.stations[start], direction: 1,
-                                      reverseLine: nil, connector: connector))
-                }
-                let reverseLine: CompactPackage.Line?
-                if let identity = leg.reverseLineID {
-                    guard let mate = package.lines.first(where: { $0.id == identity }),
-                          mate.operator == line.operator,
-                          mate.alignmentOf == line.id || line.alignmentOf == mate.id,
-                          mate.stations.contains(where: { $0.id == leg.fromStationCode }),
-                          mate.stations.contains(where: { $0.id == leg.toStationCode }) else { return [] }
-                    reverseLine = mate
-                } else {
-                    reverseLine = nil
-                }
-                let direction = start < end ? 1 : -1
-                for index in stride(from: start, to: end, by: direction) {
-                    steps.append(Step(line: line, intervalIndex: min(index, index + direction),
-                                      from: line.stations[index], to: line.stations[index + direction],
-                                      direction: direction, reverseLine: reverseLine, connector: nil))
-                }
+                guard appendLegSteps(leg, legIndex: legIndex, legs: legs, package: package,
+                                     date: date, connectors: connectors, steps: &steps) else { return [] }
             }
             guard let first = steps.first else { return [] }
             let stationCodes = [first.from.id] + steps.map { $0.to.id }
@@ -139,71 +98,149 @@ public enum JapanThroughServices {
                     let reverse = start > end
                     let slice = Array(steps[min(start, end)..<max(start, end)])
                     let ordered = reverse ? Array(slice.reversed()) : slice
-                    var sections: [RouteSection] = []
-                    var visits: [RailwayRouteChoices.Visit] = []
-                    var ids: [String] = []
-                    var valid = true
-                    for step in ordered {
-                        if let connector = step.connector {
-                            let from = reverse ? step.to : step.from
-                            let to = reverse ? step.from : step.to
-                            if visits.isEmpty { visits.append(.init(code: from.id, name: from.name)) }
-                            visits.append(.init(code: to.id, name: to.name))
-                            sections.append(RouteSection(
-                                from: from.name, to: to.name,
-                                fromN02StationCode: from.id, toN02StationCode: to.id,
-                                lineNames: [], operatorNames: [], lineIDs: [],
-                                sectionCodes: ["connector:\(connector.id)"]))
-                            continue
-                        }
-                        guard let baseLine = step.line, let baseIntervalIndex = step.intervalIndex else {
-                            valid = false
-                            break
-                        }
-                        let line = reverse ? (step.reverseLine ?? baseLine) : baseLine
-                        var from = reverse ? step.to : step.from
-                        var to = reverse ? step.from : step.to
-                        var direction = reverse ? -step.direction : step.direction
-                        var intervalIndex = baseIntervalIndex
-                        if reverse, step.reverseLine != nil {
-                            guard let fromIndex = line.stations.firstIndex(where: { $0.id == from.id }),
-                                  let toIndex = line.stations.firstIndex(where: { $0.id == to.id }),
-                                  abs(fromIndex - toIndex) == 1 else { valid = false; break }
-                            from = line.stations[fromIndex]
-                            to = line.stations[toIndex]
-                            direction = fromIndex < toIndex ? 1 : -1
-                            intervalIndex = min(fromIndex, toIndex)
-                        }
-                        let intervals = RailIntervalCodes.intervals(for: line)
-                        guard line.segments.indices.contains(intervalIndex),
-                              intervals.indices.contains(intervalIndex),
-                              intervals[intervalIndex].coordinates.count >= 2,
-                              RailwayDirection.allowedDirections(for: line, intervalIndex: intervalIndex).contains(direction)
-                        else { valid = false; break }
-                        if visits.isEmpty { visits.append(.init(code: from.id, name: from.name)) }
-                        visits.append(.init(code: to.id, name: to.name))
-                        if ids.last != line.id { ids.append(line.id) }
-                        sections.append(RouteSection(from: from.name, to: to.name,
-                            fromN02StationCode: from.id, toN02StationCode: to.id,
-                            lineNames: [line.name], operatorNames: line.operator.map { [$0] },
-                            lineIDs: [line.id], sectionCodes: [intervals[intervalIndex].code]))
-                    }
-                    guard valid, !sections.isEmpty else { continue }
-                    func unique(_ values: [String]) -> [String] {
-                        var valuesSeen: Set<String> = []
-                        return values.filter { valuesSeen.insert($0).inserted }
-                    }
-                    let choice = RailwayRouteChoices.Choice(lineIDs: ids,
-                        lineNames: unique(sections.flatMap { $0.lineNames ?? [] }),
-                        operatorNames: unique(sections.flatMap { $0.operatorNames ?? [] }),
-                        stations: visits, sectionCodes: sections.flatMap { $0.sectionCodes ?? [] },
-                        routeSections: sections)
+                    guard let choice = makeChoice(ordered, reverse: reverse) else { continue }
                     if seen.insert(choice.id).inserted { results.append(choice) }
                     if results.count == 3 { return results }
                 }
             }
             return results
         }
+        private struct Step {
+            let line: CompactPackage.Line?
+            let intervalIndex: Int?
+            let from: CompactPackage.Station
+            let to: CompactPackage.Station
+            let direction: Int
+            let reverseLine: CompactPackage.Line?
+            let connector: Connector?
+        }
+
+        private func appendLegSteps(
+            _ leg: Leg, legIndex: Int, legs: [Leg], package: CompactPackage,
+            date: String?, connectors: [Connector], steps: inout [Step]
+        ) -> Bool {
+            guard let line = package.lines.first(where: { $0.id == leg.lineID }),
+                  let start = line.stations.firstIndex(where: { $0.id == leg.fromStationCode }),
+                  let end = line.stations.firstIndex(where: { $0.id == leg.toStationCode }),
+                  start != end else { return false }
+            if let previous = steps.last, previous.to.id != leg.fromStationCode {
+                guard legIndex > 0 else { return false }
+                let previousLeg = legs[legIndex - 1]
+                let firstIDs = [previousLeg.lineID] + (previousLeg.reverseLineID.map { [$0] } ?? [])
+                let secondIDs = [leg.lineID] + (leg.reverseLineID.map { [$0] } ?? [])
+                guard let connector = connectors.first(where: {
+                    $0.joins(firstIDs, at: previous.to.id,
+                             to: secondIDs, at: leg.fromStationCode, on: date)
+                }) else { return false }
+                steps.append(Step(line: nil, intervalIndex: nil, from: previous.to,
+                                  to: line.stations[start], direction: 1,
+                                  reverseLine: nil, connector: connector))
+            }
+            let reverseLine: CompactPackage.Line?
+            if let identity = leg.reverseLineID {
+                guard let mate = package.lines.first(where: { $0.id == identity }),
+                      mate.operator == line.operator,
+                      mate.alignmentOf == line.id || line.alignmentOf == mate.id,
+                      mate.stations.contains(where: { $0.id == leg.fromStationCode }),
+                      mate.stations.contains(where: { $0.id == leg.toStationCode }) else { return false }
+                reverseLine = mate
+            } else {
+                reverseLine = nil
+            }
+            let direction = start < end ? 1 : -1
+            for index in stride(from: start, to: end, by: direction) {
+                steps.append(Step(line: line, intervalIndex: min(index, index + direction),
+                                  from: line.stations[index], to: line.stations[index + direction],
+                                  direction: direction, reverseLine: reverseLine, connector: nil))
+            }
+            return true
+        }
+
+        private func appendRailStep(
+            _ step: Step, reverse: Bool, sections: inout [RouteSection],
+            visits: inout [RailwayRouteChoices.Visit], ids: inout [String]
+        ) -> Bool {
+            guard let baseLine = step.line, let baseIntervalIndex = step.intervalIndex else {
+                return false
+            }
+            let line = reverse ? (step.reverseLine ?? baseLine) : baseLine
+            var from = reverse ? step.to : step.from
+            var to = reverse ? step.from : step.to
+            var direction = reverse ? -step.direction : step.direction
+            var intervalIndex = baseIntervalIndex
+            if reverse, step.reverseLine != nil {
+                guard let fromIndex = line.stations.firstIndex(where: { $0.id == from.id }),
+                      let toIndex = line.stations.firstIndex(where: { $0.id == to.id }),
+                      abs(fromIndex - toIndex) == 1 else { return false }
+                from = line.stations[fromIndex]
+                to = line.stations[toIndex]
+                direction = fromIndex < toIndex ? 1 : -1
+                intervalIndex = min(fromIndex, toIndex)
+            }
+            let intervals = RailIntervalCodes.intervals(for: line)
+            guard line.segments.indices.contains(intervalIndex),
+                  intervals.indices.contains(intervalIndex),
+                  intervals[intervalIndex].coordinates.count >= 2,
+                  RailwayDirection.allowedDirections(for: line, intervalIndex: intervalIndex).contains(direction)
+            else { return false }
+            if visits.isEmpty { visits.append(.init(code: from.id, name: from.name)) }
+            visits.append(.init(code: to.id, name: to.name))
+            if ids.last != line.id { ids.append(line.id) }
+            sections.append(RouteSection(from: from.name, to: to.name,
+                fromN02StationCode: from.id, toN02StationCode: to.id,
+                lineNames: [line.name], operatorNames: line.operator.map { [$0] },
+                lineIDs: [line.id], sectionCodes: [intervals[intervalIndex].code]))
+            return true
+        }
+
+        private func appendConnectorStep(
+            _ step: Step, connector: Connector, reverse: Bool,
+            sections: inout [RouteSection], visits: inout [RailwayRouteChoices.Visit]
+        ) {
+            let from = reverse ? step.to : step.from
+            let to = reverse ? step.from : step.to
+            if visits.isEmpty { visits.append(.init(code: from.id, name: from.name)) }
+            visits.append(.init(code: to.id, name: to.name))
+            sections.append(RouteSection(
+                from: from.name, to: to.name,
+                fromN02StationCode: from.id, toN02StationCode: to.id,
+                lineNames: [], operatorNames: [], lineIDs: [],
+                sectionCodes: ["connector:\(connector.id)"]))
+        }
+
+        private func unique(_ values: [String]) -> [String] {
+            var valuesSeen: Set<String> = []
+            return values.filter { valuesSeen.insert($0).inserted }
+        }
+
+        private func makeChoice(
+            _ ordered: [Step], reverse: Bool
+        ) -> RailwayRouteChoices.Choice? {
+            var sections: [RouteSection] = []
+            var visits: [RailwayRouteChoices.Visit] = []
+            var ids: [String] = []
+            var valid = true
+            for step in ordered {
+                if let connector = step.connector {
+                    appendConnectorStep(step, connector: connector, reverse: reverse,
+                                        sections: &sections, visits: &visits)
+                    continue
+                }
+                if !appendRailStep(step, reverse: reverse, sections: &sections,
+                                   visits: &visits, ids: &ids) {
+                    valid = false
+                    break
+                }
+            }
+            guard valid, !sections.isEmpty else { return nil }
+            let choice = RailwayRouteChoices.Choice(lineIDs: ids,
+                lineNames: unique(sections.flatMap { $0.lineNames ?? [] }),
+                operatorNames: unique(sections.flatMap { $0.operatorNames ?? [] }),
+                stations: visits, sectionCodes: sections.flatMap { $0.sectionCodes ?? [] },
+                routeSections: sections)
+            return choice
+        }
+
     }
     public struct Coverage: Codable, Hashable, Sendable {
         public let region: String

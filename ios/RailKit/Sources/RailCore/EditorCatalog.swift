@@ -251,6 +251,46 @@ public enum EditorCatalogBuilder {
         var seenMemberships: Set<String> = []
         var stationAcc: [StationKey: EditorCatalogStationAcc] = [:]
 
+        appendLines(
+            lines, redirects: redirects, issues: &issues, operatorAcc: &operatorAcc,
+            catalogLines: &catalogLines, seenLines: &seenLines, memberships: &memberships,
+            seenMemberships: &seenMemberships, stationAcc: &stationAcc)
+
+        var operatorsByRegion: [String: [CatalogOperator]] = [:]
+        indexOperators(operatorAcc, operatorsByRegion: &operatorsByRegion)
+
+        var linesByOperator: [String: [CatalogLine]] = [:]
+        var lineIndex: [EditorCatalogLineKey: CatalogLine] = [:]
+        indexLines(catalogLines, linesByOperator: &linesByOperator, lineIndex: &lineIndex)
+
+        var membershipsByLine: [EditorCatalogLineKey: [StationLineMembership]] = [:]
+        var membershipsByStation: [StationKey: [StationLineMembership]] = [:]
+        indexMemberships(memberships, membershipsByLine: &membershipsByLine,
+            membershipsByStation: &membershipsByStation)
+
+        var stationIndex: [StationKey: CatalogStation] = [:]
+        for (key, acc) in stationAcc {
+            stationIndex[key] = acc.station(key)
+        }
+
+        return EditorCatalog(
+            issues: issues,
+            operatorsByRegion: operatorsByRegion,
+            linesByOperator: linesByOperator,
+            lineIndex: lineIndex,
+            stationIndex: stationIndex,
+            membershipsByLine: membershipsByLine,
+            membershipsByStation: membershipsByStation
+        )
+    }
+
+    private static func appendLines(
+        _ lines: [EditorCatalogLineSource], redirects: EditorCatalogRedirects,
+        issues: inout [EditorCatalogIssue], operatorAcc: inout [String: EditorCatalogOperatorAcc],
+        catalogLines: inout [CatalogLine], seenLines: inout Set<EditorCatalogLineKey>,
+        memberships: inout [StationLineMembership], seenMemberships: inout Set<String>,
+        stationAcc: inout [StationKey: EditorCatalogStationAcc]
+    ) {
         for line in lines {
             let lineKey = EditorCatalogLineKey(regionCode: line.regionCode, lineID: line.lineID)
             if seenLines.contains(lineKey) {
@@ -273,47 +313,64 @@ public enum EditorCatalogBuilder {
                 aliases: EditorCatalogIdentity.lineAliases(line)
             ))
 
-            for (sequence, station) in line.stations.enumerated() {
-                let membershipID = [
-                    line.regionCode, line.lineID, station.sourceCode, String(sequence),
-                ].joined(separator: "|")
-                if seenMemberships.contains(membershipID) {
-                    issues.append(.duplicateMembershipID(membershipID))
-                    continue
-                }
-                seenMemberships.insert(membershipID)
-
-                let key = StationKey(regionCode: line.regionCode, sourceCode: station.sourceCode)
-                let membership = StationLineMembership(
-                    stationKey: key,
-                    lineID: line.lineID,
-                    regionCode: line.regionCode,
-                    membershipID: membershipID,
-                    sequence: sequence,
-                    longitude: station.longitude,
-                    latitude: station.latitude
-                )
-                memberships.append(membership)
-                stationAcc[key, default: EditorCatalogStationAcc(
-                    name: station.name,
-                    longitude: station.longitude,
-                    latitude: station.latitude,
-                    lineID: line.lineID,
-                    sequence: sequence
-                )].absorb(station, lineID: line.lineID, sequence: sequence)
-            }
+            appendMemberships(
+                line, issues: &issues, memberships: &memberships,
+                seenMemberships: &seenMemberships, stationAcc: &stationAcc)
         }
+    }
 
-        var operatorsByRegion: [String: [CatalogOperator]] = [:]
+    private static func appendMemberships(
+        _ line: EditorCatalogLineSource, issues: inout [EditorCatalogIssue],
+        memberships: inout [StationLineMembership], seenMemberships: inout Set<String>,
+        stationAcc: inout [StationKey: EditorCatalogStationAcc]
+    ) {
+        for (sequence, station) in line.stations.enumerated() {
+            let membershipID = [
+                line.regionCode, line.lineID, station.sourceCode, String(sequence),
+            ].joined(separator: "|")
+            if seenMemberships.contains(membershipID) {
+                issues.append(.duplicateMembershipID(membershipID))
+                continue
+            }
+            seenMemberships.insert(membershipID)
+
+            let key = StationKey(regionCode: line.regionCode, sourceCode: station.sourceCode)
+            let membership = StationLineMembership(
+                stationKey: key,
+                lineID: line.lineID,
+                regionCode: line.regionCode,
+                membershipID: membershipID,
+                sequence: sequence,
+                longitude: station.longitude,
+                latitude: station.latitude
+            )
+            memberships.append(membership)
+            stationAcc[key, default: EditorCatalogStationAcc(
+                name: station.name,
+                longitude: station.longitude,
+                latitude: station.latitude,
+                lineID: line.lineID,
+                sequence: sequence
+            )].absorb(station, lineID: line.lineID, sequence: sequence)
+        }
+    }
+
+    private static func indexOperators(
+        _ operatorAcc: [String: EditorCatalogOperatorAcc],
+        operatorsByRegion: inout [String: [CatalogOperator]]
+    ) {
         for acc in operatorAcc.values {
             operatorsByRegion[acc.regionCode, default: []].append(acc.operator)
         }
         operatorsByRegion = operatorsByRegion.mapValues { rows in
             rows.sorted { $0.id < $1.id }
         }
+    }
 
-        var linesByOperator: [String: [CatalogLine]] = [:]
-        var lineIndex: [EditorCatalogLineKey: CatalogLine] = [:]
+    private static func indexLines(
+        _ catalogLines: [CatalogLine], linesByOperator: inout [String: [CatalogLine]],
+        lineIndex: inout [EditorCatalogLineKey: CatalogLine]
+    ) {
         for line in catalogLines {
             lineIndex[EditorCatalogLineKey(regionCode: line.regionCode, lineID: line.id)] = line
             for operatorID in line.operatorIDs {
@@ -326,9 +383,13 @@ public enum EditorCatalogBuilder {
                 return lhs.id < rhs.id
             }
         }
+    }
 
-        var membershipsByLine: [EditorCatalogLineKey: [StationLineMembership]] = [:]
-        var membershipsByStation: [StationKey: [StationLineMembership]] = [:]
+    private static func indexMemberships(
+        _ memberships: [StationLineMembership],
+        membershipsByLine: inout [EditorCatalogLineKey: [StationLineMembership]],
+        membershipsByStation: inout [StationKey: [StationLineMembership]]
+    ) {
         for membership in memberships {
             let key = EditorCatalogLineKey(regionCode: membership.regionCode, lineID: membership.lineID)
             membershipsByLine[key, default: []].append(membership)
@@ -343,21 +404,6 @@ public enum EditorCatalogBuilder {
                 return lhs.sequence < rhs.sequence
             }
         }
-
-        var stationIndex: [StationKey: CatalogStation] = [:]
-        for (key, acc) in stationAcc {
-            stationIndex[key] = acc.station(key)
-        }
-
-        return EditorCatalog(
-            issues: issues,
-            operatorsByRegion: operatorsByRegion,
-            linesByOperator: linesByOperator,
-            lineIndex: lineIndex,
-            stationIndex: stationIndex,
-            membershipsByLine: membershipsByLine,
-            membershipsByStation: membershipsByStation
-        )
     }
 }
 

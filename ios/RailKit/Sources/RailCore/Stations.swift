@@ -235,56 +235,66 @@ public enum Stations {
                             codingPath: [],
                             debugDescription: "a station feature is not an object"))
                 }
-                // `decodeIfPresent` treats absent and null alike, and falls
-                // back to an empty table. A present value of any other type is
-                // still an error, just as it is on the `Decodable` path.
-                var properties: [String: Value] = [:]
-                if let value = feature["properties"], !(value is NSNull) {
-                    guard let raw = value as? [String: Any] else {
-                        throw DecodingError.typeMismatch(
-                            [String: Value].self,
-                            DecodingError.Context(
-                                codingPath: [],
-                                debugDescription: "a station feature's `properties` is not an object"))
-                    }
-                    properties.reserveCapacity(raw.count)
-                    for (key, value) in raw {
-                        properties[key] = try Value(json: value)
-                    }
-                }
-                var geometry: Geometry?
-                if let value = feature["geometry"], !(value is NSNull) {
-                    guard let raw = value as? [String: Any] else {
-                        throw DecodingError.typeMismatch(
-                            Geometry.self,
-                            DecodingError.Context(
-                                codingPath: [],
-                                debugDescription: "a station feature's `geometry` is not an object"))
-                    }
-                    // `Geometry` is synthesised `Decodable` over two OPTIONAL
-                    // properties, so both absent and null answer nil there —
-                    // `decodeIfPresent` never reaches ``Value/init(from:)`` for
-                    // a null, and so never produces `.null`. Matched here.
-                    var coordinates: Value?
-                    if let value = raw["coordinates"], !(value is NSNull) {
-                        coordinates = try Value(json: value)
-                    }
-                    var type: String?
-                    if let value = raw["type"], !(value is NSNull) {
-                        guard let text = value as? String else {
-                            throw DecodingError.typeMismatch(
-                                String.self,
-                                DecodingError.Context(
-                                    codingPath: [],
-                                    debugDescription: "a station geometry's `type` is not a string"))
-                        }
-                        type = text
-                    }
-                    geometry = Geometry(type: type, coordinates: coordinates)
-                }
+                let properties = try decodeProperties(feature)
+                let geometry = try decodeGeometry(feature)
                 features.append(Feature(properties: properties, geometry: geometry))
             }
             return FeatureCollection(features: features)
+        }
+
+        private static func decodeProperties(_ feature: [String: Any]) throws -> [String: Value] {
+            // `decodeIfPresent` treats absent and null alike, and falls
+            // back to an empty table. A present value of any other type is
+            // still an error, just as it is on the `Decodable` path.
+            var properties: [String: Value] = [:]
+            if let value = feature["properties"], !(value is NSNull) {
+                guard let raw = value as? [String: Any] else {
+                    throw DecodingError.typeMismatch(
+                        [String: Value].self,
+                        DecodingError.Context(
+                            codingPath: [],
+                            debugDescription: "a station feature's `properties` is not an object"))
+                }
+                properties.reserveCapacity(raw.count)
+                for (key, value) in raw {
+                    properties[key] = try Value(json: value)
+                }
+            }
+            return properties
+        }
+
+        private static func decodeGeometry(_ feature: [String: Any]) throws -> Geometry? {
+            var geometry: Geometry?
+            if let value = feature["geometry"], !(value is NSNull) {
+                guard let raw = value as? [String: Any] else {
+                    throw DecodingError.typeMismatch(
+                        Geometry.self,
+                        DecodingError.Context(
+                            codingPath: [],
+                            debugDescription: "a station feature's `geometry` is not an object"))
+                }
+                // `Geometry` is synthesised `Decodable` over two OPTIONAL
+                // properties, so both absent and null answer nil there —
+                // `decodeIfPresent` never reaches ``Value/init(from:)`` for
+                // a null, and so never produces `.null`. Matched here.
+                var coordinates: Value?
+                if let value = raw["coordinates"], !(value is NSNull) {
+                    coordinates = try Value(json: value)
+                }
+                var type: String?
+                if let value = raw["type"], !(value is NSNull) {
+                    guard let text = value as? String else {
+                        throw DecodingError.typeMismatch(
+                            String.self,
+                            DecodingError.Context(
+                                codingPath: [],
+                                debugDescription: "a station geometry's `type` is not a string"))
+                    }
+                    type = text
+                }
+                geometry = Geometry(type: type, coordinates: coordinates)
+            }
+            return geometry
         }
     }
 

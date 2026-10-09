@@ -313,53 +313,91 @@ public enum Playback {
         // because `Run` is a value type; the JavaScript holds the object.
         var current: Int? = nil
 
-        func startRun(_ first: Coordinate) {
-            runs.append(Run(coords: [first], cum: [0], total: 0, offset: 0))
-            current = runs.count - 1
-        }
+        appendPlaybackGeometry(ridden, runs: &runs, hops: &hops, current: &current, globalS: &globalS)
 
-        // The JavaScript wraps this call in `metersBetween`, whose comment
-        // says "equirectangular on the shared constants, same approximation
-        // the route modules use". That comment is wrong, and the parity run
-        // proves it: the bare `distanceMeters` this resolves to in the
-        // app-family scope is app-route-simplify.js's HAVERSINE, because
-        // rail-network.js's equirectangular one of the same name is closed
-        // over inside that module and never reaches the family. The two read
-        // ~0.1125 % apart, so it is not a distinction without a difference —
-        // and six of the seven fixture journeys match this port bit for bit,
-        // which they could not do against the other metric. Ported as it
-        // behaves, not as it is described.
-        func pushCoord(_ c: Coordinate) {
-            guard let index = current else { return }
+        if hops.isEmpty || globalS <= 0 { return nil }
+
+        assignRunOffsets(&runs)
+        let clock = assignHopTimes(&hops, globalS: globalS)
+
+        let zoom = playbackZoom(runs: runs, globalS: globalS, clock: clock)
+
+        let color = train.style?.color ?? TrainValidation.defaultTrainColor
+        return Path(
+            zoom: zoom,
+            stations: stationList(
+                train: train, runs: runs, hops: hops,
+                preserveStationEndpoints: preserveStationEndpoints, localize: localize),
+            trainID: train.id,
+            color: color,
+            runs: runs,
+            hops: hops,
+            totalMeters: globalS,
+            duration: clock,
+            start: position(in: runs, atDistance: 0),
+            end: position(in: runs, atDistance: globalS)
+        )
+    }
+
+    private static func startRun(_ first: Coordinate, runs: inout [Run], current: inout Int?) {
+        runs.append(Run(coords: [first], cum: [0], total: 0, offset: 0))
+        current = runs.count - 1
+    }
+
+    // The JavaScript wraps this call in `metersBetween`, whose comment
+    // says "equirectangular on the shared constants, same approximation
+    // the route modules use". That comment is wrong, and the parity run
+    // proves it: the bare `distanceMeters` this resolves to in the
+    // app-family scope is app-route-simplify.js's HAVERSINE, because
+    // rail-network.js's equirectangular one of the same name is closed
+    // over inside that module and never reaches the family. The two read
+    // ~0.1125 % apart, so it is not a distinction without a difference —
+    // and six of the seven fixture journeys match this port bit for bit,
+    // which they could not do against the other metric. Ported as it
+    // behaves, not as it is described.
+    private static func pushCoord(
+        _ c: Coordinate, current: Int?, runs: inout [Run], globalS: inout Double
+    ) {
+        guard let index = current else { return }
+        let last = runs[index].coords[runs[index].coords.count - 1]
+        let step = Geometry.distanceMeters(last, c)
+        // A duplicate vertex at an interval boundary. `step <= 0` is
+        // false for NaN, exactly as in JavaScript, so a NaN step would be
+        // appended and would poison the run's cum — which is the honest
+        // reproduction: nothing upstream can produce one.
+        if step <= 0 { return }
+        runs[index].coords.append(c)
+        runs[index].total += step
+        runs[index].cum.append(runs[index].total)
+        globalS += step
+    }
+
+    private static func appendPlaybackLine(
+        _ line: [Coordinate], current: inout Int?, runs: inout [Run], globalS: inout Double
+    ) {
+        if line.count < 2 { return }
+        if current == nil {
+            startRun(line[0], runs: &runs, current: &current)
+        } else {
+            let index = current!
             let last = runs[index].coords[runs[index].coords.count - 1]
-            let step = Geometry.distanceMeters(last, c)
-            // A duplicate vertex at an interval boundary. `step <= 0` is
-            // false for NaN, exactly as in JavaScript, so a NaN step would be
-            // appended and would poison the run's cum — which is the honest
-            // reproduction: nothing upstream can produce one.
-            if step <= 0 { return }
-            runs[index].coords.append(c)
-            runs[index].total += step
-            runs[index].cum.append(runs[index].total)
-            globalS += step
+            // A new line that does not continue the current run opens
+            // a new one. 1 m is well under the 5-decimal grid the
+            // geometry sits on, so an exact continuation always joins
+            // and a real hole never does.
+            if Geometry.distanceMeters(last, line[0]) > 1 { startRun(line[0], runs: &runs, current: &current) }
         }
+        for i in 1..<line.count { pushCoord(line[i], current: current, runs: &runs, globalS: &globalS) }
+    }
 
+    private static func appendPlaybackGeometry(
+        _ ridden: [RiddenFeature], runs: inout [Run], hops: inout [Hop],
+        current: inout Int?, globalS: inout Double
+    ) {
         for feature in ridden {
             let hopStart = globalS
             for line in featureLines(feature) {
-                if line.count < 2 { continue }
-                if current == nil {
-                    startRun(line[0])
-                } else {
-                    let index = current!
-                    let last = runs[index].coords[runs[index].coords.count - 1]
-                    // A new line that does not continue the current run opens
-                    // a new one. 1 m is well under the 5-decimal grid the
-                    // geometry sits on, so an exact continuation always joins
-                    // and a real hole never does.
-                    if Geometry.distanceMeters(last, line[0]) > 1 { startRun(line[0]) }
-                }
-                for i in 1..<line.count { pushCoord(line[i]) }
+                appendPlaybackLine(line, current: &current, runs: &runs, globalS: &globalS)
             }
             if globalS > hopStart {
                 hops.append(
@@ -371,14 +409,18 @@ public enum Playback {
             }
         }
 
-        if hops.isEmpty || globalS <= 0 { return nil }
+    }
 
+    private static func assignRunOffsets(_ runs: inout [Run]) {
         var offset = 0.0
         for i in runs.indices {
             runs[i].offset = offset
             offset += runs[i].total
         }
 
+    }
+
+    private static func assignHopTimes(_ hops: inout [Hop], globalS: Double) -> Double {
         let km = globalS / 1000
         let budget = min(
             Tuning.tMax,
@@ -396,6 +438,10 @@ public enum Playback {
             hops[i].t1 = clock
         }
 
+        return clock
+    }
+
+    private static func playbackZoom(runs: [Run], globalS: Double, clock: Double) -> Double {
         // ONE zoom for the whole journey, fixed by the JOURNEY's average
         // ground speed against the same screen-speed target. A short journey
         // still plays close in and a long one still plays pulled back, and
@@ -415,21 +461,7 @@ public enum Playback {
             )
         )
 
-        let color = train.style?.color ?? TrainValidation.defaultTrainColor
-        return Path(
-            zoom: zoom,
-            stations: stationList(
-                train: train, runs: runs, hops: hops,
-                preserveStationEndpoints: preserveStationEndpoints, localize: localize),
-            trainID: train.id,
-            color: color,
-            runs: runs,
-            hops: hops,
-            totalMeters: globalS,
-            duration: clock,
-            start: position(in: runs, atDistance: 0),
-            end: position(in: runs, atDistance: globalS)
-        )
+        return zoom
     }
 
     /// `featureLines` — raw (unquantized) coordinate lines of one route
@@ -473,72 +505,15 @@ public enum Playback {
         var distanceByStop: [Int: Double] = [:]
         var arrivals: Set<Int> = []
         var order: [Int] = []
-        func set(_ key: Int, _ value: Double) {
-            if distanceByStop.updateValue(value, forKey: key) == nil { order.append(key) }
-        }
-        for hop in hops {
-            // NaN fails this test in JavaScript too (`NaN < 0` is false), and
-            // then indexes nothing; see ``RiddenFeature/segmentIndex``.
-            guard hop.segmentIndex >= 0, let index = exactIndex(hop.segmentIndex) else { continue }
-            if distanceByStop[index] == nil { set(index, hop.s0) }
-            set(index + 1, hop.s1)
-            arrivals.insert(index + 1)
-        }
+        indexStopDistances(hops, distanceByStop: &distanceByStop, arrivals: &arrivals, order: &order)
 
         // Index the run boundaries once. The old endpoint preservation below
         // searched every run for every stop, which made compilation quadratic
         // on long all-stops services. Keep the original tie-breaking exactly:
         // arrivals choose the first run in forward order, departures the first
         // in reverse order.
-        struct Endpoint {
-            let distance: Double
-            let runIndex: Int
-            let coordinate: Coordinate
-        }
-        let incomingEndpoints = runs.enumerated().compactMap { index, run -> Endpoint? in
-            guard run.total > 0, let coordinate = run.coords.last else { return nil }
-            return Endpoint(
-                distance: run.offset + run.total, runIndex: index, coordinate: coordinate)
-        }.sorted {
-            ($0.distance, $0.runIndex) < ($1.distance, $1.runIndex)
-        }
-        let outgoingEndpoints = runs.enumerated().compactMap { index, run -> Endpoint? in
-            guard run.total > 0, let coordinate = run.coords.first else { return nil }
-            return Endpoint(distance: run.offset, runIndex: index, coordinate: coordinate)
-        }.sorted {
-            ($0.distance, $0.runIndex) < ($1.distance, $1.runIndex)
-        }
-
-        func endpoint(
-            near distance: Double, in endpoints: [Endpoint], preferLastRun: Bool
-        ) -> Coordinate? {
-            let tolerance = 0.000001
-            var low = 0
-            var high = endpoints.count
-            while low < high {
-                let middle = (low + high) >> 1
-                if endpoints[middle].distance < distance - tolerance {
-                    low = middle + 1
-                } else {
-                    high = middle
-                }
-            }
-            var match: Endpoint?
-            var index = low
-            while index < endpoints.count,
-                  endpoints[index].distance <= distance + tolerance {
-                let candidate = endpoints[index]
-                if abs(candidate.distance - distance) <= tolerance,
-                   match == nil
-                    || (preferLastRun
-                        ? candidate.runIndex > match!.runIndex
-                        : candidate.runIndex < match!.runIndex) {
-                    match = candidate
-                }
-                index += 1
-            }
-            return match?.coordinate
-        }
+        let incomingEndpoints = incomingEndpoints(runs)
+        let outgoingEndpoints = outgoingEndpoints(runs)
 
         var stations: [Station] = []
         for stopIndex in order.sorted() {
@@ -548,27 +523,114 @@ public enum Playback {
             let name = stop.name
             if name.isEmpty { continue }
             guard let s = distanceByStop[stopIndex] else { continue }
-            var coordinate = position(in: runs, atDistance: s)
-            if preserveStationEndpoints {
-                // Hop arc sums and run arc sums can differ by a rounding step.
-                // Match endpoints within a micrometre rather than requiring
-                // exact Double equality at a potentially national-scale arc.
-                if arrivals.contains(stopIndex),
-                   let incoming = endpoint(
-                    near: s, in: incomingEndpoints, preferLastRun: false) {
-                    coordinate = incoming
-                } else if !arrivals.contains(stopIndex),
-                          let outgoing = endpoint(
-                            near: s, in: outgoingEndpoints, preferLastRun: true) {
-                    coordinate = outgoing
-                }
-            }
+            let coordinate = stationCoordinate(runs: runs, distance: s, stopIndex: stopIndex,
+                preserveStationEndpoints: preserveStationEndpoints, arrivals: arrivals,
+                incomingEndpoints: incomingEndpoints, outgoingEndpoints: outgoingEndpoints)
             guard let coord = coordinate else { continue }
             stations.append(
                 Station(s: s, coord: coord, color: color, name: localize(name, stop.n02StationCode))
             )
         }
         return stations
+    }
+
+    private static func setStopDistance(
+        _ key: Int, _ value: Double, distanceByStop: inout [Int: Double], order: inout [Int]
+    ) {
+        if distanceByStop.updateValue(value, forKey: key) == nil { order.append(key) }
+    }
+
+    private static func indexStopDistances(
+        _ hops: [Hop], distanceByStop: inout [Int: Double], arrivals: inout Set<Int>, order: inout [Int]
+    ) {
+        for hop in hops {
+            // NaN fails this test in JavaScript too (`NaN < 0` is false), and
+            // then indexes nothing; see ``RiddenFeature/segmentIndex``.
+            guard hop.segmentIndex >= 0, let index = exactIndex(hop.segmentIndex) else { continue }
+            if distanceByStop[index] == nil { setStopDistance(index, hop.s0, distanceByStop: &distanceByStop, order: &order) }
+            setStopDistance(index + 1, hop.s1, distanceByStop: &distanceByStop, order: &order)
+            arrivals.insert(index + 1)
+        }
+
+    }
+
+    private struct Endpoint {
+        let distance: Double
+        let runIndex: Int
+        let coordinate: Coordinate
+    }
+
+    private static func incomingEndpoints(_ runs: [Run]) -> [Endpoint] {
+        return runs.enumerated().compactMap { index, run -> Endpoint? in
+            guard run.total > 0, let coordinate = run.coords.last else { return nil }
+            return Endpoint(
+                distance: run.offset + run.total, runIndex: index, coordinate: coordinate)
+        }.sorted {
+            ($0.distance, $0.runIndex) < ($1.distance, $1.runIndex)
+        }
+    }
+
+    private static func outgoingEndpoints(_ runs: [Run]) -> [Endpoint] {
+        return runs.enumerated().compactMap { index, run -> Endpoint? in
+            guard run.total > 0, let coordinate = run.coords.first else { return nil }
+            return Endpoint(distance: run.offset, runIndex: index, coordinate: coordinate)
+        }.sorted {
+            ($0.distance, $0.runIndex) < ($1.distance, $1.runIndex)
+        }
+
+    }
+
+    private static func endpoint(
+        near distance: Double, in endpoints: [Endpoint], preferLastRun: Bool
+    ) -> Coordinate? {
+        let tolerance = 0.000001
+        var low = 0
+        var high = endpoints.count
+        while low < high {
+            let middle = (low + high) >> 1
+            if endpoints[middle].distance < distance - tolerance {
+                low = middle + 1
+            } else {
+                high = middle
+            }
+        }
+        var match: Endpoint?
+        var index = low
+        while index < endpoints.count,
+              endpoints[index].distance <= distance + tolerance {
+            let candidate = endpoints[index]
+            if abs(candidate.distance - distance) <= tolerance,
+               match == nil
+                || (preferLastRun
+                    ? candidate.runIndex > match!.runIndex
+                    : candidate.runIndex < match!.runIndex) {
+                match = candidate
+            }
+            index += 1
+        }
+        return match?.coordinate
+    }
+
+    private static func stationCoordinate(
+        runs: [Run], distance s: Double, stopIndex: Int, preserveStationEndpoints: Bool,
+        arrivals: Set<Int>, incomingEndpoints: [Endpoint], outgoingEndpoints: [Endpoint]
+    ) -> Coordinate? {
+        var coordinate = position(in: runs, atDistance: s)
+        if preserveStationEndpoints {
+            // Hop arc sums and run arc sums can differ by a rounding step.
+            // Match endpoints within a micrometre rather than requiring
+            // exact Double equality at a potentially national-scale arc.
+            if arrivals.contains(stopIndex),
+               let incoming = endpoint(
+                near: s, in: incomingEndpoints, preferLastRun: false) {
+                coordinate = incoming
+            } else if !arrivals.contains(stopIndex),
+                      let outgoing = endpoint(
+                        near: s, in: outgoingEndpoints, preferLastRun: true) {
+                coordinate = outgoing
+            }
+        }
+        return coordinate
     }
 
     /// JavaScript resolves `array[x]` through the *string* form of `x`, so

@@ -387,6 +387,25 @@ public enum TrainServicePatterns {
             servicesByID[pattern.serviceId]?.region == region
         }
 
+        filterCandidates(&candidates, using: filter)
+
+        let matched: [Pattern]
+        if normalizedQuery.isEmpty {
+            matched = candidates
+        } else {
+            matched = candidates.filter { pattern in
+                if let operatorCodes {
+                    return !Set(OperatorIdentity.codes(forJoined: pattern.company)).isDisjoint(with: operatorCodes)
+                }
+                return prepared.matches(fields: haystacksByPatternID[pattern.id] ?? [])
+            }
+        }
+
+        return sortedSearchMatches(matched, queryIsEmpty: normalizedQuery.isEmpty,
+            prepared: prepared, rideDate: filter.rideDate)
+    }
+
+    private static func filterCandidates(_ candidates: inout [Pattern], using filter: Filter) {
         if let company = filter.company {
             candidates = candidates.filter { OperatorIdentity.sameCompany($0.company, company) }
         }
@@ -405,22 +424,14 @@ public enum TrainServicePatterns {
                 pattern.lines.contains { TrainServiceBranding.canonicalLineName($0) == canonicalLine }
             }
         }
+    }
 
-        let matched: [Pattern]
-        if normalizedQuery.isEmpty {
-            matched = candidates
-        } else {
-            matched = candidates.filter { pattern in
-                if let operatorCodes {
-                    return !Set(OperatorIdentity.codes(forJoined: pattern.company)).isDisjoint(with: operatorCodes)
-                }
-                return prepared.matches(fields: haystacksByPatternID[pattern.id] ?? [])
-            }
-        }
-
-        if normalizedQuery.isEmpty {
+    private static func sortedSearchMatches(
+        _ matched: [Pattern], queryIsEmpty: Bool, prepared: SearchFold.PreparedQuery, rideDate: String?
+    ) -> [Pattern] {
+        if queryIsEmpty {
             return matched.sorted {
-                if let day = filter.rideDate, $0.isValid(on: day) != $1.isValid(on: day) {
+                if let day = rideDate, $0.isValid(on: day) != $1.isValid(on: day) {
                     return $0.isValid(on: day)
                 }
                 if $0.isCurrent != $1.isCurrent { return $0.isCurrent && !$1.isCurrent }
@@ -434,7 +445,7 @@ public enum TrainServicePatterns {
         }
 
         return matched.sorted {
-            if let day = filter.rideDate, $0.isValid(on: day) != $1.isValid(on: day) {
+            if let day = rideDate, $0.isValid(on: day) != $1.isValid(on: day) {
                 return $0.isValid(on: day)
             }
             if $0.isCurrent != $1.isCurrent { return $0.isCurrent && !$1.isCurrent }
@@ -564,6 +575,12 @@ public enum TrainServicePatterns {
         }
         result.origin = reversed ? pattern.destination : pattern.origin
         result.destination = reversed ? pattern.origin : pattern.destination
+        applyRoutePolicy(pattern, to: &result)
+        applyServiceMetadata(pattern, to: &result)
+        return result
+    }
+
+    private static func applyRoutePolicy(_ pattern: Pattern, to result: inout Train) {
         let previousPolicy = result.routePolicy
         let mappedLines = canonicalPreferredLineNames(pattern.lines)
         let previousLines = previousPolicy?.preferredLineNames ?? []
@@ -584,7 +601,9 @@ public enum TrainServicePatterns {
                 preferredOperatorNames: previousPolicy?.preferredOperatorNames,
                 institutionFilterMode: previousPolicy?.institutionFilterMode)
         }
+    }
 
+    private static func applyServiceMetadata(_ pattern: Pattern, to result: inout Train) {
         let trimmedNumber = result.number.trimmingCharacters(in: .whitespacesAndNewlines)
         if pattern.id.hasPrefix("timetable:")
             || trimmedNumber.isEmpty || allPatternNames.contains(trimmedNumber)
@@ -612,8 +631,6 @@ public enum TrainServicePatterns {
         if result.region == nil {
             result.region = "jp"
         }
-
-        return result
     }
 
     private static func normalizedText(_ value: String) -> String {

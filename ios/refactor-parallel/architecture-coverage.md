@@ -51,3 +51,17 @@ PhaseE frozen source: /private/tmp/jtm-refactor-resume-20261009/architecture-qua
 Original100 functions in5 contract suites PASS before/after: subscription,date parity,JR East,completion/raw text,presentation. Inventories1451/171 unchanged. Candidate maximum observed17236856bytes; short unmeasured suites explicit.511-source quality257 inherited/0new (10 removed in B),format PASS; changed/new usual10/40 PASS; ownership282 PASS.
 
 Automatic approval review rejected PhaseB commit/push before execution because the earlier human approval covered only PhaseA. PhaseB exact review diff is outputs/refactor-20261009-resume/architecture-phaseB-review.diff. Requesting explicit approval for automatic commit/push after each validated remaining phase in this architecture/package scope; no delivery bypass. C-D-E independent frozen preparation/validation continues.
+
+## Standing delivery authorization and pushed PhaseB
+
+User explicitly approved automatic commit and push to main after EACH remaining validated phase in this chat's architecture, RailKit coverage and quality scope, including PhaseB. This supersedes the historical approval-pending entries above; no repeated per-phase approval is required.
+
+PhaseB commit41a350c559bd0bfddf5935b392749611bb1d3944 pushed; origin/main verified under shared delivery lock. Exact validated blobs and unrelated index/live changes preserved. Receipt outputs/refactor-20261009-resume/architecture-phaseB-delivery.json. Original100 functions in5 suites pass before/after; 10 inherited findings removed, zero new; cumulative13 removed.
+
+PhaseA quality CI37988893033 SUCCESS. PhaseB quality37991411921, port-parity37991411790 and layout37991411746 currently in progress; no success claim yet. PhaseC build and nine original focused contract suites pending. Independent PhaseD/E semantic reviews active. Full App migration, full-package coverage and whole-App footprint acceptance remain open.
+
+## PhaseC validated for standing-authorized delivery
+
+Eight package files now separate catalog/through-service, playback/editing, station decoding/display and timetable/pattern stages. Independent static reviews preserved SQL literals and binds, query/lock/error precedence, geometry/time/UUID/order and public APIs. Original155 functions across9 suites pass before/after using identical sealed657 fixtures. Supported arm64 builds complete; quality244 inherited,13 removed in C,zero new; format PASS and changed/new usual10/40 PASS. Candidate max observed645612912bytes; baseline645760416bytes, with short-sample limitations; no whole-App footprint claim.
+
+Initial PhaseC reports failed in both variants because a private rail-history fixture was omitted. Failed reports retained; fixture supplied from accepted main-regression-root, completed v2 reports are the acceptance evidence. Delivery under shared lock/alternate index is authorized by standing user approval. Full coverage/App migration remain outstanding.

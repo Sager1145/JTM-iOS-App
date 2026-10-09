@@ -157,51 +157,79 @@ public enum StationDisplay {
                 let stationZoom = densityMinZoom[packageLine.id] ?? 0
                 let isLoop = loopLineIDs.contains(packageLine.id)
                 let lineIndex = lines.count
-                lines.append(
-                    Line(
-                        lineID: packageLine.id,
-                        name: packageLine.name,
-                        nameRoma: packageLine.nameRoma,
-                        operator: packageLine.operator,
-                        color: colorOverrideByLineID[packageLine.id]
-                            ?? firstTruthy(packageLine.color) ?? Self.defaultLineColor,
-                        logo: packageLogoLineIDs.contains(packageLine.id)
-                            ? "/rail/logos/\(Self.badgeIDForLine(packageLine.id)).png"
-                            : packageLine.operatorLogo,
-                        isLoop: isLoop,
-                        minZoom: lineZoom,
-                        renderGroup: renderGroupByLineID[packageLine.id]))
+                lines.append(Self.displayLine(packageLine, lineZoom: lineZoom, isLoop: isLoop,
+                    packageLogoLineIDs: packageLogoLineIDs, colorOverrideByLineID: colorOverrideByLineID,
+                    renderGroupByLineID: renderGroupByLineID))
                 // `lineById.set` — last writer wins on a duplicate id, which
                 // is a package question rather than a display one.
                 lineIndexByID[CodeUnits(packageLine.id)] = lineIndex
 
-                let stationCount = packageLine.stations.count
-                for (index, station) in packageLine.stations.enumerated() {
-                    let isTerminal =
-                        !isLoop && (index == 0 || index == stationCount - 1)
-                    let stationID = "\(packageLine.id):\(station.id)"
-                    let position = stations.count
-                    stations.append(
-                        Station(
-                            stationID: stationID,
-                            stationGroupID: station.id,
-                            name: station.name,
-                            nameRoma: station.nameRoma,
-                            lineIndex: lineIndex,
-                            coordinate: packageLine.displayCoordinate(for: station),
-                            isTerminal: isTerminal,
-                            minZoom: isTerminal ? lineZoom : stationZoom))
-                    stationIndexByID[CodeUnits(stationID)] = position
-
-                    let key = CodeUnits(Self.groupKey(groupID: station.id, stationID: stationID))
-                    groupMemberIndices[key, default: []].append(position)
-                }
+                Self.appendDisplayStations(packageLine, lineIndex: lineIndex, isLoop: isLoop,
+                    lineZoom: lineZoom, stationZoom: stationZoom, stations: &stations,
+                    stationIndexByID: &stationIndexByID, groupMemberIndices: &groupMemberIndices)
             }
 
+            self.circleAliasStationIDs = Self.circleAliases(package)
+            self.lines = lines
+            self.stations = stations
+            self.lineIndexByID = lineIndexByID
+            self.stationIndexByID = stationIndexByID
+            self.groupMemberIndices = groupMemberIndices
+        }
+
+        private static func displayLine(
+            _ packageLine: CompactPackage.Line, lineZoom: Int, isLoop: Bool,
+            packageLogoLineIDs: Set<String>, colorOverrideByLineID: [String: String],
+            renderGroupByLineID: [String: String]
+        ) -> Line {
+            return Line(
+                lineID: packageLine.id,
+                name: packageLine.name,
+                nameRoma: packageLine.nameRoma,
+                operator: packageLine.operator,
+                color: colorOverrideByLineID[packageLine.id]
+                    ?? firstTruthy(packageLine.color) ?? Self.defaultLineColor,
+                logo: packageLogoLineIDs.contains(packageLine.id)
+                    ? "/rail/logos/\(Self.badgeIDForLine(packageLine.id)).png"
+                    : packageLine.operatorLogo,
+                isLoop: isLoop,
+                minZoom: lineZoom,
+                renderGroup: renderGroupByLineID[packageLine.id])
+        }
+
+        private static func appendDisplayStations(
+            _ packageLine: CompactPackage.Line, lineIndex: Int, isLoop: Bool,
+            lineZoom: Int, stationZoom: Int, stations: inout [Station],
+            stationIndexByID: inout [CodeUnits: Int], groupMemberIndices: inout [CodeUnits: [Int]]
+        ) {
+            let stationCount = packageLine.stations.count
+            for (index, station) in packageLine.stations.enumerated() {
+                let isTerminal =
+                    !isLoop && (index == 0 || index == stationCount - 1)
+                let stationID = "\(packageLine.id):\(station.id)"
+                let position = stations.count
+                stations.append(
+                    Station(
+                        stationID: stationID,
+                        stationGroupID: station.id,
+                        name: station.name,
+                        nameRoma: station.nameRoma,
+                        lineIndex: lineIndex,
+                        coordinate: packageLine.displayCoordinate(for: station),
+                        isTerminal: isTerminal,
+                        minZoom: isTerminal ? lineZoom : stationZoom))
+                stationIndexByID[CodeUnits(stationID)] = position
+
+                let key = CodeUnits(Self.groupKey(groupID: station.id, stationID: stationID))
+                groupMemberIndices[key, default: []].append(position)
+            }
+        }
+
+        private static func circleAliases(_ package: CompactPackage) -> Set<String> {
             let packageByID = package.lines.reduce(into: [String: CompactPackage.Line]()) {
                 $0[$1.id] = $1
             }
-            self.circleAliasStationIDs = Set(package.lines.flatMap { line in
+            return Set(package.lines.flatMap { line in
                 line.stations.compactMap { station -> String? in
                     guard let ownerID = line.stationCircleOwnerByCode[station.id], ownerID != line.id,
                           let owner = packageByID[ownerID],
@@ -211,11 +239,6 @@ public enum StationDisplay {
                     return "\(line.id):\(station.id)"
                 }
             })
-            self.lines = lines
-            self.stations = stations
-            self.lineIndexByID = lineIndexByID
-            self.stationIndexByID = stationIndexByID
-            self.groupMemberIndices = groupMemberIndices
         }
 
         /// `station.stationGroupId || "solo:" + station.stationId`.

@@ -129,6 +129,50 @@ public enum RailwayRouteEditing {
             return train.stops[index].routeEditing?.visitID
         })
         var occurrences: [String: Int] = [:]
+        appendReplacementVisits(train: train, oldStops: oldStops, newInterior: newInterior,
+            retained: retained, range: range, origin: origin, destination: destination,
+            occupiedVisitIDs: &occupiedVisitIDs, occurrences: &occurrences,
+            inserted: &inserted, replacement: &replacement)
+        replacement.append(oldStops.last!)
+        let existingSections = sections(for: train)
+        let oldSections = Array(existingSections[range.lowerBound..<range.upperBound])
+        var selectedSections = choice.routeSections
+        carryServiceLabels(oldSections: oldSections, matches: matches,
+            replacementCount: replacement.count, oldStopCount: oldStops.count,
+            selectedSections: &selectedSections)
+        let updated = applyingRouteSelection(to: train, range: range, replacement: replacement,
+            existingSections: existingSections, selectedSections: selectedSections)
+        return Plan(
+            updatedTrain: updated, insertedStops: inserted,
+            removedStops: removed.filter(isUntouchedGenerated), conflictingStops: conflicts,
+            undo: Undo(before: oldStops, after: replacement, beforeSections: oldSections,
+                       afterSections: selectedSections, originalRouteSections: train.routeSections,
+                       originalRouteConfirmation: train.routeConfirmation,
+                       updatedRouteConfirmation: updated.routeConfirmation))
+    }
+
+    private static func applyingRouteSelection(
+        to train: Train, range: ClosedRange<Int>, replacement: [Stop],
+        existingSections: [RouteSection], selectedSections: [RouteSection]
+    ) -> Train {
+        var updatedSections = existingSections
+        updatedSections.replaceSubrange(range.lowerBound..<range.upperBound, with: selectedSections)
+        var updated = train
+        updated.stops.replaceSubrange(range, with: replacement)
+        updated.routeSections = updatedSections
+        // Confirming one span does not attest the rest of a pending ride.
+        if range.lowerBound == 0 && range.upperBound == train.stops.count - 1 {
+            updated.routeConfirmation = .confirmed
+        }
+        return updated
+    }
+
+    private static func appendReplacementVisits(
+        train: Train, oldStops: [Stop], newInterior: [RailwayRouteChoices.Visit],
+        retained: [Int: Stop], range: ClosedRange<Int>, origin: String, destination: String,
+        occupiedVisitIDs: inout Set<UUID>, occurrences: inout [String: Int],
+        inserted: inout [Stop], replacement: inout [Stop]
+    ) {
         for (index, station) in newInterior.enumerated() {
             let occurrence = occurrences[station.code, default: 0]
             occurrences[station.code] = occurrence + 1
@@ -153,15 +197,17 @@ public enum RailwayRouteEditing {
             inserted.append(stop)
             replacement.append(stop)
         }
-        replacement.append(oldStops.last!)
-        let existingSections = sections(for: train)
-        let oldSections = Array(existingSections[range.lowerBound..<range.upperBound])
-        var selectedSections = choice.routeSections
+    }
+
+    private static func carryServiceLabels(
+        oldSections: [RouteSection], matches: [(Int, Int)], replacementCount: Int, oldStopCount: Int,
+        selectedSections: inout [RouteSection]
+    ) {
         // Carry service labels between consecutive retained anchors. Expanding
         // B–D into B–C–D keeps that portion's number even if A–B uses another.
         var anchorPairs = [(0, 0)]
         anchorPairs += matches.map { ($0.1 + 1, $0.0 + 1) }
-        anchorPairs.append((replacement.count - 1, oldStops.count - 1))
+        anchorPairs.append((replacementCount - 1, oldStopCount - 1))
         for anchorIndex in 0..<(anchorPairs.count - 1) {
             let start = anchorPairs[anchorIndex]
             let end = anchorPairs[anchorIndex + 1]
@@ -173,22 +219,6 @@ public enum RailwayRouteEditing {
                 selectedSections[index].name = selectedSections[index].name ?? name
             }
         }
-        var updatedSections = existingSections
-        updatedSections.replaceSubrange(range.lowerBound..<range.upperBound, with: selectedSections)
-        var updated = train
-        updated.stops.replaceSubrange(range, with: replacement)
-        updated.routeSections = updatedSections
-        // Confirming one span does not attest the rest of a pending ride.
-        if range.lowerBound == 0 && range.upperBound == train.stops.count - 1 {
-            updated.routeConfirmation = .confirmed
-        }
-        return Plan(
-            updatedTrain: updated, insertedStops: inserted,
-            removedStops: removed.filter(isUntouchedGenerated), conflictingStops: conflicts,
-            undo: Undo(before: oldStops, after: replacement, beforeSections: oldSections,
-                       afterSections: selectedSections, originalRouteSections: train.routeSections,
-                       originalRouteConfirmation: train.routeConfirmation,
-                       updatedRouteConfirmation: updated.routeConfirmation))
     }
 
     public static func isUntouchedGenerated(_ stop: Stop) -> Bool {
