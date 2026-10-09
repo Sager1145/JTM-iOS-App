@@ -518,3 +518,30 @@ quality-limits-delivery/{receipt.json,lint.json,pipeline/summary.json}. Remainin
 work is bounded responsibility extraction with equivalent behavior and lower
 footprint, followed by baseline-aware enforcement of new/modified-function debt
 and the full coverage/platform/performance/M matrix.
+
+## Phase 21: migrate the console walk to the delivered share composer
+
+Status: complete ConsoleSweep public flow passes after adapting its obsolete
+share-menu navigation to the delivered composer.
+
+Frozen Main19 full UI regression exposes the old mapShareOption/
+statisticsShareOption menu lookup, which no longer exists after Phase14. The
+console walk now opens the public composer, explicitly selects and verifies
+both light/dark appearance values, waits for export readiness, verifies an
+actual preview image, closes preview and composer, then runs every original
+map/control/data/settings/journey/editor/search step. Existing CLI navigation
+changes informed the migration; both original appearance passes and image/
+dismissal assertions remain. No production behavior or fixture is changed.
+
+Validation: independent exact Main19 production + this one test candidate
+build-for-testing PASS; full ConsoleSweep test PASS (185.990s runner), one
+owned App PID,129 successful physical samples, reported peak367,954,872B,
+no2GiB guard breach. Current five-rule pinned SwiftLint reports zero findings;
+scoped pinned SwiftFormat passes. Initial Main19 failure remains in the full
+UI matrix; this dedicated corrected receipt closes only that failed flow.
+Other UI classes continue independently, with exact outcomes recorded.
+
+Receipts: console-composer-{candidate.json,build.log,validation.json,
+validation.log,validation.xcresult,lint.json,format.log}. This is UI regression
+verification, not A/B footprint or zero-leak acceptance. Unrelated CLI source
+and staged deletions remain preserved. Full refactor acceptance is still open.

@@ -77,34 +77,32 @@ final class ConsoleSweepTests: XCTestCase {
                 return
             }
             share.tap()
-            XCTAssertTrue(
-                element("mapShareOption", in: app).waitForExistence(timeout: 4),
-                "the ticket and map option is missing")
-            let statisticsOption = element("statisticsShareOption", in: app)
-            XCTAssertTrue(statisticsOption.exists, "the ticket and statistics option is missing")
-            statisticsOption.tap()
-            // UIKit's nested menu propagates the parent identifier to its
-            // actions. Match their visible labels, as IntegratedSharing does.
-            let lightShare = app.buttons["Share in light mode"]
-            let darkShare = app.buttons["Share in dark mode"]
-            XCTAssertTrue(lightShare.waitForExistence(timeout: 4), "the light share option is missing")
-            XCTAssertTrue(darkShare.exists, "the dark share option is missing")
-            (appearance == "light" ? lightShare : darkShare).tap()
-
+            let composer = element("shareComposer", in: app)
+            XCTAssertTrue(composer.waitForExistence(timeout: 8), "the share composer did not appear")
+            let appearanceControl = element("shareComposerAppearance", in: app)
+            XCTAssertTrue(appearanceControl.waitForExistence(timeout: 4))
+            let expectedAppearance = "Share in \(appearance) mode"
+            if appearanceControl.value as? String != expectedAppearance { appearanceControl.tap() }
+            XCTAssertEqual(appearanceControl.value as? String, expectedAppearance)
+            let export = element("shareComposerExport", in: app)
+            let exportReady = XCTNSPredicateExpectation(
+                predicate: NSPredicate { _, _ in export.exists && export.isEnabled }, object: nil)
+            XCTAssertEqual(XCTWaiter.wait(for: [exportReady], timeout: 90), .completed)
+            export.tap()
             let preview = element("statisticsShareSheet", in: app)
-            XCTAssertTrue(
-                preview.waitForExistence(timeout: 90),
-                "the \(appearance) statistics preview did not appear from its own anchor")
+            XCTAssertTrue(preview.waitForExistence(timeout: 90),
+                          "the \(appearance) statistics preview did not appear from the composer")
             XCTAssertTrue(app.images.firstMatch.exists,
                           "the \(appearance) statistics preview has no rendered image")
             let close = element("statisticsShareCloseButton", in: app)
-            XCTAssertTrue(close.waitForExistence(timeout: 4),
-                          "the \(appearance) statistics preview has no close button")
+            XCTAssertTrue(close.waitForExistence(timeout: 4))
             close.tap()
-            XCTAssertTrue(close.waitForNonExistence(timeout: 8),
-                          "the \(appearance) statistics preview did not close")
-            XCTAssertTrue(preview.waitForNonExistence(timeout: 8),
-                          "the statistics share anchor remained presented")
+            XCTAssertTrue(close.waitForNonExistence(timeout: 8))
+            XCTAssertTrue(preview.waitForNonExistence(timeout: 8))
+            let cancel = app.buttons["Cancel"]
+            XCTAssertTrue(cancel.waitForExistence(timeout: 4))
+            cancel.tap()
+            XCTAssertTrue(composer.waitForNonExistence(timeout: 8), "the share composer did not close")
             settle()
         }
 
