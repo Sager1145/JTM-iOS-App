@@ -1,5 +1,19 @@
 # S3 / S6 功能责任与验证矩阵
 
+## 2026-10-09 当前提交验收入口
+
+本节覆盖下文历史“最新”和“未提交”表述。当前已推送生产基线为 `f240ada65564466af2c74de59c2ba98ad32a6b9e`；原计划及目标仍以 [主计划最新核对](FULL_CODEBASE_REFACTOR_PLAN.md) 为准，18 阶段的精确实现/收据见 [阶段交付记录](REFACTOR_PHASE_COMMITS.md)。CLI 的额外工作树改动不包含在这些 Main 结论中。
+
+| 责任链路 | 已交付验证范围 | 当前验收边界 |
+| --- | --- | --- |
+| Workspace / Share | scoped render key、单重型 permit、不可协作 await 后仍保留 owner、旧 generation 拒绝、预览/导出像素预算；57 native 检查与 Main 分享 UI 定向通过 | 完整分享/播放/视频与设备图像矩阵仍待运行 |
+| NewTrip / Application proof | dated/undated 独立证明，匹配日期才 confirmed，pending 保留；22 availability + 3 plumbing 与三条 Main 新建行程 UI 通过 | 完整编辑/保存/重启/用户数据往返矩阵待完成 |
+| Route / Display / Statistics | 有界单槽缓存、解码/构图串行、endpoint preflight、carried inputs、图材料化等价；真实 JP/TW 公开 UI 三组 Release 对照全通过 | 双地区稳定 footprint -0.54%、峰值 -20.43%，不能推广到所有地区或零泄漏 |
+| History / Physical graph | 原 surveyed geometry/拓扑/golden 未放宽；历史 browser boundary 单套通过，峰值 1,938,131,584 B | 原全量包因峰值 2,286,816,064 B 中止；当前覆盖率构建通过，全部注册测试按套新进程执行中，未宣称整套 PASS |
+| Quality / Platforms / M | 固定版本 advisory lint/format CI 与 scoped coverage 工具已交付；定向 Release 双架构构建通过 | 完整 Domain/global coverage、长度/复杂度、全 UI/Catalyst、启动/帧时/增量构建/泄漏仍开放；M frame-leading 实验失败且未交付 |
+
+永久字号 `.xSmall ... .xLarge`、iPhone 竖屏、iPad 方向、北美退役、严格物理连接与单地图遮罩层级保持原合同。旧失败保留原身份；旧局部成功不能替代当前全矩阵。整体状态：**继续执行，尚未收口**。
+
 日期：2026-10-03。状态：**源码链路核对；不是整体验收记录**。
 
 本表依据当前工作树及已完成的 Application、地图、存储、AI 请求、时刻表、站点搜索与分享请求边界。源码归属以 `source-ownership.json` 和 target 成员检查为准。没有读取用户私人文件或认证凭据；后续物理拓扑验证只读核对了活动地区的源轨道资源。测试文件存在、源码接线成立与测试实际通过是三种不同证据。

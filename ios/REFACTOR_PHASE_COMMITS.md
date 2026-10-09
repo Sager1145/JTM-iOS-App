@@ -470,3 +470,24 @@ Receipts: `graph-builder-equivalence.log`, `graph-builder-focused.log`,
 
 The roadmap is not complete. Existing full-suite/data failures and the historical
 national graph's 2 GiB operational test stop remain recorded, not waived.
+
+## Phase 19: reconcile the original roadmap and regression matrix
+
+Status: documentation reconciliation delivered; full refactor acceptance remains open.
+
+The original FULL_CODEBASE_REFACTOR_PLAN and REFACTOR_FEATURE_MATRIX now lead
+with the exact pushed phase-18 production baseline and a target/evidence/open-gate
+comparison. Historical observations remain historical. The 18 delivered phases
+are tied to the original S0-S6/M plan rather than treated as a new roadmap.
+Dual-region Release memory acceptance is separated from full-device/region/leak
+acceptance, the prior full-suite 2 GiB stop and settled-footprint failure remain
+visible, and builder CPU regression is explicit. Full Main18 instrumented package
+build passes (106.54s); exact 1,437-function/169-suite inventory is now executing
+serially in fresh processes with all arguments, existing benchmark opt-ins and
+an owned 2 GiB guard. This phase does not claim that pending run passed.
+
+Validation: documentation-only candidates contain exactly the new leading
+sections and this receipt; existing CLI edits and staged logo deletions are
+preserved. Source/metric identities checked against the phase ledger and build/
+inventory receipts. Remaining Domain/global coverage, quality thresholds, full
+UI/platform/performance/leak matrix, stable directory ownership and M are open.
