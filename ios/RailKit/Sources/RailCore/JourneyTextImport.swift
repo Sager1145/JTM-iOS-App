@@ -116,57 +116,11 @@ public extension JourneyCompletion {
                 platformNumber: platform(in: segment))
         }
 
-        // Timetable copies often place a station and its time on adjacent rows. Attach a
-        // time-only row to the nearest station row, preferring the row after the station.
-        for index in infos.indices where infos[index].match != nil && infos[index].times.isEmpty {
-            if infos.indices.contains(index + 1), infos[index + 1].match == nil,
-               !infos[index + 1].times.isEmpty
-            {
-                infos[index].times = infos[index + 1].times
-                infos[index].timeText = infos[index + 1].text
-            } else if index > 0, infos[index - 1].match == nil, !infos[index - 1].times.isEmpty {
-                infos[index].times = infos[index - 1].times
-                infos[index].timeText = infos[index - 1].text
-            }
-        }
-
-        let matched = infos.filter { $0.match != nil }
-        var stops: [RawStop] = []
-        for (position, info) in matched.enumerated() {
-            guard let match = info.match else { continue }
-            let assigned = assign(
-                info.times,
-                markerText: info.text + " " + (info.timeText ?? ""),
-                position: position,
-                count: matched.count)
-            let stop = RawStop(
-                id: stops.count,
-                sourceText: info.text,
-                matchedName: match.name,
-                arrival: assigned.arrival,
-                departure: assigned.departure,
-                platformNumber: info.platformNumber,
-                candidates: match.candidates)
-            // Repeated headers and copied transfer rows can say the same station twice. Preserve
-            // a genuine revisit, but collapse adjacent duplicate rows with identical times.
-            if let last = stops.last,
-               Set(last.candidates.map(\.key)) == Set(stop.candidates.map(\.key)),
-               last.arrival == stop.arrival, last.departure == stop.departure
-            {
-                continue
-            }
-            stops.append(stop)
-        }
-        for index in stops.indices { stops[index].id = index }
+        attachAdjacentTimes(to: &infos)
+        let stops = rawStops(from: infos)
 
         let rideDate = rawLines.lazy.compactMap(date(in:)).first
-        let service = rawLines.lazy.compactMap { line -> String? in
-            guard stationMatch(in: line, searchable: names) == nil,
-                  times(in: line).isEmpty,
-                  looksLikeService(line)
-            else { return nil }
-            return cleanedService(line)
-        }.first
+        let service = firstService(in: rawLines, names: names)
         let claimed = Set(infos.filter { $0.match != nil || !$0.times.isEmpty }.map(\.text))
         let unmatched = rawLines.filter { !claimed.contains($0) && date(in: $0) == nil && $0 != service }
         return RawDraft(
@@ -204,6 +158,66 @@ private extension JourneyCompletion {
             self.platformNumber = platformNumber
             self.timeText = timeText
         }
+    }
+
+    static func attachAdjacentTimes(to infos: inout [RawLine]) {
+        // Timetable copies often place a station and its time on adjacent rows. Attach a
+        // time-only row to the nearest station row, preferring the row after the station.
+        for index in infos.indices where infos[index].match != nil && infos[index].times.isEmpty {
+            if infos.indices.contains(index + 1), infos[index + 1].match == nil,
+               !infos[index + 1].times.isEmpty
+            {
+                infos[index].times = infos[index + 1].times
+                infos[index].timeText = infos[index + 1].text
+            } else if index > 0, infos[index - 1].match == nil, !infos[index - 1].times.isEmpty {
+                infos[index].times = infos[index - 1].times
+                infos[index].timeText = infos[index - 1].text
+            }
+        }
+    }
+
+    static func rawStops(from infos: [RawLine]) -> [RawStop] {
+        let matched = infos.filter { $0.match != nil }
+        var stops: [RawStop] = []
+        for (position, info) in matched.enumerated() {
+            guard let match = info.match else { continue }
+            let assigned = assign(
+                info.times,
+                markerText: info.text + " " + (info.timeText ?? ""),
+                position: position,
+                count: matched.count)
+            let stop = RawStop(
+                id: stops.count,
+                sourceText: info.text,
+                matchedName: match.name,
+                arrival: assigned.arrival,
+                departure: assigned.departure,
+                platformNumber: info.platformNumber,
+                candidates: match.candidates)
+            // Repeated headers and copied transfer rows can say the same station twice. Preserve
+            // a genuine revisit, but collapse adjacent duplicate rows with identical times.
+            if let last = stops.last,
+               Set(last.candidates.map(\.key)) == Set(stop.candidates.map(\.key)),
+               last.arrival == stop.arrival, last.departure == stop.departure
+            {
+                continue
+            }
+            stops.append(stop)
+        }
+        for index in stops.indices { stops[index].id = index }
+
+        return stops
+    }
+
+    static func firstService(in rawLines: [String], names: [SearchableName]) -> String? {
+        let service = rawLines.lazy.compactMap { line -> String? in
+            guard stationMatch(in: line, searchable: names) == nil,
+                  times(in: line).isEmpty,
+                  looksLikeService(line)
+            else { return nil }
+            return cleanedService(line)
+        }.first
+        return service
     }
 
     static func splitRouteLine(_ line: String) -> [String] {

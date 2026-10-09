@@ -69,19 +69,7 @@ public enum JourneyPresentationResolver {
         // 3. Hidden. §8.5: hiding changes the map, not the record or the export,
         //    and the copy has to say so.
         if train.visible == false {
-            return JourneyPresentation(
-                eyebrow: number,
-                title: .key(Keys.hiddenTitle, fallback: "Hidden from map"),
-                subtitle: endpoints,
-                status: StatusPresentation(
-                    title: .key(Keys.stillSaved, fallback: "Journey is still saved"),
-                    detail: .key(
-                        Keys.hiddenDetail,
-                        fallback: "Showing it again does not change exported journey data."),
-                    tone: .neutral),
-                primaryAction: .showOnMap,
-                secondaryActions: [.edit, .duplicate, .delete],
-                blocksPlayback: true)
+            return hidden(number: number, endpoints: endpoints)
         }
 
         // 4. Playback — but only over a route that actually exists.
@@ -91,101 +79,151 @@ public enum JourneyPresentationResolver {
         //    offering a pause button for a journey it cannot draw, and it is
         //    also §8.4 ("求解中不得让用户启动依赖完整路线的回放或视频导出").
         if case .playing(_, let isPaused) = phase, route == .resolved {
-            return JourneyPresentation(
-                eyebrow: number,
-                title: isPaused
-                    ? .key(Keys.playbackPaused, fallback: "Playback paused")
-                    : .key(Keys.playing, fallback: "Playing journey"),
-                subtitle: endpoints,
-                status: nil,
-                primaryAction: isPaused ? .resume : .pause,
-                secondaryActions: [.stop, .inspectDetails],
-                blocksPlayback: false)
+            return playback(number: number, endpoints: endpoints, isPaused: isPaused)
         }
 
-        // 5. Route state.
+        return selectedRoute(train: train, route: route, number: number, endpoints: endpoints)
+    }
+
+    private static func hidden(
+        number: PresentationText, endpoints: PresentationText
+    ) -> JourneyPresentation {
+        return JourneyPresentation(
+            eyebrow: number,
+            title: .key(Keys.hiddenTitle, fallback: "Hidden from map"),
+            subtitle: endpoints,
+            status: StatusPresentation(
+                title: .key(Keys.stillSaved, fallback: "Journey is still saved"),
+                detail: .key(
+                    Keys.hiddenDetail,
+                    fallback: "Showing it again does not change exported journey data."),
+                tone: .neutral),
+            primaryAction: .showOnMap,
+            secondaryActions: [.edit, .duplicate, .delete],
+            blocksPlayback: true)
+    }
+
+    private static func playback(
+        number: PresentationText, endpoints: PresentationText, isPaused: Bool
+    ) -> JourneyPresentation {
+        return JourneyPresentation(
+            eyebrow: number,
+            title: isPaused
+                ? .key(Keys.playbackPaused, fallback: "Playback paused")
+                : .key(Keys.playing, fallback: "Playing journey"),
+            subtitle: endpoints,
+            status: nil,
+            primaryAction: isPaused ? .resume : .pause,
+            secondaryActions: [.stop, .inspectDetails],
+            blocksPlayback: false)
+    }
+
+    private static func pendingRoute(
+        train: Train, route: JourneyRouteState, number: PresentationText, endpoints: PresentationText
+    ) -> JourneyPresentation {
+        // §5.5 keeps these apart: unknown is "准备路线" and resolving is
+        // "正在重建路线". Copy that claims a solve is under way when none
+        // has started is the same class of lie as a fake straight line —
+        // smaller, but it teaches the reader to distrust the progress text.
+        let isResolving: Bool
+        if case .resolving = route { isResolving = true } else { isResolving = false }
+        return JourneyPresentation(
+            eyebrow: number,
+            title: isResolving
+                ? .key(Keys.routeBuilding, fallback: "Building railway route")
+                : .key(Keys.routePreparing, fallback: "Preparing route"),
+            subtitle: endpoints,
+            status: StatusPresentation(
+                title: isResolving
+                    ? .key(
+                        Keys.routeGenerating,
+                        ["train": .string(train.number)],
+                        fallback: "Generating N02 railway route for {train}...")
+                    : .key(Keys.routeNotReady, fallback: "Route is not ready yet"),
+                tone: .neutral),
+            // §13.2 / §3.3: nothing to press. Offering "Rebuild" against a
+            // solve already in flight is a second answer to one question.
+            primaryAction: nil,
+            secondaryActions: [.edit, .inspectDetails],
+            blocksPlayback: true)
+    }
+
+    private static func reviewRoute(
+        reason: String, number: PresentationText, endpoints: PresentationText
+    ) -> JourneyPresentation {
+        return JourneyPresentation(
+            eyebrow: number,
+            title: .key(Keys.routeNeedsReview, fallback: "Route needs review"),
+            subtitle: reason.isEmpty ? endpoints : .value(reason),
+            status: StatusPresentation(
+                title: .key(
+                    Keys.recordUnchanged,
+                    fallback: "Journey record and stops are unchanged."),
+                detail: .key(
+                    Keys.routePartial,
+                    fallback: "Some sections could not be drawn. No straight line was used."),
+                tone: .caution),
+            primaryAction: .repairRoute,
+            // §8.4: "优先给「编辑停站」而不是「重试」死循环" — so editing the
+            // stops leads the quiet group even though the primary repairs.
+            secondaryActions: [.edit, .inspectDetails],
+            blocksPlayback: true)
+    }
+
+    private static func unavailableRoute(
+        reason: String, number: PresentationText, endpoints: PresentationText
+    ) -> JourneyPresentation {
+        return JourneyPresentation(
+            eyebrow: number,
+            title: .key(Keys.routeUnavailable, fallback: "Route unavailable"),
+            subtitle: reason.isEmpty ? endpoints : .value(reason),
+            status: StatusPresentation(
+                title: .key(
+                    Keys.recordUnchanged,
+                    fallback: "Journey record and stops are unchanged."),
+                // §1.1: the record is intact and no straight line was drawn
+                // in place of the railway. The existing catalog entry says
+                // exactly this, in all four languages.
+                detail: .key(
+                    Keys.routeNoPath,
+                    fallback: """
+                        No N02 railway path could be generated from embedded N02 data. \
+                        Check station codes / route_policy. No fake straight line was drawn.
+                        """),
+                tone: .critical),
+            primaryAction: .rebuildRoute,
+            secondaryActions: [.edit, .inspectDetails],
+            blocksPlayback: true)
+    }
+
+    private static func resolvedRoute(
+        train: Train, number: PresentationText, endpoints: PresentationText
+    ) -> JourneyPresentation {
+        // 6. Normal. §7.5: no permanent success badge — `status` is nil, and
+        //    the reader sees the journey rather than a green tick about it.
+        //    §3.2's scan order puts the date above the number as an eyebrow.
+        return JourneyPresentation(
+            eyebrow: train.date.map(PresentationText.value),
+            title: number,
+            subtitle: endpoints,
+            status: nil,
+            primaryAction: .locate,
+            secondaryActions: [.play, .edit, .duplicate, .hide, .delete],
+            blocksPlayback: false)
+    }
+
+    private static func selectedRoute(
+        train: Train, route: JourneyRouteState, number: PresentationText, endpoints: PresentationText
+    ) -> JourneyPresentation {
         switch route {
         case .unknown, .resolving:
-            // §5.5 keeps these apart: unknown is "准备路线" and resolving is
-            // "正在重建路线". Copy that claims a solve is under way when none
-            // has started is the same class of lie as a fake straight line —
-            // smaller, but it teaches the reader to distrust the progress text.
-            let isResolving: Bool
-            if case .resolving = route { isResolving = true } else { isResolving = false }
-            return JourneyPresentation(
-                eyebrow: number,
-                title: isResolving
-                    ? .key(Keys.routeBuilding, fallback: "Building railway route")
-                    : .key(Keys.routePreparing, fallback: "Preparing route"),
-                subtitle: endpoints,
-                status: StatusPresentation(
-                    title: isResolving
-                        ? .key(
-                            Keys.routeGenerating,
-                            ["train": .string(train.number)],
-                            fallback: "Generating N02 railway route for {train}...")
-                        : .key(Keys.routeNotReady, fallback: "Route is not ready yet"),
-                    tone: .neutral),
-                // §13.2 / §3.3: nothing to press. Offering "Rebuild" against a
-                // solve already in flight is a second answer to one question.
-                primaryAction: nil,
-                secondaryActions: [.edit, .inspectDetails],
-                blocksPlayback: true)
-
+            return pendingRoute(train: train, route: route, number: number, endpoints: endpoints)
         case .needsReview(let reason):
-            return JourneyPresentation(
-                eyebrow: number,
-                title: .key(Keys.routeNeedsReview, fallback: "Route needs review"),
-                subtitle: reason.isEmpty ? endpoints : .value(reason),
-                status: StatusPresentation(
-                    title: .key(
-                        Keys.recordUnchanged,
-                        fallback: "Journey record and stops are unchanged."),
-                    detail: .key(
-                        Keys.routePartial,
-                        fallback: "Some sections could not be drawn. No straight line was used."),
-                    tone: .caution),
-                primaryAction: .repairRoute,
-                // §8.4: "优先给「编辑停站」而不是「重试」死循环" — so editing the
-                // stops leads the quiet group even though the primary repairs.
-                secondaryActions: [.edit, .inspectDetails],
-                blocksPlayback: true)
-
+            return reviewRoute(reason: reason, number: number, endpoints: endpoints)
         case .unavailable(let reason):
-            return JourneyPresentation(
-                eyebrow: number,
-                title: .key(Keys.routeUnavailable, fallback: "Route unavailable"),
-                subtitle: reason.isEmpty ? endpoints : .value(reason),
-                status: StatusPresentation(
-                    title: .key(
-                        Keys.recordUnchanged,
-                        fallback: "Journey record and stops are unchanged."),
-                    // §1.1: the record is intact and no straight line was drawn
-                    // in place of the railway. The existing catalog entry says
-                    // exactly this, in all four languages.
-                    detail: .key(
-                        Keys.routeNoPath,
-                        fallback: """
-                            No N02 railway path could be generated from embedded N02 data. \
-                            Check station codes / route_policy. No fake straight line was drawn.
-                            """),
-                    tone: .critical),
-                primaryAction: .rebuildRoute,
-                secondaryActions: [.edit, .inspectDetails],
-                blocksPlayback: true)
-
+            return unavailableRoute(reason: reason, number: number, endpoints: endpoints)
         case .resolved:
-            // 6. Normal. §7.5: no permanent success badge — `status` is nil, and
-            //    the reader sees the journey rather than a green tick about it.
-            //    §3.2's scan order puts the date above the number as an eyebrow.
-            return JourneyPresentation(
-                eyebrow: train.date.map(PresentationText.value),
-                title: number,
-                subtitle: endpoints,
-                status: nil,
-                primaryAction: .locate,
-                secondaryActions: [.play, .edit, .duplicate, .hide, .delete],
-                blocksPlayback: false)
+            return resolvedRoute(train: train, number: number, endpoints: endpoints)
         }
     }
 
@@ -213,61 +251,13 @@ public enum JourneyPresentationResolver {
                 blocksPlayback: true)
 
         case .empty:
-            // §13.1: three different empty states with three different single
-            // primary actions — "空状态不得同时放三个同权主按钮."
-            if hasSearchQuery {
-                return JourneyPresentation(
-                    title: .key(Keys.emptySearchTitle, fallback: "No matching journeys"),
-                    subtitle: .key(
-                        Keys.emptySearchDetail,
-                        fallback: "Try a train number, a station, or an ID."),
-                    primaryAction: .clearSearch,
-                    secondaryActions: [.add, .importData],
-                    blocksPlayback: true)
-            }
-            if hasDateFilter {
-                return JourneyPresentation(
-                    title: .key(Keys.emptyDateTitle, fallback: "No journeys on this day"),
-                    subtitle: .key(
-                        Keys.emptyDateDetail,
-                        fallback: "The current date filter has no records."),
-                    primaryAction: .add,
-                    secondaryActions: [.importData],
-                    blocksPlayback: true)
-            }
-            return JourneyPresentation(
-                title: .key(Keys.emptyTitle, fallback: "No journeys yet"),
-                subtitle: .key(
-                    Keys.emptyDetail,
-                    fallback: "Add a journey, or import an existing JSON store."),
-                primaryAction: .add,
-                secondaryActions: [.importData],
-                blocksPlayback: true)
+            return emptyWorkspace(hasSearchQuery: hasSearchQuery, hasDateFilter: hasDateFilter)
 
         case .importing(let completed, let total):
-            return JourneyPresentation(
-                title: .key(Keys.importingTitle, fallback: "Importing journeys"),
-                subtitle: progressText(completed: completed, total: total),
-                status: StatusPresentation(
-                    title: .key(
-                        Keys.importBusy, fallback: "Loading data — please wait before editing."),
-                    tone: .neutral),
-                primaryAction: nil,
-                secondaryActions: [.cancel],
-                // §8.7 allows watching the map during a long import; it does not
-                // allow starting something that depends on routes not yet solved.
-                blocksPlayback: true)
+            return importingWorkspace(completed: completed, total: total)
 
         case .resolving(let completed, let total):
-            return JourneyPresentation(
-                title: .key(Keys.routeBuilding, fallback: "Building railway route"),
-                subtitle: progressText(completed: completed, total: total),
-                status: StatusPresentation(
-                    title: .key(Keys.routePreparing, fallback: "Preparing route"),
-                    tone: .neutral),
-                primaryAction: nil,
-                secondaryActions: [],
-                blocksPlayback: true)
+            return resolvingWorkspace(completed: completed, total: total)
 
         case .browsing, .selected, .editing, .playing:
             return JourneyPresentation(
@@ -276,6 +266,72 @@ public enum JourneyPresentationResolver {
                 secondaryActions: [.importData],
                 blocksPlayback: false)
         }
+    }
+
+    private static func emptyWorkspace(
+        hasSearchQuery: Bool, hasDateFilter: Bool
+    ) -> JourneyPresentation {
+        // §13.1: three different empty states with three different single
+        // primary actions — "空状态不得同时放三个同权主按钮."
+        if hasSearchQuery {
+            return JourneyPresentation(
+                title: .key(Keys.emptySearchTitle, fallback: "No matching journeys"),
+                subtitle: .key(
+                    Keys.emptySearchDetail,
+                    fallback: "Try a train number, a station, or an ID."),
+                primaryAction: .clearSearch,
+                secondaryActions: [.add, .importData],
+                blocksPlayback: true)
+        }
+        if hasDateFilter {
+            return JourneyPresentation(
+                title: .key(Keys.emptyDateTitle, fallback: "No journeys on this day"),
+                subtitle: .key(
+                    Keys.emptyDateDetail,
+                    fallback: "The current date filter has no records."),
+                primaryAction: .add,
+                secondaryActions: [.importData],
+                blocksPlayback: true)
+        }
+        return JourneyPresentation(
+            title: .key(Keys.emptyTitle, fallback: "No journeys yet"),
+            subtitle: .key(
+                Keys.emptyDetail,
+                fallback: "Add a journey, or import an existing JSON store."),
+            primaryAction: .add,
+            secondaryActions: [.importData],
+            blocksPlayback: true)
+    }
+
+    private static func importingWorkspace(
+        completed: Int?, total: Int?
+    ) -> JourneyPresentation {
+        return JourneyPresentation(
+            title: .key(Keys.importingTitle, fallback: "Importing journeys"),
+            subtitle: progressText(completed: completed, total: total),
+            status: StatusPresentation(
+                title: .key(
+                    Keys.importBusy, fallback: "Loading data — please wait before editing."),
+                tone: .neutral),
+            primaryAction: nil,
+            secondaryActions: [.cancel],
+            // §8.7 allows watching the map during a long import; it does not
+            // allow starting something that depends on routes not yet solved.
+            blocksPlayback: true)
+    }
+
+    private static func resolvingWorkspace(
+        completed: Int?, total: Int?
+    ) -> JourneyPresentation {
+        return JourneyPresentation(
+            title: .key(Keys.routeBuilding, fallback: "Building railway route"),
+            subtitle: progressText(completed: completed, total: total),
+            status: StatusPresentation(
+                title: .key(Keys.routePreparing, fallback: "Preparing route"),
+                tone: .neutral),
+            primaryAction: nil,
+            secondaryActions: [],
+            blocksPlayback: true)
     }
 
     // MARK: - Failure
@@ -290,73 +346,94 @@ public enum JourneyPresentationResolver {
     ) -> JourneyPresentation {
         switch failure {
         case .load(let message):
-            return JourneyPresentation(
-                eyebrow: eyebrow,
-                title: .key(Keys.loadFailedTitle, fallback: "Could not load journeys"),
-                subtitle: .value(message),
-                status: StatusPresentation(
-                    title: .key(
-                        Keys.loadFailedKept,
-                        fallback: "Saved journey data on this device was not changed."),
-                    tone: .critical),
-                primaryAction: .retry,
-                secondaryActions: [.importData, .inspectDetails],
-                blocksPlayback: true)
-
+            return loadFailure(message: message, eyebrow: eyebrow)
         case .importData(let message):
-            return JourneyPresentation(
-                eyebrow: eyebrow,
-                title: .key(Keys.importFailedTitle, fallback: "Could not import this file"),
-                subtitle: .value(message),
-                status: StatusPresentation(
-                    // §8.7: parse and validation never touch current data.
-                    title: .key(
-                        Keys.importFailedKept,
-                        fallback: "Nothing was imported; your existing journeys are unchanged."),
-                    tone: .critical),
-                primaryAction: .importData,
-                secondaryActions: [.cancel, .inspectDetails],
-                blocksPlayback: true)
-
+            return importFailure(message: message, eyebrow: eyebrow)
         case .route(let trainID, let section, let message):
-            return JourneyPresentation(
-                eyebrow: eyebrow ?? .value(trainID),
-                title: .key(Keys.routeUnavailable, fallback: "Route unavailable"),
-                subtitle: section.map { (affected: String) -> PresentationText in
-                    PresentationText.key(
-                        Keys.routeAffectedSection,
-                        ["section": .string(affected)],
-                        fallback: "No path matched the current line constraints for {section}.")
-                } ?? .value(message),
-                status: StatusPresentation(
-                    title: .key(
-                        Keys.recordUnchanged,
-                        fallback: "Journey record and stops are unchanged."),
-                    detail: .key(
-                        Keys.routeNoPath,
-                        fallback: """
-                            No N02 railway path could be generated from embedded N02 data. \
-                            Check station codes / route_policy. No fake straight line was drawn.
-                            """),
-                    tone: .critical),
-                primaryAction: .rebuildRoute,
-                secondaryActions: [.edit, .inspectDetails],
-                blocksPlayback: true)
-
+            return routeFailure(trainID: trainID, section: section, message: message, eyebrow: eyebrow)
         case .save(let message):
-            return JourneyPresentation(
-                eyebrow: eyebrow,
-                title: .key(Keys.saveFailedTitle, fallback: "Could not save this journey"),
-                subtitle: subtitle ?? .value(message),
-                status: StatusPresentation(
-                    // §8.3: a failed save keeps the draft and the focus.
-                    title: .key(Keys.saveFailedKept, fallback: "Your edits are still open."),
-                    detail: .value(message),
-                    tone: .critical),
-                primaryAction: .save,
-                secondaryActions: [.cancel, .inspectDetails],
-                blocksPlayback: true)
+            return saveFailure(message: message, eyebrow: eyebrow, subtitle: subtitle)
         }
+    }
+
+    private static func loadFailure(
+        message: String, eyebrow: PresentationText?
+    ) -> JourneyPresentation {
+        return JourneyPresentation(
+            eyebrow: eyebrow,
+            title: .key(Keys.loadFailedTitle, fallback: "Could not load journeys"),
+            subtitle: .value(message),
+            status: StatusPresentation(
+                title: .key(
+                    Keys.loadFailedKept,
+                    fallback: "Saved journey data on this device was not changed."),
+                tone: .critical),
+            primaryAction: .retry,
+            secondaryActions: [.importData, .inspectDetails],
+            blocksPlayback: true)
+    }
+
+    private static func importFailure(
+        message: String, eyebrow: PresentationText?
+    ) -> JourneyPresentation {
+        return JourneyPresentation(
+            eyebrow: eyebrow,
+            title: .key(Keys.importFailedTitle, fallback: "Could not import this file"),
+            subtitle: .value(message),
+            status: StatusPresentation(
+                // §8.7: parse and validation never touch current data.
+                title: .key(
+                    Keys.importFailedKept,
+                    fallback: "Nothing was imported; your existing journeys are unchanged."),
+                tone: .critical),
+            primaryAction: .importData,
+            secondaryActions: [.cancel, .inspectDetails],
+            blocksPlayback: true)
+    }
+
+    private static func routeFailure(
+        trainID: String, section: String?, message: String, eyebrow: PresentationText?
+    ) -> JourneyPresentation {
+        return JourneyPresentation(
+            eyebrow: eyebrow ?? .value(trainID),
+            title: .key(Keys.routeUnavailable, fallback: "Route unavailable"),
+            subtitle: section.map { (affected: String) -> PresentationText in
+                PresentationText.key(
+                    Keys.routeAffectedSection,
+                    ["section": .string(affected)],
+                    fallback: "No path matched the current line constraints for {section}.")
+            } ?? .value(message),
+            status: StatusPresentation(
+                title: .key(
+                    Keys.recordUnchanged,
+                    fallback: "Journey record and stops are unchanged."),
+                detail: .key(
+                    Keys.routeNoPath,
+                    fallback: """
+                        No N02 railway path could be generated from embedded N02 data. \
+                        Check station codes / route_policy. No fake straight line was drawn.
+                        """),
+                tone: .critical),
+            primaryAction: .rebuildRoute,
+            secondaryActions: [.edit, .inspectDetails],
+            blocksPlayback: true)
+    }
+
+    private static func saveFailure(
+        message: String, eyebrow: PresentationText?, subtitle: PresentationText?
+    ) -> JourneyPresentation {
+        return JourneyPresentation(
+            eyebrow: eyebrow,
+            title: .key(Keys.saveFailedTitle, fallback: "Could not save this journey"),
+            subtitle: subtitle ?? .value(message),
+            status: StatusPresentation(
+                // §8.3: a failed save keeps the draft and the focus.
+                title: .key(Keys.saveFailedKept, fallback: "Your edits are still open."),
+                detail: .value(message),
+                tone: .critical),
+            primaryAction: .save,
+            secondaryActions: [.cancel, .inspectDetails],
+            blocksPlayback: true)
     }
 
     // MARK: - Editing

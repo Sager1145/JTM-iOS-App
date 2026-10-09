@@ -134,11 +134,19 @@ public enum ChatGPTSubscriptionProtocol {
     /// Parses a non-2xx response body to classify the failure. Undecodable bodies still produce a
     /// status-based classification with a `nil` message.
     public static func serviceFailure(status: Int, body: Data, now: Date = Date()) -> ServiceFailure {
+        let fields = failureFields(body: body, now: now)
+        return ServiceFailure(
+            status: status, kind: failureKind(status: status, type: fields.type, code: fields.code),
+            message: cappedFailureMessage(fields.message), resetsAt: fields.resetsAt)
+    }
+
+    private static func failureFields(
+        body: Data, now: Date
+    ) -> (type: String?, code: String?, message: String?, resetsAt: Date?) {
         var type: String?
         var code: String?
         var message: String?
         var resetsAt: Date?
-
         if let json = try? JSONSerialization.jsonObject(with: body) as? [String: Any] {
             if let error = json["error"] as? [String: Any] {
                 type = error["type"] as? String
@@ -162,6 +170,10 @@ public enum ChatGPTSubscriptionProtocol {
             }
         }
 
+        return (type, code, message, resetsAt)
+    }
+
+    private static func failureKind(status: Int, type: String?, code: String?) -> ServiceFailure.Kind {
         let knownCodes: Set<String> = ["usage_limit_reached", "usage_not_included", "rate_limit_exceeded"]
         let knownCode = [type, code].compactMap { $0?.lowercased() }.first { knownCodes.contains($0) }
 
@@ -182,6 +194,10 @@ public enum ChatGPTSubscriptionProtocol {
             }
         }
 
+        return kind
+    }
+
+    private static func cappedFailureMessage(_ message: String?) -> String? {
         let trimmedMessage = message?.trimmingCharacters(in: .whitespacesAndNewlines)
         let cappedMessage: String?
         if let trimmedMessage, trimmedMessage.isEmpty == false {
@@ -190,7 +206,7 @@ public enum ChatGPTSubscriptionProtocol {
             cappedMessage = nil
         }
 
-        return ServiceFailure(status: status, kind: kind, message: cappedMessage, resetsAt: resetsAt)
+        return cappedMessage
     }
 
     private static func number(_ value: Any?) -> TimeInterval? {
@@ -261,6 +277,62 @@ public enum ChatGPTSubscriptionProtocol {
             guard didComplete == false else {
                 throw Error.eventAfterCompletion
             }
+            let (event, type) = try Self.decodeEvent(payload)
+
+            switch type {
+            case "response.output_text.delta":
+                try recordDelta(event)
+                return nil
+
+            case "response.output_item.done":
+                if let item = event["item"] as? [String: Any] {
+                    recordFinalItem(item, outputIndex: event["output_index"] as? Int)
+                }
+                return nil
+
+            case "response.completed":
+                return try completeResponse(event)
+
+            case "response.failed", "error":
+                throw Error.responseFailed(Self.failureMessage(from: event) ?? "the server reported an error")
+
+            case "response.incomplete":
+                throw Error.responseIncomplete
+
+            default:
+                return nil
+            }
+        }
+
+        private mutating func recordDelta(_ event: [String: Any]) throws {
+            guard let delta = event["delta"] as? String else {
+                throw Error.malformedStreamEvent("output-text delta is missing its text")
+            }
+            let key = Self.deltaKey(from: event)
+            if keyOrder.contains(key) == false {
+                keyOrder.append(key)
+            }
+            deltaTextByKey[key, default: ""] += delta
+        }
+
+        private mutating func completeResponse(_ event: [String: Any]) throws -> String {
+            guard let response = event["response"] as? [String: Any] else {
+                throw Error.malformedStreamEvent("completed event is missing its response")
+            }
+            guard response["status"] as? String == "completed" else {
+                throw Error.responseIncomplete
+            }
+
+            let outputText = Self.outputText(from: response)
+            let finalText = outputText.isEmpty ? deltaFallbackText() : outputText
+            guard finalText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false else {
+                throw Error.emptyResponse
+            }
+            didComplete = true
+            return finalText
+        }
+
+        private static func decodeEvent(_ payload: String) throws -> (event: [String: Any], type: String) {
             guard let data = payload.data(using: .utf8) else {
                 throw Error.malformedStreamEvent("event data is not UTF-8")
             }
@@ -275,49 +347,7 @@ public enum ChatGPTSubscriptionProtocol {
                 throw Error.malformedStreamEvent("event is missing its type")
             }
 
-            switch type {
-            case "response.output_text.delta":
-                guard let delta = event["delta"] as? String else {
-                    throw Error.malformedStreamEvent("output-text delta is missing its text")
-                }
-                let key = Self.deltaKey(from: event)
-                if keyOrder.contains(key) == false {
-                    keyOrder.append(key)
-                }
-                deltaTextByKey[key, default: ""] += delta
-                return nil
-
-            case "response.output_item.done":
-                if let item = event["item"] as? [String: Any] {
-                    recordFinalItem(item, outputIndex: event["output_index"] as? Int)
-                }
-                return nil
-
-            case "response.completed":
-                guard let response = event["response"] as? [String: Any] else {
-                    throw Error.malformedStreamEvent("completed event is missing its response")
-                }
-                guard response["status"] as? String == "completed" else {
-                    throw Error.responseIncomplete
-                }
-
-                let outputText = Self.outputText(from: response)
-                let finalText = outputText.isEmpty ? deltaFallbackText() : outputText
-                guard finalText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false else {
-                    throw Error.emptyResponse
-                }
-                didComplete = true
-                return finalText
-
-            case "response.failed", "error":
-                throw Error.responseFailed(Self.failureMessage(from: event) ?? "the server reported an error")
-
-            case "response.incomplete":
-                throw Error.responseIncomplete
-
-            default:
-                return nil
-            }
+            return (event, type)
         }
 
         private mutating func recordFinalItem(_ item: [String: Any], outputIndex: Int?) {

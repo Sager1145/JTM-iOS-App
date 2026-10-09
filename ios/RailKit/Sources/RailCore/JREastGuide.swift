@@ -110,29 +110,10 @@ extension TransferGuide {
         var stackedTimes = 0
 
         for row in rows {
-            let text = row.text
-            // Layout, not livery. Every one of these is in the body.
-            if text.contains("駅目") { jrEast += 3 }
-            if text.contains("更新時刻") { jrEast += 3 }
-            if text.contains("出発時刻を変更") { jrEast += 3 }
-            if text.contains("移動距離") { jrEast += 2 }
-            if text.contains("IC優先") { yahoo += 2 }
-            if text.contains("二次元コード") || text.contains("ルート共有") { yahoo += 2 }
-            if text.contains("指定席") || text.contains("自由席") { yahoo += 1 }
-            // The circled 駅 count sits in Yahoo's leg header. JR East writes
-            // 駅目 instead, which is why this asks for the count and a service
-            // on ONE row rather than for the character.
-            if row.tokens.contains(where: { if case .stationCount = $0 { true } else { false } }),
-                row.tokens.contains(where: { if case .service = $0 { true } else { false } })
-            {
-                yahoo += 2
-            }
-            // Then the wordmark, if it survived.
-            if text.contains("JR東日本") || text.contains("East Japan Railway") { jrEast += 4 }
-            if text.contains("Yahoo") || text.contains("YAHOO") || text.contains("YAH") {
-                yahoo += 4
-            }
-            if text.contains("乗換案内") { yahoo += 3 }
+            let layout = layoutEvidence(row)
+            let wordmark = wordmarkEvidence(row.text)
+            jrEast += layout.jrEast + wordmark.jrEast
+            yahoo += layout.yahoo + wordmark.yahoo
             if Rows.isTimeOnly(row), row.tokens.count == 1,
                 case .time(_, let marker) = row.tokens[0], marker != nil
             {
@@ -146,6 +127,41 @@ extension TransferGuide {
         if jrEast == yahoo { return (.unknown, false) }
         let source: Source = jrEast > yahoo ? .jrEast : .yahoo
         return (source, abs(jrEast - yahoo) >= 3)
+    }
+
+    private static func layoutEvidence(_ row: Row) -> (jrEast: Int, yahoo: Int) {
+        let text = row.text
+        var jrEast = 0
+        var yahoo = 0
+        // Layout, not livery. Every one of these is in the body.
+        if text.contains("駅目") { jrEast += 3 }
+        if text.contains("更新時刻") { jrEast += 3 }
+        if text.contains("出発時刻を変更") { jrEast += 3 }
+        if text.contains("移動距離") { jrEast += 2 }
+        if text.contains("IC優先") { yahoo += 2 }
+        if text.contains("二次元コード") || text.contains("ルート共有") { yahoo += 2 }
+        if text.contains("指定席") || text.contains("自由席") { yahoo += 1 }
+        // The circled 駅 count sits in Yahoo's leg header. JR East writes
+        // 駅目 instead, which is why this asks for the count and a service
+        // on ONE row rather than for the character.
+        if row.tokens.contains(where: { if case .stationCount = $0 { true } else { false } }),
+            row.tokens.contains(where: { if case .service = $0 { true } else { false } })
+        {
+            yahoo += 2
+        }
+        return (jrEast, yahoo)
+    }
+
+    private static func wordmarkEvidence(_ text: String) -> (jrEast: Int, yahoo: Int) {
+        var jrEast = 0
+        var yahoo = 0
+        // Then the wordmark, if it survived.
+        if text.contains("JR東日本") || text.contains("East Japan Railway") { jrEast += 4 }
+        if text.contains("Yahoo") || text.contains("YAHOO") || text.contains("YAH") {
+            yahoo += 4
+        }
+        if text.contains("乗換案内") { yahoo += 3 }
+        return (jrEast, yahoo)
     }
 
     // MARK: - the walk
@@ -166,109 +182,163 @@ extension TransferGuide {
         var pendingArrivalPlatform: Int?
         var started = false
 
-        func closeLeg() {
-            guard let header = openHeader else { return }
-            var closing = header
-            if let platform = pendingArrivalPlatform {
-                closing.arrivalPlatform = closing.arrivalPlatform ?? platform
-                pendingArrivalPlatform = nil
-            }
-            closed.append((closing, drafts))
-            carried = drafts.last
-            drafts = []
-            openHeader = nil
-        }
-
         for (position, row) in rows.enumerated() {
-            if row.isFooter { continue }
-
-            if route.header.departure == nil, let read = readHeader(row) {
-                route.header.merge(read)
-                continue
-            }
-            if let summary = readSummary(row) {
-                route.header.merge(summary)
-                continue
-            }
-
-            // A leg header, and the time on it is the departure of the station
-            // standing above. This test comes FIRST: the row carries a time
-            // and would otherwise read as a station.
-            if let header = readJRLegHeader(row), opensALeg(rows, from: position) {
-                closeLeg()
-                if let time = unmarkedTime(row) {
-                    carried?.times.append((minutes: time, marker: .departure))
-                }
-                pendingArrival = nil
-                pending = header
-                started = true
-                continue
-            }
-
-            // A line name printed mid-leg, where the train runs on to another
-            // railway without anybody changing trains. It looks exactly like a
-            // leg header — 門司's `ＪＲ鹿児島本線 16:37` even carries a time —
-            // and reading it as one splits a ride in half at a station the
-            // journey passes straight through.
-            if openHeader != nil, let through = readJRLegHeader(row) {
-                openHeader?.continue(with: through)
-                // The time on such a row is the arrival at the boundary
-                // BELOW it, not a departure from anything.
-                if let time = unmarkedTime(row), started { pendingArrival = time }
-                continue
-            }
-
-            // An ordinary stop: 着 and 発 either side of the name.
-            if let call = readCall(row) {
-                openLegIfPending(&pending, &openHeader, &drafts, &carried)
-                pendingArrival = nil
-                if openHeader != nil { drafts.append(call) } else { carried = call }
-                continue
-            }
-
-            if let platform = onlyPlatform(row) {
-                if pending != nil {
-                    pending?.absorb(row)
-                } else {
-                    pendingArrivalPlatform = platform
-                }
-                continue
-            }
-
-            if let time = bareTime(row) {
-                // The journey's origin has no arrival — the first bare time in
-                // the document is 更新時刻 or a header remnant, not a train
-                // getting in somewhere.
-                if started { pendingArrival = time }
-                continue
-            }
-
-            if let call = readBoundaryCall(row, arrival: pendingArrival) {
-                openLegIfPending(&pending, &openHeader, &drafts, &carried)
-                pendingArrival = nil
-                started = true
-                if openHeader != nil { drafts.append(call) } else { carried = call }
-                continue
-            }
-
-            if pending != nil {
-                pending?.absorb(row)
-                continue
-            }
-            // 出発時刻を変更 and 更新時刻 stand between legs, where no header
-            // is open to absorb them. They are furniture, not rows that went
-            // unread, and counting them as unread would make this reader look
-            // worse than the Yahoo one on a JR East screenshot.
-            if isFurniture(row) { continue }
-            if !row.tokens.isEmpty { unclaimed.append(row.text) }
+            consumeJRRow(row, rows: rows, position: position, route: &route,
+                pending: &pending, openHeader: &openHeader, carried: &carried,
+                drafts: &drafts, closed: &closed, pendingArrival: &pendingArrival,
+                pendingArrivalPlatform: &pendingArrivalPlatform, started: &started, unclaimed: &unclaimed)
         }
-        closeLeg()
+
+        closeJRLeg(&openHeader, &pendingArrivalPlatform, &closed, &carried, &drafts)
         if let service = pending?.service, !service.isEmpty { unclaimed.append(service) }
 
         route.legs = closed.map { header, calls in resolve(header: header, drafts: calls) }
         route.notes = review(route)
         route.unclaimed = unclaimed
         return route
+    }
+
+    private static func closeJRLeg(
+        _ openHeader: inout LegHeader?, _ pendingArrivalPlatform: inout Int?,
+        _ closed: inout [(LegHeader, [CallDraft])], _ carried: inout CallDraft?,
+        _ drafts: inout [CallDraft]
+    ) {
+        guard let header = openHeader else { return }
+        var closing = header
+        if let platform = pendingArrivalPlatform {
+            closing.arrivalPlatform = closing.arrivalPlatform ?? platform
+            pendingArrivalPlatform = nil
+        }
+        closed.append((closing, drafts))
+        carried = drafts.last
+        drafts = []
+        openHeader = nil
+    }
+
+    private static func consumeJRRow(
+        _ row: Row, rows: [Row], position: Int, route: inout Route,
+        pending: inout LegHeader?, openHeader: inout LegHeader?, carried: inout CallDraft?,
+        drafts: inout [CallDraft], closed: inout [(LegHeader, [CallDraft])],
+        pendingArrival: inout Int?, pendingArrivalPlatform: inout Int?, started: inout Bool, unclaimed: inout [String]
+    ) {
+        if row.isFooter { return }
+
+        if mergeJRHeader(row, into: &route) { return }
+
+        if consumeJRLegHeader(row, rows: rows, position: position,
+            pending: &pending, openHeader: &openHeader, carried: &carried,
+            drafts: &drafts, closed: &closed, pendingArrival: &pendingArrival,
+            pendingArrivalPlatform: &pendingArrivalPlatform, started: &started) { return }
+
+        // An ordinary stop: 着 and 発 either side of the name.
+        if let call = readCall(row) {
+            appendJRCall(call, pending: &pending, openHeader: &openHeader,
+                drafts: &drafts, carried: &carried, pendingArrival: &pendingArrival)
+            return
+        }
+
+        if consumeJRArrivalRow(row, pending: &pending, pendingArrival: &pendingArrival,
+            pendingArrivalPlatform: &pendingArrivalPlatform, started: started) { return }
+
+        if let call = readBoundaryCall(row, arrival: pendingArrival) {
+            appendJRCall(call, pending: &pending, openHeader: &openHeader,
+                drafts: &drafts, carried: &carried, pendingArrival: &pendingArrival)
+            started = true
+            return
+        }
+
+        if pending != nil {
+            pending?.absorb(row)
+            return
+        }
+        // 出発時刻を変更 and 更新時刻 stand between legs, where no header
+        // is open to absorb them. They are furniture, not rows that went
+        // unread, and counting them as unread would make this reader look
+        // worse than the Yahoo one on a JR East screenshot.
+        if isFurniture(row) { return }
+        if !row.tokens.isEmpty { unclaimed.append(row.text) }
+    }
+
+    private static func mergeJRHeader(_ row: Row, into route: inout Route) -> Bool {
+        if route.header.departure == nil, let read = readHeader(row) {
+            route.header.merge(read)
+            return true
+        }
+        if let summary = readSummary(row) {
+            route.header.merge(summary)
+            return true
+        }
+
+        return false
+    }
+
+    private static func consumeJRLegHeader(
+        _ row: Row, rows: [Row], position: Int,
+        pending: inout LegHeader?, openHeader: inout LegHeader?, carried: inout CallDraft?,
+        drafts: inout [CallDraft], closed: inout [(LegHeader, [CallDraft])],
+        pendingArrival: inout Int?, pendingArrivalPlatform: inout Int?, started: inout Bool
+    ) -> Bool {
+        // A leg header, and the time on it is the departure of the station
+        // standing above. This test comes FIRST: the row carries a time
+        // and would otherwise read as a station.
+        if let header = readJRLegHeader(row), opensALeg(rows, from: position) {
+            closeJRLeg(&openHeader, &pendingArrivalPlatform, &closed, &carried, &drafts)
+            if let time = unmarkedTime(row) {
+                carried?.times.append((minutes: time, marker: .departure))
+            }
+            pendingArrival = nil
+            pending = header
+            started = true
+            return true
+        }
+
+        // A line name printed mid-leg, where the train runs on to another
+        // railway without anybody changing trains. It looks exactly like a
+        // leg header — 門司's `ＪＲ鹿児島本線 16:37` even carries a time —
+        // and reading it as one splits a ride in half at a station the
+        // journey passes straight through.
+        if openHeader != nil, let through = readJRLegHeader(row) {
+            openHeader?.continue(with: through)
+            // The time on such a row is the arrival at the boundary
+            // BELOW it, not a departure from anything.
+            if let time = unmarkedTime(row), started { pendingArrival = time }
+            return true
+        }
+
+        return false
+    }
+
+    private static func appendJRCall(
+        _ call: CallDraft, pending: inout LegHeader?, openHeader: inout LegHeader?,
+        drafts: inout [CallDraft], carried: inout CallDraft?, pendingArrival: inout Int?
+    ) {
+        openLegIfPending(&pending, &openHeader, &drafts, &carried)
+        pendingArrival = nil
+        if openHeader != nil { drafts.append(call) } else { carried = call }
+    }
+
+    private static func consumeJRArrivalRow(
+        _ row: Row, pending: inout LegHeader?, pendingArrival: inout Int?,
+        pendingArrivalPlatform: inout Int?, started: Bool
+    ) -> Bool {
+        if let platform = onlyPlatform(row) {
+            if pending != nil {
+                pending?.absorb(row)
+            } else {
+                pendingArrivalPlatform = platform
+            }
+            return true
+        }
+
+        if let time = bareTime(row) {
+            // The journey's origin has no arrival — the first bare time in
+            // the document is 更新時刻 or a header remnant, not a train
+            // getting in somewhere.
+            if started { pendingArrival = time }
+            return true
+        }
+
+        return false
     }
 
     /// A header block ends at the first station row, exactly as Yahoo's does.

@@ -369,6 +369,12 @@ public enum Dates {
         if trimmed.isEmpty { return 0 }  // Number("") and Number(" ") are 0
         if trimmed == "Infinity" || trimmed == "+Infinity" { return .infinity }
         if trimmed == "-Infinity" { return -.infinity }
+        if let radixValue = jsRadixNumber(trimmed) { return radixValue }
+        guard isJSDecimalLiteral(trimmed) else { return .nan }
+        return Double(trimmed) ?? .nan
+    }
+
+    private static func jsRadixNumber(_ trimmed: String) -> Double? {
         // Radix literals take no sign in a StringNumericLiteral.
         if trimmed.count > 2, trimmed.hasPrefix("0") {
             let radix: Int?
@@ -384,6 +390,10 @@ public enum Dates {
                 return Double(value)
             }
         }
+        return nil
+    }
+
+    private static func isJSDecimalLiteral(_ trimmed: String) -> Bool {
         // StrDecimalLiteral: [+-]? ( digits [. digits?] | . digits ) ( [eE] [+-]? digits )?
         var scalars = Array(trimmed.unicodeScalars)[...]
         if scalars.first == "+" || scalars.first == "-" { scalars = scalars.dropFirst() }
@@ -395,16 +405,16 @@ public enum Dates {
             fractionDigits = scalars.prefix(while: isAsciiDigit)
             scalars = scalars.dropFirst(fractionDigits.count)
         }
-        if intDigits.isEmpty && fractionDigits.isEmpty { return .nan }
+        if intDigits.isEmpty && fractionDigits.isEmpty { return false }
         if scalars.first == "e" || scalars.first == "E" {
             scalars = scalars.dropFirst()
             if scalars.first == "+" || scalars.first == "-" { scalars = scalars.dropFirst() }
             let exponentDigits = scalars.prefix(while: isAsciiDigit)
-            if exponentDigits.isEmpty { return .nan }
+            if exponentDigits.isEmpty { return false }
             scalars = scalars.dropFirst(exponentDigits.count)
         }
-        guard scalars.isEmpty else { return .nan }  // trailing junk ⇒ NaN
-        return Double(trimmed) ?? .nan
+        guard scalars.isEmpty else { return false }  // trailing junk ⇒ NaN
+        return true
     }
 
     /// `parseTimeToMinutes` — `"H:MM"` or `"HH:MM"`, optionally followed by
