@@ -216,7 +216,7 @@ source-key/lifecycle cause is being traced before delivery.
 
 ## Phase 11: scoped native Sonic route-constraint fixtures
 
-Status: validated for main delivery.
+Status: committed and pushed as `a48cb27b`.
 
 The Sonic constraint suite now uses the application's on-demand physical graph,
 reviewed junctions and bounded graph policy. Each solve owns its fixture through
@@ -238,6 +238,31 @@ trace also records late publication of ride 144 after ride 143: the current
 composer hashes all rides although its statistics/rendered cards use selected
 scope/date members. A focused input-key fix and regression are in progress;
 the earlier public failure remains evidence, not waived by the later passes.
+
+## Phase 12: bounded solver-input and batch graph lifetimes
+
+Status: validated for main delivery.
+
+Reduces completed immutable solver inputs from two scopes to one and admits
+JSON decodes through an independent one-at-a-time permit. Same-scope callers
+share work; cancellation stays local, and late waiters cannot reinsert an old
+completed owner. Old cache ownership drops before replacement decode. Batch
+graphs use the bounded 100,000-node policy and release after their scope.
+A carried preferred graph travels with its original immutable inputs through
+both solver passes, preventing another decode after an earlier scope evicts it.
+Route order, routing bodies, history/geometry inputs and keys are preserved.
+Concurrent CLI worker changes and platform date-validation adoption are excluded.
+
+Validation: clean-main Release App build passes arm64 and x86_64. The actual
+candidate cache/invalidation harness passes ten groups; controlled production
+batch/solver-plumbing fixtures pass three ownership/order scenarios on candidate
+and working sources. The integrated ongoing-CLI App builds; public sharing with
+the scoped-key fix passes. Scope/date validation separately passes 22 cases.
+These fixtures prove owner bounds and behavior, not measured whole-App savings.
+The existing statistics Release A/B and graph memory receipts do not substitute
+for the remaining real solved-route App comparison or complete release goals.
+Receipts: `input-phase-head-build.log`, `input-phase-caches-candidate.log`,
+`input-phase-plumbing-candidate.log`, `scoped-share-public.log`.
 
 ## Remaining delivery phases
 
