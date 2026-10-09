@@ -954,3 +954,44 @@ logo deletions are preserved separately from the frozen accepted source.
 Local receipts: workspace-stable-keyboard-main34-*,
 layout-oslog-focus-trace-main32-analysis.json; failed/disabled probe receipts
 remain available. No complete-refactor claim.
+
+
+## Phase36 — match the accessibility container to the drawn workspace viewport
+
+The original Search viewport assertion exposed an accessibility container
+ending at958.179points even though the public native scroll viewport ended
+at866points, within the875point screen limit. Apply the public accessibility
+content shape to the containing viewport. This changes the assistive frame
+and path without changing its hit-test shape; see
+[Apple's API contract](https://developer.apple.com/documentation/swiftui/contentshapekinds/accessibility).
+There are no new caches, observers, tasks, timers or production diagnostics.
+
+The four original viewport, Medium/Expanded tab clearance and Compact Search
+reopening cases PASS, followed by both original final-card clearance and
+repeated-header-drag cases PASS. All six original assertions, deadlines and
+fixtures are unchanged.35 samples/four PIDs peaked at264932232bytes in the
+first group;42 samples/three PIDs peaked at247188216bytes in the second.
+These are bounded budget observations, not a strict paired memory reduction.
+Debug and arm64+x86_64 Release build-for-testing PASS;510 source files retain
+270 inherited lint findings with zero new findings and format PASS.
+
+The Stats footer case remains open: the diagnostic failed honestly and
+showed a10105point scroll content,9832point maximum offset, and only4381.333
+points reached by the original12 drags. No assertion, expected content or
+scroll behavior is weakened to turn that failure into a pass.
+
+Whole-map memory remains open. The ordinary Main35 serial gate passed run1
+at1866027232bytes, failed run2 at2250166736bytes, and stopped before run3.
+The separate current VM-only trace captured the guard failure at2587988696
+bytes and exported successfully; capture validity is not UI acceptance or
+allocation-owner attribution. Phase33's strict scoped reductions remain
+scoped. Full171suite/1445function package coverage is still executing; full
+platform, route stress final-batch identity, global/Domain coverage, M,
+leaks and original launch/first-map/stall/build targets remain open.
+
+The validated frozen source is committed independently of concurrent CLI
+changes; only these two modifier/comment lines are inserted into the live
+source, preserving its other bytes and original staged logo deletions.
+Receipts: workspace-accessibility-shape-main35-*;
+layout-scroll-probe-main35-analysis.json; map-normal-main35-serialized.json;
+map-current-vm-300-validation.json. No complete-refactor claim.

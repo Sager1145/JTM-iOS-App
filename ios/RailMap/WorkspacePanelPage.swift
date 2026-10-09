@@ -49,6 +49,8 @@ private struct WorkspacePanelViewport<Content: View>: View {
                 .disabled(morph?.stage == .compact)
                 .accessibilityHidden(!showsContent)
                 .accessibilityElement(children: .contain)
+                // Assistive focus follows the drawn viewport, including its glass overlap.
+                .contentShape(.accessibility, Rectangle())
                 .accessibilityIdentifier("workspaceMenuViewport")
                 .modifier(TabClearanceDiagnostic(occlusion: tabBarOcclusion))
                 .background {
