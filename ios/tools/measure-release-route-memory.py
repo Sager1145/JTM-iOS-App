@@ -18,6 +18,7 @@ from pathlib import Path
 import argparse
 import hashlib
 import json
+import math
 import plistlib
 import shutil
 import signal
@@ -113,13 +114,21 @@ def footprint(pid, path):
                              '-j', str(path)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     if result.returncode or not path.exists():
         return None
-    matches = [p for p in json.loads(path.read_text()).get('processes', [])
-               if p.get('pid') == pid]
+    processes = json.loads(path.read_text()).get('processes', [])
+    if processes and all(p is None for p in processes):
+        return None
+    matches = [p for p in processes if isinstance(p, dict) and p.get('pid') == pid]
     if len(matches) != 1:
         raise ValueError('Footprint response does not identify the owned app PID')
     auxiliary = matches[0].get('auxiliary', {})
+    if auxiliary is None:
+        return None
+    if not isinstance(auxiliary, dict):
+        raise ValueError('Actual physical footprint and process peak are unavailable')
     current, peak = auxiliary.get('phys_footprint'), auxiliary.get('phys_footprint_peak')
-    if not isinstance(current, (int, float)) or not isinstance(peak, (int, float)) or current <= 0 or peak < current:
+    if (type(current) not in (int, float) or type(peak) not in (int, float)
+            or not math.isfinite(current) or not math.isfinite(peak)
+            or current <= 0 or peak < current):
         raise ValueError('Actual physical footprint and process peak are unavailable')
     return {'pid': pid, 'current_bytes': current, 'peak_bytes': peak, 'time': time.time()}
 

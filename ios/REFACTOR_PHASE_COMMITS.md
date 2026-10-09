@@ -699,3 +699,22 @@ no production source, test assertion, fixture, resource or memory gate change.
 Validation: receipts and committed source/test identities checked against
 Main26; links resolve to original plan/ledger. Original cached two logo
 deletions and all unrelated CLI working changes are preserved.
+
+
+## Phase28 — preserve sampling through actual null exit snapshots
+
+Apple footprint emitted processes:[null] and owned-PID auxiliary:null while
+processes exited during the full-package runner. The Release sampler now
+treats those snapshots as unavailable, never as zero or a valid sample.
+Ignore null entries beside an actual owned process; still reject wrong or
+duplicate PIDs and malformed actual metrics. Positive finite physical current
+and peak values remain required, including peaks above the budget.
+
+Validation: nine focused regression tests PASS with real recorded metric
+values, null exit forms, mixed actual/null records, wrong/duplicate PID,
+invalid current/peak and stale failed-command output. Existing registered
+bundle refresh, single-PID trial, original public JP/TW proof, five final
+valid samples and 2GiB stop are unchanged. No app source, fixture, XCTest
+assertion or memory threshold changes; no comparative RAM claim in this phase.
+The in-progress Edge layout candidate and both its passing and guard-stopped
+map runs remain separate unaccepted evidence until paired validation.
