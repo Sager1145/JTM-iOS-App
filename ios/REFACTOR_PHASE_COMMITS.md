@@ -313,7 +313,7 @@ matrix acceptance. Receipts: `share-phase-main-ui.log` / xcresult,
 
 ## Phase 15: platform dated route proof and pending drafts
 
-Status: independently validated for this main delivery.
+Status: committed and pushed as `592b8b9c`.
 
 Connects NewTrip's immutable corridor snapshot to the existing Application
 physical validation use case. Draft construction is shared by probing and saving;
@@ -343,6 +343,28 @@ Receipts: `date-phase-main-build.log` (initial failure),
 `date-phase-main-build-fixed.log`, `date-phase-main-release.log`,
 `date-phase-main-ui.log` / xcresult, `date-phase-main-availability.log`,
 `date-phase-main-plumbing.log`, `date-phase-main-boundaries.log`.
+
+## Phase 16: immutable operator constant isolation
+
+Status: independently validated for this main delivery.
+
+Declares the timetable picker's immutable Sendable operator-name Set nonisolated,
+matching its nonisolated filtering caller. Contents and matching behavior do not
+change. The concurrent CLI file is exactly this one-line change and is adopted
+without other CLI implementation changes.
+
+Validation: independent current-main Release App builds for arm64 and x86_64;
+both former ServicePatternPicker actor-isolation warnings disappear. No App
+source warning appears; Xcode's AppIntents metadata-not-needed warning remains.
+Receipt: `quality-constant-main-release.log`.
+
+The coherent committed-main full package attempt is incomplete: its owned 2 GiB
+guard stopped at 2,286,816,064 bytes after 48 XCTest tests, a complete 336-test
+SwiftTesting target run, and the full 551.456s junction census passed. No captured
+assertion failure appeared. A prior stack confirmed the legacy historical browser
+boundary audit; buffered output cannot identify the exact final allocating test.
+This remains an open memory failure, not full-package acceptance. Receipts:
+`main-regression-results.json`, `main-regression-memory-summary.json`.
 
 ## Remaining delivery phases
 

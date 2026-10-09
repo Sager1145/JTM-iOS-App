@@ -487,7 +487,7 @@ struct ServicePatternPickerView: View {
         guard TrainTimetableDatabase.supports(country: region) else { return nil }
         return Self.japaneseTimetableDatabase
     }
-    private static let jrAndNationalOperatorNames: Set<String> = [
+    nonisolated private static let jrAndNationalOperatorNames: Set<String> = [
         "北海道旅客鉄道", "東日本旅客鉄道", "東海旅客鉄道",
         "西日本旅客鉄道", "四国旅客鉄道", "九州旅客鉄道",
         "日本国有鉄道", "国鉄",
