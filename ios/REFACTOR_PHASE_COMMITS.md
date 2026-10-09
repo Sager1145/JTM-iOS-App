@@ -491,3 +491,30 @@ sections and this receipt; existing CLI edits and staged logo deletions are
 preserved. Source/metric identities checked against the phase ledger and build/
 inventory receipts. Remaining Domain/global coverage, quality thresholds, full
 UI/platform/performance/leak matrix, stable directory ownership and M are open.
+
+## Phase 20: make original complexity and length limits visible in CI
+
+Status: calibrated advisory metric reporting delivered; original quality goals
+are not yet met or enforced for new code.
+
+The pinned existing SwiftLint configuration now includes cyclomatic_complexity
+and function_body_length, with requested warning limits15 and60. Case statements
+are included; no legacy exclusions, suppressions or autocorrection are added.
+Calibration with SwiftLint0.65.1 proves16/61 warn and15/60 do not. Existing CI
+uses this configuration and preserves complete reports and actual tool statuses.
+Usual<=10/<=40 remains a review target, not an inferred passing gate.
+
+Validation: exact committed280 production files, no individual exclusions, yield
+165 requested-limit findings (56 complexity,109 body length) across60 files.
+A second advisory10/40 inventory yields336 findings across87 files. Combined
+existing/new rule run yields167 findings (the above165 plus2 production casts),
+actual strict exit2. The production-scoped existing advisory pipeline preserves
+that nonzero status, pinned tool identities and format findings, returning0 as
+documented advisory behavior. No production source is reformatted or refactored
+by this reporting phase. Legacy debt is visible, not waived or marked clean.
+
+Receipts: quality-complexity/{inventory.json,run-receipt.json,recommendation.md},
+quality-limits-delivery/{receipt.json,lint.json,pipeline/summary.json}. Remaining
+work is bounded responsibility extraction with equivalent behavior and lower
+footprint, followed by baseline-aware enforcement of new/modified-function debt
+and the full coverage/platform/performance/M matrix.

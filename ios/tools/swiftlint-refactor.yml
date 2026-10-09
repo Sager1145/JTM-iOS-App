@@ -1,5 +1,14 @@
-# Advisory refactor report: deliberately narrow, with no autocorrection.
+# Read-only advisory refactor report; no autocorrection or legacy suppression.
+# Requested warning limits are strict >15 / >60 (calibrated with SwiftLint 0.65.1).
+# Usual <=10 / <=40 targets remain review goals, not claimed by this report.
 only_rules:
   - duplicate_imports
   - force_cast
   - force_try
+  - cyclomatic_complexity
+  - function_body_length
+cyclomatic_complexity:
+  warning: 15
+  ignores_case_statements: false
+function_body_length:
+  warning: 60
