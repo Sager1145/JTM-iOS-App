@@ -266,7 +266,7 @@ Receipts: `input-phase-head-build.log`, `input-phase-caches-candidate.log`,
 
 ## Phase 13: bounded native service-pattern graph retention
 
-Status: validated for main delivery.
+Status: committed and pushed as `c706f15b`.
 
 Adds only the production bounded graph policy to the service-pattern physical
 fixture's reviewed-registry graph store. Source inputs, dates, route constraints,
@@ -278,6 +278,38 @@ Clean-main Core: 77.632s, sampled peak 1,178,912,520 bytes. Both owned 2 GiB gua
 and runners exit zero. This covers these three tests, not every service-pattern
 parameter, complete package acceptance or a before/after App memory result.
 Receipts: `service-pattern-native-bounded*`, `service-pattern-clean-main*`.
+
+## Phase 14: sharing export ownership and scoped render identity
+
+Status: independently validated for this main delivery.
+
+Adopts the CLI share composer and its necessary statistics-card rendering inputs
+as a reviewable, independently built integration. Sharing now opens a composer
+with card/layout, scope, ratio, size and map controls. Main's region menu and
+Passport behavior are preserved; unrelated CLI area-menu, map and editor changes
+are excluded. Retires the old poster request controller and its superseded gate.
+
+Full-resolution user and DEBUG exports share one FIFO permit through raster and
+PNG completion. Invalidation immediately drops partial pixels and queued work,
+without releasing a noncooperative active writer's permit. DEBUG writes directly
+to its destination with one PNG encode. Input identity includes only rendered
+scope/date/year/group/ridden geometry; unrelated late ride publication no longer
+invalidates a current export. Preview size remains bounded independently of
+full-resolution output. Statistics tasks cancel with their composer owner.
+
+Validation: the actual extracted controller/view harness passes 57 checks on
+working and independent-main candidate sources. Source ownership (280 sources),
+seven boundary-checker regressions and permanent typography bounds pass. Clean
+main Debug build-for-testing and Release App arm64/x86_64 build pass. Public
+Japan/date export, image preview and dismissal pass in 46.865s, without diagnostic
+instrumentation. Release retains two pre-existing ServicePatternPicker actor
+warnings (one per architecture); this phase does not claim zero whole-App warnings.
+The earlier public sharing failure remains recorded; a later diagnostic trace
+identified the global-vs-scoped input-key mismatch fixed here. Harness ownership
+bounds and this flow do not establish whole-App peak memory or full sharing/UI
+matrix acceptance. Receipts: `share-phase-main-ui.log` / xcresult,
+`share-phase-main-release.log`, `share-phase-main-controller.log`,
+`share-phase-main-boundaries.log`, `share-phase-main-delivery.json`.
 
 ## Remaining delivery phases
 

@@ -101,6 +101,11 @@ final class MileageStatisticsStore {
     /// computed once per load and left alone by ``selectDate(_:)``.
     private(set) var passport: PassportStatistics?
     private(set) var progress: Progress?
+    /// The caller-provided identity of the inputs that produced the currently
+    /// published view/passport pair.
+    private(set) var publishedInputsKey: String?
+    /// Changes whenever a view or passport answer is published.
+    private(set) var publishGeneration = 0
 
     /// The statistics screen's own date bucket, in the same vocabulary the
     /// date bar uses: `Dates.allDates`, `Dates.undated`, or `YYYY-MM-DD`.
@@ -118,6 +123,16 @@ final class MileageStatisticsStore {
     private(set) var classification: Classification = .date
     private(set) var dateSelection = StatisticsDateSelection()
     private(set) var selectedJourneyGroupID: String?
+
+    /// Starts an independent statistics surface from another surface's scope.
+    func adoptSelection(from other: MileageStatisticsStore) {
+        selectedYear = other.selectedYear
+        classification = other.classification
+        dateSelection = other.dateSelection
+        selectedDate = other.selectedDate
+        selectedJourneyGroupID = other.selectedJourneyGroupID
+        invalidateScope()
+    }
 
     func selectClassification(_ mode: Classification) {
         guard mode != classification else { return }
@@ -186,6 +201,7 @@ final class MileageStatisticsStore {
         availableDates = []
         view = nil
         passport = nil
+        publishedInputsKey = nil
         progress = Progress(stage: .aggregating)
         state = .loading
     }
@@ -208,6 +224,29 @@ final class MileageStatisticsStore {
     private var passportTask: Task<Void, Never>?
     private var scopeTask: Task<Void, Never>?
     private var context: Context?
+
+    deinit {
+        MainActor.assumeIsolated {
+            task?.cancel()
+            passportTask?.cancel()
+            scopeTask?.cancel()
+        }
+    }
+
+    func cancelAll() {
+        task?.cancel()
+        passportTask?.cancel()
+        scopeTask?.cancel()
+        task = nil
+        passportTask = nil
+        scopeTask = nil
+        progress = nil
+    }
+
+    private func markPublished(inputsKey: String?) {
+        publishedInputsKey = inputsKey
+        publishGeneration &+= 1
+    }
 
     /// The fingerprint the published figures answer for, or `nil` when they
     /// answer for nothing — before the first load, and after any failure.
@@ -258,11 +297,20 @@ final class MileageStatisticsStore {
     /// guard here (rather than only in the shell) also makes every caller obey
     /// the same no-work contract and lets an empty reload cancel an older
     /// calculation that may still be running.
-    func load(countries: [String], trains: [Train], rides: [RiddenRouteStore.DrawnRide]) {
-        let fingerprint = Self.fingerprint(countries: countries, trains: trains, rides: rides)
-        guard fingerprint != servedFingerprint else { return }
+    func load(countries: [String], japanLeaves: Set<JapanAreaLeaf>? = nil,
+        trains: [Train], rides: [RiddenRouteStore.DrawnRide], inputsKey: String? = nil
+    ) {
+        let leavesKey = japanLeaves.map { $0.map(\.rawValue).sorted().joined(separator: ",") } ?? "*"
+        let fingerprint = Self.fingerprint(
+            countries: countries, japanLeavesKey: leavesKey, trains: trains, rides: rides)
+        guard fingerprint != servedFingerprint else {
+            if case .loaded = state, publishedInputsKey != inputsKey {
+                markPublished(inputsKey: inputsKey)
+            }
+            return
+        }
         guard !trains.isEmpty else {
-            clearForEmpty(fingerprint: fingerprint)
+            clearForEmpty(fingerprint: fingerprint, inputsKey: inputsKey)
             return
         }
         // The entries this load would produce, journey for journey, are
@@ -278,7 +326,9 @@ final class MileageStatisticsStore {
             Self.sameMileageInputs(built, previous),
             Self.differsOnlyInPassport(previous, fingerprint)
         {
-            reloadPassportOnly(fingerprint: fingerprint, trains: trains, entries: context.entries)
+            reloadPassportOnly(
+                fingerprint: fingerprint, trains: trains, entries: context.entries,
+                inputsKey: inputsKey)
             return
         }
         servedFingerprint = fingerprint
@@ -297,7 +347,7 @@ final class MileageStatisticsStore {
 #endif
             do {
                 self.progress = Progress(stage: .readingNetwork)
-                let index = try await Self.readNetwork(countries: countries)
+                let index = try await Self.readNetwork(countries: countries, japanLeaves: japanLeaves)
                 try Task.checkCancellation()
 #if DEBUG
                 let indexed = ContinuousClock.now
@@ -312,7 +362,8 @@ final class MileageStatisticsStore {
                 // a country-only key would reuse entries matched under the
                 // previous attribution. No history or package revision is in
                 // scope here, so the key does not carry one.
-                let indexKey = countries.joined(separator: ",") + "|attribution-policy-v2"
+                let indexKey = countries.joined(separator: ",") + "|" + leavesKey
+                    + "|attribution-policy-v2"
                 if self.entryCacheIndexKey != indexKey {
                     self.entryCache = [:]
                     self.entryCacheIndexKey = indexKey
@@ -388,6 +439,7 @@ final class MileageStatisticsStore {
                 self.passport = grouped
                 self.progress = nil
                 self.state = .loaded
+                self.markPublished(inputsKey: inputsKey)
                 // The scope can be moved while the load is still running; the
                 // answer just computed is then for the wrong day.
                 if self.selectedDate != scope { self.rescope() }
@@ -404,6 +456,7 @@ final class MileageStatisticsStore {
                 self.contextFingerprint = nil
                 self.view = nil
                 self.passport = nil
+                self.publishedInputsKey = nil
                 self.availableDates = []
                 self.lineTotals = []
                 self.lineOperators = [:]
@@ -426,7 +479,8 @@ final class MileageStatisticsStore {
     /// ``reloadPassportOnly(fingerprint:trains:entries:)`` pair the new
     /// `trains` against the old `entries` positionally.
     private nonisolated static func sameMileageInputs(_ a: Fingerprint, _ b: Fingerprint) -> Bool {
-        guard a.countries == b.countries, a.journeys.count == b.journeys.count else { return false }
+        guard a.countries == b.countries, a.japanLeavesKey == b.japanLeavesKey,
+              a.journeys.count == b.journeys.count else { return false }
         for (x, y) in zip(a.journeys, b.journeys) {
             guard x.id == y.id, x.trainType == y.trainType, x.date == y.date, x.entry == y.entry
             else { return false }
@@ -471,7 +525,8 @@ final class MileageStatisticsStore {
     /// one. `scopeTask` is left running: `context` is unchanged by this path,
     /// so a rescope already under way is still computing the right answer.
     private func reloadPassportOnly(
-        fingerprint: Fingerprint, trains: [Train], entries: [Statistics.TrainEntry]
+        fingerprint: Fingerprint, trains: [Train], entries: [Statistics.TrainEntry],
+        inputsKey: String?
     ) {
         servedFingerprint = fingerprint
         passportTask?.cancel()
@@ -482,6 +537,7 @@ final class MileageStatisticsStore {
             let grouped = await Self.group(trains: trains, entries: entries)
             guard !Task.isCancelled, self.servedFingerprint == fingerprint else { return }
             self.passport = grouped
+            self.markPublished(inputsKey: inputsKey)
         }
     }
 
@@ -491,7 +547,7 @@ final class MileageStatisticsStore {
     /// particular, retaining `context` would let a later date selection
     /// aggregate the deleted journeys again, while retaining `progress` would
     /// leave the empty card claiming that a calculation was still underway.
-    private func clearForEmpty(fingerprint: Fingerprint) {
+    private func clearForEmpty(fingerprint: Fingerprint, inputsKey: String?) {
         task?.cancel()
         passportTask?.cancel()
         scopeTask?.cancel()
@@ -511,7 +567,8 @@ final class MileageStatisticsStore {
         availableDates = []
         entryCache = [:]
         entryCacheIndexKey = ""
-        state = .idle
+        state = .loaded
+        markPublished(inputsKey: inputsKey)
     }
 
     /// Move the statistics screen's own date scope.
@@ -555,6 +612,7 @@ final class MileageStatisticsStore {
                 self.view = result
                 self.progress = nil
                 self.state = .loaded
+                self.publishGeneration &+= 1
             } catch is CancellationError {
                 return
             } catch {
@@ -584,11 +642,12 @@ final class MileageStatisticsStore {
     /// ``EdgeIndexCache``, which is also what the map's ridden-line category
     /// filter classifies against.
     private nonisolated static func readNetwork(
-        countries: [String]
+        countries: [String], japanLeaves: Set<JapanAreaLeaf>?
     ) async throws -> Statistics.EdgeIndex {
         let interval = RailSignpost.jobs.begin("stats.readNetwork")
         defer { RailSignpost.jobs.end("stats.readNetwork", interval) }
-        let index = try await EdgeIndexCache.shared.merged(countries: countries)
+        let index = try await EdgeIndexCache.shared.scoped(
+            countries: countries, japanLeaves: japanLeaves)
         try Task.checkCancellation()
         return index
     }
@@ -725,6 +784,7 @@ final class MileageStatisticsStore {
     /// passport screen reads a strict subset of what this one does.
     struct Fingerprint: Equatable, Sendable {
         let countries: [String]
+        let japanLeavesKey: String
         let journeys: [Journey]
 
         struct Journey: Equatable, Sendable {
@@ -746,13 +806,15 @@ final class MileageStatisticsStore {
     }
 
     private nonisolated static func fingerprint(
-        countries: [String], trains: [Train], rides: [RiddenRouteStore.DrawnRide]
+        countries: [String], japanLeavesKey: String,
+        trains: [Train], rides: [RiddenRouteStore.DrawnRide]
     ) -> Fingerprint {
         let interval = RailSignpost.jobs.begin("stats.fingerprint")
         defer { RailSignpost.jobs.end("stats.fingerprint", interval) }
         let ridesByID = Dictionary(rides.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
         return Fingerprint(
             countries: countries,
+            japanLeavesKey: japanLeavesKey,
             journeys: trains.map { train in
                 Fingerprint.Journey(
                     id: train.id,

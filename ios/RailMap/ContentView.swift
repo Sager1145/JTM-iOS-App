@@ -72,6 +72,8 @@ struct RailWorkspaceView: View {
     /// window at an accessibility text size, and the compact stop must not
     /// reserve a row for a line that is not drawn. See ``compactHeaderRows``.
     @Environment(AppLocalization.self) private var localization
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @Environment(\.colorScheme) private var colorScheme
 
     @Bindable var store: RailNetworkStore
     @Bindable var itineraries: ItineraryStore
@@ -682,8 +684,17 @@ struct RailWorkspaceView: View {
         // other presentation in this workspace already raises from here,
         // outside that override, and reads the WINDOW's own size class; this
         // one now does too.
-        .sheet(item: $statisticsImage) { file in
-            StatisticsShareView(file: file) { statisticsImage = nil }
+        .fullScreenCover(isPresented: compactStatisticsComposer) {
+            statisticsComposer
+        }
+        .sheet(isPresented: regularStatisticsComposer) {
+            if #available(iOS 18.0, *) {
+                statisticsComposer
+                    .presentationDetents([.large])
+                    .presentationSizing(.page)
+            } else {
+                statisticsComposer.presentationDetents([.large])
+            }
         }
         // §13.2's harmony rule: the tap has to arrive with the change, so it is
         // driven by the same state the view is drawn from rather than by a
@@ -750,6 +761,25 @@ struct RailWorkspaceView: View {
             // on each one. Stopping is a thing the reader asks for, from the
             // transport controls, in any workspace.
         }
+    }
+
+    private var compactStatisticsComposer: Binding<Bool> {
+        Binding(
+            get: { statisticsComposerPresented && horizontalSizeClass == .compact },
+            set: { if !$0 { statisticsComposerPresented = false } })
+    }
+
+    private var regularStatisticsComposer: Binding<Bool> {
+        Binding(
+            get: { statisticsComposerPresented && horizontalSizeClass != .compact },
+            set: { if !$0 { statisticsComposerPresented = false } })
+    }
+
+    private var statisticsComposer: some View {
+        ShareComposerView(
+            itineraries: itineraries, riddenRoutes: riddenRoutes, statistics: statistics,
+            region: regionScope, area: nil, colorScheme: colorScheme,
+            journeyPresentation: { presentation(for: $0) })
     }
 
     private func presentedSheet(_ presented: WorkspaceSheet) -> some View {
@@ -1138,24 +1168,8 @@ struct RailWorkspaceView: View {
     /// nothing in the console about presenting twice. What makes it safe is
     /// that the destinations are mutually exclusive — only the tab on screen
     /// can be trying to present.
-    private enum StatisticsShareRequest: Hashable {
-        case map(ColorScheme)
-        case statistics(ColorScheme)
-
-        var colorScheme: ColorScheme {
-            switch self {
-            case .map(let scheme), .statistics(let scheme): scheme
-            }
-        }
-        var includesMap: Bool {
-            if case .map = self { return true }
-            return false
-        }
-    }
-
-    @State private var statisticsShare = ShareRequestController<StatisticsShareRequest>()
     @State private var statisticsScopePresented = false
-    @State private var statisticsImage: StatisticsPoster.File?
+    @State private var statisticsComposerPresented = false
 
     private var statisticsPanel: some View {
         PassportWorkspaceView(
@@ -1439,118 +1453,17 @@ struct RailWorkspaceView: View {
     /// the reason the two scope buttons do: it is a thing this destination can
     /// do, and §9.5.6 gives every destination one row for exactly those.
     ///
-    /// Rendered on the spot rather than kept ready. The page is several
-    /// thousand points tall and its bitmap is measured in tens of megabytes,
-    /// so holding one against the chance the reader taps this would be paying
-    /// for the feature on every screen that never uses it.
-    ///
-    /// Disabled while there is nothing to draw: an image of a screen that is
-    /// still calculating is a picture of a spinner.
+    /// The composer owns rendering and its independent date scope; this button
+    /// only opens it once the current figures are available to seed it.
     private var statisticsShareButton: some View {
-        Menu {
-            Menu {
-                Button {
-                    statisticsShare.begin(.map(.light))
-                } label: {
-                    Label(localization.statsText("ios.stats.shareLight"), systemImage: "sun.max")
-                }
-                .accessibilityIdentifier("mapShareLightButton")
-                Button {
-                    statisticsShare.begin(.map(.dark))
-                } label: {
-                    Label(localization.statsText("ios.stats.shareDark"), systemImage: "moon")
-                }
-                .accessibilityIdentifier("mapShareDarkButton")
-            } label: {
-                Label(localization.statsText("ios.stats.shareMapOption"), systemImage: "map")
-            }
-            .accessibilityIdentifier("mapShareOption")
-            Menu {
-                Button {
-                    statisticsShare.begin(.statistics(.light))
-                } label: {
-                    Label(localization.statsText("ios.stats.shareLight"), systemImage: "sun.max")
-                }
-                .accessibilityIdentifier("statisticsShareLightButton")
-                Button {
-                    statisticsShare.begin(.statistics(.dark))
-                } label: {
-                    Label(localization.statsText("ios.stats.shareDark"), systemImage: "moon")
-                }
-                .accessibilityIdentifier("statisticsShareDarkButton")
-            } label: {
-                Label(localization.statsText("ios.stats.shareStatisticsOption"), systemImage: "chart.bar")
-            }
-            .accessibilityIdentifier("statisticsShareOption")
+        Button {
+            statisticsComposerPresented = true
         } label: {
             SheetIconLabel(systemImage: "square.and.arrow.up")
         }
         .accessibilityLabel(Text(localization.statsText("ios.stats.shareImage")))
-        .disabled(statistics.view == nil || statisticsShare.request != nil)
-        .overlay { if statisticsShare.request != nil { ProgressView().allowsHitTesting(false) } }
-        .task(id: statisticsShare.request?.id) {
-            guard let ticket = statisticsShare.request else { return }
-            let request = ticket.input
-            let year = statistics.selectedYear
-            let date = statistics.selectedDate
-            let dates = statistics.dateSelection
-            let groupID = statistics.selectedJourneyGroupID
-            let region = regionScope
-            let storeGeneration = itineraries.storeGeneration
-            let isCurrent: @MainActor @Sendable () -> Bool = {
-                statistics.selectedYear == year && statistics.selectedDate == date
-                    && statistics.dateSelection == dates && statistics.selectedJourneyGroupID == groupID
-                    && regionScope == region && statistics.view != nil
-                    && itineraries.storeGeneration == storeGeneration
-            }
-            let file: StatisticsPoster.File? = await statisticsShare.perform(ticket, isCurrent: isCurrent, operation: {
-                let mapImage = request.includesMap
-                    ? await StatisticsMapSnapshot.render(
-                        rides: mapRides,
-                        fallback: regionScope?.networkExtent ?? controller.mapView?.region,
-                        colorScheme: request.colorScheme)
-                    : nil
-                guard isCurrent(), !Task.isCancelled else { return nil }
-                if request.includesMap && mapImage == nil { return nil }
-                return await renderStatisticsImage(colorScheme: request.colorScheme, mapImage: mapImage)
-            })
-            guard let file else { return }
-            PresentationHost.afterTeardown {
-                guard statisticsShare.isLatest(ticket), isCurrent() else { return }
-                statisticsImage = file
-            }
-        }
-        .onDisappear { statisticsShare.cancel() }
+        .disabled(statistics.view == nil)
         .accessibilityIdentifier("statisticsShareButton")
-    }
-
-    /// The statistics page, as a PNG on disk. `nil` if it could not be drawn
-    /// or could not be written, in which case nothing is presented.
-    private func renderStatisticsImage(
-        colorScheme: ColorScheme, mapImage: UIImage?
-    ) async -> StatisticsPoster.File? {
-        await StatisticsPoster.render(
-            itineraries: itineraries,
-            statistics: statistics,
-            region: regionScope,
-            // The two scopes, spelled out. On screen they are the two round
-            // buttons beside this one and they stay on screen while the
-            // numbers are read; an image travels without them.
-            scope: localization.statsText(
-                "ios.stats.shareScope",
-                params: [
-                    "region": .string(regionScopeName),
-                    "date": .string(!statistics.dateSelection.isEmpty || statistics.selectedJourneyGroupID != nil
-                        ? statisticsScopeLabel : statistics.selectedYear.map(String.init)
-                            ?? localization.statsText("ios.stats.allTime")),
-                ]),
-            title: mapImage == nil
-                ? localization.text("nav.stats", fallback: "Stats")
-                : localization.statsText("ios.stats.shareMapTitle"),
-            localization: localization,
-            journeyPresentation: { presentation(for: $0) },
-            colorScheme: colorScheme,
-            mapImage: mapImage)
     }
 
     private var playbackButton: some View {

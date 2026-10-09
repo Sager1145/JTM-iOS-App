@@ -203,23 +203,84 @@ enum StatisticsStrings {
             .en: "Share image", .ja: "画像を共有",
             .zhHans: "分享图片", .zhHant: "分享圖片",
         ],
-        "ios.stats.shareMapOption": [
-            .en: "Ticket + railway map", .ja: "きっぷ＋鉄道路線図",
-            .zhHans: "车票＋铁路地图", .zhHant: "車票＋鐵路地圖",
+        "ios.stats.shareComposer": [
+            .en: "Share composer", .ja: "共有画像を編集",
+            .zhHans: "编辑分享图片", .zhHant: "編輯分享圖片",
         ],
-        "ios.stats.shareStatisticsOption": [
-            .en: "Ticket + statistics", .ja: "きっぷ＋統計",
-            .zhHans: "车票＋统计", .zhHant: "車票＋統計",
+        "ios.stats.shareExport": [
+            .en: "Export", .ja: "書き出す", .zhHans: "导出", .zhHant: "匯出",
         ],
-        "ios.stats.shareMapTitle": [
-            .en: "Ticket and railway map", .ja: "きっぷと鉄道路線図",
-            .zhHans: "车票与铁路地图", .zhHant: "車票與鐵路地圖",
+        "ios.stats.shareCanvas": [
+            .en: "Share image canvas", .ja: "共有画像キャンバス",
+            .zhHans: "分享图片画布", .zhHant: "分享圖片畫布",
         ],
-        "ios.stats.shareMapImageLabel": [
-            .en: "A picture of the ticket and railway map",
-            .ja: "きっぷと鉄道路線図の画像",
-            .zhHans: "车票与铁路地图的图片",
-            .zhHant: "車票與鐵路地圖的圖片",
+        "ios.stats.shareNoOverlap": [
+            .en: "The region selection and map cards do not overlap.",
+            .ja: "地域の選択と地図カードの範囲が重なっていません。",
+            .zhHans: "地区选择与地图卡片的范围不重叠。",
+            .zhHant: "地區選擇與地圖卡片的範圍不重疊。",
+        ],
+        "ios.stats.shareDoesNotFit": [
+            .en: "Doesn’t fit", .ja: "収まりません",
+            .zhHans: "无法放入", .zhHant: "無法放入",
+        ],
+        "ios.stats.shareRatio": [
+            .en: "Canvas ratio", .ja: "画像の比率", .zhHans: "画布比例", .zhHant: "畫布比例",
+        ],
+        "ios.stats.shareAppearance": [
+            .en: "Appearance", .ja: "外観", .zhHans: "外观", .zhHant: "外觀",
+        ],
+        "ios.stats.shareSize": [
+            .en: "Image size", .ja: "画像サイズ", .zhHans: "图片尺寸", .zhHant: "圖片尺寸",
+        ],
+        "ios.stats.shareSizeSmall": [
+            .en: "S", .ja: "小", .zhHans: "小", .zhHant: "小",
+        ],
+        "ios.stats.shareSizeMedium": [
+            .en: "M", .ja: "中", .zhHans: "中", .zhHant: "中",
+        ],
+        "ios.stats.shareSizeLarge": [
+            .en: "L", .ja: "大", .zhHans: "大", .zhHant: "大",
+        ],
+        "ios.stats.shareLayouts": [
+            .en: "Layouts", .ja: "レイアウト", .zhHans: "布局", .zhHant: "版面配置",
+        ],
+        "ios.stats.shareLayoutJapan": [
+            .en: "Japan islands", .ja: "日本列島", .zhHans: "日本列岛", .zhHant: "日本列島",
+        ],
+        "ios.stats.shareAdd": [
+            .en: "Add card", .ja: "カードを追加", .zhHans: "添加卡片", .zhHant: "加入卡片",
+        ],
+        "ios.stats.shareTicket": [
+            .en: "Ticket", .ja: "きっぷ", .zhHans: "车票", .zhHant: "車票",
+        ],
+        "ios.stats.shareMap": [
+            .en: "Map", .ja: "地図", .zhHans: "地图", .zhHant: "地圖",
+        ],
+        "ios.stats.shareStatistics": [
+            .en: "Statistics", .ja: "統計", .zhHans: "统计", .zhHant: "統計",
+        ],
+        "ios.stats.shareCardSize": [
+            .en: "Card size", .ja: "カードサイズ", .zhHans: "卡片尺寸", .zhHant: "卡片尺寸",
+        ],
+        "ios.stats.shareTicketFixedRatio": [
+            .en: "Ticket proportions are fixed.",
+            .ja: "きっぷの縦横比は固定です。",
+            .zhHans: "车票比例固定。", .zhHant: "車票比例固定。",
+        ],
+        "ios.stats.shareNoData": [
+            .en: "No data for this scope", .ja: "この範囲のデータはありません",
+            .zhHans: "此范围没有数据", .zhHant: "此範圍沒有資料",
+        ],
+        "ios.stats.shareMapRatio": [
+            .en: "Map ratio", .ja: "地図の比率", .zhHans: "地图比例", .zhHant: "地圖比例",
+        ],
+        "ios.stats.shareZoom": [
+            .en: "Zoom", .ja: "拡大率", .zhHans: "缩放", .zhHant: "縮放",
+        ],
+        "ios.stats.shareCardLabel": [
+            .en: "{name}, {columns} by {rows}", .ja: "{name}、{columns}×{rows}",
+            .zhHans: "{name}，{columns}×{rows}", .zhHant: "{name}，{columns}×{rows}",
         ],
         "ios.stats.shareLight": [
             .en: "Share in light mode", .ja: "ライトモードで共有",
@@ -244,12 +305,6 @@ enum StatisticsStrings {
             .ja: "この画面の統計の画像",
             .zhHans: "本页统计内容的图片",
             .zhHant: "本頁統計內容的圖片",
-        ],
-        // The line above the numbers in that picture: which region, and which
-        // day, the figures below are scoped to.
-        "ios.stats.shareScope": [
-            .en: "{region} · {date}", .ja: "{region}・{date}",
-            .zhHans: "{region} · {date}", .zhHant: "{region} · {date}",
         ],
         "ios.stats.totalDistance": [
             .en: "Total distance ridden", .ja: "総乗車距離",
@@ -531,5 +586,33 @@ enum StatisticsStrings {
             .en: "regions", .ja: "か国・地域",
             .zhHans: "个国家或地区", .zhHant: "個國家或地區",
         ],
+        // Japanese area scopes and the card names used by the share composer.
+        "ios.area.japanAll": [.en: "Japan (all)", .ja: "日本（全域）", .zhHans: "日本（全部）", .zhHant: "日本（全部）"],
+        "ios.area.honshuAll": [.en: "Honshu (all)", .ja: "本州（全域）", .zhHans: "本州（全部）", .zhHant: "本州（全部）"],
+        "ios.area.hokkaido": [.en: "Hokkaido", .ja: "北海道", .zhHans: "北海道", .zhHant: "北海道"],
+        "ios.area.honshu": [.en: "Honshu", .ja: "本州", .zhHans: "本州", .zhHant: "本州"],
+        "ios.area.tohoku": [.en: "Tohoku", .ja: "東北", .zhHans: "东北", .zhHant: "東北"],
+        "ios.area.kanto": [.en: "Kanto", .ja: "関東", .zhHans: "关东", .zhHant: "關東"],
+        "ios.area.hokuriku": [.en: "Hokuriku", .ja: "北陸", .zhHans: "北陆", .zhHant: "北陸"],
+        "ios.area.koshin": [.en: "Koshin", .ja: "甲信", .zhHans: "甲信", .zhHant: "甲信"],
+        "ios.area.tokai": [.en: "Tokai", .ja: "東海", .zhHans: "东海", .zhHant: "東海"],
+        "ios.area.kinki": [.en: "Kinki", .ja: "近畿", .zhHans: "近畿", .zhHant: "近畿"],
+        "ios.area.chugoku": [.en: "Chugoku", .ja: "中国", .zhHans: "中国", .zhHant: "中國"],
+        "ios.area.shikoku": [.en: "Shikoku", .ja: "四国", .zhHans: "四国", .zhHant: "四國"],
+        "ios.area.kyushu": [.en: "Kyushu", .ja: "九州", .zhHans: "九州", .zhHant: "九州"],
+        "ios.area.okinawa": [.en: "Okinawa", .ja: "沖縄", .zhHans: "冲绳", .zhHant: "沖繩"],
+        "ios.stats.card.recordTicket": [.en: "Record ticket", .ja: "乗車記録券", .zhHans: "乘车记录票", .zhHant: "乘車記錄票"],
+        "ios.stats.card.dailyTicket": [.en: "Daily ticket", .ja: "当日乗車券", .zhHans: "当日乘车票", .zhHant: "當日乘車票"],
+        "ios.stats.card.rhythm": [.en: "Travel rhythm", .ja: "乗車分布", .zhHans: "乘坐分布", .zhHant: "乘坐分佈"],
+        "ios.stats.card.distance": [.en: "Distance", .ja: "距離", .zhHans: "里程", .zhHant: "里程"],
+        "ios.stats.card.time": [.en: "Time", .ja: "時間", .zhHans: "时间", .zhHant: "時間"],
+        "ios.stats.card.coverage": [.en: "Coverage", .ja: "走破率", .zhHans: "覆盖率", .zhHant: "覆蓋率"],
+        "ios.stats.card.service": [.en: "Services", .ja: "車種", .zhHans: "车种", .zhHant: "車種"],
+        "ios.stats.card.stations": [.en: "Stations", .ja: "駅", .zhHans: "车站", .zhHant: "車站"],
+        "ios.stats.card.operators": [.en: "Operators", .ja: "事業者", .zhHans: "运营商", .zhHant: "業者"],
+        "ios.stats.card.routes": [.en: "Routes", .ja: "発着区間", .zhHans: "起讫", .zhHant: "起訖"],
+        "ios.stats.card.topSegments": [.en: "Top segments", .ja: "よく乗った区間", .zhHans: "常乘区间", .zhHant: "常乘區間"],
+        "ios.stats.card.regions": [.en: "Regions", .ja: "国と地域", .zhHans: "国家与地区", .zhHant: "國家與地區"],
+        "ios.stats.card.lineDetail": [.en: "Line detail", .ja: "路線詳細", .zhHans: "线路详情", .zhHant: "路線詳情"],
     ]
 }

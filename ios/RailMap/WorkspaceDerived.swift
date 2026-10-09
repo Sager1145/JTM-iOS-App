@@ -181,6 +181,53 @@ final class WorkspaceDerived {
         return (scopeValue, scopeIDs)
     }
 
+    // MARK: - geometry-aware statistics membership
+
+    private var ridesDigestKey: [RiddenRouteStore.DrawnRide]?
+    private var ridesDigestValue = 0
+
+    private func ridesDigest(_ rides: [RiddenRouteStore.DrawnRide]) -> Int {
+        if let ridesDigestKey, ArrayGeneration.same(ridesDigestKey, rides) {
+            return ridesDigestValue
+        }
+        var hasher = Hasher()
+        hasher.combine(rides.count)
+        for ride in rides {
+            hasher.combine(ride.id)
+            hasher.combine(ride.geometryDigest)
+        }
+        ridesDigestValue = hasher.finalize()
+        ridesDigestKey = rides
+        return ridesDigestValue
+    }
+
+    private struct MemberIDsKey {
+        let scopeKey: String
+        let trains: [Train]
+        let ridesDigest: Int
+    }
+
+    private var memberIDsKey: MemberIDsKey?
+    private var memberIDsValue: Set<String> = []
+    private var memberIDsGeneration = 0
+
+    /// Geometry-aware scope membership and a generation suitable for downstream memo keys.
+    func memberIDs(
+        scope: StatisticsScope, trains: [Train], rides: [RiddenRouteStore.DrawnRide]
+    ) -> (ids: Set<String>, key: Int) {
+        let digest = ridesDigest(rides)
+        if let memberIDsKey, memberIDsKey.scopeKey == scope.key,
+           memberIDsKey.ridesDigest == digest,
+           ArrayGeneration.same(memberIDsKey.trains, trains) {
+            return (memberIDsValue, memberIDsGeneration)
+        }
+        memberIDsValue = Set(scope.filter(trains, rides: rides).map(\.id))
+        memberIDsGeneration &+= 1
+        memberIDsKey = MemberIDsKey(
+            scopeKey: scope.key, trains: trains, ridesDigest: digest)
+        return (memberIDsValue, memberIDsGeneration)
+    }
+
     // MARK: - the drawn rides
 
     private var rideKey: [RiddenRouteStore.DrawnRide]?
@@ -301,6 +348,7 @@ final class WorkspaceDerived {
     // MARK: - the passport's region + ridden scope
 
     private struct PassportScopeKey {
+        let scopeKey: String
         let dates: StatisticsDateSelection
         let groupID: String?
         let year: Int?
@@ -317,9 +365,11 @@ final class WorkspaceDerived {
     func passportScope(
         trains: [Train], days: [ItineraryStore.Loaded.Day], region: Region?, year: Int? = nil,
         groupID: String? = nil, dates: StatisticsDateSelection = StatisticsDateSelection(),
+        scopeKey: String = "",
         compute: () -> (trains: [Train], days: [ItineraryStore.Loaded.Day], unconfirmed: Int)
     ) -> (trains: [Train], days: [ItineraryStore.Loaded.Day], unconfirmed: Int) {
-        if let passportScopeKey, passportScopeKey.region == region, passportScopeKey.year == year,
+        if let passportScopeKey, passportScopeKey.scopeKey == scopeKey,
+           passportScopeKey.region == region, passportScopeKey.year == year,
            passportScopeKey.groupID == groupID, passportScopeKey.dates == dates,
            ArrayGeneration.same(passportScopeKey.trains, trains),
            ArrayGeneration.same(passportScopeKey.days, days) {
@@ -327,13 +377,14 @@ final class WorkspaceDerived {
         }
         let value = compute()
         passportScopeValue = value
-        passportScopeKey = PassportScopeKey(dates: dates, groupID: groupID, year: year, trains: trains, days: days, region: region)
+        passportScopeKey = PassportScopeKey(scopeKey: scopeKey, dates: dates, groupID: groupID, year: year, trains: trains, days: days, region: region)
         return value
     }
 
     // MARK: - the days a region has records for
 
     private struct RegionDatesKey {
+        let scopeKey: String
         let year: Int?
         let trains: [Train]
         let days: [ItineraryStore.Loaded.Day]
@@ -346,9 +397,11 @@ final class WorkspaceDerived {
     /// `RailWorkspaceView.statisticsDates`, memoised — the calendar menu's own
     /// question, asked again on every body evaluation a sheet drag causes.
     func scopedDates(
-        trains: [Train], days: [ItineraryStore.Loaded.Day], region: Region?, year: Int? = nil
+        trains: [Train], days: [ItineraryStore.Loaded.Day], region: Region?, year: Int? = nil,
+        scopeKey: String = "", filter: ((Train) -> Bool)? = nil
     ) -> [String] {
-        if let regionDatesKey, regionDatesKey.region == region, regionDatesKey.year == year,
+        if let regionDatesKey, regionDatesKey.scopeKey == scopeKey,
+           regionDatesKey.region == region, regionDatesKey.year == year,
            ArrayGeneration.same(regionDatesKey.trains, trains),
            ArrayGeneration.same(regionDatesKey.days, days) {
             return regionDatesValue
@@ -357,11 +410,12 @@ final class WorkspaceDerived {
             RideLedger.hasBeenRidden($0)
                 && (region == nil || Region.resolved($0) == region)
                 && (year == nil || MileageStatisticsStore.year(of: $0) == year)
+                && (filter?($0) ?? true)
         }
         regionDatesValue = Set(scoped.map {
             Dates.trainDate(Dates.Train(id: $0.id, date: $0.date, stops: []))
         }).filter { $0 != Dates.undated }.sorted()
-        regionDatesKey = RegionDatesKey(year: year, trains: trains, days: days, region: region)
+        regionDatesKey = RegionDatesKey(scopeKey: scopeKey, year: year, trains: trains, days: days, region: region)
         return regionDatesValue
     }
 }

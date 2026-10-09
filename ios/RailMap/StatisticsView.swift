@@ -61,6 +61,47 @@ import SwiftUI
 /// panel header now, beside the region, where §5.3.1 puts Scope and where it
 /// stays visible at every sheet stop. Nothing else moved: same figures, same
 /// order, same wording, and the same VoiceOver sentences over the top of them.
+/// A share-composer-friendly identity for every dashboard card.
+enum StatisticsCardKind: String, CaseIterable, Identifiable, Sendable {
+    case recordTicket, dailyTicket, rhythm, distance, time, coverage, service
+    case stations, operators, routes, topSegments, regions, lineDetail
+
+    var id: String { rawValue }
+    static let standardOrder = allCases
+    var localizationKey: String { "ios.stats.card.\(rawValue)" }
+    var fallbackTitle: String {
+        switch self {
+        case .recordTicket: "Record ticket"
+        case .dailyTicket: "Daily ticket"
+        case .rhythm: "Travel rhythm"
+        case .distance: "Distance"
+        case .time: "Time"
+        case .coverage: "Coverage"
+        case .service: "Services"
+        case .stations: "Stations"
+        case .operators: "Operators"
+        case .routes: "Routes"
+        case .topSegments: "Top segments"
+        case .regions: "Regions"
+        case .lineDetail: "Line detail"
+        }
+    }
+    var systemImage: String {
+        switch self {
+        case .recordTicket, .dailyTicket: "ticket"
+        case .rhythm: "chart.bar"
+        case .distance: "ruler"
+        case .time: "clock"
+        case .coverage: "percent"
+        case .service: "tram"
+        case .stations: "mappin"
+        case .operators: "building.2"
+        case .routes, .topSegments, .lineDetail: "point.topleft.down.to.point.bottomright.curvepath"
+        case .regions: "map"
+        }
+    }
+}
+
 struct StatisticsDashboardContent: View {
     @Environment(AppLocalization.self) private var localization
     @Bindable var itineraries: ItineraryStore
@@ -74,13 +115,18 @@ struct StatisticsDashboardContent: View {
     /// the shell reloads `MileageStatisticsStore` when it moves.
     /// `nil` is 全部 — every network in one denominator.
     @Binding var region: Region?
+    /// Explicit geometry-aware membership overrides the coarse region slice.
+    var memberIDs: Set<String>? = nil
+    /// Generation of `memberIDs`, supplied by the geometry-aware workspace memo.
+    var memberKey: Int? = nil
+    /// The printed ticket scope for an area selection.
+    var scopeName: String? = nil
 
     /// The workspace's shared memoisation cache — see ``WorkspaceDerived`` —
     /// so ``scoped(_:)`` computes its region + ridden slice once per (trains
     /// generation, region) rather than rebuilding a whole
     /// `ItineraryStore.Loaded` on every body evaluation. Defaulted rather than
-    /// required so `StatisticsPosterPage` — a one-shot render for the share
-    /// image, not a per-frame surface — need not supply one of its own.
+    /// required so one-shot share-card renders need not supply one of their own.
     var derived: WorkspaceDerived = WorkspaceDerived()
 
     /// §11.2's resolved surface for one journey, from the app's ONE caller of
@@ -101,6 +147,10 @@ struct StatisticsDashboardContent: View {
     var openJourney: (Train) -> Void
     /// The map share image prints the same record ticket without the charts below it.
     var ticketOnly = false
+    /// Mount the ticket face before reading its SwiftUI environment during export.
+    var recordTicketFaceOnly = false
+    /// `nil` preserves the complete dashboard; a list composes selected cards.
+    var cards: [StatisticsCardKind]? = nil
 
     /// §13.2: work under about 400 ms must not flash progress UI at the
     /// reader. Held here rather than inside the summary because the summary is
@@ -207,7 +257,9 @@ struct StatisticsDashboardContent: View {
 
     var body: some View {
         Group {
-            if let all = itineraries.loaded {
+            if recordTicketFaceOnly {
+                recordTicketFace
+            } else if let all = itineraries.loaded {
                 let scope = scoped(all)
                 let loaded = scope.loaded
                 // Journeys whose records do not say they were ridden. They are
@@ -219,7 +271,10 @@ struct StatisticsDashboardContent: View {
                 // inside the workspace's one ScrollView, and nesting a second
                 // lazy container inside it defeats both.
                 VStack(spacing: 16) {
-                    if progressVisible {
+#if DEBUG
+                    statisticsDebug(loaded: loaded)
+#endif
+                    if progressVisible && cards == nil && !ticketOnly {
                         StatisticsProgressView(store: statistics)
                             // The one card on this screen that arrives and
                             // leaves on its own, and the cards below it shift
@@ -246,14 +301,13 @@ struct StatisticsDashboardContent: View {
                         // every card built from it is optional rather than the
                         // whole screen waiting for the slower half.
                         let passport = statistics.passport.flatMap { $0.isEmpty ? nil : $0 }
-                        passportDataPage(loaded, stats.overall)
-                        if loaded.trains.contains(where: \.requiresRouteConfirmation) {
-                            Text(localization.editorText("ios.routeGuide.pendingMileageNote"))
-                                .font(.footnote)
-                                .foregroundStyle(.secondary)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                        if !ticketOnly {
+                        if let selectedCards = ticketOnly ? [.recordTicket] : cards {
+                            ForEach(selectedCards) { kind in
+                                dashboardCard(kind, loaded: loaded, stats: stats, passport: passport)
+                            }
+                        } else {
+                            passportDataPage(loaded, stats.overall)
+                            pendingMileageNote(loaded)
                             // 本日乗車 — the day in scope, issued as a ticket of
                             // its own directly under the record it is one entry
                             // in. It used to be a stamped block INSIDE that card,
@@ -307,6 +361,93 @@ struct StatisticsDashboardContent: View {
             StatisticsProgressGate(store: statistics, progressVisible: $progressVisible)
                 .allowsHitTesting(false)
         }
+    }
+
+    /// The exact record-ticket surface used by the statistics page, exposed
+    /// for the share composer without its surrounding dashboard or notes.
+    @ViewBuilder
+    private var recordTicketFace: some View {
+        if let all = itineraries.loaded, let stats = statistics.view {
+            passportDataPage(scoped(all).loaded, stats.overall)
+        }
+    }
+
+#if DEBUG
+    private func statisticsDebug(loaded: ItineraryStore.Loaded) -> some View {
+        let km = statistics.view.map {
+            String(format: "%.1f", ($0.overall.riddenAll * 10).rounded() / 10)
+        } ?? "-1"
+        return Text(" ")
+            .foregroundStyle(.clear)
+            .frame(width: 1, height: 1)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel("Statistics debug")
+            .accessibilityValue(
+                "journeys=\(loaded.trains.count);km=\(km);scope=\(ticketScope)")
+            .accessibilityIdentifier("statisticsDebug")
+            .accessibilityHidden(false)
+    }
+#endif
+
+    @ViewBuilder
+    private func pendingMileageNote(_ loaded: ItineraryStore.Loaded) -> some View {
+        if loaded.trains.contains(where: \.requiresRouteConfirmation) {
+            Text(localization.editorText("ios.routeGuide.pendingMileageNote"))
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+    }
+
+    /// Renders one card with the same availability rules as the full page.
+    @ViewBuilder
+    private func dashboardCard(
+        _ kind: StatisticsCardKind, loaded: ItineraryStore.Loaded,
+        stats: Statistics.MileageStatsView, passport: PassportStatistics?
+    ) -> some View {
+        switch kind {
+        case .recordTicket:
+            passportDataPage(loaded, stats.overall)
+        case .dailyTicket:
+            if let daily = stats.daily { dailyTicket(daily, trains: loaded.trains) }
+            else { emptyDashboardCard(kind) }
+        case .rhythm:
+            if let passport { rhythmCard(passport) } else { emptyDashboardCard(kind) }
+        case .distance:
+            if let passport { distanceCard(passport, distancePending: passport.measuredJourneys == 0) }
+            else { emptyDashboardCard(kind) }
+        case .time:
+            if let passport { timeCard(passport) } else { emptyDashboardCard(kind) }
+        case .coverage:
+            coverageCard(stats)
+        case .service:
+            serviceCard(stats.overall, distancePending: loaded.trains.allSatisfy(\.requiresRouteConfirmation))
+        case .stations:
+            if let passport { stationsCard(passport) } else { emptyDashboardCard(kind) }
+        case .operators:
+            if let passport { operatorsCard(passport) } else { emptyDashboardCard(kind) }
+        case .routes:
+            if let passport { routesCard(passport) } else { emptyDashboardCard(kind) }
+        case .topSegments:
+            topSegmentsCard(stats.overall)
+        case .regions:
+            if let passport, passport.regions.count > 1 { regionsCard(passport) }
+            else { emptyDashboardCard(kind) }
+        case .lineDetail:
+            lineDetailCard(stats)
+        }
+    }
+
+    private func emptyDashboardCard(_ kind: StatisticsCardKind) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Label(localization.statsText(kind.localizationKey), systemImage: kind.systemImage)
+                .font(.headline)
+            Text(localization.statsText("ios.stats.shareNoData"))
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .passportCard(.soft)
     }
 
     /// The progress card. Reading ``MileageStatisticsStore/progress`` stays in
@@ -553,7 +694,7 @@ struct StatisticsDashboardContent: View {
         let groupName = (itineraries.store?.trains ?? itineraries.loaded?.trains ?? [])
             .first { $0.journeyGroup?.id == statistics.selectedJourneyGroupID && $0.journeyGroup != nil }?
             .journeyGroup?.name
-        return groupName ?? region.map(regionName)
+        return groupName ?? scopeName ?? region.map(regionName)
             ?? localization.text("ios.region.all", fallback: "All regions")
     }
 
@@ -1717,13 +1858,16 @@ struct StatisticsDashboardContent: View {
         // about the scope changed.
         let slice = derived.passportScope(
             trains: loaded.trains, days: loaded.days, region: region, year: statistics.selectedYear,
-            groupID: statistics.selectedJourneyGroupID, dates: statistics.dateSelection
+            groupID: statistics.selectedJourneyGroupID, dates: statistics.dateSelection,
+            scopeKey: memberKey.map(String.init) ?? ""
         ) {
             var trains: [Train] = []
             var unconfirmed = 0
             trains.reserveCapacity(loaded.trains.count)
             for train in loaded.trains {
-                if let region, Region.resolved(train) != region { continue }
+                if let memberIDs {
+                    guard memberIDs.contains(train.id) else { continue }
+                } else if let region, Region.resolved(train) != region { continue }
                 guard statistics.includesYear(train), statistics.includesJourneyGroup(train),
                       statistics.includesDate(train) else { continue }
                 if RideLedger.hasBeenRidden(train) {

@@ -203,7 +203,7 @@
         },
         {
           "id": "share-lifecycle",
-          "command": "python3 ios/tools/verify-share-request.py"
+          "command": "python3 ios/tools/verify-share-card-rendering.py"
         }
       ],
       "sources": [
@@ -211,7 +211,9 @@
         "ios/RailMap/PlaybackController.swift",
         "ios/RailMap/PlaybackTransportBar.swift",
         "ios/RailMap/PlaybackVideoExporter.swift",
-        "ios/RailMap/ShareRequestController.swift",
+        "ios/RailMap/ShareCardRendering.swift",
+        "ios/RailMap/ShareComposerModel.swift",
+        "ios/RailMap/ShareComposerView.swift",
         "ios/RailMap/VideoExportFlow.swift",
         "ios/RailMap/VideoExportOptionsView.swift",
         "ios/RailMap/VideoExportSettings.swift"
