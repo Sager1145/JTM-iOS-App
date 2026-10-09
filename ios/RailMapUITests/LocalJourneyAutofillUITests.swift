@@ -47,7 +47,7 @@ final class LocalJourneyAutofillUITests: XCTestCase {
         let app = newEditor()
         selectEndpoints(in: app, origin: "003280", destination: "004368")
         let deadline = Date().addingTimeInterval(30)
-        let serviceName = "京成・都営浅草線・京急直通"
+        let serviceName = "京成本線・都営浅草線・京急空港線直通"
         let operatingService = app.buttons["localJourneyOperatingService"]
         revealProposal(operatingService, in: app, before: deadline)
         XCTAssertTrue(operatingService.waitForExistence(timeout: max(0, deadline.timeIntervalSinceNow)))

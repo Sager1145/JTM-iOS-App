@@ -630,3 +630,23 @@ all reports on failure, and keeps formatting advisory. Receipts:
 quality-debt-{base,candidate,main23}/, quality-debt-*-comparison.json,
 quality-debt-calibration-{baseline,candidate,rejection.json}. No App runtime
 source or concurrent CLI staging is changed by this tooling phase.
+
+## Phase 25: align the pending-service test with its real catalogue name
+
+Status: the original through-service candidate/pending/save/reopen UI case
+passes134.813s. Change only its stale literal to the exact committed
+asakusa-keisei-keikyu catalogue name 京成本線・都営浅草線・京急空港線直通.
+The former failure was the service picker lookup before route-candidate
+assertions, not a physical route failure. All physical endpoint/candidate
+selection, pending confirmation, no invented visits, through-service label,
+persistence and reopened endpoint assertions remain unchanged.
+
+Validation: isolated current Main22 production Debug build PASS; exact tested
+second-case body equals the delivered body. The complete two-case run has
+159samples/threeexpectedPIDs, peak395,004,856B and no2GiB breach, but exits65
+because the separate physical-autofill Undo case stillfails. That failure
+and the attempted bounded scrolling helper remain unaccepted; this commit
+includes neither the failed helper nor speculative Undo product changes.
+Receipts: autofill-ui-{candidate,build,validation} artifacts retain both
+outcomes. This closes only the stale catalogue-name regression; full UI,
+Undo and comparative memory acceptance remain open.
