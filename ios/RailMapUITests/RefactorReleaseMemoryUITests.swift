@@ -49,6 +49,53 @@ final class RefactorReleaseMemoryUITests: XCTestCase {
         XCTAssertEqual(region.value as? String, "All regions")
     }
 
+    func testFiveRealRegionsCompleteRoutesAndStatistics() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launch()
+        let map = app.descendants(matching: .any)["railwayMap"]
+        XCTAssertTrue(map.waitForExistence(timeout: 60), app.debugDescription)
+        XCTAssertEqual(map.label, "Map")
+        let routesLoaded = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+            map.exists && map.value as? String == "Routes loaded"
+        }, object: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [routesLoaded], timeout: 240), .completed,
+                       app.debugDescription)
+        // The containing status must preserve the real MKMapView and its children.
+        let nativeMap = app.maps.firstMatch
+        XCTAssertTrue(nativeMap.exists, app.debugDescription)
+        // MapKit can expose an empty map node. Its annotation container is
+        // a sibling inside the map wrapper, not a child of that map node.
+        XCTAssertTrue(map.descendants(matching: .map).firstMatch.exists,
+                      "The status container must preserve the native map.")
+        XCTAssertTrue(map.descendants(matching: .any)["AnnotationContainer"].exists,
+                      "The status container must preserve native annotations: \(app.debugDescription)")
+        let all = app.tabBars.buttons["All"]
+        XCTAssertTrue(all.waitForExistence(timeout: 30), app.debugDescription)
+        all.tap()
+        for id in ["20260722_06_sonic44",
+                   "20260802_01_taoyuan_airport_mrt_express_t2_taipei",
+                   "HK-SAMPLE-EAL-LOW", "MO-SAMPLE-MLM-TAIPA", "KR-SAMPLE-GYEONGBUKSEON"] {
+            assertPhysicalRouteGenerated(id, in: app)
+        }
+        let stats = app.tabBars.buttons["Stats"]
+        XCTAssertTrue(stats.waitForExistence(timeout: 60), app.debugDescription)
+        stats.tap()
+        let share = app.descendants(matching: .any)["statisticsShareButton"]
+        let ready = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+            share.exists && share.isEnabled
+        }, object: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 180), .completed, app.debugDescription)
+        let region = app.descendants(matching: .any)["regionScopeButton"]
+        XCTAssertEqual(region.value as? String, "All regions")
+        // Keep the same fully loaded screen for the external footprint sampler.
+        let settled = XCTNSPredicateExpectation(predicate: NSPredicate(value: false), object: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [settled], timeout: 8), .timedOut)
+        XCTAssertTrue(share.isEnabled)
+        XCTAssertEqual(region.value as? String, "All regions")
+    }
+
     private func assertPhysicalRouteGenerated(_ id: String, in app: XCUIApplication) {
         let row = revealRideRow(id, in: app)
         XCTAssertTrue(row.exists && row.isHittable,

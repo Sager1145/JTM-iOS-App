@@ -571,3 +571,32 @@ and staged logo deletions remain preserved. Separately, the full Main19 UI
 matrix stopped at a real2GiB map-layer-toggle peak2,553,958,912B; its
 30pass/7fail/4existing-skip/1interrupted/94unstarted results remain open,
 with ConsoleSweep and group-name failures closed only by dedicated proofs.
+
+## Phase 23: prove five real regions through public route details
+
+Status: Release public proof PASS148.377s. Commit a separately reviewed
+five-record fixture (JP/TW/HK/MO/KR) and a test that retains every dual-region
+map/annotation/global-route/detail-generated/statistics-ready assertion,
+checking each of the five IDs. JP Sonic44 and Taiwan Airport MRT are unchanged
+from the two-record fixture; HK-SAMPLE-EAL-LOW, MO-SAMPLE-MLM-TAIPA and
+KR-SAMPLE-GYEONGBUKSEON are exact original records from committed
+app/data/train-store-{hk,mo,kr}.json. No synthetic stations, forced route
+confirmation, geometry or readiness fields are added. Fixture SHA256:
+ccfcdb2a60eeed675648dedf01f2472d1f00d9dbcae2485737c87a083a801961.
+
+Validation: all280 frozen production Swift files match Main21 at preparation
+(the later Main22 change is group input only); Release dual-architecture
+build-for-testing PASS. On the owned simulator, the new exact test reports
+every real route generated and All regions statistics ready, exit0,106
+actual physical samples, one App PID40162, peak1,188,285,896B, no2GiB stop.
+Current five-rule SwiftLint zero findings and scoped SwiftFormat PASS.
+This run occurred with other owned work active: correctness/budget evidence
+only, not paired stable-footprint, launch/stall or leak acceptance.
+
+The external runner must seed the matching committed fixture per method:
+testTwoRealRegionsCompleteRoutesAndStatistics uses the two-region fixture;
+testFiveRealRegionsCompleteRoutesAndStatistics uses this five-region fixture.
+Earlier synthetic five-region/Stats-only evidence is not accepted for route
+proof. Original dual-region test remains unchanged; unrelated live CLI test
+changes and staging remain preserved. Receipts: release-five-real-{candidate,
+build,validation,lint,format} artifacts. Full acceptance remains open.

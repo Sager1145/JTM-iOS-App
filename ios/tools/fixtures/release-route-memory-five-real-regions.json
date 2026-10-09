@@ -1,0 +1,1198 @@
+{
+  "schema_version": "1.3",
+  "trains": [
+    {
+      "id": "20260722_06_sonic44",
+      "date": "2026-07-22",
+      "number": "ソニック44号（Sonic 44）（3044M）",
+      "number_en": "Sonic 44",
+      "train_type": "特急",
+      "company": "JR九州",
+      "origin": "大分",
+      "destination": "博多",
+      "direction": "博多",
+      "visible": true,
+      "style": {
+        "color": "#2c7fb8"
+      },
+      "route_policy": {
+        "mode": "single_primary_route",
+        "jr_only": true,
+        "allow_alternatives": false,
+        "allow_browser_straight_line_fallback": false,
+        "allowed_institution_type_codes": [
+          "2"
+        ],
+        "institution_filter_mode": "soft"
+      },
+      "route_sections": [],
+      "stops": [
+        {
+          "name": "大分",
+          "n02_station_code": "009480",
+          "platform_number": null,
+          "arrival": null,
+          "departure": "16:10",
+          "stop_type": "origin",
+          "ride_segment": true
+        },
+        {
+          "name": "別府",
+          "n02_station_code": "009428",
+          "platform_number": null,
+          "arrival": "16:18",
+          "departure": "16:18",
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "亀川",
+          "n02_station_code": "009373",
+          "platform_number": null,
+          "arrival": "16:23",
+          "departure": "16:23",
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "杵築",
+          "n02_station_code": "009303",
+          "platform_number": null,
+          "arrival": "16:33",
+          "departure": "16:34",
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "宇佐",
+          "n02_station_code": "009217",
+          "platform_number": null,
+          "arrival": "16:48",
+          "departure": "16:49",
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "柳ヶ浦",
+          "n02_station_code": "009103",
+          "platform_number": null,
+          "arrival": "16:53",
+          "departure": "16:54",
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "中津",
+          "n02_station_code": "009013",
+          "platform_number": null,
+          "arrival": "17:04",
+          "departure": "17:04",
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "宇島",
+          "n02_station_code": "008981",
+          "platform_number": null,
+          "arrival": "17:09",
+          "departure": "17:10",
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "行橋",
+          "n02_station_code": "008870",
+          "platform_number": null,
+          "arrival": "17:22",
+          "departure": "17:22",
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "小倉",
+          "n02_station_code": "008683",
+          "platform_number": null,
+          "arrival": "17:38",
+          "departure": "17:40",
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "戸畑",
+          "n02_station_code": "008667",
+          "platform_number": null,
+          "arrival": "17:44",
+          "departure": "17:45",
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "黒崎",
+          "n02_station_code": "008702",
+          "platform_number": null,
+          "arrival": "17:50",
+          "departure": "17:50",
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "折尾",
+          "n02_station_code": "008707",
+          "platform_number": null,
+          "arrival": "17:55",
+          "departure": "17:56",
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "赤間",
+          "n02_station_code": "008807",
+          "platform_number": null,
+          "arrival": "18:06",
+          "departure": "18:07",
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "福間",
+          "n02_station_code": "008847",
+          "platform_number": null,
+          "arrival": "18:14",
+          "departure": "18:14",
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "香椎",
+          "n02_station_code": "008931",
+          "platform_number": null,
+          "arrival": "18:22",
+          "departure": "18:23",
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "博多",
+          "n02_station_code": "009030",
+          "platform_number": null,
+          "arrival": "18:31",
+          "departure": null,
+          "stop_type": "destination",
+          "ride_segment": true
+        }
+      ],
+      "region": "jp",
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+    },
+    {
+      "id": "20260802_01_taoyuan_airport_mrt_express_t2_taipei",
+      "date": "2026-08-02",
+      "number": "桃園機場捷運 直達車（機場第二航廈站→台北車站）",
+      "train_type": "直達車",
+      "company": "桃園捷運",
+      "origin": "機場第二航廈站",
+      "destination": "台北車站",
+      "direction": "up",
+      "visible": true,
+      "style": {
+        "color": "#8246af"
+      },
+      "route_policy": {
+        "mode": "single_primary_route",
+        "jr_only": false,
+        "allow_alternatives": false,
+        "allow_browser_straight_line_fallback": false,
+        "allowed_institution_type_codes": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "preferred_line_names": [
+          "桃園機場捷運"
+        ],
+        "preferred_operator_names": [
+          "桃園大眾捷運股份有限公司"
+        ],
+        "institution_filter_mode": "soft"
+      },
+      "route_sections": [
+        {
+          "from": "機場第二航廈站",
+          "to": "機場第一航廈站",
+          "from_n02_station_code": "TYMC-A13",
+          "to_n02_station_code": "TYMC-A12",
+          "line_names": [
+            "桃園機場捷運"
+          ],
+          "operator_names": [
+            "桃園大眾捷運股份有限公司"
+          ]
+        },
+        {
+          "from": "機場第一航廈站",
+          "to": "坑口站",
+          "from_n02_station_code": "TYMC-A12",
+          "to_n02_station_code": "TYMC-A11",
+          "line_names": [
+            "桃園機場捷運"
+          ],
+          "operator_names": [
+            "桃園大眾捷運股份有限公司"
+          ]
+        },
+        {
+          "from": "坑口站",
+          "to": "山鼻站",
+          "from_n02_station_code": "TYMC-A11",
+          "to_n02_station_code": "TYMC-A10",
+          "line_names": [
+            "桃園機場捷運"
+          ],
+          "operator_names": [
+            "桃園大眾捷運股份有限公司"
+          ]
+        },
+        {
+          "from": "山鼻站",
+          "to": "林口站",
+          "from_n02_station_code": "TYMC-A10",
+          "to_n02_station_code": "TYMC-A9",
+          "line_names": [
+            "桃園機場捷運"
+          ],
+          "operator_names": [
+            "桃園大眾捷運股份有限公司"
+          ]
+        },
+        {
+          "from": "林口站",
+          "to": "長庚醫院站",
+          "from_n02_station_code": "TYMC-A9",
+          "to_n02_station_code": "TYMC-A8",
+          "line_names": [
+            "桃園機場捷運"
+          ],
+          "operator_names": [
+            "桃園大眾捷運股份有限公司"
+          ]
+        },
+        {
+          "from": "長庚醫院站",
+          "to": "體育大學站",
+          "from_n02_station_code": "TYMC-A8",
+          "to_n02_station_code": "TYMC-A7",
+          "line_names": [
+            "桃園機場捷運"
+          ],
+          "operator_names": [
+            "桃園大眾捷運股份有限公司"
+          ]
+        },
+        {
+          "from": "體育大學站",
+          "to": "泰山貴和站",
+          "from_n02_station_code": "TYMC-A7",
+          "to_n02_station_code": "TYMC-A6",
+          "line_names": [
+            "桃園機場捷運"
+          ],
+          "operator_names": [
+            "桃園大眾捷運股份有限公司"
+          ]
+        },
+        {
+          "from": "泰山貴和站",
+          "to": "泰山站",
+          "from_n02_station_code": "TYMC-A6",
+          "to_n02_station_code": "TYMC-A5",
+          "line_names": [
+            "桃園機場捷運"
+          ],
+          "operator_names": [
+            "桃園大眾捷運股份有限公司"
+          ]
+        },
+        {
+          "from": "泰山站",
+          "to": "新莊副都心站",
+          "from_n02_station_code": "TYMC-A5",
+          "to_n02_station_code": "TYMC-A4",
+          "line_names": [
+            "桃園機場捷運"
+          ],
+          "operator_names": [
+            "桃園大眾捷運股份有限公司"
+          ]
+        },
+        {
+          "from": "新莊副都心站",
+          "to": "新北產業園區站",
+          "from_n02_station_code": "TYMC-A4",
+          "to_n02_station_code": "TYMC-A3",
+          "line_names": [
+            "桃園機場捷運"
+          ],
+          "operator_names": [
+            "桃園大眾捷運股份有限公司"
+          ]
+        },
+        {
+          "from": "新北產業園區站",
+          "to": "三重站",
+          "from_n02_station_code": "TYMC-A3",
+          "to_n02_station_code": "TYMC-A2",
+          "line_names": [
+            "桃園機場捷運"
+          ],
+          "operator_names": [
+            "桃園大眾捷運股份有限公司"
+          ]
+        },
+        {
+          "from": "三重站",
+          "to": "台北車站",
+          "from_n02_station_code": "TYMC-A2",
+          "to_n02_station_code": "TYMC-A1",
+          "line_names": [
+            "桃園機場捷運"
+          ],
+          "operator_names": [
+            "桃園大眾捷運股份有限公司"
+          ]
+        }
+      ],
+      "stops": [
+        {
+          "name": "機場第二航廈站",
+          "n02_station_code": "TYMC-A13",
+          "arrival": null,
+          "departure": "13:25",
+          "stop_type": "origin",
+          "ride_segment": true
+        },
+        {
+          "name": "機場第一航廈站",
+          "n02_station_code": "TYMC-A12",
+          "arrival": null,
+          "departure": "13:28",
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "坑口站",
+          "n02_station_code": "TYMC-A11",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "pass_through",
+          "ride_segment": true
+        },
+        {
+          "name": "山鼻站",
+          "n02_station_code": "TYMC-A10",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "pass_through",
+          "ride_segment": true
+        },
+        {
+          "name": "林口站",
+          "n02_station_code": "TYMC-A9",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "pass_through",
+          "ride_segment": true
+        },
+        {
+          "name": "長庚醫院站",
+          "n02_station_code": "TYMC-A8",
+          "arrival": null,
+          "departure": "13:41",
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "體育大學站",
+          "n02_station_code": "TYMC-A7",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "pass_through",
+          "ride_segment": true
+        },
+        {
+          "name": "泰山貴和站",
+          "n02_station_code": "TYMC-A6",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "pass_through",
+          "ride_segment": true
+        },
+        {
+          "name": "泰山站",
+          "n02_station_code": "TYMC-A5",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "pass_through",
+          "ride_segment": true
+        },
+        {
+          "name": "新莊副都心站",
+          "n02_station_code": "TYMC-A4",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "pass_through",
+          "ride_segment": true
+        },
+        {
+          "name": "新北產業園區站",
+          "n02_station_code": "TYMC-A3",
+          "arrival": null,
+          "departure": "13:55",
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "三重站",
+          "n02_station_code": "TYMC-A2",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "pass_through",
+          "ride_segment": true
+        },
+        {
+          "name": "台北車站",
+          "n02_station_code": "TYMC-A1",
+          "arrival": "14:04",
+          "departure": null,
+          "stop_type": "destination",
+          "ride_segment": true
+        }
+      ],
+      "region": "tw"
+    },
+    {
+      "id": "HK-SAMPLE-EAL-LOW",
+      "date": "2026-08-10",
+      "number": "東鐵綫 官方路線示例",
+      "train_type": "示例列車",
+      "company": "MTR",
+      "origin": "金鐘",
+      "destination": "上水",
+      "direction": "down",
+      "visible": true,
+      "style": {
+        "color": "#5EB6E4"
+      },
+      "route_policy": {
+        "mode": "single_primary_route",
+        "jr_only": false,
+        "allow_alternatives": false,
+        "allow_browser_straight_line_fallback": false,
+        "allowed_institution_type_codes": [
+          "4"
+        ],
+        "preferred_line_names": [
+          "東鐵綫"
+        ],
+        "preferred_operator_names": [
+          "MTR"
+        ],
+        "institution_filter_mode": "hard"
+      },
+      "route_sections": [
+        {
+          "from_n02_station_code": "MTR-ADM",
+          "to_n02_station_code": "MTR-EXC",
+          "line_names": [
+            "東鐵綫"
+          ],
+          "operator_names": [
+            "MTR"
+          ]
+        },
+        {
+          "from_n02_station_code": "MTR-EXC",
+          "to_n02_station_code": "MTR-HUH",
+          "line_names": [
+            "東鐵綫"
+          ],
+          "operator_names": [
+            "MTR"
+          ]
+        },
+        {
+          "from_n02_station_code": "MTR-HUH",
+          "to_n02_station_code": "MTR-MKK",
+          "line_names": [
+            "東鐵綫"
+          ],
+          "operator_names": [
+            "MTR"
+          ]
+        },
+        {
+          "from_n02_station_code": "MTR-MKK",
+          "to_n02_station_code": "MTR-KOT",
+          "line_names": [
+            "東鐵綫"
+          ],
+          "operator_names": [
+            "MTR"
+          ]
+        },
+        {
+          "from_n02_station_code": "MTR-KOT",
+          "to_n02_station_code": "MTR-TAW",
+          "line_names": [
+            "東鐵綫"
+          ],
+          "operator_names": [
+            "MTR"
+          ]
+        },
+        {
+          "from_n02_station_code": "MTR-TAW",
+          "to_n02_station_code": "MTR-SHT",
+          "line_names": [
+            "東鐵綫"
+          ],
+          "operator_names": [
+            "MTR"
+          ]
+        },
+        {
+          "from_n02_station_code": "MTR-SHT",
+          "to_n02_station_code": "MTR-FOT",
+          "line_names": [
+            "東鐵綫"
+          ],
+          "operator_names": [
+            "MTR"
+          ]
+        },
+        {
+          "from_n02_station_code": "MTR-FOT",
+          "to_n02_station_code": "MTR-UNI",
+          "line_names": [
+            "東鐵綫"
+          ],
+          "operator_names": [
+            "MTR"
+          ]
+        },
+        {
+          "from_n02_station_code": "MTR-UNI",
+          "to_n02_station_code": "MTR-TAP",
+          "line_names": [
+            "東鐵綫"
+          ],
+          "operator_names": [
+            "MTR"
+          ]
+        },
+        {
+          "from_n02_station_code": "MTR-TAP",
+          "to_n02_station_code": "MTR-TWO",
+          "line_names": [
+            "東鐵綫"
+          ],
+          "operator_names": [
+            "MTR"
+          ]
+        },
+        {
+          "from_n02_station_code": "MTR-TWO",
+          "to_n02_station_code": "MTR-FAN",
+          "line_names": [
+            "東鐵綫"
+          ],
+          "operator_names": [
+            "MTR"
+          ]
+        },
+        {
+          "from_n02_station_code": "MTR-FAN",
+          "to_n02_station_code": "MTR-SHS",
+          "line_names": [
+            "東鐵綫"
+          ],
+          "operator_names": [
+            "MTR"
+          ]
+        }
+      ],
+      "stops": [
+        {
+          "name": "金鐘",
+          "n02_station_code": "MTR-ADM",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "origin",
+          "ride_segment": true
+        },
+        {
+          "name": "會展",
+          "n02_station_code": "MTR-EXC",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "紅磡",
+          "n02_station_code": "MTR-HUH",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "旺角東",
+          "n02_station_code": "MTR-MKK",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "九龍塘",
+          "n02_station_code": "MTR-KOT",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "大圍",
+          "n02_station_code": "MTR-TAW",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "沙田",
+          "n02_station_code": "MTR-SHT",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "火炭",
+          "n02_station_code": "MTR-FOT",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "大學",
+          "n02_station_code": "MTR-UNI",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "大埔墟",
+          "n02_station_code": "MTR-TAP",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "太和",
+          "n02_station_code": "MTR-TWO",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "粉嶺",
+          "n02_station_code": "MTR-FAN",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "上水",
+          "n02_station_code": "MTR-SHS",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "destination",
+          "ride_segment": true
+        }
+      ],
+      "region": "hk"
+    },
+    {
+      "id": "MO-SAMPLE-MLM-TAIPA",
+      "date": "2026-08-10",
+      "number": "氹仔線 官方路線示例",
+      "train_type": "示例列車",
+      "company": "澳門輕軌",
+      "origin": "媽閣",
+      "destination": "機場",
+      "direction": "down",
+      "visible": true,
+      "style": {
+        "color": "#72BF44"
+      },
+      "route_policy": {
+        "mode": "single_primary_route",
+        "jr_only": false,
+        "allow_alternatives": false,
+        "allow_browser_straight_line_fallback": false,
+        "allowed_institution_type_codes": [
+          "4"
+        ],
+        "preferred_line_names": [
+          "氹仔線"
+        ],
+        "preferred_operator_names": [
+          "澳門輕軌"
+        ],
+        "institution_filter_mode": "hard"
+      },
+      "route_sections": [
+        {
+          "from_n02_station_code": "MLM-BARRA",
+          "to_n02_station_code": "MLM-OCEAN",
+          "line_names": [
+            "氹仔線"
+          ],
+          "operator_names": [
+            "澳門輕軌"
+          ]
+        },
+        {
+          "from_n02_station_code": "MLM-OCEAN",
+          "to_n02_station_code": "MLM-JOCKEY",
+          "line_names": [
+            "氹仔線"
+          ],
+          "operator_names": [
+            "澳門輕軌"
+          ]
+        },
+        {
+          "from_n02_station_code": "MLM-JOCKEY",
+          "to_n02_station_code": "MLM-STADIUM",
+          "line_names": [
+            "氹仔線"
+          ],
+          "operator_names": [
+            "澳門輕軌"
+          ]
+        },
+        {
+          "from_n02_station_code": "MLM-STADIUM",
+          "to_n02_station_code": "MLM-PAIKOK",
+          "line_names": [
+            "氹仔線"
+          ],
+          "operator_names": [
+            "澳門輕軌"
+          ]
+        },
+        {
+          "from_n02_station_code": "MLM-PAIKOK",
+          "to_n02_station_code": "MLM-COTAIW",
+          "line_names": [
+            "氹仔線"
+          ],
+          "operator_names": [
+            "澳門輕軌"
+          ]
+        },
+        {
+          "from_n02_station_code": "MLM-COTAIW",
+          "to_n02_station_code": "MLM-LOTUS",
+          "line_names": [
+            "氹仔線"
+          ],
+          "operator_names": [
+            "澳門輕軌"
+          ]
+        },
+        {
+          "from_n02_station_code": "MLM-LOTUS",
+          "to_n02_station_code": "MLM-HOSPITAL",
+          "line_names": [
+            "氹仔線"
+          ],
+          "operator_names": [
+            "澳門輕軌"
+          ]
+        },
+        {
+          "from_n02_station_code": "MLM-HOSPITAL",
+          "to_n02_station_code": "MLM-EAG",
+          "line_names": [
+            "氹仔線"
+          ],
+          "operator_names": [
+            "澳門輕軌"
+          ]
+        },
+        {
+          "from_n02_station_code": "MLM-EAG",
+          "to_n02_station_code": "MLM-COTAIE",
+          "line_names": [
+            "氹仔線"
+          ],
+          "operator_names": [
+            "澳門輕軌"
+          ]
+        },
+        {
+          "from_n02_station_code": "MLM-COTAIE",
+          "to_n02_station_code": "MLM-MUST",
+          "line_names": [
+            "氹仔線"
+          ],
+          "operator_names": [
+            "澳門輕軌"
+          ]
+        },
+        {
+          "from_n02_station_code": "MLM-MUST",
+          "to_n02_station_code": "MLM-AIRPORT",
+          "line_names": [
+            "氹仔線"
+          ],
+          "operator_names": [
+            "澳門輕軌"
+          ]
+        }
+      ],
+      "stops": [
+        {
+          "name": "媽閣",
+          "n02_station_code": "MLM-BARRA",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "origin",
+          "ride_segment": true
+        },
+        {
+          "name": "海洋",
+          "n02_station_code": "MLM-OCEAN",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "馬會",
+          "n02_station_code": "MLM-JOCKEY",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "運動場",
+          "n02_station_code": "MLM-STADIUM",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "排角",
+          "n02_station_code": "MLM-PAIKOK",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "路氹西",
+          "n02_station_code": "MLM-COTAIW",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "蓮花",
+          "n02_station_code": "MLM-LOTUS",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "協和醫院",
+          "n02_station_code": "MLM-HOSPITAL",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "東亞運",
+          "n02_station_code": "MLM-EAG",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "路氹東",
+          "n02_station_code": "MLM-COTAIE",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "科大",
+          "n02_station_code": "MLM-MUST",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "機場",
+          "n02_station_code": "MLM-AIRPORT",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "destination",
+          "ride_segment": true
+        }
+      ],
+      "region": "mo"
+    },
+    {
+      "id": "KR-SAMPLE-GYEONGBUKSEON",
+      "date": "2026-08-11",
+      "number": "경북선 공식 노선 예시",
+      "train_type": "예시 열차",
+      "company": "한국철도공사",
+      "origin": "김천",
+      "destination": "영주",
+      "direction": "down",
+      "visible": true,
+      "style": {
+        "color": "#0067A3"
+      },
+      "route_policy": {
+        "mode": "single_primary_route",
+        "jr_only": false,
+        "allow_alternatives": false,
+        "allow_browser_straight_line_fallback": false,
+        "allowed_institution_type_codes": [
+          "2"
+        ],
+        "preferred_line_names": [
+          "경북선"
+        ],
+        "preferred_operator_names": [
+          "한국철도공사"
+        ],
+        "institution_filter_mode": "hard"
+      },
+      "route_sections": [
+        {
+          "from_n02_station_code": "KR-GYEONGBUKSEON-GIMCHEON",
+          "to_n02_station_code": "KR-GYEONGBUKSEON-OKSAN",
+          "line_names": [
+            "경북선"
+          ],
+          "operator_names": [
+            "한국철도공사"
+          ]
+        },
+        {
+          "from_n02_station_code": "KR-GYEONGBUKSEON-OKSAN",
+          "to_n02_station_code": "KR-GYEONGBUKSEON-CHEONGRI",
+          "line_names": [
+            "경북선"
+          ],
+          "operator_names": [
+            "한국철도공사"
+          ]
+        },
+        {
+          "from_n02_station_code": "KR-GYEONGBUKSEON-CHEONGRI",
+          "to_n02_station_code": "KR-GYEONGBUKSEON-BAEKWON",
+          "line_names": [
+            "경북선"
+          ],
+          "operator_names": [
+            "한국철도공사"
+          ]
+        },
+        {
+          "from_n02_station_code": "KR-GYEONGBUKSEON-BAEKWON",
+          "to_n02_station_code": "KR-GYEONGBUKSEON-HAMCHANG",
+          "line_names": [
+            "경북선"
+          ],
+          "operator_names": [
+            "한국철도공사"
+          ]
+        },
+        {
+          "from_n02_station_code": "KR-GYEONGBUKSEON-HAMCHANG",
+          "to_n02_station_code": "KR-GYEONGBUKSEON-JEOMCHON",
+          "line_names": [
+            "경북선"
+          ],
+          "operator_names": [
+            "한국철도공사"
+          ]
+        },
+        {
+          "from_n02_station_code": "KR-GYEONGBUKSEON-JEOMCHON",
+          "to_n02_station_code": "KR-GYEONGBUKSEON-YONGGUNG",
+          "line_names": [
+            "경북선"
+          ],
+          "operator_names": [
+            "한국철도공사"
+          ]
+        },
+        {
+          "from_n02_station_code": "KR-GYEONGBUKSEON-YONGGUNG",
+          "to_n02_station_code": "KR-GYEONGBUKSEON-GAEPO",
+          "line_names": [
+            "경북선"
+          ],
+          "operator_names": [
+            "한국철도공사"
+          ]
+        },
+        {
+          "from_n02_station_code": "KR-GYEONGBUKSEON-GAEPO",
+          "to_n02_station_code": "KR-GYEONGBUKSEON-YECHEON",
+          "line_names": [
+            "경북선"
+          ],
+          "operator_names": [
+            "한국철도공사"
+          ]
+        },
+        {
+          "from_n02_station_code": "KR-GYEONGBUKSEON-YECHEON",
+          "to_n02_station_code": "KR-GYEONGBUKSEON-EODEUNG",
+          "line_names": [
+            "경북선"
+          ],
+          "operator_names": [
+            "한국철도공사"
+          ]
+        },
+        {
+          "from_n02_station_code": "KR-GYEONGBUKSEON-EODEUNG",
+          "to_n02_station_code": "KR-GYEONGBUKSEON-YEONGJU",
+          "line_names": [
+            "경북선"
+          ],
+          "operator_names": [
+            "한국철도공사"
+          ]
+        }
+      ],
+      "stops": [
+        {
+          "name": "김천",
+          "n02_station_code": "KR-GYEONGBUKSEON-GIMCHEON",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "origin",
+          "ride_segment": true
+        },
+        {
+          "name": "옥산",
+          "n02_station_code": "KR-GYEONGBUKSEON-OKSAN",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "청리",
+          "n02_station_code": "KR-GYEONGBUKSEON-CHEONGRI",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "백원",
+          "n02_station_code": "KR-GYEONGBUKSEON-BAEKWON",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "함창",
+          "n02_station_code": "KR-GYEONGBUKSEON-HAMCHANG",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "점촌",
+          "n02_station_code": "KR-GYEONGBUKSEON-JEOMCHON",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "용궁",
+          "n02_station_code": "KR-GYEONGBUKSEON-YONGGUNG",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "개포",
+          "n02_station_code": "KR-GYEONGBUKSEON-GAEPO",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "예천",
+          "n02_station_code": "KR-GYEONGBUKSEON-YECHEON",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "어등",
+          "n02_station_code": "KR-GYEONGBUKSEON-EODEUNG",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "영주",
+          "n02_station_code": "KR-GYEONGBUKSEON-YEONGJU",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "destination",
+          "ride_segment": true
+        }
+      ],
+      "region": "kr"
+    }
+  ]
+}
