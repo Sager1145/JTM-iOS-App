@@ -109,3 +109,9 @@ PhaseE commit 8a616ed69fee4e60b0d788762356cc04fa54aa26 pushed and origin/main ve
 ## PhaseF validated for standing-authorized delivery
 
 statistics/history/graph/matcher/display/station geometry: original 144 functions across 16 suites PASS before/after. Exact original selectors and argument cases retained. Quality 176 inherited, 25 removed in this phase, zero new; format/ownership/changed-new usual10/40 and independent static review PASS. Candidate/baseline observed focused peaks {'baseline': 834487808, 'candidate': 835913288} bytes; short unmeasured cases remain in receipts. No complete-package/global/App coverage or strict whole-App footprint claim.
+
+PhaseF commit 6991bd692ad0540619ac5bc3b785e47bbd3810d5 pushed and origin/main verified under shared delivery lock; exact validated blobs and unrelated index entries preserved. Delivery receipt architecture-phaseF-delivery.json.
+
+## PhaseG validated for standing-authorized delivery
+
+ContinuousStroke and circular fillets: original 62 functions across 8 suites PASS before/after. Exact original selectors and argument cases retained. Quality 165 inherited, 11 removed in this phase, zero new; format/ownership/changed-new usual10/40 and independent static review PASS. Candidate/baseline observed focused peaks {'baseline': 122291088, 'candidate': 121865104} bytes; short unmeasured cases remain in receipts. No complete-package/global/App coverage or strict whole-App footprint claim.

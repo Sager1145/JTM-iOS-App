@@ -551,6 +551,7 @@ public enum ContinuousStroke {
         }
         return sum
     }
+
     public static let curveHardWindowPx: Double = 3
     public static let curveProtectPx: Double = 12
     /// Vertices within ``curveProtectPx`` of a hard turn (and at least two on
@@ -569,6 +570,7 @@ public enum ContinuousStroke {
             }
         }
     }
+
     /// A merge must also stay sub-visible on screen, whatever the zoom.
     public static let curveMergeLateralPx: Double = 0.1
 
@@ -582,17 +584,9 @@ public enum ContinuousStroke {
         let metres = (measures.last ?? 0) - measures[0]
         let metresPerPx = length > 0 && metres > 0 ? metres / length : 1
         var kept = [0]
-        for i in 1..<(points.count - 1) {
-            let previous = kept.last!
-            let short = min(measures[i] - measures[previous], measures[i + 1] - measures[i]) < curveMergeMetres
-            let lateral = sqrt(segmentDistanceSquared(points[i], points[previous], points[i + 1])) * metresPerPx
-            let nearHard = (max(1, i - 2)...min(points.count - 2, i + 2)).contains {
-                abs(windowedTurn(points, $0)) > .pi * curveHardTurnDegrees / 180
-            }
-            let isAnchor = anchorMeasures.contains { abs($0 - measures[i]) < 1e-9 }
-            if short && lateral <= curveMergeLateralMetres && lateral / metresPerPx <= curveMergeLateralPx && !nearHard && !isAnchor { continue }
-            kept.append(i)
-        }
+        retainCentrelineSupports(
+            points: points, measures: measures, anchorMeasures: anchorMeasures,
+            metresPerPx: metresPerPx, kept: &kept)
         kept.append(points.count - 1)
         let p = kept.map { points[$0] }, m = kept.map { measures[$0] }
         guard p.count >= 4 else { return (points, measures) }
@@ -605,43 +599,71 @@ public enum ContinuousStroke {
             var runEnd = runStart + 1
             while runEnd + 1 < p.count && !hard[runEnd] { runEnd += 1 }
             for i in runStart..<runEnd {
-                let a = p[i], b = p[i + 1]
-                if runEnd - runStart < 3 || (runStart > 0 && i == runStart) || (runEnd + 1 < p.count && i + 1 == runEnd) {
-                    out.append(b); outMeasures.append(m[i + 1]); continue
-                }
-                let before = i > runStart ? p[i - 1] : Point(x: 2 * a.x - b.x, y: 2 * a.y - b.y)
-                let after = i + 1 < runEnd ? p[i + 2] : Point(x: 2 * b.x - a.x, y: 2 * b.y - a.y)
-                let d0 = sqrt(hypot(a.x - before.x, a.y - before.y))
-                let d1 = sqrt(hypot(b.x - a.x, b.y - a.y))
-                let d2 = sqrt(hypot(after.x - b.x, after.y - b.y))
-                guard min(d0, d1, d2) > degenerateEdge else {
-                    out.append(b); outMeasures.append(m[i + 1]); continue
-                }
-                // Non-uniform Catmull-Rom expressed as a cubic Hermite;
-                // knot spacing sqrt(chord length) is alpha=0.5.
-                func tangent(_ v0: Double, _ v1: Double, _ v2: Double, _ left: Double, _ right: Double) -> Double {
-                    (v1 - v0) / left - (v2 - v0) / (left + right) + (v2 - v1) / right
-                }
-                let t0 = Point(x: d1 * tangent(before.x, a.x, b.x, d0, d1),
-                               y: d1 * tangent(before.y, a.y, b.y, d0, d1))
-                let t1 = Point(x: d1 * tangent(a.x, b.x, after.x, d1, d2),
-                               y: d1 * tangent(a.y, b.y, after.y, d1, d2))
-                let curve = sampleCubic(a, b, t0, t1)
-                let allowance = max(curveMaxDeviationPx, curveMaxDeviationMetres / metresPerPx)
-                // Check against the original surveyed span, including tiny
-                // edges merged above, rather than just the surviving chord.
-                let survey = Array(points[kept[i]...kept[i + 1]])
-                if curve.contains(where: { distanceToPolyline($0, survey) > allowance }) {
-                    out.append(b); outMeasures.append(m[i + 1]); continue
-                }
-                for j in 1..<curve.count {
-                    out.append(curve[j])
-                    outMeasures.append(m[i] + (m[i + 1] - m[i]) * Double(j) / Double(curve.count - 1))
-                }
+                appendSmoothCentrelineSpan(
+                    i: i, runStart: runStart, runEnd: runEnd, p: p, m: m, points: points,
+                    kept: kept, metresPerPx: metresPerPx, out: &out, outMeasures: &outMeasures)
             }
             runStart = runEnd
         }
         return (out, outMeasures)
+    }
+
+    private static func retainCentrelineSupports(
+        points: [Point], measures: [Double], anchorMeasures: [Double], metresPerPx: Double,
+        kept: inout [Int]
+    ) {
+        for i in 1..<(points.count - 1) {
+            let previous = kept.last!
+            let short = min(measures[i] - measures[previous], measures[i + 1] - measures[i]) < curveMergeMetres
+            let lateral = sqrt(segmentDistanceSquared(points[i], points[previous], points[i + 1])) * metresPerPx
+            let nearHard = (max(1, i - 2)...min(points.count - 2, i + 2)).contains {
+                abs(windowedTurn(points, $0)) > .pi * curveHardTurnDegrees / 180
+            }
+            let isAnchor = anchorMeasures.contains { abs($0 - measures[i]) < 1e-9 }
+            if short && lateral <= curveMergeLateralMetres && lateral / metresPerPx <= curveMergeLateralPx && !nearHard && !isAnchor { continue }
+            kept.append(i)
+        }
+    }
+
+    private static func appendSmoothCentrelineSpan(
+        i: Int, runStart: Int, runEnd: Int, p: [Point], m: [Double],
+        points: [Point], kept: [Int], metresPerPx: Double,
+        out: inout [Point], outMeasures: inout [Double]
+    ) {
+        let a = p[i], b = p[i + 1]
+        if runEnd - runStart < 3 || (runStart > 0 && i == runStart) || (runEnd + 1 < p.count && i + 1 == runEnd) {
+            out.append(b); outMeasures.append(m[i + 1]); return
+        }
+        let before = i > runStart ? p[i - 1] : Point(x: 2 * a.x - b.x, y: 2 * a.y - b.y)
+        let after = i + 1 < runEnd ? p[i + 2] : Point(x: 2 * b.x - a.x, y: 2 * b.y - a.y)
+        let d0 = sqrt(hypot(a.x - before.x, a.y - before.y))
+        let d1 = sqrt(hypot(b.x - a.x, b.y - a.y))
+        let d2 = sqrt(hypot(after.x - b.x, after.y - b.y))
+        guard min(d0, d1, d2) > degenerateEdge else {
+            out.append(b); outMeasures.append(m[i + 1]); return
+        }
+        // Non-uniform Catmull-Rom expressed as a cubic Hermite;
+        // knot spacing sqrt(chord length) is alpha=0.5.
+        let t0 = Point(x: d1 * centripetalTangent(before.x, a.x, b.x, d0, d1),
+                       y: d1 * centripetalTangent(before.y, a.y, b.y, d0, d1))
+        let t1 = Point(x: d1 * centripetalTangent(a.x, b.x, after.x, d1, d2),
+                       y: d1 * centripetalTangent(a.y, b.y, after.y, d1, d2))
+        let curve = sampleCubic(a, b, t0, t1)
+        let allowance = max(curveMaxDeviationPx, curveMaxDeviationMetres / metresPerPx)
+        // Check against the original surveyed span, including tiny
+        // edges merged above, rather than just the surviving chord.
+        let survey = Array(points[kept[i]...kept[i + 1]])
+        if curve.contains(where: { distanceToPolyline($0, survey) > allowance }) {
+            out.append(b); outMeasures.append(m[i + 1]); return
+        }
+        for j in 1..<curve.count {
+            out.append(curve[j])
+            outMeasures.append(m[i] + (m[i + 1] - m[i]) * Double(j) / Double(curve.count - 1))
+        }
+    }
+
+    private static func centripetalTangent(_ v0: Double, _ v1: Double, _ v2: Double, _ left: Double, _ right: Double) -> Double {
+        (v1 - v0) / left - (v2 - v0) / (left + right) + (v2 - v1) / right
     }
 
     static func cubicPoint(_ a: Point, _ b: Point, _ ta: Point, _ tb: Point, _ u: Double) -> Point {
@@ -761,15 +783,7 @@ public enum ContinuousStroke {
                 points: points, anchors: options.anchors.map { _ in only },
                 measures: measures, anchorMeasures: options.anchors.map { _ in lastMeasure })
         }
-        let inputMeasures: [Double]
-        if options.measures.count == points.count {
-            inputMeasures = options.measures
-        } else {
-            let raw = cumulativeLengths(points)
-            let rawTotalPx = raw[raw.count - 1]
-            let scale = rawTotalPx > 0 && options.totalMetres > 0 ? options.totalMetres / rawTotalPx : 0
-            inputMeasures = raw.map { $0 * scale }
-        }
+        let inputMeasures = strokeInputMeasures(points, options: options)
         let (clean, cleanMeasures, anchorMap, anchorSet) = dedupe(
             points, measures: inputMeasures, anchors: options.anchors)
         let anchorMeasures = options.anchors.map { index -> Double in
@@ -783,12 +797,51 @@ public enum ContinuousStroke {
                 points: [only, only], anchors: options.anchors.map { _ in only },
                 measures: [m, m], anchorMeasures: anchorMeasures)
         }
+        return buildCleanStroke(
+            clean: clean, cleanMeasures: cleanMeasures, anchorMap: anchorMap, anchorSet: anchorSet,
+            anchorMeasures: anchorMeasures, options: options)
+    }
+
+    private static func strokeInputMeasures(_ points: [Point], options: Options) -> [Double] {
+        if options.measures.count == points.count {
+            return options.measures
+        } else {
+            let raw = cumulativeLengths(points)
+            let rawTotalPx = raw[raw.count - 1]
+            let scale = rawTotalPx > 0 && options.totalMetres > 0 ? options.totalMetres / rawTotalPx : 0
+            return raw.map { $0 * scale }
+        }
+    }
+
+    private static func buildCleanStroke(
+        clean: [Point], cleanMeasures: [Double], anchorMap: [Int], anchorSet: Set<Int>,
+        anchorMeasures: [Double], options: Options
+    ) -> Stroke {
         let gap = options.laneGapPx
         let cleanCumulative = cumulativeLengths(clean)
         let cleanTotalPx = cleanCumulative[cleanCumulative.count - 1]
         let totalMetres = cleanMeasures[cleanMeasures.count - 1] - cleanMeasures[0]
         let metresPerPx = cleanTotalPx > 0 && totalMetres > 0 ? totalMetres / cleanTotalPx : 0
-        let curvedFollows = options.follows.map { follow -> Follow in
+        let curvedFollows = curvedStrokeFollows(options)
+        let substituted = substituteFollows(
+            clean, measures: cleanMeasures, anchors: anchorSet, follows: curvedFollows,
+            jointStart: options.joinStart != nil, jointEnd: options.joinEnd != nil)
+        var followed = substituted
+        removeSubstitutionFolds(substituted: substituted, clean: clean, anchorSet: anchorSet, followed: &followed)
+        let curveEnabled = options.curveCentreline && options.cornerRadiusPx > 0
+        if curveEnabled {
+            curveFollowedStroke(
+                followed: &followed, options: options, anchorSet: anchorSet, anchorMeasures: anchorMeasures,
+                cleanMeasures: cleanMeasures, totalMetres: totalMetres, gap: gap, cleanCount: clean.count)
+        }
+        var tapered = taperFollowedStroke(followed: followed, anchorSet: anchorSet, metresPerPx: metresPerPx)
+        return finishTaperedStroke(
+            tapered: &tapered, options: options, totalMetres: totalMetres, metresPerPx: metresPerPx,
+            gap: gap, anchorSet: anchorSet, curveEnabled: curveEnabled, anchorMap: anchorMap, anchorMeasures: anchorMeasures)
+    }
+
+    private static func curvedStrokeFollows(_ options: Options) -> [Follow] {
+        return options.follows.map { follow -> Follow in
             guard options.curveCentreline && options.cornerRadiusPx > 0 else { return follow }
             let simplified = simplifyForFillet(follow.points, measures: follow.measures,
                 anchors: [], tolerance: strokeSimplifyTolerancePx)
@@ -797,10 +850,12 @@ public enum ContinuousStroke {
             result.points = curved.points; result.measures = curved.measures
             return result
         }
-        let substituted = substituteFollows(
-            clean, measures: cleanMeasures, anchors: anchorSet, follows: curvedFollows,
-            jointStart: options.joinStart != nil, jointEnd: options.joinEnd != nil)
-        var followed = substituted
+    }
+
+    private static func removeSubstitutionFolds(
+        substituted: (points: [Point], measures: [Double], map: [Int]), clean: [Point], anchorSet: Set<Int>,
+        followed: inout (points: [Point], measures: [Double], map: [Int])
+    ) {
         if substituted.points.count != clean.count || substituted.points != clean {
             let foldTurn = foldTurnDegrees * Double.pi / 180
             var cleanReversal = [Bool](repeating: false, count: clean.count)
@@ -823,39 +878,55 @@ public enum ContinuousStroke {
                 measures: measures,
                 map: substituted.map.map { $0 < 0 ? -1 : unfolded.map[$0] })
         }
-        let curveEnabled = options.curveCentreline && options.cornerRadiusPx > 0
-        if curveEnabled {
-            // `anchorSet` indexes `clean`; the curve pass works on
-            // `followed.points`, so carry each anchor across by its map.
-            var protected = Set<Int>()
-            for index in anchorSet where followed.map[index] >= 0 { protected.insert(followed.map[index]) }
-            if followed.points.count >= 3 {
-              for i in 1..<(followed.points.count - 1) where abs(turnAt(followed.points, i)) > curveHardTurnDegrees * .pi / 180 {
-                protectAround(followed.points, i, &protected)
-              }
-            }
-            let simplified = simplifyForFillet(followed.points, measures: followed.measures,
-                anchors: protected, tolerance: strokeSimplifyTolerancePx)
-            var curved = smoothCentreline(simplified.points, measures: simplified.measures, anchorMeasures: anchorMeasures)
-            let startInterval = anchorMeasures.filter { $0 > cleanMeasures[0] }.min().map { $0 - cleanMeasures[0] } ?? totalMetres
-            let endInterval = anchorMeasures.filter { $0 < cleanMeasures.last! }.max().map { cleanMeasures.last! - $0 } ?? totalMetres
-            curved = blendJunction(curved.points, measures: curved.measures, join: options.joinStart,
-                                   atEnd: false, intervalMetres: startInterval, gap: gap)
-            curved = blendJunction(curved.points, measures: curved.measures, join: options.joinEnd,
-                                   atEnd: true, intervalMetres: endInterval, gap: gap)
-            // Stations are read by measure from final ink below; they are
-            // deliberately not hard vertices of the spline or jog passes.
-            followed = (curved.points, curved.measures, Array(repeating: -1, count: clean.count))
+    }
+
+    private static func curveFollowedStroke(
+        followed: inout (points: [Point], measures: [Double], map: [Int]), options: Options,
+        anchorSet: Set<Int>, anchorMeasures: [Double], cleanMeasures: [Double],
+        totalMetres: Double, gap: Double, cleanCount: Int
+    ) {
+        // `anchorSet` indexes `clean`; the curve pass works on
+        // `followed.points`, so carry each anchor across by its map.
+        var protected = Set<Int>()
+        for index in anchorSet where followed.map[index] >= 0 { protected.insert(followed.map[index]) }
+        if followed.points.count >= 3 {
+          for i in 1..<(followed.points.count - 1) where abs(turnAt(followed.points, i)) > curveHardTurnDegrees * .pi / 180 {
+            protectAround(followed.points, i, &protected)
+          }
         }
+        let simplified = simplifyForFillet(followed.points, measures: followed.measures,
+            anchors: protected, tolerance: strokeSimplifyTolerancePx)
+        var curved = smoothCentreline(simplified.points, measures: simplified.measures, anchorMeasures: anchorMeasures)
+        let startInterval = anchorMeasures.filter { $0 > cleanMeasures[0] }.min().map { $0 - cleanMeasures[0] } ?? totalMetres
+        let endInterval = anchorMeasures.filter { $0 < cleanMeasures.last! }.max().map { cleanMeasures.last! - $0 } ?? totalMetres
+        curved = blendJunction(curved.points, measures: curved.measures, join: options.joinStart,
+                               atEnd: false, intervalMetres: startInterval, gap: gap)
+        curved = blendJunction(curved.points, measures: curved.measures, join: options.joinEnd,
+                               atEnd: true, intervalMetres: endInterval, gap: gap)
+        // Stations are read by measure from final ink below; they are
+        // deliberately not hard vertices of the spline or jog passes.
+        followed = (curved.points, curved.measures, Array(repeating: -1, count: cleanCount))
+    }
+
+    private static func taperFollowedStroke(
+        followed: (points: [Point], measures: [Double], map: [Int]), anchorSet: Set<Int>, metresPerPx: Double
+    ) -> (points: [Point], measures: [Double], map: [Int]) {
         var followedAnchors = Set<Int>()
         for index in anchorSet where followed.map[index] >= 0 { followedAnchors.insert(followed.map[index]) }
         let taperedStep = taperJogs(
             followed.points, measures: followed.measures, anchors: followedAnchors,
             metresPerPx: metresPerPx)
-        var tapered = (
+        return (
             points: taperedStep.points,
             measures: taperedStep.measures,
             map: followed.map.map { $0 < 0 ? -1 : taperedStep.map[$0] })
+    }
+
+    private static func finishTaperedStroke(
+        tapered: inout (points: [Point], measures: [Double], map: [Int]), options: Options,
+        totalMetres: Double, metresPerPx: Double, gap: Double, anchorSet: Set<Int>,
+        curveEnabled: Bool, anchorMap: [Int], anchorMeasures: [Double]
+    ) -> Stroke {
         let joinLaneStart = options.joinStart?.lane
         let joinLaneEnd = options.joinEnd?.lane
         let profile = laneProfile(
@@ -869,6 +940,19 @@ public enum ContinuousStroke {
             tapered = (sampled.points, sampled.measures,
                        tapered.map.map { $0 < 0 ? -1 : sampled.map[$0] })
         }
+        let offsetStage = offsetTaperedStroke(
+            tapered: tapered, options: options, anchorSet: anchorSet, joinLaneStart: joinLaneStart,
+            joinLaneEnd: joinLaneEnd, totalMetres: totalMetres, profile: profile, width: width, gap: gap)
+        return drawnStroke(
+            tapered: tapered, cleaned: offsetStage.cleaned, cleanedMeasures: offsetStage.cleanedMeasures,
+            taperedAnchors: offsetStage.taperedAnchors, offset: offsetStage.offset,
+            curveEnabled: curveEnabled, anchorMap: anchorMap, anchorMeasures: anchorMeasures, options: options)
+    }
+
+    private static func offsetTaperedStroke(
+        tapered: (points: [Point], measures: [Double], map: [Int]), options: Options, anchorSet: Set<Int>,
+        joinLaneStart: Double?, joinLaneEnd: Double?, totalMetres: Double, profile: [Plateau], width: Double, gap: Double
+    ) -> (offset: [Point], cleaned: (points: [Point], map: [Int]), cleanedMeasures: [Double], taperedAnchors: Set<Int>) {
         let base = tapered.points
         var taperedAnchors = Set<Int>()
         for index in anchorSet where tapered.map[index] >= 0 {
@@ -902,6 +986,14 @@ public enum ContinuousStroke {
         let cleanedMeasures = cleaned.map.enumerated().compactMap { index, at in
             at >= 0 ? tapered.measures[index] : nil
         }
+        return (offset, cleaned, cleanedMeasures, taperedAnchors)
+    }
+
+    private static func drawnStroke(
+        tapered: (points: [Point], measures: [Double], map: [Int]), cleaned: (points: [Point], map: [Int]),
+        cleanedMeasures: [Double], taperedAnchors: Set<Int>, offset: [Point],
+        curveEnabled: Bool, anchorMap: [Int], anchorMeasures: [Double], options: Options
+    ) -> Stroke {
         var finalAnchors = Set<Int>()
         for index in taperedAnchors where cleaned.map[index] >= 0 {
             finalAnchors.insert(cleaned.map[index])
@@ -929,49 +1021,10 @@ public enum ContinuousStroke {
             floorRadius: options.minCornerRadiusPx, anchors: drawn.anchors,
             measures: drawn.measures, enforceMinimumRadius: options.enforceMinimumCornerRadius)
         let anchors = options.anchors.enumerated().map { anchorIndex, index -> Point in
-            if curveEnabled {
-                // A surviving anchor vertex is returned exactly (the fillet keeps it as an apex).
-                if let exact = drawn.points.indices.first(where: { drawn.anchors.contains($0) && abs(drawn.measures[$0] - anchorMeasures[anchorIndex]) < 1e-9 && filleted.points.contains(drawn.points[$0]) && distanceToPolyline(drawn.points[$0], filleted.points) == 0 }) {
-                    return drawn.points[exact]
-                }
-                let at = anchorMeasures[anchorIndex]
-                let read = pointAtMeasure(filleted.points, filleted.measures, at)
-                // Re-project so the bead is exactly on the drawn segment.
-                return exactlyOnPolyline(read, filleted.points)
-            }
-            guard index >= 0, index < anchorMap.count else { return offset[offset.count - 1] }
-            let moved = tapered.map[anchorMap[index]]
-            if moved < 0 { return offset[offset.count - 1] }
-            let resolved = cleaned.map[moved]
-            if resolved >= 0 { return cleaned.points[resolved] }
-            // Fold removal dropped this vertex: the bead goes on the
-            // surviving edge that replaced it, nearest the offset position
-            // it was reading from — not the vertex the fold pass threw
-            // away — and projected onto the FINAL emitted (post-fillet)
-            // line: a fillet at either endpoint of that edge trims it, so
-            // projecting onto the pre-fillet edge can land off the drawn
-            // ink whenever cornerRadiusPx > 0.
-            var prev = moved
-            while prev > 0 && cleaned.map[prev] < 0 { prev -= 1 }
-            var next = moved
-            while next < cleaned.map.count - 1 && cleaned.map[next] < 0 { next += 1 }
-            let aIndex = cleaned.map[prev]
-            let bIndex = cleaned.map[next]
-            let target = offset[moved]
-            if let projected = nearestOnMeasureSpan(
-                target, polyline: filleted.points, measures: filleted.measures,
-                mLo: cleanedMeasures[aIndex], mHi: cleanedMeasures[bIndex])
-            {
-                return projected
-            }
-            let a = cleaned.points[aIndex]
-            let b = cleaned.points[bIndex]
-            let dx = b.x - a.x
-            let dy = b.y - a.y
-            let square = dx * dx + dy * dy
-            var t = square > 0 ? ((target.x - a.x) * dx + (target.y - a.y) * dy) / square : 0
-            t = max(0, min(1, t))
-            return Point(x: a.x + dx * t, y: a.y + dy * t)
+            finalStrokeAnchor(
+                anchorIndex: anchorIndex, index: index, curveEnabled: curveEnabled,
+                anchorMap: anchorMap, anchorMeasures: anchorMeasures, drawn: drawn,
+                filleted: filleted, offset: offset, tapered: tapered, cleaned: cleaned, cleanedMeasures: cleanedMeasures)
         }
         // A fillet at a vertex whose neighbour edge is tiny can overshoot its
         // predecessor by float noise; clamp so the measures stay non-decreasing.
@@ -982,6 +1035,58 @@ public enum ContinuousStroke {
         return Stroke(
             points: filleted.points, anchors: anchors, measures: finalMeasures,
             anchorMeasures: anchorMeasures)
+    }
+
+    private static func finalStrokeAnchor(
+        anchorIndex: Int, index: Int, curveEnabled: Bool, anchorMap: [Int], anchorMeasures: [Double],
+        drawn: (points: [Point], measures: [Double], anchors: Set<Int>),
+        filleted: (points: [Point], measures: [Double]), offset: [Point],
+        tapered: (points: [Point], measures: [Double], map: [Int]),
+        cleaned: (points: [Point], map: [Int]), cleanedMeasures: [Double]
+    ) -> Point {
+        if curveEnabled {
+            // A surviving anchor vertex is returned exactly (the fillet keeps it as an apex).
+            if let exact = drawn.points.indices.first(where: { drawn.anchors.contains($0) && abs(drawn.measures[$0] - anchorMeasures[anchorIndex]) < 1e-9 && filleted.points.contains(drawn.points[$0]) && distanceToPolyline(drawn.points[$0], filleted.points) == 0 }) {
+                return drawn.points[exact]
+            }
+            let at = anchorMeasures[anchorIndex]
+            let read = pointAtMeasure(filleted.points, filleted.measures, at)
+            // Re-project so the bead is exactly on the drawn segment.
+            return exactlyOnPolyline(read, filleted.points)
+        }
+        guard index >= 0, index < anchorMap.count else { return offset[offset.count - 1] }
+        let moved = tapered.map[anchorMap[index]]
+        if moved < 0 { return offset[offset.count - 1] }
+        let resolved = cleaned.map[moved]
+        if resolved >= 0 { return cleaned.points[resolved] }
+        // Fold removal dropped this vertex: the bead goes on the
+        // surviving edge that replaced it, nearest the offset position
+        // it was reading from — not the vertex the fold pass threw
+        // away — and projected onto the FINAL emitted (post-fillet)
+        // line: a fillet at either endpoint of that edge trims it, so
+        // projecting onto the pre-fillet edge can land off the drawn
+        // ink whenever cornerRadiusPx > 0.
+        var prev = moved
+        while prev > 0 && cleaned.map[prev] < 0 { prev -= 1 }
+        var next = moved
+        while next < cleaned.map.count - 1 && cleaned.map[next] < 0 { next += 1 }
+        let aIndex = cleaned.map[prev]
+        let bIndex = cleaned.map[next]
+        let target = offset[moved]
+        if let projected = nearestOnMeasureSpan(
+            target, polyline: filleted.points, measures: filleted.measures,
+            mLo: cleanedMeasures[aIndex], mHi: cleanedMeasures[bIndex])
+        {
+            return projected
+        }
+        let a = cleaned.points[aIndex]
+        let b = cleaned.points[bIndex]
+        let dx = b.x - a.x
+        let dy = b.y - a.y
+        let square = dx * dx + dy * dy
+        var t = square > 0 ? ((target.x - a.x) * dx + (target.y - a.y) * dy) / square : 0
+        t = max(0, min(1, t))
+        return Point(x: a.x + dx * t, y: a.y + dy * t)
     }
 
     /// The polyline between two metre measures of a `buildStroke` result, in
@@ -1292,47 +1397,105 @@ public enum ContinuousStroke {
         // ``followBlendMetres``.
         let weightFloor = jointStart ? first + blend : -Double.infinity
         let weightCeiling = jointEnd ? totalPx - blend : Double.infinity
-        struct Prepared {
-            let from: Double
-            let to: Double
-            let weightFrom: Double
-            let weightTo: Double
-            let canonFrom: Double
-            let canonTo: Double
-            let canon: [Point]
-            let canonCumulative: [Double]
-            let canonTotalPx: Double
-        }
-        // A follower is drawn from the canonical's own stroke, not its raw
-        // survey: a seam jog on the canonical is tapered on the canonical's
-        // own pass, and every follower must draw from that tapered shape, or
-        // the jog reappears untapered on each of them. Cached per distinct
-        // canonical array (by value, `Point`/`Double` arrays have no
-        // reference identity in Swift) so N follows onto one canonical taper
-        // it once.
-        struct TaperedCanonical {
-            let rawPoints: [Point]
-            let rawMeasures: [Double]
-            let points: [Point]
-            let measures: [Double]
-        }
         var taperedCanonicals: [TaperedCanonical] = []
-        func taperedCanonical(_ canon: [Point], _ canonCumulative: [Double]) -> (points: [Point], measures: [Double]) {
-            if let cached = taperedCanonicals.first(where: {
-                $0.rawPoints == canon && $0.rawMeasures == canonCumulative
-            }) {
-                return (cached.points, cached.measures)
+        var prepared: [PreparedFollow] = []
+        prepareFollows(
+            follows: follows, weightFloor: weightFloor, weightCeiling: weightCeiling,
+            taperedCanonicals: &taperedCanonicals, prepared: &prepared)
+        guard !prepared.isEmpty else { return identity }
+        prepared = prepared.enumerated().sorted {
+            $0.element.from < $1.element.from
+                || ($0.element.from == $1.element.from && $0.offset < $1.offset)
+        }.map(\.element)
+        // A follow that begins at the part's own start (or ends at its end) is
+        // whole from that end: the kernel would otherwise weight the terminal
+        // vertex by half and leave the platform bead between two alignments. A
+        // JOINT is the exception, and holding the weight back one blend width
+        // is what makes it one: the held-back bound can no longer reach either
+        // test, so the kernel runs a full ramp from zero AT the shared vertex.
+        var extra: [Double] = []
+        appendCanonicalFollowMeasures(prepared: prepared, totalPx: totalPx, extra: &extra)
+        extra.sort()
+        var out: [Point] = []
+        var outMeasures: [Double] = []
+        var map = [Int](repeating: -1, count: count)
+        emitPreparedFollows(
+            points: points, cumulative: cumulative, prepared: prepared, first: first,
+            totalPx: totalPx, blend: blend, extra: extra, map: &map, out: &out, outMeasures: &outMeasures)
+        return (points: out, measures: outMeasures, map: map)
+    }
+
+    private static func emitPreparedFollows(
+        points: [Point], cumulative: [Double], prepared: [PreparedFollow], first: Double,
+        totalPx: Double, blend: Double, extra: [Double], map: inout [Int],
+        out: inout [Point], outMeasures: inout [Double]
+    ) {
+        let count = points.count
+        var extraAt = 0
+        for index in 0..<count {
+            let s = cumulative[index]
+            while extraAt < extra.count, extra[extraAt] < s - degenerateEdge {
+                emitFollowPoint(
+                    extra[extraAt], nil, -1, points: points, cumulative: cumulative,
+                    prepared: prepared, first: first, totalPx: totalPx, blend: blend,
+                    map: &map, out: &out, outMeasures: &outMeasures)
+                extraAt += 1
             }
-            let canonPxTotal = cumulativeLengths(canon).last ?? 0
-            let canonMetresTotal = canonCumulative[canonCumulative.count - 1] - canonCumulative[0]
-            let metresPerPx = canonPxTotal > 0 && canonMetresTotal > 0 ? canonMetresTotal / canonPxTotal : 0
-            let tapered = taperJogs(canon, measures: canonCumulative, anchors: Set<Int>(), metresPerPx: metresPerPx)
-            taperedCanonicals.append(TaperedCanonical(
-                rawPoints: canon, rawMeasures: canonCumulative,
-                points: tapered.points, measures: tapered.measures))
-            return (tapered.points, tapered.measures)
+            while extraAt < extra.count, extra[extraAt] <= s + degenerateEdge { extraAt += 1 }
+            emitFollowPoint(
+                s, points[index], index, points: points, cumulative: cumulative,
+                prepared: prepared, first: first, totalPx: totalPx, blend: blend,
+                map: &map, out: &out, outMeasures: &outMeasures)
         }
-        var prepared: [Prepared] = []
+    }
+
+    private struct PreparedFollow {
+        let from: Double
+        let to: Double
+        let weightFrom: Double
+        let weightTo: Double
+        let canonFrom: Double
+        let canonTo: Double
+        let canon: [Point]
+        let canonCumulative: [Double]
+        let canonTotalPx: Double
+    }
+    // A follower is drawn from the canonical's own stroke, not its raw
+    // survey: a seam jog on the canonical is tapered on the canonical's
+    // own pass, and every follower must draw from that tapered shape, or
+    // the jog reappears untapered on each of them. Cached per distinct
+    // canonical array (by value, `Point`/`Double` arrays have no
+    // reference identity in Swift) so N follows onto one canonical taper
+    // it once.
+    private struct TaperedCanonical {
+        let rawPoints: [Point]
+        let rawMeasures: [Double]
+        let points: [Point]
+        let measures: [Double]
+    }
+
+    private static func taperedCanonical(
+        _ canon: [Point], _ canonCumulative: [Double], taperedCanonicals: inout [TaperedCanonical]
+    ) -> (points: [Point], measures: [Double]) {
+        if let cached = taperedCanonicals.first(where: {
+            $0.rawPoints == canon && $0.rawMeasures == canonCumulative
+        }) {
+            return (cached.points, cached.measures)
+        }
+        let canonPxTotal = cumulativeLengths(canon).last ?? 0
+        let canonMetresTotal = canonCumulative[canonCumulative.count - 1] - canonCumulative[0]
+        let metresPerPx = canonPxTotal > 0 && canonMetresTotal > 0 ? canonMetresTotal / canonPxTotal : 0
+        let tapered = taperJogs(canon, measures: canonCumulative, anchors: Set<Int>(), metresPerPx: metresPerPx)
+        taperedCanonicals.append(TaperedCanonical(
+            rawPoints: canon, rawMeasures: canonCumulative,
+            points: tapered.points, measures: tapered.measures))
+        return (tapered.points, tapered.measures)
+    }
+
+    private static func prepareFollows(
+        follows: [Follow], weightFloor: Double, weightCeiling: Double,
+        taperedCanonicals: inout [TaperedCanonical], prepared: inout [PreparedFollow]
+    ) {
         for follow in follows {
             let rawCanon = follow.points
             guard rawCanon.count >= 2, follow.to > follow.from,
@@ -1348,50 +1511,47 @@ public enum ContinuousStroke {
             let weightFrom = max(follow.from, weightFloor)
             let weightTo = min(follow.to, weightCeiling)
             guard weightTo > weightFrom else { continue }
-            let (canon, canonCumulative) = taperedCanonical(rawCanon, rawCanonCumulative)
+            let (canon, canonCumulative) = taperedCanonical(rawCanon, rawCanonCumulative, taperedCanonicals: &taperedCanonicals)
             let canonTotalPx = canonCumulative[canonCumulative.count - 1]
-            prepared.append(Prepared(
+            prepared.append(PreparedFollow(
                 from: follow.from, to: follow.to,
                 weightFrom: weightFrom, weightTo: weightTo,
                 canonFrom: follow.canonFrom, canonTo: follow.canonTo,
                 canon: canon, canonCumulative: canonCumulative, canonTotalPx: canonTotalPx))
         }
-        guard !prepared.isEmpty else { return identity }
-        prepared = prepared.enumerated().sorted {
-            $0.element.from < $1.element.from
-                || ($0.element.from == $1.element.from && $0.offset < $1.offset)
-        }.map(\.element)
-        // A follow that begins at the part's own start (or ends at its end) is
-        // whole from that end: the kernel would otherwise weight the terminal
-        // vertex by half and leave the platform bead between two alignments. A
-        // JOINT is the exception, and holding the weight back one blend width
-        // is what makes it one: the held-back bound can no longer reach either
-        // test, so the kernel runs a full ramp from zero AT the shared vertex.
-        func weightsAt(_ s: Double) -> [(w: Double, follow: Prepared)] {
-            var held: [(w: Double, follow: Prepared)] = []
-            var sum = 0.0
-            for follow in prepared {
-                let rise = follow.weightFrom <= first + degenerateEdge
-                    ? 1 : kernelCumulative(s - follow.weightFrom, width: blend)
-                let fall = follow.weightTo >= totalPx - degenerateEdge
-                    ? 0 : kernelCumulative(s - follow.weightTo, width: blend)
-                let w = rise - fall
-                if w > 0 {
-                    held.append((w, follow))
-                    sum += w
-                }
+    }
+
+    private static func followWeightsAt(
+        _ s: Double, prepared: [PreparedFollow], first: Double, totalPx: Double, blend: Double
+    ) -> [(w: Double, follow: PreparedFollow)] {
+        var held: [(w: Double, follow: PreparedFollow)] = []
+        var sum = 0.0
+        for follow in prepared {
+            let rise = follow.weightFrom <= first + degenerateEdge
+                ? 1 : kernelCumulative(s - follow.weightFrom, width: blend)
+            let fall = follow.weightTo >= totalPx - degenerateEdge
+                ? 0 : kernelCumulative(s - follow.weightTo, width: blend)
+            let w = rise - fall
+            if w > 0 {
+                held.append((w, follow))
+                sum += w
             }
-            if sum > 1 { held = held.map { ($0.w / sum, $0.follow) } }
-            return held
         }
-        func canonPoint(_ follow: Prepared, _ s: Double) -> Point {
-            let span = follow.to - follow.from
-            let t = span > 0 ? (s - follow.from) / span : 0
-            let sc = follow.canonFrom + (follow.canonTo - follow.canonFrom) * t
-            let clamped = max(0, min(follow.canonTotalPx, sc))
-            return pointAlong(follow.canon, follow.canonCumulative, clamped, low: 0, high: follow.canon.count - 1)
-        }
-        var extra: [Double] = []
+        if sum > 1 { held = held.map { ($0.w / sum, $0.follow) } }
+        return held
+    }
+
+    private static func canonicalFollowPoint(_ follow: PreparedFollow, _ s: Double) -> Point {
+        let span = follow.to - follow.from
+        let t = span > 0 ? (s - follow.from) / span : 0
+        let sc = follow.canonFrom + (follow.canonTo - follow.canonFrom) * t
+        let clamped = max(0, min(follow.canonTotalPx, sc))
+        return pointAlong(follow.canon, follow.canonCumulative, clamped, low: 0, high: follow.canon.count - 1)
+    }
+
+    private static func appendCanonicalFollowMeasures(
+        prepared: [PreparedFollow], totalPx: Double, extra: inout [Double]
+    ) {
         for follow in prepared {
             let low = min(follow.canonFrom, follow.canonTo)
             let high = max(follow.canonFrom, follow.canonTo)
@@ -1404,43 +1564,33 @@ public enum ContinuousStroke {
                 if s > 0, s < totalPx { extra.append(s) }
             }
         }
-        extra.sort()
-        var out: [Point] = []
-        var outMeasures: [Double] = []
-        var map = [Int](repeating: -1, count: count)
-        var extraAt = 0
-        func emit(_ s: Double, _ own: Point?, _ index: Int) {
-            let held = weightsAt(s)
-            guard !held.isEmpty else {
-                if let own {
-                    map[index] = out.count
-                    out.append(own)
-                    outMeasures.append(s)
-                }
-                return
+    }
+
+    private static func emitFollowPoint(
+        _ s: Double, _ own: Point?, _ index: Int, points: [Point], cumulative: [Double],
+        prepared: [PreparedFollow], first: Double, totalPx: Double, blend: Double,
+        map: inout [Int], out: inout [Point], outMeasures: inout [Double]
+    ) {
+        let held = followWeightsAt(s, prepared: prepared, first: first, totalPx: totalPx, blend: blend)
+        guard !held.isEmpty else {
+            if let own {
+                map[index] = out.count
+                out.append(own)
+                outMeasures.append(s)
             }
-            let base = own ?? pointAlong(points, cumulative, s, low: 0, high: count - 1)
-            var x = base.x
-            var y = base.y
-            for entry in held {
-                let target = canonPoint(entry.follow, s)
-                x += (target.x - base.x) * entry.w
-                y += (target.y - base.y) * entry.w
-            }
-            if own != nil { map[index] = out.count }
-            out.append(Point(x: x, y: y))
-            outMeasures.append(s)
+            return
         }
-        for index in 0..<count {
-            let s = cumulative[index]
-            while extraAt < extra.count, extra[extraAt] < s - degenerateEdge {
-                emit(extra[extraAt], nil, -1)
-                extraAt += 1
-            }
-            while extraAt < extra.count, extra[extraAt] <= s + degenerateEdge { extraAt += 1 }
-            emit(s, points[index], index)
+        let base = own ?? pointAlong(points, cumulative, s, low: 0, high: points.count - 1)
+        var x = base.x
+        var y = base.y
+        for entry in held {
+            let target = canonicalFollowPoint(entry.follow, s)
+            x += (target.x - base.x) * entry.w
+            y += (target.y - base.y) * entry.w
         }
-        return (points: out, measures: outMeasures, map: map)
+        if own != nil { map[index] = out.count }
+        out.append(Point(x: x, y: y))
+        outMeasures.append(s)
     }
 
     /// Redraw every seam jog as a taper. Returns the new polyline and, for
@@ -1464,62 +1614,26 @@ public enum ContinuousStroke {
         for index in 1..<(count - 1) { turns[index] = turnAt(points, index) }
         let anchorsSorted = anchorSet.sorted()
         var windows: [(a: Int, b: Int, i: Int, j: Int)] = []
-        var lastEnd = 0
-        var i = 1
-        while i + 1 < count {
-            defer { i += 1 }
-            let first = turns[i]
-            if abs(first) < minTurn || abs(first) > maxTurn { continue }
-            var found: Int? = nil
-            var net = first
-            var j = i + 1
-            while j + 1 < count {
-                if cumulative[j] - cumulative[i] > maxRun { break }
-                let second = turns[j]
-                net += second
-                if abs(second) >= minTurn, abs(second) <= maxTurn,
-                   (second < 0) != (first < 0), second != 0 {
-                    if abs(net) <= maxNet { found = j }
-                    break
-                }
-                if abs(second) >= minTurn { break }
-                j += 1
-            }
-            guard let j = found else { continue }
-            let a0 = points[i - 1]
-            let a1 = points[i]
-            let ex = a1.x - a0.x
-            let ey = a1.y - a0.y
-            var el = hypot(ex, ey)
-            if el == 0 { el = 1 }
-            let px = points[j].x - a1.x
-            let py = points[j].y - a1.y
-            let lateral = abs(ex * py - ey * px) / el
-            if lateral < minLateral { continue }
-            if anchorsSorted.contains(where: { $0 >= i && $0 <= j }) { continue }
-            var a = i - 1
-            while a > lastEnd, cumulative[i] - cumulative[a - 1] <= taper { a -= 1 }
-            // Never back over the previous window.
-            if a < lastEnd { a = lastEnd }
-            if let anchorBefore = anchorsSorted.last(where: { $0 < i }), anchorBefore > a {
-                a = anchorBefore
-            }
-            var b = j + 1
-            while b + 1 < count, cumulative[b + 1] - cumulative[j] <= taper { b += 1 }
-            if let anchorAfter = anchorsSorted.first(where: { $0 > j }), anchorAfter < b {
-                b = anchorAfter
-            }
-            if cumulative[i] - cumulative[a] < minTaper || cumulative[b] - cumulative[j] < minTaper {
-                continue
-            }
-            windows.append((a: a, b: b, i: i, j: j))
-            lastEnd = b
-            i = b - 1
-        }
+        discoverJogWindows(
+            points: points, turns: turns, cumulative: cumulative, anchorsSorted: anchorsSorted,
+            minTurn: minTurn, maxTurn: maxTurn, maxNet: maxNet, maxRun: maxRun,
+            minLateral: minLateral, taper: taper, minTaper: minTaper, windows: &windows)
         if windows.isEmpty { return identity }
         var out: [Point] = []
         var outMeasures: [Double] = []
         var map = [Int](repeating: -1, count: count)
+        emitJogWindows(
+            points: points, measures: measures, cumulative: cumulative,
+            windows: windows, map: &map, out: &out, outMeasures: &outMeasures)
+        return (points: out, measures: outMeasures, map: map)
+    }
+
+    private static func emitJogWindows(
+        points: [Point], measures: [Double], cumulative: [Double],
+        windows: [(a: Int, b: Int, i: Int, j: Int)], map: inout [Int],
+        out: inout [Point], outMeasures: inout [Double]
+    ) {
+        let count = points.count
         var cursor = 0
         for window in windows {
             for index in cursor...window.a {
@@ -1527,26 +1641,9 @@ public enum ContinuousStroke {
                 out.append(points[index])
                 outMeasures.append(measures[index])
             }
-            let measureStart = measures[window.a]
-            let measureEnd = measures[window.b]
-            let start = cumulative[window.a]
-            let end = cumulative[window.b]
-            let span = end - start
-            var sampleMeasures = Set<Double>()
-            if window.a + 1 < window.b {
-                for index in (window.a + 1)..<window.b { sampleMeasures.insert(cumulative[index]) }
-            }
-            for sample in 1..<jogTaperSamples {
-                sampleMeasures.insert(start + (span * Double(sample)) / Double(jogTaperSamples))
-            }
-            let ordered = sampleMeasures.filter { $0 > start && $0 < end }.sorted()
-            for s in ordered {
-                let w = smoothstep((s - start) / span)
-                let from = pointAlong(points, cumulative, s, low: window.a, high: window.i)
-                let to = pointAlong(points, cumulative, s, low: window.j, high: window.b)
-                out.append(Point(x: from.x + (to.x - from.x) * w, y: from.y + (to.y - from.y) * w))
-                outMeasures.append(measureStart + (measureEnd - measureStart) * ((s - start) / span))
-            }
+            appendJogTaperSamples(
+                window: window, points: points, measures: measures, cumulative: cumulative,
+                out: &out, outMeasures: &outMeasures)
             cursor = window.b
         }
         for index in cursor..<count {
@@ -1554,7 +1651,115 @@ public enum ContinuousStroke {
             out.append(points[index])
             outMeasures.append(measures[index])
         }
-        return (points: out, measures: outMeasures, map: map)
+    }
+
+    private static func opposingJogTurn(
+        i: Int, first: Double, count: Int, turns: [Double], cumulative: [Double],
+        maxRun: Double, minTurn: Double, maxTurn: Double, maxNet: Double
+    ) -> Int? {
+        var found: Int? = nil
+        var net = first
+        var j = i + 1
+        while j + 1 < count {
+            if cumulative[j] - cumulative[i] > maxRun { break }
+            let second = turns[j]
+            net += second
+            if abs(second) >= minTurn, abs(second) <= maxTurn,
+               (second < 0) != (first < 0), second != 0 {
+                if abs(net) <= maxNet { found = j }
+                break
+            }
+            if abs(second) >= minTurn { break }
+            j += 1
+        }
+        return found
+    }
+
+    private static func jogTaperWindow(
+        i: Int, j: Int, points: [Point], cumulative: [Double], anchorsSorted: [Int],
+        lastEnd: Int, minLateral: Double, taper: Double, minTaper: Double
+    ) -> (a: Int, b: Int, i: Int, j: Int)? {
+        let count = points.count
+        let a0 = points[i - 1]
+        let a1 = points[i]
+        let ex = a1.x - a0.x
+        let ey = a1.y - a0.y
+        var el = hypot(ex, ey)
+        if el == 0 { el = 1 }
+        let px = points[j].x - a1.x
+        let py = points[j].y - a1.y
+        let lateral = abs(ex * py - ey * px) / el
+        if lateral < minLateral { return nil }
+        if anchorsSorted.contains(where: { $0 >= i && $0 <= j }) { return nil }
+        var a = i - 1
+        while a > lastEnd, cumulative[i] - cumulative[a - 1] <= taper { a -= 1 }
+        // Never back over the previous window.
+        if a < lastEnd { a = lastEnd }
+        if let anchorBefore = anchorsSorted.last(where: { $0 < i }), anchorBefore > a {
+            a = anchorBefore
+        }
+        var b = j + 1
+        while b + 1 < count, cumulative[b + 1] - cumulative[j] <= taper { b += 1 }
+        if let anchorAfter = anchorsSorted.first(where: { $0 > j }), anchorAfter < b {
+            b = anchorAfter
+        }
+        if cumulative[i] - cumulative[a] < minTaper || cumulative[b] - cumulative[j] < minTaper {
+            return nil
+        }
+        return (a: a, b: b, i: i, j: j)
+    }
+
+    private static func discoverJogWindows(
+        points: [Point], turns: [Double], cumulative: [Double], anchorsSorted: [Int],
+        minTurn: Double, maxTurn: Double, maxNet: Double, maxRun: Double,
+        minLateral: Double, taper: Double, minTaper: Double,
+        windows: inout [(a: Int, b: Int, i: Int, j: Int)]
+    ) {
+        let count = points.count
+        var lastEnd = 0
+        var i = 1
+        while i + 1 < count {
+            defer { i += 1 }
+            let first = turns[i]
+            if abs(first) < minTurn || abs(first) > maxTurn { continue }
+            guard let j = opposingJogTurn(
+                i: i, first: first, count: count, turns: turns, cumulative: cumulative,
+                maxRun: maxRun, minTurn: minTurn, maxTurn: maxTurn, maxNet: maxNet)
+            else { continue }
+            guard let window = jogTaperWindow(
+                i: i, j: j, points: points, cumulative: cumulative, anchorsSorted: anchorsSorted,
+                lastEnd: lastEnd, minLateral: minLateral, taper: taper, minTaper: minTaper)
+            else { continue }
+            windows.append(window)
+            lastEnd = window.b
+            i = window.b - 1
+        }
+    }
+
+    private static func appendJogTaperSamples(
+        window: (a: Int, b: Int, i: Int, j: Int), points: [Point], measures: [Double], cumulative: [Double],
+        out: inout [Point], outMeasures: inout [Double]
+    ) {
+        let measureStart = measures[window.a]
+        let measureEnd = measures[window.b]
+        let start = cumulative[window.a]
+        let end = cumulative[window.b]
+        let span = end - start
+        var sampleMeasures = Set<Double>()
+        if window.a + 1 < window.b {
+            for index in (window.a + 1)..<window.b { sampleMeasures.insert(cumulative[index]) }
+        }
+        for sample in 1..<jogTaperSamples {
+            sampleMeasures.insert(start + (span * Double(sample)) / Double(jogTaperSamples))
+        }
+        let ordered = sampleMeasures.filter { $0 > start && $0 < end }.sorted()
+        for s in ordered {
+            let w = smoothstep((s - start) / span)
+            let from = pointAlong(points, cumulative, s, low: window.a, high: window.i)
+            let to = pointAlong(points, cumulative, s, low: window.j, high: window.b)
+            out.append(Point(x: from.x + (to.x - from.x) * w, y: from.y + (to.y - from.y) * w))
+            outMeasures.append(measureStart + (measureEnd - measureStart) * ((s - start) / span))
+        }
     }
 
     /// Remove offset-induced reversals while preserving surveyed bends.
@@ -1691,63 +1896,79 @@ public enum ContinuousStroke {
                 out[index] = point
                 continue
             }
-            var nx = 0.0
-            var ny = 0.0
-            var scale = 1.0
-            var t0: (Double, Double)? = nil
-            var t1: (Double, Double)? = nil
-            let join = index == 0 ? joinStart : (index == count - 1 ? joinEnd : nil)
-            if let join {
-                // Both tangents from the joint, so the neighbouring part —
-                // which computes the same pair — offsets this vertex to the
-                // same place.
-                t0 = (join.incoming.x, join.incoming.y)
-                t1 = (join.outgoing.x, join.outgoing.y)
-            } else {
-                if index > 0 {
-                    let before = points[index - 1]
-                    let dx = point.x - before.x
-                    let dy = point.y - before.y
-                    var length = hypot(dx, dy)
-                    if length == 0 { length = 1 }
-                    t0 = (dx / length, dy / length)
-                }
-                if index + 1 < count {
-                    let after = points[index + 1]
-                    let dx = after.x - point.x
-                    let dy = after.y - point.y
-                    var length = hypot(dx, dy)
-                    if length == 0 { length = 1 }
-                    t1 = (dx / length, dy / length)
-                }
-            }
-            if let t0, let t1 {
-                let bx = -t0.1 - t1.1
-                let by = t0.0 + t1.0
-                let length = hypot(bx, by)
-                if join != nil && t0.0 * t1.0 + t0.1 * t1.1 <= cos(150 * .pi / 180) {
-                    // Shared reversal endpoints use the same arriving normal
-                    // on both chains. A near-zero bisector otherwise extends
-                    // a false tip past the station by the full miter limit.
-                    nx = -t0.1
-                    ny = t0.0
-                } else if length > 1e-9 {
-                    nx = bx / length
-                    ny = by / length
-                    let cosHalf = max(1e-6, length / 2)
-                    scale = min(miterLimit, 1 / cosHalf)
-                } else {
-                    nx = -t0.1
-                    ny = t0.0
-                }
-            } else {
-                let t = t0 ?? t1 ?? (1, 0)
-                nx = -t.1
-                ny = t.0
-            }
-            out[index] = Point(x: point.x + nx * d * scale, y: point.y + ny * d * scale)
+            let tangents = offsetVertexTangents(
+                points: points, point: point, index: index, joinStart: joinStart, joinEnd: joinEnd)
+            let normal = offsetVertexNormal(t0: tangents.t0, t1: tangents.t1, join: tangents.join)
+            out[index] = Point(x: point.x + normal.nx * d * normal.scale, y: point.y + normal.ny * d * normal.scale)
         }
         return out
+    }
+
+    private static func offsetVertexTangents(
+        points: [Point], point: Point, index: Int, joinStart: Join?, joinEnd: Join?
+    ) -> (t0: (Double, Double)?, t1: (Double, Double)?, join: Join?) {
+        let count = points.count
+        var t0: (Double, Double)? = nil
+        var t1: (Double, Double)? = nil
+        let join = index == 0 ? joinStart : (index == count - 1 ? joinEnd : nil)
+        if let join {
+            // Both tangents from the joint, so the neighbouring part —
+            // which computes the same pair — offsets this vertex to the
+            // same place.
+            t0 = (join.incoming.x, join.incoming.y)
+            t1 = (join.outgoing.x, join.outgoing.y)
+        } else {
+            if index > 0 {
+                let before = points[index - 1]
+                let dx = point.x - before.x
+                let dy = point.y - before.y
+                var length = hypot(dx, dy)
+                if length == 0 { length = 1 }
+                t0 = (dx / length, dy / length)
+            }
+            if index + 1 < count {
+                let after = points[index + 1]
+                let dx = after.x - point.x
+                let dy = after.y - point.y
+                var length = hypot(dx, dy)
+                if length == 0 { length = 1 }
+                t1 = (dx / length, dy / length)
+            }
+        }
+        return (t0, t1, join)
+    }
+
+    private static func offsetVertexNormal(
+        t0: (Double, Double)?, t1: (Double, Double)?, join: Join?
+    ) -> (nx: Double, ny: Double, scale: Double) {
+        var nx = 0.0
+        var ny = 0.0
+        var scale = 1.0
+        if let t0, let t1 {
+            let bx = -t0.1 - t1.1
+            let by = t0.0 + t1.0
+            let length = hypot(bx, by)
+            if join != nil && t0.0 * t1.0 + t0.1 * t1.1 <= cos(150 * .pi / 180) {
+                // Shared reversal endpoints use the same arriving normal
+                // on both chains. A near-zero bisector otherwise extends
+                // a false tip past the station by the full miter limit.
+                nx = -t0.1
+                ny = t0.0
+            } else if length > 1e-9 {
+                nx = bx / length
+                ny = by / length
+                let cosHalf = max(1e-6, length / 2)
+                scale = min(miterLimit, 1 / cosHalf)
+            } else {
+                nx = -t0.1
+                ny = t0.0
+            }
+        } else {
+            let t = t0 ?? t1 ?? (1, 0)
+            nx = -t.1
+            ny = t.0
+        }
+        return (nx, ny, scale)
     }
 
     /// Follow substitution and lane-ramp sampling can place a straight-edge
@@ -1911,6 +2132,39 @@ public enum ContinuousStroke {
         // sharply each one turns.
         var turns = [Double](repeating: 0, count: count)
         var hard = [Bool](repeating: false, count: count)
+        prepareFilletTurns(points: points, anchors: anchors, maxTurn: maxTurn, turns: &turns, hard: &hard)
+        let cumulative = cumulativeLengths(points)
+        var out: [Point] = [points[0]]
+        var outMeasures: [Double] = [measures[0]]
+        // Where the previous corner left the polyline: the edge it ended on
+        // (by its start vertex) and how far along that edge. A corner never
+        // starts before it, so two corners can never cross however the runs
+        // fell.
+        var guardEdge = -1
+        var guardOffset = 0.0
+
+        emitFilletInterior(
+            points: points, measures: measures, anchors: anchors, turns: turns, hard: hard, cumulative: cumulative,
+            radius: radius, floor: floor, minTurn: minTurn, maxTurn: maxTurn, step: step,
+            enforceMinimumRadius: enforceMinimumRadius, guardEdge: &guardEdge, guardOffset: &guardOffset,
+            out: &out, outMeasures: &outMeasures)
+        emitFilletPoint(points[count - 1], measures[measures.count - 1], out: &out, outMeasures: &outMeasures)
+        return (out, outMeasures)
+    }
+
+    private struct FilletCorner {
+        let last: Int
+        let curve: [Point]
+        let achieved: Double
+        let endOffset: Double
+        let mStart: Double
+        let mEnd: Double
+    }
+
+    private static func prepareFilletTurns(
+        points: [Point], anchors: Set<Int>, maxTurn: Double, turns: inout [Double], hard: inout [Bool]
+    ) {
+        let count = points.count
         for index in 1..<(count - 1) {
             let ax = points[index].x - points[index - 1].x
             let ay = points[index].y - points[index - 1].y
@@ -1927,293 +2181,371 @@ public enum ContinuousStroke {
             if turns[index] > maxTurn { hard[index] = true }
         }
         for index in anchors where index > 0 && index + 1 < count { hard[index] = true }
-        let cumulative = cumulativeLengths(points)
-        var out: [Point] = [points[0]]
-        var outMeasures: [Double] = [measures[0]]
-        // Every vertex this function emits goes through here, and an emission
-        // that repeats the previous one EXACTLY is dropped.
+    }
+
+    // Every vertex this function emits goes through here, and an emission
+    // that repeats the previous one EXACTLY is dropped.
+    //
+    // Corners are cut apart, not glued: the guard clamp below can shorten
+    // a corner's tangent to exactly `back - guardOffset`, which puts its
+    // `start` on the identical coordinate the previous corner's `end`
+    // already occupies. That is a harmless coincidence — the line is
+    // unchanged either way — but it is a zero-length edge, which is the
+    // one thing `everyStrokeIsWellFormed` refuses. Only bit-equal points
+    // are dropped, never merely near ones: a "close enough" test is a
+    // simplification, and this pass is the one place the stroke must not
+    // be simplified (see ``strokeSimplifyTolerancePx``).
+    private static func emitFilletPoint(
+        _ point: Point, _ measure: Double, out: inout [Point], outMeasures: inout [Double]
+    ) {
+        let last = out[out.count - 1]
+        if last.x == point.x && last.y == point.y { return }
+        out.append(point)
+        outMeasures.append(measure)
+    }
+
+    private static func filletRunCorner(
+        _ first: Int, _ last: Int, points: [Point], measures: [Double], radius: Double, floor: Double,
+        minTurn: Double, maxTurn: Double, step: Double, enforceMinimumRadius: Bool,
+        guardEdge: Int, guardOffset: Double
+    ) -> FilletCorner? {
+        let before = points[first - 1]
+        let after = points[last + 1]
+        let ax = points[first].x - before.x
+        let ay = points[first].y - before.y
+        let la = hypot(ax, ay)
+        if la <= degenerateEdge { return nil }
+        let t0x = ax / la
+        let t0y = ay / la
+        let bx = after.x - points[last].x
+        let by = after.y - points[last].y
+        let lb = hypot(bx, by)
+        if lb <= degenerateEdge { return nil }
+        let t1x = bx / lb
+        let t1y = by / lb
+        let dot = max(-1, min(1, t0x * t1x + t0y * t1y))
+        let turn = acos(dot)
+        if turn < minTurn || turn > maxTurn { return nil }
+        return finishFilletRunCorner(
+            first: first, last: last, points: points, measures: measures, after: after,
+            radius: radius, floor: floor, step: step, enforceMinimumRadius: enforceMinimumRadius,
+            guardEdge: guardEdge, guardOffset: guardOffset,
+            t0x: t0x, t0y: t0y, t1x: t1x, t1y: t1y, la: la, lb: lb, turn: turn)
+    }
+
+    private static func finishFilletRunCorner(
+        first: Int, last: Int, points: [Point], measures: [Double], after: Point,
+        radius: Double, floor: Double, step: Double, enforceMinimumRadius: Bool,
+        guardEdge: Int, guardOffset: Double, t0x: Double, t0y: Double, t1x: Double, t1y: Double,
+        la: Double, lb: Double, turn: Double
+    ) -> FilletCorner? {
+        // The corner's apex: where the two tangent lines meet, given as
+        // its offset from the run's first vertex along the incoming
+        // tangent and from its last along the outgoing one. For a run of
+        // one both are exactly zero and the apex is the vertex itself, so
+        // a single corner stays bit-for-bit the fillet this function has
+        // always drawn.
+        var apex = points[first]
+        var apexBack = 0.0
+        var apexForward = 0.0
+        if last > first {
+            let cross = t0x * t1y - t0y * t1x
+            if !(abs(cross) > degenerateEdge) { return nil }
+            let rx = after.x - points[first].x
+            let ry = after.y - points[first].y
+            apexBack = (rx * t1y - ry * t1x) / cross
+            apex = Point(
+                x: points[first].x + t0x * apexBack, y: points[first].y + t0y * apexBack)
+            apexForward = (apex.x - points[last].x) * t1x + (apex.y - points[last].y) * t1y
+        }
+        let back = la + apexBack
+        let forward = lb - apexForward
+        if !(back > 0) || !(forward > 0) { return nil }
+        let half = tan(turn / 2)
+        var tangent = min(
+            radius * half, filletMaxTangentShare * back, filletMaxTangentShare * forward)
+        if guardEdge == first - 1, back - tangent < guardOffset {
+            tangent = back - guardOffset
+        }
+        if !(tangent > degenerateEdge) { return nil }
+        // A merged run's intersection can lie beyond either original
+        // outer edge. Merely clamping against distance to that apex
+        // allows the new arc to start/end inside the swallowed run,
+        // extrapolating its measure and reversing a connecting edge.
+        if enforceMinimumRadius {
+            let startOffset = apexBack - tangent
+            let endOffset = apexForward + tangent
+            guard startOffset >= -la, startOffset <= 0,
+                  endOffset >= 0, endOffset <= lb else { return nil }
+        }
+        return sampleFilletRunCorner(
+            first: first, last: last, points: points, measures: measures, floor: floor, step: step,
+            apex: apex, apexBack: apexBack, apexForward: apexForward, tangent: tangent, half: half,
+            t0x: t0x, t0y: t0y, t1x: t1x, t1y: t1y, la: la, lb: lb, turn: turn)
+    }
+
+    private static func sampleFilletRunCorner(
+        first: Int, last: Int, points: [Point], measures: [Double], floor: Double, step: Double,
+        apex: Point, apexBack: Double, apexForward: Double, tangent: Double, half: Double,
+        t0x: Double, t0y: Double, t1x: Double, t1y: Double, la: Double, lb: Double, turn: Double
+    ) -> FilletCorner? {
+        let start = Point(x: apex.x - t0x * tangent, y: apex.y - t0y * tangent)
+        let end = Point(x: apex.x + t1x * tangent, y: apex.y + t1y * tangent)
+        // A TRUE circular arc, sampled at uniform ANGLE steps — the same
+        // construction `anchorCornerOf` below already uses, and for the
+        // same reason. This used to be a quadratic Bézier sampled
+        // uniformly in u, and a Bézier does not rotate its tangent
+        // uniformly with u: it turns slowly at the ends and fast in the
+        // middle, so the middle facet of a 90-degree corner reached 14.3
+        // degrees, of a 120-degree corner 19.7, and of a 150-degree one
+        // 29.9 — two and a half times the `filletStepDegrees` the sample
+        // count was chosen to honour, and plainly visible as a flat spot
+        // at the apex of every wide corner. The arc turns by exactly
+        // turn / samples between neighbours, so `filletStepDegrees` means
+        // what it says at every deflection.
         //
-        // Corners are cut apart, not glued: the guard clamp below can shorten
-        // a corner's tangent to exactly `back - guardOffset`, which puts its
-        // `start` on the identical coordinate the previous corner's `end`
-        // already occupies. That is a harmless coincidence — the line is
-        // unchanged either way — but it is a zero-length edge, which is the
-        // one thing `everyStrokeIsWellFormed` refuses. Only bit-equal points
-        // are dropped, never merely near ones: a "close enough" test is a
-        // simplification, and this pass is the one place the stroke must not
-        // be simplified (see ``strokeSimplifyTolerancePx``).
-        func emit(_ point: Point, _ measure: Double) {
-            let last = out[out.count - 1]
-            if last.x == point.x && last.y == point.y { return }
-            out.append(point)
-            outMeasures.append(measure)
-        }
-        // Where the previous corner left the polyline: the edge it ended on
-        // (by its start vertex) and how far along that edge. A corner never
-        // starts before it, so two corners can never cross however the runs
-        // fell.
-        var guardEdge = -1
-        var guardOffset = 0.0
-
-        struct Corner {
-            let last: Int
-            let curve: [Point]
-            let achieved: Double
-            let endOffset: Double
-            let mStart: Double
-            let mEnd: Double
-        }
-
-        func cornerOf(_ first: Int, _ last: Int) -> Corner? {
-            let before = points[first - 1]
-            let after = points[last + 1]
-            let ax = points[first].x - before.x
-            let ay = points[first].y - before.y
-            let la = hypot(ax, ay)
-            if la <= degenerateEdge { return nil }
-            let t0x = ax / la
-            let t0y = ay / la
-            let bx = after.x - points[last].x
-            let by = after.y - points[last].y
-            let lb = hypot(bx, by)
-            if lb <= degenerateEdge { return nil }
-            let t1x = bx / lb
-            let t1y = by / lb
-            let dot = max(-1, min(1, t0x * t1x + t0y * t1y))
-            let turn = acos(dot)
-            if turn < minTurn || turn > maxTurn { return nil }
-            // The corner's apex: where the two tangent lines meet, given as
-            // its offset from the run's first vertex along the incoming
-            // tangent and from its last along the outgoing one. For a run of
-            // one both are exactly zero and the apex is the vertex itself, so
-            // a single corner stays bit-for-bit the fillet this function has
-            // always drawn.
-            var apex = points[first]
-            var apexBack = 0.0
-            var apexForward = 0.0
-            if last > first {
-                let cross = t0x * t1y - t0y * t1x
-                if !(abs(cross) > degenerateEdge) { return nil }
-                let rx = after.x - points[first].x
-                let ry = after.y - points[first].y
-                apexBack = (rx * t1y - ry * t1x) / cross
-                apex = Point(
-                    x: points[first].x + t0x * apexBack, y: points[first].y + t0y * apexBack)
-                apexForward = (apex.x - points[last].x) * t1x + (apex.y - points[last].y) * t1y
-            }
-            let back = la + apexBack
-            let forward = lb - apexForward
-            if !(back > 0) || !(forward > 0) { return nil }
-            let half = tan(turn / 2)
-            var tangent = min(
-                radius * half, filletMaxTangentShare * back, filletMaxTangentShare * forward)
-            if guardEdge == first - 1, back - tangent < guardOffset {
-                tangent = back - guardOffset
-            }
-            if !(tangent > degenerateEdge) { return nil }
-            // A merged run's intersection can lie beyond either original
-            // outer edge. Merely clamping against distance to that apex
-            // allows the new arc to start/end inside the swallowed run,
-            // extrapolating its measure and reversing a connecting edge.
-            if enforceMinimumRadius {
-                let startOffset = apexBack - tangent
-                let endOffset = apexForward + tangent
-                guard startOffset >= -la, startOffset <= 0,
-                      endOffset >= 0, endOffset <= lb else { return nil }
-            }
-            let start = Point(x: apex.x - t0x * tangent, y: apex.y - t0y * tangent)
-            let end = Point(x: apex.x + t1x * tangent, y: apex.y + t1y * tangent)
-            // A TRUE circular arc, sampled at uniform ANGLE steps — the same
-            // construction `anchorCornerOf` below already uses, and for the
-            // same reason. This used to be a quadratic Bézier sampled
-            // uniformly in u, and a Bézier does not rotate its tangent
-            // uniformly with u: it turns slowly at the ends and fast in the
-            // middle, so the middle facet of a 90-degree corner reached 14.3
-            // degrees, of a 120-degree corner 19.7, and of a 150-degree one
-            // 29.9 — two and a half times the `filletStepDegrees` the sample
-            // count was chosen to honour, and plainly visible as a flat spot
-            // at the apex of every wide corner. The arc turns by exactly
-            // turn / samples between neighbours, so `filletStepDegrees` means
-            // what it says at every deflection.
-            //
-            // The radius is `tangent / half` — the same number reported as
-            // `achieved` — and the centre sits on the corner's bisector, one
-            // radius off the incoming edge on the side the corner turns
-            // toward. Solved RELATIVE to the apex, never in absolute
-            // (web-mercator, ~1e7) pixel coordinates: the arc is a few pixels
-            // across, and subtracting nearly-equal huge numbers to find its
-            // centre is ill conditioned. The two endpoints are appended
-            // VERBATIM, so the join with the straight segments either side
-            // stays exact whatever the trigonometry rounds to.
-            let arcRadius = tangent / half
-            let arcCross = t0x * t1y - t0y * t1x
-            let turnSign: Double = arcCross >= 0 ? 1 : -1
-            let centreX = -t0x * tangent - turnSign * t0y * arcRadius
-            let centreY = -t0y * tangent + turnSign * t0x * arcRadius
-            let a0 = atan2(-t0y * tangent - centreY, -t0x * tangent - centreX)
-            let samples = max(2, Int((turn / step).rounded(.up)))
-            var curve: [Point] = [start]
-            if samples > 1 {
-                for sample in 1..<samples {
-                    let angle = a0 + turnSign * turn * (Double(sample) / Double(samples))
-                    curve.append(Point(
-                        x: apex.x + centreX + arcRadius * cos(angle),
-                        y: apex.y + centreY + arcRadius * sin(angle)))
-                }
-            }
-            curve.append(end)
-            // Nothing a run swallows may end up further than the floor from
-            // the arc that replaced it.
-            if last > first {
-                for index in first...last
-                where distanceToPolyline(points[index], curve) > floor {
-                    return nil
-                }
-            }
-            let dStart = apexBack - tangent
-            let dEnd = apexForward + tangent
-            return Corner(
-                last: last, curve: curve, achieved: tangent / half, endOffset: dEnd,
-                mStart: measures[first] + (dStart * (measures[first] - measures[first - 1])) / la,
-                mEnd: measures[last] + (dEnd * (measures[last + 1] - measures[last])) / lb)
-        }
-
-        // A station platform's vertex must not turn sharply into its dot
-        // (rules §10.9), but it also must not move: the anchor's bead is
-        // read from this exact coordinate before this function ever runs
-        // (see buildStroke). So a lone anchor corner is not CUT AWAY like
-        // an ordinary fillet — it is replaced by a circular arc that passes
-        // THROUGH the vertex: three points on one circle, the tangent
-        // points T1/T2 on the incoming and outgoing edges and the vertex
-        // itself between them. The tangent length reuses the ordinary
-        // corner's rule. T1, vertex and T2 form an isosceles triangle (two
-        // sides the tangent length, apex angle π − turn at the vertex), so
-        // the circumradius has the closed form tangent / (2·sin(turn / 2))
-        // — but the centre and the sweep direction are still solved
-        // generally, the same way for every turn from filletMinTurnDegrees
-        // to filletMaxTurnDegrees.
-        func anchorCornerOf(_ index: Int) -> Corner? {
-            let before = points[index - 1]
-            let after = points[index + 1]
-            let ax = points[index].x - before.x
-            let ay = points[index].y - before.y
-            let la = hypot(ax, ay)
-            if la <= degenerateEdge { return nil }
-            let t0x = ax / la
-            let t0y = ay / la
-            let bx = after.x - points[index].x
-            let by = after.y - points[index].y
-            let lb = hypot(bx, by)
-            if lb <= degenerateEdge { return nil }
-            let t1x = bx / lb
-            let t1y = by / lb
-            let dot = max(-1, min(1, t0x * t1x + t0y * t1y))
-            let turn = acos(dot)
-            if turn < minTurn || turn > maxTurn { return nil }
-            let half = tan(turn / 2)
-            var tangent = min(
-                radius * half, filletMaxTangentShare * la, filletMaxTangentShare * lb)
-            if guardEdge == index - 1, la - tangent < guardOffset {
-                tangent = la - guardOffset
-            }
-            if !(tangent > degenerateEdge) { return nil }
-            // tangent <= filletMaxTangentShare * la (0.45 * la) and likewise
-            // for lb by construction above, and the guardEdge clamp above
-            // only ever shrinks tangent further — so la >= 2*tangent and
-            // lb >= 2*tangent always hold; neither edge can be shorter than
-            // twice what the arc borrows from it.
-            let vertex = points[index]
-            let t1Point = Point(x: vertex.x - t0x * tangent, y: vertex.y - t0y * tangent)
-            let t2Point = Point(x: vertex.x + t1x * tangent, y: vertex.y + t1y * tangent)
-            // Circumcircle of t1Point, vertex, t2Point, solved relative to
-            // the vertex rather than in absolute (web-mercator, ~1e7)
-            // coordinates: the three points are only `tangent` (a few
-            // pixels) apart, so solving in absolute space subtracts
-            // nearly-equal huge numbers and is ill conditioned. Translating
-            // the vertex to the origin first keeps the arithmetic well
-            // behaved at any zoom or tile offset; the centre is translated
-            // back to absolute space afterwards.
-            let p1x = -t0x * tangent, p1y = -t0y * tangent
-            let p2x = 0.0, p2y = 0.0
-            let p3x = t1x * tangent, p3y = t1y * tangent
-            let d = 2 * (p1x * (p2y - p3y) + p2x * (p3y - p1y) + p3x * (p1y - p2y))
-            if !(abs(d) > 0) { return nil }
-            let sq1 = p1x * p1x + p1y * p1y
-            let sq2 = p2x * p2x + p2y * p2y
-            let sq3 = p3x * p3x + p3y * p3y
-            let cxRel = (sq1 * (p2y - p3y) + sq2 * (p3y - p1y) + sq3 * (p1y - p2y)) / d
-            let cyRel = (sq1 * (p3x - p2x) + sq2 * (p1x - p3x) + sq3 * (p2x - p1x)) / d
-            let cx = vertex.x + cxRel
-            let cy = vertex.y + cyRel
-            let arcRadius = hypot(p2x - cxRel, p2y - cyRel)
-            let a1 = atan2(p1y - cyRel, p1x - cxRel)
-            let aV = atan2(p2y - cyRel, p2x - cxRel)
-            let a2 = atan2(p3y - cyRel, p3x - cxRel)
-            func angleDiff(_ from: Double, _ to: Double) -> Double {
-                var delta = to - from
-                while delta <= -Double.pi { delta += 2 * Double.pi }
-                while delta > Double.pi { delta -= 2 * Double.pi }
-                return delta
-            }
-            let short = angleDiff(a1, a2)
-            let toApex = angleDiff(a1, aV)
-            let sameSign = (short >= 0 && toApex >= 0) || (short <= 0 && toApex <= 0)
-            let sweep =
-                sameSign && abs(toApex) <= abs(short)
-                ? short
-                : short - (short == 0 ? 1 : short.sign == .minus ? -1 : 1) * 2 * Double.pi
-            // An anchor arc always uses an EVEN sample count, so the forced
-            // apex sample below lands at index samples/2 exactly — the true
-            // analytic midpoint (u = 0.5) of the arc (V is equidistant from
-            // T1 and T2 along it, the triangle being isosceles), not an
-            // approximation of it. An odd count would put samples/2 between
-            // two samples and the bead would stop sitting on the drawn line.
-            //
-            // Sized by |sweep|, NOT by `turn`. The two are the same only
-            // while the arc takes the minor way round; a corner sharp enough
-            // to send the apex outside the minor arc takes the REFLEX one
-            // (see `sweep` above), and sizing 2·ceil(turn / 2·step) samples
-            // for a sweep of 360° − turn spends them at the wrong rate: the
-            // shipped 120-degree anchor case sweeps 240° over the 10 samples
-            // 120° asked for and drew 24-degree facets, twice what
-            // `filletStepDegrees` promises. Half-steps of the sweep keep the
-            // count even and the promise true at every deflection.
-            let samples = 2 * max(1, Int((abs(sweep) / (2 * step)).rounded(.up)))
-            var curve: [Point] = [t1Point]
+        // The radius is `tangent / half` — the same number reported as
+        // `achieved` — and the centre sits on the corner's bisector, one
+        // radius off the incoming edge on the side the corner turns
+        // toward. Solved RELATIVE to the apex, never in absolute
+        // (web-mercator, ~1e7) pixel coordinates: the arc is a few pixels
+        // across, and subtracting nearly-equal huge numbers to find its
+        // centre is ill conditioned. The two endpoints are appended
+        // VERBATIM, so the join with the straight segments either side
+        // stays exact whatever the trigonometry rounds to.
+        let arcRadius = tangent / half
+        let arcCross = t0x * t1y - t0y * t1x
+        let turnSign: Double = arcCross >= 0 ? 1 : -1
+        let centreX = -t0x * tangent - turnSign * t0y * arcRadius
+        let centreY = -t0y * tangent + turnSign * t0x * arcRadius
+        let a0 = atan2(-t0y * tangent - centreY, -t0x * tangent - centreX)
+        let samples = max(2, Int((turn / step).rounded(.up)))
+        var curve: [Point] = [start]
+        if samples > 1 {
             for sample in 1..<samples {
-                let u = Double(sample) / Double(samples)
-                let angle = a1 + sweep * u
-                curve.append(Point(x: cx + arcRadius * cos(angle), y: cy + arcRadius * sin(angle)))
+                let angle = a0 + turnSign * turn * (Double(sample) / Double(samples))
+                curve.append(Point(
+                    x: apex.x + centreX + arcRadius * cos(angle),
+                    y: apex.y + centreY + arcRadius * sin(angle)))
             }
-            curve.append(t2Point)
-            // The apex sample is forced to the vertex exactly — the bead
-            // (the same coordinate, read in buildStroke before this
-            // function ever runs) must sit ON the drawn line to the bit,
-            // not merely near it. Plain integer arithmetic (not a ratio of
-            // trig results, which can differ between JS's and Swift's
-            // atan2 by float noise) so both ports pick the identical index.
-            let apexIndex = samples / 2
-            curve[apexIndex] = Point(x: vertex.x, y: vertex.y)
-            return Corner(
-                last: index, curve: curve, achieved: tangent / half, endOffset: tangent,
-                mStart: measures[index] - (tangent * (measures[index] - measures[index - 1])) / la,
-                mEnd: measures[index] + (tangent * (measures[index + 1] - measures[index])) / lb)
         }
+        curve.append(end)
+        // Nothing a run swallows may end up further than the floor from
+        // the arc that replaced it.
+        if last > first {
+            for index in first...last
+            where distanceToPolyline(points[index], curve) > floor {
+                return nil
+            }
+        }
+        let dStart = apexBack - tangent
+        let dEnd = apexForward + tangent
+        return FilletCorner(
+            last: last, curve: curve, achieved: tangent / half, endOffset: dEnd,
+            mStart: measures[first] + (dStart * (measures[first] - measures[first - 1])) / la,
+            mEnd: measures[last] + (dEnd * (measures[last + 1] - measures[last])) / lb)
+    }
 
+    // A station platform's vertex must not turn sharply into its dot
+    // (rules §10.9), but it also must not move: the anchor's bead is
+    // read from this exact coordinate before this function ever runs
+    // (see buildStroke). So a lone anchor corner is not CUT AWAY like
+    // an ordinary fillet — it is replaced by a circular arc that passes
+    // THROUGH the vertex: three points on one circle, the tangent
+    // points T1/T2 on the incoming and outgoing edges and the vertex
+    // itself between them. The tangent length reuses the ordinary
+    // corner's rule. T1, vertex and T2 form an isosceles triangle (two
+    // sides the tangent length, apex angle π − turn at the vertex), so
+    // the circumradius has the closed form tangent / (2·sin(turn / 2))
+    // — but the centre and the sweep direction are still solved
+    // generally, the same way for every turn from filletMinTurnDegrees
+    // to filletMaxTurnDegrees.
+    private static func filletAnchorCorner(
+        _ index: Int, points: [Point], measures: [Double], radius: Double,
+        minTurn: Double, maxTurn: Double, step: Double, guardEdge: Int, guardOffset: Double
+    ) -> FilletCorner? {
+        let before = points[index - 1]
+        let after = points[index + 1]
+        let ax = points[index].x - before.x
+        let ay = points[index].y - before.y
+        let la = hypot(ax, ay)
+        if la <= degenerateEdge { return nil }
+        let t0x = ax / la
+        let t0y = ay / la
+        let bx = after.x - points[index].x
+        let by = after.y - points[index].y
+        let lb = hypot(bx, by)
+        if lb <= degenerateEdge { return nil }
+        let t1x = bx / lb
+        let t1y = by / lb
+        let dot = max(-1, min(1, t0x * t1x + t0y * t1y))
+        let turn = acos(dot)
+        if turn < minTurn || turn > maxTurn { return nil }
+        let half = tan(turn / 2)
+        var tangent = min(
+            radius * half, filletMaxTangentShare * la, filletMaxTangentShare * lb)
+        if guardEdge == index - 1, la - tangent < guardOffset {
+            tangent = la - guardOffset
+        }
+        if !(tangent > degenerateEdge) { return nil }
+        return circumcircleFilletAnchor(
+            index: index, points: points, measures: measures, tangent: tangent, half: half,
+            t0x: t0x, t0y: t0y, t1x: t1x, t1y: t1y, la: la, lb: lb, step: step)
+    }
+
+    private static func circumcircleFilletAnchor(
+        index: Int, points: [Point], measures: [Double], tangent: Double, half: Double,
+        t0x: Double, t0y: Double, t1x: Double, t1y: Double, la: Double, lb: Double, step: Double
+    ) -> FilletCorner? {
+        // tangent <= filletMaxTangentShare * la (0.45 * la) and likewise
+        // for lb by construction above, and the guardEdge clamp above
+        // only ever shrinks tangent further — so la >= 2*tangent and
+        // lb >= 2*tangent always hold; neither edge can be shorter than
+        // twice what the arc borrows from it.
+        let vertex = points[index]
+        let t1Point = Point(x: vertex.x - t0x * tangent, y: vertex.y - t0y * tangent)
+        let t2Point = Point(x: vertex.x + t1x * tangent, y: vertex.y + t1y * tangent)
+        // Circumcircle of t1Point, vertex, t2Point, solved relative to
+        // the vertex rather than in absolute (web-mercator, ~1e7)
+        // coordinates: the three points are only `tangent` (a few
+        // pixels) apart, so solving in absolute space subtracts
+        // nearly-equal huge numbers and is ill conditioned. Translating
+        // the vertex to the origin first keeps the arithmetic well
+        // behaved at any zoom or tile offset; the centre is translated
+        // back to absolute space afterwards.
+        let p1x = -t0x * tangent, p1y = -t0y * tangent
+        let p2x = 0.0, p2y = 0.0
+        let p3x = t1x * tangent, p3y = t1y * tangent
+        let d = 2 * (p1x * (p2y - p3y) + p2x * (p3y - p1y) + p3x * (p1y - p2y))
+        if !(abs(d) > 0) { return nil }
+        let sq1 = p1x * p1x + p1y * p1y
+        let sq2 = p2x * p2x + p2y * p2y
+        let sq3 = p3x * p3x + p3y * p3y
+        let cxRel = (sq1 * (p2y - p3y) + sq2 * (p3y - p1y) + sq3 * (p1y - p2y)) / d
+        let cyRel = (sq1 * (p3x - p2x) + sq2 * (p1x - p3x) + sq3 * (p2x - p1x)) / d
+        let cx = vertex.x + cxRel
+        let cy = vertex.y + cyRel
+        let arcRadius = hypot(p2x - cxRel, p2y - cyRel)
+        let a1 = atan2(p1y - cyRel, p1x - cxRel)
+        let aV = atan2(p2y - cyRel, p2x - cxRel)
+        let a2 = atan2(p3y - cyRel, p3x - cxRel)
+        return sampleFilletAnchorCorner(
+            index: index, measures: measures, vertex: vertex, t1Point: t1Point, t2Point: t2Point,
+            cx: cx, cy: cy, arcRadius: arcRadius, a1: a1, aV: aV, a2: a2,
+            tangent: tangent, half: half, la: la, lb: lb, step: step)
+    }
+
+    private static func sampleFilletAnchorCorner(
+        index: Int, measures: [Double], vertex: Point, t1Point: Point, t2Point: Point,
+        cx: Double, cy: Double, arcRadius: Double, a1: Double, aV: Double, a2: Double,
+        tangent: Double, half: Double, la: Double, lb: Double, step: Double
+    ) -> FilletCorner {
+        let short = filletAngleDiff(a1, a2)
+        let toApex = filletAngleDiff(a1, aV)
+        let sameSign = (short >= 0 && toApex >= 0) || (short <= 0 && toApex <= 0)
+        let sweep =
+            sameSign && abs(toApex) <= abs(short)
+            ? short
+            : short - (short == 0 ? 1 : short.sign == .minus ? -1 : 1) * 2 * Double.pi
+        // An anchor arc always uses an EVEN sample count, so the forced
+        // apex sample below lands at index samples/2 exactly — the true
+        // analytic midpoint (u = 0.5) of the arc (V is equidistant from
+        // T1 and T2 along it, the triangle being isosceles), not an
+        // approximation of it. An odd count would put samples/2 between
+        // two samples and the bead would stop sitting on the drawn line.
+        //
+        // Sized by |sweep|, NOT by `turn`. The two are the same only
+        // while the arc takes the minor way round; a corner sharp enough
+        // to send the apex outside the minor arc takes the REFLEX one
+        // (see `sweep` above), and sizing 2·ceil(turn / 2·step) samples
+        // for a sweep of 360° − turn spends them at the wrong rate: the
+        // shipped 120-degree anchor case sweeps 240° over the 10 samples
+        // 120° asked for and drew 24-degree facets, twice what
+        // `filletStepDegrees` promises. Half-steps of the sweep keep the
+        // count even and the promise true at every deflection.
+        let samples = 2 * max(1, Int((abs(sweep) / (2 * step)).rounded(.up)))
+        var curve: [Point] = [t1Point]
+        for sample in 1..<samples {
+            let u = Double(sample) / Double(samples)
+            let angle = a1 + sweep * u
+            curve.append(Point(x: cx + arcRadius * cos(angle), y: cy + arcRadius * sin(angle)))
+        }
+        curve.append(t2Point)
+        // The apex sample is forced to the vertex exactly — the bead
+        // (the same coordinate, read in buildStroke before this
+        // function ever runs) must sit ON the drawn line to the bit,
+        // not merely near it. Plain integer arithmetic (not a ratio of
+        // trig results, which can differ between JS's and Swift's
+        // atan2 by float noise) so both ports pick the identical index.
+        let apexIndex = samples / 2
+        curve[apexIndex] = Point(x: vertex.x, y: vertex.y)
+        return FilletCorner(
+            last: index, curve: curve, achieved: tangent / half, endOffset: tangent,
+            mStart: measures[index] - (tangent * (measures[index] - measures[index - 1])) / la,
+            mEnd: measures[index] + (tangent * (measures[index + 1] - measures[index])) / lb)
+    }
+
+    private static func filletAngleDiff(_ from: Double, _ to: Double) -> Double {
+        var delta = to - from
+        while delta <= -Double.pi { delta += 2 * Double.pi }
+        while delta > Double.pi { delta -= 2 * Double.pi }
+        return delta
+    }
+
+    private static func bestFilletRunCorner(
+        index: Int, points: [Point], measures: [Double], hard: [Bool], cumulative: [Double],
+        radius: Double, floor: Double, minTurn: Double, maxTurn: Double, step: Double,
+        enforceMinimumRadius: Bool, guardEdge: Int, guardOffset: Double
+    ) -> FilletCorner? {
+        let count = points.count
+        var best: FilletCorner? = nil
+        var last = index
+        while true {
+            if let corner = filletRunCorner(
+                index, last, points: points, measures: measures, radius: radius, floor: floor,
+                minTurn: minTurn, maxTurn: maxTurn, step: step, enforceMinimumRadius: enforceMinimumRadius,
+                guardEdge: guardEdge, guardOffset: guardOffset),
+               best == nil || corner.achieved > best!.achieved {
+                best = corner
+            }
+            if let best, best.achieved >= radius - degenerateEdge { break }
+            if !(floor > 0) { break }
+            if last + 1 >= count - 1 || hard[last + 1] { break }
+            if cumulative[last + 1] - cumulative[index] > radius { break }
+            last += 1
+        }
+        return best
+    }
+
+    private static func emitFilletCorner(
+        _ corner: FilletCorner, out: inout [Point], outMeasures: inout [Double]
+    ) {
+        for sample in 0..<corner.curve.count {
+            let u = Double(sample) / Double(corner.curve.count - 1)
+            emitFilletPoint(corner.curve[sample], corner.mStart + (corner.mEnd - corner.mStart) * u,
+                            out: &out, outMeasures: &outMeasures)
+        }
+    }
+
+    private static func emitFilletInterior(
+        points: [Point], measures: [Double], anchors: Set<Int>, turns: [Double], hard: [Bool], cumulative: [Double],
+        radius: Double, floor: Double, minTurn: Double, maxTurn: Double, step: Double, enforceMinimumRadius: Bool,
+        guardEdge: inout Int, guardOffset: inout Double, out: inout [Point], outMeasures: inout [Double]
+    ) {
+        let count = points.count
         var index = 1
         while index + 1 < count {
-            if !enforceMinimumRadius, anchors.contains(index), let arc = anchorCornerOf(index) {
-                for sample in 0..<arc.curve.count {
-                    let u = Double(sample) / Double(arc.curve.count - 1)
-                    emit(arc.curve[sample], arc.mStart + (arc.mEnd - arc.mStart) * u)
-                }
+            if !enforceMinimumRadius, anchors.contains(index), let arc = filletAnchorCorner(
+                index, points: points, measures: measures, radius: radius,
+                minTurn: minTurn, maxTurn: maxTurn, step: step, guardEdge: guardEdge, guardOffset: guardOffset) {
+                emitFilletCorner(arc, out: &out, outMeasures: &outMeasures)
                 guardEdge = arc.last
                 guardOffset = arc.endOffset
                 index += 1
                 continue
             }
             if hard[index] || turns[index] < minTurn {
-                emit(points[index], measures[index])
+                emitFilletPoint(points[index], measures[index], out: &out, outMeasures: &outMeasures)
                 index += 1
                 continue
             }
@@ -2242,35 +2574,21 @@ public enum ContinuousStroke {
             // rounded on one side and merged into a two-vertex run on the
             // other. An allowance many orders below any real geometric
             // radius removes the tie without weakening what "reaches" means.
-            var best: Corner? = nil
-            var last = index
-            while true {
-                if let corner = cornerOf(index, last),
-                   best == nil || corner.achieved > best!.achieved {
-                    best = corner
-                }
-                if let best, best.achieved >= radius - degenerateEdge { break }
-                if !(floor > 0) { break }
-                if last + 1 >= count - 1 || hard[last + 1] { break }
-                if cumulative[last + 1] - cumulative[index] > radius { break }
-                last += 1
-            }
+            let best = bestFilletRunCorner(
+                index: index, points: points, measures: measures, hard: hard, cumulative: cumulative,
+                radius: radius, floor: floor, minTurn: minTurn, maxTurn: maxTurn, step: step,
+                enforceMinimumRadius: enforceMinimumRadius, guardEdge: guardEdge, guardOffset: guardOffset)
             guard let corner = best,
                   !enforceMinimumRadius || corner.achieved >= floor - degenerateEdge else {
-                emit(points[index], measures[index])
+                emitFilletPoint(points[index], measures[index], out: &out, outMeasures: &outMeasures)
                 index += 1
                 continue
             }
-            for sample in 0..<corner.curve.count {
-                let u = Double(sample) / Double(corner.curve.count - 1)
-                emit(corner.curve[sample], corner.mStart + (corner.mEnd - corner.mStart) * u)
-            }
+            emitFilletCorner(corner, out: &out, outMeasures: &outMeasures)
             guardEdge = corner.last
             guardOffset = corner.endOffset
             index = corner.last + 1
         }
-        emit(points[count - 1], measures[measures.count - 1])
-        return (out, outMeasures)
     }
 
     /// The distance from a point to a polyline, in the same pixel space.
