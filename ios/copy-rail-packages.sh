@@ -84,6 +84,32 @@ python3 "$source_dir/../../scripts/railway/build-display-network.py" \
     --rail-dir "$source_dir" --output "$network_dir" \
     --history-dir "$here/../app/data"
 
+# Build timings identify an execution, not the rail snapshot. Keep them in the
+# build log so equal source content produces identical packaged descriptors.
+python3 - "$network_dir" <<'PYIDENTITY'
+import json
+from pathlib import Path
+import sys
+
+root = Path(sys.argv[1])
+manifest_path = root / "manifest.json"
+report_path = root / "display-network-report.json"
+manifest = json.loads(manifest_path.read_text())
+report = json.loads(report_path.read_text())
+diagnostics = {
+    "generatedAt": manifest.pop("generatedAt"),
+    "timingsSeconds": report.pop("timingsSeconds"),
+    "dpSeconds": {
+        country: region.pop("dpSeconds")
+        for country, region in report["regions"].items() if "dpSeconds" in region
+    },
+}
+report.pop("generatedAt")
+print("display-network build diagnostics " + json.dumps(diagnostics, sort_keys=True))
+for path, document in [(manifest_path, manifest), (report_path, report)]:
+    path.write_text(json.dumps(document, ensure_ascii=False, sort_keys=True, separators=(",", ":")))
+PYIDENTITY
+
 # The route pipeline reads three additional country-scoped datasets. They are
 # copied under the web app's own resource names so the native loader can apply
 # the same `countrySuffixed` rule without maintaining a second manifest.
