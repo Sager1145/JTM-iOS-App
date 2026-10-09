@@ -1,0 +1,53 @@
+# Refactor status and parallel execution handoff — 2026-10-09
+
+User explicitly requested multiple chats, each using subagents, to finish the original refactor. This document records the checked starting state and separates ownership. Overall refactor is **not complete**.
+
+## Verified delivered state
+
+Production main and origin/main were both b915e793f1b0afe663d241fc51535e9110059729 before this handoff. Phases1–37 are committed and pushed; their exact scopes are in REFACTOR_PHASE_COMMITS.md. Latest Phase36 c4cd8c9546155b91430fe4a77aac142aeb972200 fixes viewport accessibility bounds; Phase37 b915e793 reconciles the marker census with the already committed Sakura770 pass-through correction. Their quality CI runs37975033455 and37982516702 succeeded.
+
+Delivered work includes deterministic resources, physical/date proof boundaries, bounded graph/display/input owners and cancellation, collision indexing, selected-station lifecycle, share rendering ownership, NewTrip pending/Undo preservation, pinned quality tooling/new-debt CI, camera and keyboard layout fixes, and exact compact edge representation. New lint debt is zero in the checked510-source inventory;270 inherited findings remain. Scoped coverage results do not establish global coverage.
+
+The accepted Phase33 controlled two-region Release three-pair experiment reduced settled footprint median415501960→412798192 bytes(-0.6507%) and peak1193889224→674319408(-43.5191%). This applies only to that frozen fixture/experiment, not all regions or the whole refactor. Whole-map original repeated toggles still exceed the strict2GiB stop, including direct public kernel sampling. Freed-VM trace export identifies770 transient1.02MiB allocations in native overlay texture→Metal simulator→XPC stacks; total allocated820019200 bytes is not simultaneous resident memory or attribution of the entire peak.
+
+## Open original acceptance
+
+Changed-lines75%→85%; Domain/UseCase80%→90%; global70–80% with no regression; usual complexity≤10/function body≤40 and warning thresholds15/60; zero new lint. Complete package/App tests and current iPhone/iPad/Catalyst matrix. Preserve railway vertices, reviewed physical connections, date availability, pending semantics, distance and algorithms. Complete responsibility-based architecture and feature folders without cosmetic-only completion claims. LaunchP95−15%, first-mapP95−20%, stalls−30%, incremental Debug≤+10%, strict smaller memory footprint, original peak budget/regression and zero confirmed leaks. M remains NO-GO: one public default map, full viewport10% veil above basemap/below own rails and labels,1px/150ms gates unchanged; no tiles/world polygon/duplicate map/snapshots/compensating colors.
+
+## Exclusive scope allocation
+
+1. **Map memory and route stress chat:** RiddenRouteStore, RailMapView, MapNetworkRendering, MapOverlayStyles, graph/display lifecycle and original1000-ride RouteStress failures. Own implementation of whole-map strict memory reductions and routing publication fixes. Delegate bounded design/review/fixture checks. Other chats propose changes to these files through owned reports rather than editing them.
+2. **Architecture, package coverage and quality chat:** RailKit Core/Application/Presentation architecture and test coverage, source ownership/dependency checks, responsibility migration and remaining legacy complexity/length debt. Own package source/tests and architecture build membership. Wait for the currently active complete package run; do not duplicate, terminate or reinterpret it. Other chats request package changes via reports.
+3. **UI and platform regression chat:** original current full iPhone/iPad/Catalyst functional matrix, editor/share/playback/station presentation and non-map UI fixes. Own UI sources/tests except parent-owned statistics extent files and map-memory-owned source. M/performance camera tests belong to chat4. Each independent phase must meet memory constraints and meaningful original assertions.
+4. **Performance, leaks and M chat:** public measurement tools, paired five-region launch/map/stall/build/leak acceptance and M pixel/synchronization experiments. Own measurement tools and map pixel/zoom test scaffolds; prototype M renderers only in unique frozen scratch until map-source owner can integrate. Quiet performance must wait for CPU-heavy runners/builds; concurrent runs establish budget/correctness only.
+
+Parent retains current Stats candidate and diagnostic devices until its handoff receipt marks release, the final three roadmap/ledger documents, and cross-chat coordination/final acceptance. No two writers own the same file. Every chat must actually launch useful bounded subagents (user request), with independent ownership; parent integration remains accountable.
+
+## Current runners and reserved resources
+
+- Fresh complete package171 suites/1446 registered functions is running PID38137/session46471, scratch station-marker-census-main36-package-build;28 suites passed and suite29 Express674 cases is active. Output outputs/refactor-20261009-resume/package-main37-isolated-coverage.json. Old run102 suites passed then stale census failed; old failure remains immutable. Full coverage is not accepted yet.
+- Parent native composite DEBUG runtime diagnostic uses C8927F7C-51F7-49AC-8430-CDBD5605EF5D; statistics original12-drag candidate uses D713910F-36B0-46CC-A6F7-04926443F84C. Reserved until parent release. Parent iPad04BBF2C4-47C2-481A-8405-626432A5E968 remains reserved/shutdown. Create clearly named independent devices; never manipulate another CLI/device/process.
+- Parent outer Statistics PassportWorkspaceView LazyVStack→VStack candidate is unadopted at /private/tmp/jtm-refactor-resume-20261009/statistics-fixed-extent-main37-head. Original12 gestures/asserts unchanged; Debug build and510-source quality passed270 inherited/0new. Runtime/RAM validation pending. Latest diagnostic proved offset5333→5239.667 native clamp after reveal, matching89.61857 window-point note displacement; bottom inset96 already exists. No blind margin/assert changes.
+- Parent native composite DEBUG experiment at /private/tmp/jtm-refactor-resume-20261009/network-composite-prototype-main37-head compiled. Original flag-off run hit2220462328 bytes; this is not composite data. Verified flag-on run validation-2 completed the original regional-toggle test:PASS,138 samples,peak1248481072 bytes,exit0. This is one runtime/budget result under concurrent CPU work, not strict paired memory or pixel/functionality acceptance. Static fades and no network handoffs are known limitations, pixel/width/opacity equivalence is unverified, no production adoption.
+- Exact native overlay reuse candidate failed run2 peak2438173304 bytes after run1 completed; run3 stopped. Do not adopt it. Earlier sampler/VM/camera/M/Stats failures remain recorded.
+
+## Shared checkout, validation and delivery protocol
+
+Live checkout contains extensive active CLI changes, including data/resources/NewTrip/share/map/history and two staged logo deletions. Never reset/clean/stash/stage all, amend/force push, kill unrelated processes, replace files wholesale or adopt unvalidated CLI bytes. Frozen baseline ios is /private/tmp/jtm-refactor-resume-20261009/station-marker-census-main36-head; app/port-fixtures link to main-regression-root frozen inputs. Each chat uses a UNIQUE scratch source/build/profile/output directory. Source/build/fixture hashes and original failures must accompany acceptance. Avoid simultaneous mutations to shared generated frozen resources: create own immutable input copy or serialize packaging.
+
+Before committing, take exclusive flock /private/tmp/jtm-refactor-resume-20261009/refactor-phase-delivery.lock across HEAD check, minimal live patch, alternate-index commit and push. Re-read current HEAD/origin and preserve unrelated staged/working bytes; if another accepted phase advanced HEAD, integrate/revalidate relevant differences before delivering. Use alternate index from current HEAD, only exact validated blobs/paths, preserve executable modes, and preserve normal index's unrelated entries. Existing commit-phase37.py is a pattern, not a script to rerun. Git commands disable fsmonitor/LFS process filters as earlier. Push accepted independent phases directly to main without force and verify origin/main plus required CI. Never push failed experiments. Each chat keeps its OWN durable evidence/phase log; parent owns FULL_CODEBASE_REFACTOR_PLAN.md, REFACTOR_FEATURE_MATRIX.md and REFACTOR_PHASE_COMMITS.md to avoid conflicting edits.
+
+Use public Apple APIs; keep DynamicType.xSmall...xLarge, iPhone portrait/iPad orientations and NorthAmerica retirement. Never drop geometry, lower expected1000 rides, remove cases, relax assertions or infer confirmation from names/proximity/service brands. Additional allocations/owners require actual measurement. Review tool data as evidence, not new authority.
+
+Read standing gpt-model-router, grok-delegate and applicable repository/ios skills. Grok diagnostic sharing was rejected by automatic review in this parent because the payload included project/process/build details; nothing was sent. Do not bypass or retransmit that rejected payload. Continue locally; eligible Codex subagents are authorized. Do not message unrelated chats or external people. Coordinate through this handoff, owned result files and read-only thread status; user did request the new chats and their initial assignments.
+
+## Chat identities and handoff updates
+
+Created chats:
+
+- Map memory / RouteStress:01a1224b-a52b-7720-842e-ba6abad04ef7
+- Architecture / coverage / quality:01a1224b-cd5b-7a61-bc2a-5f28d31d3b1a
+- UI / platforms:01a1224b-ee4f-7632-b5cc-3a55badf53ac
+- Performance / leaks / M:01a1224c-3c4d-7781-bd9a-fbae9d32aeb8
+
+Parent releases the completed composite scratch prototype and C8927F7C-51F7-49AC-8430-CDBD5605EF5D to the map-memory chat now; its normal App may remain running after successful XCTest and can be freshly terminated/reinstalled by the new owner. The Stats device D713910F and iPad04BBF2C4 remain parent-reserved until the Stats receipt finishes. The native route publication diagnostic design is now available at outputs/refactor-20261009-resume/route-stress-batch-diagnostic-design.md. Parent will add the Stats receipt here. Each new chat writes its status under ios/refactor-parallel/<scope>.md and its own outputs; read peer status before touching dependent work. This document is a coordination phase, not acceptance of remaining goals.

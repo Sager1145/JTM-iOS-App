@@ -1041,3 +1041,17 @@ coverage, M, leaks and original launch/first-map/stall/build targets stay open.
 Receipts: station-marker-census-main36-*; package-main33-isolated-coverage.*;
 map-kernel-counter-main35-*; map-current-vm-300-all-allocations-*.
 No complete-refactor claim.
+
+
+## Phase38 — checked status and four-chat execution handoff
+
+User requested multiple chats, each with subagents, to finish the remaining
+original refactor. Added REFACTOR_PARALLEL_HANDOFF_20261009.md with exact
+delivered/open scopes, four active chat IDs, exclusive file ownership, current
+runners, reserved devices, immutable failure evidence and serialized
+alternate-index/main delivery protocol. This is a coordination phase; no
+production implementation or remaining acceptance is claimed. Composite
+DEBUG flag-on single runtime test passed with peak1248481072bytes, but pixel,
+fades, handoffs and strict paired memory remain open. Stats original test
+candidate and full package171/1446 run remain active. Parent retains final
+roadmap/ledger integration; chats own separate durable phase evidence.
