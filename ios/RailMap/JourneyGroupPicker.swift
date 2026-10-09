@@ -43,15 +43,10 @@ struct JourneyGroupChoiceFields: View {
         }
         .accessibilityIdentifier("createJourneyGroup")
 
-        if let newGroupID {
-            TextField(localization.groupText("name"), text: $name)
+        if newGroupID != nil {
+            TextField(localization.groupText("name"), text: draftName)
                 .submitLabel(.done)
                 .accessibilityIdentifier("journeyGroupName")
-                .onChange(of: name) { _, value in
-                    let limited = String(value.filter { !$0.isNewline }.prefix(JourneyGroup.maxNameLength))
-                    if name != limited { name = limited }
-                    selection = JourneyGroup(id: newGroupID, name: limited)
-                }
             Text("\(name.count)/\(JourneyGroup.maxNameLength) · \(localization.groupText("limit"))")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
@@ -72,6 +67,16 @@ struct JourneyGroupChoiceFields: View {
                 name = selection.name
             } else {
                 newGroupID = nil
+            }
+        })
+    }
+
+    private var draftName: Binding<String> {
+        Binding(get: { name }, set: { value in
+            let limited = String(value.filter { !$0.isNewline }.prefix(JourneyGroup.maxNameLength))
+            name = limited
+            if let newGroupID {
+                selection = JourneyGroup(id: newGroupID, name: limited)
             }
         })
     }

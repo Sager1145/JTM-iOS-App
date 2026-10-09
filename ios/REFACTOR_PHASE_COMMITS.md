@@ -545,3 +545,29 @@ Receipts: console-composer-{candidate.json,build.log,validation.json,
 validation.log,validation.xcresult,lint.json,format.log}. This is UI regression
 verification, not A/B footprint or zero-leak acceptance. Unrelated CLI source
 and staged deletions remain preserved. Full refactor acceptance is still open.
+
+## Phase 22: normalize group names in the input binding
+
+Status: both original JourneyGroup UI regressions pass with all assertions
+unchanged. Normalize newline removal and the existing 12-character bound in
+the synchronous TextField binding, together with the selected draft group.
+Remove the recursive onChange writeback; add no task, retained view state,
+UIKit wrapper or alternate group ownership.
+
+Main19 full matrix reproduced a 14-character visible field despite the
+12-character contract. The isolated candidate now passes draft editing,
+reselection and returning from stop editing (65.423s), plus the original
+12-character field assertion, save, relaunch and statistics group selection
+(52.714s). Dedicated Debug build-for-testing PASS; current five-rule pinned
+SwiftLint zero findings and scoped SwiftFormat PASS. External physical guard
+records 84 samples across three expected relaunch PIDs, peak361,007,960B,
+no2GiB breach. This correctness check does not claim comparative RAM savings
+or full-platform acceptance. Grok prepared the bounded binding edit; Codex
+reviewed the exact diff and ran the unchanged UI tests.
+
+Receipts: group-name-input-{candidate.json,build.log,validation.json,
+validation.log,validation.xcresult,lint.json,format.log}. Existing CLI changes
+and staged logo deletions remain preserved. Separately, the full Main19 UI
+matrix stopped at a real2GiB map-layer-toggle peak2,553,958,912B; its
+30pass/7fail/4existing-skip/1interrupted/94unstarted results remain open,
+with ConsoleSweep and group-name failures closed only by dedicated proofs.
