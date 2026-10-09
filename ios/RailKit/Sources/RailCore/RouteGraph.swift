@@ -1360,19 +1360,36 @@ public enum RouteGraph {
                 }
             }
         }
+        // Global-to-local lookup and stamps are needed only while recording edges.
+        localOf.removeAll(keepingCapacity: false)
+        metaStamp.removeAll(keepingCapacity: false)
         let n = creator.count
-        var slot = [String: Int](minimumCapacity: n)
-        var grid: [String: [String]] = [:]
+        var nodes = [String: Coordinate](minimumCapacity: n)
+        var finalAdjacency = [String: [Edge]](minimumCapacity: n)
+        var nodeMeta = [String: NodeMeta](minimumCapacity: n)
         for l in 0..<n {
             let v = creator[l]
             let key = c.vertexKey[v]
-            slot[key] = l
-            grid[c.vertexCell[v], default: []].append(key)
+            nodes[key] = c.vertexCoord[v]
+            finalAdjacency[key] = adjacency[l]
+            nodeMeta[key] = meta[l]
+            graph.grid[c.vertexCell[v], default: []].append(key)
+            // The final values now own these buffers; dropping staging owners
+            // avoids a second owner when junction augmentation mutates them.
+            adjacency[l] = []
+            meta[l] = NodeMeta()
         }
-        graph.nodes = slot.mapValues { c.vertexCoord[creator[$0]] }
-        graph.adjacency = slot.mapValues { adjacency[$0] }
-        graph.nodeMeta = slot.mapValues { meta[$0] }
-        graph.grid = grid
+        creator.removeAll(keepingCapacity: false)
+        adjacency.removeAll(keepingCapacity: false)
+        meta.removeAll(keepingCapacity: false)
+        // Assign once: nodes/adjacency observers only invalidate empty caches.
+        graph.nodes = nodes
+        graph.adjacency = finalAdjacency
+        graph.nodeMeta = nodeMeta
+        // Release local dictionary owners before mutable junction augmentation.
+        nodes = [:]
+        finalAdjacency = [:]
+        nodeMeta = [:]
         if c.policy == .physicalRailway {
             addPhysicalJunctions(to: graph, junctions: junctions, plans: plans)
         }

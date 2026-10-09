@@ -410,6 +410,51 @@ raster screenshots but fails alignment: sampled maxima 3-4 device px; frame gap
 Receipts: `history-boundary-focused-run-summary.json`,
 `history-boundary-focused-memory-summary.json`, `map-frame-lead-pixels.log`.
 
+## Phase 18: graph materialization ownership and verified Release pair
+
+Status: scoped graph equivalence/memory and dual-region Release acceptance pass.
+
+Graph construction drops the completed local-id/stamp buffers, removes the
+intermediate slot dictionary, builds final reserved dictionaries directly, then
+releases all staging arrays and local final-dictionary aliases before physical
+junction augmentation. Native graph cache observers still receive one final
+assignment. Selected feature order, surveyed coordinates, ordered edges/grid,
+metadata, UTF8 identity and physical junction evidence remain unchanged.
+
+Validation: scratch original/candidate oracle compares complete real Tokyo graphs
+under physicalRailway and coordinateParity, plus canonical UTF8, repeated/reordered
+features, coincident ties, duplicate edges and self-loop cases (15.625s PASS).
+Existing compiled graph/physical topology suites: 21 tests / two suites PASS
+38.047s. Cache-policy suite: three PASS. Release arm64/x86_64 App test build PASS.
+Three alternating fresh host processes, same 23,028 JP sections/3,752 selected
+features/40,238 nodes/80,506 edges: settled median 263,423,008 -> 261,440,592 B
+(-0.75%), peak 263,603,232 -> 261,637,200 B (-0.75%). This is a Tokyo builder
+workload, not an App percentage. Builder-time median 0.348796 -> 0.388026s
+(+11.25%); full launch/render/build-time goals remain unaccepted and a less
+hash-intensive materializer is being evaluated.
+
+The committed Release sampler's first runtime attempt exposes an installation
+lifecycle issue: Xcode replaces the bundle path while preserving seeded data;
+all public assertions pass but no PID samples match the prelaunch path. It fails
+rather than reporting zero memory. The sampler now resolves the registered
+owned bundle path while sampling and retains the one-PID check.
+
+With other owned builds/experiments stopped, three alternating fresh Release
+containers/processes pass all public route/Stats assertions and sampling.
+Baseline is the frozen pre-phase-12 RiddenRouteStore build; candidate is latest
+Main App plus this graph materializer. The comparison includes delivered route,
+date/readiness code and this graph change; it does not isolate cache-count alone.
+Exact committed JP/TW fixture and Main resources are common. Settled median
+418,910,024 -> 416,632,456 B (-0.54%); peak median 1,521,208,992 -> 1,210,404,320 B
+(-20.43%). All six builds retain one fixed binary SHA per side; gate PASS.
+Earlier Phase 17 failed measurements remain recorded. This acceptance is only
+for the stated two-region scenario, not all regions or confirmed zero leaks.
+
+Receipts: `graph-builder-equivalence.log`, `graph-builder-focused.log`,
+`graph-builder-cache-policy.log`, `graph-builder-memory-result.json`,
+`graph-builder-main-release.log`, `graph-builder-release-app-memory.json`
+(first sampler failure), `graph-builder-release-app-memory-v2.json` (PASS).
+
 ## Remaining delivery phases
 
 - Recover the large historical graph's memory acceptance without changing physical

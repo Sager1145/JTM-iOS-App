@@ -88,6 +88,13 @@ def dedicated_device(identifier):
 
 
 def find_owned_pid(device, executable):
+    # Xcode can replace the bundle installation while preserving the seeded
+    # data container. Resolve its current registered app path after launch.
+    current_app = Path(text_command([
+        'xcrun', 'simctl', 'get_app_container', device, BUNDLE_ID, 'app'])).resolve()
+    if device not in str(current_app) or current_app.name != 'RailMap.app':
+        raise ValueError('Runtime app path does not belong to the owned simulator')
+    executable = current_app / executable.name
     pids = []
     for row in text_command(['ps', '-axo', 'pid,args']).splitlines()[1:]:
         fields = row.strip().split(None, 1)
