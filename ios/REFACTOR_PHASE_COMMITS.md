@@ -600,3 +600,33 @@ Earlier synthetic five-region/Stats-only evidence is not accepted for route
 proof. Original dual-region test remains unchanged; unrelated live CLI test
 changes and staging remain preserved. Receipts: release-five-real-{candidate,
 build,validation,lint,format} artifacts. Full acceptance remains open.
+
+## Phase 24: gate new lint debt without suppressing legacy findings
+
+Status: baseline-aware pinned five-rule SwiftLint gate delivered. Advisory
+full lint/format reports remain visible; CI now also rejects new findings,
+increased metric reasons and changed warning declarations. Compare exact
+root-relative source identities and unchanged lines through the full function
+declaration (including multiline parameters/return/default closures), so
+unrelated line shifts retain the same legacy warning. Deleted debt does not
+pay for a new warning elsewhere; duplicates remain individually counted.
+Complete ios Swift inventory, pinned0.65.1/version/real lint exit/report
+consistency are required. No per-file suppression or reduced source list.
+
+Validation: nine meaningful parser/comparison tests PASS, existing30 coverage
+parser tests PASS; workflow YAML parsed. Independent review found a multiline
+parameter identity gap; fixed and covered by multiline/default-closure/string
+brace regressions before delivery. Actual pinned lint/format runs on frozen
+Main21/Main22 and Main22/Main23 each contain507Swift files and270 findings,
+all270 inherited, zero new, both comparisons PASS. A separate actual pinned
+force_cast fixture produces one new finding and gate exit1 as expected.
+Production's167finding baseline (165complexity/length+2casts) remains visible
+as reported in Phase20;270 here includes tests. This gate does not claim
+global complexity<=15/body<=60, usual10/40, full coverage or RAM acceptance.
+
+CI archives the event's base SHA (parent for manual dispatch) with full history,
+runs both snapshots using the same current pinned configuration, preserves
+all reports on failure, and keeps formatting advisory. Receipts:
+quality-debt-{base,candidate,main23}/, quality-debt-*-comparison.json,
+quality-debt-calibration-{baseline,candidate,rejection.json}. No App runtime
+source or concurrent CLI staging is changed by this tooling phase.

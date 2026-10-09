@@ -1,4 +1,4 @@
-name: iOS refactor quality (advisory)
+name: iOS refactor quality
 
 on:
   push:
@@ -21,14 +21,18 @@ concurrency:
 
 jobs:
   advisory:
-    name: Advisory Swift lint and format reports
+    name: Swift quality reports and new-debt gate
     runs-on: xcode-27
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
 
       - name: Coverage report parser unit tests
-        run: python3 -m unittest discover -s ios/tools/tests -p 'test_*coverage*.py'
+        run: |
+          python3 -m unittest discover -s ios/tools/tests -p 'test_*coverage*.py'
+          python3 -m unittest discover -s ios/tools/tests -p 'test_quality_debt_report.py'
 
       - name: Download and verify pinned official tools
         env:
@@ -55,6 +59,24 @@ jobs:
           SWIFTFORMAT_BIN: ${{ runner.temp }}/swift-quality-tools/swiftformat/swiftformat
           QUALITY_REPORT_DIR: ${{ runner.temp }}/swift-quality-reports
         run: ./ios/tools/advisory-swift-quality.sh
+
+      - name: Reject new pinned lint debt while retaining legacy findings
+        env:
+          SWIFTLINT_BIN: ${{ runner.temp }}/swift-quality-tools/swiftlint/swiftlint
+          SWIFTFORMAT_BIN: ${{ runner.temp }}/swift-quality-tools/swiftformat/swiftformat
+          REPORT_DIR: ${{ runner.temp }}/swift-quality-reports
+          BASE_ROOT: ${{ runner.temp }}/swift-quality-baseline
+          BASE_REF: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          set -euo pipefail
+          if [ -z "$BASE_REF" ] || [[ "$BASE_REF" =~ ^0+$ ]]; then
+            BASE_REF="$(git rev-parse HEAD^)"
+          fi
+          git cat-file -e "$BASE_REF^{commit}"
+          mkdir -p "$BASE_ROOT"
+          git archive "$BASE_REF" ios | tar -xf - -C "$BASE_ROOT"
+          ./ios/tools/advisory-swift-quality.sh --source "$BASE_ROOT/ios" --output-dir "$REPORT_DIR/baseline"
+          python3 ios/tools/quality-debt-report.py --baseline-root "$BASE_ROOT" --candidate-root "$PWD" --baseline-report "$REPORT_DIR/baseline" --candidate-report "$REPORT_DIR" --output "$REPORT_DIR/new-debt.json"
 
       - name: Preserve advisory reports including failure evidence
         if: always()
