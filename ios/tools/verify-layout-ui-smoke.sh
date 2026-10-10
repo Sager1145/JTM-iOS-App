@@ -18,7 +18,8 @@ case "$mode" in
         result_name=LayoutSmoke
         success_message="adaptive layout UI smoke test passed"
         set -- \
-            -only-testing:RailMapUITests/RailMapUITests/testWideIPadDocksThePhoneMenu
+            -only-testing:RailMapUITests/RailMapUITests/testWideIPadDocksThePhoneMenu \
+            -only-testing:RailMapUITests/RailMapUITests/testWideIPadCompactMenuReopens
         ;;
     iphone)
         device_family=iPhone
@@ -30,6 +31,7 @@ case "$mode" in
             -only-testing:RailMapUITests/WorkspaceEditingTests \
             -only-testing:RailMapUITests/JourneySaveUITests \
             -only-testing:RailMapUITests/RailMapUITests/testSearchDestinationAlwaysExposesAField \
+            -only-testing:RailMapUITests/RailMapUITests/testCompactHeaderDragRevealsTheDestinationContent \
             -only-testing:RailMapUITests/RailMapUITests/testAllJourneyRowsOpenTheirMatchingJourney \
             -only-testing:RailMapUITests/RailMapUITests/testReselectingJourneyKeepsCollapsedHeaderAboveTabBar \
             -only-testing:RailMapUITests/RailMapUITests/testPhoneMenuHeaderDragsInBothDirectionsRepeatedly \

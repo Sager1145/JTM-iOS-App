@@ -18,6 +18,7 @@ struct JourneySearchField: View {
     @FocusState.Binding var isFocused: Bool
 
     @Environment(AppLocalization.self) private var localization
+    @Environment(PanelMorph.self) private var morph: PanelMorph?
 
     var body: some View {
         HStack(spacing: 8) {
@@ -45,6 +46,11 @@ struct JourneySearchField: View {
                 style: .continuous))
         .padding(.horizontal, 16)
         .padding(.bottom, 12)
+        .onChange(of: morph?.stage) { _, stage in
+            // Disabling the mounted viewport does not resign an existing
+            // UIKit first responder. Compact must also dismiss its keyboard.
+            if stage == .compact { isFocused = false }
+        }
     }
 
     private var clearButton: some View {

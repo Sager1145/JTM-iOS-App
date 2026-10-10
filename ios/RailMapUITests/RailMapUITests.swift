@@ -728,13 +728,25 @@ final class RailMapUITests: XCTestCase {
         // losing the selected destination. The map remains usable throughout.
         let toggle = element("dockPanelToggle", in: app)
         XCTAssertTrue(toggle.waitForExistence(timeout: 8))
+        assertSearchAcceptsInput(in: app)
         attach(app, named: "ipad-menu-expanded")
         toggle.tap()
         let compact = NSPredicate(format: "value == %@", "compact")
         expectation(for: compact, evaluatedWith: toggle)
         waitForExpectations(timeout: 8)
-        XCTAssertFalse(element("journeySearchField", in: app).isHittable,
-                       "Compact menus must keep Search clear of the tab bar.")
+        let search = element("journeySearchField", in: app)
+        // The stage value changes before UIKit finishes updating its hosted
+        // text field and accessibility snapshot. Wait for the UI invariant,
+        // retaining the same non-hittable requirement and a bounded timeout.
+        let hiddenSearch = NSPredicate { _, _ in !search.isHittable }
+        XCTAssertEqual(
+            XCTWaiter.wait(for: [XCTNSPredicateExpectation(
+                predicate: hiddenSearch, object: search)], timeout: 8), .completed,
+            "Compact menus must keep Search clear of the tab bar.")
+        XCTAssertFalse(search.isHittable)
+        if search.exists { XCTAssertFalse(search.isEnabled) }
+        XCTAssertTrue(app.keyboards.firstMatch.waitForNonExistence(timeout: 8),
+                      "Compact Search must resign keyboard focus.")
         assertNetworkToggleResponds(in: app)
         attach(app, named: "ipad-menu-retracted")
 
@@ -743,6 +755,7 @@ final class RailMapUITests: XCTestCase {
             element("journeySearchField", in: app).waitForExistence(timeout: 8),
             "Reopening the resident menu must restore its Search destination.")
         assertNetworkToggleResponds(in: app)
+        assertSearchAcceptsInput(in: app, text: " Station", expected: "Tokyo Station")
         attach(app, named: "ipad-menu-reopened")
     }
 
@@ -765,13 +778,20 @@ final class RailMapUITests: XCTestCase {
         attach(app, named: "ipad-compact-menu-reopened")
     }
 
-    private func assertSearchAcceptsInput(in app: XCUIApplication) {
+    private func assertSearchAcceptsInput(
+        in app: XCUIApplication, text: String = "Tokyo", expected: String = "Tokyo"
+    ) {
         let field = element("journeySearchField", in: app)
+        let ready = NSPredicate(format: "isEnabled == true AND isHittable == true")
+        XCTAssertEqual(
+            XCTWaiter.wait(for: [XCTNSPredicateExpectation(
+                predicate: ready, object: field)], timeout: 8), .completed,
+            "Expanded Search must become enabled and hittable.")
         XCTAssertTrue(field.isEnabled)
         XCTAssertTrue(field.isHittable)
         field.tap()
-        field.typeText("Tokyo")
-        XCTAssertEqual(field.value as? String, "Tokyo",
+        field.typeText(text)
+        XCTAssertEqual(field.value as? String, expected,
                        "The reopened native text field must accept input.")
     }
 
