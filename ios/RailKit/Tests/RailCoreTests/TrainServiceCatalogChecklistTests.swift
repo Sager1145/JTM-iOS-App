@@ -42,6 +42,43 @@ struct TrainServiceCatalogChecklistTests {
         return first.isASCII ? "\(name) 1" : "\(name)1号"
     }
 
+    private static func normalizedVersionDate(_ value: String, endOfPeriod: Bool) -> String? {
+        let parts = value.split(separator: "-", omittingEmptySubsequences: false)
+        guard (1...3).contains(parts.count), parts[0].count == 4,
+              parts[0].allSatisfy(\.isNumber), let year = Int(parts[0]),
+              (1...9999).contains(year)
+        else { return nil }
+
+        var month = endOfPeriod ? 12 : 1
+        if parts.count >= 2 {
+            guard parts[1].count == 2, parts[1].allSatisfy(\.isNumber),
+                  let parsedMonth = Int(parts[1]), (1...12).contains(parsedMonth)
+            else { return nil }
+            month = parsedMonth
+        }
+
+        let maximumDay: Int
+        switch month {
+        case 2:
+            let leapYear = year.isMultiple(of: 400)
+                || (year.isMultiple(of: 4) && !year.isMultiple(of: 100))
+            maximumDay = leapYear ? 29 : 28
+        case 4, 6, 9, 11:
+            maximumDay = 30
+        default:
+            maximumDay = 31
+        }
+
+        var day = endOfPeriod ? maximumDay : 1
+        if parts.count == 3 {
+            guard parts[2].count == 2, parts[2].allSatisfy(\.isNumber),
+                  let parsedDay = Int(parts[2]), (1...maximumDay).contains(parsedDay)
+            else { return nil }
+            day = parsedDay
+        }
+        return String(format: "%04d-%02d-%02d", year, month, day)
+    }
+
     @Test("catalog has 241 uniquely identified services")
     func catalogSize() {
         let services = TrainServiceBranding.services
@@ -83,12 +120,67 @@ struct TrainServiceCatalogChecklistTests {
             }
         }
 
+        let root = try PortFixtures.repositoryRoot()
         if let logoPath = service.logoPath {
-            let root = try PortFixtures.repositoryRoot()
             let path = root.appending(path: "app/public").path + logoPath
             let exists = FileManager.default.fileExists(atPath: path)
             #expect(exists, "\(serviceID): logo missing at \(path)")
             if exists == false { failed.append("<logo>: missing \(logoPath)") }
+        }
+
+        let versions = service.logos ?? []
+        var ranges: [(index: Int, start: String, end: String)] = []
+        for (index, version) in versions.enumerated() {
+            let path = root.appending(path: "app/public").path + version.path
+            let exists = FileManager.default.fileExists(atPath: path)
+            #expect(exists, "\(serviceID): versioned logo missing at \(path)")
+            if exists == false { failed.append("<logo[\(index)]>: missing \(version.path)") }
+
+            let start = version.validFrom.flatMap {
+                Self.normalizedVersionDate($0, endOfPeriod: false)
+            }
+            let end = version.validUntil.flatMap {
+                Self.normalizedVersionDate($0, endOfPeriod: true)
+            }
+            let validStart = version.validFrom == nil || start != nil
+            let validEnd = version.validUntil == nil || end != nil
+            #expect(validStart, "\(serviceID): logo version \(index) has invalid validFrom")
+            #expect(validEnd, "\(serviceID): logo version \(index) has invalid validUntil")
+            if validStart == false { failed.append("<logo[\(index)]>: invalid validFrom") }
+            if validEnd == false { failed.append("<logo[\(index)]>: invalid validUntil") }
+
+            guard validStart, validEnd else { continue }
+            let normalizedStart = start ?? "0001-01-01"
+            let normalizedEnd = end ?? "9999-12-31"
+            let ordered = normalizedStart <= normalizedEnd
+            #expect(ordered, "\(serviceID): logo version \(index) starts after it ends")
+            if ordered == false {
+                failed.append("<logo[\(index)]>: validFrom is after validUntil")
+            } else {
+                ranges.append((index, normalizedStart, normalizedEnd))
+            }
+        }
+
+        for left in ranges.indices {
+            for right in ranges.indices where right > left {
+                let overlaps = ranges[left].start <= ranges[right].end
+                    && ranges[right].start <= ranges[left].end
+                #expect(overlaps == false,
+                        "\(serviceID): logo versions \(ranges[left].index) and \(ranges[right].index) overlap")
+                if overlaps {
+                    failed.append("<logos>: versions \(ranges[left].index) and \(ranges[right].index) overlap")
+                }
+            }
+        }
+
+        // A nil default is allowed: dates outside every version (an era with
+        // no mark of its own) fall back to the operator logo.
+        if versions.isEmpty == false {
+            let containsDefault = service.logoPath.map {
+                defaultPath in versions.contains { $0.path == defaultPath }
+            } ?? true
+            #expect(containsDefault, "\(serviceID): default logo is not one of its versions")
+            if containsDefault == false { failed.append("<logos>: default path not versioned") }
         }
 
         Report.shared.record(serviceID: serviceID, names: service.names.count, failed: failed)

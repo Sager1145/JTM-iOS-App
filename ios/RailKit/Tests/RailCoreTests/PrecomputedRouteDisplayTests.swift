@@ -48,20 +48,22 @@ struct PrecomputedRouteDisplayTests {
         }
     }
 
-    @Test("Osaki north forks join the legacy N02 representative without an appended main")
+    @Test("Osaki local display has one station/north owner without capped branch leads")
     func osakiSurveyedMain() throws {
         let package = try PortFixtures.package(country: "jp")
         let branches = package.lines.filter { $0.name == "大崎支線" }
         #expect(branches.count == 2)
         let main = try #require(branches.first { $0.alignmentOf == nil })
         let parts = DisplayParts.parts(for: main)
-        #expect(parts.count == 2)
+        #expect(parts.count == 1)
         let yamanote = try #require(package.lines.first { $0.id == "jp-東日本旅客鉄道-山手線" })
         let trunk = DisplayParts.parts(for: yamanote).flatMap { $0 }
         for branch in branches {
-            let lead = try #require(branch.displayBranchLeadIns.first)
-            #expect(lead.last == branch.displayCoordinate(for: branch.stations[0]))
-            #expect(trunk.contains(try #require(lead.first)))
+            #expect(branch.displayBranchLeadIns.isEmpty)
+            let anchor = branch.displayCoordinate(for: branch.stations[0])
+            #expect(anchor == yamanote.displayCoordinate(for: yamanote.stations[1]))
+            #expect(DisplayParts.parts(for: branch).first?.first == anchor)
+            #expect(trunk.contains(anchor))
         }
     }
 

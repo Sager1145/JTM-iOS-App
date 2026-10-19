@@ -5,7 +5,7 @@ import Testing
 @Suite("Report-backed timetable lookup")
 struct TimetableQuickMatchReportTests {
     @Test func akagiExactDateTripsRetainPublishedStopsAndSources() throws {
-        let database = try #require(TrainTimetableDatabase.bundled())
+        let database = try TrainTimetableDatabase.bundled(bundle: .module)
         let trips = try database.trips(on: "2026-09-30")
             .filter { $0.service.id == "akagi" }
         #expect(Set(trips.compactMap(\.publicNumber)) == ["3", "6", "9"])
@@ -21,7 +21,7 @@ struct TimetableQuickMatchReportTests {
     }
 
     @Test func partialAzusaMatchKeepsSourceAndDraftBoundary() throws {
-        let database = try #require(TrainTimetableDatabase.bundled())
+        let database = try TrainTimetableDatabase.bundled(bundle: .module)
         let trips = try database.trips(on: "2026-09-27")
         let trip = try #require(trips.first { $0.service.id == "azusa" })
         let from = try #require(trip.origin)

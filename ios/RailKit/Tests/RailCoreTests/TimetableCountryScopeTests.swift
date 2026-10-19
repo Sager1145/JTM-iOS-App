@@ -4,11 +4,13 @@ import Testing
 
 struct TimetableCountryScopeTests {
     @Test func foreignDraftsCannotReceiveJapaneseTimetableFacts() throws {
-        let database = try #require(TrainTimetableDatabase.bundled())
+        let database = try TrainTimetableDatabase.bundled(bundle: .module)
         let trip = try #require(try database.trips(on: "2026-09-30").first { $0.passengerStops.count >= 2 })
         for region in ["tw", "hk", "mo", "kr", "unknown"] {
             let draft = Train(id: region, number: "", origin: "", destination: "", stops: [], region: region)
-            #expect(TrainTimetableDatabase.bundled(country: region) == nil)
+            #expect(throws: TrainTimetableDatabase.OpenFailure.unsupportedCountry(region)) {
+                try TrainTimetableDatabase.bundled(country: region)
+            }
             #expect(!TrainTimetableDatabase.accepts(draft))
             #expect(trip.publishedStopsDraft(to: draft) == nil)
             #expect(trip.applying(to: draft) == nil)
@@ -40,6 +42,16 @@ struct TimetableCountryScopeTests {
         try Data("incompatible-artifact".utf8).write(to: artifact)
         let bundle = try #require(Bundle(url: directory))
         #expect(TrainTimetableDatabase.bundledURL(in: bundle)?.standardizedFileURL == artifact.standardizedFileURL)
-        #expect(TrainTimetableDatabase.bundled(bundle: bundle) == nil)
+        do {
+            _ = try TrainTimetableDatabase.bundled(bundle: bundle)
+            Issue.record("damaged timetable artifact opened")
+        } catch let failure as TrainTimetableDatabase.OpenFailure {
+            guard case .damaged = failure else {
+                Issue.record("expected damaged, got \(failure)")
+                return
+            }
+        } catch {
+            Issue.record("expected OpenFailure.damaged, got \(error)")
+        }
     }
 }

@@ -59,18 +59,6 @@ struct JourneyLifecycleTests {
             region: "jp")
     }
 
-    private static func dateView(_ train: Train) -> Dates.Train {
-        Dates.Train(
-            id: train.id,
-            date: train.date,
-            stops: train.stops.map {
-                Dates.Stop(
-                    arrival: $0.arrival,
-                    departure: $0.departure,
-                    stopType: $0.stopType)
-            })
-    }
-
     @Test("adding a colliding id creates and focuses one distinct journey")
     func addMakesIdentityUniqueWithoutReplacingTheExistingJourney() {
         let existing = Self.journey(id: "night-owl", number: "Existing")
@@ -124,10 +112,9 @@ struct JourneyLifecycleTests {
             Self.journey(id: "night-owl-b", number: "Night Owl 2"),
             in: &workspace)
 
-        let dateViews = workspace.store.trains.map(Self.dateView)
-        let dates = Dates.availableDates(dateViews)
+        let dates = Dates.availableDates(workspace.store.trains)
         #expect(dates == ["2026-09-22"])
-        #expect(Dates.trains(dateViews, inBucket: "2026-09-22").compactMap(\.id)
+        #expect(Dates.trains(workspace.store.trains, inBucket: "2026-09-22").map(\.id)
             == ["night-owl-a", "night-owl-b"])
         #expect(workspace.store.trains.count == 2)
 
@@ -167,21 +154,24 @@ struct JourneyLifecycleTests {
     }
 
     @Test("an invalid import fails before changing journey inventory")
-    func rejectedImportLeavesWorkspaceUnchanged() throws {
+    func rejectedImportLeavesSessionUnchanged() throws {
         let existing = Self.journey(id: "night-owl")
-        var workspace = StoreOperations.Workspace(
-            store: TrainStore(trains: [existing]),
+        var session = ImportEngine.Session(
+            trains: [existing],
             selectedTrainID: existing.id,
             focusedTrainID: existing.id,
             country: "jp")
-        let before = workspace
+        let before = session.trains
         let invalid = try TrainValidation.JSON.parse(
             #"{"id":"broken","number":"Broken","origin":"A","destination":"B","stops":[{"name":"A"}]}"#)
 
         #expect(throws: TrainValidation.ValidationError.self) {
-            try StoreOperations.appendImportedTrain(invalid, in: &workspace)
+            try session.appendImportedTrain(invalid)
         }
-        #expect(workspace == before)
+        #expect(session.trains == before)
+        #expect(session.selectedTrainID == existing.id)
+        #expect(session.focusedTrainID == existing.id)
+        #expect(session.country == "jp")
     }
 
     @Test("canonical save escapes text and is stable through validation and re-import")
@@ -217,10 +207,12 @@ struct JourneyLifecycleTests {
             Issue.record("saved store did not contain a trains array")
             return
         }
-        var reimported = StoreOperations.Workspace(country: "jp")
+        var session = ImportEngine.Session(country: "jp")
         for row in rows {
-            _ = try StoreOperations.appendImportedTrain(row, in: &reimported)
+            _ = try session.appendImportedTrain(row)
         }
+        let reimported = StoreOperations.Workspace(
+            store: TrainStore(trains: session.trains), country: session.country)
         #expect(StoreOperations.exportTrainStore(reimported) == saved)
     }
 }

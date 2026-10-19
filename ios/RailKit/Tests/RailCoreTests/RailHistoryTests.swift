@@ -506,6 +506,243 @@ final class RailHistoryTests: XCTestCase {
         XCTAssertEqual(report.retirementsApplied["open.station"], 1)
     }
 
+    func testIdentityPeriodUsesOldOperatorBeforeHalfOpenBoundary() throws {
+        let json = """
+        {
+          "schema_version": "1", "revision": "identity",
+          "features": ["identity_periods"],
+          "sections": [], "stations": [], "retirements": [],
+          "identity_periods": [{
+            "history_id": "rename.sections",
+            "match": {
+              "line_name": "New Line", "operator": "New Operator",
+              "bbox": [134.0, 34.0, 136.0, 36.0], "targets": ["sections"]
+            },
+            "valid_to": "2019-10-01",
+            "as": {"N02_003": "Old Line", "N02_004": "Old Operator"},
+            "source": "synthetic"
+          }]
+        }
+        """
+        let overlay = try RailHistoryOverlay.decode(Data(json.utf8))
+        var sections = [RouteGraph.SectionFeature(
+            properties: .init(lineName: "New Line", operator: "New Operator"),
+            lines: [[Coordinate(lon: 135.0, lat: 35.0), Coordinate(lon: 135.1, lat: 35.0)]])]
+        var stations: [Stations.Feature] = []
+        let report = RailHistory.apply(overlay, sections: &sections, stations: &stations)
+        XCTAssertEqual(report.identityPeriodsApplied["rename.sections"], 1)
+        XCTAssertEqual(sections.count, 2)
+
+        func activeOperator(_ date: String?) -> String? {
+            sections.first {
+                RouteGraph.RailValidity.isValid(
+                    validFrom: $0.properties.validFrom,
+                    validTo: $0.properties.validTo, on: date)
+            }?.properties.operator
+        }
+        XCTAssertEqual(activeOperator("2019-09-30"), "Old Operator")
+        XCTAssertEqual(activeOperator("2019-10-01"), "New Operator")
+        XCTAssertEqual(activeOperator(nil), "New Operator")
+        XCTAssertEqual(sections[0].lines, sections[1].lines)
+    }
+
+    func testIdentityPeriodCarriesClassCodesIntoGraphAndStationVariants() throws {
+        let json = """
+        {
+          "schema_version": "1", "revision": "identity-codes",
+          "sections": [], "stations": [], "retirements": [],
+          "identity_periods": [{
+            "history_id": "transfer.old",
+            "match": {
+              "line_name": "New Line", "operator": "New Operator",
+              "bbox": [134.0, 34.0, 136.0, 36.0]
+            },
+            "valid_to": "2019-10-01",
+            "as": {
+              "N02_001": "11", "N02_002": "2",
+              "N02_003": "Old Line", "N02_004": "Old Operator"
+            },
+            "source": "synthetic"
+          }]
+        }
+        """
+        let overlay = try RailHistoryOverlay.decode(Data(json.utf8))
+        let junction = Coordinate(lon: 135.1, lat: 35.0)
+        var sections = [RouteGraph.SectionFeature(
+            properties: .init(
+                lineName: "New Line", operator: "New Operator",
+                institutionTypeCode: "5", railwayClassCode: "12"),
+            lines: [[Coordinate(lon: 135.0, lat: 35.0), junction]])]
+        var stations = [Stations.Feature(
+            properties: [
+                "line_name": .string("New Line"), "operator": .string("New Operator"),
+                "station_name": .string("Boundary"),
+                "railway_class_code": .string("12"), "institution_type_code": .string("5"),
+            ],
+            geometry: .init(type: "Point", coordinates: .array([.number(135.1), .number(35.0)])))]
+
+        _ = RailHistory.apply(overlay, sections: &sections, stations: &stations)
+        let predecessor = try XCTUnwrap(sections.first { $0.properties.historyId == "transfer.old" })
+        XCTAssertEqual(predecessor.properties.railwayClassCode, "11")
+        XCTAssertEqual(predecessor.properties.institutionTypeCode, "2")
+        XCTAssertEqual(
+            predecessor.physicalTrackIdentity,
+            .init(operatorName: "Old Operator", lineName: "Old Line", railwayClassCode: "11"))
+        let oldStation = try XCTUnwrap(stations.first {
+            $0.properties["history_id"] == .string("transfer.old")
+        })
+        XCTAssertEqual(oldStation.properties["railway_class_code"], .string("11"))
+        XCTAssertEqual(Stations.stationInstitutionTypeCode(oldStation), "2")
+
+        let other = RouteGraph.SectionFeature(
+            properties: .init(
+                lineName: "Other Line", operator: "Old Operator",
+                institutionTypeCode: "2", railwayClassCode: "11"),
+            lines: [[junction, Coordinate(lon: 135.2, lat: 35.0)]])
+        let registryJunction = RouteGraph.PhysicalJunction(
+            id: "predecessor-junction",
+            from: .init(identity: predecessor.physicalTrackIdentity, coordinate: junction),
+            to: .init(identity: other.physicalTrackIdentity, coordinate: junction),
+            evidence: ["synthetic reviewed boundary"])
+        let graph = RouteGraph.build(from: sections + [other], junctions: [registryJunction])
+        XCTAssertFalse(graph.rejectedPhysicalJunctionIDs.contains("predecessor-junction"))
+    }
+
+    func testRejectsOverlappingIdentityPeriodsForSameSelector() {
+        let json = """
+        {
+          "schema_version": "1", "revision": "identity-overlap",
+          "sections": [], "stations": [], "retirements": [],
+          "identity_periods": [
+            {
+              "history_id": "first",
+              "match": {"line_name": "L", "operator": "O", "bbox": [0, 0, 1, 1]},
+              "valid_from": "2000-01-01", "valid_to": "2010-01-01",
+              "as": {"N02_003": "Old L", "N02_004": "Old O"}, "source": "synthetic"
+            },
+            {
+              "history_id": "second",
+              "match": {"line_name": "L", "operator": "O", "bbox": [0, 0, 1, 1]},
+              "valid_from": "2009-01-01", "valid_to": "2020-01-01",
+              "as": {"N02_003": "Older L", "N02_004": "Older O"}, "source": "synthetic"
+            }
+          ]
+        }
+        """
+        XCTAssertThrowsError(try RailHistoryOverlay.decode(Data(json.utf8)))
+    }
+
+    func testIdentityHistoryJunctionConnectsPredecessorThenSuccessor() throws {
+        let (graph, predecessor, successor, other, coordinate) = try identityJunctionFixture(
+            namingPredecessor: false)
+        XCTAssertFalse(graph.rejectedPhysicalJunctionIDs.contains("identity-junction"))
+        let predecessorKey = RouteGraph.physicalNodeKey(
+            coordinate, identity: predecessor.physicalTrackIdentity)
+        let successorKey = RouteGraph.physicalNodeKey(
+            coordinate, identity: successor.physicalTrackIdentity)
+        let otherKey = RouteGraph.physicalNodeKey(coordinate, identity: other.physicalTrackIdentity)
+        XCTAssertTrue(junctionLinks(graph, predecessorKey, otherKey, on: "2019-09-30"))
+        XCTAssertFalse(junctionLinks(graph, successorKey, otherKey, on: "2019-09-30"))
+        XCTAssertTrue(junctionLinks(graph, successorKey, otherKey, on: "2019-10-01"))
+        XCTAssertFalse(junctionLinks(graph, predecessorKey, otherKey, on: "2019-10-01"))
+    }
+
+    func testIdentityHistoryJunctionNamingPredecessorStillResolves() throws {
+        let (graph, predecessor, successor, other, coordinate) = try identityJunctionFixture(
+            namingPredecessor: true)
+        XCTAssertFalse(graph.rejectedPhysicalJunctionIDs.contains("identity-junction"))
+        let predecessorKey = RouteGraph.physicalNodeKey(
+            coordinate, identity: predecessor.physicalTrackIdentity)
+        let successorKey = RouteGraph.physicalNodeKey(
+            coordinate, identity: successor.physicalTrackIdentity)
+        let otherKey = RouteGraph.physicalNodeKey(coordinate, identity: other.physicalTrackIdentity)
+        XCTAssertTrue(junctionLinks(graph, predecessorKey, otherKey, on: "2019-09-30"))
+        XCTAssertTrue(junctionLinks(graph, successorKey, otherKey, on: "2019-10-01"))
+        XCTAssertFalse(junctionLinks(graph, predecessorKey, otherKey, on: "2019-10-01"))
+    }
+
+    func testIdentityHistoryJunctionRejectedOnlyWhenNothingResolves() throws {
+        let (graph, _, successor, other, coordinate) = try identityJunctionFixture(
+            namingPredecessor: false, extraMissingEndpoint: true)
+        XCTAssertFalse(graph.rejectedPhysicalJunctionIDs.contains("identity-junction"))
+        XCTAssertTrue(graph.rejectedPhysicalJunctionIDs.contains("missing-junction"))
+        XCTAssertTrue(graph.rejectedPhysicalJunctionReasons.contains {
+            $0.hasPrefix("missing-junction:") && $0.contains("existing vertex")
+        })
+        let successorKey = RouteGraph.physicalNodeKey(
+            coordinate, identity: successor.physicalTrackIdentity)
+        let otherKey = RouteGraph.physicalNodeKey(coordinate, identity: other.physicalTrackIdentity)
+        XCTAssertTrue(junctionLinks(graph, successorKey, otherKey, on: "2019-10-01"))
+    }
+
+    private func junctionLinks(
+        _ graph: RouteGraph.Graph, _ from: String, _ to: String, on date: String
+    ) -> Bool {
+        (graph.adjacency[from] ?? []).contains { edge in
+            edge.to == to && edge.physicalJunction != nil
+                && RouteGraph.RailValidity.isValid(
+                    validFrom: edge.validFrom, validTo: edge.validTo, on: date)
+        }
+    }
+
+    private func identityJunctionFixture(
+        namingPredecessor: Bool, extraMissingEndpoint: Bool = false
+    ) throws -> (
+        RouteGraph.Graph, RouteGraph.SectionFeature, RouteGraph.SectionFeature,
+        RouteGraph.SectionFeature, Coordinate
+    ) {
+        let json = """
+        {
+          "schema_version": "1", "revision": "identity-junction",
+          "sections": [], "stations": [], "retirements": [],
+          "identity_periods": [{
+            "history_id": "transfer.old",
+            "match": {
+              "line_name": "New Line", "operator": "New Operator",
+              "bbox": [134.0, 34.0, 136.0, 36.0], "targets": ["sections"]
+            },
+            "valid_to": "2019-10-01",
+            "as": {
+              "N02_001": "11", "N02_003": "Old Line", "N02_004": "Old Operator"
+            },
+            "source": "synthetic"
+          }]
+        }
+        """
+        let overlay = try RailHistoryOverlay.decode(Data(json.utf8))
+        let coordinate = Coordinate(lon: 135.1, lat: 35.0)
+        var sections = [RouteGraph.SectionFeature(
+            properties: .init(
+                lineName: "New Line", operator: "New Operator", railwayClassCode: "12"),
+            lines: [[Coordinate(lon: 135.0, lat: 35.0), coordinate]])]
+        var stations: [Stations.Feature] = []
+        _ = RailHistory.apply(overlay, sections: &sections, stations: &stations)
+        let predecessor = try XCTUnwrap(sections.first { $0.properties.historyId == "transfer.old" })
+        let successor = try XCTUnwrap(sections.first { $0.properties.operator == "New Operator" })
+        let other = RouteGraph.SectionFeature(
+            properties: .init(
+                lineName: "Other Line", operator: "Other Operator", railwayClassCode: "11"),
+            lines: [[coordinate, Coordinate(lon: 135.2, lat: 35.0)]])
+        let named = namingPredecessor ? predecessor : successor
+        var junctions = [RouteGraph.PhysicalJunction(
+            id: "identity-junction",
+            from: .init(identity: named.physicalTrackIdentity, coordinate: coordinate),
+            to: .init(identity: other.physicalTrackIdentity, coordinate: coordinate),
+            evidence: ["synthetic reviewed boundary"], validFrom: "1950-01-01")]
+        if extraMissingEndpoint {
+            junctions.append(RouteGraph.PhysicalJunction(
+                id: "missing-junction",
+                from: .init(
+                    identity: .init(operatorName: "Nobody", lineName: "Missing Line", railwayClassCode: "12"),
+                    coordinate: coordinate),
+                to: .init(identity: other.physicalTrackIdentity, coordinate: coordinate),
+                evidence: ["synthetic reviewed boundary"]))
+        }
+        let graph = RouteGraph.build(
+            from: sections + [other], junctions: junctions, identityPeriods: overlay.identityPeriods)
+        return (graph, predecessor, successor, other, coordinate)
+    }
+
     func testShouldCanonicalizeDisplayNetworkOnlyForCurrent() {
         XCTAssertTrue(RouteGraph.TemporalKind.shouldCanonicalizeDisplayNetwork(.current))
         XCTAssertFalse(RouteGraph.TemporalKind.shouldCanonicalizeDisplayNetwork(.historical))

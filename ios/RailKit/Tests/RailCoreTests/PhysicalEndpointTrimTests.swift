@@ -49,6 +49,32 @@ struct PhysicalEndpointTrimTests {
             operatorName: "Operator", lineName: line, railwayClassCode: ""))
     }
 
+    @Test("Reused source proofs retain date, direction, filters and graph mutations")
+    func sourceProofReuseRemainsQualified() throws {
+        let line = [point(0), point(100), point(200)]
+        let graph = RouteGraph.build(from: [rail(line, validTo: "2020-12-31")])
+        let section = RouteSection(lineNames: ["Rail"], operatorNames: ["Operator"])
+        let context = RouteSolver.TrainContext(rideDate: "2020-06-01")
+        let first = try #require(RouteSolver.verifiedSourcePath([line], graph: graph, context: context, section: section))
+        #expect(RouteSolver.verifiedSourcePath([line], graph: graph, context: .init(id: "another-ride", rideDate: "2020-06-01"), section: section) == first)
+        #expect(RouteSolver.verifiedSourcePath([line], graph: graph, context: .init(rideDate: "2021-01-01"), section: section) == nil)
+        #expect(RouteSolver.verifiedSourcePath([Array(line.reversed())], graph: graph, context: context, section: section) == Array(first.reversed()))
+        #expect(RouteSolver.verifiedSourcePath([line], graph: graph, context: context,
+            section: .init(lineNames: ["Another railway"], operatorNames: ["Operator"])) == nil)
+        let firstEdges = graph.adjacency[key(line[0])]
+        graph.adjacency[key(line[0])] = []
+        #expect(RouteSolver.verifiedSourcePath([line], graph: graph, context: context, section: section) == nil)
+        graph.adjacency[key(line[0])] = firstEdges
+        #expect(RouteSolver.verifiedSourcePath([line], graph: graph, context: context, section: section) == first)
+        let grid = graph.grid
+        graph.grid = [:]
+        #expect(RouteSolver.verifiedSourcePath([line], graph: graph, context: context, section: section) == nil)
+        graph.grid = grid
+        #expect(RouteSolver.verifiedSourcePath([line], graph: graph, context: context, section: section) == first)
+        graph.nodes = [:]
+        #expect(RouteSolver.verifiedSourcePath([line], graph: graph, context: context, section: section) == nil)
+    }
+
     @Test("Short endpoint marker bridges are trimmed before source verification")
     func endpointTrimming() throws {
         let a = point(0)
@@ -246,7 +272,8 @@ struct PhysicalEndpointTrimTests {
         }
         let graphStore = RouteGraph.RouteGraphStore(
             sections: sections, policy: .physicalRailway, junctions: junctions,
-            cachePolicy: .bounded(maximumNodes: 100_000))
+            cachePolicy: .bounded(maximumNodes: 100_000),
+            identityPeriods: overlay.identityPeriods)
         let loaded = try DisplayParts.LoadedPackage.load(
             contentsOf: root.appending(path: "app/public/rail/jp-2025.json"))
         let network = RouteNetwork(lines: loaded.package.lines.map { line in
@@ -359,7 +386,7 @@ struct PhysicalEndpointTrimTests {
                     ?? hints.fromStationCode
                 hints.toStationCode = data.eligibility.stationCode(hints.toStationCode)
                     ?? hints.toStationCode
-                let sourceResult = data.network.sourceGeometry(for: hints)
+                let sourceResult = data.network.sourceCertification(for: hints)?.geometry
                 let exactResult = data.network.canonicalizeRouteFeature(
                     RouteFeature(geometry: nil, hints: hints),
                     continueFrom: sharesBoundary ? displayContinuity : nil,
@@ -470,7 +497,7 @@ struct PhysicalEndpointTrimTests {
                 var matchedHints = hints
                 matchedHints.sectionCodes = codes
                 matchedHints.requiredLineIDs = canonical?.displayLineIds ?? []
-                matchedSource = data.network.sourceGeometry(for: matchedHints)
+                matchedSource = data.network.sourceCertification(for: matchedHints)?.geometry
             }
             if let matchedSource {
                 let matchedGraph = proofGraph(matchedSource.lines.flatMap { $0 }, store: data.graphStore)

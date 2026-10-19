@@ -18,7 +18,7 @@ struct DirectionalAlignmentSelectionTests {
         .init(base: "jp-東日本旅客鉄道-奥羽線", pair: "p1", forward: true),
         .init(base: "jp-東日本旅客鉄道-東北線", pair: "p2", forward: false),
         .init(base: "jp-東海旅客鉄道-東海道線-2", pair: "p1", forward: true),
-        .init(base: "jp-西日本旅客鉄道-北陸線", pair: "p1", forward: false),
+        .init(base: "jp-西日本旅客鉄道-北陸線", pair: "p1", forward: true),
     ]
 
     private func network(_ lines: [CompactPackage.Line]) -> RouteNetwork {
@@ -29,6 +29,35 @@ struct DirectionalAlignmentSelectionTests {
                 parts: DisplayParts.parts(for: line), intervals: RailIntervalCodes.intervals(for: line),
                 compactLine: line)
         })
+    }
+
+    @Test("Hatsuhara's loop serves the up direction; the crossing straight serves down")
+    func hokurikuLoopUsesUpDirection() throws {
+        // JR West's own description identifies the loop and its grade-separated
+        // crossing: https://www.westjr.co.jp/company/info/issue/bsignal/26_vol_207/area/
+        let package = try PortFixtures.package(country: "jp")
+        let baseID = "jp-西日本旅客鉄道-北陸線"
+        let base = try #require(package.lines.first { $0.id == baseID })
+        let loop = try #require(package.lines.first { $0.id == baseID + "-p1" })
+        let first = try #require(loop.stations.first)
+        let last = try #require(loop.stations.last)
+        #expect(first.name == "敦賀" && last.name == "新疋田")
+        #expect(loop.stationOrderDirection == "up")
+        #expect(loop.alignmentDirection == "up")
+        #expect(base.alignmentPairs.first { $0.with == loop.id }?.direction == "down")
+        #expect(RailwayDirection.allowedDirections(for: loop, intervalIndex: 0) == [1])
+        let up = RailwayRouteChoices.choices(package: package, originCode: first.id, destinationCode: last.id)
+        let down = RailwayRouteChoices.choices(package: package, originCode: last.id, destinationCode: first.id)
+        #expect(up.contains { $0.lineIDs.contains(loop.id) })
+        #expect(!down.contains { $0.lineIDs.contains(loop.id) })
+        let family = [base, loop]
+        for (from, to, usesLoop) in [(first, last, true), (last, first, false)] {
+            let result = try #require(network(family).canonicalizeRouteFeature(RouteFeature(
+                geometry: .lineString([from.coordinate, to.coordinate]),
+                hints: .init(requiredLineNames: [base.name], requiredOperatorNames: [base.operator],
+                             fromStationCode: from.id, toStationCode: to.id))))
+            #expect(result.displayLineIds.contains(loop.id) == usesLoop)
+        }
     }
 
     @Test("Endpoint order selects directional tracks inside a longer journey", arguments: cases)

@@ -106,7 +106,7 @@ struct RejoiningRailwayFamiliesTests {
             let codedHints = RouteHints(
                 requiredLineIDs: choice.lineIDs, sectionCodes: codes,
                 fromStationCode: from, toStationCode: to)
-            let source = try #require(network.sourceGeometry(for: codedHints))
+            let source = try #require(network.sourceCertification(for: codedHints)?.geometry)
             let coded = try #require(network.canonicalizeRouteFeature(
                 RouteFeature(geometry: nil, hints: codedHints)))
             // The solver gives one continuous hop, including a connector

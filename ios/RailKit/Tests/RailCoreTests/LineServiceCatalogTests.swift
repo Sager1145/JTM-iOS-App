@@ -3,9 +3,27 @@ import Testing
 @testable import RailCore
 
 struct LineServiceCatalogTests {
+    @Test func bundledCatalogRetainsOnlySuccessfulDecode() throws {
+        let directory = FileManager.default.temporaryDirectory
+            .appending(path: "line-catalog-\(UUID().uuidString).bundle")
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let url = directory.appending(path: "line-service-catalog.json")
+        try Data("invalid json".utf8).write(to: url)
+        let bundle = try #require(Bundle(url: directory))
+        #expect(throws: (any Error).self) { try LineServiceCatalog.loadBundled(bundle: bundle) }
+        let data = Data(#"{"schemaVersion":1,"inventoryVersion":"fixture","observedOn":"2026-10-01","lines":[],"trips":[]}"#.utf8)
+        try data.write(to: url)
+        let first = try LineServiceCatalog.loadBundled(bundle: bundle)
+        try Data("broken after the immutable snapshot loaded".utf8).write(to: url)
+        let second = try LineServiceCatalog.loadBundled(bundle: bundle)
+        #expect(first.inventoryVersion == "fixture")
+        #expect(second.inventoryVersion == first.inventoryVersion)
+    }
+
     @Test func nationalInventoryHasExplicitUnknowns() throws {
         let catalog = try LineServiceCatalog.loadBundled()
-        #expect(catalog.lines.count == 657)
+        #expect(catalog.lines.count == 658)
         #expect(Set(catalog.lines.map(\.lineID)).count == catalog.lines.count)
         #expect(catalog.lines.contains { $0.coverage == .unknown && $0.kinds.isEmpty })
         #expect(catalog.lines.allSatisfy { $0.kinds.isEmpty == ($0.coverage == .unknown) })
@@ -76,9 +94,36 @@ struct LineServiceCatalogTests {
         #expect(child.previousTrainIDs?.contains(parent.id) == true)
         #expect(parent.serviceDates == child.serviceDates)
         #expect(parent.stops.last?.stationCode == child.stops.first?.stationCode)
+        #expect(catalog.continuations(for: parent).contains { $0.id == child.id })
         let meitetsu = try #require(catalog.trips.first { $0.trainNumber == "645B" })
         #expect(meitetsu.trainType == "準急")
         #expect(meitetsu.serviceDates == ["2026-10-02"])
+    }
+
+    @Test func continuationsRequireExplicitIdentitySharedDateAndEndpoint() throws {
+        func trip(_ id: String, from: String = "B", date: String = "2026-10-01") -> [String: Any] {
+            ["id": id, "trainNumber": id, "trainType": "local", "operatorName": "Operator",
+             "lineIDs": [], "serviceDates": [date], "sourceURL": "https://example.com/timetable",
+             "coverage": "partial", "note": "", "stops": [
+                ["stationCode": from, "stationName": from, "departureSeconds": 0],
+                ["stationCode": "B", "stationName": "B", "arrivalSeconds": 60]
+             ]]
+        }
+        var parent = trip("parent", from: "A")
+        parent["nextTrainIDs"] = ["later", "wrong-date", "wrong-endpoint", "missing", "first", "first"]
+        let data = try JSONSerialization.data(withJSONObject: [
+            "schemaVersion": 1, "inventoryVersion": "fixture", "observedOn": "2026-10-01", "lines": [],
+            "trips": [parent, trip("first"), trip("later"), trip("wrong-date", date: "2026-10-02"),
+                      trip("wrong-endpoint", from: "C"), trip("unlinked")]
+        ])
+        let catalog = try LineServiceCatalog(data: data)
+        let reopened = try JSONDecoder().decode(LineServiceCatalog.self, from: JSONEncoder().encode(catalog))
+        for value in [catalog, reopened] {
+            let parent = try #require(value.trips.first { $0.id == "parent" })
+            #expect(value.continuations(for: parent).map(\.id) == ["first", "later"])
+            let unlinked = try #require(value.trips.first { $0.id == "unlinked" })
+            #expect(value.continuations(for: unlinked).isEmpty)
+        }
     }
 
     @Test func importerRejectsInvalidTimesAndDuplicateIdentities() throws {

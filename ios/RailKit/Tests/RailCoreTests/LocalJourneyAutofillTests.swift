@@ -74,6 +74,7 @@ struct LocalJourneyAutofillTests {
         route.routeSections[1].lineIDs = ["Toei"]
         route.routeSections[1].operatorNames = ["東京都"]
         let proposal = try #require(LocalJourneyAutofill.proposal(train: ride(["A", "C"]), choice: route))
+        #expect(proposal.train.routeConfirmation == .pending)
         #expect(proposal.train.routeSections?.map(\.lineIDs) == [["Keisei"], ["Toei"]])
         #expect(proposal.train.routeSections?.map(\.operatorNames) == [["京成電鉄"], ["東京都"]])
         #expect(proposal.train.routeSections?.flatMap { $0.sectionCodes ?? [] } == route.sectionCodes)

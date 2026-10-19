@@ -57,7 +57,18 @@ struct RouteHintsParityTests {
     }
 
     static func fixture() throws -> Fixture {
-        try PortFixtures.decode(Fixture.self, "route-hints.json")
+        let fixture = try PortFixtures.decode(Fixture.self, "route-hints.json")
+        try #require(fixture.cases.count == 2 && Set(fixture.cases.map(\.country)) == ["mo", "hk"],
+                     "Route-hint parity requires both Macao and Hong Kong")
+        for item in fixture.cases {
+            try #require(!item.cases.isEmpty, "\(item.country) route-hint cases are missing")
+            for row in item.cases {
+                try #require(!row.fromStationIndices.isEmpty && !row.toStationIndices.isEmpty,
+                             "\(item.country) route-hint endpoints are missing")
+                try #require(!row.attempts.isEmpty, "\(item.country) route-hint attempts are missing")
+            }
+        }
+        return fixture
     }
 
     static func stations(_ country: String) throws -> Stations.Index {

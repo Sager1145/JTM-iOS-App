@@ -202,4 +202,27 @@ struct CompiledRouteGraphEquivalenceTests {
         #expect(store.retainedCompiledNodeCount == 0)
     }
 
+    @Test("Build-seeded components partition the graph exactly as the general pass")
+    func seededComponentsMatchGeneralPass() throws {
+        let fixture = try Self.loadFixture()
+        let graph = RouteGraph.build(
+            from: fixture.sections, policy: .physicalRailway, junctions: fixture.junctions)
+        #expect(graph.rejectedPhysicalJunctionIDs.count < fixture.junctions.count)
+        let seeded = try #require(graph.physicalRailComponents())
+        // Any adjacency write drops the seed and the cache.
+        let adjacency = graph.adjacency
+        graph.adjacency = adjacency
+        let general = try #require(graph.physicalRailComponents())
+        #expect(Set(seeded.keys) == Set(general.keys))
+        var forward: [Int: Int] = [:]
+        var backward: [Int: Int] = [:]
+        for (key, component) in seeded {
+            let other = try #require(general[key])
+            #expect(forward[component, default: other] == other)
+            #expect(backward[other, default: component] == component)
+            forward[component] = other
+            backward[other] = component
+        }
+    }
+
 }

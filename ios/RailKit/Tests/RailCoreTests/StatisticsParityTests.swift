@@ -444,16 +444,27 @@ struct StatisticsParityTests {
     /// daily split filters on and the stops the ride time comes from.
     /// `serviceGroupStats` pairs trains with entries BY INDEX, so this order
     /// is part of the input, not a convenience.
-    static func trains(country: String) -> [Statistics.Train] {
+    static func trains(country: String) -> [Train] {
         fixture.trains.filter { $0.country == country }.map { ride in
-            Statistics.Train(
-                id: ride.id, trainType: ride.trainType, date: ride.date,
-                stops: ride.stops.map {
-                    Statistics.Stop(
-                        arrival: $0.arrival, departure: $0.departure, stopType: $0.stopType,
-                        rideSegment: $0.rideSegment.isExactlyTrue)
-                })
+            rideTrain(id: ride.id, trainType: ride.trainType, date: ride.date, stops: ride.stops)
         }
+    }
+
+    /// The fixture date is the statistics date the JavaScript stub returned
+    /// unchanged. It stays on `Train.date` so the view's injected closure can
+    /// read that field; production computes the bucket with `Dates.trainDate`.
+    private static func rideTrain(
+        id: String = "", trainType: String? = nil, date: String? = nil,
+        stops: [RideTimeCase.StopJSON]
+    ) -> Train {
+        Train(
+            id: id, date: date, number: "", trainType: trainType, origin: "", destination: "",
+            stops: stops.map {
+                Stop(
+                    name: "", arrival: $0.arrival, departure: $0.departure,
+                    stopType: $0.stopType ?? "passenger_stop",
+                    rideSegment: $0.rideSegment.isExactlyTrue)
+            })
     }
 
     // MARK: - classification
@@ -835,13 +846,7 @@ struct StatisticsParityTests {
         let cases = Self.fixture.rideTimes + Self.fixture.adversarialTrains
         #expect(cases.count > 200)
         for item in cases {
-            let train = Statistics.Train(
-                trainType: item.trainType,
-                stops: item.stops.map {
-                    Statistics.Stop(
-                        arrival: $0.arrival, departure: $0.departure, stopType: $0.stopType,
-                        rideSegment: $0.rideSegment.isExactlyTrue)
-                })
+            let train = Self.rideTrain(trainType: item.trainType, stops: item.stops)
             let why = item.why ?? "\(item.country) \(item.trainType ?? "nil")"
             let minutes = Statistics.trainRideMinutes(train)
             #expect(minutes?.bitPattern == item.rideMinutes?.bitPattern, "\(why)")
@@ -855,16 +860,7 @@ struct StatisticsParityTests {
     func serviceSums() throws {
         for item in Self.fixture.serviceSums {
             let trains = Self.fixture.rideTimes.filter { $0.country == item.country }
-                .map { c in
-                    Statistics.Train(
-                        trainType: c.trainType,
-                        stops: c.stops.map {
-                            Statistics.Stop(
-                                arrival: $0.arrival, departure: $0.departure,
-                                stopType: $0.stopType,
-                                rideSegment: $0.rideSegment.isExactlyTrue)
-                        })
-                }
+                .map { c in Self.rideTrain(trainType: c.trainType, stops: c.stops) }
             #expect(trains.count == item.trainCount, "\(item.country)")
             #expect(
                 Statistics.sumRideMinutes(trains).bitPattern == item.sumRideMinutes.bitPattern,

@@ -367,6 +367,64 @@ struct StationDisplayParityTests {
         #expect(total == shippedStationCount, "every shipped station row, got \(total)")
     }
 
+    @Test("Representative circles retain different operators and displaced anchors")
+    func representativeCircleOwnership() throws {
+        for (operatorName, longitude, hidden) in [
+            ("Other Rail", 139.0, false), ("Test Rail", 139.000001, false),
+            ("Test Rail", 139.0, true),
+        ] {
+            let raw = """
+            {"format":"compact-v1","version":"test","country":"JP","lines":[
+              {"id":"owner","name":"Owner","rank":0,"operator":"Test Rail","stations":[["a","A",139,35],["b","B",139.01,35]],"segments":[[1,0,[[139,35],[139.01,35]]]]},
+              {"id":"alias","name":"Alias","rank":0,"operator":"\(operatorName)","stations":[["a","A",139,35],["b","B",139.01,35]],"segments":[[1,0,[[139,35],[139.01,35]]]],"displayStationCoordinates":{"a":[\(longitude),35]},"stationCircleOwnerByCode":{"a":"owner"}}
+            ]}
+            """
+            let package = try JSONDecoder().decode(CompactPackage.self, from: Data(raw.utf8))
+            let network = StationDisplay.Network(package: package, loopLineIDs: [], packageLogoLineIDs: [])
+            #expect(network.circleAliasStationIDs.contains("alias:a") == hidden)
+            #expect(network.station(id: "alias:a") != nil)
+            #expect(network.groupMembers(ofStationID: "alias:a").count == 2)
+        }
+    }
+
+    @Test("Japan passenger popup retains independent Shinagawa corridors with production render groups")
+    func shinagawaProductionPopupGroups() throws {
+        let root = try PortFixtures.repositoryRoot()
+        let package = try PortFixtures.package(country: "jp")
+        let data = try Data(contentsOf: root.appending(path: "app/public/rail/display-lanes.json"))
+        let raw = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
+        let byRegion = try #require(raw["renderGroupByRegion"] as? [String: [String: String]])
+        let groups = try #require(byRegion["jp"])
+        let surfaceID = "jp-東日本旅客鉄道-東海道線"
+        let sobuID = "jp-東日本旅客鉄道-総武線-3"
+        #expect(groups[surfaceID] == groups[sobuID])
+        let network = StationDisplay.Network(package: package, renderGroupByLineID: groups)
+        let popup = StationDisplay.buildPopupModel(network: network, stationID: "\(sobuID):004095")
+        #expect(Set(popup.lines.map(\.lineID)) == Set([
+            surfaceID, sobuID, "jp-東日本旅客鉄道-山手線",
+            "jp-京浜急行電鉄-本線", "jp-東海旅客鉄道-東海道新幹線",
+        ]))
+        let tokyo = StationDisplay.buildPopupModel(network: network, stationID: "\(sobuID):003766")
+        #expect(tokyo.lines.filter { $0.label.hasPrefix("総武線") }.count == 1)
+        #expect(tokyo.lines.contains { $0.lineID == surfaceID })
+    }
+
+    @Test("North American reviewed render groups still elect one passenger popup row")
+    func northAmericanPopupRenderGroup() throws {
+        let raw = """
+        {"format":"compact-v1","version":"test","country":"US","lines":[
+          {"id":"us-main","name":"Main","operator":"Reviewed Rail","rank":0,"stations":[["a","A",-73,40],["b","B",-73.01,40]],"segments":[[1,0,[[-73,40],[-73.01,40]]]]},
+          {"id":"us-branch","name":"Branch","operator":"Reviewed Rail","rank":0,"stations":[["a","A",-73,40],["b","B",-73,40.01]],"segments":[[1,0,[[-73,40],[-73,40.01]]]]}
+        ]}
+        """
+        let package = try JSONDecoder().decode(CompactPackage.self, from: Data(raw.utf8))
+        let network = StationDisplay.Network(package: package,
+            renderGroupByLineID: ["us-main": "reviewed", "us-branch": "reviewed"])
+        let popup = StationDisplay.buildPopupModel(network: network, stationID: "us-main:a")
+        #expect(popup.lines.map(\.lineID) == ["us-main"])
+        #expect(network.groupMembers(ofStationID: "us-main:a").count == 2)
+    }
+
     @Test("Tokyo circle aliases remain available to station groups and popups")
     func tokyoLogicalAliases() throws {
         let fixture = Self.fixture
@@ -376,17 +434,19 @@ struct StationDisplayParityTests {
             ("jp-東日本旅客鉄道-東北線-2:003766", "jp-東日本旅客鉄道-東海道線:003766"),
             ("jp-東日本旅客鉄道-総武線-3:003766", "jp-東日本旅客鉄道-総武線:003766"),
         ]
-        let corridorAliases = [
-            ("jp-東日本旅客鉄道-総武線-3:004095", "jp-東日本旅客鉄道-東海道線:004095"),
-        ]
-        #expect(network.stations.count == japan.stationCount + network.circleAliasStationIDs.count)
+        // The historical fixture counted Shinagawa Sobu as a shared circle.
+        // This repair restores exactly that one circle; Tokyo aliases below
+        // still account for the remaining difference from logical row count.
+        let restoredShinagawaCircles = 1
+        #expect(network.stations.count - network.circleAliasStationIDs.count
+            == japan.stationCount + restoredShinagawaCircles)
         for entry in fixture.packages where entry.country != "jp" {
             #expect(try Self.network(entry).stations.count == entry.stationCount)
         }
 
-        // The compact Swift decoder intentionally omits drawing policy. Read
-        // the source ownership declarations to identify exactly which logical
-        // rows share circles, rather than accepting any two missing marks.
+        // Read current ownership declarations alongside the historical Tokyo
+        // popup fixture; the Shinagawa repair does not require regenerating
+        // every country's station-display fixture.
         let packageURL = try PortFixtures.repositoryRoot()
             .appending(path: "app/public/rail/jp-2025.json")
         let raw = try #require(try JSONSerialization.jsonObject(with: Data(contentsOf: packageURL))
@@ -398,12 +458,32 @@ struct StationDisplayParityTests {
             else { return [] }
             return owners.filter { $0.value != id }.map { "\(id):\($0.key)" }
         }
-        #expect(Set(declaredAliases).isSuperset(of: Set((aliases + corridorAliases).map { $0.0 })))
-        for (aliasID, ownerID) in corridorAliases {
-            let alias = try #require(network.station(id: aliasID))
-            let owner = try #require(network.station(id: ownerID))
-            #expect(alias.coordinate == owner.coordinate)
-        }
+        #expect(Set(declaredAliases).isSuperset(of: Set(aliases.map { $0.0 })))
+        let sobuID = "jp-東日本旅客鉄道-総武線-3"
+        let surfaceID = "jp-東日本旅客鉄道-東海道線"
+        var currentRaw = raw
+        currentRaw["lines"] = lines.filter { [sobuID, surfaceID].contains($0["id"] as? String ?? "") }
+        let currentCompact = try JSONDecoder().decode(CompactPackage.self,
+            from: JSONSerialization.data(withJSONObject: currentRaw))
+        #expect(currentCompact.lines.count == 2)
+        let current = StationDisplay.Network(package: currentCompact)
+        let sobuStationID = "\(sobuID):004095"
+        let surfaceStationID = "\(surfaceID):004095"
+        let sobu = try #require(current.station(id: sobuStationID))
+        let surface = try #require(current.station(id: surfaceStationID))
+        #expect(!current.circleAliasStationIDs.contains(sobuStationID))
+        #expect(!current.circleAliasStationIDs.contains(surfaceStationID))
+        #expect(!declaredAliases.contains(sobuStationID))
+        #expect(sobu.coordinate != surface.coordinate)
+        let sourceSobu = try #require(currentCompact.lines.first { $0.id == sobuID })
+        let sourceStation = try #require(sourceSobu.stations.first { $0.id == "004095" })
+        #expect(sobu.coordinate == sourceStation.coordinate)
+        #expect(sobu.stationGroupID == surface.stationGroupID)
+        #expect(current.groupMembers(ofStationID: sobuStationID) == current.groupMembers(ofStationID: surfaceStationID))
+        let sobuPopup = StationDisplay.buildPopupModel(network: current, stationID: sobuStationID)
+        let surfacePopup = StationDisplay.buildPopupModel(network: current, stationID: surfaceStationID)
+        #expect(sobuPopup.lines.map(\.lineID) == surfacePopup.lines.map(\.lineID))
+        #expect(Set(sobuPopup.lines.map(\.lineID)) == Set([sobuID, surfaceID]))
         for (aliasID, ownerID) in aliases {
             let alias = try #require(network.station(id: aliasID))
             let owner = try #require(network.station(id: ownerID))

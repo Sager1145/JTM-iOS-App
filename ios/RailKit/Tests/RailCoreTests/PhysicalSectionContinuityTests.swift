@@ -116,8 +116,8 @@ struct PhysicalSectionContinuityTests {
             contentsOf: data.appendingPathComponent("rail-sections.json")).features
         var features = try Stations.FeatureCollection.load(
             contentsOf: data.appendingPathComponent("stations.json")).features
-        _ = RailHistory.apply(try RailHistoryOverlay.load(from: data.appendingPathComponent("rail-history.json")),
-            sections: &sections, stations: &features)
+        let overlay = try RailHistoryOverlay.load(from: data.appendingPathComponent("rail-history.json"))
+        _ = RailHistory.apply(overlay, sections: &sections, stations: &features)
         // Include all surveyed memberships near the route, including Kofu's
         // other platform. Each test owns its mutable regional graph cache.
         sections = sections.filter { feature in feature.lines.contains { line in line.contains {
@@ -125,7 +125,9 @@ struct PhysicalSectionContinuityTests {
         } } }
         let registry = try PhysicalRailJunctionRegistry(data: Data(contentsOf:
             data.appendingPathComponent("physical-rail-junctions.json")))
-        let store = RouteGraph.RouteGraphStore(sections: sections, junctions: registry.junctions(for: "jp"))
+        let store = RouteGraph.RouteGraphStore(
+            sections: sections, junctions: registry.junctions(for: "jp"),
+            identityPeriods: overlay.identityPeriods)
         let stations = Stations.Index(features)
         let graph = store.fullGraph()
         let previousKey = "21:東日本旅客鉄道|9:中央線|2:11|0:|0:|0:|0:@138.57021,35.66677"
@@ -167,7 +169,8 @@ struct PhysicalSectionContinuityTests {
             data.appendingPathComponent("physical-rail-junctions.json"))).junctions(for: "jp").filter {
                 $0.id.hasPrefix("utazu-")
             }
-        let store = RouteGraph.RouteGraphStore(sections: sections, junctions: junctions)
+        let store = RouteGraph.RouteGraphStore(
+            sections: sections, junctions: junctions, identityPeriods: overlay.identityPeriods)
         let stations = Stations.Index(stationFeatures)
         for (start, startCode, end, endCode) in [("児島", "007919", "丸亀", "008271"),
             ("丸亀", "008271", "児島", "007919")] {

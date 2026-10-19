@@ -306,19 +306,6 @@ struct FixtureParityTests {
     }
 
     static func package(country: String) throws -> CompactPackage {
-        if let cached = packageCache[country] { return cached }
-        var directory = URL(filePath: #filePath).deletingLastPathComponent()
-        for _ in 0..<8 {
-            let candidate = directory.appending(path: "app/public/rail/\(country)-2025.json")
-            if FileManager.default.fileExists(atPath: candidate.path) {
-                let loaded = try CompactPackage.load(contentsOf: candidate)
-                packageCache[country] = loaded
-                return loaded
-            }
-            directory = directory.deletingLastPathComponent()
-        }
-        throw CocoaError(.fileNoSuchFile)
+        try PortFixtures.package(country: country)
     }
-
-    nonisolated(unsafe) private static var packageCache: [String: CompactPackage] = [:]
 }

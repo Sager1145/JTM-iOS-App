@@ -1,19 +1,12 @@
 import Foundation
 import Testing
-@testable import RailCore
+import RailCore
 
 struct ReviewedIwanumaRoutingTests {
     @Test("Reviewed Iwanuma identity boundary carries current Watari–Sendai over surveyed rail")
     func actualSourceBoundary() throws {
-        let data = try PortFixtures.repositoryRoot().appendingPathComponent("app/data")
-        var sourceSections = try RouteGraph.SectionFeatureCollection.load(
-            contentsOf: data.appendingPathComponent("rail-sections.json")).features
-        var stationFeatures = try Stations.FeatureCollection.load(
-            contentsOf: data.appendingPathComponent("stations.json")).features
-        let overlay = try RailHistoryOverlay.load(
-            from: data.appendingPathComponent("rail-history.json"))
-        _ = RailHistory.apply(overlay, sections: &sourceSections, stations: &stationFeatures)
-
+        let snapshot = try ReviewedCorridorFixtures.snapshot(history: true)
+        let sourceSections = snapshot.sections
         let sections = sourceSections.filter { feature in
             feature.properties.operator == "東日本旅客鉄道"
                 && ["常磐線", "東北線"].contains(feature.properties.lineName)
@@ -25,10 +18,8 @@ struct ReviewedIwanumaRoutingTests {
                 }
         }
         #expect(!sections.isEmpty)
-        let stations = Stations.Index(.init(features: stationFeatures))
-        let registry = try PhysicalRailJunctionRegistry(data: Data(
-            contentsOf: data.appendingPathComponent("physical-rail-junctions.json")))
-        let junction = try #require(registry.junctions(for: "jp").first {
+
+        let junction = try #require(snapshot.junctions.first {
             $0.id == "iwanuma-joban-tohoku"
         })
         let coordinate = Coordinate(lon: 140.86437, lat: 38.11279)
@@ -53,14 +44,14 @@ struct ReviewedIwanumaRoutingTests {
                                    fromN02StationCode: "001259", toN02StationCode: "001182")
         let reverse = RouteSection(from: "仙台", to: "亘理",
                                    fromN02StationCode: "001182", toN02StationCode: "001259")
-        func solve(_ graph: RouteGraph.Graph, _ section: RouteSection) -> RouteSolver.SolvedSection? {
-            RouteSolver.solveSection(section, segmentIndex: 0,
-                train: .init(company: "東日本旅客鉄道", rideDate: "2026-10-03"),
-                country: "jp", graph: graph, stations: stations)
+        var worker = ReviewedCorridorWorker(sections: sections, stations: snapshot.stations,
+            junctions: [junction])
+        func solve(_ reviewed: Bool, _ section: RouteSection) throws -> ReviewedCorridorWorker.Proof? {
+            try worker.solve(reviewed: reviewed, section: section, company: "東日本旅客鉄道", date: "2026-10-03")
         }
         for section in [forward, reverse] {
-            #expect(solve(independent, section) == nil)
-            let solved = try #require(solve(joined, section))
+            #expect(try solve(false, section) == nil)
+            let solved = try #require(try solve(true, section))
             #expect(solved.coordinates == solved.rawPathKeys.compactMap { joined.nodes[$0] })
             var boundaries = 0
             var lines = Set<String>()

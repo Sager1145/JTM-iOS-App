@@ -216,7 +216,14 @@
       "やくも",
       "Yakumo"
     ],
-    "logoPath": null
+    "logoPath": null,
+    "logos": [
+      {
+        "path": "/rail/service-logos/yakumo-273.png",
+        "validFrom": "2024-04-06",
+        "validUntil": null
+      }
+    ]
   },
   {
     "id": "shinano",
@@ -808,7 +815,7 @@
       "四国まんなか千年ものがたり",
       "Shikoku Mannaka Sennen Monogatari"
     ],
-    "logoPath": null
+    "logoPath": "/rail/service-logos/shikoku-mannaka-sennen-monogatari.png"
   },
   {
     "id": "shikoku-tosa-jidai-no-yoake",
@@ -818,7 +825,7 @@
       "志国土佐時代の夜明けのものがたり",
       "Shikoku Tosa Jidai no Yoake no Monogatari"
     ],
-    "logoPath": null
+    "logoPath": "/rail/service-logos/shikoku-tosa-jidai-no-yoake.png"
   },
   {
     "id": "iyonada-monogatari",
@@ -827,7 +834,7 @@
       "伊予灘ものがたり",
       "Iyonada Monogatari"
     ],
-    "logoPath": null
+    "logoPath": "/rail/service-logos/iyonada-monogatari.png"
   },
   {
     "id": "nichirin",
@@ -949,7 +956,7 @@
       "ふたつ星4047",
       "Futatsuboshi 4047"
     ],
-    "logoPath": null
+    "logoPath": "/rail/service-logos/futatsuboshi-4047.png"
   },
   {
     "id": "aru-ressha",
@@ -958,7 +965,7 @@
       "或る列車",
       "Aru Ressha"
     ],
-    "logoPath": null
+    "logoPath": "/rail/service-logos/aru-ressha.png"
   },
   {
     "id": "fujisan",
@@ -979,7 +986,7 @@
       "Twilight Express Mizukaze",
       "Mizukaze"
     ],
-    "logoPath": null
+    "logoPath": "/rail/service-logos/twilight-express-mizukaze.png"
   },
   {
     "id": "ibusuki-no-tamatebako",
@@ -1012,7 +1019,7 @@
       "Kanpachi",
       "Ichiroku"
     ],
-    "logoPath": null
+    "logoPath": "/rail/service-logos/kanpachi-ichiroku.png"
   },
   {
     "id": "muroto",
@@ -1426,7 +1433,7 @@
       "Blue Symphony",
       "Ao no Symphony"
     ],
-    "logoPath": "/rail/service-logos/blue-symphony.jpg"
+    "logoPath": "/rail/service-logos/blue-symphony.png"
   },
   {
     "id": "southern",
@@ -1487,7 +1494,7 @@
       "京とれいん雅洛",
       "Kyo-train Garaku"
     ],
-    "logoPath": "/rail/service-logos/kyo-train.jpg"
+    "logoPath": "/rail/service-logos/kyo-train.png"
   },
   {
     "id": "fujisan-tokkyu",
@@ -1632,7 +1639,7 @@
       "北斗星",
       "Hokutosei"
     ],
-    "logoPath": "/rail/service-logos/hokutosei.jpg"
+    "logoPath": "/rail/service-logos/hokutosei.png"
   },
   {
     "id": "cassiopeia",
@@ -1884,7 +1891,7 @@
       "花嫁のれん",
       "Hanayome Noren"
     ],
-    "logoPath": null
+    "logoPath": "/rail/service-logos/hanayome-noren.png"
   },
   {
     "id": "home-express-anan",
@@ -1902,7 +1909,14 @@
       "かもめ",
       "Kamome"
     ],
-    "logoPath": null
+    "logoPath": null,
+    "logos": [
+      {
+        "path": "/rail/service-logos/kamome-n700s.png",
+        "validFrom": "2022-09-23",
+        "validUntil": null
+      }
+    ]
   },
   {
     "id": "relay-tsubame",

@@ -20,6 +20,26 @@ import Testing
 /// spelling.
 struct StationsParityTests {
 
+    @Test func bundledIdentityIndexDoesNotRetainFailedOrPartialReads() throws {
+        let directory = FileManager.default.temporaryDirectory
+            .appending(path: "station-identities-\(UUID().uuidString).bundle")
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let url = directory.appending(path: "stations-hk.json")
+        try Data("invalid json".utf8).write(to: url)
+        let bundle = try #require(Bundle(url: directory))
+        #expect(throws: (any Error).self) {
+            try Stations.bundledIdentityIndex(country: "hk", bundle: bundle)
+        }
+        let valid = Data(#"{"features":[{"properties":{"n02_station_code":"MTR-HOK","n02_group_code":"hong-kong"}},{"properties":{"N02_005c":"legacy","N02_005g":"legacy-group"}},{"properties":{"n02_station_code":"ungrouped"}}]}"#.utf8)
+        try valid.write(to: url)
+        let index = try Stations.bundledIdentityIndex(country: "hk", bundle: bundle)
+        #expect(index.codes == ["MTR-HOK", "legacy", "ungrouped"])
+        #expect(index.groups == ["MTR-HOK": "hong-kong", "legacy": "legacy-group"])
+        try Data("broken after successful load".utf8).write(to: url)
+        #expect(try Stations.bundledIdentityIndex(country: "hk", bundle: bundle).groups == index.groups)
+    }
+
     // MARK: - Reading the fixture
 
     /// The row encoding: fields separated by U+0000, split on code units so a

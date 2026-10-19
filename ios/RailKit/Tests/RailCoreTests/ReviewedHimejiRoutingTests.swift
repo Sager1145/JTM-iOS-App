@@ -1,18 +1,12 @@
 import Foundation
 import Testing
-@testable import RailCore
+import RailCore
 
 struct ReviewedHimejiRoutingTests {
     @Test("The reviewed Himeji connector joins the San'yo and Bantan lines", arguments: ["2026-10-03", "1990-07-01"])
     func sanyoBantanThroughHimeji(rideDate: String) throws {
-        let data = try PortFixtures.repositoryRoot().appendingPathComponent("app/data")
-        var sourceSections = try RouteGraph.SectionFeatureCollection.load(
-            contentsOf: data.appendingPathComponent("rail-sections.json")).features
-        var stationFeatures = try Stations.FeatureCollection.load(
-            contentsOf: data.appendingPathComponent("stations.json")).features
-        let overlay = try RailHistoryOverlay.load(
-            from: data.appendingPathComponent("rail-history.json"))
-        _ = RailHistory.apply(overlay, sections: &sourceSections, stations: &stationFeatures)
+        let snapshot = try ReviewedCorridorFixtures.snapshot(history: true)
+        let sourceSections = snapshot.sections
         let sections = sourceSections.filter { feature in
             feature.properties.operator == "西日本旅客鉄道"
                 && ["山陽線", "播但線"].contains(feature.properties.lineName)
@@ -24,10 +18,8 @@ struct ReviewedHimejiRoutingTests {
                 }
         }
         #expect(!sections.isEmpty)
-        let stations = Stations.Index(.init(features: stationFeatures))
-        let registry = try PhysicalRailJunctionRegistry(data: Data(
-            contentsOf: data.appendingPathComponent("physical-rail-junctions.json")))
-        let junctions = registry.junctions(for: "jp").filter { $0.id == "west-himeji-sanyo-bantan" }
+
+        let junctions = snapshot.junctions.filter { $0.id == "west-himeji-sanyo-bantan" }
         let himeji = try #require(junctions.first)
         #expect(junctions.count == 1)
         #expect(himeji.kind == .osmConnector)
@@ -41,10 +33,10 @@ struct ReviewedHimejiRoutingTests {
         let joined = RouteGraph.build(from: sections, policy: .physicalRailway, junctions: junctions)
         #expect(joined.rejectedPhysicalJunctionIDs.isEmpty)
 
-        func solve(_ graph: RouteGraph.Graph, _ section: RouteSection) -> RouteSolver.SolvedSection? {
-            RouteSolver.solveSection(section, segmentIndex: 0,
-                train: .init(company: "西日本旅客鉄道", rideDate: rideDate),
-                country: "jp", graph: graph, stations: stations)
+        var worker = ReviewedCorridorWorker(sections: sections, stations: snapshot.stations,
+            junctions: junctions)
+        func solve(_ reviewed: Bool, _ section: RouteSection) throws -> ReviewedCorridorWorker.Proof? {
+            try worker.solve(reviewed: reviewed, section: section, company: "西日本旅客鉄道", date: rideDate)
         }
         // A train from the west (英賀保) runs straight through the turnout
         // east of 姫路 onto 播但線. はまかぜ's stop-at-姫路 continuity is
@@ -53,8 +45,8 @@ struct ReviewedHimejiRoutingTests {
             RouteSection(from: "英賀保", to: "京口", fromN02StationCode: "006573", toN02StationCode: "006477"),
             RouteSection(from: "京口", to: "英賀保", fromN02StationCode: "006477", toN02StationCode: "006573")
         ] {
-            #expect(solve(independent, section) == nil)
-            let solved = try #require(solve(joined, section))
+            #expect(try solve(false, section) == nil)
+            let solved = try #require(try solve(true, section))
             // 英賀保–姫路 3.7 km plus 姫路–京口 1.8 km, entered east of the platforms.
             #expect(solved.physicalLength < 7_000)
             var connector = 0

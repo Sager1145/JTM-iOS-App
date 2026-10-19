@@ -16,9 +16,14 @@ struct MileageMatchingTests {
     private func journey(
         id: String = "ride", digest: Int = 1, date: String = "2026-10-03", ridden: Bool = true
     ) -> MileageMatching.Journey {
-        .init(train: .init(id: id, trainType: "local", date: date,
-            stops: [.init(departure: "10:00", rideSegment: true),
-                .init(arrival: "11:00", rideSegment: ridden)]), entryDigest: digest,
+        .init(
+            train: Train(
+                id: id, date: date, number: "", trainType: "local", origin: "A", destination: "B",
+                stops: [
+                    Stop(name: "A", departure: "10:00", rideSegment: true),
+                    Stop(name: "B", arrival: "11:00", rideSegment: ridden),
+                ]),
+            statisticsDate: date, entryDigest: digest,
             segments: [.init(sourceCoordinates: coordinates, segmentIndex: 0, from: "A", to: "B")])
     }
 
@@ -38,11 +43,45 @@ struct MileageMatchingTests {
         #expect(unRidden.entries[0].segments.isEmpty)
     }
 
+    @Test func sourceOnlyBoundaryRetainsBothPhysicalSectionsInRiddenMileage() throws {
+        let a = Coordinate(lon: 139, lat: 35)
+        let b = Coordinate(lon: 139.01, lat: 35)
+        let c = Coordinate(lon: 139.02, lat: 35)
+        let mapping = try #require(RecordedRouteMapping(
+            stops: [Stop(name: "A"), Stop(name: "C")],
+            sections: [RouteSection(from: "A", to: "B"), RouteSection(from: "B", to: "C")]))
+        let network = Statistics.buildEdgeIndex(sections: [
+            .init(properties: .init(n02_001: .string("11"), n02_002: .string("2"),
+                                   n02_003: .string("test"), n02_004: .string("operator")),
+                  coordinates: [a, b, c]),
+        ], country: "jp")
+        let segments: [MileageMatching.Segment] = [
+            .init(sourceCoordinates: [a, b], segmentIndex: 0, from: "A", to: "B"),
+            .init(sourceCoordinates: [b, c], segmentIndex: 1, from: "B", to: "C"),
+        ]
+        for ridden in [true, false] {
+            let input = MileageMatching.Journey(
+                train: Train(
+                    id: "source-boundary", number: "", origin: "A", destination: "C",
+                    stops: [
+                        Stop(name: "A", departure: "10:00", rideSegment: true),
+                        Stop(name: "C", arrival: "11:00", rideSegment: ridden),
+                    ]),
+                entryDigest: 1, segments: segments, recordedRouteMapping: mapping)
+            let result = try MileageMatching.match(journeys: [input], index: network, cache: [:])
+            #expect(result.entries[0].edges == (ridden ? [0, 1] : []))
+            #expect(result.entries[0].segments.map(\.from) == (ridden ? ["A", "B"] : []))
+        }
+    }
+
     @Test func cacheHitNeedsNoGeometryAndDeletedJourneysArePruned() throws {
         let network = index()
         let original = try MileageMatching.match(journeys: [journey(), journey(id: "deleted")], index: network, cache: [:])
         let updatedMetadata = MileageMatching.Journey(
-            train: .init(id: "ride", trainType: "express", date: "2026-10-03"), entryDigest: 1, segments: [])
+            train: Train(
+                id: "ride", date: "2026-10-03", number: "", trainType: "express",
+                origin: "", destination: "", stops: []),
+            statisticsDate: "2026-10-03", entryDigest: 1, segments: [])
         let reused = try MileageMatching.match(journeys: [updatedMetadata], index: network, cache: original.cache)
         #expect(reused.entries[0].km.bitPattern == original.entries[0].km.bitPattern)
         #expect(reused.entries[0].edges == original.entries[0].edges)
@@ -57,8 +96,10 @@ struct MileageMatchingTests {
         let confirmed = journey()
         let previous = try MileageMatching.match(journeys: [confirmed], index: network, cache: [:])
         #expect(previous.entries[0].km > 0)
-        let pending = MileageMatching.Journey(train: confirmed.train, entryDigest: confirmed.entryDigest,
-            segments: confirmed.segments, routeConfirmation: .pending)
+        let pending = MileageMatching.Journey(
+            train: confirmed.train, statisticsDate: confirmed.statisticsDate,
+            entryDigest: confirmed.entryDigest, segments: confirmed.segments,
+            routeConfirmation: .pending)
         let result = try MileageMatching.match(journeys: [pending], index: network, cache: previous.cache)
         #expect(result.entries[0].km == 0)
         #expect(!result.entries[0].distanceIsKnown)
@@ -73,27 +114,31 @@ struct MileageMatchingTests {
     @Test func disconnectedJourneyRetainsProvenPartsWithoutACompleteDistance() throws {
         let network = index()
         let complete = journey()
-        let partial = MileageMatching.Journey(train: complete.train, entryDigest: 2,
+        let partial = MileageMatching.Journey(
+            train: complete.train, statisticsDate: complete.statisticsDate, entryDigest: 2,
             segments: complete.segments, fullDistanceKnown: false)
         let result = try MileageMatching.match(journeys: [partial], index: network, cache: [:])
         #expect(result.entries[0].km > 0)
         #expect(!result.entries[0].distanceIsKnown)
         #expect(result.entries[0].partialDistanceIsProven)
         let original = try MileageMatching.match(journeys: [complete], index: network, cache: [:])
-        let cachedPartial = MileageMatching.Journey(train: complete.train, entryDigest: 1,
+        let cachedPartial = MileageMatching.Journey(
+            train: complete.train, statisticsDate: complete.statisticsDate, entryDigest: 1,
             segments: [], fullDistanceKnown: false)
         let reused = try MileageMatching.match(journeys: [cachedPartial], index: network, cache: original.cache)
         #expect(reused.entries[0].km == original.entries[0].km)
         #expect(!reused.entries[0].distanceIsKnown)
         #expect(reused.entries[0].partialDistanceIsProven)
-        let noGeometry = MileageMatching.Journey(train: complete.train, entryDigest: 3,
+        let noGeometry = MileageMatching.Journey(
+            train: complete.train, statisticsDate: complete.statisticsDate, entryDigest: 3,
             segments: [], fullDistanceKnown: false)
         let empty = try MileageMatching.match(journeys: [noGeometry], index: network, cache: [:])
         #expect(!empty.entries[0].distanceIsKnown)
         #expect(!empty.entries[0].partialDistanceIsProven)
         let future = try MileageMatching.match(journeys: [partial], index: index(validFrom: "2027-01-01"), cache: [:])
         #expect(!future.entries[0].partialDistanceIsProven)
-        let pending = MileageMatching.Journey(train: complete.train, entryDigest: 2,
+        let pending = MileageMatching.Journey(
+            train: complete.train, statisticsDate: complete.statisticsDate, entryDigest: 2,
             segments: complete.segments, routeConfirmation: .pending, fullDistanceKnown: false)
         let unconfirmed = try MileageMatching.match(journeys: [pending], index: network, cache: result.cache)
         #expect(unconfirmed.entries[0].km == 0)

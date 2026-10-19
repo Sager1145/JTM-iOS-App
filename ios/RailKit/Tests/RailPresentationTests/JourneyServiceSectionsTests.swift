@@ -4,6 +4,23 @@ import Testing
 @testable import RailPresentation
 
 struct JourneyServiceSectionsTests {
+    @Test("Source boundaries do not become fictitious recorded stop indices")
+    func sourceBoundaryLegRanges() {
+        let source = Train(id: "source-legs", number: "", origin: "A", destination: "C",
+            routeSections: [
+                .init(from: "A", to: "B", fromN02StationCode: "A", toN02StationCode: "B", lineNames: ["First"]),
+                .init(from: "B", to: "C", fromN02StationCode: "B", toN02StationCode: "C", lineNames: ["Second"])
+            ], stops: [Stop(name: "A", n02StationCode: "A"), Stop(name: "C", n02StationCode: "C")])
+        let legs = JourneyServiceSections.legs(of: source)
+        #expect(legs.count == 2)
+        #expect(legs.allSatisfy { $0.fromStopIndex == 0 && $0.toStopIndex == 1 })
+        #expect(Set(legs.map(\.id)).count == 2)
+        #expect(legs.map(\.from) == ["A", "B"])
+        #expect(legs.map(\.to) == ["B", "C"])
+        #expect(legs.map(\.fromStationCode) == ["A", "B"])
+        #expect(legs.map(\.toStationCode) == ["B", "C"])
+    }
+
     private func train(_ infos: [RouteSectionServiceInfo]) -> Train {
         let stops = (0...infos.count).map {
             Stop(name: "Station \($0)", n02StationCode: String(format: "%06d", $0))

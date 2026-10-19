@@ -3,6 +3,54 @@ import Testing
 @testable import RailCore
 
 struct RouteSectionServiceEditingTests {
+    @Test("Editing or clearing an exact source-only service leg leaves its sibling intact")
+    func exactSourceBoundaryServiceRange() throws {
+        var first = boundary("A", "B")
+        first.number = "First service"
+        var second = boundary("B", "C")
+        second.number = "Second service"
+        let original = Train(id: "exact-service", number: "", origin: "A", destination: "C",
+            routeSections: [first, second], stops: [Stop(name: "A", n02StationCode: "A"),
+                                                  Stop(name: "C", n02StationCode: "C")])
+        let edited = RouteSectionServiceEditing.applying(.init(lineNames: ["Source"], number: "Changed"),
+            to: original, fromSectionIndex: 1, toSectionIndex: 2)
+        let editedSections = try #require(edited.routeSections)
+        #expect(editedSections[0] == first)
+        #expect(editedSections[1].number == "Changed")
+        #expect(editedSections[1].sectionCodes == second.sectionCodes)
+        let cleared = RouteSectionServiceEditing.applying(.init(), to: original,
+            fromSectionIndex: 0, toSectionIndex: 1)
+        let clearedSections = try #require(cleared.routeSections)
+        #expect(RouteSectionServiceInfo(section: clearedSections[0]).isEmpty)
+        #expect(clearedSections[0].fromN02StationCode == "A" && clearedSections[0].toN02StationCode == "B")
+        #expect(clearedSections[1] == second)
+        #expect(edited.stops == original.stops && cleared.stops == original.stops)
+        for range in [(-1, 1), (0, 3), (1, 1)] {
+            #expect(RouteSectionServiceEditing.applying(.init(number: "Invalid"), to: original,
+                fromSectionIndex: range.0, toSectionIndex: range.1) == original)
+        }
+    }
+
+    @Test("Service edits cover the selected recorded interval, including source-only boundaries")
+    func sourceBoundaryServiceRange() throws {
+        let original = Train(id: "boundary-service", number: "", origin: "A", destination: "E",
+            routeSections: [boundary("A", "B"), boundary("B", "C"),
+                            boundary("C", "D"), boundary("D", "E")],
+            stops: ["A", "C", "E"].map { Stop(name: $0, n02StationCode: $0) })
+        let updated = RouteSectionServiceEditing.applying(
+            .init(lineNames: ["Source"], number: "New number"), to: original,
+            fromStopIndex: 1, toStopIndex: 2)
+        let sections = try #require(updated.routeSections)
+        #expect(Array(sections.prefix(2)) == Array(original.routeSections!.prefix(2)))
+        #expect(sections.map(\.number) == ["Old number", "Old number", "New number", "New number"])
+        #expect(sections.flatMap { $0.sectionCodes ?? [] } == ["A>B", "B>C", "C>D", "D>E"])
+    }
+
+    private func boundary(_ from: String, _ to: String) -> RouteSection {
+        .init(from: from, to: to, fromN02StationCode: from, toN02StationCode: to,
+              lineNames: ["Source"], lineIDs: ["source"], sectionCodes: [from + ">" + to], number: "Old number")
+    }
+
     private var train: Train {
         Train(id: "through", number: "Through service", origin: "A", destination: "D",
               routeSections: [
@@ -26,7 +74,7 @@ struct RouteSectionServiceEditingTests {
             to: original, fromStopIndex: 1, toStopIndex: 3)
         let sections = try #require(updated.routeSections)
         #expect(sections.count == 3)
-        #expect(sections[0] == StoreOperations.rideRouteSections(for: original)[0])
+        #expect(sections[0] == original.routeSections?[0])
         #expect(sections[1].lineNames == ["Second line"])
         #expect(sections[2].operatorNames == ["Second operator"])
         #expect(sections[1].number == "505D" && sections[2].number == "505D")

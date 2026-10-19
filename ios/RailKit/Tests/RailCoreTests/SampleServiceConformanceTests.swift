@@ -22,10 +22,52 @@ struct SampleServiceConformanceTests {
         "20260711_05_seibu_ikebukuro_semiexp": "西武池袋線 急行 names a line and class",
     ]
 
+    // Recorded named conventional rides, pinned independently of the lookup
+    // under test. Shinkansen rides remain required by their explicit class.
+    private let namedConventionalServices = [
+        "20260703_01_haruka": "haruka",
+        "20260706_02_super_tsugaru2": "super-tsugaru",
+        "20260706_03_inaho14": "inaho",
+        "20260708_02_shirasagi2": "shirasagi",
+        "20260713_07_hokuto21": "hokuto",
+        "20260714_01_ozora3": "ozora",
+        "20260714_04_ozora12": "ozora",
+        "20260715_01_soya": "soya",
+        "20260715_02_soya": "soya",
+        "20260716_07_hokuto20": "hokuto",
+        "20260719_02_yakumo11": "yakumo",
+        "20260719_03_super_oki5": "super-oki",
+        "20260720_47_midori35_shintosu_arita": "midori",
+        "20260721_06_relay_kamome22": "relay-kamome",
+        "20260721_08_asoboy3": "asoboy",
+        "20260721_09_asoboy4": "asoboy",
+        "20260722_04_kirishima8": "kirishima",
+        "20260722_05_nichirin10": "nichirin",
+        "20260722_06_sonic44": "sonic",
+        "20260722_07_kirameki6": "kirameki",
+        "20260722_08_sonic54_kokura_kurosaki": "sonic",
+        "20260723_02_shiokaze5": "shiokaze",
+        "20260723_03_ishizuchi10": "ishizuchi",
+        "20260723_05_uzushio10": "uzushio",
+        "20260724_01_ishizuchi9": "ishizuchi",
+        "20260724_02_nanpu9": "nanpu",
+        "20260724_03_tsurugisan6": "tsurugisan",
+        "20260724_05_nanpu17": "nanpu",
+        "20260724_06_nanpu28": "nanpu",
+        "20260726_07_odoriko": "odoriko",
+        "20260727_08_narita_express": "narita-express",
+        "20260729_05_sunrise_izumo": "sunrise-izumo",
+        "20260730_03_yakumo22": "yakumo",
+        "20260731_02_rapit_alpha3": "rapit",
+    ]
+
     @Test func sampleServiceConformance() throws {
         let root = try PortFixtures.repositoryRoot()
         let store = try JSONDecoder().decode(TrainStore.self, from:
             Data(contentsOf: root.appending(path: "app/data/train-store.json")))
+        let japaneseIDs = Set(store.trains.filter { ($0.region ?? "jp") == "jp" }.map(\.id))
+        try #require(Set(namedConventionalServices.keys).isSubset(of: japaneseIDs),
+                     "Required named conventional rides disappeared from the sample store")
         let stations = try JSONDecoder().decode(Stations.self, from:
             Data(contentsOf: root.appending(path: "app/data/stations.json")))
         var groups: [String: String] = [:]
@@ -89,6 +131,10 @@ struct SampleServiceConformanceTests {
         var checked = 0, failures = 0
         for ride in store.trains where (ride.region ?? "jp") == "jp" {
             let service = TrainServiceBranding.service(for: ride)
+            if let expected = namedConventionalServices[ride.id] {
+                let resolved = try #require(service, "Required sample branding disappeared: \(ride.id)")
+                #expect(resolved.id == expected, "\(ride.id) must retain its named service identity")
+            }
             if classOnly[ride.id] != nil {
                 #expect(service == nil, "Class-only exemption now resolves: \(ride.id)")
                 #expect(!(ride.trainType ?? "").contains("新幹線"))

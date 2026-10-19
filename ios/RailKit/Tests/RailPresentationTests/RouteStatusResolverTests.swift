@@ -5,9 +5,9 @@ import Testing
 /// JRM_FLIGHTY_UI_REFACTOR_SPEC.md §5.5, §8.4 and §8.8, as a decision table.
 ///
 /// Every case below was reachable before this suite existed and none of them
-/// was asserted: the rules lived in `RideStatusCenter.status(forTrainID:)`, a
-/// method on a `@MainActor @Observable` object in the app target, which has no
-/// test target under it. The three that matter most are the three that fail
+/// was asserted: the rules lived on a `@MainActor @Observable` object in the
+/// app target, which has no test target under it. The three that matter most
+/// are the three that fail
 /// *quietly* — each one degrades a specific, actionable state into a vaguer
 /// one, and the map still draws:
 ///

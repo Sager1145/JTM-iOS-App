@@ -75,7 +75,7 @@ struct HakodateRouteConnectionTests {
         let hints = RouteHints(requiredLineIDs: rows, sectionCodes: codes,
                                fromStationCode: "000424", toStationCode: "000426")
         let network = try network()
-        let source = try #require(network.sourceGeometry(for: hints))
+        let source = try #require(network.sourceCertification(for: hints)?.geometry)
         let display = try #require(network.canonicalizeRouteFeature(RouteFeature(geometry: nil, hints: hints)))
         #expect(source.lines.count == 1)
         #expect(display.geometry.lines.count == 1)
@@ -88,7 +88,7 @@ struct HakodateRouteConnectionTests {
         let reverseHints = RouteHints(
             requiredLineIDs: rows, sectionCodes: codes.reversed(),
             fromStationCode: "000426", toStationCode: "000424")
-        let reverseSource = try #require(network.sourceGeometry(for: reverseHints))
+        let reverseSource = try #require(network.sourceCertification(for: reverseHints)?.geometry)
         let reverseDisplay = try #require(network.canonicalizeRouteFeature(
             RouteFeature(geometry: nil, hints: reverseHints)))
         #expect(reverseSource.lines[0] == Array(source.lines[0].reversed()))

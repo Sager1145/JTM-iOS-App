@@ -3,6 +3,27 @@ import Testing
 @testable import RailCore
 
 struct StationIntervalResolverTests {
+    @Test func reusedRequestsKeepBudgetConstraintsVisitsAndCancellation() throws {
+        let resolver = try fixture([
+            row("direct", ["A", "D"]), row("long", ["A", "B", "C", "D"]),
+        ])
+        let full = resolver.resolve(stationCodes: ["A", "D"], requiredLineNames: ["Family"])
+        #expect(try resolved(full).lineIDs == ["direct"])
+        #expect(resolver.resolve(stationCodes: ["A", "D"], requiredLineNames: ["Family"]) == full)
+        #expect(resolver.resolve(stationCodes: ["A", "D"], requiredLineNames: ["Family"],
+            maximumExaminedStates: 1) == .ambiguous)
+        #expect(resolver.resolve(stationCodes: ["A", "D"], requiredLineNames: ["Family"],
+            isCancelled: { true }) == .unsupported)
+        #expect(resolver.resolve(stationCodes: ["A", "D"], requiredLineNames: ["Family"]) == full)
+        #expect(try resolved(resolver.resolve(stationCodes: ["A", "D"], requiredLineIDs: ["long"])).lineIDs == ["long"])
+        let repeated = try resolved(resolver.resolve(stationCodes: ["A", "D", "A"], requiredLineIDs: ["direct"]))
+        #expect(repeated.intervals.map(\.direction) == [1, -1])
+        let reverse = try resolved(resolver.resolve(stationCodes: ["D", "A"], requiredLineIDs: ["direct"]))
+        #expect(reverse.intervals.map(\.direction) == [-1])
+        let otherNetwork = try fixture([row("direct", ["A", "D"], traversal: "forward")])
+        #expect(otherNetwork.resolve(stationCodes: ["D", "A"], requiredLineIDs: ["direct"]) == .unsupported)
+    }
+
     @Test func shortFamilyHintResolvesBothDirections() throws {
         let resolver = try fixture([row("main", ["A", "B", "C"], name: "1号線(Family)", norm: "Family")])
         let forward = try resolved(resolver.resolve(stationCodes: ["A", "C"], requiredLineNames: ["Family"]))

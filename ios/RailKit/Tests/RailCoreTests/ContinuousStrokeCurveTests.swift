@@ -167,6 +167,105 @@ struct ContinuousStrokeCurveTests {
         #expect(zip(lane.measures, lane.measures.dropFirst()).allSatisfy(<=))
     }
 
+    @Test func branchTangentIgnoresSurveyDirection() throws {
+        let main = [Point(x: -200, y: 0), Point(x: 0, y: 0), Point(x: 200, y: 0)]
+        let departure = [Point(x: 0, y: 0), Point(x: 100, y: 10), Point(x: 200, y: 30)]
+        for branch in [departure, departure.map { Point(x: -$0.x, y: $0.y) }] {
+            for atEnd in [false, true] {
+                let points = atEnd ? Array(branch.reversed()) : branch
+                let forward = try #require(ContinuousStroke.tangentJoin(points, mainChain: main, atEnd: atEnd, lane: 0))
+                let reverse = try #require(ContinuousStroke.tangentJoin(points, mainChain: Array(main.reversed()), atEnd: atEnd, lane: 0))
+                #expect(forward.mainTangent == reverse.mainTangent)
+            }
+        }
+        #expect(ContinuousStroke.tangentJoin([Point(x: 0, y: 0), Point(x: 100, y: 100)], mainChain: main, atEnd: false, lane: 0) == nil)
+        #expect(ContinuousStroke.tangentJoin([Point(x: 0, y: 0.001), Point(x: 100, y: 10)], mainChain: main, atEnd: false, lane: 0) == nil)
+    }
+
+    @Test func branchEndpointInheritsMainLane() throws {
+        let main = [Point(x: -200, y: 0), Point(x: 0, y: 0), Point(x: 200, y: 0)]
+        let branch = [Point(x: 0, y: 0), Point(x: 100, y: 10), Point(x: 200, y: 30)]
+        for reversed in [false, true] {
+            let join = try #require(ContinuousStroke.tangentJoin(
+                branch, mainChain: reversed ? Array(main.reversed()) : main,
+                atEnd: false, lane: -1, mainLane: reversed ? -2 : 2))
+            let stroke = ContinuousStroke.buildStroke(branch, options: .init(
+                measures: [0, 200, 400], rows: [.init(from: 0, to: 400, lane: -1)],
+                totalMetres: 400, laneGapPx: 10, minRampPx: 0, cornerRadiusPx: 0,
+                anchors: [], joinStart: join))
+            #expect(abs(stroke.points[0].y - 20) < 1e-10)
+        }
+    }
+
+    @Test func confirmedEndpointJunctionMeetsPhysicalSwitch() throws {
+        let departure = [Point(x: 0, y: 0), Point(x: 100, y: 10), Point(x: 200, y: 30)]
+        let main = [Point(x: -200, y: 0), Point(x: 0, y: 0)]
+        for atEnd in [false, true] {
+            for reverseMain in [false, true] {
+                let points = atEnd ? Array(departure.reversed()) : departure
+                let chain = reverseMain ? Array(main.reversed()) : main
+                #expect(ContinuousStroke.tangentJoin(
+                    points, mainChain: chain, atEnd: atEnd, lane: 2, mainLane: 0) == nil)
+                let join = try #require(ContinuousStroke.tangentJoin(
+                    points, mainChain: chain, atEnd: atEnd, lane: 2, mainLane: 0, allowMainEndpoint: true))
+                #expect(join.mainChain == chain)
+                let stroke = ContinuousStroke.buildStroke(points, options: .init(
+                    measures: [0, 200, 400], rows: [.init(from: 0, to: 400, lane: 2)],
+                    totalMetres: 400, laneGapPx: 10, minRampPx: 24, cornerRadiusPx: 3.6,
+                    anchors: [], joinStart: atEnd ? nil : join, joinEnd: atEnd ? join : nil))
+                let endpoint = try #require(atEnd ? stroke.points.last : stroke.points.first)
+                #expect(hypot(endpoint.x, endpoint.y) < 1e-9)
+            }
+        }
+        #expect(ContinuousStroke.tangentJoin(
+            [Point(x: 0, y: 0), Point(x: 100, y: 100)], mainChain: main,
+            atEnd: false, lane: 0, mainLane: 0, allowMainEndpoint: true) == nil)
+        #expect(ContinuousStroke.tangentJoin(
+            [Point(x: 0, y: 0.001), Point(x: 100, y: 10)], mainChain: main,
+            atEnd: false, lane: 0, mainLane: 0, allowMainEndpoint: true) == nil)
+    }
+
+    @Test func branchEndpointSurvivesNearbyLaneChangeAndPixelFloor() throws {
+        for pixelScale in [1.0, 0.02] {
+            for atEnd in [false, true] {
+                let points = [Point(x: 0, y: 0), Point(x: 100 * pixelScale, y: 0),
+                              Point(x: 1000 * pixelScale, y: 0)]
+                let endpoint = atEnd ? points[2] : points[0]
+                let main = [Point(x: endpoint.x - 2000, y: 0), endpoint,
+                            Point(x: endpoint.x + 2000, y: 0)]
+                let rows: [ContinuousStroke.LaneRow] = atEnd
+                    ? [.init(from: 900, to: 1000, lane: -1)]
+                    : [.init(from: 0, to: 100, lane: -1)]
+                let join = try #require(ContinuousStroke.tangentJoin(
+                    points, mainChain: main, atEnd: atEnd, lane: -1, mainLane: 2))
+                let stroke = ContinuousStroke.buildStroke(points, options: .init(
+                    measures: [0, 100, 1000], rows: rows, totalMetres: 1000,
+                    laneGapPx: 10, minRampPx: 24, cornerRadiusPx: 0, anchors: [],
+                    joinStart: atEnd ? nil : join, joinEnd: atEnd ? join : nil))
+                let drawnEndpoint = try #require(atEnd ? stroke.points.last : stroke.points.first)
+                #expect(abs(drawnEndpoint.y - 20) < 1e-9)
+            }
+        }
+    }
+
+    @Test func bothBranchTargetsSurviveOverlappingAndCoalescedRamps() throws {
+        for total in [40.0, 100.0] {
+            let points = [Point(x: 0, y: 0), Point(x: total / 2, y: 0), Point(x: total, y: 0)]
+            let start = try #require(ContinuousStroke.tangentJoin(
+                points, mainChain: [Point(x: -100, y: 0), points[0], Point(x: 100, y: 0)],
+                atEnd: false, lane: 0, mainLane: 2))
+            let end = try #require(ContinuousStroke.tangentJoin(
+                points, mainChain: [Point(x: total - 100, y: 0), points[2], Point(x: total + 100, y: 0)],
+                atEnd: true, lane: 0, mainLane: -1))
+            let stroke = ContinuousStroke.buildStroke(points, options: .init(
+                measures: [0, total / 2, total], rows: [], totalMetres: total,
+                laneGapPx: 10, minRampPx: 0, cornerRadiusPx: 0, anchors: [], joinStart: start, joinEnd: end))
+            let last = try #require(stroke.points.last)
+            #expect(abs(stroke.points[0].y - 20) < 1e-9)
+            #expect(abs(last.y + 10) < 1e-9)
+        }
+    }
+
     @Test func tangentJunctionBlendsButFortyFiveDegreeJunctionDoesNot() {
         func branch(angleDegrees: Double) -> [Point] {
             let angle = angleDegrees * .pi / 180
@@ -210,4 +309,20 @@ struct ContinuousStrokeCurveTests {
         #expect(unblended.points == steep)
         #expect(unblended.measures == measures)
     }
+    @Test func shallowSurveyedCurveRemainsAnInterpolationSupport() {
+        let source = [Point(x: 0, y: 0), Point(x: 10, y: 0), Point(x: 10.1, y: 0.01),
+                      Point(x: 20, y: 0), Point(x: 30, y: 0.2), Point(x: 40, y: 0.4), Point(x: 50, y: 0.6)]
+        let measures = ContinuousStroke.cumulativeLengths(source)
+        let curved = ContinuousStroke.smoothCentreline(source, measures: measures)
+        for index in [1, 2] {
+            let at = curved.measures.firstIndex(of: measures[index])
+            #expect(at != nil)
+            if let at { #expect(curved.points[at] == source[index]) }
+        }
+        let stroke = ContinuousStroke.buildStroke(source, options: .init(
+            measures: measures, rows: [], totalMetres: measures.last!, laneGapPx: 0,
+            minRampPx: 0, cornerRadiusPx: 3, anchors: []))
+        #expect(stroke.points.contains { $0.x > 10 && $0.x < 10.2 && $0.y >= 0.009 })
+    }
+
 }

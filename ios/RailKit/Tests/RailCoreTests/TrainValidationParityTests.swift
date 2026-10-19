@@ -660,4 +660,47 @@ struct TrainValidationParityTests {
         #expect(repeated.ownKeys == ["a", "b"])
         #expect(repeated["a"] == .number(3))
     }
+
+    /// A hand-written JSON document and the same illegal fact on a `Train`
+    /// name the same field and the same reason. The JSON text is the input;
+    /// it is not produced by encoding the typed value.
+    @Test func rawJSONAndTypedTrainReportTheSameIllegalFact() throws {
+        let raw = """
+        {"id":"ride","number":"Local","origin":"A","destination":"B","stops":[
+          {"name":"A","departure":"09:00","stop_type":"not-a-stop","ride_segment":true},
+          {"name":"B","arrival":"10:00","stop_type":"destination","ride_segment":true}
+        ]}
+        """
+        let typed = Train(
+            id: "ride", number: "Local", origin: "A", destination: "B",
+            stops: [
+                Stop(name: "A", departure: "09:00", stopType: "not-a-stop", rideSegment: true),
+                Stop(name: "B", arrival: "10:00", stopType: "destination", rideSegment: true),
+            ])
+        var jsonIDs = Set<String>()
+        var typedIDs = Set<String>()
+        let jsonError = Self.validationError {
+            try TrainValidation.validateTrain(
+                try TrainValidation.JSON.parse(raw), index: 0, ids: &jsonIDs)
+        }
+        let typedError = Self.validationError {
+            try TrainValidation.validateTrain(typed, index: 0, ids: &typedIDs)
+        }
+        #expect(jsonError.path == typedError.path)
+        #expect(jsonError.reason == typedError.reason)
+        #expect(jsonError.path == "stops[0].stop_type")
+    }
+
+    private static func validationError(_ body: () throws -> Void) -> TrainValidation.ValidationError {
+        do {
+            try body()
+            Issue.record("expected a validation error")
+            return TrainValidation.ValidationError(message: "")
+        } catch let error as TrainValidation.ValidationError {
+            return error
+        } catch {
+            Issue.record("unexpected error \(error)")
+            return TrainValidation.ValidationError(message: "")
+        }
+    }
 }

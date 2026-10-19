@@ -1,18 +1,12 @@
 import Foundation
 import Testing
-@testable import RailCore
+import RailCore
 
 struct ReviewedKobeRoutingTests {
     @Test("The reviewed Kobe boundary joins the Tokaido and San'yo lines for through trains", arguments: ["2026-10-03", "1990-07-01"])
     func tokaidoSanyoThroughKobe(rideDate: String) throws {
-        let data = try PortFixtures.repositoryRoot().appendingPathComponent("app/data")
-        var sourceSections = try RouteGraph.SectionFeatureCollection.load(
-            contentsOf: data.appendingPathComponent("rail-sections.json")).features
-        var stationFeatures = try Stations.FeatureCollection.load(
-            contentsOf: data.appendingPathComponent("stations.json")).features
-        let overlay = try RailHistoryOverlay.load(
-            from: data.appendingPathComponent("rail-history.json"))
-        _ = RailHistory.apply(overlay, sections: &sourceSections, stations: &stationFeatures)
+        let snapshot = try ReviewedCorridorFixtures.snapshot(history: true)
+        let sourceSections = snapshot.sections
         let sections = sourceSections.filter { feature in
             feature.properties.operator == "西日本旅客鉄道"
                 && ["東海道線", "山陽線"].contains(feature.properties.lineName)
@@ -24,10 +18,8 @@ struct ReviewedKobeRoutingTests {
                 }
         }
         #expect(!sections.isEmpty)
-        let stations = Stations.Index(.init(features: stationFeatures))
-        let registry = try PhysicalRailJunctionRegistry(data: Data(
-            contentsOf: data.appendingPathComponent("physical-rail-junctions.json")))
-        let junctions = registry.junctions(for: "jp").filter { $0.id == "west-kobe" }
+
+        let junctions = snapshot.junctions.filter { $0.id == "west-kobe" }
         let kobe = try #require(junctions.first)
         #expect(junctions.count == 1)
         #expect(kobe.from.coordinate == Coordinate(lon: 135.17838, lat: 34.68057))
@@ -40,10 +32,10 @@ struct ReviewedKobeRoutingTests {
         let joined = RouteGraph.build(from: sections, policy: .physicalRailway, junctions: junctions)
         #expect(joined.rejectedPhysicalJunctionIDs.isEmpty)
 
-        func solve(_ graph: RouteGraph.Graph, _ section: RouteSection) -> RouteSolver.SolvedSection? {
-            RouteSolver.solveSection(section, segmentIndex: 0,
-                train: .init(company: "西日本旅客鉄道", rideDate: rideDate),
-                country: "jp", graph: graph, stations: stations)
+        var worker = ReviewedCorridorWorker(sections: sections, stations: snapshot.stations,
+            junctions: junctions)
+        func solve(_ reviewed: Bool, _ section: RouteSection) throws -> ReviewedCorridorWorker.Proof? {
+            try worker.solve(reviewed: reviewed, section: section, company: "西日本旅客鉄道", date: rideDate)
         }
         // 元町 → 兵庫 and 三ノ宮 → 新長田 pass 神戸, where 東海道線 ends and
         // 山陽線 begins. Without the boundary neither interval exists.
@@ -55,8 +47,8 @@ struct ReviewedKobeRoutingTests {
                 RouteSection(from: from, to: to, fromN02StationCode: fromCode, toN02StationCode: toCode),
                 RouteSection(from: to, to: from, fromN02StationCode: toCode, toN02StationCode: fromCode)
             ] {
-                #expect(solve(independent, section) == nil)
-                let solved = try #require(solve(joined, section))
+                #expect(try solve(false, section) == nil)
+                let solved = try #require(try solve(true, section))
                 var boundaries = 0
                 var lines = Set<String>()
                 for (from, to) in zip(solved.rawPathKeys, solved.rawPathKeys.dropFirst()) {

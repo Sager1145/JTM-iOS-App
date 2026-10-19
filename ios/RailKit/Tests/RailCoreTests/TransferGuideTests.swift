@@ -150,6 +150,41 @@ struct TransferGuideParseTests {
         #expect(route.legs[1].calls.first?.departure == "09:12")
     }
 
+    @Test("one OCR observation retains each transfer clock badge", arguments: [false, true])
+    func oneObservationTransferBadges(unmarked: Bool) {
+        var shot = Screenshot()
+        shot.row(("23:40 発 東京", 10))
+        shot.row(("1駅", 10), ("JR東海道本線", 110))
+        shot.row((unmarked ? "23:58 00:02 品川" : "23:58 着 00:02 発 品川", 10))
+        shot.row(("1駅", 10), ("JR山手線", 110))
+        shot.row(("00:20 着 渋谷", 10))
+        let route = TransferGuide.parse(shot.lines)
+        #expect(route.legs.count == 2)
+        #expect(route.legs.first?.calls.last?.arrival == "23:58")
+        #expect(route.legs.last?.calls.first?.departure == "24:02")
+        #expect(route.legs.last?.calls.last?.arrival == "24:20")
+    }
+
+    @Test("midnight carries across legs before excluded legs are removed")
+    func midnightAcrossIncludedLegs() {
+        var shot = Screenshot()
+        shot.row(("23:40", 10), ("発", 70), ("東京", 110))
+        shot.row(("1駅", 10), ("JR東海道本線", 110))
+        shot.row(("23:58着", 10), ("品川", 170))
+        shot.row(("00:02発", 10))
+        shot.row(("1駅", 10), ("JR山手線", 110))
+        shot.row(("00:20", 10), ("着", 70), ("渋谷", 110))
+        let route = TransferGuide.parse(shot.lines)
+        #expect(route.legs.count == 2)
+        #expect(route.legs.last?.calls.first?.departure == "24:02")
+        var kept = route
+        kept.legs = Array(route.legs.suffix(1))
+        let records = TransferGuide.build(route: kept, options: .init(date: "2026-08-30"), stations: testIndex()).trains
+        #expect(records.first?.date == "2026-08-30")
+        #expect(records.first?.stops.first?.departure == "24:02")
+        #expect(records.first?.stops.last?.arrival == "24:20")
+    }
+
     @Test("the bracketed prefecture is kept and the 構内図 icon is not")
     func names() {
         let route = TransferGuide.parse(sapporoToHakata())

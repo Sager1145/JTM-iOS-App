@@ -1,0 +1,126 @@
+import RailCore
+
+/// Matches an ordered journey snapshot against one already-loaded edge index.
+/// The caller owns the index identity, cache lifetime and result publication.
+public enum MileageMatching {
+    public struct Segment: Sendable {
+        /// Canonical WGS84, before any MapKit datum conversion or simplification.
+        public let sourceCoordinates: [Coordinate]
+        public let segmentIndex: Int
+        public let from: String?
+        public let to: String?
+
+        public init(sourceCoordinates: [Coordinate], segmentIndex: Int, from: String?, to: String?) {
+            self.sourceCoordinates = sourceCoordinates
+            self.segmentIndex = segmentIndex
+            self.from = from
+            self.to = to
+        }
+    }
+
+    public struct Journey: Sendable {
+        public let train: Train
+        /// Normalized statistics bucket (`Dates.trainDate`), never raw `Train.date`.
+        /// `nil` means the walk has no ride date, which is a different input
+        /// from the `undated` bucket.
+        public let statisticsDate: String?
+        public let entryDigest: Int
+        public let segments: [Segment]
+        /// Physical section ordinals need their recorded visit ownership when
+        /// source boundaries are absent from the passenger stop list.
+        public let recordedRouteMapping: RecordedRouteMapping?
+        public let routeConfirmation: RouteConfirmation?
+        public let fullDistanceKnown: Bool
+
+        public init(train: Train, statisticsDate: String? = nil, entryDigest: Int, segments: [Segment],
+                    routeConfirmation: RouteConfirmation? = nil, fullDistanceKnown: Bool = true,
+                    recordedRouteMapping: RecordedRouteMapping? = nil) {
+            self.train = train
+            self.statisticsDate = statisticsDate
+            self.entryDigest = entryDigest
+            self.segments = segments
+            self.recordedRouteMapping = recordedRouteMapping
+            self.routeConfirmation = routeConfirmation
+            self.fullDistanceKnown = fullDistanceKnown
+        }
+    }
+
+    public struct CachedEntry: Sendable {
+        public let digest: Int
+        public let entry: Statistics.TrainEntry
+
+        public init(digest: Int, entry: Statistics.TrainEntry) {
+            self.digest = digest
+            self.entry = entry
+        }
+    }
+
+    public struct Result: Sendable {
+        public let trains: [Train]
+        public let entries: [Statistics.TrainEntry]
+        /// Rebuilt from this snapshot only, so deleted journeys leave the cache.
+        public let cache: [String: CachedEntry]
+    }
+
+    /// Cache entries must belong to `index`; a change of index invalidates all
+    /// entries even if their journey digests have not moved. Order is preserved
+    /// because Core's deduplicated union has insertion-order numeric semantics.
+    public static func match(
+        journeys: [Journey], index: Statistics.EdgeIndex,
+        cache: [String: CachedEntry], report: @Sendable (Int) -> Void = { _ in }
+    ) throws -> Result {
+        var trains: [Train] = []
+        var entries: [Statistics.TrainEntry] = []
+        var fresh: [String: CachedEntry] = [:]
+        trains.reserveCapacity(journeys.count)
+        entries.reserveCapacity(journeys.count)
+        fresh.reserveCapacity(journeys.count)
+
+        for (position, journey) in journeys.enumerated() {
+            try Task.checkCancellation()
+            let train = journey.train
+            trains.append(train)
+            if journey.routeConfirmation == .pending {
+                // Cached or stale drawn geometry cannot attest a route that
+                // the reader has explicitly left unconfirmed. Do not cache
+                // this placeholder as a measured zero-distance journey.
+                entries.append(Statistics.TrainEntry(distanceIsKnown: false))
+            } else if let cached = cache[train.id], cached.digest == journey.entryDigest {
+                var entry = cached.entry
+                entry.distanceIsKnown = entry.distanceIsKnown && journey.fullDistanceKnown
+                entry.partialDistanceIsProven = entry.partialDistanceIsProven
+                    || (!journey.fullDistanceKnown && !entry.edges.isEmpty)
+                entries.append(entry)
+                fresh[train.id] = CachedEntry(digest: cached.digest, entry: entry)
+            } else {
+                let features = journey.segments.map { segment in
+                    let stopInterval: Int?
+                    if let mapping = journey.recordedRouteMapping {
+                        stopInterval = mapping.stopInterval(forSectionIndex: segment.segmentIndex)
+                    } else {
+                        // Existing callers with adjacent stop-pair geometry
+                        // already supply recorded interval ordinals.
+                        stopInterval = segment.segmentIndex
+                    }
+                    return Statistics.RouteFeature(
+                        lines: [segment.sourceCoordinates], hasGeometry: true,
+                        rideSegment: stopInterval.map {
+                            Statistics.isRideSegment(train.stops, segmentIndex: $0)
+                        } ?? false,
+                        from: segment.from, to: segment.to)
+                }
+                var entry = Statistics.collectTrainStatsEntry(
+                    features: features, index: index, rideDate: journey.statisticsDate)
+                entry.distanceIsKnown = journey.fullDistanceKnown
+                entry.partialDistanceIsProven = !journey.fullDistanceKnown && !entry.edges.isEmpty
+                entries.append(entry)
+                fresh[train.id] = CachedEntry(digest: journey.entryDigest, entry: entry)
+            }
+            // Preserve the store's progress cadence, including a final report
+            // when the last block has exactly 25 journeys.
+            if position % 25 == 24 { report(position + 1) }
+        }
+        report(journeys.count)
+        return Result(trains: trains, entries: entries, cache: fresh)
+    }
+}

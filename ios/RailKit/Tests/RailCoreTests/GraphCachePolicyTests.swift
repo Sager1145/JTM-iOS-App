@@ -1,3 +1,4 @@
+import Foundation
 import Testing
 @testable import RailCore
 
@@ -13,8 +14,8 @@ struct GraphCachePolicyTests {
         .init(minX: 138.99, minY: 34.99, maxX: 139.01, maxY: 35.01)
     }
 
-    @Test("Bounded caches release ownership across all graph categories")
-    func replacesAcrossCategories() {
+    @Test("Bounded caches release the full graph before building a regional one")
+    func releasesFullGraphBeforeRegional() {
         let store = RouteGraph.RouteGraphStore(sections: sections, cachePolicy: .bounded(maximumNodes: 4))
         weak let previous = store.fullGraph()
         #expect(previous != nil)
@@ -26,14 +27,31 @@ struct GraphCachePolicyTests {
         #expect(previous == nil)
         #expect(regional === store.regionalGraph(for: box))
         #expect(store.retainedGraphNodeCount == 2)
-        let corridor = store.corridorGraph(for: Array(points.suffix(2)), meters: 10)
-        #expect(store.regionCacheKeys.isEmpty)
-        #expect(store.retainedGraphNodeCount == 2)
-        #expect(corridor === store.corridorGraph(for: Array(points.suffix(2)), meters: 10))
         // An active caller's graph survives eviction intact.
         #expect(regional.nodeCount == 2)
         store.invalidate()
         #expect(store.retainedGraphNodeCount == 0)
+    }
+
+    /// A route solve alternates a section's regional graph with corridor
+    /// proofs of the path it found. A single shared slot made every proof
+    /// evict the regional graph, so each following section rebuilt it.
+    @Test("Corridor proofs keep the regional graph within the node budget")
+    func corridorProofsKeepRegionalGraph() {
+        let store = RouteGraph.RouteGraphStore(sections: sections, cachePolicy: .bounded(maximumNodes: 4))
+        let regional = store.regionalGraph(for: box)
+        let corridor = store.corridorGraph(for: Array(points.suffix(2)), meters: 10)
+        #expect(store.regionCacheKeys.count == 1)
+        #expect(regional === store.regionalGraph(for: box))
+        #expect(corridor === store.corridorGraph(for: Array(points.suffix(2)), meters: 10))
+        #expect(store.retainedGraphNodeCount == 4)
+        // A third graph evicts the least recently used one, never the new one.
+        let other = RouteGraph.BBox(minX: 139.99, minY: 35.99, maxX: 140.01, maxY: 36.01)
+        let second = store.regionalGraph(for: other)
+        #expect(store.retainedGraphNodeCount <= 4)
+        #expect(second === store.regionalGraph(for: other))
+        #expect(regional === store.regionalGraph(for: box))
+        #expect(store.retainedGraphNodeCount <= 4)
     }
 
     @Test("Oversized graphs stay complete but are not cached")
@@ -53,6 +71,44 @@ struct GraphCachePolicyTests {
         #expect(store.retainedGraphNodeCount == 0)
         #expect(store.corridorGraph(for: points, meters: 10).nodeCount == 4)
         #expect(store.retainedGraphNodeCount == 0)
+    }
+
+    @Test("Exact corridor reuse respects radius, invalidation and node budget")
+    func corridorRequestsRemainScoped() {
+        let local = Array(points.prefix(2))
+        let store = RouteGraph.RouteGraphStore(sections: sections, cachePolicy: .bounded(maximumNodes: 4))
+        let narrow = store.corridorGraph(for: local, meters: 10)
+        #expect(narrow.nodeCount == 2)
+        #expect(store.corridorGraph(for: local, meters: 10) === narrow)
+        let wide = store.corridorGraph(for: local, meters: 200_000)
+        #expect(wide.nodeCount == 4)
+        #expect(store.retainedGraphNodeCount <= 4)
+        // The wider replacement evicted the old corridor. A repeated request
+        // must rebuild its own topology, rather than keep an unbudgeted alias.
+        let rebuilt = store.corridorGraph(for: local, meters: 10)
+        #expect(rebuilt.nodeCount == 2)
+        #expect(rebuilt !== narrow)
+        store.invalidate()
+        #expect(store.corridorGraph(for: local, meters: 10) !== rebuilt)
+    }
+
+    @Test("Shared proof provenance belongs to an immutable feature snapshot")
+    func proofProvenanceInvalidatesOnMutation() {
+        let snapshot = UUID()
+        let first = RouteGraph.RouteGraphStore(sections: sections, sourceSnapshotID: snapshot)
+        let second = RouteGraph.RouteGraphStore(sections: sections, sourceSnapshotID: snapshot)
+        let local = Array(points.prefix(2))
+        let graph = first.corridorGraph(for: local, meters: 10)
+        #expect(graph.sourceProofProvenance != nil)
+        #expect(graph.sourceProofProvenance == second.corridorGraph(for: local, meters: 10).sourceProofProvenance)
+        #expect(graph.sourceProofProvenance != RouteGraph.RouteGraphStore(
+            sections: sections, sourceSnapshotID: UUID()).corridorGraph(for: local, meters: 10).sourceProofProvenance)
+        let nodes = graph.nodes
+        graph.nodes = nodes
+        #expect(graph.sourceProofProvenance == nil)
+        let augmented = RouteGraph.RouteGraphStore(sections: sections, sourceSnapshotID: snapshot)
+        augmented.augment = { _, _ in }
+        #expect(augmented.corridorGraph(for: local, meters: 10).sourceProofProvenance == nil)
     }
 
     @Test("Eviction and rebuilding preserve physical topology and adjacency order")

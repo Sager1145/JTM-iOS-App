@@ -1,18 +1,12 @@
 import Foundation
 import Testing
-@testable import RailCore
+import RailCore
 
 struct ReviewedUtazuRoutingTests {
     @Test("Reviewed Utazu boundaries preserve the separate surveyed Sakaide and Marugame arms")
     func actualSourceArms() throws {
-        let data = try PortFixtures.repositoryRoot().appendingPathComponent("app/data")
-        var sourceSections = try RouteGraph.SectionFeatureCollection.load(
-            contentsOf: data.appendingPathComponent("rail-sections.json")).features
-        var stationFeatures = try Stations.FeatureCollection.load(
-            contentsOf: data.appendingPathComponent("stations.json")).features
-        let overlay = try RailHistoryOverlay.load(
-            from: data.appendingPathComponent("rail-history.json"))
-        _ = RailHistory.apply(overlay, sections: &sourceSections, stations: &stationFeatures)
+        let snapshot = try ReviewedCorridorFixtures.snapshot(history: true)
+        let sourceSections = snapshot.sections
         let sections = sourceSections.filter { feature in
             feature.properties.operator == "四国旅客鉄道"
                 && ["本四備讃線", "予讃線"].contains(feature.properties.lineName)
@@ -24,12 +18,10 @@ struct ReviewedUtazuRoutingTests {
                 }
         }
         #expect(!sections.isEmpty)
-        let stations = Stations.Index(.init(features: stationFeatures))
-        let registry = try PhysicalRailJunctionRegistry(data: Data(
-            contentsOf: data.appendingPathComponent("physical-rail-junctions.json")))
+
         let easternID = "utazu-honshi-bisan-yosan-eastern-bypass"
         let stationID = "utazu-honshi-bisan-yosan-station-arm"
-        let junctions = registry.junctions(for: "jp").filter {
+        let junctions = snapshot.junctions.filter {
             [easternID, stationID].contains($0.id)
         }
         #expect(junctions.count == 2)
@@ -57,16 +49,20 @@ struct ReviewedUtazuRoutingTests {
         let joined = RouteGraph.build(from: sections, policy: .physicalRailway, junctions: junctions)
         #expect(joined.rejectedPhysicalJunctionIDs.isEmpty)
 
-        func solve(_ graph: RouteGraph.Graph, _ section: RouteSection) -> RouteSolver.SolvedSection? {
-            RouteSolver.solveSection(section, segmentIndex: 0,
-                train: .init(company: "四国旅客鉄道", rideDate: "2026-10-03"),
-                country: "jp", graph: graph, stations: stations)
+        var worker = ReviewedCorridorWorker(sections: sections, stations: snapshot.stations,
+            junctions: junctions)
+        func solve(_ reviewed: Bool, _ section: RouteSection) throws -> ReviewedCorridorWorker.Proof? {
+            try worker.solve(reviewed: reviewed, section: section, company: "四国旅客鉄道", date: "2026-10-03")
         }
-        // Source indexes identify the reviewed physical arms. Read their
-        // vertices from the actual history-applied source, never a fixture.
-        for (destination, code, expected, requiredFeatures) in [
-            ("坂出", "008240", eastern, [5506]),
-            ("丸亀", "008271", station, [5505, 5500])
+        // Registry geometryEvidence identifies the source arms at these
+        // surveyed vertices. History identity copies can shift array positions;
+        // locate the same whole source features by identity and both endpoints.
+        let bridgeFork = Coordinate(lon: 133.82224, lat: 34.31954)
+        let westernApproach = Coordinate(lon: 133.81778, lat: 34.31274)
+        for (destination, code, expected, requiredArms) in [
+            ("坂出", "008240", eastern, [(bridgeFork, eastern.from.coordinate)]),
+            ("丸亀", "008271", station, [(westernApproach, bridgeFork),
+                                        (station.from.coordinate, westernApproach)])
         ] {
             // Exercise the production default without per-section line hints
             // as well as the explicitly constrained corridor, both ways.
@@ -80,12 +76,23 @@ struct ReviewedUtazuRoutingTests {
                     lineNames: lineNames)]
             }
             for section in routes {
-                #expect(solve(independent, section) == nil)
-                let solved = try #require(solve(joined, section))
-                #expect(solved.hints.preferredLines == ["本四備讃線", "予讃線"])
+                #expect(try solve(false, section) == nil)
+                let solved = try #require(try solve(true, section))
                 #expect(solved.coordinates == solved.rawPathKeys.compactMap { joined.nodes[$0] })
-                for index in requiredFeatures {
-                    let feature = sourceSections[index]
+                for (from, to) in requiredArms {
+                    let matches = sourceSections.filter { feature in
+                        feature.properties.operator == "四国旅客鉄道"
+                            && feature.properties.lineName == "本四備讃線"
+                            && RouteGraph.RailValidity.isValid(
+                                validFrom: feature.properties.validFrom,
+                                validTo: feature.properties.validTo, on: "2026-10-03")
+                            && feature.quantisedLines.contains { line in
+                                (line.first == from && line.last == to)
+                                    || (line.first == to && line.last == from)
+                            }
+                    }
+                    #expect(matches.count == 1)
+                    let feature = try #require(matches.first)
                     #expect(feature.properties.operator == "四国旅客鉄道")
                     #expect(feature.properties.lineName == "本四備讃線")
                     for line in feature.quantisedLines {

@@ -32,7 +32,8 @@ struct TrainServicePatternRouteTests {
         let graphStore = RouteGraph.RouteGraphStore(
             sections: sections, policy: .physicalRailway,
             junctions: registry.junctions(for: "jp"),
-            cachePolicy: .bounded(maximumNodes: 100_000))
+            cachePolicy: .bounded(maximumNodes: 100_000),
+            identityPeriods: overlay.identityPeriods)
         return Environment(
             graphStore: graphStore, stations: Stations.Index(stationCollection),
             historyRevision: overlay.revision)
@@ -84,8 +85,8 @@ struct TrainServicePatternRouteTests {
             "railSectionsHash": git(["hash-object", "app/data/rail-sections.json"]),
             "historyOverlayRevision": TrainServicePatternRouteTests.environment.historyRevision,
             "historyOverlayHash": git(["hash-object", "app/data/rail-history.json"]),
-            "solverVersion": git(["hash-object", "ios/RailKit/Sources/RailCore/RouteSolver.swift"]),
-            "graphVersion": git(["hash-object", "ios/RailKit/Sources/RailCore/RouteGraph.swift"]),
+            "solverVersion": git(["hash-object", "ios/RailKit/Sources/RailCore/Routing/RouteSolver.swift"]),
+            "graphVersion": git(["hash-object", "ios/RailKit/Sources/RailCore/Routing/RouteGraph.swift"]),
             "testVersion": git(["hash-object", "ios/RailKit/Tests/RailCoreTests/TrainServicePatternRouteTests.swift"]),
             "testDate": "per-pattern catalog validFrom when validity is complete; otherwise unverified",
             "asOfDate": "not used; deterministic catalog evidence",
@@ -496,8 +497,7 @@ struct TrainServicePatternRouteTests {
             let workspace = StoreOperations.Workspace(
                 store: TrainStore(trains: [reopened]), country: "jp")
             let exported = StoreOperations.exportTrainStore(workspace)
-            let durableDate = Dates.normalizeTrainDate(
-                Dates.Train(id: recorded.id, date: recorded.date))
+            let durableDate = Dates.normalizeTrainDate(recorded)
             let disk = try JSONDecoder().decode(TrainStore.self, from: Data(exported.utf8)).trains.first
             guard let disk, identity(disk) == expected, disk.date == durableDate else {
                 return "\(direction): canonical export changed the record"
@@ -507,9 +507,9 @@ struct TrainServicePatternRouteTests {
             guard case .array(let rows)? = parsed["trains"], let row = rows.first else {
                 return "\(direction): export had no train"
             }
-            var importedWorkspace = StoreOperations.Workspace(country: "jp")
-            _ = try StoreOperations.appendImportedTrain(row, in: &importedWorkspace)
-            guard let imported = importedWorkspace.store.trains.first,
+            var session = ImportEngine.Session(country: "jp")
+            _ = try session.appendImportedTrain(row)
+            guard let imported = session.trains.first,
                   identity(imported) == expected else {
                 return "\(direction): import changed stop identity"
             }
@@ -551,5 +551,39 @@ struct TrainServicePatternRouteTests {
                 name: $0.name, code: $0.n02StationCode, arrival: $0.arrival,
                 departure: $0.departure, stopType: $0.stopType, ridden: $0.rideSegment)
         }
+    }
+
+    // Lives in this serialized suite because it uses `environment`, whose
+    // graph store is a mutable cache: another suite running in parallel on the
+    // same store corrupted its dictionaries.
+    @Test("京とれいん 雅洛 rides 宝塚線 大阪梅田→十三 and the 十三 boundary to 京都線 proves")
+    func garakuRidesTakarazukaThroughJuso() throws {
+        let pattern = try #require(TrainServicePatterns.patterns.first {
+            $0.id == "kyo-train-garaku-umeda-kawaramachi"
+        })
+        let day = "2026-10-03"
+        let applied = TrainServicePatterns.apply(pattern, to: Train(
+            id: pattern.id, date: day, number: "", origin: "", destination: "", stops: []))
+        let canonical = TrainValidation.normalizeExportTrain(applied, country: "jp")
+        let sections = StoreOperations.rideRouteSections(for: canonical)
+        let index = try #require(sections.firstIndex { $0.from == "大阪梅田" && $0.to == "十三" })
+        let env = TrainServicePatternRouteTests.environment
+        let train = TrainServicePatternRouteTests.context(canonical)
+        let solved = try #require(RouteSolver.solveSectionOnDemand(
+            sections[index], segmentIndex: index, train: train, country: "jp",
+            graphStore: env.graphStore, stations: env.stations, continuityAnchor: nil))
+        let next = try #require(RouteSolver.solveSectionOnDemand(
+            sections[index + 1], segmentIndex: index + 1, train: train, country: "jp",
+            graphStore: env.graphStore, stations: env.stations,
+            physicalContinuationKey: solved.rawPathKeys.last))
+        let graph = env.graphStore.corridorGraph(
+            for: solved.coordinates + next.coordinates, meters: 1_000)
+        let ridden = Set(solved.rawPathKeys.flatMap { graph.nodeMeta[$0]?.lineNames ?? [] })
+        #expect(ridden.contains("宝塚線"), "rode \(ridden)")
+        #expect(!ridden.contains("神戸線"), "rode \(ridden)")
+        #expect(RouteSolver.provenBoundaryContinuation(
+            previous: solved.rawPathKeys.last, first: next.rawPathKeys.first,
+            previousSection: sections[index], nextSection: sections[index + 1],
+            graph: graph, stations: env.stations, rideDate: day) != nil)
     }
 }

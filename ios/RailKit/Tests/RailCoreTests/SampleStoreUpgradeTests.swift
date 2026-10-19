@@ -23,19 +23,19 @@ struct SampleStoreUpgradeTests {
             return
         }
         try #require(rows.count == 201)
-        var workspace = StoreOperations.Workspace(country: "jp")
+        var session = ImportEngine.Session(country: "jp")
         for (index, row) in rows.enumerated() {
-            try StoreOperations.appendImportedTrain(row, in: &workspace)
+            try session.appendImportedTrain(row)
             // Import splits legacy bilingual captions. This format-only
             // migration must preserve their authored text and English names.
-            workspace.store.trains[index].number = original.trains[index].number
+            session.trains[index].number = original.trains[index].number
             if let english = original.trains[index].numberEn {
-                workspace.store.trains[index].numberEn = english
+                session.trains[index].numberEn = english
             }
         }
         // Ordinary RideEditorView save passes its draft unchanged; visit IDs
         // are assigned only by route editing, so no identities are invented.
-        var upgraded = TrainValidation.buildCanonicalTrainStore(workspace.trains, country: "jp")
+        var upgraded = TrainValidation.buildCanonicalTrainStore(session.trains, country: "jp")
         for index in upgraded.trains.indices {
             // Sample sections are reviewed physical claims. Preserve their
             // authored shape, including empty arrays; load-time inference must

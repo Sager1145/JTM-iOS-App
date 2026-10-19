@@ -1,0 +1,2320 @@
+import Foundation
+
+/// Mileage statistics — the port of `app/public/app-stats.js` §23a.
+///
+/// This is the tier that turns "which rails did you actually travel on" into
+/// the numbers in the 統計 panel: which bucket a stretch of track belongs to,
+/// how long every bucket is, how much of it has been ridden, and which
+/// station-to-station sections have been ridden most.
+///
+/// **The rule the whole file rests on: coverage is a deduped UNION, not a
+/// sum.** Every train's ridden geometry is matched onto the N02 RailroadSection
+/// edge set, and those edge ids are folded into one Set. Riding 東京–品川 forty
+/// times puts the same ids into the Set forty times and into the total once,
+/// which is why the percentage is a percentage of the network rather than a
+/// running tally. ``aggregateMileageStats(index:entries:country:asOf:)`` is where
+/// that happens, and it is the one function in here whose contract cannot be
+/// relaxed without the panel becoming a different claim.
+///
+/// The per-train km on ``TrainEntry/km`` is the deliberate opposite: it
+/// accumulates repeats, because it pairs with ride time and ride count in the
+/// service-tier rows.
+///
+/// What is *not* here is everything `app-stats-render.js` does with the
+/// result — number formatting, `Intl.Collator` line ordering, the HTML. Nor
+/// the browser-side scheduling around the pure logic: the sliced index build's
+/// 12 ms yield budget, `_statsTrainCache`'s per-train signature (which keys on
+/// `getTrainRouteTemplateKey`, a different file's port) and
+/// `ensureStatsEdgeIndexAsync`'s single-flight guard are all about not
+/// freezing a browser tab, and none of them change an answer.
+public enum Statistics {
+
+    // MARK: - category masks
+
+    // The mask bits are shared by every country — a bit means the same KIND of
+    // track everywhere (high speed, incumbent conventional, metro, light rail,
+    // other) so all the accumulation code stays country-generic. What differs
+    // per country is which buckets exist and what they are called.
+    public static let maskHSR = 1
+    public static let maskCONV = 2
+    public static let maskJR = 4
+    public static let maskMETRO = 8
+    public static let maskPRIV = 16
+    public static let maskTRAM = 32
+
+    public struct Category: Sendable, Equatable {
+        public let mask: Int
+        /// The i18n key, which resolves through the country variants
+        /// (`stat.conv` → `stat.conv.tw` = 臺鐵) in the render tier.
+        public let i18n: String
+    }
+
+    /// The rows one country's coverage panel has, in display order.
+    ///
+    /// Read this as a getter, never as a snapshot: the active country can
+    /// change without a reload, and a value captured once would keep the old
+    /// country's rows forever.
+    public static func categories(country: String) -> [Category] {
+        switch country {
+        case "cn", "tw":
+            return [
+                Category(mask: maskHSR, i18n: "stat.hsr"),
+                Category(mask: maskCONV, i18n: "stat.conv"),
+                Category(mask: maskMETRO, i18n: "stat.metro"),
+                Category(mask: maskTRAM, i18n: "stat.tram"),
+                Category(mask: maskPRIV, i18n: "stat.priv"),
+            ]
+        // Hong Kong: MTR's two service families — heavy rail and Light Rail —
+        // plus the Hong Kong Island street tramway, a separate operator that
+        // takes the "other railway" slot because 輕鐵 already holds the
+        // light-rail one. Macao is a single LRT system.
+        case "hk":
+            return [
+                Category(mask: maskMETRO, i18n: "stat.metro"),
+                Category(mask: maskTRAM, i18n: "stat.tram"),
+                Category(mask: maskPRIV, i18n: "stat.priv"),
+            ]
+        case "mo":
+            return [Category(mask: maskMETRO, i18n: "stat.metro")]
+        case "kr":
+            return [
+                Category(mask: maskHSR, i18n: "stat.hsr"),
+                Category(mask: maskCONV, i18n: "stat.conv"),
+                Category(mask: maskMETRO, i18n: "stat.metro"),
+                Category(mask: maskTRAM, i18n: "stat.tram"),
+                Category(mask: maskPRIV, i18n: "stat.priv"),
+            ]
+        default:
+            return [
+                Category(mask: maskHSR, i18n: "stat.hsr"),
+                Category(mask: maskCONV, i18n: "stat.conv"),
+                Category(mask: maskJR, i18n: "stat.jr"),
+                Category(mask: maskMETRO, i18n: "stat.metro"),
+                Category(mask: maskPRIV, i18n: "stat.priv"),
+                Category(mask: maskTRAM, i18n: "stat.tram"),
+            ]
+        }
+    }
+
+    /// The coverage masks deliberately OVERLAP (JR is the union of 新幹線 and
+    /// JR在來線, and 普通鐵道 means "everything that is not 新幹線"), which is right
+    /// for percentages and wrong for asking "what kind of track is this?".
+    /// This collapses a mask to exactly ONE bucket, most specific first.
+    public static func exclusiveTrackBucket(_ mask: Int) -> Int {
+        if mask & maskHSR != 0 { return maskHSR }
+        if mask & maskMETRO != 0 { return maskMETRO }
+        if mask & maskTRAM != 0 { return maskTRAM }
+        if mask & maskPRIV != 0 { return maskPRIV }
+        return maskCONV  // JR 在來線 (and any unclassified conventional track)
+    }
+
+    /// Collapse a section mask to the ONE 已乘路線 checkbox it belongs to.
+    ///
+    /// This is the single rule behind both the ridden-line classifier and the
+    /// station-dot classifier, so hiding a category always hides its lines and
+    /// its dots together. Taiwan records no JR-style union, so its incumbent
+    /// conventional railway (臺鐵, CONV-only masks) fills the slot the filter
+    /// calls "jr" — the national-railway toggle. The United States and Canada
+    /// fill it the same way, with Amtrak and VIA Rail: they are the one
+    /// intercity passenger railway each country has, which is exactly what
+    /// that toggle asks about.
+    public static func filterCategoryForMask(_ mask: Int, country: String) -> String {
+        if mask & maskHSR != 0 { return "hsr" }
+        if mask & maskMETRO != 0 { return "metro" }
+        if mask & maskJR != 0 { return "jr" }
+        if mask & maskCONV != 0 && nationalRailwayInConvSlot.contains(country) {
+            return "jr"
+        }
+        return "priv"
+    }
+
+    /// The countries whose national railway is recorded as CONV rather than
+    /// through a JR-style union bit. See ``filterCategoryForMask(_:country:)``.
+    static let nationalRailwayInConvSlot: Set<String> = ["tw", "cn"]
+
+    // MARK: - section attributes
+
+    /// One JSON value, kept in the shape JavaScript sees it in.
+    ///
+    /// The section readers are `props.N02_001 || props.railway_class_code || ""`
+    /// — a chain of `||`, which is JavaScript *truthiness*, not a nil check.
+    /// A numeric `0` in `N02_001` therefore falls through to the neutral alias
+    /// while the string `"0"` does not, and `String(21)` must spell `"21"`
+    /// rather than `"21.0"`. Modelling the field as `String?` would quietly
+    /// lose both distinctions, so the raw value is kept.
+    public enum JSValue: Sendable, Equatable {
+        case string(String)
+        case number(Double)
+        case bool(Bool)
+        case null
+
+        /// JavaScript truthiness: `""`, `0`, `NaN`, `false` and `null` are falsy.
+        public var isTruthy: Bool {
+            switch self {
+            case .string(let s): return !s.isEmpty
+            case .number(let d): return d != 0 && !d.isNaN
+            case .bool(let b): return b
+            case .null: return false
+            }
+        }
+
+        /// `String(value)` — via ``JSNumber/string(_:)`` for numbers, because
+        /// Swift spells an integral `Double` with a fractional part and
+        /// JavaScript does not.
+        public var jsString: String {
+            switch self {
+            case .string(let s): return s
+            case .number(let d): return JSNumber.string(d)
+            case .bool(let b): return b ? "true" : "false"
+            case .null: return "null"
+            }
+        }
+    }
+
+    /// The attributes every country's dataset answers under, read by one
+    /// reader for both spellings: Japan writes the historical `N02_*` property
+    /// names, the others the neutral aliases.
+    public struct SectionProperties: Decodable, Sendable, Equatable {
+        public var n02_001: JSValue?
+        public var n02_002: JSValue?
+        public var n02_003: JSValue?
+        public var n02_004: JSValue?
+        public var railwayClassCode: JSValue?
+        public var institutionTypeCode: JSValue?
+        public var lineName: JSValue?
+        public var operatorName: JSValue?
+
+        /// ADR 0011 bounds. Empty and missing are the same: unbounded.
+        public var validFrom: String?
+        public var validTo: String?
+        /// Overlay `history_id`, when this section has one.
+        public var historyId: String?
+        /// Stamped by ``RailHistory/apply(_:sections:stations:)``. Default
+        /// `.current` for a section read from the current package.
+        public var temporalKind: RouteGraph.TemporalKind
+
+        public init(
+            n02_001: JSValue? = nil, n02_002: JSValue? = nil,
+            n02_003: JSValue? = nil, n02_004: JSValue? = nil,
+            railwayClassCode: JSValue? = nil, institutionTypeCode: JSValue? = nil,
+            lineName: JSValue? = nil, operatorName: JSValue? = nil,
+            validFrom: String? = nil, validTo: String? = nil,
+            historyId: String? = nil, temporalKind: RouteGraph.TemporalKind = .current
+        ) {
+            self.n02_001 = n02_001
+            self.n02_002 = n02_002
+            self.n02_003 = n02_003
+            self.n02_004 = n02_004
+            self.railwayClassCode = railwayClassCode
+            self.institutionTypeCode = institutionTypeCode
+            self.lineName = lineName
+            self.operatorName = operatorName
+            self.validFrom = validFrom
+            self.validTo = validTo
+            self.historyId = historyId
+            self.temporalKind = temporalKind
+        }
+
+        private enum CodingKeys: String, CodingKey {
+            case n02_001 = "N02_001"
+            case n02_002 = "N02_002"
+            case n02_003 = "N02_003"
+            case n02_004 = "N02_004"
+            case railwayClassCode = "railway_class_code"
+            case institutionTypeCode = "institution_type_code"
+            case lineName = "line_name"
+            case operatorName = "operator"
+            case validFrom = "valid_from"
+            case validTo = "valid_to"
+            case historyId = "history_id"
+            case temporalKind = "temporal_kind"
+        }
+
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            func read(_ key: CodingKeys) throws -> JSValue? {
+                guard container.contains(key) else { return nil }
+                if try container.decodeNil(forKey: key) { return .null }
+                if let s = try? container.decode(String.self, forKey: key) { return .string(s) }
+                if let d = try? container.decode(Double.self, forKey: key) { return .number(d) }
+                if let b = try? container.decode(Bool.self, forKey: key) { return .bool(b) }
+                return nil
+            }
+            n02_001 = try read(.n02_001)
+            n02_002 = try read(.n02_002)
+            n02_003 = try read(.n02_003)
+            n02_004 = try read(.n02_004)
+            railwayClassCode = try read(.railwayClassCode)
+            institutionTypeCode = try read(.institutionTypeCode)
+            lineName = try read(.lineName)
+            operatorName = try read(.operatorName)
+            validFrom = try container.decodeIfPresent(String.self, forKey: .validFrom)
+            validTo = try container.decodeIfPresent(String.self, forKey: .validTo)
+            let rawHistory = try container.decodeIfPresent(String.self, forKey: .historyId)?
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+            historyId = (rawHistory?.isEmpty == false) ? rawHistory : nil
+            temporalKind = try container.decodeIfPresent(
+                RouteGraph.TemporalKind.self, forKey: .temporalKind) ?? .current
+        }
+
+        /// `a || b || ""`.
+        private static func firstTruthy(_ a: JSValue?, _ b: JSValue?) -> JSValue? {
+            if let a, a.isTruthy { return a }
+            if let b, b.isTruthy { return b }
+            return nil
+        }
+
+        /// `String(props.N02_001 || props.railway_class_code || "")`
+        public var railwayClassCodeString: String {
+            Self.firstTruthy(n02_001, railwayClassCode)?.jsString ?? ""
+        }
+
+        /// `String(props.N02_002 || props.institution_type_code || "")`
+        public var institutionTypeCodeString: String {
+            Self.firstTruthy(n02_002, institutionTypeCode)?.jsString ?? ""
+        }
+
+        /// `props.N02_003 || props.line_name || ""`.
+        ///
+        /// The JavaScript does *not* wrap this one in `String()`, so in
+        /// principle a numeric line name would stay a number and miss the
+        /// string-keyed corridor Maps. Every caller either interpolates it
+        /// into a template or compares it with a string literal, and no
+        /// shipped dataset carries a non-string here, so the coerced form is
+        /// what is kept — with the one behaviour that depended on the raw
+        /// value, its truthiness, preserved as "not empty".
+        public var lineNameString: String {
+            Self.firstTruthy(n02_003, lineName)?.jsString ?? ""
+        }
+
+        /// `props.N02_004 || props.operator || ""`
+        public var operatorString: String {
+            Self.firstTruthy(n02_004, operatorName)?.jsString ?? ""
+        }
+    }
+
+    // MARK: - classification
+
+    /// 地下鐵 operators (`N02_004` names): the two metro companies plus every
+    /// municipal subway operator in Japan.
+    static let metroOperatorNames: Set<String> = [
+        "東京地下鉄",  // 東京メトロ
+        "大阪市高速電気軌道",  // Osaka Metro
+        "東京都",  // 都営地下鉄 (都電 excluded via the tram class below)
+        "札幌市", "仙台市", "横浜市", "名古屋市", "京都市", "神戸市", "福岡市",
+    ]
+
+    /// Only class 21 (軌道) is a street tram. Class 22 is a SUSPENDED MONORAIL
+    /// built under the same 軌道法 — 千葉都市モノレール is its only holder in N02,
+    /// and it belongs with the other monorails in 私鐵・第三部門.
+    static let tramRailwayClasses: Set<String> = ["21"]
+
+    /// Heavy-rail lines licensed under 軌道法 (class 21) that are nothing like a
+    /// street tram: full-size trains, mostly through-running onto subways.
+    /// Without this they would all count as 路面電車.
+    static let tramClassHeavyRailLines: Set<String> = [
+        "北大阪急行電鉄|南北線",  // through-service with Osaka Metro 御堂筋線
+        "近畿日本鉄道|けいはんな線",  // through-service with Osaka Metro 中央線
+        "名古屋鉄道|豊川線",  // ordinary 名鉄 line, 軌道法 for historic reasons only
+    ]
+
+    /// Which buckets a section belongs to, for the given country. The mask
+    /// bits are shared; how a country's own official codes map onto them is not.
+    public static func classifySectionMask(_ props: SectionProperties, country: String) -> Int {
+        switch country {
+        case "cn": return classifyCnSectionMask(props)
+        case "tw": return classifyTwSectionMask(props)
+        case "hk": return classifyHkSectionMask(props)
+        case "mo": return maskMETRO  // Macao's whole network is one automated LRT system.
+        case "kr": return classifyKrSectionMask(props)
+        default: return classifyJpSectionMask(props)
+        }
+    }
+
+    /// Taiwan, over the code space the package build assigns: institution 1 =
+    /// 高鐵, 2 = 臺鐵, 3 = publicly operated, with the railway class separating
+    /// 捷運 (普通鐵道) from 輕軌 (軌道) and the 阿里山林業鐵路 (特殊鐵道). Unlike Japan's
+    /// overlapping masks these buckets are exclusive.
+    static func classifyTwSectionMask(_ props: SectionProperties) -> Int {
+        let code = props.institutionTypeCodeString
+        let cls = props.railwayClassCodeString
+        if code == "1" { return maskHSR }
+        if cls == "21" { return maskTRAM }
+        if cls == "31" { return maskPRIV }
+        if code == "3" { return maskMETRO }
+        return maskCONV
+    }
+
+    /// China: 1 = high speed, 2 = conventional, 3 = municipal, 4 = private.
+    /// Class 21 separates street tramways from other municipal railways;
+    /// class 31 keeps special railways out of the conventional total.
+    static func classifyCnSectionMask(_ props: SectionProperties) -> Int {
+        let code = props.institutionTypeCodeString
+        let cls = props.railwayClassCodeString
+        if code == "1" { return maskHSR }
+        if cls == "21" { return maskTRAM }
+        if cls == "31" { return maskPRIV }
+        if code == "3" { return maskMETRO }
+        if code == "4" { return maskPRIV }
+        return maskCONV
+    }
+
+    static let hongKongTramOperator = "香港電車"
+
+    /// Hong Kong ships one flat code pair (institution 4 / class 21) across the
+    /// whole territory, so its buckets ride on the operator and the official
+    /// line names instead: the tramway is the only network 香港電車 runs, and
+    /// within MTR's own network every Light Rail route is named 輕鐵NNN綫 by the
+    /// package build while everything else is a heavy-rail line.
+    static func classifyHkSectionMask(_ props: SectionProperties) -> Int {
+        if props.operatorString == hongKongTramOperator { return maskPRIV }
+        return props.lineNameString.hasPrefix("輕鐵") ? maskTRAM : maskMETRO
+    }
+
+    /// South Korea: 고속철도 / 일반철도 / 도시철도 / 경전철 / 모노레일·자기부상. Like Taiwan
+    /// the buckets are exclusive — but note the class tests come BEFORE the
+    /// institution ones, which is the opposite order to Taiwan's class 21.
+    static func classifyKrSectionMask(_ props: SectionProperties) -> Int {
+        let code = props.institutionTypeCodeString
+        let cls = props.railwayClassCodeString
+        if code == "1" { return maskHSR }
+        if cls == "31" { return maskPRIV }
+        if cls == "21" { return maskTRAM }
+        if code == "3" { return maskMETRO }
+        if code == "4" { return maskMETRO }
+        return maskCONV
+    }
+
+    static func classifyJpSectionMask(_ props: SectionProperties) -> Int {
+        let code = props.institutionTypeCodeString
+        let cls = props.railwayClassCodeString
+        let op = props.operatorString
+        var mask = 0
+        if code == "1" { mask |= maskHSR } else { mask |= maskCONV }
+        if code == "1" || code == "2" { mask |= maskJR }
+        // 都電荒川線 is the ONLY street tram run by a metro-list operator (東京都).
+        // Osaka Metro's subway lines are legally 軌道 (class 21) too, so the tram
+        // exclusion must be scoped to 東京都 — never applied operator-wide.
+        let isMetro =
+            metroOperatorNames.contains(op)
+            && !(op == "東京都" && tramRailwayClasses.contains(cls))
+        if isMetro { mask |= maskMETRO }
+        // 路面電車 is its own category: every 軌道 line that is not one of the
+        // metro operators'. Trams are then held OUT of 私鐵・第三部門 so the two
+        // rows do not double-count each other.
+        let isTram =
+            tramRailwayClasses.contains(cls)
+            && !isMetro
+            && !tramClassHeavyRailLines.contains("\(op)|\(props.lineNameString)")
+        if isTram { mask |= maskTRAM }
+        if (code == "4" || code == "5") && !isMetro && !isTram { mask |= maskPRIV }
+        return mask
+    }
+
+    /// Category of ONE station, classified from the line attributes its own
+    /// station feature carries (both schemas repeat the line's
+    /// institution/class/operator on every station). Used to hide a hidden
+    /// category's STATION DOTS along with its lines.
+    public static func markerCategoryForStation(
+        _ props: SectionProperties?, country: String
+    ) -> String? {
+        guard let props else { return nil }
+        if props.railwayClassCodeString.isEmpty && props.institutionTypeCodeString.isEmpty {
+            return nil
+        }
+        return filterCategoryForMask(classifySectionMask(props, country: country), country: country)
+    }
+
+    // MARK: - JavaScript's own arithmetic
+
+
+    /// `AppCore.equirectKm` — the cheap distance used for graph edge weights
+    /// and every stats sum. (The route solver's haversine `distanceMeters`
+    /// stays separate on purpose: a different accuracy class.)
+    public static func equirectKm(
+        _ ax: Double, _ ay: Double, _ bx: Double, _ by: Double
+    ) -> Double {
+        let kx = 111.32 * JSMath.cos(((ay + by) / 2) * Double.pi / 180)
+        return JSMath.hypot((ax - bx) * kx, (ay - by) * 110.574)
+    }
+
+    /// `AppCore.edgeKey5` — a direction-independent segment key: the two
+    /// 5-decimal node keys, smaller first.
+    ///
+    /// "Smaller" is decided NUMERICALLY on the quantised coordinates, which is
+    /// what separates this from `Grid.routeCoordinateSegmentKey`'s string
+    /// ordering. The two produce different keys for the same pair and are not
+    /// interchangeable.
+    public static func edgeKey(_ a: Coordinate, _ b: Coordinate) -> String {
+        let ax = Grid.quant5(a.lon)
+        let ay = Grid.quant5(a.lat)
+        let bx = Grid.quant5(b.lon)
+        let by = Grid.quant5(b.lat)
+        let aFirst = ax < bx || (ax == bx && ay < by)
+        let (px, py, qx, qy) = aFirst ? (ax, ay, bx, by) : (bx, by, ax, ay)
+        return JSNumber.string(px) + "," + JSNumber.string(py)
+            + "|" + JSNumber.string(qx) + "," + JSNumber.string(qy)
+    }
+
+    /// ``edgeKey(_:_:)``'s answer as a value rather than as digits.
+    ///
+    /// The index this keys is the largest arithmetic object the app builds —
+    /// 382,713 edges for Japan alone — and the string spelling made building it
+    /// cost more than reading the 11.8 MB file it is built from: four
+    /// `JSNumber.string` calls (a full ECMAScript shortest-round-trip
+    /// formatter) and three concatenations, per edge, then a hash of the
+    /// ~35 bytes that came out.
+    ///
+    /// ## Why the two keys agree, exactly
+    ///
+    /// This runs ``edgeKey(_:_:)``'s own ordering comparison, on the same
+    /// `Grid/quant5(_:)` doubles, and then stores those doubles' **bit
+    /// patterns** instead of printing them. So the question is only whether
+    /// bit-pattern equality decides what string equality decided, and it does,
+    /// in all four cases a `Double` has:
+    ///
+    /// - **Finite and non-zero.** `JSNumber.string` is shortest-round-trip, so
+    ///   it is injective: two doubles print alike exactly when they are the
+    ///   same double, which is exactly when their bits agree.
+    /// - **Zero.** `-0.0` prints as `"0"`, the same as `+0.0`, and their bits
+    ///   do *not* agree — so ``gridBits(_:)`` folds both to `+0.0` first.
+    /// - **Infinite.** `"Infinity"` and `"-Infinity"` are distinct strings and
+    ///   distinct bit patterns.
+    /// - **NaN.** Every NaN prints as `"NaN"`, so every NaN folds to one bit
+    ///   pattern — which is also what keeps this a total function, and keeps
+    ///   `Double`'s own `==` (under which NaN is not equal to itself) out of
+    ///   the comparison entirely.
+    ///
+    /// The string spelling stays: it is the key ``Span`` is filed under, and
+    /// `edgeKeySpelling` in the parity tests pins its bytes.
+    public static func packedEdgeKey(_ a: Coordinate, _ b: Coordinate) -> EdgeKey {
+        let ax = Grid.quant5(a.lon)
+        let ay = Grid.quant5(a.lat)
+        let bx = Grid.quant5(b.lon)
+        let by = Grid.quant5(b.lat)
+        let aFirst = ax < bx || (ax == bx && ay < by)
+        let (px, py, qx, qy) = aFirst ? (ax, ay, bx, by) : (bx, by, ax, ay)
+        return EdgeKey(
+            px: gridBits(px), py: gridBits(py), qx: gridBits(qx), qy: gridBits(qy))
+    }
+
+    /// One quantised coordinate component, folded so that bit equality is the
+    /// equality ``edgeKey(_:_:)``'s digits expressed. See ``packedEdgeKey(_:_:)``.
+    @inline(__always)
+    static func gridBits(_ value: Double) -> UInt64 {
+        if value.isNaN { return 0x7ff8_0000_0000_0000 }  // every NaN prints "NaN"
+        if value == 0 { return 0 }                       // -0.0 prints "0"
+        return value.bitPattern
+    }
+
+    /// ``packedEdgeKey(_:_:)``'s result: the two ordered node positions.
+    public struct EdgeKey: Hashable, Sendable {
+        public let px: UInt64
+        public let py: UInt64
+        public let qx: UInt64
+        public let qy: UInt64
+
+        public init(px: UInt64, py: UInt64, qx: UInt64, qy: UInt64) {
+            self.px = px
+            self.py = py
+            self.qx = qx
+            self.qy = qy
+        }
+    }
+
+    // MARK: - insertion-ordered collections
+
+    /// A dictionary that remembers the order its keys were first written in.
+    ///
+    /// Not a convenience. Every `Map` and `Set` in app-stats.js is iterated at
+    /// least once, JavaScript iterates both in insertion order, and three of
+    /// those iterations decide an answer: the ridden-edge Set decides the
+    /// ORDER hundreds of thousands of doubles are summed in (and therefore the
+    /// last bits of the total), while the per-line operator table and the
+    /// per-section bucket table are both scanned for a maximum with `>`, which
+    /// keeps whichever candidate was seen first. A Swift `Dictionary` iterates
+    /// in hash order and would answer differently on all three.
+    public struct OrderedDictionary<Key: Hashable & Sendable, Value: Sendable>: Sendable {
+        public private(set) var keys: [Key] = []
+        private var storage: [Key: Value] = [:]
+
+        public init() {}
+
+        public subscript(key: Key) -> Value? {
+            get { storage[key] }
+            set {
+                if let newValue {
+                    if storage.updateValue(newValue, forKey: key) == nil { keys.append(key) }
+                } else if storage.removeValue(forKey: key) != nil {
+                    keys.removeAll { $0 == key }
+                }
+            }
+        }
+
+        public var count: Int { keys.count }
+        public var isEmpty: Bool { keys.isEmpty }
+        public var values: [Value] { keys.map { storage[$0]! } }
+        public var pairs: [(key: Key, value: Value)] { keys.map { ($0, storage[$0]!) } }
+    }
+
+    // MARK: - the N02 edge index
+
+    /// One RailroadSection: the untouched N02-25 attributes plus its geometry.
+    public struct Section: Sendable {
+        public var properties: SectionProperties
+        public var coordinates: [Coordinate]
+
+        public init(properties: SectionProperties, coordinates: [Coordinate]) {
+            self.properties = properties
+            self.coordinates = coordinates
+        }
+    }
+
+    /// Decodes `rail-sections*.json` into the exact flattened line list the
+    /// statistics edge-index sweep consumes. Kept in RailCore so the iOS app
+    /// and parity tests do not grow separate GeoJSON readers.
+    public struct SectionFeatureCollection: Decodable, Sendable {
+        public let sections: [Section]
+
+        private struct Feature: Decodable {
+            let properties: SectionProperties
+            let geometry: Geometry?
+        }
+
+        private struct Geometry: Decodable {
+            let lines: [[Coordinate]]
+            private enum CodingKeys: String, CodingKey { case type, coordinates }
+
+            init(from decoder: Decoder) throws {
+                let container = try decoder.container(keyedBy: CodingKeys.self)
+                switch try container.decode(String.self, forKey: .type) {
+                case "LineString":
+                    let raw = try container.decode([[Double]].self, forKey: .coordinates)
+                    lines = [raw.compactMap(Coordinate.init(pair:))]
+                case "MultiLineString":
+                    let raw = try container.decode([[[Double]]].self, forKey: .coordinates)
+                    lines = raw.map { $0.compactMap(Coordinate.init(pair:)) }
+                default:
+                    lines = []
+                }
+            }
+        }
+
+        private enum CodingKeys: String, CodingKey { case features }
+
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            let features = try container.decode([Feature].self, forKey: .features)
+            sections = features.flatMap { feature in
+                (feature.geometry?.lines ?? []).map {
+                    Section(properties: feature.properties, coordinates: $0)
+                }
+            }
+        }
+
+        public static func load(contentsOf url: URL) throws -> SectionFeatureCollection {
+            try JSONDecoder().decode(Self.self, from: Data(contentsOf: url))
+        }
+    }
+
+    /// Built once from the rail sections and reused for every stats refresh:
+    /// edge key → index into parallel km/mask arrays.
+    public struct EdgeIndex: Sendable {
+        /// Edge key → index. This is what a ridden route's vertices are looked
+        /// up by, so its quantisation and endpoint ordering are load-bearing.
+        public let map: [EdgeKey: Int]
+        public let km: [Double]
+        public let mask: [Int]
+        /// Line name (`N02_003`) of the FIRST feature to claim each edge, `""`
+        /// when unnamed.
+        public let lineName: [String]
+        /// The naming feature's own category mask, so a station edge shared
+        /// with a Shinkansen does not file the conventional line under 新幹線.
+        public let lineMask: [Int]
+        public let totalKm: Double
+        public let totalsByMask: [Int: Double]
+        /// Line name → per-category total km, so a line's breakdown row
+        /// reflects ONLY the track it has in that category.
+        public let lineTotByCat: OrderedDictionary<String, [Int: Double]>
+        /// Line name → the operator owning the MOST of its track. Not the
+        /// first edge's operator: a line shares the odd edge with another
+        /// company at a joint station, and first-wins let that one edge label
+        /// the whole line wrongly.
+        public let lineOperator: OrderedDictionary<String, String>
+        /// Parallel to ``km``. Empty on an index built before temporal edges
+        /// existed; a missing row is treated as `.current` with no bounds.
+        public let temporalKind: [RouteGraph.TemporalKind]
+        public let validFrom: [String?]
+        public let validTo: [String?]
+        public let historyId: [String?]
+        /// `false` when this edge's length stays out of the base-map coverage
+        /// denominator: `.historical` or `.relocatedOld`. In-place retirement
+        /// (`.current` or `.relocatedNew` with `validTo`) stays `true`.
+        public let currentNetwork: [Bool]
+        /// Geometry keys claimed by more than one temporal slot. Absent keys
+        /// have a single edge, the one in ``map``.
+        public let variants: [EdgeKey: [Int]]
+
+        /// Plumbing, not a rule.
+        ///
+        /// `buildEdgeIndex` is the only thing that computes one of these, and
+        /// it stays the only thing that decides what an edge MEANS. The
+        /// memberwise initialiser is published so a client that has several
+        /// regions open at once can lay their finished indexes side by side —
+        /// see `EdgeIndexCache.merged` in the iOS app, which is what the
+        /// all-regions statistics scope is built on. The JavaScript has one
+        /// country loaded at a time and therefore never needed it, which is
+        /// why this is exposed rather than ported.
+        public init(
+            map: [EdgeKey: Int],
+            km: [Double],
+            mask: [Int],
+            lineName: [String],
+            lineMask: [Int],
+            totalKm: Double,
+            totalsByMask: [Int: Double],
+            lineTotByCat: OrderedDictionary<String, [Int: Double]>,
+            lineOperator: OrderedDictionary<String, String>,
+            temporalKind: [RouteGraph.TemporalKind] = [],
+            validFrom: [String?] = [],
+            validTo: [String?] = [],
+            historyId: [String?] = [],
+            currentNetwork: [Bool] = [],
+            variants: [EdgeKey: [Int]] = [:]
+        ) {
+            self.map = map
+            self.km = km
+            self.mask = mask
+            self.lineName = lineName
+            self.lineMask = lineMask
+            self.totalKm = totalKm
+            self.totalsByMask = totalsByMask
+            self.lineTotByCat = lineTotByCat
+            self.lineOperator = lineOperator
+            self.temporalKind = temporalKind
+            self.validFrom = validFrom
+            self.validTo = validTo
+            self.historyId = historyId
+            self.currentNetwork = currentNetwork
+            self.variants = variants
+        }
+
+        /// The edge of `key` that ``RouteGraph/RailValidity`` accepts on
+        /// `rideDate`. `nil` when every claimant is out of service that day.
+        ///
+        /// An index with no temporal columns (tests, a merge of legacy parts)
+        /// returns ``map`` unchanged: those edges have no `valid_to`.
+        public func edgeID(for key: EdgeKey, on rideDate: String?) -> Int? {
+            let ids = variants[key] ?? map[key].map { [$0] } ?? []
+            guard !temporalKind.isEmpty else { return ids.first }
+            for id in ids {
+                let from = id < validFrom.count ? validFrom[id] : nil
+                let to = id < validTo.count ? validTo[id] : nil
+                if RouteGraph.RailValidity.isValid(validFrom: from, validTo: to, on: rideDate) {
+                    return id
+                }
+            }
+            return nil
+        }
+    }
+
+    /// Whether an edge's length belongs in the base-map coverage denominator.
+    /// `.current` and `.relocatedNew` do, even when `validTo` is set.
+    /// `.historical` and `.relocatedOld` do not. `validTo` is not read:
+    /// in-place retirement stays reference geometry.
+    public static func countsTowardCurrentNetwork(
+        kind: RouteGraph.TemporalKind, validTo _: String?
+    ) -> Bool {
+        switch kind {
+        case .historical, .relocatedOld:
+            return false
+        case .current, .relocatedNew:
+            return true
+        }
+    }
+
+    /// Bucket for ridden km that is not still-active reference geometry.
+    /// `nil` means the edge is not historically classified on `asOf`.
+    public enum HistoricalBucket: Sendable, Equatable {
+        case retired
+        case relocatedOld
+    }
+
+    /// Historical classification for ridden-km buckets only. Does not decide
+    /// reference-geometry membership or ``EdgeIndex/totalKm``.
+    ///
+    /// `.relocatedOld` and `.historical` are always classified. `.current` and
+    /// `.relocatedNew` are `.retired` only when service has already ended on
+    /// `asOf` (`validTo` set and ``RouteGraph/RailValidity/isValid`` fails
+    /// because of that end). A future `validTo` and a not-yet-open `validFrom`
+    /// are `nil` — `validTo != nil` alone is not retirement.
+    public static func historicalClassification(
+        kind: RouteGraph.TemporalKind,
+        validFrom: String?,
+        validTo: String?,
+        asOf: String
+    ) -> HistoricalBucket? {
+        switch kind {
+        case .relocatedOld:
+            return .relocatedOld
+        case .historical:
+            return .retired
+        case .current, .relocatedNew:
+            let from = validFrom.flatMap { $0.isEmpty ? nil : $0 }
+            let to = validTo.flatMap { $0.isEmpty ? nil : $0 }
+            guard to != nil else { return nil }
+            // Not-yet-open is not retired, even if a `validTo` is also set.
+            if !RouteGraph.RailValidity.isValid(validFrom: from, validTo: nil, on: asOf) {
+                return nil
+            }
+            if RouteGraph.RailValidity.isValid(validFrom: from, validTo: to, on: asOf) {
+                return nil
+            }
+            return .retired
+        }
+    }
+
+    /// ``historicalClassification(kind:validFrom:validTo:asOf:)`` is `.retired`.
+    /// A future `validTo` is not retired.
+    public static func isRetiredNetworkEdge(
+        kind: RouteGraph.TemporalKind,
+        validFrom: String?,
+        validTo: String?,
+        asOf: String
+    ) -> Bool {
+        historicalClassification(
+            kind: kind, validFrom: validFrom, validTo: validTo, asOf: asOf) == .retired
+    }
+
+    /// Fold `overlay` through ``RailHistory/apply(_:sections:stations:)`` and
+    /// return the sections the statistics index should walk. `nil` leaves
+    /// `sections` untouched, which is every country that ships no history file.
+    public static func applyingHistoryOverlay(
+        _ overlay: RailHistoryOverlay?, to sections: [Section]
+    ) -> [Section] {
+        guard let overlay else { return sections }
+        var features: [RouteGraph.SectionFeature] = sections.map { section in
+            let props = section.properties
+            return RouteGraph.SectionFeature(
+                properties: RouteGraph.SectionProperties(
+                    lineName: props.lineNameString,
+                    operator: props.operatorString,
+                    institutionTypeCode: props.institutionTypeCodeString,
+                    railwayClassCode: props.railwayClassCodeString,
+                    validFrom: props.validFrom,
+                    validTo: props.validTo,
+                    historyId: props.historyId,
+                    temporalKind: props.temporalKind),
+                lines: [section.coordinates])
+        }
+        var stations: [Stations.Feature] = []
+        _ = RailHistory.apply(overlay, sections: &features, stations: &stations)
+        return features.flatMap { feature in
+            let props = feature.properties
+            func text(_ value: String) -> JSValue? {
+                value.isEmpty ? nil : .string(value)
+            }
+            let properties = SectionProperties(
+                n02_001: text(props.railwayClassCode),
+                n02_002: text(props.institutionTypeCode),
+                n02_003: text(props.lineName),
+                n02_004: text(props.operator),
+                validFrom: props.validFrom,
+                validTo: props.validTo,
+                historyId: props.historyId,
+                temporalKind: props.temporalKind)
+            return feature.lines.map { Section(properties: properties, coordinates: $0) }
+        }
+    }
+
+    // ── Mini-Shinkansen reclassification (§23a-mini) ──────────────────────
+    // 山形新幹線 / 秋田新幹線 run on gauge-converted track that N02-25 STILL files
+    // as 在来線 (`N02_002 = "2"`) under the plain line names 奥羽線 / 田沢湖線 —
+    // there is no Shinkansen attribute to key on. 博多南線 is the same story.
+    // Track that ONLY carries Shinkansen must count as 新幹線 and NOT as 在来線,
+    // or the 新幹線 denominator reads ~8 points high (~285 km missing) and these
+    // lines can never appear in the breakdown.
+    //
+    // A corridor edge is MOVED, not copied: its 在来線 bit is cleared and its
+    // 新幹線 bit set — the JR全線 bit is left intact, because it is still JR
+    // track. Whole-line corridors match by name; the two 奥羽線 sub-corridors
+    // are traced along the 奥羽線 subgraph between their gauge-conversion
+    // endpoints.
+    //
+    // The ~1.8 km 越後湯沢–ガーラ湯沢 spur (Shinkansen-only, filed under 上越線) is
+    // deliberately NOT reclassified: no separable N02 section geometry, and
+    // unridden.
+    //
+    // Ordered as the JavaScript `Map` literal is: the display names are seeded
+    // into the hit table in this order, and applied in it.
+    struct FullLineReclass: Sendable {
+        let line: String
+        let display: String
+    }
+    static let hsrReclassifyFullLines: [FullLineReclass] = [
+        FullLineReclass(line: "田沢湖線", display: "秋田新幹線"),  // 盛岡–大曲, ~75.6 km
+        FullLineReclass(line: "博多南線", display: "博多南線"),  // 博多–博多南, ~8.9 km
+    ]
+    static let hsrReclassifyOuLine = "奥羽線"
+    struct OuCorridor: Sendable {
+        let display: String
+        let from: Coordinate
+        let to: Coordinate
+    }
+    static let hsrReclassifyOuCorridors: [OuCorridor] = [
+        // 山形新幹線: 奥羽線 福島(001373) – 新庄(001004), ~148.6 km
+        OuCorridor(
+            display: "山形新幹線", from: Coordinate(lon: 140.45972, lat: 37.75341),
+            to: Coordinate(lon: 140.3059, lat: 38.76386)),
+        // 秋田新幹線: 奥羽線 大曲(000854) – 秋田(000783), ~51.7 km (盛岡–大曲 is 田沢湖線)
+        OuCorridor(
+            display: "秋田新幹線", from: Coordinate(lon: 140.47996, lat: 39.46546),
+            to: Coordinate(lon: 140.12947, lat: 39.71836)),
+    ]
+
+    /// `buildStatsEdgeIndexSliced`, minus the slicing.
+    ///
+    /// The JavaScript is `async` only so that this sweep — several hundred
+    /// thousand edges — parks every 12 ms instead of freezing the tab the
+    /// moment the 統計 panel opens. Nothing about the result depends on where
+    /// it parks, so the port is synchronous and the caller decides where it runs.
+    public static func buildEdgeIndex(sections: [Section], country: String) -> EdgeIndex {
+        var map: [EdgeKey: Int] = [:]
+        var kmArr: [Double] = []
+        var maskArr: [Int] = []
+        var lineArr: [String] = []
+        var lineMaskArr: [Int] = []
+        var lineOpArr: [String] = []
+        var kindArr: [RouteGraph.TemporalKind] = []
+        var fromArr: [String?] = []
+        var toArr: [String?] = []
+        var historyArr: [String?] = []
+        var currentArr: [Bool] = []
+        var variants: [EdgeKey: [Int]] = [:]
+
+        // Reclassification accumulators, applied after the full pass. Every
+        // edge is recorded against the CURRENT feature's line name (not the
+        // first-wins lineArr), so a corridor edge co-located with another line
+        // is still captured.
+        var hsrFullHits = OrderedDictionary<String, [Int]>()
+        var hsrFullSeen: [String: Set<Int>] = [:]
+        for entry in hsrReclassifyFullLines where hsrFullHits[entry.display] == nil {
+            hsrFullHits[entry.display] = []
+            hsrFullSeen[entry.display] = []
+        }
+        var ouAdj: [String: [(node: String, edge: Int)]] = [:]
+        var ouNodeXY = OrderedDictionary<String, Coordinate>()
+
+        for section in sections {
+            appendStatsSection(section, country: country,
+                map: &map, kmArr: &kmArr, maskArr: &maskArr,
+                lineArr: &lineArr, lineMaskArr: &lineMaskArr, lineOpArr: &lineOpArr,
+                kindArr: &kindArr, fromArr: &fromArr, toArr: &toArr,
+                historyArr: &historyArr, currentArr: &currentArr, variants: &variants,
+                hsrFullSeen: &hsrFullSeen, hsrFullHits: &hsrFullHits,
+                ouAdj: &ouAdj, ouNodeXY: &ouNodeXY)
+        }
+
+        applyStatsReclassification(hsrFullHits: hsrFullHits, ouAdj: ouAdj, ouNodeXY: ouNodeXY, kmArr: kmArr,
+            maskArr: &maskArr, lineArr: &lineArr, lineMaskArr: &lineMaskArr)
+
+        return finalizedEdgeIndex(country: country, map: map, kmArr: kmArr, maskArr: maskArr,
+            lineArr: lineArr, lineMaskArr: lineMaskArr, lineOpArr: lineOpArr, kindArr: kindArr,
+            fromArr: fromArr, toArr: toArr, historyArr: historyArr, currentArr: currentArr, variants: variants)
+    }
+
+    private static func edgeTemporalBound(_ value: String?) -> String? {
+        guard let value, !value.isEmpty else { return nil }
+        return value
+    }
+
+    private static func edgeTemporalSlot(
+        _ index: Int, kindArr: [RouteGraph.TemporalKind], fromArr: [String?],
+        toArr: [String?], historyArr: [String?]
+    ) -> (RouteGraph.TemporalKind, String?, String?, String?) {
+        (kindArr[index], edgeTemporalBound(fromArr[index]), edgeTemporalBound(toArr[index]), edgeTemporalBound(historyArr[index]))
+    }
+
+    private static func appendIndexedEdge(
+        key: EdgeKey, a: Coordinate, b: Coordinate, mask: Int, lineName: String, operatorName: String,
+        kind: RouteGraph.TemporalKind, from: String?, to: String?, history: String?, onCurrentNetwork: Bool,
+        map: inout [EdgeKey: Int], kmArr: inout [Double], maskArr: inout [Int],
+        lineArr: inout [String], lineMaskArr: inout [Int], lineOpArr: inout [String],
+        kindArr: inout [RouteGraph.TemporalKind], fromArr: inout [String?], toArr: inout [String?],
+        historyArr: inout [String?], currentArr: inout [Bool], variants: inout [EdgeKey: [Int]]
+    ) -> Int {
+        let ei = kmArr.count
+        if map[key] == nil { map[key] = ei }
+        kmArr.append(equirectKm(a.lon, a.lat, b.lon, b.lat))
+        maskArr.append(mask)
+        lineArr.append(lineName)
+        lineMaskArr.append(lineName.isEmpty ? 0 : mask)
+        lineOpArr.append(lineName.isEmpty ? "" : operatorName)
+        kindArr.append(kind)
+        fromArr.append(from)
+        toArr.append(to)
+        historyArr.append(history)
+        currentArr.append(onCurrentNetwork)
+        if let first = map[key], first != ei {
+            var list = variants[key] ?? [first]
+            list.append(ei)
+            variants[key] = list
+        }
+        return ei
+    }
+
+    private static func claimIndexedEdge(
+        key: EdgeKey, a: Coordinate, b: Coordinate, mask: Int, lineName: String, operatorName: String,
+        kind: RouteGraph.TemporalKind, from: String?, to: String?, history: String?, onCurrentNetwork: Bool,
+        map: inout [EdgeKey: Int], kmArr: inout [Double], maskArr: inout [Int],
+        lineArr: inout [String], lineMaskArr: inout [Int], lineOpArr: inout [String],
+        kindArr: inout [RouteGraph.TemporalKind], fromArr: inout [String?], toArr: inout [String?],
+        historyArr: inout [String?], currentArr: inout [Bool], variants: inout [EdgeKey: [Int]]
+    ) -> Int {
+        let incoming = (kind, from, to, history)
+        let claimants = variants[key] ?? map[key].map { [$0] } ?? []
+        let ei: Int
+        if let existing = claimants.first(where: { edgeTemporalSlot($0, kindArr: kindArr, fromArr: fromArr, toArr: toArr, historyArr: historyArr) == incoming }) {
+            ei = existing
+            maskArr[ei] |= mask
+            if lineArr[ei].isEmpty && !lineName.isEmpty {
+                lineArr[ei] = lineName
+                lineMaskArr[ei] = mask
+                lineOpArr[ei] = operatorName
+            }
+        } else {
+            ei = appendIndexedEdge(key: key, a: a, b: b, mask: mask, lineName: lineName, operatorName: operatorName,
+                kind: kind, from: from, to: to, history: history, onCurrentNetwork: onCurrentNetwork,
+                map: &map, kmArr: &kmArr, maskArr: &maskArr,
+                lineArr: &lineArr, lineMaskArr: &lineMaskArr, lineOpArr: &lineOpArr,
+                kindArr: &kindArr, fromArr: &fromArr, toArr: &toArr,
+                historyArr: &historyArr, currentArr: &currentArr, variants: &variants)
+        }
+        return ei
+    }
+
+    private static func recordReclassificationEdge(
+        _ ei: Int, a: Coordinate, b: Coordinate, fullReclass: String?, isOuLine: Bool,
+        hsrFullSeen: inout [String: Set<Int>], hsrFullHits: inout OrderedDictionary<String, [Int]>,
+        ouAdj: inout [String: [(node: String, edge: Int)]], ouNodeXY: inout OrderedDictionary<String, Coordinate>
+    ) {
+        if let fullReclass {
+            if hsrFullSeen[fullReclass]!.insert(ei).inserted {
+                hsrFullHits[fullReclass]!.append(ei)
+            }
+        } else if isOuLine {
+            let ka = Grid.coordKey(a)
+            let kb = Grid.coordKey(b)
+            if ouNodeXY[ka] == nil {
+                ouNodeXY[ka] = Coordinate(lon: Grid.quant5(a.lon), lat: Grid.quant5(a.lat))
+            }
+            if ouNodeXY[kb] == nil {
+                ouNodeXY[kb] = Coordinate(lon: Grid.quant5(b.lon), lat: Grid.quant5(b.lat))
+            }
+            ouAdj[ka, default: []].append((kb, ei))
+            ouAdj[kb, default: []].append((ka, ei))
+        }
+    }
+
+    private static func appendStatsSection(
+        _ section: Section, country: String,
+        map: inout [EdgeKey: Int], kmArr: inout [Double], maskArr: inout [Int],
+        lineArr: inout [String], lineMaskArr: inout [Int], lineOpArr: inout [String],
+        kindArr: inout [RouteGraph.TemporalKind], fromArr: inout [String?], toArr: inout [String?],
+        historyArr: inout [String?], currentArr: inout [Bool], variants: inout [EdgeKey: [Int]],
+        hsrFullSeen: inout [String: Set<Int>], hsrFullHits: inout OrderedDictionary<String, [Int]>,
+        ouAdj: inout [String: [(node: String, edge: Int)]], ouNodeXY: inout OrderedDictionary<String, Coordinate>
+    ) {
+        let props = section.properties
+        let coords = section.coordinates
+        let mask = classifySectionMask(props, country: country)
+        let lineName = props.lineNameString
+        let operatorName = props.operatorString
+        let fullReclass = hsrReclassifyFullLines.first { $0.line == lineName }?.display
+        let isOuLine = lineName == hsrReclassifyOuLine
+        let kind = props.temporalKind
+        let from = edgeTemporalBound(props.validFrom)
+        let to = edgeTemporalBound(props.validTo)
+        let history = edgeTemporalBound(props.historyId)
+        let onCurrentNetwork = countsTowardCurrentNetwork(kind: kind, validTo: to)
+
+        guard coords.count >= 2 else { return }
+        for i in 1..<coords.count {
+            let a = coords[i - 1]
+            let b = coords[i]
+            let key = packedEdgeKey(a, b)
+            let ei = claimIndexedEdge(key: key, a: a, b: b, mask: mask, lineName: lineName, operatorName: operatorName,
+                kind: kind, from: from, to: to, history: history, onCurrentNetwork: onCurrentNetwork,
+                map: &map, kmArr: &kmArr, maskArr: &maskArr,
+                lineArr: &lineArr, lineMaskArr: &lineMaskArr, lineOpArr: &lineOpArr,
+                kindArr: &kindArr, fromArr: &fromArr, toArr: &toArr,
+                historyArr: &historyArr, currentArr: &currentArr, variants: &variants)
+
+            // Corridor reclassification is a current-network correction.
+            // A retired alignment that happens to share a name must not
+            // pull today's 奥羽線 trace onto geometry the denominator
+            // does not contain.
+            guard onCurrentNetwork || currentArr[ei] else { continue }
+            recordReclassificationEdge(ei, a: a, b: b, fullReclass: fullReclass, isOuLine: isOuLine,
+                hsrFullSeen: &hsrFullSeen, hsrFullHits: &hsrFullHits,
+                ouAdj: &ouAdj, ouNodeXY: &ouNodeXY)
+        }
+    }
+
+    private static func applyHsrCorridorOverride(
+        _ ei: Int, _ display: String, maskArr: inout [Int], lineArr: inout [String], lineMaskArr: inout [Int]
+    ) {
+        maskArr[ei] = (maskArr[ei] & ~maskCONV) | maskHSR
+        lineArr[ei] = display
+        lineMaskArr[ei] = maskHSR | maskJR
+    }
+
+    private static func applyStatsReclassification(
+        hsrFullHits: OrderedDictionary<String, [Int]>, ouAdj: [String: [(node: String, edge: Int)]],
+        ouNodeXY: OrderedDictionary<String, Coordinate>, kmArr: [Double],
+        maskArr: inout [Int], lineArr: inout [String], lineMaskArr: inout [Int]
+    ) {
+        // Apply the reclassification BEFORE totals are summed, so the 新幹線 /
+        // 在來線 denominators and the per-line breakdown all reflect it.
+        for (display, edges) in hsrFullHits.pairs {
+            for ei in edges { applyHsrCorridorOverride(ei, display, maskArr: &maskArr, lineArr: &lineArr, lineMaskArr: &lineMaskArr) }
+        }
+        for corridor in hsrReclassifyOuCorridors {
+            guard
+                let from = snapToNearestNode(corridor.from, ouNodeXY),
+                let to = snapToNearestNode(corridor.to, ouNodeXY)
+            else { continue }
+            for ei in traceCorridorEdges(ouAdj, kmArr, from, to) {
+                applyHsrCorridorOverride(ei, corridor.display, maskArr: &maskArr, lineArr: &lineArr, lineMaskArr: &lineMaskArr)
+            }
+        }
+
+    }
+
+    private static func finalizedEdgeIndex(
+        country: String,
+        map: [EdgeKey: Int], kmArr: [Double], maskArr: [Int],
+        lineArr: [String], lineMaskArr: [Int], lineOpArr: [String],
+        kindArr: [RouteGraph.TemporalKind], fromArr: [String?], toArr: [String?],
+        historyArr: [String?], currentArr: [Bool], variants: [EdgeKey: [Int]]
+    ) -> EdgeIndex {
+        var totalKm = 0.0
+        var totalsByMask: [Int: Double] = [:]
+        let cats = categories(country: country)
+        for category in cats { totalsByMask[category.mask] = 0 }
+        var lineTotByCat = OrderedDictionary<String, [Int: Double]>()
+        var lineOpKm = OrderedDictionary<String, OrderedDictionary<String, Double>>()
+
+        for i in 0..<kmArr.count where currentArr[i] {
+            totalKm += kmArr[i]
+            let km = kmArr[i]
+            let m = maskArr[i]
+            for category in cats where m & category.mask != 0 {
+                totalsByMask[category.mask]! += km
+            }
+            let ln = lineArr[i]
+            guard !ln.isEmpty else { continue }
+            let lm = lineMaskArr[i]
+            var byCat = lineTotByCat[ln] ?? zeroCategoryKm(country: country)
+            for category in cats where lm & category.mask != 0 {
+                byCat[category.mask]! += km
+            }
+            lineTotByCat[ln] = byCat
+            let op = lineOpArr[i]
+            guard !op.isEmpty else { continue }
+            var byOp = lineOpKm[ln] ?? OrderedDictionary<String, Double>()
+            byOp[op] = (byOp[op] ?? 0) + km
+            lineOpKm[ln] = byOp
+        }
+
+        // Resolve each line to its majority-km operator. The scan keeps the
+        // FIRST candidate at the maximum, so the insertion order of byOp is
+        // the tie-break.
+        var lineOperator = OrderedDictionary<String, String>()
+        resolveLineOperators(lineOpKm, lineOperator: &lineOperator)
+
+        return EdgeIndex(
+            map: map, km: kmArr, mask: maskArr, lineName: lineArr, lineMask: lineMaskArr,
+            totalKm: totalKm, totalsByMask: totalsByMask,
+            lineTotByCat: lineTotByCat, lineOperator: lineOperator,
+            temporalKind: kindArr, validFrom: fromArr, validTo: toArr,
+            historyId: historyArr, currentNetwork: currentArr, variants: variants)
+    }
+
+    private static func resolveLineOperators(
+        _ lineOpKm: OrderedDictionary<String, OrderedDictionary<String, Double>>,
+        lineOperator: inout OrderedDictionary<String, String>
+    ) {
+        for (line, byOp) in lineOpKm.pairs {
+            var best = ""
+            var bestKm = -1.0
+            for (op, value) in byOp.pairs where value > bestKm {
+                bestKm = value
+                best = op
+            }
+            if !best.isEmpty { lineOperator[line] = best }
+        }
+
+    }
+
+    /// Zero km accumulator keyed by category mask, for per-line-per-category sums.
+    public static func zeroCategoryKm(country: String) -> [Int: Double] {
+        var out: [Int: Double] = [:]
+        for category in categories(country: country) { out[category.mask] = 0 }
+        return out
+    }
+
+    /// Nearest subgraph node to an endpoint (station) coordinate, so a
+    /// corridor snaps onto its line even when the station point is not itself
+    /// a graph vertex. `nil` when the subgraph is empty.
+    static func snapToNearestNode(
+        _ coord: Coordinate, _ nodeXY: OrderedDictionary<String, Coordinate>
+    ) -> String? {
+        let x = Grid.quant5(coord.lon)
+        let y = Grid.quant5(coord.lat)
+        var best: String? = nil
+        var bestKm = Double.infinity
+        for (key, node) in nodeXY.pairs {
+            let d = equirectKm(x, y, node.lon, node.lat)
+            if d < bestKm {
+                bestKm = d
+                best = key
+            }
+        }
+        return best
+    }
+
+    /// Minimal binary min-heap over `(priority, value)` tuples — `AppCore`'s
+    /// shared heap, ported comparison for comparison because equal priorities
+    /// are ordinary here and the pop order they resolve to decides which
+    /// predecessor a node keeps.
+    struct TupleMinHeap {
+        private var items: [(priority: Double, value: String)] = []
+        var size: Int { items.count }
+
+        mutating func push(_ priority: Double, _ value: String) {
+            items.append((priority, value))
+            var i = items.count - 1
+            while i > 0 {
+                let p = (i - 1) >> 1
+                if items[p].priority <= items[i].priority { break }
+                items.swapAt(p, i)
+                i = p
+            }
+        }
+
+        mutating func pop() -> (priority: Double, value: String) {
+            let top = items[0]
+            let last = items.removeLast()
+            if !items.isEmpty {
+                items[0] = last
+                var i = 0
+                let n = items.count
+                while true {
+                    let l = 2 * i + 1
+                    let r = l + 1
+                    var s = i
+                    if l < n && items[l].priority < items[s].priority { s = l }
+                    if r < n && items[r].priority < items[s].priority { s = r }
+                    if s == i { break }
+                    items.swapAt(s, i)
+                    i = s
+                }
+            }
+            return top
+        }
+    }
+
+    /// Dijkstra shortest path between two nodes of a single-line subgraph,
+    /// returned as the edge indices it traverses.
+    static func traceCorridorEdges(
+        _ adj: [String: [(node: String, edge: Int)]], _ kmArr: [Double],
+        _ fromKey: String, _ toKey: String
+    ) -> [Int] {
+        var edges: [Int] = []
+        var seen = Set<Int>()
+        if fromKey == toKey || adj[fromKey] == nil || adj[toKey] == nil { return edges }
+        var dist: [String: Double] = [fromKey: 0]
+        var prev: [String: (node: String, edge: Int)] = [:]
+        var heap = TupleMinHeap()
+        heap.push(0, fromKey)
+        while heap.size > 0 {
+            let (d, u) = heap.pop()
+            if u == toKey { break }
+            if d > (dist[u] ?? .infinity) { continue }
+            for (v, ei) in adj[u] ?? [] {
+                let nd = d + kmArr[ei]
+                if nd < (dist[v] ?? .infinity) {
+                    dist[v] = nd
+                    prev[v] = (u, ei)
+                    heap.push(nd, v)
+                }
+            }
+        }
+        var cur = toKey
+        while let step = prev[cur] {
+            if seen.insert(step.edge).inserted { edges.append(step.edge) }
+            cur = step.node
+        }
+        return edges
+    }
+
+    // MARK: - walking one train onto the index
+
+    /// One matched route feature, reduced to what the walk reads.
+    public struct RouteFeature: Sendable {
+        /// LineString → one entry; MultiLineString → one per part. Any other
+        /// geometry type leaves this empty and is walked over in silence,
+        /// exactly as the JavaScript's two-branch `if` does.
+        public var lines: [[Coordinate]]
+        /// Whether the feature carried a geometry object at all.
+        ///
+        /// This is not the same question as "does it have any lines". The
+        /// JavaScript drops a feature with no geometry BEFORE the ride check,
+        /// so such a feature contributes no ridden SECTION either — while a
+        /// Point geometry survives that guard and does record a section, with
+        /// zero km and bucket 0. Folding the two together would invent a
+        /// section that the panel never shows.
+        public var hasGeometry: Bool
+        /// Must be **exactly** `true` to count. The JavaScript tests
+        /// `properties.ride_segment !== true`, so `1` and `"true"` are unridden.
+        public var rideSegment: Bool
+        public var from: String?
+        public var to: String?
+
+        public init(
+            lines: [[Coordinate]], hasGeometry: Bool = true, rideSegment: Bool,
+            from: String?, to: String?
+        ) {
+            self.lines = lines
+            self.hasGeometry = hasGeometry
+            self.rideSegment = rideSegment
+            self.from = from
+            self.to = to
+        }
+    }
+
+    /// One matched route feature = one station-to-station ridden interval,
+    /// which is the unit the 最常乘坐區間 section counts.
+    public struct RiddenSection: Sendable {
+        public var from: String
+        public var to: String
+        public var km: Double
+        public var bucket: Int
+        /// Sorted ascending so containment can be tested as a set-subset.
+        public var edgeIds: [Int]
+
+        public init(from: String, to: String, km: Double, bucket: Int, edgeIds: [Int]) {
+            self.from = from
+            self.to = to
+            self.km = km
+            self.bucket = bucket
+            self.edgeIds = edgeIds
+        }
+    }
+
+    public struct Span: Sendable {
+        public var key: String
+        public var km: Double
+        public var mask: Int
+
+        public init(key: String, km: Double, mask: Int) {
+            self.key = key
+            self.km = km
+            self.mask = mask
+        }
+    }
+
+    public struct TrainEntry: Sendable {
+        public var edges: [Int]
+        public var spans: [Span]
+        /// This train's OWN cumulative ridden distance — repeat sections count
+        /// each time, because this pairs with ride time and ride count in the
+        /// service-type rows, unlike the deduped network-coverage sums.
+        public var km: Double
+        public var segments: [RiddenSection]
+        /// False when no physical route has been confirmed. The empty numeric
+        /// contribution in that case represents unknown distance, not zero km.
+        public var distanceIsKnown: Bool
+        /// Independently matched source geometry can contribute its measured
+        /// parts even while a missing section or boundary leaves the total unknown.
+        public var partialDistanceIsProven: Bool
+
+        public init(edges: [Int] = [], spans: [Span] = [], km: Double = 0,
+                    segments: [RiddenSection] = [], distanceIsKnown: Bool = true,
+                    partialDistanceIsProven: Bool = false) {
+            self.edges = edges
+            self.spans = spans
+            self.km = km
+            self.segments = segments
+            self.distanceIsKnown = distanceIsKnown
+            self.partialDistanceIsProven = partialDistanceIsProven
+        }
+    }
+
+    /// One railway a drawn ride actually ran over, as the edge index names it.
+    public struct TraversedLine: Sendable, Equatable {
+        public var name: String
+        /// `EdgeIndex.lineOperator[name]` — the operator owning most of the line.
+        public var operatorName: String?
+        /// Matched edge km attributed to this line over the whole ride.
+        public var km: Double
+        /// Physical line identity when this metadata comes from the selected route.
+        public var selectedLineID: String?
+        public init(name: String, operatorName: String?, km: Double, selectedLineID: String? = nil) {
+            self.name = name
+            self.operatorName = operatorName
+            self.km = km
+            self.selectedLineID = selectedLineID
+        }
+    }
+
+    /// Below this, a line is a station throat the walk clipped, not a railway the ride ran over.
+    static let traversedLineMinimumKm = 1.0
+
+    /// The floor also scales with the ride: an absolute 1 km floor is right
+    /// for a 30 km ride but a 500 km Shinkansen ride can clip more than 1 km
+    /// of another feature's track in the 東京 throat, so the floor is 2% of
+    /// the ride's matched km, never below `traversedLineMinimumKm`.
+    static let traversedLineMinimumShare = 0.02
+
+    /// The railways a ride ran over, listed in the order they are MET along
+    /// the path, each placed at the km-weighted MIDDLE of where it was
+    /// ridden — a line ridden at both ends of a journey sits at its middle,
+    /// not at its first touch.
+    ///
+    /// `edges` are matched edge ids in walk order (`TrainEntry.edges`). N02
+    /// files a shared station edge under whichever feature claimed it FIRST
+    /// (`EdgeIndex.lineName`), so a 東海道線 ride that merely passes through
+    /// 京都 can clip one 山陰線 edge there without ever running on 山陰線 track
+    /// until hundreds of km later. Ordering by first-seen would pin 山陰線's
+    /// position at that clip; ordering by the km-weighted centroid of every
+    /// matched edge instead puts each line where it was actually ridden. A
+    /// line only counts as traversed once its summed matched km clears the
+    /// relative floor (``traversedLineMinimumShare`` of the ride's total
+    /// matched km, never below ``traversedLineMinimumKm``); if nothing clears
+    /// it but something matched (a very short ride), the single line with the
+    /// most km is returned so the ride is never left nameless. Unnamed edges
+    /// (`""`) are ignored — their km is not attributed to any line, but they
+    /// still advance the walk's position along the path, so a named line
+    /// ridden after an unnamed stretch is centred past it rather than on top
+    /// of it. The floor's `totalKm` is the summed km of NAMED matched edges
+    /// only.
+    public static func traversedLines(edges: [Int], index: EdgeIndex) -> [TraversedLine] {
+        var kmByName = OrderedDictionary<String, Double>()
+        var weightedPositionByName: [String: Double] = [:]
+        var firstIndexByName: [String: Int] = [:]
+        var position = 0.0
+        var ordinal = 0
+        for e in edges {
+            guard index.lineName.indices.contains(e), index.km.indices.contains(e) else { continue }
+            let km = index.km[e]
+            let name = index.lineName[e]
+            if !name.isEmpty {
+                kmByName[name] = (kmByName[name] ?? 0) + km
+                weightedPositionByName[name, default: 0] += km * (position + km / 2)
+                if firstIndexByName[name] == nil { firstIndexByName[name] = ordinal }
+            }
+            position += km
+            ordinal += 1
+        }
+        let totalKm = kmByName.values.reduce(0, +)
+        let floor = max(traversedLineMinimumKm, traversedLineMinimumShare * totalKm)
+        let qualifying = kmByName.pairs.filter { $0.value >= floor }
+        let chosen: [(key: String, value: Double)]
+        if qualifying.isEmpty, !kmByName.isEmpty {
+            let best = kmByName.pairs.max { $0.value < $1.value }!
+            chosen = [best]
+        } else {
+            chosen = qualifying
+        }
+        let ordered = chosen.sorted { a, b in
+            let ca = weightedPositionByName[a.key]! / a.value
+            let cb = weightedPositionByName[b.key]! / b.value
+            if ca != cb { return ca < cb }
+            return firstIndexByName[a.key]! < firstIndexByName[b.key]!
+        }
+        return ordered.map { name, km in
+            TraversedLine(name: name, operatorName: index.lineOperator[name], km: km)
+        }
+    }
+
+    static let maxBridgeKm = 4.0
+
+    /// Walk ONE train's ridden geometry onto the edge index.
+    ///
+    /// Anchor-merge walk: the route solver densifies some N02 edges with
+    /// interpolated points (station snaps, long-edge subdivision), so a naive
+    /// pair-by-pair lookup misses them. Keep the last on-network anchor and try
+    /// (anchor → current) at every vertex — a subdivided N02 edge re-matches as
+    /// soon as the walk reaches its far endpoint. Off-network connector spans
+    /// are recorded with the category mask of the edge they reconnect to
+    /// (mask 0 = truly unattributable).
+    public static func collectTrainStatsEntry(
+        features: [RouteFeature], index: EdgeIndex, rideDate: String? = nil
+    ) -> TrainEntry {
+        var edges: [Int] = []
+        var spans: [Span] = []
+        var segments: [RiddenSection] = []
+
+        for feature in features {
+            guard feature.hasGeometry else { continue }
+            guard feature.rideSegment else { continue }
+            // Remember where this feature's contribution starts so its own km
+            // and category mask can be summed back out of the shared
+            // accumulators.
+            let edgeStart = edges.count
+            let spanStart = spans.count
+            for line in feature.lines { walkStatsCoordinates(line, index: index, rideDate: rideDate, edges: &edges, spans: &spans) }
+
+            appendRiddenStatsSection(feature, index: index, edgeStart: edgeStart, spanStart: spanStart,
+                edges: edges, spans: spans, segments: &segments)
+        }
+
+        var km = 0.0
+        for e in edges { km += index.km[e] }
+        for span in spans { km += span.km }
+        return TrainEntry(edges: edges, spans: spans, km: km, segments: segments)
+    }
+
+    private static func recordSpan(
+        _ from: Coordinate, _ to: Coordinate, _ km: Double, _ mask: Int, spans: inout [Span]
+    ) {
+        if km > 0 { spans.append(Span(key: edgeKey(from, to), km: km, mask: mask)) }
+    }
+
+    private static func walkStatsCoordinates(
+        _ coords: [Coordinate], index: EdgeIndex, rideDate: String?, edges: inout [Int], spans: inout [Span]
+    ) {
+        guard coords.count >= 2 else { return }
+        var anchor = coords[0]
+        // Category of the edge the anchor most recently reached. The
+        // display network deliberately finishes a station interval at
+        // the station anchor, which can sit a short connector away from
+        // the raw section edge. A leading connector already inherits the
+        // edge it reconnects to below; keeping this makes the trailing
+        // connector inherit the edge it just left, symmetrically.
+        var anchorMask = 0
+        var pendingKm = 0.0
+        for i in 1..<coords.count {
+            let prev = coords[i - 1]
+            let v = coords[i]
+            if anchor.lon == v.lon && anchor.lat == v.lat { continue }
+            if let e = index.edgeID(for: packedEdgeKey(anchor, v), on: rideDate) {
+                edges.append(e)
+                anchor = v
+                anchorMask = index.mask[e]
+                pendingKm = 0  // pending hops were interior to this matched edge
+                continue
+            }
+            if let e2 = index.edgeID(for: packedEdgeKey(prev, v), on: rideDate) {
+                recordSpan(anchor, prev, pendingKm, index.mask[e2], spans: &spans)
+                edges.append(e2)
+                anchor = v
+                anchorMask = index.mask[e2]
+                pendingKm = 0
+                continue
+            }
+            pendingKm += equirectKm(prev.lon, prev.lat, v.lon, v.lat)
+            if pendingKm > maxBridgeKm {
+                recordSpan(anchor, v, pendingKm, 0, spans: &spans)
+                anchor = v
+                anchorMask = 0
+                pendingKm = 0
+            } else if i == coords.count - 1 {
+                recordSpan(anchor, v, pendingKm, anchorMask, spans: &spans)
+                anchor = v
+                pendingKm = 0
+            }
+        }
+    }
+
+    private static func addStatsBucketKm(
+        _ mask: Int, _ km: Double, kmByBucket: inout OrderedDictionary<Int, Double>
+    ) {
+        let b = exclusiveTrackBucket(mask)
+        kmByBucket[b] = (kmByBucket[b] ?? 0) + km
+    }
+
+    private static func appendRiddenStatsSection(
+        _ feature: RouteFeature, index: EdgeIndex, edgeStart: Int, spanStart: Int,
+        edges: [Int], spans: [Span], segments: inout [RiddenSection]
+    ) {
+        guard let from = feature.from, let to = feature.to, from != to else { return }
+        var segKm = 0.0
+        // Attribute the section to the mode carrying the MOST of its
+        // distance. OR-ing every edge's mask instead would file a JR
+        // section under 私鐵 and 地下鐵 the moment its geometry clipped one
+        // parallel edge in a dense terminal area — which is what it used
+        // to do.
+        var kmByBucket = OrderedDictionary<Int, Double>()
+        for i in edgeStart..<edges.count {
+            segKm += index.km[edges[i]]
+            addStatsBucketKm(index.mask[edges[i]], index.km[edges[i]], kmByBucket: &kmByBucket)
+        }
+        for i in spanStart..<spans.count {
+            segKm += spans[i].km
+            if spans[i].mask != 0 { addStatsBucketKm(spans[i].mask, spans[i].km, kmByBucket: &kmByBucket) }
+        }
+        var bucket = 0
+        var bestKm = -1.0
+        for (b, km) in kmByBucket.pairs where km > bestKm {
+            bestKm = km
+            bucket = b
+        }
+        // Edge ids are the unit of "same track": two intervals that share
+        // none cannot contain one another, which is what keeps 新幹線 from
+        // swallowing the 在來線 running beside it.
+        let segEdges = edges[edgeStart...].sorted()
+        segments.append(
+            RiddenSection(from: from, to: to, km: segKm, bucket: bucket, edgeIds: segEdges))
+    }
+
+    // MARK: - aggregation
+
+    public struct MileageStats: Sendable {
+        public var riddenAll: Double
+        public var riddenByMask: [Int: Double]
+        public var unmatchedKm: Double
+        /// Deduped ridden km per line, split by category — the same ridden
+        /// edge Set as the category sums.
+        public var lineRidByCat: OrderedDictionary<String, [Int: Double]>
+        public var rideMinutes: Double = 0
+        public var services: ServiceGroups = ServiceGroups()
+        public var topSegments: TopSegments? = nil
+        /// Deduped km of every service-valid edge a ride matched, current and
+        /// not. Connector spans are not edges and are not included.
+        public var totalRiddenKm: Double = 0
+        /// Reference-geometry ridden km whose ``historicalClassification``
+        /// is nil on the statistics reference date. In-place retirement is
+        /// excluded; it stays in ``riddenAll`` and ``retiredNetworkKm``.
+        public var currentNetworkRiddenKm: Double = 0
+        /// `.historical`, plus reference geometry already closed on the
+        /// statistics reference date. A future `validTo` is not retired.
+        public var retiredNetworkKm: Double = 0
+        /// ``RouteGraph/TemporalKind/relocatedOld`` only.
+        public var relocatedOldKm: Double = 0
+        /// ``retiredNetworkKm`` plus ``relocatedOldKm``. Not added into
+        /// ``totalRiddenKm``.
+        public var historicalUniqueKm: Double = 0
+        /// Distinct history ids on those edges, plus line names that have no
+        /// history id and are not current-only.
+        public var historicalLineCount: Int = 0
+
+        /// The part of ``riddenAll`` a coverage percentage may be taken of.
+        ///
+        /// ``riddenAll`` is every kilometre the reader rode, which is the
+        /// right answer to 総乗車距離 and the wrong one to 網路覆蓋率. It
+        /// includes the connector spans the walk bridges gaps with, and the
+        /// mask-0 ones among them are by definition distance that landed on no
+        /// classified edge at all — while the denominator is the classified
+        /// network and nothing else. Left in, a ride that never touched the
+        /// network would raise the percentage of the network said to be
+        /// covered.
+        ///
+        /// The MASKED spans stay: `collectTrainStatsEntry` records those with
+        /// the category of the edge they reconnect to precisely because they
+        /// are the network, minus the exact edge id the index happened not to
+        /// carry — which is the same reading `riddenByMask` already takes of
+        /// them. Only the remainder this subtracts is unattributable, and
+        /// ``unmatchedKm`` is the figure the passport states it in.
+        ///
+        /// Derived rather than aggregated, so `aggregateMileageStats` keeps
+        /// returning the two figures the port fixtures pin bit-for-bit.
+        public var networkKm: Double { riddenAll - unmatchedKm }
+    }
+
+    /// The deduped union. **This is the function the whole panel means.**
+    ///
+    /// Every entry's edge ids go into one Set, and `idx.km` is summed over that
+    /// Set once. The order that Set is iterated in is JavaScript insertion
+    /// order and it is load-bearing: floating-point addition is not
+    /// associative, so the same edges summed in a different order give a total
+    /// that differs in its last bits. Measured on the fixture's own cases,
+    /// listing the same rides in reverse order moves `riddenAll` by 1 ULP —
+    /// which is why the ridden set is kept as an array plus a membership set
+    /// rather than as a `Set`.
+    /// Civil today in the region's zone — the statistics reference clock.
+    /// Not the map era and not a ride date. Zone identifiers match the
+    /// region clocks (Japan when the country is unknown).
+    static func statisticsReferenceDate(country: String, now: Date = Date()) -> String {
+        let identifier: String
+        let fallbackSeconds: Int
+        switch country.lowercased() {
+        case "cn":
+            identifier = "Asia/Shanghai"
+            fallbackSeconds = 8 * 3600
+        case "tw":
+            identifier = "Asia/Taipei"
+            fallbackSeconds = 8 * 3600
+        case "hk":
+            identifier = "Asia/Hong_Kong"
+            fallbackSeconds = 8 * 3600
+        case "mo":
+            identifier = "Asia/Macau"
+            fallbackSeconds = 8 * 3600
+        case "kr":
+            identifier = "Asia/Seoul"
+            fallbackSeconds = 9 * 3600
+        default:
+            identifier = "Asia/Tokyo"
+            fallbackSeconds = 9 * 3600
+        }
+        let zone =
+            TimeZone(identifier: identifier)
+            ?? TimeZone(secondsFromGMT: fallbackSeconds)
+            ?? TimeZone(secondsFromGMT: 0)
+            ?? .gmt
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = zone
+        let parts = calendar.dateComponents([.year, .month, .day], from: now)
+        return String(
+            format: "%04d-%02d-%02d", parts.year ?? 2000, parts.month ?? 1, parts.day ?? 1)
+    }
+
+    /// ``aggregateMileageStats(index:entries:country:asOf:)`` dated on the
+    /// region civil today. Callers that already know the reference date pass
+    /// it explicitly; this is not the ride date and not the map era.
+    public static func aggregateMileageStats(
+        index: EdgeIndex, entries: [TrainEntry], country: String
+    ) -> MileageStats {
+        aggregateMileageStats(
+            index: index, entries: entries, country: country,
+            asOf: statisticsReferenceDate(country: country))
+    }
+
+    public static func aggregateMileageStats(
+        index: EdgeIndex, entries: [TrainEntry], country: String, asOf: String
+    ) -> MileageStats {
+        var riddenOrder: [Int] = []
+        var riddenSeen = Set<Int>()
+        var extraSpans = OrderedDictionary<String, (km: Double, mask: Int)>()
+        collectUniqueRiddenParts(entries, riddenOrder: &riddenOrder, riddenSeen: &riddenSeen, extraSpans: &extraSpans)
+
+        var riddenAll = 0.0
+        var unmatchedKm = 0.0
+        var totalRiddenKm = 0.0
+        var currentNetworkRiddenKm = 0.0
+        var retiredNetworkKm = 0.0
+        var relocatedOldKm = 0.0
+        var historyIDs: [String] = []
+        var historySeen = Set<String>()
+        var fallbackLines: [String] = []
+        var fallbackSeen = Set<String>()
+        var currentLines = Set<String>()
+        let cats = categories(country: country)
+        var riddenByMask: [Int: Double] = [:]
+        for category in cats { riddenByMask[category.mask] = 0 }
+        var lineRidByCat = OrderedDictionary<String, [Int: Double]>()
+
+        accumulateRiddenEdges(riddenOrder, index: index, country: country, asOf: asOf, cats: cats,
+            totalRiddenKm: &totalRiddenKm, relocatedOldKm: &relocatedOldKm, retiredNetworkKm: &retiredNetworkKm,
+            historySeen: &historySeen, historyIDs: &historyIDs, fallbackSeen: &fallbackSeen, fallbackLines: &fallbackLines,
+            currentNetworkRiddenKm: &currentNetworkRiddenKm, riddenAll: &riddenAll,
+            riddenByMask: &riddenByMask, currentLines: &currentLines, lineRidByCat: &lineRidByCat)
+
+        accumulateRiddenSpans(extraSpans, cats: cats, riddenAll: &riddenAll,
+            unmatchedKm: &unmatchedKm, riddenByMask: &riddenByMask)
+
+        let namedLines = fallbackLines.filter { !currentLines.contains($0) }
+        return MileageStats(
+            riddenAll: riddenAll, riddenByMask: riddenByMask,
+            unmatchedKm: unmatchedKm, lineRidByCat: lineRidByCat,
+            totalRiddenKm: totalRiddenKm,
+            currentNetworkRiddenKm: currentNetworkRiddenKm,
+            retiredNetworkKm: retiredNetworkKm,
+            relocatedOldKm: relocatedOldKm,
+            historicalUniqueKm: retiredNetworkKm + relocatedOldKm,
+            historicalLineCount: historyIDs.count + namedLines.count)
+    }
+
+    private static func collectUniqueRiddenParts(
+        _ entries: [TrainEntry], riddenOrder: inout [Int], riddenSeen: inout Set<Int>,
+        extraSpans: inout OrderedDictionary<String, (km: Double, mask: Int)>
+    ) {
+        for entry in entries {
+            for e in entry.edges where riddenSeen.insert(e).inserted { riddenOrder.append(e) }
+            for span in entry.spans {
+                if let current = extraSpans[span.key] {
+                    // A repeat ride of the same connector only ORs its mask in;
+                    // the km is counted once.
+                    extraSpans[span.key] = (current.km, current.mask | span.mask)
+                } else {
+                    extraSpans[span.key] = (span.km, span.mask)
+                }
+            }
+        }
+
+    }
+
+    private static func recordHistoricalMileage(
+        edge e: Int, km: Double, index: EdgeIndex, bucket: HistoricalBucket?,
+        relocatedOldKm: inout Double, retiredNetworkKm: inout Double,
+        historySeen: inout Set<String>, historyIDs: inout [String],
+        fallbackSeen: inout Set<String>, fallbackLines: inout [String]
+    ) {
+        switch bucket {
+        case .relocatedOld:
+            relocatedOldKm += km
+        case .retired:
+            retiredNetworkKm += km
+        case nil:
+            break
+        }
+        if bucket != nil {
+            if e < index.historyId.count, let id = index.historyId[e], !id.isEmpty {
+                if historySeen.insert(id).inserted { historyIDs.append(id) }
+            } else {
+                let name = index.lineName[e]
+                if !name.isEmpty, fallbackSeen.insert(name).inserted { fallbackLines.append(name) }
+            }
+        }
+    }
+
+    private static func accumulateRiddenEdges(
+        _ riddenOrder: [Int], index: EdgeIndex, country: String, asOf: String, cats: [Category],
+        totalRiddenKm: inout Double, relocatedOldKm: inout Double, retiredNetworkKm: inout Double,
+        historySeen: inout Set<String>, historyIDs: inout [String],
+        fallbackSeen: inout Set<String>, fallbackLines: inout [String],
+        currentNetworkRiddenKm: inout Double, riddenAll: inout Double,
+        riddenByMask: inout [Int: Double], currentLines: inout Set<String>,
+        lineRidByCat: inout OrderedDictionary<String, [Int: Double]>
+    ) {
+        for e in riddenOrder {
+            let km = index.km[e]
+            let kind = e < index.temporalKind.count ? index.temporalKind[e] : RouteGraph.TemporalKind.current
+            let validFrom = e < index.validFrom.count ? index.validFrom[e] : nil
+            let validTo = e < index.validTo.count ? index.validTo[e] : nil
+            let onCurrent = e < index.currentNetwork.count
+                ? index.currentNetwork[e]
+                : countsTowardCurrentNetwork(kind: kind, validTo: validTo)
+            let bucket = historicalClassification(
+                kind: kind, validFrom: validFrom, validTo: validTo, asOf: asOf)
+            totalRiddenKm += km
+            recordHistoricalMileage(edge: e, km: km, index: index, bucket: bucket,
+                relocatedOldKm: &relocatedOldKm, retiredNetworkKm: &retiredNetworkKm,
+                historySeen: &historySeen, historyIDs: &historyIDs,
+                fallbackSeen: &fallbackSeen, fallbackLines: &fallbackLines)
+            if !onCurrent { continue }
+            // Reference geometry, including in-place retirement. Only the
+            // still-active part (classification nil) is current-network ridden.
+            if bucket == nil { currentNetworkRiddenKm += km }
+            riddenAll += km
+            let m = index.mask[e]
+            for category in cats where m & category.mask != 0 {
+                riddenByMask[category.mask]! += km
+            }
+            let ln = index.lineName[e]
+            guard !ln.isEmpty else { continue }
+            if bucket == nil { currentLines.insert(ln) }
+            let lm = index.lineMask[e]
+            var byCat = lineRidByCat[ln] ?? zeroCategoryKm(country: country)
+            for category in cats where lm & category.mask != 0 { byCat[category.mask]! += km }
+            lineRidByCat[ln] = byCat
+        }
+
+    }
+
+    private static func accumulateRiddenSpans(
+        _ extraSpans: OrderedDictionary<String, (km: Double, mask: Int)>, cats: [Category],
+        riddenAll: inout Double, unmatchedKm: inout Double, riddenByMask: inout [Int: Double]
+    ) {
+        // Connector spans: counted nationally, attributed to their reconnect
+        // category when known; the mask-0 remainder is reported as unmatchedKm.
+        for span in extraSpans.values {
+            riddenAll += span.km
+            if span.mask == 0 {
+                unmatchedKm += span.km
+                continue
+            }
+            for category in cats where span.mask & category.mask != 0 {
+                riddenByMask[category.mask]! += span.km
+            }
+        }
+
+    }
+
+    // MARK: - ride time
+
+    // The ride-flag rules live in app-editor.js, next to the editor that
+    // toggles them; they are reproduced here because trainRideMinutes cannot
+    // be ported without them. A pass-through (非停車站) is NOT individually
+    // toggleable: it inherits the ride state of the stop-to-stop interval it
+    // lies in, so hiding an interval hides every pass-through inside it.
+    public static func isStoppingStation(_ stop: Stop) -> Bool {
+        stop.stopType != "pass_through"
+    }
+
+    /// Public because the map, playback, and statistics all draw from this
+    /// one rule: a marker for a station the reader did not ride is a claim
+    /// about the journey they did not make.
+    public static func effectiveStopRide(_ stops: [Stop], _ index: Int) -> Bool {
+        guard index >= 0, index < stops.count else { return false }
+        let stop = stops[index]
+        if isStoppingStation(stop) { return stop.rideSegment }
+        let prev = (0..<index).last { isStoppingStation(stops[$0]) } ?? -1
+        let next = ((index + 1)..<stops.count).first { isStoppingStation(stops[$0]) } ?? -1
+        if prev < 0 || next < 0 { return stop.rideSegment }
+        return stops[prev].rideSegment && stops[next].rideSegment
+    }
+
+    /// Ordered indexes of a train's effectively-ridden STOPPING stations
+    /// (pass-throughs excluded). First and last entry are the ride boundary pair.
+    public static func effectivelyRiddenStopIndexes(_ stops: [Stop]) -> [Int] {
+        stops.indices.filter { stops[$0].stopType != "pass_through" && effectiveStopRide(stops, $0) }
+    }
+
+    /// Whether the route feature between `index` and `index + 1` is ridden.
+    public static func isRideSegment(_ stops: [Stop], segmentIndex: Int) -> Bool {
+        effectiveStopRide(stops, segmentIndex) && effectiveStopRide(stops, segmentIndex + 1)
+    }
+
+    /// Ride TIME of one train: first effectively-ridden stopping station's
+    /// departure → last one's arrival, falling back to the other field when one
+    /// is missing. `nil` = no usable times.
+    ///
+    /// A plain end-before-start wraps overnight; the `"+1"` day offsets are
+    /// already folded in by `parseTimeToMinutes`, so they do not wrap twice.
+    public static func trainRideMinutes(_ train: Train) -> Double? {
+        let stops = train.stops
+        let ridden = effectivelyRiddenStopIndexes(stops)
+        guard ridden.count >= 2 else { return nil }
+        let first = stops[ridden[0]]
+        let last = stops[ridden[ridden.count - 1]]
+        guard
+            let start = Dates.parseTimeToMinutes(first.departure)
+                ?? Dates.parseTimeToMinutes(first.arrival),
+            var end = Dates.parseTimeToMinutes(last.arrival)
+                ?? Dates.parseTimeToMinutes(last.departure)
+        else { return nil }
+        if end < start { end += 24 * 60 }
+        return end - start
+    }
+
+    public static func sumRideMinutes(_ trains: [Train]) -> Double {
+        var total = 0.0
+        for train in trains { if let m = trainRideMinutes(train) { total += m } }
+        return total
+    }
+
+    // MARK: - service-type rows
+
+    public struct ServiceGroup: Sendable, Equatable {
+        public var km: Double = 0
+        public var minutes: Double = 0
+        public var count: Int = 0
+    }
+
+    public struct ServiceGroups: Sendable, Equatable {
+        public var hsr = ServiceGroup()
+        public var ltd = ServiceGroup()
+        public var other = ServiceGroup()
+
+        /// Every kilometre travelled — the ACCUMULATING answer, where a
+        /// section ridden twice counts twice.
+        ///
+        /// `serviceGroupOfTrain` returns exactly one of these three for every
+        /// journey, so the groups partition the journeys and their sum is the
+        /// sum of each journey's own `TrainEntry.km`. That is what 総乗車距離
+        /// asks for, and it is deliberately NOT ``MileageStats/riddenAll``:
+        /// that one is the deduped union over N02 edge ids, which answers how
+        /// much of the NETWORK has been covered. Twenty-one rides over
+        /// 三島↔沼津 are twenty-one rides here and one section there, and a
+        /// screen that prints the second under the first one's label is
+        /// telling the reader they travelled less than they did.
+        ///
+        /// The port fixtures record both beside each other for exactly this
+        /// reason — `summedTrainKm` next to `riddenAll` — "so the two can
+        /// never be confused for each other".
+        public var km: Double { hsr.km + ltd.km + other.km }
+    }
+
+    /// The three buckets are the same everywhere — high speed, the
+    /// reserved-seat premium tier, everything else — but the service names that
+    /// identify them are a country's own vocabulary, so the matching is per
+    /// country. Taiwan, China and Korea each match their own; every other country
+    /// falls through to Japan's words.
+    public static func serviceGroupOfTrain(trainType: String?, country: String) -> String {
+        let t = trainType ?? ""
+        if country == "tw" {
+            // 高鐵 is Taiwan's high-speed service; 對號列車 (自強 — including 太魯閣
+            // and 普悠瑪 — and 莒光) is the reserved-seat tier 有料特急 corresponds to.
+            if containsAny(t, ["高鐵", "高铁"]) { return "hsr" }
+            if containsAny(
+                t, ["自強", "自强", "太魯閣", "太鲁阁", "普悠瑪", "普悠玛", "莒光", "對號", "对号"])
+            { return "ltd" }
+            return "other"
+        }
+        if country == "cn" {
+            let units = Array(asciiUppercased(TrainValidation.jsTrim(t)).utf16)
+            let numberedCode = !units.isEmpty && units.dropFirst().allSatisfy { (48...57).contains($0) }
+            let initial = units.first
+            if containsAny(t, ["高铁", "高鐵", "高速", "动车", "動車"])
+                || (numberedCode && initial.map { [71, 68, 67].contains($0) } == true)
+            { return "hsr" }
+            if containsAny(t, ["直达", "直達", "特快", "快速"])
+                || (numberedCode && initial.map { [90, 84, 75].contains($0) } == true)
+            { return "ltd" }
+            return "other"
+        }
+        if country == "kr" {
+            // KTX and SRT are the high-speed services; ITX-새마을 / ITX-마음 and
+            // 무궁화호 are the reserved-seat intercity tier 有料特急 corresponds
+            // to. The JavaScript's own note says what its absence costs: "a KTX
+            // ride landed in 其他列車 while the 高速鐵道（KTX・SRT）row above it
+            // read 0.0 km." This port did not follow it there, and no fixture
+            // caught that — `stats.json` still records the older belief in its
+            // own `why` ("Only jp and tw have their own vocabulary"), so the
+            // parity test asserted the stale answer and passed.
+            //
+            // The first test is case-insensitive and the second is not,
+            // because the two JavaScript regexes differ in exactly that way
+            // (`/KTX|SRT|고속/i` against `/ITX|새마을|…/`). Folding is ASCII-only
+            // so the UTF-16 code-unit count cannot shift under `contains`.
+            if containsAny(asciiUppercased(t), ["KTX", "SRT", "고속"]) { return "hsr" }
+            if containsAny(
+                t, ["ITX", "새마을", "무궁화", "セマウル", "ムグンファ", "新村", "無窮花", "无穷花"])
+            { return "ltd" }
+            return "other"
+        }
+        if contains(t, "新幹線") { return "hsr" }
+        if contains(t, "特急") { return "ltd" }
+        return "other"
+    }
+
+    /// `String.prototype.includes` — a search over UTF-16 code units.
+    ///
+    /// Swift's own `contains` matches by canonical equivalence, so a
+    /// precomposed needle would find a decomposed haystack that JavaScript
+    /// would miss. Train types are user-entered text, so the difference is
+    /// reachable and the code-unit search is the faithful one.
+    static func contains(_ haystack: String, _ needle: String) -> Bool {
+        let h = Array(haystack.utf16)
+        let n = Array(needle.utf16)
+        if n.isEmpty { return true }
+        if n.count > h.count { return false }
+        for start in 0...(h.count - n.count) {
+            var match = true
+            for i in 0..<n.count where h[start + i] != n[i] {
+                match = false
+                break
+            }
+            if match { return true }
+        }
+        return false
+    }
+
+    static func containsAny(_ haystack: String, _ needles: [String]) -> Bool {
+        needles.contains { contains(haystack, $0) }
+    }
+
+    /// `a`…`z` folded to upper case and nothing else.
+    ///
+    /// `String.uppercased()` would do full Unicode case mapping, which can
+    /// change a string's length (ß becomes SS) and so cannot be used under a
+    /// rule whose whole point is to match JavaScript's UTF-16 code-unit
+    /// search. Every needle this serves is ASCII.
+    static func asciiUppercased(_ text: String) -> String {
+        String(String.UnicodeScalarView(text.unicodeScalars.map { scalar in
+            (scalar.value >= 97 && scalar.value <= 122)
+                ? Unicode.Scalar(scalar.value - 32) ?? scalar
+                : scalar
+        }))
+    }
+
+    public static func serviceGroupStats(
+        trains: [Train], entries: [TrainEntry], country: String
+    ) -> ServiceGroups {
+        var groups = ServiceGroups()
+        for i in trains.indices {
+            let name = serviceGroupOfTrain(trainType: trains[i].trainType, country: country)
+            var group = name == "hsr" ? groups.hsr : name == "ltd" ? groups.ltd : groups.other
+            group.km += i < entries.count ? entries[i].km : 0
+            if let m = trainRideMinutes(trains[i]) { group.minutes += m }
+            group.count += 1
+            if name == "hsr" { groups.hsr = group } else if name == "ltd" {
+                groups.ltd = group
+            } else {
+                groups.other = group
+            }
+        }
+        return groups
+    }
+
+    // MARK: - most-ridden sections
+
+    public struct TopRow: Sendable {
+        public var from: String
+        public var to: String
+        public var count: Int
+        public var km: Double
+        public var bucket: Int
+        public var edgeIds: [Int]
+
+        public init(from: String, to: String, count: Int, km: Double, bucket: Int,
+                    edgeIds: [Int]) {
+            self.from = from
+            self.to = to
+            self.count = count
+            self.km = km
+            self.bucket = bucket
+            self.edgeIds = edgeIds
+        }
+    }
+
+    public struct TopSegments: Sendable {
+        public struct Bucket: Sendable {
+            public var mask: Int
+            public var rows: [TopRow]
+        }
+        /// One row lands in exactly one mode, keyed by the country's own
+        /// category masks and listed in its category order.
+        public var byMask: [Bucket]
+        public var all: [TopRow]
+    }
+
+    public static func topRiddenSegments(
+        entries: [TrainEntry], country: String
+    ) -> TopSegments {
+        var acc = OrderedDictionary<String, TopRow>()
+        for entry in entries {
+            for sg in entry.segments {
+                let key = sortedPairKey(sg.from, sg.to)
+                if var current = acc[key] {
+                    current.count += 1
+                    // Keep the longest measurement: a partially-solved repeat
+                    // ride must not shrink the section's recorded length. The
+                    // best-measured ride also decides the mode, and its edges
+                    // define the section's extent.
+                    if sg.km > current.km {
+                        current.km = sg.km
+                        current.bucket = sg.bucket
+                        current.edgeIds = sg.edgeIds
+                    }
+                    acc[key] = current
+                } else {
+                    acc[key] = TopRow(
+                        from: sg.from, to: sg.to, count: 1, km: sg.km,
+                        bucket: sg.bucket, edgeIds: sg.edgeIds)
+                }
+            }
+        }
+
+        let cats = categories(country: country)
+        var byMaskRows: [Int: [TopRow]] = [:]
+        for category in cats { byMaskRows[category.mask] = [] }
+        var all: [TopRow] = []
+        for row in acc.values {
+            all.append(row)
+            if byMaskRows[row.bucket] != nil { byMaskRows[row.bucket]!.append(row) }
+        }
+
+        let byMask = cats.map { category in
+            TopSegments.Bucket(
+                mask: category.mask,
+                rows: dropContainedSections(stableSortByRides(byMaskRows[category.mask]!)))
+        }
+        return TopSegments(byMask: byMask, all: dropContainedSections(stableSortByRides(all)))
+    }
+
+    /// `[from, to].sort().join("\u{0}")`.
+    ///
+    /// `Array.prototype.sort` with no comparator orders by UTF-16 code unit,
+    /// not by Swift's canonical-equivalence `<`. Station names are the strings
+    /// being compared, so the difference is reachable in real data.
+    static func sortedPairKey(_ a: String, _ b: String) -> String {
+        let ordered = utf16LessOrEqual(a, b) ? (a, b) : (b, a)
+        return ordered.0 + "\u{0}" + ordered.1
+    }
+
+    static func utf16LessOrEqual(_ a: String, _ b: String) -> Bool {
+        let x = Array(a.utf16)
+        let y = Array(b.utf16)
+        for i in 0..<Swift.min(x.count, y.count) {
+            if x[i] != y[i] { return x[i] < y[i] }
+        }
+        return x.count <= y.count
+    }
+
+    /// `rows.sort((a, b) => b.count - a.count || b.km - a.km)`.
+    ///
+    /// `Array.prototype.sort` is required to be stable, and Swift's `sorted`
+    /// is not, so the original position is carried as the final tie-break.
+    /// This is not cosmetic: `dropContainedSections` walks the sorted list and
+    /// keeps whichever section it reaches first, so a reordering of two
+    /// equal-ranking rows changes which section a reader is shown.
+    static func stableSortByRides(_ rows: [TopRow]) -> [TopRow] {
+        rows.enumerated()
+            .sorted { l, r in
+                if l.element.count != r.element.count { return l.element.count > r.element.count }
+                if l.element.km != r.element.km { return l.element.km > r.element.km }
+                return l.offset < r.offset
+            }
+            .map(\.element)
+    }
+
+    /// True when every edge of `inner` also appears in `outer` — i.e. `inner`
+    /// is a stretch of the very same track. Both arrays are sorted ascending,
+    /// so this is a linear merge rather than a Set build per comparison.
+    public static func isEdgeSubset(_ inner: [Int], _ outer: [Int]) -> Bool {
+        if inner.isEmpty || outer.isEmpty || inner.count > outer.count { return false }
+        var j = 0
+        for want in inner {
+            while j < outer.count && outer[j] < want { j += 1 }
+            if j >= outer.count || outer[j] != want { return false }
+            j += 1
+        }
+        return true
+    }
+
+    /// Riding A→D necessarily rides B→C inside it, so listing both says the
+    /// same trip twice. Walking the already ride-sorted list and dropping any
+    /// section contained in one ALREADY KEPT means the longer section wins only
+    /// when it is ridden at least as often; a short section ridden more than
+    /// the long one it sits inside still ranks first and keeps the long one as
+    /// a separate entry.
+    ///
+    /// The bucket check is belt-and-braces on top of the edge test: sections of
+    /// different modes never share edges anyway.
+    public static func dropContainedSections(_ rows: [TopRow]) -> [TopRow] {
+        var kept: [TopRow] = []
+        for row in rows {
+            var contained = false
+            for k in kept where k.bucket == row.bucket && isEdgeSubset(row.edgeIds, k.edgeIds) {
+                contained = true
+                break
+            }
+            if !contained { kept.append(row) }
+        }
+        return kept
+    }
+
+    // MARK: - the view model
+
+    public struct DailyStats: Sendable {
+        public var date: String
+        public var trainCount: Int
+        public var stats: MileageStats
+    }
+
+    public struct MileageStatsView: Sendable {
+        public var overall: MileageStats
+        public var daily: DailyStats?
+        public var categories: [Category]
+    }
+
+    public static let allDates = "__all__"
+
+    /// The all-time aggregate plus, when a concrete date bucket is active,
+    /// that day's own km/time aggregate computed from the SAME per-train entries.
+    ///
+    /// `trainDate` and `dateLabel` are parameters rather than calls: the first
+    /// is app-dates.js's business and the second resolves through I18N, i.e.
+    /// presentation. The JavaScript's `yieldPoint` has no analogue — it exists
+    /// to keep a browser tab responsive between phases, and parking somewhere
+    /// else cannot change an answer.
+    public static func buildMileageStatsView(
+        index: EdgeIndex,
+        trains: [Train],
+        entries: [TrainEntry],
+        country: String,
+        selectedDate: String?,
+        trainDate: (Train) -> String,
+        dateLabel: (String) -> String
+    ) -> MileageStatsView {
+        var overall = aggregateMileageStats(index: index, entries: entries, country: country)
+        overall.rideMinutes = sumRideMinutes(trains)
+        overall.services = serviceGroupStats(trains: trains, entries: entries, country: country)
+        overall.topSegments = topRiddenSegments(entries: entries, country: country)
+
+        var daily: DailyStats? = nil
+        if let selectedDate, selectedDate != allDates {
+            var dayTrains: [Train] = []
+            var dayEntries: [TrainEntry] = []
+            for (i, train) in trains.enumerated() where trainDate(train) == selectedDate {
+                dayTrains.append(train)
+                if i < entries.count { dayEntries.append(entries[i]) }
+            }
+            var stats = aggregateMileageStats(
+                index: index, entries: dayEntries, country: country)
+            stats.rideMinutes = sumRideMinutes(dayTrains)
+            stats.services = serviceGroupStats(
+                trains: dayTrains, entries: dayEntries, country: country)
+            daily = DailyStats(
+                date: dateLabel(selectedDate), trainCount: dayTrains.count, stats: stats)
+        }
+        return MileageStatsView(
+            overall: overall, daily: daily, categories: categories(country: country))
+    }
+
+    // MARK: - the ridden-line display filter
+
+    /// Category of ONE ridden route feature, by dominant km over the same N02
+    /// edge index the mileage stats use.
+    ///
+    /// `nil` means undetermined — either the feature has no line geometry, or
+    /// none of it matched the network. The render tier keeps an undetermined
+    /// feature visible rather than guessing, which is also what it does while
+    /// the network is still loading and there is no index at all.
+    public static func riddenFeatureCategory(
+        _ feature: RouteFeature, index: EdgeIndex, country: String
+    ) -> String? {
+        var km: [String: Double] = ["hsr": 0, "jr": 0, "metro": 0, "priv": 0]
+        for line in feature.lines {
+            guard line.count >= 2 else { continue }
+            for i in 1..<line.count {
+                guard let e = index.map[packedEdgeKey(line[i - 1], line[i])] else { continue }
+                km[filterCategoryForMask(index.mask[e], country: country)]! += index.km[e]
+            }
+        }
+        var best: String? = nil
+        var bestKm = 0.0
+        // Not the order the km object was built in: hsr, metro, jr, priv, so a
+        // tie goes to the more specific mode.
+        for c in ["hsr", "metro", "jr", "priv"] where km[c]! > bestKm {
+            bestKm = km[c]!
+            best = c
+        }
+        return best
+    }
+
+    /// The four checkboxes that hide/show RIDDEN route lines by category.
+    /// Unridden intervals and the 全部鐵路線 network overlay are untouched.
+    public struct RiddenCategoryFilter: Sendable, Equatable {
+        public var hsr = true
+        public var jr = true
+        public var metro = true
+        public var priv = true
+
+        public init(hsr: Bool = true, jr: Bool = true, metro: Bool = true, priv: Bool = true) {
+            self.hsr = hsr
+            self.jr = jr
+            self.metro = metro
+            self.priv = priv
+        }
+
+        public subscript(category: String) -> Bool {
+            switch category {
+            case "hsr": return hsr
+            case "jr": return jr
+            case "metro": return metro
+            case "priv": return priv
+            default: return true  // an unknown key is `undefined !== false`
+            }
+        }
+
+        public var anyHidden: Bool { !hsr || !jr || !metro || !priv }
+    }
+
+    public static func riddenFeatureVisible(
+        _ feature: RouteFeature, index: EdgeIndex?, country: String,
+        filter: RiddenCategoryFilter
+    ) -> Bool {
+        // Read-only: NEVER build the (expensive) edge index from the render
+        // path. Until the stats job has built it, everything stays visible.
+        guard let index,
+            let category = riddenFeatureCategory(feature, index: index, country: country)
+        else { return true }
+        return filter[category]
+    }
+}

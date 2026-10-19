@@ -65,16 +65,6 @@ struct FamilyWindowParityTests {
         let cases: [Case]
     }
 
-    static func fixtureURL() -> URL? {
-        guard let root = try? PortFixtures.repositoryRoot() else { return nil }
-        return root.appending(path: "port-fixtures/family-windows.json")
-    }
-
-    static func fixtureExists() -> Bool {
-        guard let url = fixtureURL() else { return false }
-        return FileManager.default.fileExists(atPath: url.path)
-    }
-
     /// Pieces shorter than this are the fixture's own boundary bookkeeping
     /// (see the type's doc comment), not something either app ever draws.
     static let degenerateMetres = 1e-6
@@ -89,9 +79,9 @@ struct FamilyWindowParityTests {
     }
 
     /// Calls the PRODUCTION partition — `ContinuousStroke.familyPartition`
-    /// (`ios/RailKit/Sources/RailCore/ContinuousStroke.swift`), the same
+    /// (`ios/RailKit/Sources/RailCore/Rendering/ContinuousStroke.swift`), the same
     /// function `continuousStrokeBuild`'s family-window branch
-    /// (`ios/RailMap/RailMapView.swift`) now calls instead of hand-mirroring
+    /// (`ios/RailMap/Map/RailMapView.swift`) now calls instead of hand-mirroring
     /// — and reshapes its `{base, family}` result back into the fixture's
     /// own flat, sorted piece list: a BASE piece in this line's own colour,
     /// a FAMILY piece in the shared group's colour, a tenant window drawn by
@@ -120,17 +110,9 @@ struct FamilyWindowParityTests {
 
     // MARK: - the test
 
-    @Test(.disabled(
-        if: !FamilyWindowParityTests.fixtureExists(),
-        "port-fixtures/family-windows.json is absent — skipping FamilyWindowParityTests until the web agent registers it"
-    ))
+    @Test
     func partitionMatchesTheWebFixture() throws {
-        guard let url = Self.fixtureURL() else {
-            Issue.record("could not locate the repository root for port-fixtures/")
-            return
-        }
-        let data = try Data(contentsOf: url)
-        let fixture = try JSONDecoder().decode(Fixture.self, from: data)
+        let fixture = try PortFixtures.decode(Fixture.self, "family-windows.json")
         #expect(!fixture.cases.isEmpty, "family-windows.json fixture has no cases")
 
         for testCase in fixture.cases {

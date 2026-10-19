@@ -29,6 +29,23 @@ struct TokyoConventionalRouteInferenceTests {
         #expect(TokyoConventionalRouteInference.applying(to: result) == result)
     }
 
+    @Test("Tokyo preference keeps its inference origin through canonical import and export")
+    func preferenceRoundTrip() throws {
+        let inferred = TokyoConventionalRouteInference.applying(to: sparse())
+        let exported = TrainValidation.normalizeExportTrain(inferred)
+        let data = try JSONEncoder().encode(exported)
+        let object = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
+        let sections = try #require(object["route_sections"] as? [[String: Any]])
+        let json = try TrainValidation.JSON.parse(String(decoding:
+            JSONSerialization.data(withJSONObject: try #require(sections.first)), as: UTF8.self))
+        let section = try TrainValidation.normalizeImportedRouteSection(json)
+        #expect(section.sectionCodesOrigin == .corridorPreference)
+        #expect(section.sectionCodes == ["jp-東日本旅客鉄道-総武線-3@003766:003872",
+                                       "jp-東日本旅客鉄道-総武線-3@003872:004095"])
+        let reopened = try JSONDecoder().decode(Train.self, from: data)
+        #expect(reopened.routeSections?.first?.sectionCodesOrigin == .corridorPreference)
+    }
+
     @Test("An authored Yurakucho or other surface-only visit prevents tunnel inference")
     func surfaceEvidence() {
         for (code, name) in [("003795", "有楽町"), ("003949", "浜松町"), ("004000", "田町")] {

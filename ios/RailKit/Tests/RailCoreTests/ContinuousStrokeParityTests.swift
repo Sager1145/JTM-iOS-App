@@ -787,6 +787,114 @@ struct ContinuousStrokeParityTests {
         #expect(loose.anchors[0].y != surveyed[1].y)
     }
 
+    /// An ownership-only identity follow must not take a share of the geometry
+    /// blend from an adjacent real alignment. Osaki's paired representative
+    /// uses this shape: the identity row is still retained outside this builder
+    /// so family coverage can map its tenant window to the owner.
+    @Test func exactIdentityFollowDoesNotDiluteOverlappingAlignment() {
+        let own = [
+            ContinuousStroke.Point(x: 0, y: 0), .init(x: 1, y: 0),
+            .init(x: 2, y: 0), .init(x: 3, y: 0), .init(x: 4, y: 0),
+        ]
+        let measures = [0.0, 100, 200, 300, 400]
+        let aligned = own.map { ContinuousStroke.Point(x: $0.x, y: $0.y + 1) }
+        let real = ContinuousStroke.Follow(
+            from: 0, to: 100, canonFrom: 0, canonTo: 100,
+            points: aligned, measures: measures)
+        let identity = ContinuousStroke.Follow(
+            from: 100, to: 300, canonFrom: 100, canonTo: 300,
+            points: own, measures: measures)
+        func stroke(_ follows: [ContinuousStroke.Follow]) -> ContinuousStroke.Stroke {
+            ContinuousStroke.buildStroke(own, options: .init(
+                measures: measures, rows: [], totalMetres: 400, laneGapPx: 0,
+                minRampPx: 24, cornerRadiusPx: 3.6, anchors: [], follows: follows))
+        }
+        let expected = stroke([real])
+        let withOwnershipIdentity = stroke([real, identity])
+        #expect(withOwnershipIdentity.points == expected.points)
+        #expect(withOwnershipIdentity.measures == expected.measures)
+    }
+
+    /// A short, byte-identical shared prefix is one corridor even when the
+    /// canonical and follower leave the reviewed fork in opposite directions.
+    /// Check every 10 m, including both prefix endpoints; an endpoint-only
+    /// assertion missed the former 300 m follow-blend drift near the fork.
+    @Test func exactSharedPrefixStaysCanonicalThroughFork() {
+        typealias Point = ContinuousStroke.Point
+        let measures = [0.0, 100, 200, 300, 400, 500]
+        let canonical = [
+            Point(x: 0, y: 0), .init(x: 10, y: 0), .init(x: 20, y: 2),
+            .init(x: 30, y: 2), .init(x: 40, y: 2), .init(x: 50, y: 2),
+        ]
+        let branch = [
+            Point(x: 0, y: 0), .init(x: 10, y: 0), .init(x: 20, y: 2),
+            .init(x: 30, y: -10), .init(x: 40, y: -10), .init(x: 50, y: -10),
+        ]
+        func stroke(_ points: [Point], follows: [ContinuousStroke.Follow] = [])
+            -> ContinuousStroke.Stroke {
+            ContinuousStroke.buildStroke(points, options: .init(
+                measures: measures,
+                rows: [.init(from: 0, to: 500, lane: 0)], totalMetres: 500,
+                laneGapPx: 2.7, minRampPx: 24, cornerRadiusPx: 3.6,
+                minCornerRadiusPx: 3, anchors: [], follows: follows,
+                shapeBoundaryMeasures: [0, 200],
+                enforceMinimumCornerRadius: true))
+        }
+        func point(_ stroke: ContinuousStroke.Stroke, at measure: Double) -> Point {
+            if measure == 0 { return stroke.points[0] }
+            return ContinuousStroke.slice(
+                points: stroke.points, measures: stroke.measures,
+                from: measure - 0.001, to: measure).last!
+        }
+        let canonicalStroke = stroke(canonical)
+        let ownBranchStroke = stroke(branch)
+        let branchStroke = stroke(branch, follows: [.init(
+            from: 0, to: 200, canonFrom: 0, canonTo: 200,
+            points: canonical, measures: measures, shapeBoundaryMeasures: [0, 200])])
+        for measure in stride(from: 0.0, through: 200, by: 10) {
+            let a = point(branchStroke, at: measure)
+            let b = point(canonicalStroke, at: measure)
+            let error = hypot(a.x - b.x, a.y - b.y)
+            #expect(error < 0.1, Comment(rawValue: "shared prefix drifted \(error) px at \(measure) m"))
+        }
+        for measure in stride(from: 200.0, through: 500, by: 10) {
+            let a = point(branchStroke, at: measure)
+            let b = point(ownBranchStroke, at: measure)
+            let error = hypot(a.x - b.x, a.y - b.y)
+            #expect(error < 0.1, Comment(rawValue: "branch continuation drifted \(error) px at \(measure) m"))
+        }
+        let branchTail = branchStroke.points.last!
+        let canonicalTail = canonicalStroke.points.last!
+        #expect(branchTail.y < -8, "branch continuation was replaced")
+        #expect(canonicalTail.y > 1, "canonical continuation was replaced")
+        #expect(hypot(branchTail.x - canonicalTail.x, branchTail.y - canonicalTail.y) > 10)
+
+        let shiftedCanonical = canonical.map { Point(x: $0.x, y: $0.y + 5) }
+        let exactFollow = ContinuousStroke.Follow(
+            from: 0, to: 200, canonFrom: 0, canonTo: 200,
+            points: canonical, measures: measures, shapeBoundaryMeasures: [0, 200])
+        let overlapStroke = stroke(branch, follows: [exactFollow, .init(
+            from: 50, to: 150, canonFrom: 50, canonTo: 150,
+            points: shiftedCanonical, measures: measures, shapeBoundaryMeasures: [50, 150])])
+        for measure in stride(from: 50.0, through: 150, by: 10) {
+            let a = point(overlapStroke, at: measure)
+            let b = point(canonicalStroke, at: measure)
+            let error = hypot(a.x - b.x, a.y - b.y)
+            #expect(error < 0.1,
+                    Comment(rawValue: "ordinary overlap diluted exact shared follow by \(error) px at \(measure) m"))
+        }
+
+        var nearCanonical = canonical
+        nearCanonical[1].y += 0.001
+        let nearStroke = stroke(branch, follows: [.init(
+            from: 0, to: 200, canonFrom: 0, canonTo: 200,
+            points: nearCanonical, measures: measures, shapeBoundaryMeasures: [0, 200])])
+        let nearPoint = point(nearStroke, at: 250)
+        let ownPoint = point(ownBranchStroke, at: 250)
+        #expect(hypot(nearPoint.x - ownPoint.x, nearPoint.y - ownPoint.y) > 0.1,
+                "near-but-not-exact prefix incorrectly used exact shared behavior")
+    }
+
     /// `ContinuousStroke.familyPartition` against rail-stroke.js's own
     /// `familyPartition` (`port-fixtures/continuous-stroke.json`'s
     /// `familyPartitions`) over synthetic boundary probes — end-to-end

@@ -133,7 +133,7 @@ struct OnEdgeCertificationTests {
             ("名古屋", "京都", "005456", "006083", "東海道新幹線", "東海旅客鉄道", true),
             ("中津", "宇島", "009013", "008981", "日豊線", "九州旅客鉄道", true),
             ("弘前", "大鰐温泉", "000586", "000618", "奥羽線", "東日本旅客鉄道", true),
-            ("芦原温泉", "福井", "010178", "010179", "北陸新幹線", "西日本旅客鉄道", true),
+            ("芦原温泉", "福井", "002529", "002688", "北陸新幹線", "西日本旅客鉄道", true),
             // Registered osmTrack tokyo-tokaido-shinkansen-shinagawa follows this stroke.
             ("品川", "東京", "004092", "003768", "東海道新幹線", "東海旅客鉄道", true),
         ]
@@ -142,8 +142,33 @@ struct OnEdgeCertificationTests {
                 toN02StationCode: toCode, lineNames: [line], operatorNames: [operatorName])
             let inferred = RouteSolver.inferStationSections([section], resolver: data.resolver,
                 network: data.network, eligibility: data.eligibility, allowedCodes: ["1", "2"], hard: false)
-            let hints = try #require(inferred.hints[0], "\(from)→\(to)")
-            let source = try #require(data.network.sourceGeometry(for: hints), "\(from)→\(to)")
+            let hints: RouteHints
+            // These proof fixtures select the canonical source row, rather
+            // than its paired display alignment or retired station aliases.
+            let candidateIDs: Set<String> = ["jp-\(operatorName)-\(line)"]
+            let familyRows = data.network.lines.filter { candidateIDs.contains($0.lineId) }
+            let familyEligible = !familyRows.isEmpty && familyRows.allSatisfy {
+                data.eligibility.permits($0, allowedInstitutionCodes: ["1", "2"], hard: false)
+            }
+            if !familyEligible {
+                // Dated source families stay out of current-survey inference.
+                // This test checks source certification through an explicit,
+                // uniquely resolved interval while preserving that exclusion.
+                #expect(inferred.hints[0] == nil)
+                let resolution = data.resolver.resolve(stationCodes: [fromCode, toCode],
+                    requiredLineIDs: candidateIDs.sorted(),
+                    requiredLineNames: [line], requiredOperatorNames: [operatorName])
+                guard case .resolved(let selection) = resolution else {
+                    Issue.record("\(from)→\(to) requires a unique explicit source interval")
+                    continue
+                }
+                hints = RouteHints(requiredLineIDs: selection.lineIDs,
+                    sectionCodes: selection.sectionCodes,
+                    fromStationCode: selection.fromStationCode, toStationCode: selection.toStationCode)
+            } else {
+                hints = try #require(inferred.hints[0], "\(from)→\(to)")
+            }
+            let source = try #require(data.network.sourceCertification(for: hints)?.geometry, "\(from)→\(to)")
             let graph = pipeline.proofGraph(source.lines.flatMap { $0 }, store: data.graphStore)
             let keys = RouteSolver.verifiedSourcePath(source.lines, graph: graph,
                 context: .init(rideDate: "2026-07-01"), section: section)

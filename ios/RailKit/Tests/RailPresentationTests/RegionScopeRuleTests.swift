@@ -14,7 +14,7 @@ struct RegionScopeRuleTests {
     /// it: `allCases` order, Japan's six-digit N02 codes, Japan as the
     /// fallback for a ride that names nothing.
     private let rule = RegionScopeRule(
-        regionCodes: ["jp", "tw", "hk", "mo", "kr"],
+        regionCodes: ["jp", "tw", "hk", "mo", "kr", "cn"],
         numericCodeRegion: "jp",
         fallback: "jp")
 
@@ -48,6 +48,8 @@ struct RegionScopeRuleTests {
         #expect(rule.regionCode(forStationCode: "HK-OFFICIAL-CENTRAL") == "hk")
         #expect(rule.regionCode(forStationCode: "MO-OFFICIAL-BARRA") == "mo")
         #expect(rule.regionCode(forStationCode: "kr-official-busan") == "kr")
+        #expect(rule.regionCode(forStationCode: "CN-12306-XJA") == "cn")
+        #expect(rule.regionCode(forStationCode: "cn-official-12306-xja") == "cn")
         // An operator code that merely begins with its own region's letters.
         #expect(rule.regionCode(forStationCode: "KR-GYEONGBUSEON-BUSAN") == "kr")
     }
@@ -72,6 +74,17 @@ struct RegionScopeRuleTests {
         #expect(rule.regionCode(forStationCode: nil) == nil)
         // A prefix that looks like a region but is not one in this catalog.
         #expect(rule.regionCode(forStationCode: "MX-FERROMEX-1") == nil)
+    }
+
+    @Test("Hong Kong high speed is wholly China while Hong Kong transit remains independent")
+    func hongKongHighSpeedBelongsToChina() {
+        let highSpeed = train(stops: ["CN-12306-IOQ", "CN-12306-XJA"])
+        #expect(rule.matched(highSpeed) == "cn")
+        #expect(rule.regionCodesTouched(highSpeed) == ["cn"])
+        let metro = train(region: "hk", stops: ["MTR-AUS", "MTR-HOK"])
+        #expect(rule.regionCodesTouched(metro) == ["hk"])
+        let macao = train(region: "mo", stops: ["MLM-BARRA", "MLM-HENGQIN"])
+        #expect(rule.regionCodesTouched(macao) == ["mo"])
     }
 
     // MARK: - one journey

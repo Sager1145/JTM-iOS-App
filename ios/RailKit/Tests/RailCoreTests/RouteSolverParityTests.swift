@@ -76,7 +76,17 @@ struct RouteSolverParityTests {
     }
 
     static func fixture() throws -> Fixture {
-        try PortFixtures.decode(Fixture.self, "route-solver-core.json")
+        let fixture = try PortFixtures.decode(Fixture.self, "route-solver-core.json")
+        try #require(fixture.cases.count == 2 && Set(fixture.cases.map(\.country)) == ["mo", "hk"],
+                     "Solver parity requires both Macao and Hong Kong")
+        for item in fixture.cases {
+            try #require(!item.cases.isEmpty, "\(item.country) solver cases are missing")
+            for row in item.cases {
+                try #require(!row.sources.isEmpty && !row.targets.isEmpty,
+                             "\(item.country)/\(row.name) solver endpoints are missing")
+            }
+        }
+        return fixture
     }
 
     static func graph(_ item: Fixture.CountryCase) -> RouteGraph.Graph {

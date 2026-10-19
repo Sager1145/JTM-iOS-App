@@ -24,7 +24,7 @@ struct RailIntervalCodeTests {
                                    sectionCodes: reverse ? Array(codes.reversed()) : codes,
                                    fromStationCode: reverse ? "003766" : yamate.stations[shinjukuIndex].id,
                                    toStationCode: reverse ? yamate.stations[shinjukuIndex].id : "003766")
-            let source = try #require(network.sourceGeometry(for: hints))
+            let source = try #require(network.sourceCertification(for: hints)?.geometry)
             let display = try #require(network.canonicalizeRouteFeature(RouteFeature(geometry: nil, hints: hints)))
             #expect(source.lines.count == 2)
             #expect(display.geometry.lines.count == 2)
@@ -37,7 +37,7 @@ struct RailIntervalCodeTests {
                 forwardDisplay = display.geometry
             }
         }
-        #expect(network.sourceGeometry(for: RouteHints(sectionCodes: ["missing"], fromStationCode: "003766")) == nil)
+        #expect(network.sourceCertification(for: RouteHints(sectionCodes: ["missing"], fromStationCode: "003766"))?.geometry == nil)
     }
 
     @Test func nexSelectsTunnelByIdentityInBothDirections() throws {
@@ -78,7 +78,7 @@ struct RailIntervalCodeTests {
     }
 
     @Test func timetableNexCarriesPhysicalIntervalsThroughProjection() throws {
-        let database = try #require(TrainTimetableDatabase.bundled())
+        let database = try TrainTimetableDatabase.bundled(bundle: .module)
         let query = try database.trip(id: "jr-east.narita-express.1.2001m.exact-2026-09-30", on: "2026-09-30")
         let trip = try #require(query)
         let draft = Train(id: "nex-projection", date: nil, number: "", origin: "", destination: "", stops: [])

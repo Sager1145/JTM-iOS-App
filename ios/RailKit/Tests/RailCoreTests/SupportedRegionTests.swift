@@ -22,7 +22,7 @@ struct SupportedRegionTests {
         }
     }
 
-    @Test(arguments: ["jp", "tw", "hk", "mo", "kr"])
+    @Test(arguments: ["jp", "tw", "hk", "mo", "kr", "cn"])
     func activeRegionsRemainSupported(_ region: String) throws {
         let train = Train(id: "active", number: "Local", origin: "A", destination: "B",
                           stops: [], region: region)

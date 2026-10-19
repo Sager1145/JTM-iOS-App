@@ -100,7 +100,7 @@ struct WorkspaceJourneyRulesTests {
         #expect(dates == ["2026-09-07"])
     }
 
-    @Test("upcoming compares raw stored dates against each region's today")
+    @Test("upcoming compares valid stored dates against each region's today")
     func upcomingUsesRawRegionalDate() {
         let trains = [
             train("jp-yesterday", date: "2026-09-06"),
@@ -109,6 +109,7 @@ struct WorkspaceJourneyRulesTests {
             train("jp-today-a", date: "2026-09-07"),
             train("malformed", date: "tomorrow"),
             train("undated", date: nil),
+            train("sentinel", date: Dates.undated),
         ]
 
         let scope = WorkspaceJourneyRules.upcomingScope(
@@ -116,8 +117,14 @@ struct WorkspaceJourneyRulesTests {
             todayByRegion: today, rule: rule)
 
         #expect(scope.map(\.id) == [
-            "tw-today", "jp-today-a", "jp-today-z", "malformed",
+            "tw-today", "jp-today-a", "jp-today-z",
         ])
+    }
+
+    @Test("upcoming menus exclude undated and malformed records")
+    func upcomingMenusExcludeUndated() {
+        let trains = [train("today", date: "2026-09-07"), train("undated", date: Dates.undated), train("bad", date: "tomorrow")]
+        #expect(WorkspaceJourneyRules.journeyDates(trains: trains, regionCode: nil, upcoming: true, todayByRegion: today, manualDates: [], rule: rule) == ["2026-09-07"])
     }
 
     @Test("statistics include only ridden journeys in the selected span")

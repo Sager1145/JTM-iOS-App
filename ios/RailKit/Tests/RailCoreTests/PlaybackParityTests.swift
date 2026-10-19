@@ -212,8 +212,11 @@ struct PlaybackParityTests {
 
     nonisolated(unsafe) private static var loaded: Fixture?
     nonisolated(unsafe) private static var loadedStore: TrainStore?
+    private static let cacheLock = NSLock()
 
     static func fixture() throws -> Fixture {
+        cacheLock.lock()
+        defer { cacheLock.unlock() }
         if let loaded { return loaded }
         let value = try PortFixtures.decode(Fixture.self, "playback.json")
         loaded = value
@@ -224,6 +227,8 @@ struct PlaybackParityTests {
     /// The fixture names its itineraries by id rather than copying them, so
     /// this is the same store the JavaScript solved.
     static func store() throws -> TrainStore {
+        cacheLock.lock()
+        defer { cacheLock.unlock() }
         if let loadedStore { return loadedStore }
         let url = try PortFixtures.repositoryRoot().appending(path: "app/data/train-store.json")
         let value = try JSONDecoder().decode(TrainStore.self, from: Data(contentsOf: url))
@@ -995,19 +1000,10 @@ struct PlaybackParityTests {
         // The order matters: `seconds` is a running sum, and a sum of seven
         // doubles added in a different order is a different double.
         let cases = fixture.cases
-        let queue = Dates.sortByDateAndDeparture(
-            try cases.map { item in
-                let train = try Self.train(item.trainId)
-                return Dates.Train(
-                    id: train.id, date: train.date,
-                    stops: train.stops.map {
-                        Dates.Stop(
-                            arrival: $0.arrival, departure: $0.departure, stopType: $0.stopType)
-                    })
-            })
+        let queue = try Dates.sortByDateAndDeparture(cases.map { try Self.train($0.trainId) })
 
         for plan in fixture.plans {
-            let ids = plan.scope == "__all__" ? queue.compactMap(\.id) : [plan.scope]
+            let ids = plan.scope == "__all__" ? queue.map(\.id) : [plan.scope]
             let compiled: [Playback.Path?] = try ids.map { id in
                 guard let item = cases.first(where: { $0.trainId == id }) else { return nil }
                 return Playback.compile(
@@ -1062,7 +1058,7 @@ struct PlaybackParityTests {
     /// `Math.pow`, `Math.exp`, `Math.log2` and `Math.cos` are all answered
     /// from V8's own fdlibm port in `base/ieee754.cc`, so that a JavaScript
     /// program gives the same answer on every platform. Darwin's are
-    /// different, also correct, implementations. PORTING.md's instruction is
+    /// different, also correct, implementations. ios/docs/porting.md's instruction is
     /// to measure before reaching for `JSMath` and to say what was measured;
     /// this is that measurement, on the inputs this module actually produces
     /// rather than on a sweep.
@@ -1133,7 +1129,7 @@ struct PlaybackParityTests {
 
     // MARK: - what the numbers cost
 
-    /// The measurement PORTING.md asks for, stated once rather than implied by
+    /// The measurement ios/docs/porting.md asks for, stated once rather than implied by
     /// every ceiling above.
     ///
     /// `Geometry.distanceMeters` is a haversine built out of `sin`, `cos` and

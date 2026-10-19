@@ -1,0 +1,447 @@
+import Foundation
+
+/// Offline physical route proposals, ordered by distance, then row changes.
+/// This searches surveyed intervals, not dated passenger services. Transfers
+/// require an explicit reviewed continuation predicate. Shared station groups
+/// alone do not establish physical junction connectivity.
+public enum LocalJourneySearch {
+    public struct Result: Sendable {
+        public let choices: [RailwayRouteChoices.Choice]
+        // Recorded-route admission owns this compatibility result's permission.
+        // It is intentionally absent from the public initializer and interface.
+        var allowsAutomaticMaterialization = true
+        public let isTruncated: Bool
+        /// compact-v1 provides interval order but no audited network junctions
+        /// or declaration that every possible physical route is represented.
+        public let topologyIsComplete: Bool
+        /// Recorded stop order establishes the train's travel direction.
+        public let directionIsKnown: Bool
+        /// The choices exist only because recorded line names and ids were
+        /// dropped. They stay on the route guide and do not auto-complete.
+        public let relaxedLineConstraints: Bool
+        /// Uniqueness within the searched package graph, not complete real-world
+        /// topology. Applying a proposal remains undoable.
+        public var isUniqueWithinPackage: Bool { !isTruncated && choices.count == 1 }
+        public var hasAmbiguity: Bool { choices.count > 1 }
+
+        public init(
+            choices: [RailwayRouteChoices.Choice], isTruncated: Bool,
+            topologyIsComplete: Bool, directionIsKnown: Bool,
+            relaxedLineConstraints: Bool = false
+        ) {
+            self.choices = choices
+            self.isTruncated = isTruncated
+            self.topologyIsComplete = topologyIsComplete
+            self.directionIsKnown = directionIsKnown
+            self.relaxedLineConstraints = relaxedLineConstraints
+        }
+    }
+
+    public static func choices(
+        package: CompactPackage, originCode: String, destinationCode: String,
+        trainType: String? = nil, excludingStationCodes: Set<String> = [],
+        requiredStationCodes: [String] = [], stationAliases: [String: String] = [:],
+        maximumChoices: Int = 3, maximumExpansions: Int = 50_000,
+        continuation: ((_ from: CompactPackage.Line, _ to: CompactPackage.Line, _ stationCode: String) -> Bool)? = nil,
+        originLineIDs: Set<String>? = nil, destinationLineIDs: Set<String>? = nil
+    ) -> [RailwayRouteChoices.Choice] {
+        search(package: package, originCode: originCode, destinationCode: destinationCode,
+               trainType: trainType, excludingStationCodes: excludingStationCodes,
+               requiredStationCodes: requiredStationCodes, stationAliases: stationAliases,
+               maximumChoices: maximumChoices, maximumExpansions: maximumExpansions,
+               continuation: continuation, originLineIDs: originLineIDs,
+               destinationLineIDs: destinationLineIDs).choices
+    }
+
+    /// Keeps at most `maximumChoices` settled labels per station occurrence and anchor progress, and
+    /// never expands more than `maximumExpansions` labels. This bounded search
+    /// returns useful short alternatives rather than enumerating every path.
+    /// The first result is a shortest directed route; the alternative set is
+    /// deliberately bounded and is not an exhaustive list of simple paths.
+    public static func search(
+        package: CompactPackage, originCode: String, destinationCode: String,
+        trainType: String? = nil, excludingStationCodes: Set<String> = [],
+        requiredStationCodes: [String] = [], stationAliases: [String: String] = [:],
+        maximumChoices: Int = 3, maximumExpansions: Int = 50_000,
+        continuation: ((_ from: CompactPackage.Line, _ to: CompactPackage.Line, _ stationCode: String) -> Bool)? = nil,
+        originLineIDs: Set<String>? = nil, destinationLineIDs: Set<String>? = nil
+    ) -> Result {
+        let packageCodes = Set(package.lines.flatMap { $0.stations.map(\.id) })
+        func canonical(_ code: String) -> String {
+            packageCodes.contains(code) ? code : stationAliases[code] ?? code
+        }
+        let originalAnchors = requiredStationCodes.isEmpty ? [originCode, destinationCode] : requiredStationCodes
+        let originCode = canonical(originCode), destinationCode = canonical(destinationCode)
+        let requiredStationCodes = requiredStationCodes.map(canonical)
+        let protectedCodes = Set(requiredStationCodes + [originCode, destinationCode])
+        let excludingStationCodes = Set(excludingStationCodes.map(canonical)).subtracting(protectedCodes)
+        func result(_ choices: [RailwayRouteChoices.Choice] = [], truncated: Bool = false) -> Result {
+            Result(choices: choices.map { restoreAnchors($0, originalAnchors: originalAnchors, canonical: canonical) }, isTruncated: truncated, topologyIsComplete: false, directionIsKnown: false)
+        }
+        guard maximumChoices > 0, maximumExpansions > 0 else { return result(truncated: true) }
+        guard originCode != destinationCode,
+              !excludingStationCodes.contains(originCode),
+              !excludingStationCodes.contains(destinationCode) else { return result() }
+        let anchors = requiredStationCodes.isEmpty ? [originCode, destinationCode] : requiredStationCodes
+        guard anchors.first == originCode, anchors.last == destinationCode,
+              anchors.allSatisfy({ !excludingStationCodes.contains($0) }) else { return result() }
+        let limit = min(maximumChoices, 3)
+        let budget = min(maximumExpansions, 200_000)
+        let lines = package.lines.filter { RailwayRouteChoices.permits($0, trainType: trainType) }
+            .sorted { $0.id < $1.id }
+        var nodes: [Node] = []
+        var edges: [Edge] = []
+        var outgoing: [String: [Int]] = [:]
+        guard buildGraph(lines: lines, excludingStationCodes: excludingStationCodes,
+            nodes: &nodes, edges: &edges, outgoing: &outgoing) else { return result(truncated: true) }
+        guard outgoing[originCode] != nil else { return result() }
+        // A cheap directed reachability pass avoids searching disconnected
+        // national components. Occurrence constraints are applied below.
+        let reachable = reachableCodes(destinationCode: destinationCode, nodes: nodes, edges: edges)
+        guard reachable.contains(originCode) else { return result() }
+        let settled = settledChoices(originCode: originCode, destinationCode: destinationCode,
+            nodes: nodes, edges: edges, lines: lines, anchors: anchors, outgoing: outgoing,
+            reachable: reachable, budget: budget, limit: limit, originLineIDs: originLineIDs,
+            destinationLineIDs: destinationLineIDs, continuation: continuation)
+        return result(settled.choices, truncated: settled.truncated)
+    }
+
+    private static func restoreAnchors(
+        _ input: RailwayRouteChoices.Choice, originalAnchors: [String],
+        canonical: (String) -> String
+    ) -> RailwayRouteChoices.Choice {
+        var choice = input
+        var anchor = 0
+        for index in choice.stations.indices {
+            guard anchor < originalAnchors.count,
+                  choice.stations[index].code == canonical(originalAnchors[anchor]) else { continue }
+            choice.stations[index].code = originalAnchors[anchor]
+            anchor += 1
+        }
+        for index in choice.routeSections.indices {
+            choice.routeSections[index].fromN02StationCode = choice.stations[index].code
+            choice.routeSections[index].toN02StationCode = choice.stations[index + 1].code
+        }
+        // Choice identity remains the ordered physical section-code chain.
+        return choice
+    }
+
+    private static func buildGraph(
+        lines: [CompactPackage.Line], excludingStationCodes: Set<String>,
+        nodes: inout [Node], edges: inout [Edge], outgoing: inout [String: [Int]]
+    ) -> Bool {
+        for (row, line) in lines.enumerated() {
+            guard !Task.isCancelled else { return false }
+            let base = nodes.count
+            nodes += line.stations.map { Node(row: row, station: $0) }
+            let intervals = RailIntervalCodes.intervals(for: line)
+            for (index, interval) in intervals.enumerated() {
+                guard line.segments.indices.contains(index), interval.coordinates.count >= 2,
+                      !excludingStationCodes.contains(interval.fromStationCode),
+                      !excludingStationCodes.contains(interval.toStationCode) else { continue }
+                let distance = line.segments[index].distanceKm
+                guard distance.isFinite, distance >= 0 else { continue }
+                let next = (index + 1) % line.stations.count
+                for direction in RailwayDirection.allowedDirections(for: line, intervalIndex: index) {
+                    let from = base + (direction == 1 ? index : next)
+                    let to = base + (direction == 1 ? next : index)
+                    outgoing[nodes[from].station.id, default: []].append(edges.count)
+                    edges.append(Edge(from: from, to: to, row: row,
+                                      code: interval.code, distance: distance))
+                }
+            }
+        }
+        return true
+    }
+
+    private static func reachableCodes(
+        destinationCode: String, nodes: [Node], edges: [Edge]
+    ) -> Set<String> {
+        var predecessors: [String: [String]] = [:]
+        for edge in edges {
+            predecessors[nodes[edge.to].station.id, default: []].append(nodes[edge.from].station.id)
+        }
+        var reachable: Set<String> = [destinationCode]
+        var pending = [destinationCode]
+        while let code = pending.popLast() {
+            for previous in predecessors[code] ?? [] where reachable.insert(previous).inserted {
+                pending.append(previous)
+            }
+        }
+        return reachable
+    }
+
+    private static func enqueue(
+        edgeIndex: Int, parent: Int?, queueBudget: Int, edges: [Edge], nodes: [Node],
+        anchors: [String], records: inout [Record], heap: inout Heap, truncated: inout Bool
+    ) {
+        guard records.count < queueBudget else { truncated = true; return }
+        let edge = edges[edgeIndex]
+        let previous = parent.map { records[$0] }
+        var anchorIndex = previous?.anchorIndex ?? 0
+        if anchorIndex + 1 < anchors.count, nodes[edge.to].station.id == anchors[anchorIndex + 1] {
+            anchorIndex += 1
+        }
+        let record = Record(edge: edgeIndex, parent: parent, anchorIndex: anchorIndex,
+                            distance: (previous?.distance ?? 0) + edge.distance,
+                            transfers: (previous?.transfers ?? 0)
+                                + (previous.map { edges[$0.edge].row != edge.row ? 1 : 0 } ?? 0),
+                            hops: (previous?.hops ?? 0) + 1)
+        let id = records.count
+        records.append(record)
+        heap.push(Entry(id: id, distance: record.distance,
+                        transfers: record.transfers, hops: record.hops))
+    }
+
+    private static func appendChoice(
+        entryID: Int, records: [Record], edges: [Edge], nodes: [Node],
+        lines: [CompactPackage.Line], results: inout [RailwayRouteChoices.Choice], seen: inout Set<String>
+    ) {
+        var path: [Edge] = []
+        var cursor: Int? = entryID
+        while let id = cursor {
+            path.append(edges[records[id].edge])
+            cursor = records[id].parent
+        }
+        let choice = makeChoice(path: Array(path.reversed()), nodes: nodes, lines: lines)
+        if seen.insert(choice.id).inserted { results.append(choice) }
+    }
+
+    private static func wouldCycle(
+        entryID: Int, record: Record, arrived: Edge, edge: Edge,
+        originCode: String, nodes: [Node], edges: [Edge], records: [Record]
+    ) -> Bool {
+        var cursor: Int? = entryID
+        var cycle = false
+        while let id = cursor {
+            let prior = edges[records[id].edge]
+            // A different row's origin occurrence must not permit an
+            // unrequested loop back to the start before the next anchor.
+            // Later anchored returns and repeated visits within a row
+            // retain their occurrence-specific semantics.
+            let crossRowOriginRevisit = prior.row != edge.row
+                && record.anchorIndex == 0
+                && nodes[edge.to].station.id == originCode
+                && (nodes[prior.from].station.id == originCode
+                    || nodes[prior.to].station.id == originCode)
+            if crossRowOriginRevisit || prior.from == edge.to || prior.to == edge.to
+                || (edge.row != arrived.row && (prior.from == edge.from || prior.to == edge.from)) {
+                cycle = true
+                break
+            }
+            cursor = records[id].parent
+        }
+        return cycle
+    }
+
+    private static func expandEdges(
+        entry: Entry, record: Record, arrived: Edge, code: String, originCode: String,
+        nodes: [Node], edges: [Edge], lines: [CompactPackage.Line], anchors: [String],
+        outgoing: [String: [Int]], reachable: Set<String>,
+        continuation: ((CompactPackage.Line, CompactPackage.Line, String) -> Bool)?,
+        queueBudget: Int, records: inout [Record], heap: inout Heap, truncated: inout Bool
+    ) {
+        for edgeIndex in outgoing[code] ?? [] {
+            let edge = edges[edgeIndex]
+            guard reachable.contains(nodes[edge.to].station.id) else { continue }
+            // Continuing one row must use the actual occurrence reached.
+            // A–B–C–B–D therefore cannot silently become A–B–D.
+            if edge.row == arrived.row {
+                guard edge.from == arrived.to else { continue }
+            } else {
+                guard continuation?(lines[arrived.row], lines[edge.row], code) == true else { continue }
+            }
+            // Forbid revisiting an occurrence, including a transfer's
+            // departure occurrence; repeated IDs at other positions remain.
+            let cycle = wouldCycle(entryID: entry.id, record: record, arrived: arrived,
+                edge: edge, originCode: originCode, nodes: nodes, edges: edges, records: records)
+            if !cycle {
+                enqueue(edgeIndex: edgeIndex, parent: entry.id, queueBudget: queueBudget,
+                    edges: edges, nodes: nodes, anchors: anchors,
+                    records: &records, heap: &heap, truncated: &truncated)
+            }
+        }
+    }
+
+    private static func runSearch(
+        originCode: String, destinationCode: String, nodes: [Node], edges: [Edge],
+        lines: [CompactPackage.Line], anchors: [String], outgoing: [String: [Int]],
+        reachable: Set<String>, budget: Int, limit: Int,
+        destinationLineIDs: Set<String>?,
+        continuation: ((CompactPackage.Line, CompactPackage.Line, String) -> Bool)?,
+        queueBudget: Int, records: inout [Record], heap: inout Heap, settled: inout [Int],
+        results: inout [RailwayRouteChoices.Choice], seen: inout Set<String>,
+        expansions: inout Int, truncated: inout Bool
+    ) {
+        while !heap.items.isEmpty {
+            guard expansions < budget, results.count < limit else { truncated = true; break }
+            guard let entry = heap.pop() else { break }
+            guard !Task.isCancelled else { truncated = true; return }
+            let record = records[entry.id]
+            let arrived = edges[record.edge]
+            let settledIndex = arrived.to * anchors.count + record.anchorIndex
+            guard settled[settledIndex] < limit else { truncated = true; continue }
+            settled[settledIndex] += 1
+            expansions += 1
+            let code = nodes[arrived.to].station.id
+            if code == destinationCode && record.anchorIndex == anchors.count - 1,
+               destinationLineIDs?.contains(lines[arrived.row].id) ?? true {
+                appendChoice(entryID: entry.id, records: records, edges: edges, nodes: nodes,
+                    lines: lines, results: &results, seen: &seen)
+                continue
+            }
+            expandEdges(entry: entry, record: record, arrived: arrived, code: code,
+                originCode: originCode, nodes: nodes, edges: edges, lines: lines, anchors: anchors,
+                outgoing: outgoing, reachable: reachable,
+                continuation: continuation, queueBudget: queueBudget,
+                records: &records, heap: &heap, truncated: &truncated)
+        }
+    }
+
+    private static func settledChoices(
+        originCode: String, destinationCode: String, nodes: [Node], edges: [Edge],
+        lines: [CompactPackage.Line], anchors: [String], outgoing: [String: [Int]],
+        reachable: Set<String>, budget: Int, limit: Int, originLineIDs: Set<String>?,
+        destinationLineIDs: Set<String>?,
+        continuation: ((CompactPackage.Line, CompactPackage.Line, String) -> Bool)?
+    ) -> (choices: [RailwayRouteChoices.Choice], truncated: Bool) {
+        var records: [Record] = []
+        var heap = Heap()
+        var settled = Array(repeating: 0, count: nodes.count * anchors.count)
+        var results: [RailwayRouteChoices.Choice] = []
+        var seen: Set<String> = []
+        var expansions = 0
+        var truncated = false
+        // Queue storage also has a hard bound; a large interchange cannot
+        // consume unbounded memory before the expansion budget is reached.
+        let queueBudget = budget * 8
+        for edge in outgoing[originCode] ?? [] where reachable.contains(nodes[edges[edge].to].station.id) {
+            guard originLineIDs?.contains(lines[edges[edge].row].id) ?? true else { continue }
+            enqueue(edgeIndex: edge, parent: nil, queueBudget: queueBudget, edges: edges, nodes: nodes,
+                anchors: anchors, records: &records, heap: &heap, truncated: &truncated)
+        }
+        runSearch(originCode: originCode, destinationCode: destinationCode, nodes: nodes, edges: edges,
+            lines: lines, anchors: anchors, outgoing: outgoing, reachable: reachable,
+            budget: budget, limit: limit,
+            destinationLineIDs: destinationLineIDs, continuation: continuation, queueBudget: queueBudget,
+            records: &records, heap: &heap, settled: &settled, results: &results, seen: &seen,
+            expansions: &expansions, truncated: &truncated)
+        return (results, truncated)
+    }
+
+    /// Resolve line-instance codes through official station-group identity only.
+    public static func stationAliases(
+        for codes: [String], package: CompactPackage, groupCode: (String) -> String?
+    ) -> [String: String] {
+        let packageCodes = Set(package.lines.flatMap { $0.stations.map(\.id) })
+        var members: [String: Set<String>] = [:]
+        for code in packageCodes {
+            if let group = groupCode(code) { members[group, default: []].insert(code) }
+        }
+        var aliases: [String: String] = [:]
+        for code in codes where !packageCodes.contains(code) {
+            guard let group = groupCode(code) else { continue }
+            if packageCodes.contains(group) {
+                aliases[code] = group
+            } else if let candidates = members[group], candidates.count == 1 {
+                aliases[code] = candidates.first
+            }
+        }
+        return aliases
+    }
+
+    private struct Node {
+        let row: Int
+        let station: CompactPackage.Station
+    }
+    private struct Edge {
+        let from: Int
+        let to: Int
+        let row: Int
+        let code: String
+        let distance: Double
+    }
+    private struct Record {
+        let edge: Int
+        let parent: Int?
+        let anchorIndex: Int
+        let distance: Double
+        let transfers: Int
+        let hops: Int
+    }
+    private struct Entry {
+        let id: Int
+        let distance: Double
+        let transfers: Int
+        let hops: Int
+        func precedes(_ other: Entry) -> Bool {
+            if distance != other.distance { return distance < other.distance }
+            if transfers != other.transfers { return transfers < other.transfers }
+            if hops != other.hops { return hops < other.hops }
+            return id < other.id
+        }
+    }
+    private struct Heap {
+        var items: [Entry] = []
+        mutating func push(_ entry: Entry) {
+            items.append(entry)
+            var index = items.count - 1
+            while index > 0 {
+                let parent = (index - 1) / 2
+                guard items[index].precedes(items[parent]) else { break }
+                items.swapAt(index, parent)
+                index = parent
+            }
+        }
+        mutating func pop() -> Entry? {
+            guard !items.isEmpty else { return nil }
+            let first = items[0]
+            let last = items.removeLast()
+            if items.isEmpty { return first }
+            items[0] = last
+            var index = 0
+            while index * 2 + 1 < items.count {
+                let left = index * 2 + 1, right = left + 1
+                let child = right < items.count && items[right].precedes(items[left]) ? right : left
+                guard items[child].precedes(items[index]) else { break }
+                items.swapAt(index, child)
+                index = child
+            }
+            return first
+        }
+    }
+
+    private static func makeChoice(
+        path: [Edge], nodes: [Node], lines: [CompactPackage.Line]
+    ) -> RailwayRouteChoices.Choice {
+        let first = nodes[path[0].from].station
+        var visits = [RailwayRouteChoices.Visit(code: first.id, name: first.name)]
+        var sections: [RouteSection] = []
+        var lineIDs: [String] = []
+        for edge in path {
+            let from = nodes[edge.from].station, to = nodes[edge.to].station
+            let line = lines[edge.row]
+            visits.append(.init(code: to.id, name: to.name))
+            if lineIDs.last != line.id { lineIDs.append(line.id) }
+            sections.append(RouteSection(
+                from: from.name, to: to.name,
+                fromN02StationCode: from.id, toN02StationCode: to.id,
+                lineNames: [line.name], operatorNames: line.operator.map { [$0] },
+                lineIDs: [line.id], sectionCodes: [edge.code]))
+        }
+        func unique(_ values: [String]) -> [String] {
+            var seen: Set<String> = []
+            return values.filter { seen.insert($0).inserted }
+        }
+        return .init(lineIDs: lineIDs, lineNames: unique(sections.flatMap { $0.lineNames ?? [] }),
+                     operatorNames: unique(sections.flatMap { $0.operatorNames ?? [] }),
+                     stations: visits, sectionCodes: path.map(\.code), routeSections: sections)
+    }
+}
+
+
+extension CompactPackage.Line {
+    /// Statuses describe service, not track; search candidates still require confirmation.
+    /// Only a whole line replaced by buses is excluded from physical route search.
+    var isTraversableForSearch: Bool { serviceStatus != "substitute_bus" }
+}

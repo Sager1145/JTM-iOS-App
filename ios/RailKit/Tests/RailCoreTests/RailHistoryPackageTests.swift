@@ -45,7 +45,8 @@ struct RailHistoryPackageTests {
         let graphStore = RouteGraph.RouteGraphStore(
             sections: sections, policy: .physicalRailway,
             junctions: registry.junctions(for: "jp"),
-            cachePolicy: .bounded(maximumNodes: 100_000))
+            cachePolicy: .bounded(maximumNodes: 100_000),
+            identityPeriods: overlay.identityPeriods)
         return Environment(graphStore: graphStore, stations: stations, overlay: overlay)
     }()
 

@@ -301,6 +301,94 @@ struct DisplayPartsParityTests {
 
     // MARK: - every line of every package
 
+    @Test("Nihongi draws its physical spur once beside a continuous through main")
+    func nihongiSwitchback() throws {
+        let root = try PortFixtures.repositoryRoot()
+        let loaded = try DisplayParts.LoadedPackage.load(
+            contentsOf: root.appending(path: "app/public/rail/jp-2025.json"))
+        let id = "jp-えちごトキめき鉄道-妙高はねうまライン"
+        let line = try #require(loaded.package.lines.first { $0.id == id })
+        let topology = try #require(loaded.topologyByLineID[id])
+        let station = Coordinate(lon: 138.232612, lat: 36.989568)
+        let junction = Coordinate(lon: 138.23198, lat: 36.98702)
+        #expect(line.stations.count == 10)
+        #expect(line.segments.count == 9)
+        #expect(line.stations[2].coordinate == station)
+        #expect(topology.reversalTails == [junction])
+
+        let parts = DisplayParts.parts(for: line, topology: topology)
+        try #require(parts.count == 2)
+        #expect(parts.map(\.count) == [7, 472])
+        #expect(parts[0].first == junction)
+        #expect(parts[0].last == station)
+        #expect(parts[1][211] == junction)
+        #expect(parts[1][212] == Coordinate(lon: 138.23206, lat: 36.98717))
+        #expect(!parts[1].contains(station))
+
+        // Physical intervals still carry the real station reversal. Display
+        // topology cuts their exact shared suffix at the surveyed junction,
+        // so the station spur is emitted once and the main stays continuous.
+        let intervals = CompactPackage.decodeIntervals(line)
+        let incoming = intervals[0] + Array(intervals[1].dropFirst())
+        var outgoing = intervals[2]
+        for interval in intervals.dropFirst(3) {
+            outgoing.append(contentsOf: interval.dropFirst())
+        }
+        #expect(parts[0] == Array(incoming.suffix(7)))
+        let cut = try #require(incoming.firstIndex(of: junction))
+        #expect(parts[1] == Array(incoming[...cut]) + Array(outgoing.dropFirst(7)))
+    }
+
+    @Test("loaded source metadata preserves the Okoba and Izumo-Sakane passenger reversals")
+    func sourcePassengerReversalExtents() throws {
+        let root = try PortFixtures.repositoryRoot()
+        let loaded = try DisplayParts.LoadedPackage.load(
+            contentsOf: root.appending(path: "app/public/rail/jp-2025.json"))
+        let cases: [(id: String, interval: Int, extent: Coordinate, counts: [Int])] = [
+            ("jp-九州旅客鉄道-肥薩線", 15, Coordinate(lon: 130.78504, lat: 32.16386), [8, 1551, 9, 1171]),
+            ("jp-西日本旅客鉄道-木次線", 14, Coordinate(lon: 133.11333, lat: 35.10687), [8, 1573, 525])
+        ]
+        for item in cases {
+            let line = try #require(loaded.package.lines.first { $0.id == item.id })
+            let topology = try #require(loaded.topologyByLineID[item.id])
+            #expect(topology.reversalTails.contains(item.extent))
+            let source = CompactPackage.decodeIntervals(line)[item.interval]
+            #expect(source.contains(item.extent))
+            let parts = DisplayParts.parts(for: line, topology: topology)
+            #expect(parts.map(\.count) == item.counts)
+            #expect(parts.flatMap { $0 }.contains(item.extent))
+            let unprotected = DisplayParts.parts(for: line)
+            #expect(!unprotected.flatMap { $0 }.contains(item.extent))
+            #expect(zip(parts, unprotected).filter { pair in pair.0 != pair.1 }.count == 1)
+        }
+    }
+
+    @Test("Tateishi paired alignment retains station identity on its surveyed south platform")
+    func tateishiPairedPassengerPlatform() throws {
+        let root = try PortFixtures.repositoryRoot()
+        let loaded = try DisplayParts.LoadedPackage.load(
+            contentsOf: root.appending(path: "app/public/rail/jp-2025.json"))
+        let id = "jp-九州旅客鉄道-日豊線-p1"
+        let pair = try #require(loaded.package.lines.first { $0.id == id })
+        let main = try #require(loaded.package.lines.first { $0.id == "jp-九州旅客鉄道-日豊線" })
+        let south = Coordinate(lon: 131.477065, lat: 33.48177)
+        let eastFork = Coordinate(lon: 131.48048, lat: 33.48176)
+        #expect(pair.stations.map(\.id) == ["009241", "009262"])
+        #expect(pair.stations[0].coordinate == Coordinate(lon: 131.429545, lat: 33.50443))
+        #expect(pair.stations[1].coordinate == south)
+        #expect(main.stations.first { $0.id == "009262" }?.coordinate
+            == Coordinate(lon: 131.477238, lat: 33.482051))
+        let topology = loaded.topologyByLineID[id] ?? .init()
+        #expect(topology.reversalTails.isEmpty)
+        let source = try #require(CompactPackage.decodeIntervals(pair).first)
+        #expect(source.count == 63)
+        #expect(source.last == south)
+        #expect(!source.contains(eastFork))
+        let parts = DisplayParts.parts(for: pair, topology: topology)
+        #expect(parts.count == 1)
+        #expect(parts.first?.last == south)
+    }
+
     @Test("every line of all seven packages emits the same strokes")
     func everyLine() throws {
         let fixture = try Self.load()
@@ -453,6 +541,67 @@ struct DisplayPartsParityTests {
 
     // MARK: - the branches real data cannot reach
 
+    @Test("a nearby spur platform cannot steal the main track lead-in")
+    func branchLeadInUsesOwnTrackAnchor() throws {
+        let source = [Coordinate(lon: 139.03, lat: 35),
+                      Coordinate(lon: 139.02, lat: 35),
+                      Coordinate(lon: 139.01, lat: 35)]
+        let nearbySpur = Coordinate(lon: 139.02, lat: 35.001)
+        let lead = try #require(DisplayParts.branchLeadIn(
+            source, divergenceIndex: 2, stationPoints: [nearbySpur, source[0]]))
+        #expect(lead == source)
+        #expect(DisplayParts.branchLeadIn(source, divergenceIndex: 2, stationPoints: [nearbySpur]) == nil)
+    }
+
+    @Test("an excursion branch begins at its physical switch without a main lead-in")
+    func physicalSpurStartsAtSwitch() throws {
+        let fixture = try Self.load()
+        let item = try #require(fixture.synthetic.first {
+            $0.label == "synthetic:excursion-split-on-open-track"
+        })
+        let parts = DisplayParts.parts(for: item.line, topology: item.topology)
+        try #require(parts.count == 3)
+        #expect(parts.map(\.count) == [21, 21, 21])
+        #expect(parts[0].first == Coordinate(lon: 139.1, lat: 35))
+        #expect(parts[0].last == item.line.stations[1].coordinate)
+        #expect(parts[1].first == item.line.stations[0].coordinate)
+        #expect(parts[1].last == parts[0].first)
+        #expect(parts[2].first == parts[0].first)
+        #expect(parts[2].last == item.line.stations[2].coordinate)
+    }
+
+    @Test("exact short and long station retraces contribute unique physical spur edges")
+    func exactStationSpurs() throws {
+        let package = try PortFixtures.package(country: "jp")
+        for (id, index) in [
+            ("jp-九州旅客鉄道-佐世保線", 3),
+            ("jp-東日本旅客鉄道-成田線", 13),
+            ("jp-東日本旅客鉄道-磐越西線", 15)
+        ] {
+            let line = try #require(package.lines.first { $0.id == id })
+            let intervals = CompactPackage.decodeDisplayIntervals(line)
+            let incoming = intervals[index - 1], outgoing = intervals[index]
+            var shared = 0
+            while shared < incoming.count && shared < outgoing.count
+                && incoming[incoming.count - 1 - shared] == outgoing[shared] { shared += 1 }
+            try #require(shared >= 3)
+            let junction = outgoing[shared - 1]
+            let parts = DisplayParts.parts(for: line)
+            let spur = try #require(parts.first { $0.first == junction && $0.last == outgoing.first })
+            #expect(spur == Array(outgoing.prefix(shared).reversed()))
+            for edge in 1..<shared {
+                let a = outgoing[edge - 1], b = outgoing[edge]
+                let occurrences = parts.reduce(0) { count, part in
+                    count + zip(part, part.dropFirst()).filter {
+                        ($0.0 == a && $0.1 == b) || ($0.0 == b && $0.1 == a)
+                    }.count
+                }
+                #expect(occurrences == 1, "\(id): shared survey edge drawn \(occurrences) times")
+            }
+            #expect(line.stations[index].coordinate == outgoing.first)
+        }
+    }
+
     /// Eight hand-built topologies, each written for one branch that the
     /// shipped packages never take.
     ///
@@ -522,8 +671,7 @@ struct DisplayPartsParityTests {
     }
 
     /// A three-part line is the shape the whole function exists for: a trunk,
-    /// a stroke that reverses off it, and a branch re-served from the station
-    /// the order jumped back to. No shipped line produces one today, so this
+    /// a stroke that reverses off it, and a unique branch from its switch. No shipped line produces one today, so this
     /// asserts the synthetic one still does.
     @Test("a station order that jumps back across the line still emits three strokes")
     func threeStrokes() throws {
@@ -532,18 +680,12 @@ struct DisplayPartsParityTests {
             fixture.synthetic.first { $0.label == "synthetic:retrace-onto-closed-part" })
         let parts = DisplayParts.parts(for: item.line, topology: item.topology)
         #expect(parts.count == 3)
-        // Every stroke begins and ends on a platform anchor: that is the
-        // contract that makes a branch sliceable, and the reason a lead-in is
-        // walked back to a station rather than cut at the switch.
-        let anchors = Set(item.line.stations.map { Grooming.coordinateKey($0.coordinate) })
-        for (index, part) in parts.enumerated() {
-            #expect(
-                anchors.contains(Grooming.coordinateKey(part[0])),
-                "part \(index) does not start on a platform")
-            #expect(
-                anchors.contains(Grooming.coordinateKey(part[part.count - 1])),
-                "part \(index) does not end on a platform")
-        }
+        // The newly diverging spur begins at its physical switch, rather
+        // than repeating the already drawn main from station C.
+        #expect(parts[2].first == Coordinate(lon: 139.05, lat: 35))
+        #expect(parts[2].last == item.line.stations.last?.coordinate)
+        #expect(parts[2].count == 11)
+        #expect(!parts[2].contains(item.line.stations[2].coordinate))
     }
 
     // MARK: - the primitives the tolerance rests on

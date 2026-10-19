@@ -202,11 +202,9 @@ struct StoreOperationsParityTests {
     /// unit the fixture counts in — and a window either side, which names the
     /// field that moved.
     static func expectSameBytes(_ actual: String, _ expected: String, _ label: String) {
-        guard actual != expected else { return }
+        guard let index = firstDifference(actual, expected) else { return }
         let a = Array(actual.utf16)
         let b = Array(expected.utf16)
-        var index = 0
-        while index < a.count && index < b.count && a[index] == b[index] { index += 1 }
         let window = { (units: [UInt16]) -> String in
             let low = max(0, index - 90)
             let high = min(units.count, index + 90)
@@ -224,7 +222,7 @@ struct StoreOperationsParityTests {
     /// The first differing UTF-16 index, or nil when the two agree — the
     /// same measurement the fixture records.
     static func firstDifference(_ a: String, _ b: String) -> Int? {
-        guard a != b else { return nil }
+        guard !a.utf8.elementsEqual(b.utf8) else { return nil }
         let left = Array(a.utf16)
         let right = Array(b.utf16)
         var index = 0
@@ -235,6 +233,14 @@ struct StoreOperationsParityTests {
     }
 
     // MARK: - the constants the operations are spelled from
+
+    @Test("Archive parity detects canonically equivalent spellings with different bytes")
+    func canonicalEquivalenceIsNotByteParity() {
+        let decomposed = "e\u{0301}"
+        let precomposed = "\u{00E9}"
+        #expect(Self.firstDifference(decomposed, precomposed) == 0)
+        #expect(Self.firstDifference(decomposed, decomposed) == nil)
+    }
 
     @Test func constants() throws {
         let fixture = try Self.load()
@@ -263,19 +269,22 @@ struct StoreOperationsParityTests {
         }
     }
 
-    /// The string quoter here and the one behind `JSON.canonicalText` are two
-    /// copies of the same rule, because this file may not edit `Train.swift`.
-    /// This is what keeps them from drifting: on a single string value the
-    /// two spellings are the whole output, so they must be identical.
-    @Test func quotingAgreesWithTheCanonicalSpelling() throws {
-        let fixture = try Self.load()
-        var probes = fixture.stringifyCases.map(\.input)
-        probes.append(contentsOf: fixture.blankTrains.map(\.train))
-        probes.append(contentsOf: ["", "\u{0}\u{1f}", "a/b", "\u{2028}", "🚄", "が", "が"])
-        for probe in probes {
-            #expect(
-                StoreOperations.stringify(.string(probe)) == TrainValidation.JSON.string(probe).canonicalText,
-                "the two quoters disagree on \(probe.debugDescription)")
+    /// Fixed JSON bytes pin the shared escaping rule through both writers.
+    @Test func stringEscapesPreserveJSONBytes() {
+        let probes: [(String, String)] = [
+            ("", "\"\""),
+            ("\u{0}\u{1}\u{1f}", #""\u0000\u0001\u001f""#),
+            ("\"\\\u{8}\t\n\u{c}\r", #""\"\\\b\t\n\f\r""#),
+            ("a/b", #""a/b""#),
+            ("\u{2028}\u{2029}", "\"\u{2028}\u{2029}\""),
+            ("🚄", #""🚄""#),
+            ("中文", #""中文""#),
+            ("が", #""が""#),
+            ("か\u{3099}", "\"か\u{3099}\"")
+        ]
+        for (probe, expected) in probes {
+            #expect(StoreOperations.stringify(.string(probe)) == expected)
+            #expect(TrainValidation.JSON.string(probe).canonicalText == expected)
         }
     }
 
@@ -634,15 +643,14 @@ struct StoreOperationsParityTests {
 
         for testCase in fixture.appendCases {
             guard let store = committed[testCase.country] else { continue }
-            var workspace = StoreOperations.Workspace(store: store, country: testCase.country)
+            var session = ImportEngine.Session(trains: store.trains, country: testCase.country)
             let raw = try TrainValidation.JSON.parse(testCase.input)
             var returned: [String] = []
             var failure: TrainValidation.ValidationError?
             do {
                 for _ in 0..<testCase.repeatCount {
                     returned.append(
-                        try StoreOperations.appendImportedTrain(
-                            raw, fallbackDate: testCase.fallbackDate, in: &workspace))
+                        try session.appendImportedTrain(raw, fallbackDate: testCase.fallbackDate))
                 }
             } catch let error as TrainValidation.ValidationError {
                 failure = error
@@ -660,10 +668,10 @@ struct StoreOperationsParityTests {
             }
             #expect(returned == testCase.returnedIds, "\(label): returned ids")
             #expect(
-                workspace.store.trains.count - store.trains.count == testCase.appendedCount,
+                session.trains.count - store.trains.count == testCase.appendedCount,
                 "\(label): appended count")
 
-            let appended = workspace.store.trains.dropFirst(store.trains.count)
+            let appended = session.trains.dropFirst(store.trains.count)
             #expect(appended.count == testCase.appended.count, "\(label): appended count")
             for (train, expected) in zip(appended, testCase.appended) {
                 Self.expectSameBytes(

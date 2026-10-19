@@ -55,6 +55,52 @@ struct StatisticsLineCoverageTests {
         #expect(row.percent > 100)
     }
 
+    @Test func widgetCountsPhysicalLinesOnceAcrossOverlappingJapaneseCategories() {
+        let totals: Totals = [
+            ("Conventional", [Statistics.maskCONV: 20, Statistics.maskJR: 20]),
+            ("High speed", [Statistics.maskHSR: 100, Statistics.maskJR: 100]),
+            ("Mixed", [Statistics.maskCONV: 10, Statistics.maskHSR: 30, Statistics.maskJR: 40]),
+            ("Partly ridden mixed", [Statistics.maskCONV: 20, Statistics.maskHSR: 10, Statistics.maskJR: 30]),
+            ("Metro", [Statistics.maskCONV: 20, Statistics.maskMETRO: 20]),
+        ]
+        var ridden = Ridden()
+        ridden["Conventional"] = [Statistics.maskCONV: 10, Statistics.maskJR: 10]
+        ridden["High speed"] = [Statistics.maskHSR: 25, Statistics.maskJR: 25]
+        ridden["Mixed"] = [Statistics.maskCONV: 5, Statistics.maskHSR: 15, Statistics.maskJR: 20]
+        ridden["Partly ridden mixed"] = [Statistics.maskHSR: 10, Statistics.maskJR: 10]
+        ridden["Metro"] = [Statistics.maskCONV: 5, Statistics.maskMETRO: 5]
+        let rows = StatisticsLineCoverage.widgetRows(
+            masks: Statistics.categories(country: "jp").map(\.mask),
+            totals: totals, operators: [:], ridden: ridden)
+        #expect(rows.count == 5)
+        #expect(Set(rows.map(\.id)).count == rows.count)
+        #expect(rows.first { $0.name == "Conventional" }?.percent == 50)
+        #expect(rows.first { $0.name == "High speed" }?.percent == 25)
+        #expect(rows.first { $0.name == "Mixed" }?.total == 40)
+        #expect(rows.first { $0.name == "Mixed" }?.ridden == 20)
+        #expect(rows.first { $0.name == "Partly ridden mixed" }?.total == 30)
+        #expect(rows.first { $0.name == "Partly ridden mixed" }?.ridden == 10)
+        #expect(rows.first { $0.name == "Metro" }?.total == 20)
+        #expect(rows.first { $0.name == "Metro" }?.ridden == 5)
+    }
+
+    @Test func widgetKeepsLargestCategoryMeasureAndForeignMetroInAllRegionVocabulary() {
+        let totals: Totals = [
+            ("Mixed regional", [Statistics.maskCONV: 20, Statistics.maskMETRO: 10]),
+            ("Unridden metro", [Statistics.maskMETRO: 5]),
+            ("Unridden conventional", [Statistics.maskCONV: 5]),
+        ]
+        var ridden = Ridden()
+        ridden["Mixed regional"] = [Statistics.maskCONV: 5, Statistics.maskMETRO: 5]
+        let rows = StatisticsLineCoverage.widgetRows(
+            masks: Statistics.categories(country: "jp").map(\.mask),
+            totals: totals, operators: [:], ridden: ridden)
+        #expect(rows.count == 2)
+        #expect(rows.first { $0.name == "Mixed regional" }?.total == 20)
+        #expect(rows.first { $0.name == "Mixed regional" }?.ridden == 5)
+        #expect(rows.first { $0.name == "Unridden metro" }?.percent == 0)
+    }
+
     @Test func emptyInputsAndCollatorTiesPreserveEncounterOrder() {
         #expect(StatisticsLineCoverage.rows(mask: Statistics.maskHSR, totals: [],
                                             operators: [:], ridden: Ridden()).isEmpty)

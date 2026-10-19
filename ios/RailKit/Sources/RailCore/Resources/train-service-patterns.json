@@ -3626,6 +3626,68 @@
   "notes": "JR・東武直通 from 2006-03-18. 2023-03-18 revision replaced the regular 日光 by スペーシア日光 (東武100系); 253系日光 may still run as 臨時. 日光線 = 東武鉄道 (栗橋〜東武日光); 山手線 stands in for 山手貨物線. [verified] Official JR東日本 2022-12-16 release (https://www.jreast.co.jp/press/2022/20221216_ho02.pdf (archived: https://web.archive.org/web/20221216050327/https://www.jreast.co.jp/press/2022/20221216_ho02.pdf)): ダイヤ改正日 2023-03-18、改正前「日光1号」→改正後「スペーシア日光1号」, so validTo 2023-03-17 is official. validFrom 2006-03-18 not yet checked against an official source; validity stays partial."
  },
  {
+  "patternId": "kinugawa-shinjuku-kinugawaonsen-2006",
+  "serviceId": "kinugawa",
+  "name": "きぬがわ",
+  "company": "東日本旅客鉄道/東武鉄道",
+  "label": "新宿〜鬼怒川温泉（2006–2017）",
+  "origin": "新宿",
+  "destination": "鬼怒川温泉",
+  "stops": [
+   {
+    "name": "新宿",
+    "sourceCode": "003700"
+   },
+   {
+    "name": "池袋",
+    "sourceCode": "003390"
+   },
+   {
+    "name": "浦和",
+    "sourceCode": "002989"
+   },
+   {
+    "name": "大宮",
+    "sourceCode": "002914"
+   },
+   {
+    "name": "栃木",
+    "sourceCode": "002313"
+   },
+   {
+    "name": "新鹿沼",
+    "sourceCode": "002118"
+   },
+   {
+    "name": "下今市",
+    "sourceCode": "001889"
+   },
+   {
+    "name": "鬼怒川温泉",
+    "sourceCode": "001779"
+   }
+  ],
+  "optionalStops": [],
+  "via": [],
+  "lines": [
+   "山手線",
+   "赤羽線",
+   "東北本線",
+   "日光線",
+   "鬼怒川線"
+  ],
+  "validFrom": "2006-03-18",
+  "validUntil": "2017-07-22",
+  "completeness": {
+   "stops": "partial",
+   "lines": "complete",
+   "validity": "complete"
+  },
+  "confidence": "medium",
+  "source": "https://timetables.jreast.co.jp/timetable/list0350.html",
+  "notes": "JR・東武直通開始 2006-03-18 から 東武ワールドスクウェア駅開業（2017-07-22）前日までの停車駅体系。2017-07-22 以降の停車駅（公式照合済み）から開業前の 東武ワールドスクウェア を除いたもの。この期間の他の停車駅は当時の時刻表で未照合のため stops は partial。"
+ },
+ {
   "patternId": "kinugawa-shinjuku-kinugawaonsen",
   "serviceId": "kinugawa",
   "name": "きぬがわ",
@@ -3680,7 +3742,7 @@
    "日光線",
    "鬼怒川線"
   ],
-  "validFrom": "2006-03-18",
+  "validFrom": "2017-07-22",
   "validUntil": null,
   "completeness": {
    "stops": "complete",
@@ -3689,7 +3751,7 @@
   },
   "confidence": "high",
   "source": "https://timetables.jreast.co.jp/timetable/list0350.html",
-  "notes": "Still a regular train after the 2023-03-18 revision (1往復). 日光線/鬼怒川線 = 東武鉄道. Stops verified 2026-09 against 東武鉄道 特急停車駅ご案内 (JR線直通運転 green line, legend 'JR特急日光・きぬがわ・特急スペーシアきぬがわ'): JR新宿・池袋・浦和・大宮, 栃木, 新鹿沼, 下今市, 東武ワールドスクウェア, 鬼怒川温泉; passes 板倉東洋大前・新栃木・新高徳. 2026-09-23 JR東日本「駅の時刻表」（JR時刻表2026年10月号ベース）で全列車の停車駅一覧を照合。"
+  "notes": "Still a regular train after the 2023-03-18 revision (1往復). 日光線/鬼怒川線 = 東武鉄道. Stops verified 2026-09 against 東武鉄道 特急停車駅ご案内 (JR線直通運転 green line, legend 'JR特急日光・きぬがわ・特急スペーシアきぬがわ'): JR新宿・池袋・浦和・大宮, 栃木, 新鹿沼, 下今市, 東武ワールドスクウェア, 鬼怒川温泉; passes 板倉東洋大前・新栃木・新高徳. 2026-09-23 JR東日本「駅の時刻表」（JR時刻表2026年10月号ベース）で全列車の停車駅一覧を照合。 東武ワールドスクウェア駅は 2017-07-22 開業のため、本パターンはその日から。それ以前は kinugawa-shinjuku-kinugawaonsen-2006。"
  },
  {
   "patternId": "spacia-nikko-shinjuku-tobunikko",

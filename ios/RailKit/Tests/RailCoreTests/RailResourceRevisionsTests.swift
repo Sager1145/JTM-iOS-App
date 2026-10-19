@@ -3,6 +3,39 @@ import Testing
 @testable import RailCore
 
 struct RailResourceRevisionsTests {
+    @Test func bundledAttestationRejectsInvalidDataAndSharesSuccessfulSnapshot() throws {
+        let directory = FileManager.default.temporaryDirectory
+            .appending(path: "resource-revisions-\(UUID().uuidString).bundle")
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let url = directory.appending(path: "rail-resource-revisions.json")
+        let invalid = RailResourceRevisions(schemaVersion: 2, regions: ["jp": "first"], timetableRevision: "tt")
+        try JSONEncoder().encode(invalid).write(to: url)
+        let bundle = try #require(Bundle(url: directory))
+        #expect(throws: RailResourceRevisions.ResourceError.self) {
+            try RailResourceRevisions.bundled(bundle: bundle)
+        }
+        let valid = RailResourceRevisions(regions: ["jp": "first"], timetableRevision: "tt")
+        try JSONEncoder().encode(valid).write(to: url)
+        #expect(try RailResourceRevisions.bundled(bundle: bundle) == valid)
+        try Data("broken after snapshot load".utf8).write(to: url)
+        #expect(try RailResourceRevisions.bundled(bundle: bundle) == valid)
+        #expect(throws: RailResourceRevisions.ResourceError.missingRegion("tw")) {
+            try valid.requiredRevision(for: "tw")
+        }
+    }
+
+    @Test func missingAttestationIsAnExplicitFailure() throws {
+        let directory = FileManager.default.temporaryDirectory
+            .appending(path: "resource-revisions-missing-\(UUID().uuidString).bundle")
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let bundle = try #require(Bundle(url: directory))
+        #expect(throws: RailResourceRevisions.ResourceError.missingResource) {
+            try RailResourceRevisions.bundled(bundle: bundle)
+        }
+    }
+
     @Test func everyCountryAndCombinedScopeUseContentRevisions() {
         let codes = ["jp", "tw", "hk", "mo", "kr"]
         let snapshot = RailResourceRevisions(regions: Dictionary(uniqueKeysWithValues:

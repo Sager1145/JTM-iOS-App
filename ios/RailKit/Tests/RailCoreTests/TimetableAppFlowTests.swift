@@ -9,7 +9,7 @@ import Testing
 struct TimetableAppFlowTests {
     @Test(arguments: ["2013-08-12", "2026-09-26", "2026-09-27", "2026-09-28", "2026-09-30"])
     func datedPublishedDraftsSurviveWorkspaceAndArchive(serviceDate: String) throws {
-        let database = try #require(TrainTimetableDatabase.bundled())
+        let database = try TrainTimetableDatabase.bundled(bundle: .module)
         let trips = try database.trips(on: serviceDate)
         try #require(!trips.isEmpty)
         var workspace = StoreOperations.Workspace()
@@ -54,10 +54,12 @@ struct TimetableAppFlowTests {
             Issue.record("Export did not contain a train array")
             return
         }
-        var restored = StoreOperations.Workspace()
+        var session = ImportEngine.Session()
         for rawTrain in rawTrains {
-            try StoreOperations.appendImportedTrain(rawTrain, in: &restored)
+            try session.appendImportedTrain(rawTrain)
         }
+        let restored = StoreOperations.Workspace(
+            store: TrainStore(trains: session.trains), country: session.country)
         #expect(restored.store.trains.count == drafted)
         for (before, after) in zip(workspace.trains, restored.trains) {
             #expect(after.id == before.id)
@@ -75,7 +77,7 @@ struct TimetableAppFlowTests {
     }
 
     @Test func incompleteBundledOccurrencesCannotInstallRoutes() throws {
-        let database = try #require(TrainTimetableDatabase.bundled())
+        let database = try TrainTimetableDatabase.bundled(bundle: .module)
         let trips = try database.trips(on: "2026-09-30")
         try #require(!trips.isEmpty)
         let base = Train(id: "draft", date: nil, number: "", origin: "", destination: "",
@@ -121,7 +123,7 @@ struct TimetableAppFlowTests {
     }
 
     @Test func exactMatchRejectsDifferentDayClocksAndShorterSegments() throws {
-        let database = try #require(TrainTimetableDatabase.bundled())
+        let database = try TrainTimetableDatabase.bundled(bundle: .module)
         let trips = try database.trips(for: "azusa", on: "2026-09-27")
         let trip = try #require(trips.first)
         let base = Train(id: "match", date: nil, number: "", origin: "", destination: "",
@@ -143,7 +145,7 @@ struct TimetableAppFlowTests {
     }
 
     @Test func overnightDraftStoresServiceDayAndExtendedClock() throws {
-        let database = try #require(TrainTimetableDatabase.bundled())
+        let database = try TrainTimetableDatabase.bundled(bundle: .module)
         let trip = try #require(try database.trip(
             id: "jr-west.west-express-ginga.kumano-night.2026-07-03", on: "2026-09-28"))
         let draft = try #require(trip.publishedStopsDraft(to: Train(
@@ -161,7 +163,7 @@ struct TimetableAppFlowTests {
 
     @Test(arguments: ["2026-02-29", "2026-13-01", "2026-09-31", "2026-9-30", "", "__all__"])
     func malformedDatesAreRejectedRatherThanNormalized(serviceDate: String) throws {
-        let database = try #require(TrainTimetableDatabase.bundled())
+        let database = try TrainTimetableDatabase.bundled(bundle: .module)
         do {
             _ = try database.trips(on: serviceDate)
             Issue.record("Accepted invalid service date: \(serviceDate)")
@@ -171,7 +173,7 @@ struct TimetableAppFlowTests {
     }
 
     @Test func exactDayAndSeasonalBoundariesDoNotLeakOccurrences() throws {
-        let database = try #require(TrainTimetableDatabase.bundled())
+        let database = try TrainTimetableDatabase.bundled(bundle: .module)
         let exactID = "jr-hokkaido.hokuto.3.exact-2026-09-30"
         #expect(try database.trip(id: exactID, on: "2026-09-29") == nil)
         #expect(try database.trip(id: exactID, on: "2026-09-30") != nil)

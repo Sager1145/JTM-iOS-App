@@ -107,7 +107,7 @@ struct OperatorIdentityTests {
             add(train["company"], source: "train-store", split: true)
         }
         // Read the actual label tables, including keys and values, so new labels require registry coverage.
-        let swift = try String(contentsOf: root.appending(path: "ios/RailKit/Sources/RailCore/OperatorBranding.swift"), encoding: .utf8)
+        let swift = try String(contentsOf: root.appending(path: "ios/RailKit/Sources/RailCore/Identity/OperatorBranding.swift"), encoding: .utf8)
         let pair = try NSRegularExpression(pattern: #"\("((?:\\.|[^"\\])*)",\s*"((?:\\.|[^"\\])*)"\)"#)
         func decodeSwift(_ raw: String) throws -> String {
             var value = raw

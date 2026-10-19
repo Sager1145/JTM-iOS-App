@@ -57,7 +57,7 @@ struct ContinuousStrokeMinimumRadiusTests {
                 if result.points.count > 3 {
                     // Interior arc triples must all have the same turn sign
                     // and a circumradius at least the requested pixel floor.
-                    for i in 2..<(result.points.count - 2) {
+                    for i in result.points.indices where i >= 2 && i + 2 < result.points.count {
                         let a = result.points[i - 1], b = result.points[i], c = result.points[i + 1]
                         let cross = (b.x-a.x)*(c.y-b.y) - (b.y-a.y)*(c.x-b.x)
                         #expect(cross > 0)
@@ -88,7 +88,7 @@ struct ContinuousStrokeMinimumRadiusTests {
                     for (a, b) in zip(result.points, result.points.dropFirst()) {
                         #expect((b.x-a.x)*forward.x + (b.y-a.y)*forward.y > 0)
                     }
-                    for i in 2..<(result.points.count - 2) {
+                    for i in result.points.indices where i >= 2 && i + 2 < result.points.count {
                         let a = result.points[i - 1], b = result.points[i], c = result.points[i + 1]
                         let cross = (b.x-a.x)*(c.y-b.y) - (b.y-a.y)*(c.x-b.x)
                         #expect(cross > 0)

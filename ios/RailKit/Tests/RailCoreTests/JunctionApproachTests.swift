@@ -210,8 +210,8 @@ struct JunctionApproachTests {
         }
 
         #expect(baselineJunctions.count == 10)
-        #expect(addedRecords.count == 190)
-        #expect(Set(addedRecords.map(\.station)).count == 157)
+        #expect(addedRecords.count == 192)
+        #expect(Set(addedRecords.map(\.station)).count == 159)
 
         try assertRegistryAccepted(dataRoot: dataRoot, junctions: fullJunctions)
 
@@ -407,7 +407,7 @@ struct JunctionApproachTests {
             lineNames: line.name.map { [$0] }, operatorNames: line.operator.map { [$0] })
         let hints = RouteHints(
             requiredLineIDs: [line.lineId], sectionCodes: codes, fromStationCode: from, toStationCode: to)
-        guard let source = data.network.sourceGeometry(for: hints) else { return nil }
+        guard let source = data.network.sourceCertification(for: hints)?.geometry else { return nil }
         let coordinates = source.lines.flatMap { $0 }
         let graph = pipeline.proofGraph(coordinates, store: data.graphStore)
         guard let keys = RouteSolver.verifiedSourcePath(
@@ -429,7 +429,8 @@ struct JunctionApproachTests {
             contentsOf: dataRoot.appending(path: "stations.json")).features
         let overlay = try RailHistoryOverlay.load(from: dataRoot.appending(path: "rail-history.json"))
         _ = RailHistory.apply(overlay, sections: &features, stations: &stationFeatures)
-        let graph = RouteGraph.build(from: features, junctions: junctions)
+        let graph = RouteGraph.build(from: features, junctions: junctions,
+                                     identityPeriods: overlay.identityPeriods)
         #expect(graph.rejectedPhysicalJunctionIDs.isEmpty,
             "Rejected registry junctions: \(graph.rejectedPhysicalJunctionIDs)")
     }
@@ -523,7 +524,7 @@ struct JunctionApproachTests {
                     ?? hints.fromStationCode
                 hints.toStationCode = data.eligibility.stationCode(hints.toStationCode)
                     ?? hints.toStationCode
-                let sourceResult = data.network.sourceGeometry(for: hints)
+                let sourceResult = data.network.sourceCertification(for: hints)?.geometry
                 let exactResult = data.network.canonicalizeRouteFeature(
                     RouteFeature(geometry: nil, hints: hints),
                     continueFrom: sharesBoundary ? displayContinuity : nil,
@@ -621,7 +622,7 @@ struct JunctionApproachTests {
                 var matchedHints = hints
                 matchedHints.sectionCodes = codes
                 matchedHints.requiredLineIDs = canonical?.displayLineIds ?? []
-                matchedSource = data.network.sourceGeometry(for: matchedHints)
+                matchedSource = data.network.sourceCertification(for: matchedHints)?.geometry
             }
             if let matchedSource {
                 let matchedGraph = pipeline.proofGraph(matchedSource.lines.flatMap { $0 }, store: data.graphStore)

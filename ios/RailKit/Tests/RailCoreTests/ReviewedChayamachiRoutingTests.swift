@@ -1,21 +1,16 @@
 import Foundation
 import Testing
-@testable import RailCore
+import RailCore
 
 struct ReviewedChayamachiRoutingTests {
     @Test("Reviewed Kojima operator boundary retains the continuous surveyed bridge railway")
     func actualKojimaOperatorBoundary() throws {
-        let data = try PortFixtures.repositoryRoot().appendingPathComponent("app/data")
-        let sections = try RouteGraph.SectionFeatureCollection.load(
-            contentsOf: data.appendingPathComponent("rail-sections.json")).features.filter {
+        let snapshot = try ReviewedCorridorFixtures.snapshot(history: false)
+        let sections = snapshot.sections.filter {
                 $0.properties.lineName == "本四備讃線"
                     && ["西日本旅客鉄道", "四国旅客鉄道"].contains($0.properties.operator)
             }
-        let stations = Stations.Index(try Stations.FeatureCollection.load(
-            contentsOf: data.appendingPathComponent("stations.json")).features)
-        let registry = try PhysicalRailJunctionRegistry(data: Data(
-            contentsOf: data.appendingPathComponent("physical-rail-junctions.json")))
-        let junction = try #require(registry.junctions(for: "jp").first {
+        let junction = try #require(snapshot.junctions.first {
             $0.id == "kojima-honshi-bisan-operator-boundary"
         })
         let independent = RouteGraph.build(from: sections)
@@ -25,17 +20,17 @@ struct ReviewedChayamachiRoutingTests {
                                    fromN02StationCode: "007663", toN02StationCode: "008252")
         let reverse = RouteSection(from: "宇多津", to: "茶屋町",
                                    fromN02StationCode: "008252", toN02StationCode: "007663")
-        func solve(_ graph: RouteGraph.Graph, _ section: RouteSection,
-                   _ date: String) -> RouteSolver.SolvedSection? {
-            RouteSolver.solveSection(section, segmentIndex: 0,
-                train: .init(company: "西日本旅客鉄道/四国旅客鉄道", rideDate: date),
-                country: "jp", graph: graph, stations: stations)
+        var worker = ReviewedCorridorWorker(sections: sections, stations: snapshot.stations,
+            junctions: [junction])
+        func solve(_ reviewed: Bool, _ section: RouteSection,
+                   _ date: String) throws -> ReviewedCorridorWorker.Proof? {
+            try worker.solve(reviewed: reviewed, section: section, company: "西日本旅客鉄道/四国旅客鉄道", date: date)
         }
         for section in [forward, reverse] {
-            #expect(solve(independent, section, "2026-10-03") == nil)
-            #expect(solve(joined, section, "1988-04-09") == nil)
+            #expect(try solve(false, section, "2026-10-03") == nil)
+            #expect(try solve(true, section, "1988-04-09") == nil)
             for day in ["1988-04-10", "2026-10-03"] {
-                let solved = try #require(solve(joined, section, day))
+                let solved = try #require(try solve(true, section, day))
                 #expect(solved.coordinates == solved.rawPathKeys.compactMap { joined.nodes[$0] })
                 var boundaries = 0
                 var operators = Set<String>()
@@ -60,19 +55,13 @@ struct ReviewedChayamachiRoutingTests {
 
     @Test("Reviewed Chayamachi line boundary connects surveyed rail only after opening")
     func actualSurveyedBoundary() throws {
-        let root = try PortFixtures.repositoryRoot()
-        let data = root.appendingPathComponent("app/data")
-        let sections = try RouteGraph.SectionFeatureCollection.load(
-            contentsOf: data.appendingPathComponent("rail-sections.json")).features.filter {
+        let snapshot = try ReviewedCorridorFixtures.snapshot(history: false)
+        let sections = snapshot.sections.filter {
                 $0.properties.operator == "西日本旅客鉄道"
                     && ["宇野線", "本四備讃線"].contains($0.properties.lineName)
             }
         #expect(!sections.isEmpty)
-        let stations = Stations.Index(try Stations.FeatureCollection.load(
-            contentsOf: data.appendingPathComponent("stations.json")).features)
-        let registry = try PhysicalRailJunctionRegistry(data: Data(
-            contentsOf: data.appendingPathComponent("physical-rail-junctions.json")))
-        let junction = try #require(registry.junctions(for: "jp").first {
+        let junction = try #require(snapshot.junctions.first {
             $0.id == "chayamachi-uno-honshi-bisan"
         })
         let independent = RouteGraph.build(from: sections, policy: .physicalRailway)
@@ -82,17 +71,17 @@ struct ReviewedChayamachiRoutingTests {
                                  fromN02StationCode: "007310", toN02StationCode: "007919")
         let reverse = RouteSection(from: "児島", to: "岡山",
                                    fromN02StationCode: "007919", toN02StationCode: "007310")
-        func solve(_ graph: RouteGraph.Graph, date: String,
-                   section: RouteSection) -> RouteSolver.SolvedSection? {
-            RouteSolver.solveSection(section, segmentIndex: 0,
-                train: .init(company: "西日本旅客鉄道/四国旅客鉄道", rideDate: date),
-                country: "jp", graph: graph, stations: stations)
+        var worker = ReviewedCorridorWorker(sections: sections, stations: snapshot.stations,
+            junctions: [junction])
+        func solve(_ reviewed: Bool, date: String,
+                   section: RouteSection) throws -> ReviewedCorridorWorker.Proof? {
+            try worker.solve(reviewed: reviewed, section: section, company: "西日本旅客鉄道/四国旅客鉄道", date: date)
         }
         for section in [route, reverse] {
-          #expect(solve(independent, date: "2026-10-03", section: section) == nil)
-          #expect(solve(joined, date: "1988-03-19", section: section) == nil)
+          #expect(try solve(false, date: "2026-10-03", section: section) == nil)
+          #expect(try solve(true, date: "1988-03-19", section: section) == nil)
           for date in ["1988-03-20", "2026-10-03"] {
-            let solved = try #require(solve(joined, date: date, section: section))
+            let solved = try #require(try solve(true, date: date, section: section))
             #expect(solved.coordinates == solved.rawPathKeys.compactMap { joined.nodes[$0] })
             var junctionCount = 0
             var lines = Set<String>()

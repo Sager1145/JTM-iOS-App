@@ -10,6 +10,9 @@ final class DatasetManifestIndexTests: XCTestCase {
         let manifest = try decode(#"{"parts":["part-002","part-000"]}"#)
         XCTAssertEqual(manifest.parts, ["part-002", "part-000"])
         XCTAssertNil(manifest.indexedParts)
+        let null = try decode(#"{"parts":["part-002","part-000"],"part_train_ids":null}"#)
+        XCTAssertEqual(null.parts, manifest.parts)
+        XCTAssertNil(null.indexedParts)
     }
 
     func testCompleteMapUsesManifestPositionsAndPreservesDuplicateTrainIDs() throws {
@@ -21,9 +24,9 @@ final class DatasetManifestIndexTests: XCTestCase {
         XCTAssertEqual(manifest.indexedParts?["other"], [.init(name: "part-000", position: 1)])
     }
 
-    func testMalformedOrIncompleteMapRequestsPartScan() throws {
+    func testMalformedOrIncompleteDeclaredMapIsRejected() throws {
         let maps = [
-            "null", "[]", #""incorrect""#,
+            "[]", "{}", #""incorrect""#,
             #"{"part-000":5,"part-001":"second"}"#,
             #"{"part-000":"first"}"#,
             #"{"part-000":"first","unexpected":"second"}"#,
@@ -32,9 +35,9 @@ final class DatasetManifestIndexTests: XCTestCase {
             #"{"part-000":" \n ","part-001":"second"}"#,
         ]
         for map in maps {
-            let manifest = try decode("{\"parts\":[\"part-000\",\"part-001\"],\"part_train_ids\":\(map)}")
-            XCTAssertNil(manifest.indexedParts, map)
-            XCTAssertEqual(manifest.parts, ["part-000", "part-001"])
+            XCTAssertThrowsError(try decode("{\"parts\":[\"part-000\",\"part-001\"],\"part_train_ids\":\(map)}"), map) { error in
+                XCTAssertTrue(error is DecodingError, map)
+            }
         }
     }
 }

@@ -1,0 +1,259 @@
+import Foundation
+
+/// Selectable timetable browse rows and fallback visibility, independent of view lifecycle.
+public enum ServicePatternBrowsePolicy {
+    private static let jrAndNationalOperatorNames: Set<String> = [
+        "北海道旅客鉄道", "東日本旅客鉄道", "東海旅客鉄道",
+        "西日本旅客鉄道", "四国旅客鉄道", "九州旅客鉄道",
+        "日本国有鉄道", "国鉄",
+    ]
+
+    /// A row carries the object the editor will select. Occurrences never
+    /// acquire route-pattern identity or a reverse-direction action.
+    public enum Row: Identifiable, Sendable {
+        case occurrence(TrainTimetableDatabase.Trip)
+        case pattern(TrainServicePatterns.Pattern)
+
+        public var id: String {
+            switch self {
+            case .occurrence(let trip): "occurrence:\(trip.id):\(trip.serviceDate)"
+            case .pattern(let pattern): "pattern:\(pattern.id)"
+            }
+        }
+
+        fileprivate var name: String {
+            switch self {
+            case .occurrence(let trip): trip.service.canonicalName
+            case .pattern(let pattern): pattern.name
+            }
+        }
+
+        fileprivate var companyLabel: String {
+            switch self {
+            case .occurrence(let trip):
+                var seen: Set<String> = []
+                return OperatorBranding.companyLabel(trip.operatorSegments.map(\.displayName)
+                    .filter { seen.insert($0).inserted }.joined(separator: "/"))
+            case .pattern(let pattern): return pattern.companyLabel
+            }
+        }
+    }
+
+    public struct SearchGroup: Sendable {
+        public let name: String
+        public let companyLabel: String
+        public let rows: [Row]
+    }
+
+    public struct SearchFilters: Equatable, Sendable {
+        public var region: String
+        public var rideDate: String?
+        public var companyFilter: String?
+        public var lineFilter: String?
+        public var showsAllHistory: Bool
+    
+        public init(region: String, rideDate: String?, companyFilter: String?, lineFilter: String?, showsAllHistory: Bool) {
+            self.region = region
+            self.rideDate = rideDate
+            self.companyFilter = companyFilter
+            self.lineFilter = lineFilter
+            self.showsAllHistory = showsAllHistory
+        }
+    }
+
+    public struct SearchSnapshot: Sendable {
+        public let groups: [SearchGroup]
+        public let incompleteTrips: [TrainTimetableDatabase.Trip]
+        public let unknownPatterns: [TrainServicePatterns.Pattern]
+        public let outsidePatterns: [TrainServicePatterns.Pattern]
+        public let companyLabels: [String]
+        public let lineNames: [String]
+        /// `searchGeneration` this result belongs to. `-1` until the first build,
+        /// so the list is loading rather than "no results" at launch and after
+        /// a timetable reload bumps the generation.
+        public let generation: Int
+        public let filters: SearchFilters
+        /// Primary groups came from the route-pattern catalog, not from a
+        /// timetable occurrence.
+        public let primaryRowsArePatterns: Bool
+
+        public static let empty = SearchSnapshot(
+            groups: [], incompleteTrips: [], unknownPatterns: [], outsidePatterns: [],
+            companyLabels: [], lineNames: [],
+            generation: -1,
+            filters: SearchFilters(
+                region: "", rideDate: nil, companyFilter: nil, lineFilter: nil,
+                showsAllHistory: false),
+            primaryRowsArePatterns: false)
+    }
+
+    /// Occurrence-database state. A hard failure is not a reason to present
+    /// another catalog as that same successful query.
+    public enum OccurrenceAvailability: Sendable, Equatable {
+        case notRequested
+        case unsupported
+        case missing
+        case damaged
+        case queryFailed
+        case ready(TrainTimetableDatabase.Coverage)
+
+        public var isHardFailure: Bool {
+            switch self {
+            case .missing, .damaged, .queryFailed: true
+            case .notRequested, .unsupported, .ready: false
+            }
+        }
+    }
+
+    public struct SearchInput: Sendable {
+        public let query: String
+        public let region: String
+        public let rideDate: String?
+        public let companyFilter: String?
+        public let lineFilter: String?
+        public let showsAllHistory: Bool
+        public let language: String
+        public let sources: TimetableKnowledgeQuery.ClassifiedSources
+        public let generation: Int
+    
+        public init(query: String, region: String, rideDate: String?, companyFilter: String?, lineFilter: String?, showsAllHistory: Bool, language: String, sources: TimetableKnowledgeQuery.ClassifiedSources, generation: Int) {
+            self.query = query
+            self.region = region
+            self.rideDate = rideDate
+            self.companyFilter = companyFilter
+            self.lineFilter = lineFilter
+            self.showsAllHistory = showsAllHistory
+            self.language = language
+            self.sources = sources
+            self.generation = generation
+        }
+    }
+
+    public static func makeSearchSnapshot(_ input: SearchInput) -> SearchSnapshot {
+        let search = TimetableSearch(input.query)
+        let sources = input.sources
+        let patternMatches = sources.patterns.filter { pattern in
+            matchesFilters(companies: [pattern.company], lines: pattern.lines, input: input)
+                && search.matches(pattern)
+        }.sorted {
+            if let day = input.rideDate, $0.isValid(on: day) != $1.isValid(on: day) {
+                return $0.isValid(on: day)
+            }
+            if $0.isCurrent != $1.isCurrent { return $0.isCurrent && !$1.isCurrent }
+            if $0.name != $1.name { return $0.name < $1.name }
+            return $0.label < $1.label
+        }
+        var completeMatches: [TrainTimetableDatabase.Trip] = []
+        var incompleteMatches: [TrainTimetableDatabase.Trip] = []
+        var hasIncompleteOccurrences = false
+        for trip in sources.occurrences {
+            let canApply = trip.canApplyToRouteEditor
+            hasIncompleteOccurrences = hasIncompleteOccurrences || !canApply
+            guard matchesFilters(companies: trip.operatorSegments.map(\.displayName),
+                                 lines: trip.lineSegments.map(\.lineName), input: input),
+                  search.matches(trip) else { continue }
+            if canApply { completeMatches.append(trip) }
+            else { incompleteMatches.append(trip) }
+        }
+        let primaryRowsArePatterns = input.region != "jp" || input.rideDate == nil
+        let knownMatches: [Row]
+        let incompleteTrips: [TrainTimetableDatabase.Trip]
+        if primaryRowsArePatterns {
+            knownMatches = patternMatches.map(Row.pattern)
+            incompleteTrips = []
+        } else if sources.availability.isHardFailure {
+            knownMatches = []
+            incompleteTrips = []
+        } else {
+            knownMatches = completeMatches.map(Row.occurrence)
+            incompleteTrips = incompleteMatches
+        }
+        let researchIncomplete: Bool = {
+            switch sources.availability {
+            case .ready(.partial), .ready(.unknown), .ready(.conflict): true
+            default: false
+            }
+        }()
+        let shouldShowLegacyFallback = researchIncomplete || hasIncompleteOccurrences
+        let unknownPatterns: [TrainServicePatterns.Pattern]
+        if sources.availability.isHardFailure {
+            unknownPatterns = []
+        } else if input.region == "jp", let rideDate = input.rideDate {
+            unknownPatterns = patternMatches.filter { pattern in
+                pattern.applicability(on: rideDate) != .notApplicable
+                    && (shouldShowLegacyFallback || !isJROrNationalRailway(pattern))
+            }
+        } else {
+            unknownPatterns = []
+        }
+        let outsidePatterns: [TrainServicePatterns.Pattern]
+        if let rideDate = input.rideDate, input.showsAllHistory {
+            outsidePatterns = patternMatches.filter {
+                $0.applicability(on: rideDate) == .notApplicable
+            }
+        } else {
+            outsidePatterns = []
+        }
+        let companyNames = sources.patterns.map(\.companyLabel)
+            + sources.occurrences.flatMap { $0.operatorSegments.map(\.displayName) }
+        let companyLabels = Array(Set(companyNames.flatMap { name -> [String] in
+            name.components(separatedBy: "/").map {
+                let part = $0.trimmingCharacters(in: .whitespacesAndNewlines)
+                return OperatorIdentity.code(for: part) ?? part
+            }.filter { !$0.isEmpty }
+        })).sorted {
+            companyDisplayName($0, language: input.language)
+                .localizedStandardCompare(companyDisplayName($1, language: input.language))
+                == .orderedAscending
+        }
+        let lineNames = Array(Set(
+            sources.patterns.flatMap(\.lines)
+                + sources.occurrences.flatMap { $0.lineSegments.map(\.lineName) }
+        )).sorted()
+        var order: [String] = []
+        var byName: [String: [Row]] = [:]
+        for row in knownMatches {
+            if byName[row.name] == nil { order.append(row.name) }
+            byName[row.name, default: []].append(row)
+        }
+        let groups = order.map { name in
+            SearchGroup(name: name, companyLabel: byName[name]?.first?.companyLabel ?? "",
+                        rows: byName[name] ?? [])
+        }
+        return SearchSnapshot(
+            groups: groups, incompleteTrips: incompleteTrips,
+            unknownPatterns: unknownPatterns, outsidePatterns: outsidePatterns,
+            companyLabels: companyLabels, lineNames: lineNames,
+            generation: input.generation,
+            filters: SearchFilters(
+                region: input.region, rideDate: input.rideDate,
+                companyFilter: input.companyFilter, lineFilter: input.lineFilter,
+                showsAllHistory: input.showsAllHistory),
+            primaryRowsArePatterns: primaryRowsArePatterns)
+    }
+
+    private static func matchesFilters(companies: [String], lines: [String], input: SearchInput) -> Bool {
+        if let companyFilter = input.companyFilter,
+           !companies.contains(where: { OperatorIdentity.sameCompany($0, companyFilter) }) { return false }
+        if let lineFilter = input.lineFilter {
+            let line = TrainServiceBranding.canonicalLineName(lineFilter)
+            guard lines.contains(where: {
+                TrainServiceBranding.canonicalLineName($0) == line
+            }) else { return false }
+        }
+        return true
+    }
+
+    private static func companyDisplayName(_ code: String, language: String) -> String {
+        OperatorIdentity.displayName(code: code, language: language) ?? code
+    }
+
+    private static func isJROrNationalRailway(
+        _ pattern: TrainServicePatterns.Pattern
+    ) -> Bool {
+        pattern.company.split(separator: "/").contains { component in
+            jrAndNationalOperatorNames.contains(
+                component.trimmingCharacters(in: .whitespacesAndNewlines))
+        }
+    }
+}

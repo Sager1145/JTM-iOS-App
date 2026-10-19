@@ -3,6 +3,25 @@ import Testing
 @testable import RailCore
 
 struct RouteSectionExportTests {
+    @Test("Physical source spans retain repeated visit ownership and the final destination occurrence")
+    func sourceBoundaryVisitMapping() throws {
+        let original = train(["A", "P", "A", "B"], [section("A", "X"), section("X", "P"),
+            section("P", "Y"), section("Y", "A"), section("A", "B"), section("B", "Z"), section("Z", "B")])
+        let mapping = try #require(RecordedRouteMapping(stops: original.stops, sections: original.routeSections!))
+        #expect(mapping.sectionStopIntervals == [0, 0, 1, 1, 2, 2, 2])
+        #expect(mapping.stopSectionBoundaries == [0, 2, 4, 7])
+        #expect(mapping.sectionRange(fromStopIndex: 2, toStopIndex: 3) == (4..<7))
+        #expect(mapping.stopIndex(atSectionBoundary: 5) == nil)
+        #expect(mapping.stopIndex(atSectionBoundary: 7) == 3)
+        #expect(mapping.stopInterval(forSectionIndex: 7) == nil)
+        #expect(mapping.sectionRange(fromStopIndex: -1, toStopIndex: 2) == nil)
+        var conflicting = original.routeSections!
+        conflicting[1].fromN02StationCode = "Other X"
+        #expect(RecordedRouteMapping(stops: original.stops, sections: conflicting) == nil)
+        let missingVisit = train(["A", "P", "P", "B"], [section("A", "P"), section("P", "B")])
+        #expect(RecordedRouteMapping(stops: missingVisit.stops, sections: missingVisit.routeSections!) == nil)
+    }
+
     private func train(_ codes: [String], _ sections: [RouteSection]) -> Train {
         Train(id: "boundary_export", date: "2026-07-27", number: "Test", origin: codes.first!,
               destination: codes.last!, routeSections: sections,

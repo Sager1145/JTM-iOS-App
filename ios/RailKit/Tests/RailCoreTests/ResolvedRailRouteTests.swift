@@ -31,8 +31,8 @@ struct ResolvedRailRouteTests {
         #expect(result.map(\.lineID) == ["tunnel", "surface"])
         #expect(result.map(\.name) == ["Tunnel", "Surface"])
         #expect(result.map(\.operatorName) == [nil, "Rail Co"])
-        let source = try #require(network.sourceGeometry(for: RouteHints(
-            sectionCodes: ["surface@A:B", "surface@B:C"], fromStationCode: "A", toStationCode: "C")))
+        let source = try #require(network.sourceCertification(for: RouteHints(
+            sectionCodes: ["surface@A:B", "surface@B:C"], fromStationCode: "A", toStationCode: "C"))?.geometry)
         #expect(abs(result[1].km - RouteNetwork.Metric.pathLength(source.lines[0]) / 1000) < 1e-10)
     }
 

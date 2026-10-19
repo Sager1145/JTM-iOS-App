@@ -67,4 +67,35 @@ struct StationNameFieldsTests {
             .init(kind: .en, text: "Group name"),
         ])
     }
+
+    @Test("A sparse platform row gains only its missing kinds from the exact official code")
+    func sparsePlatformFillsFromOfficialCode() throws {
+        // The bundled Marunouchi platform row for Tokyo has empty readings;
+        // the official station row 003766 has them.
+        let localization = Localization(
+            catalog: try emptyCatalog(),
+            stationReadings: .init(
+                byCode: [
+                    "jp-東京地下鉄-4号線丸ノ内線:003766": .init(
+                        kana: "", romaji: "Tōkyō", zhHant: "東京", zhHans: "东京",
+                        ja: "東京", en: "Tokyo", katakana: ""),
+                    "003766": .init(
+                        kana: "とうきょう", romaji: "Tokyo official", zhHant: "東京", zhHans: "东京",
+                        ja: "東京駅", en: "Tokyo Station", katakana: "トウキョウ"),
+                ],
+                byName: ["東京": .init(kana: "ひがしきょう", katakana: "ヒガシキョウ")]))
+        #expect(localization.stationNameFields(
+            "東京", code: "jp-東京地下鉄-4号線丸ノ内線:003766", alternateCode: "003766") == [
+            .init(kind: .ja, text: "東京"), .init(kind: .en, text: "Tokyo"),
+            .init(kind: .zhHant, text: "東京"), .init(kind: .zhHans, text: "东京"),
+            .init(kind: .kana, text: "とうきょう"), .init(kind: .katakana, text: "トウキョウ"),
+            .init(kind: .romaji, text: "Tōkyō"),
+        ])
+        // Without an exact official row, a same-name row never fills the gaps.
+        for alternate in [nil, "", "999999"] as [String?] {
+            #expect(localization.stationNameFields(
+                "東京", code: "jp-東京地下鉄-4号線丸ノ内線:003766", alternateCode: alternate
+            ).map(\.kind) == [.ja, .en, .zhHant, .zhHans, .romaji])
+        }
+    }
 }

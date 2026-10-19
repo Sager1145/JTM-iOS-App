@@ -122,79 +122,30 @@ struct EditorTimeTests {
         )
     }
 
-    @Test func stationAndConfirmedTimeOnTheSameStopAllows() {
-        let denial = EditorAIEligibility.denial(
-            stops: [stop(resolved: true, departure: EditorTime.input("25:10", confirmed: true))],
-            providerAvailable: true,
-            requestInFlight: false
-        )
-        #expect(denial == nil)
+    @Test func nativeJourneyAnchorAllows() {
+        #expect(denial([stop(resolved: true, departure: "25:10")]) == nil)
     }
 
-    @Test func denialPriority() {
-        #expect(
-            EditorAIEligibility.denial(
-                stops: [stop(resolved: true)],
-                providerAvailable: true,
-                requestInFlight: false
-            ) == .noExplicitTime
-        )
-        #expect(
-            EditorAIEligibility.denial(
-                stops: [stop(resolved: false, departure: EditorTime.input("9:30", confirmed: true))],
-                providerAvailable: true,
-                requestInFlight: false
-            ) == .noResolvedStation
-        )
-        #expect(
-            EditorAIEligibility.denial(
-                stops: [
-                    stop(resolved: true),
-                    stop(resolved: false, departure: EditorTime.input("9:30", confirmed: true)),
-                ],
-                providerAvailable: true,
-                requestInFlight: false
-            ) == .timeNotOnThatStation
-        )
-        #expect(
-            EditorAIEligibility.denial(
-                stops: [stop(resolved: true, departure: EditorTime.input("25:10", confirmed: false))],
-                providerAvailable: true,
-                requestInFlight: false
-            ) == .noExplicitTime
-        )
-        #expect(
-            EditorAIEligibility.denial(
-                stops: [stop(resolved: true, departure: EditorTime.input("9:99", confirmed: true))],
-                providerAvailable: true,
-                requestInFlight: false
-            ) == .invalidTime
-        )
-        let anchor = stop(resolved: true, departure: EditorTime.confirmPicker(dayOffset: 0, hour: 9, minute: 30))
-        #expect(
-            EditorAIEligibility.denial(stops: [anchor], providerAvailable: true, requestInFlight: true)
-                == .requestInFlight
-        )
-        #expect(
-            EditorAIEligibility.denial(stops: [anchor], providerAvailable: false, requestInFlight: false)
-                == .providerUnavailable
-        )
-        #expect(
-            EditorAIEligibility.denial(stops: [anchor], providerAvailable: false, requestInFlight: true)
-                == .requestInFlight
-        )
+    @Test func nativeJourneyDenialPriority() {
+        #expect(denial([stop(resolved: true)]) == .noExplicitTime)
+        #expect(denial([stop(resolved: false, departure: "9:30")]) == .noResolvedStation)
+        #expect(denial([stop(resolved: true), stop(resolved: false, departure: "9:30")]) == .timeNotOnThatStation)
+        #expect(denial([stop(resolved: true, departure: "9:99")]) == .invalidTime)
+        let anchor = stop(resolved: true, departure: EditorTime.confirmPicker(dayOffset: 0, hour: 9, minute: 30).raw)
+        #expect(denial([anchor], requestInFlight: true) == .requestInFlight)
+        #expect(denial([anchor], providerAvailable: false) == .providerUnavailable)
+        #expect(denial([anchor], providerAvailable: false, requestInFlight: true) == .requestInFlight)
     }
 
-    private func stop(
-        resolved: Bool,
-        arrival: EditorTimeInput? = nil,
-        departure: EditorTimeInput? = nil
-    ) -> EditorAIStop {
-        EditorAIStop(
-            occurrenceID: UUID(),
-            stationResolved: resolved,
-            arrival: arrival ?? EditorTime.input("", confirmed: false),
-            departure: departure ?? EditorTime.input("", confirmed: false)
-        )
+    private func denial(_ stops: [Stop], providerAvailable: Bool = true, requestInFlight: Bool = false) -> EditorAIDenial? {
+        JourneyCompletion.requestDenial(
+            train: Train(id: "gate", number: "", origin: "A", destination: "B", stops: stops),
+            stationIsInDatabase: { $0 == "resolved" }, providerAvailable: providerAvailable,
+            requestInFlight: requestInFlight)
+    }
+
+    private func stop(resolved: Bool, arrival: String? = nil, departure: String? = nil) -> Stop {
+        Stop(name: "Station", n02StationCode: resolved ? "resolved" : "unresolved",
+             arrival: arrival, departure: departure)
     }
 }

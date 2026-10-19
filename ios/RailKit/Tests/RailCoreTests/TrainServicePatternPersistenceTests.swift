@@ -86,9 +86,9 @@ struct TrainServicePatternPersistenceTests {
             return
         }
         let row = try #require(rows.first)
-        var importedWorkspace = StoreOperations.Workspace(country: "jp")
-        _ = try StoreOperations.appendImportedTrain(row, in: &importedWorkspace)
-        let imported = try #require(importedWorkspace.store.trains.first)
+        var session = ImportEngine.Session(country: "jp")
+        _ = try session.appendImportedTrain(row)
+        let imported = try #require(session.trains.first)
         #expect(imported.date == "2026-09-24")
         #expect(Self.stopSnapshot(imported) == expectedStops)
 

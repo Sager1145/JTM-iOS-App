@@ -3,6 +3,46 @@ import Testing
 @testable import RailCore
 
 struct RouteDirectionAndBranchTests {
+    @Test("Direction exclusions follow changed survey geometry with identical network metadata")
+    func directionCacheFollowsGeometry() throws {
+        let a = Coordinate(lon: 139, lat: 35)
+        let b = Coordinate(lon: 139.1, lat: 35)
+        let lineID = "direction-cache-geometry-regression"
+        let forward = RouteSection(fromN02StationCode: "000001", toN02StationCode: "000002",
+            lineNames: [lineID], operatorNames: ["Operator"])
+        let reverse = RouteSection(fromN02StationCode: "000002", toN02StationCode: "000001",
+            lineNames: [lineID], operatorNames: ["Operator"])
+        // Revisit the first snapshot too: a changed generation must neither
+        // weaken its restriction nor poison a previously cached valid solve.
+        for middle in [Coordinate(lon: 139.05, lat: 35.01), Coordinate(lon: 139.05, lat: 35.02),
+                       Coordinate(lon: 139.05, lat: 35.01)] {
+            let points = [a, middle, b]
+            var row = line(lineID, ["000001", "000002"], direction: "up")
+            row["stations"] = [["000001", "A", a.lon, a.lat], ["000002", "B", b.lon, b.lat]] as [[Any]]
+            row["segments"] = [[10, 0, points.map(\.pair)]] as [[Any]]
+            let package = try fixture([row])
+            let compact = try #require(package.lines.first)
+            #expect(RailwayDirection.allowedDirections(for: compact, intervalIndex: 0) == [1])
+            let network = RouteNetwork(lines: [.init(lineId: lineID, name: lineID, operator: "Operator",
+                isLoop: false, alignmentDirection: "up", parts: [points],
+                intervals: RailIntervalCodes.intervals(for: compact), compactLine: compact)])
+            let graph = RouteGraph.build(from: [.init(properties: .init(lineName: lineID,
+                operator: "Operator", institutionTypeCode: "1"), lines: [points])])
+            let stations = Stations.Index(compact.stations.map { station in
+                Stations.Feature(properties: ["n02_station_code": .string(station.id),
+                    "station_name": .string(station.name), "line_name": .string(lineID),
+                    "operator": .string("Operator"), "institution_type_code": .string("1")],
+                    geometry: .init(type: "Point", coordinates: .array([
+                        .number(station.coordinate.lon), .number(station.coordinate.lat)])))
+            })
+            let allowed = try #require(RouteSolver.solveSection(forward, segmentIndex: 0,
+                train: .init(), country: "jp", graph: graph, stations: stations, directionNetwork: network))
+            #expect(allowed.coordinates == points)
+            #expect(RouteSolver.solveSection(reverse, segmentIndex: 0, train: .init(), country: "jp",
+                graph: graph, stations: stations, directionNetwork: network) == nil)
+        }
+    }
+
     @Test("Recorded direction uniquely selects the up or down alignment", arguments: [false, true])
     func directedRoute(reverse: Bool) throws {
         let package = try fixture([
@@ -10,13 +50,13 @@ struct RouteDirectionAndBranchTests {
             line("c", ["A", "C", "B"], direction: "down"),
         ])
         let original = RailwayRouteEditing.preparing(train(reverse ? ["B", "A"] : ["A", "B"]))
-        let result = RailwayRouteInference.search(in: original, package: package)
+        let result = RecordedRouteAdmission.search(in: original, package: package)
         #expect(result.choices.count == 1)
         #expect(result.isTruncated == false)
         #expect(result.topologyIsComplete == false)
         #expect(result.directionIsKnown)
         #expect(result.isUniqueWithinPackage)
-        let choice = try #require(result.uniqueChoice)
+        let choice = try #require(RecordedRouteAdmission.uniqueChoice(for: result))
         #expect(choice.lineIDs == [reverse ? "c" : "a"])
         #expect(choice.stations.map(\.code) == (reverse ? ["B", "C", "A"] : ["A", "B"]))
         let plan = try #require(RailwayRouteEditing.plan(train: original, choice: choice))
@@ -37,28 +77,28 @@ struct RouteDirectionAndBranchTests {
     func branches(count: Int, reverse: Bool) throws {
         let rows = [line("a", ["A", "B"]), line("b", ["A", "D", "B"]),
                     line("third", ["A", "E", "B"])]
-        let result = RailwayRouteInference.search(in: train(reverse ? ["B", "A"] : ["A", "B"]),
+        let result = RecordedRouteAdmission.search(in: train(reverse ? ["B", "A"] : ["A", "B"]),
             package: try fixture(Array(rows.prefix(count))))
         #expect(result.choices.count == count)
         #expect(Set(result.choices.flatMap(\.lineIDs)) == Set(rows.prefix(count).compactMap { $0["id"] as? String }))
         #expect(result.isTruncated == false)
         #expect(result.hasAmbiguity)
-        #expect(result.uniqueChoice == nil)
+        #expect(RecordedRouteAdmission.uniqueChoice(for: result) == nil)
     }
 
     @Test("Unknown train direction and truncated searches cannot auto-complete")
     func incompleteEvidence() throws {
         let package = try fixture([line("a", ["A", "B"]), line("b", ["A", "D", "B"])])
-        let limited = RailwayRouteInference.search(in: train(["A", "B"]), package: package, maximumChoices: 1)
+        let limited = RecordedRouteAdmission.search(in: train(["A", "B"]), package: package, maximumChoices: 1)
         #expect(limited.choices.count == 1)
         #expect(limited.isTruncated)
-        #expect(limited.uniqueChoice == nil)
+        #expect(RecordedRouteAdmission.uniqueChoice(for: limited) == nil)
         let unknown = LocalJourneySearch.search(package: try fixture([line("a", ["A", "B"])]),
             originCode: "A", destinationCode: "B")
         #expect(unknown.isUniqueWithinPackage)
         #expect(unknown.directionIsKnown == false)
-        #expect(unknown.uniqueChoice == nil)
-        #expect(RailwayRouteInference.search(in: train(["A", "missing"]), package: package).uniqueChoice == nil)
+        #expect(RecordedRouteAdmission.uniqueChoice(for: unknown) == nil)
+        #expect(RecordedRouteAdmission.uniqueChoice(for: RecordedRouteAdmission.search(in: train(["A", "missing"]), package: package)) == nil)
     }
 
     @Test("Hakodate to Mori can use the encoded down-only Fujishiro row; reverse cannot")
@@ -71,8 +111,8 @@ struct RouteDirectionAndBranchTests {
         let fujishiro = try #require(package.lines.first { $0.id == fujishiroID })
         #expect(fujishiro.stations.map(\.name) == ["七飯", "大沼"])
         #expect(RailwayDirection.allowedDirections(for: fujishiro, intervalIndex: 0) == [1])
-        let down = RailwayRouteInference.search(in: train(["000455", "000420"]), package: package)
-        let up = RailwayRouteInference.search(in: train(["000420", "000455"]), package: package)
+        let down = RecordedRouteAdmission.search(in: train(["000455", "000420"]), package: package)
+        let up = RecordedRouteAdmission.search(in: train(["000420", "000455"]), package: package)
         #expect(down.choices.contains { $0.lineIDs.contains(fujishiroID) })
         #expect(up.choices.isEmpty == false)
         #expect(up.choices.allSatisfy { $0.lineIDs.contains(fujishiroID) == false })
@@ -111,7 +151,7 @@ struct RouteDirectionAndBranchTests {
                 country: package.country, lines: package.lines.filter {
                     $0.id == mainID || $0.id == mainID + "-2" || $0.id == branch.id
                 })
-            let result = RailwayRouteInference.search(in: prepared, package: corridor)
+            let result = RecordedRouteAdmission.search(in: prepared, package: corridor)
             if twoStops {
                 for choice in result.choices {
                     let km = choice.sectionCodes.reduce(0.0) { total, code in
@@ -126,20 +166,20 @@ struct RouteDirectionAndBranchTests {
             if twoStops {
                 #expect(!result.isTruncated)
                 if reverse {
-                    let choice = try #require(result.uniqueChoice)
+                    let choice = try #require(RecordedRouteAdmission.uniqueChoice(for: result))
                     #expect(choice.lineIDs == [mainID])
                     #expect(choice.stations.map(\.code) == ["000427", "000429", "000431"])
                     #expect(choice.sectionCodes == [mainID + "@000427:000429", mainID + "@000429:000431"])
                 } else {
                     #expect(result.choices.count == 2)
-                    #expect(result.uniqueChoice == nil)
+                    #expect(RecordedRouteAdmission.uniqueChoice(for: result) == nil)
                     #expect(Set(result.choices.map(\.lineIDs)) == Set([[mainID], [branch.id]]))
                     #expect(Set(result.choices.map(\.sectionCodes)).count == 2)
                 }
             }
             let choice = try #require(twoStops && !reverse
                 ? result.choices.first { $0.lineIDs.contains(branch.id) }
-                : result.uniqueChoice)
+                : RecordedRouteAdmission.uniqueChoice(for: result))
             if reverse || !twoStops { #expect(!choice.lineIDs.contains(branch.id)) }
             let plan = try #require(RailwayRouteEditing.plan(train: prepared, choice: choice))
             if twoStops && reverse { #expect(!plan.requiresConfirmation) }
@@ -162,7 +202,7 @@ struct RouteDirectionAndBranchTests {
             let hints = inferred.hints[index] ?? RouteHints(requiredLineIDs: section.lineIDs ?? [],
                 sectionCodes: section.sectionCodes ?? [], fromStationCode: section.fromN02StationCode,
                 toStationCode: section.toN02StationCode)
-            if !hints.sectionCodes.isEmpty, let source = data.network.sourceGeometry(for: hints) {
+            if !hints.sectionCodes.isEmpty, let source = data.network.sourceCertification(for: hints)?.geometry {
                 let exact = try #require(data.network.canonicalizeRouteFeature(
                     RouteFeature(geometry: nil, hints: hints), continueFrom: drawn.last, cache: &cache))
                 let graph = pipeline.proofGraph(source.lines.flatMap { $0 }, store: data.graphStore)

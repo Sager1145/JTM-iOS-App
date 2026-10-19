@@ -38,17 +38,49 @@ struct RouteStoreStressTests {
         print("STRESS \(label): \(count) journeys, \(String(format: "%.3f", Date().timeIntervalSince(start))) s")
     }
 
+    /// Import keeps authored sections; export derives canonical adjacent-stop
+    /// sections. Compare every field in the exported model, with bounded failure
+    /// diagnostics so a failed 10k-row assertion never dumps the entire store.
+    private static func expectTrainsEqual(_ actual: [Train], _ expected: [Train], context: String) {
+        let equal = actual == expected
+        var detail = "\(context): actual count \(actual.count), expected \(expected.count)"
+        if let index = zip(actual, expected).enumerated().first(where: { $0.element.0 != $0.element.1 })?.offset {
+            detail += "; first differing row \(index), ID \(expected[index].id)"
+            for (left, right) in zip(Mirror(reflecting: actual[index]).children,
+                                     Mirror(reflecting: expected[index]).children) {
+                let actualValue = String(reflecting: left.value)
+                let expectedValue = String(reflecting: right.value)
+                if actualValue != expectedValue {
+                    detail += "; field \(left.label ?? "unknown"): actual \(actualValue.prefix(200)), expected \(expectedValue.prefix(200))"
+                    break
+                }
+            }
+        }
+        #expect(equal, Comment(rawValue: detail))
+    }
+
+    private static func expectCanonicalReopen(_ reopened: [Train], original: [Train]) {
+        expectTrainsEqual(
+            TrainValidation.buildCanonicalTrainStore(reopened).trains,
+            TrainValidation.buildCanonicalTrainStore(original).trains,
+            context: "All canonical fields survive export and reimport")
+        let visitsPreserved = reopened.map(\.stops) == original.map(\.stops)
+        #expect(visitsPreserved, "Stop identities, clocks and visit metadata survive canonical export")
+    }
+
     @Test("Thousands of mixed-region journeys import, export, and reopen without data loss")
     func largeMixedRegionJSONRoundTrip() throws {
         let generated: [Train]
+        let text: String
         if let path = ProcessInfo.processInfo.environment["JTM_STRESS_STORE_PATH"] {
-            generated = try JSONDecoder().decode(
-                TrainStore.self, from: Data(contentsOf: URL(filePath: path))).trains
+            let data = try Data(contentsOf: URL(filePath: path))
+            generated = try JSONDecoder().decode(TrainStore.self, from: data).trains
+            text = try #require(String(data: data, encoding: .utf8))
             try #require(generated.count >= 2_100)
         } else {
             generated = try Self.generatedTrains(count: Self.count)
+            text = StoreOperations.stringify(Self.document(generated))
         }
-        let text = StoreOperations.stringify(Self.document(generated))
         var warmIDs: [String] = []
         var drawIDs: [String] = []
         var listIDs: [String] = []
@@ -103,8 +135,96 @@ struct RouteStoreStressTests {
         #expect(restored.trains.map(\.region) == session.trains.map(\.region))
         #expect(restored.trains.map(\.date) == session.trains.map(\.date))
         let native = try JSONEncoder().encode(TrainStore(trains: restored.trains))
-        #expect(try JSONDecoder().decode(TrainStore.self, from: native).trains == restored.trains)
+        Self.expectTrainsEqual(try JSONDecoder().decode(TrainStore.self, from: native).trains,
+                              restored.trains, context: "Native Codable archive preserves every model field")
         Self.report("canonical export, validate and reopen", count: generated.count, since: exportStart)
+    }
+
+    @Test("Two-thousand-row parts append into the same canonical store")
+    func sequentialPartImportsMatchWholeStore() throws {
+        let generated = try Self.generatedTrains(count: Self.count)
+        var session = ImportEngine.Session(country: "jp")
+        let fixtureDirectory = ProcessInfo.processInfo.environment["JTM_STRESS_PARTS_DIRECTORY"]
+        var imported = 0
+        if fixtureDirectory != nil { try #require(generated.count >= 10_000) }
+        let start = Date()
+        for offset in stride(from: 0, to: generated.count, by: 2_000) {
+            let document: TrainValidation.JSON
+            if let fixtureDirectory {
+                let path = URL(filePath: fixtureDirectory)
+                    .appending(path: String(format: "stress-part-%04d.json", offset / 2_000))
+                document = try TrainValidation.JSON.parse(String(contentsOf: path, encoding: .utf8))
+            } else {
+                document = Self.document(Array(generated[offset..<min(offset + 2_000, generated.count)]))
+            }
+            let result = try session.importCanonicalStoreAppendProgressive(document)
+            #expect(result.count == min(2_000, generated.count - offset))
+            imported += result.count
+            #expect(session.trains.count == imported)
+            #expect(!session.importInProgress)
+        }
+        #expect(imported == generated.count)
+        #expect(Set(session.trains.map(\.id)).count == imported)
+        let exported = StoreOperations.exportTrainStore(.init(store: TrainStore(trains: session.trains)))
+        var reopened = ImportEngine.Session(country: "jp")
+        try reopened.replaceTrainStoreFromJSONText(exported)
+        Self.expectCanonicalReopen(reopened.trains, original: session.trains)
+        let reexported = StoreOperations.exportTrainStore(.init(store: TrainStore(trains: reopened.trains)))
+        let canonicalArchiveIsStable = reexported == exported
+        #expect(canonicalArchiveIsStable, "The complete canonical archive reaches a fixed point")
+        if let fixtureDirectory {
+            var whole = ImportEngine.Session(country: "jp")
+            let path = URL(filePath: fixtureDirectory).appending(path: "stress-all.json")
+            try whole.replaceTrainStoreFromJSONText(String(contentsOf: path, encoding: .utf8))
+            Self.expectTrainsEqual(whole.trains, session.trains, context: "Part append matches whole raw-file import")
+        }
+        Self.report("sequential 2000-row append, export and reopen", count: imported, since: start)
+    }
+
+    @Test("A dense source-date fixture with colliding identities survives import and reimport")
+    func denseCollisionFixtureRoundTrip() throws {
+        let generated: [Train]
+        let text: String
+        if let path = ProcessInfo.processInfo.environment["JTM_STRESS_DENSE_STORE_PATH"] {
+            let data = try Data(contentsOf: URL(filePath: path))
+            generated = try JSONDecoder().decode(TrainStore.self, from: data).trains
+            text = try #require(String(data: data, encoding: .utf8))
+            try #require(generated.count >= 10_000)
+        } else {
+            let rows = try Self.generatedTrains(count: Self.count)
+            let days = Dictionary(grouping: rows, by: { $0.region ?? "" }).mapValues { regionRows in
+                Dictionary(grouping: regionRows, by: { $0.date ?? "" })
+                    .max { $0.value.count < $1.value.count }!.value
+            }
+            generated = rows.enumerated().map { index, row in
+                var source = days[row.region ?? ""]![index % days[row.region ?? ""]!.count]
+                source.id = "stress_\(source.region ?? "")_collision"
+                return source
+            }
+            text = StoreOperations.stringify(Self.document(generated))
+        }
+        try #require(generated.count >= Self.count)
+        #expect(Set(generated.map(\.id)).count == PortFixtures.countries.count)
+        for region in PortFixtures.countries {
+            #expect(Set(generated.filter { $0.region == region }.compactMap(\.date)).count == 1)
+        }
+        var session = ImportEngine.Session(country: "jp")
+        let start = Date()
+        try session.replaceTrainStoreFromJSONText(text)
+        #expect(session.trains.count == generated.count)
+        #expect(Set(session.trains.map(\.id)).count == generated.count)
+        #expect(session.trains.map(\.date) == generated.map(\.date))
+        let sourceVisitsPreserved = session.trains.map(\.stops) == generated.map(\.stops)
+        #expect(sourceVisitsPreserved, "Raw source stop identities, clocks and visit metadata are preserved")
+        let exported = StoreOperations.exportTrainStore(.init(store: TrainStore(trains: session.trains)))
+        #expect(try TrainValidation.validateTrainStore(TrainValidation.JSON.parse(exported)))
+        var reopened = ImportEngine.Session(country: "jp")
+        try reopened.replaceTrainStoreFromJSONText(exported)
+        Self.expectCanonicalReopen(reopened.trains, original: session.trains)
+        let reexported = StoreOperations.exportTrainStore(.init(store: TrainStore(trains: reopened.trains)))
+        let canonicalArchiveIsStable = reexported == exported
+        #expect(canonicalArchiveIsStable, "The complete canonical archive reaches a fixed point")
+        Self.report("dense colliding source-date import, export and reopen", count: generated.count, since: start)
     }
 
     @Test("Ten thousand rapid additions sharing a base ID keep contiguous collision suffixes")
@@ -151,7 +271,7 @@ struct RouteStoreStressTests {
         #expect(throws: TrainValidation.ValidationError.self) {
             try session.appendImportedTrain(StoreOperations.json(invalid))
         }
-        #expect(session.trains == baseline)
+        Self.expectTrainsEqual(session.trains, baseline, context: "Rejected row leaves the store unchanged")
         incoming.id = invalid.id
         #expect(try session.appendImportedTrain(StoreOperations.json(incoming)) == invalid.id)
     }
@@ -170,7 +290,7 @@ struct RouteStoreStressTests {
         #expect(throws: TrainValidation.ValidationError.self) {
             try session.importCanonicalStoreAppendProgressive(Self.document(incoming + [invalid]))
         }
-        #expect(session.trains == existing)
+        Self.expectTrainsEqual(session.trains, existing, context: "Late failure rolls back all imported rows")
         #expect(session.selectedTrainID == existing[0].id)
         #expect(session.focusedTrainID == existing.last?.id)
         #expect(!session.importInProgress)

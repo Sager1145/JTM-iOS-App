@@ -32,6 +32,7 @@ struct RegionClockTests {
     /// Only the defaults can be moved from a test, and nothing in
     /// `RegionClock` reads them — which is the assertion, not an inconvenience
     /// being worked around.
+    @MainActor
     private func underDeviceZone(_ name: String, _ body: () -> Void) {
         guard let zone = TimeZone(identifier: name) else {
             Issue.record("no time zone \(name)")
@@ -45,13 +46,9 @@ struct RegionClockTests {
 
     // MARK: - the table
 
-    /// The five whose region IS their clock, and which of the seven those
-    /// are. The United States and Canada are in ``RegionClock/all`` too, and
-    /// they are not in this list on purpose: what they name is a DEFAULT for a
-    /// record with no station this build can place, not the zone their
-    /// journeys are read on. See ``fiveSingleZoneRegions``.
-    private static let fiveSingleZoneRegions: [RegionClock] = [
-        .japan, .taiwan, .hongKong, .macao, .korea,
+    /// Each supported railway region supplies one timetable clock.
+    private static let singleZoneRegions: [RegionClock] = [
+        .japan, .taiwan, .hongKong, .macao, .korea, .china,
     ]
 
     @Test("each region names its zone")
@@ -61,7 +58,8 @@ struct RegionClockTests {
         #expect(RegionClock.hongKong.timeZone.identifier == "Asia/Hong_Kong")
         #expect(RegionClock.macao.timeZone.identifier == "Asia/Macau")
         #expect(RegionClock.korea.timeZone.identifier == "Asia/Seoul")
-        #expect(RegionClock.all.count == 5)
+        #expect(RegionClock.china.timeZone.identifier == "Asia/Shanghai")
+        #expect(RegionClock.all.count == 6)
         // Every region the catalog knows has a clock, and no two share a code.
         #expect(Set(RegionClock.all.map(\.regionCode)).count == RegionClock.all.count)
     }
@@ -72,7 +70,7 @@ struct RegionClockTests {
     @Test("the offsets are the ones these regions have kept")
     func offsets() {
         let now = Self.evening
-        for clock in Self.fiveSingleZoneRegions {
+        for clock in Self.singleZoneRegions {
             #expect(
                 clock.timeZone.secondsFromGMT(for: now) == clock.fixedOffsetSeconds,
                 "\(clock.regionCode) offset")
@@ -82,21 +80,13 @@ struct RegionClockTests {
         #expect(RegionClock.taiwan.utcOffsetText(at: now) == "UTC+8")
         #expect(RegionClock.hongKong.utcOffsetText(at: now) == "UTC+8")
         #expect(RegionClock.macao.utcOffsetText(at: now) == "UTC+8")
+        #expect(RegionClock.china.utcOffsetText(at: now) == "UTC+8")
     }
 
-    /// None of the five Asian regions observes summer time, so no journey
-    /// inside one of them can have an ambiguous day and no printed stop time
-    /// can land in a skipped hour. Asserted rather than assumed: this is the
-    /// test that notices the year one of them adopts it.
-    ///
-    /// The United States and Canada are excluded, and it is worth writing down
-    /// why rather than leaving it to the list: they DO observe summer time,
-    /// which is exactly why their clock is per station and read on the
-    /// journey's own date. The assertion for them is the opposite one, and it
-    /// is in ``offsetDependsOnTheDate``.
-    @Test("none of the five Asian regions is on summer time")
+    /// No supported regional timetable clock currently observes summer time.
+    @Test("the regional railway clocks have no daylight-saving transition ahead")
     func noDaylightSaving() {
-        for clock in Self.fiveSingleZoneRegions {
+        for clock in Self.singleZoneRegions {
             #expect(
                 clock.timeZone.nextDaylightSavingTimeTransition(after: Self.evening) == nil,
                 "\(clock.regionCode) has a DST transition ahead")
@@ -114,7 +104,8 @@ struct RegionClockTests {
         // ride drawn against Japan's package is dated on Japan's clock.
         #expect(RegionClock.forRegionCode(nil) == .japan)
         #expect(RegionClock.forRegionCode("") == .japan)
-        #expect(RegionClock.forRegionCode("cn") == .japan)
+        #expect(RegionClock.forRegionCode("CN") == .china)
+        #expect(RegionClock.forRegionCode("zz") == .japan)
     }
 
     // MARK: - an instant, and the day it falls on
@@ -122,6 +113,7 @@ struct RegionClockTests {
     /// 23:30 in Taipei is already the next day in Tokyo, and the day before in
     /// Los Angeles. Three regions, three answers, one instant.
     @Test("the day is the region's, not the device's")
+    @MainActor
     func theDayIsTheRegions() {
         for zone in ["UTC", "Asia/Tokyo", "America/Los_Angeles", "Pacific/Auckland"] {
             underDeviceZone(zone) {
@@ -130,6 +122,7 @@ struct RegionClockTests {
                 #expect(RegionClock.taiwan.civilDate(at: Self.evening) == "2026-08-27")
                 #expect(RegionClock.hongKong.civilDate(at: Self.evening) == "2026-08-27")
                 #expect(RegionClock.macao.civilDate(at: Self.evening) == "2026-08-27")
+                #expect(RegionClock.china.civilDate(at: Self.evening) == "2026-08-27")
             }
         }
     }
@@ -170,6 +163,7 @@ struct RegionClockTests {
     /// dated the 27th is over — Japan reached the 28th ninety minutes ago —
     /// and the app used to keep it in 「これから」 for another seven hours.
     @Test("a journey stops being upcoming when its own day ends")
+    @MainActor
     func upcomingFollowsTheRide() {
         underDeviceZone("Europe/London") {
             let japan = RegionClock.japan

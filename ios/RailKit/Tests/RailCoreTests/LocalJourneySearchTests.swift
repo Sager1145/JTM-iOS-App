@@ -3,7 +3,7 @@ import Testing
 @testable import RailCore
 
 struct LocalJourneySearchTests {
-    @Test("Shared station groups allow reviewable transfers without certifying connected track")
+    @Test("Shared station groups cannot supply physical continuation")
     func transfer() throws {
         let package = try fixture([
             line("first", ["A", "B"], operatorName: "One"),
@@ -11,9 +11,11 @@ struct LocalJourneySearchTests {
             line("nearby", ["B-other", "D"]),
         ])
         let result = LocalJourneySearch.search(package: package, originCode: "A", destinationCode: "C")
-        #expect(result.choices.first?.lineIDs == ["first", "second"])
+        #expect(result.choices.isEmpty)
+        let reviewed = LocalJourneySearch.search(package: package, originCode: "A", destinationCode: "C", continuation: { from, to, code in from.id == "first" && to.id == "second" && code == "B" })
+        #expect(reviewed.choices.first?.lineIDs == ["first", "second"])
         #expect(!result.topologyIsComplete)
-        #expect(result.uniqueChoice == nil)
+        #expect(RecordedRouteAdmission.uniqueChoice(for: result) == nil)
         #expect(LocalJourneySearch.choices(package: package, originCode: "A", destinationCode: "D").isEmpty)
     }
 
@@ -52,10 +54,9 @@ struct LocalJourneySearchTests {
         let first = LocalJourneySearch.choices(package: try fixture(rows), originCode: "A", destinationCode: "D")
         let reordered = LocalJourneySearch.choices(package: try fixture(Array(rows.reversed())), originCode: "A", destinationCode: "D")
         #expect(first == reordered)
-        #expect(first.count == 3)
+        #expect(first.count == 2)
         #expect(first[0].lineIDs == ["equal"])
-        #expect(first[1].lineIDs == ["first", "second"])
-        #expect(first[2].lineIDs == ["direct"])
+        #expect(first[1].lineIDs == ["direct"])
     }
 
     @Test("High speed policy and physical geometry restrict offline search")
@@ -86,12 +87,12 @@ struct LocalJourneySearchTests {
                                                maximumChoices: 1)
         #expect(limited.choices.count == 1)
         #expect(limited.isTruncated)
-        #expect(limited.uniqueChoice == nil)
+        #expect(RecordedRouteAdmission.uniqueChoice(for: limited) == nil)
         let unfinished = LocalJourneySearch.search(package: package, originCode: "A", destinationCode: "D",
                                                   maximumExpansions: 1)
         #expect(unfinished.choices.isEmpty)
         #expect(unfinished.isTruncated)
-        #expect(unfinished.uniqueChoice == nil)
+        #expect(RecordedRouteAdmission.uniqueChoice(for: unfinished) == nil)
     }
 
     @Test("An exhausted single-row search is still incomplete network coverage")
@@ -102,7 +103,7 @@ struct LocalJourneySearchTests {
         #expect(!result.isTruncated)
         #expect(!result.hasAmbiguity)
         #expect(!result.topologyIsComplete)
-        #expect(result.uniqueChoice == nil)
+        #expect(RecordedRouteAdmission.uniqueChoice(for: result) == nil)
     }
 
     @Test("Ordered authored anchors cannot be bypassed by the shorter row")
@@ -115,7 +116,7 @@ struct LocalJourneySearchTests {
                 requiredStationCodes: ["A", "C", "B", "D"]).choices.isEmpty)
     }
 
-    @Test("Compatible through-network rows provide reviewable shared-station candidates")
+    @Test("Through-service labels cannot create physical search edges")
     func japaneseThroughNetwork() throws {
         let source = try PortFixtures.package(country: "jp")
         let corridorIDs = ["jp-京成電鉄-押上線", "jp-東京都-1号線浅草線",
@@ -124,9 +125,9 @@ struct LocalJourneySearchTests {
                                      country: source.country,
                                      lines: source.lines.filter { corridorIDs.contains($0.id) })
         let result = LocalJourneySearch.search(package: package, originCode: "003280", destinationCode: "004368")
-        #expect(result.choices.first?.lineIDs == corridorIDs)
+        #expect(result.choices.isEmpty)
         #expect(!result.topologyIsComplete)
-        #expect(result.uniqueChoice == nil)
+        #expect(RecordedRouteAdmission.uniqueChoice(for: result) == nil)
     }
 
     @Test("Incompatible tram transfers are blocked")
@@ -167,8 +168,12 @@ struct LocalJourneySearchTests {
             line("r1", ["O", "M"]), line("r2", ["O", "M"]), line("r3", ["O", "M"]),
             line("r4", ["O", "B", "M"], distance: 5), line("r5", ["M", "D"]),
         ])
+        // These synthetic rows independently declare surveyed continuations
+        // at M; the assertion below tests anchor-state retention, not identity.
         let result = LocalJourneySearch.search(package: package, originCode: "O", destinationCode: "D",
-            requiredStationCodes: ["O", "B", "D"])
+            requiredStationCodes: ["O", "B", "D"], continuation: { from, to, code in
+                code == "M" && ["r1", "r2", "r3", "r4"].contains(from.id) && to.id == "r5"
+            })
         #expect(result.choices.first?.stations.map(\.code) == ["O", "B", "M", "D"])
     }
 
@@ -195,13 +200,13 @@ struct LocalJourneySearchTests {
             excludingStationCodes: ["A", "C"], stationAliases: aliases).choices.count == 1)
     }
 
-    @Test("Same operator identity permits tram to railway transfers only at shared station IDs")
+    @Test("Same operator identity and shared station IDs cannot establish a tram railway junction")
     func sameOperatorDifferentKinds() throws {
         var tram = line("tram", ["A", "B"], operatorName: "広島電鉄")
         tram["kind"] = "tram"
         var railway = line("railway", ["B", "C"], operatorName: "広電")
         railway["kind"] = "private"
-        #expect(!LocalJourneySearch.choices(package: try fixture([tram, railway]), originCode: "A", destinationCode: "C").isEmpty)
+        #expect(LocalJourneySearch.choices(package: try fixture([tram, railway]), originCode: "A", destinationCode: "C").isEmpty)
         railway["operator"] = "西日本鉄道"
         #expect(LocalJourneySearch.choices(package: try fixture([tram, railway]), originCode: "A", destinationCode: "C").isEmpty)
         railway = line("railway", ["B-other", "C"], operatorName: "広電")
@@ -233,20 +238,27 @@ extension LocalJourneySearchTests {
             line("start", ["O", "J"]), line("wrong-start", ["O", "K"]),
             line("wrong-end", ["J", "D"]), line("finish", ["K", "D"], distance: 5),
             line("beyond", ["D", "K"])])
-        let baseline = LocalJourneySearch.search(package: package, originCode: "O", destinationCode: "D")
+        // Explicit fixture continuations keep this test about endpoint hints,
+        // independently of shared-code/operator physical permission.
+        let surveyed = ["start>wrong-end@J", "wrong-start>finish@K",
+                        "wrong-end>beyond@D", "beyond>finish@K"]
+        func reviewed(_ from: CompactPackage.Line, _ to: CompactPackage.Line, _ code: String) -> Bool {
+            surveyed.contains(from.id + ">" + to.id + "@" + code)
+        }
+        let baseline = LocalJourneySearch.search(package: package, originCode: "O", destinationCode: "D", continuation: reviewed)
         let explicitNil = LocalJourneySearch.search(package: package, originCode: "O", destinationCode: "D",
-            originLineIDs: nil, destinationLineIDs: nil)
+            continuation: reviewed, originLineIDs: nil, destinationLineIDs: nil)
         #expect(explicitNil.choices == baseline.choices)
         #expect(explicitNil.isTruncated == baseline.isTruncated)
         let hinted = LocalJourneySearch.search(package: package, originCode: "O", destinationCode: "D",
-            maximumChoices: 1, originLineIDs: ["start"], destinationLineIDs: ["finish"])
+            maximumChoices: 1, continuation: reviewed, originLineIDs: ["start"], destinationLineIDs: ["finish"])
         #expect(hinted.choices.first?.lineIDs == ["start", "wrong-end", "beyond", "finish"])
         #expect(hinted.choices.first?.stations.map(\.code) == ["O", "J", "D", "K", "D"])
         #expect(LocalJourneySearch.choices(package: package, originCode: "O", destinationCode: "D",
-            maximumChoices: 1, originLineIDs: ["start"], destinationLineIDs: ["finish"]) == hinted.choices)
+            maximumChoices: 1, continuation: reviewed, originLineIDs: ["start"], destinationLineIDs: ["finish"]) == hinted.choices)
         #expect(LocalJourneySearch.choices(package: package, originCode: "O", destinationCode: "D",
-            originLineIDs: []).isEmpty)
+            continuation: reviewed, originLineIDs: []).isEmpty)
         #expect(LocalJourneySearch.choices(package: package, originCode: "O", destinationCode: "D",
-            destinationLineIDs: []).isEmpty)
+            continuation: reviewed, destinationLineIDs: []).isEmpty)
     }
 }

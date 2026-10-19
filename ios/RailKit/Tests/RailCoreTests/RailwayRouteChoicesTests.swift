@@ -151,9 +151,9 @@ struct RailwayRouteChoicesTests {
         #expect(StoreOperations.addTrain(draft, in: &workspace) == .trainCollectionChanged)
         let archive = StoreOperations.exportTrainStore(workspace)
         let archived = try #require(try JSONDecoder().decode(TrainStore.self, from: Data(archive.utf8)).trains.first)
-        var restoredWorkspace = StoreOperations.Workspace()
-        try StoreOperations.appendImportedTrain(StoreOperations.json(archived), in: &restoredWorkspace)
-        let restored = try #require(restoredWorkspace.trains.first)
+        var session = ImportEngine.Session()
+        try session.appendImportedTrain(StoreOperations.json(archived))
+        let restored = try #require(session.trains.first)
         for train in [saved, reopened, imported, exportedAgain, archived, restored] {
             let sections = try #require(train.routeSections)
             #expect(sections.count == choice.stations.count - 1)

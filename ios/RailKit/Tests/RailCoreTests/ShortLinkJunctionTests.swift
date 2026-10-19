@@ -98,8 +98,13 @@ struct ShortLinkJunctionTests {
             .appendingPathComponent("app/data/physical-rail-junctions.json")
         let registry = try PhysicalRailJunctionRegistry(data: Data(contentsOf: url))
         let all = Localization.supportedCountries.flatMap { registry.junctions(for: $0) }
-        #expect(all.count == 200)
+        #expect(all.count == 202)
         #expect(all.filter { $0.kind == .zeroLength }.count == 177)
         #expect(all.filter { $0.kind == .shortLink }.count == 6)
+        #expect(all.filter { $0.kind == .osmConnector }.count == 8)
+        #expect(all.contains { $0.id == "matsuda-east-15" })
+        #expect(all.contains { $0.id == "seibu-chichibu-connector" })
+        let senseki = try #require(all.first { $0.id == "senseki-tohoku-connector" })
+        #expect(senseki.validFrom == "2015-05-30")
     }
 }

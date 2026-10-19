@@ -76,6 +76,19 @@ struct JourneyRouteIdentityTests {
             == "/rail/service-logos/narita-express.png")
     }
 
+    @Test func tripDateSelectsTheHistoricalServiceMark() {
+        var express = train(type: "特急", lines: ["テスト線"])
+        express.date = "2016-05-01T08:00"
+        let service = TrainServiceBranding.Service(
+            id: "dated", region: "jp", names: ["Dated"], logoPath: "new.png",
+            logos: [
+                .init(path: "old.png", validFrom: "2000-01-01", validUntil: "2017-12-22"),
+                .init(path: "new.png", validFrom: "2017-12-23"),
+            ])
+
+        #expect(service.logoPath(on: express.date) == "old.png")
+    }
+
     @Test(arguments: [
         ("WEST EXPRESS 銀河1号", "/rail/service-logos/west-express-ginga.png"),
         ("はこね3号", "/rail/service-logos/romancecar.png"),

@@ -28,14 +28,37 @@ struct DatesParityTests {
     // MARK: - fixture shape
 
     struct Fixture: Decodable {
+        struct StopInput: Decodable {
+            let arrival: String?
+            let departure: String?
+            let stopType: String?
+
+            private enum CodingKeys: String, CodingKey {
+                case arrival, departure
+                case stopType = "stop_type"
+            }
+
+            var stop: Stop {
+                Stop(
+                    name: "", arrival: arrival, departure: departure,
+                    stopType: stopType ?? "passenger_stop", rideSegment: false)
+            }
+        }
+
         struct TrainInput: Decodable {
             let index: Int
             let source: String
             let id: String?
             let date: String?
-            let stops: [Dates.Stop]
+            let stops: [StopInput]
 
-            var train: Dates.Train { Dates.Train(id: id, date: date, stops: stops) }
+            /// Date rules read a canonical record. The fixture carries only
+            /// the fields those rules use, so the rest of the record is empty.
+            var train: Train {
+                Train(
+                    id: id ?? "", date: date, number: "", origin: "", destination: "",
+                    stops: stops.map(\.stop))
+            }
         }
 
         /// A day span. `breaks` is `trainDayBreaks` and `spanBreaks` is what
@@ -327,8 +350,8 @@ struct DatesParityTests {
         let fixture = try Self.load()
         #expect(fixture.tiebreakLocale == "en-US", "the fixture was recorded under a different locale")
         for item in fixture.idTiebreak {
-            let a = Dates.Train(id: item.a, date: "2026-07-03", stops: [])
-            let b = Dates.Train(id: item.b, date: "2026-07-03", stops: [])
+            let a = Train(id: item.a, date: "2026-07-03", number: "", origin: "", destination: "", stops: [])
+            let b = Train(id: item.b, date: "2026-07-03", number: "", origin: "", destination: "", stops: [])
             #expect(
                 Dates.compareByDateAndDeparture(a, b).signum() == item.sign,
                 "\(item.a) vs \(item.b)"
@@ -355,7 +378,10 @@ struct DatesParityTests {
                 #expect(
                     Dates.departureMinutes(of: actual)
                         == Dates.departureMinutes(of: wanted.train), "\(item.label)")
-                #expect(actual.id == wanted.id, "\(item.label)")
+                // A fixture train with no id decodes to the empty string: Train.id
+                // is non-optional. The comparator cases already show that
+                // spelling does not change order against this fixture.
+                #expect(actual.id == (wanted.id ?? ""), "\(item.label)")
             }
         }
         // The tiebreak case exists only because of a projection; if it were
@@ -454,6 +480,7 @@ struct DatesParityTests {
     /// the day someone "simplifies" the civil-date arithmetic into
     /// `Calendar.current`.
     @Test("day arithmetic is unmoved by the ambient time zone")
+    @MainActor
     func dayArithmeticIgnoresTheAmbientZone() throws {
         let fixture = try Self.load()
         let zones = ["UTC", "Asia/Tokyo", "America/Los_Angeles", "Pacific/Auckland"]

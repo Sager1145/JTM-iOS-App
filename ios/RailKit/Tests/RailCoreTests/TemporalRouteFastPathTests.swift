@@ -1,3 +1,4 @@
+import Foundation
 import XCTest
 @testable import RailCore
 
@@ -66,6 +67,25 @@ final class TemporalRouteFastPathTests: XCTestCase {
             XCTAssertNil(solve([section()], date: "2020-01-01", stations: stations))
             XCTAssertNil(solve([section()], date: nil, stations: stations))
         }
+    }
+
+    func testChinaSourceIntervalHonorsExplicitLineIdentityAndProvenance() throws {
+        let data = Data(#"{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"line_name":"L","operator":"O","line_id":"cn-guangshengan-hsr","institution_type_code":"1"},"geometry":{"type":"LineString","coordinates":[[121,25],[121.001,25.001]]}}]}"#.utf8)
+        let sections = try JSONDecoder().decode(RouteGraph.SectionFeatureCollection.self, from: data).features
+        XCTAssertEqual(sections.first?.properties.lineID, "cn-guangshengan-hsr")
+        let stations = Stations.Index(.init(features: [station("A", at: a), station("B", at: b)]))
+        let intervals = RouteSolver.OfficialIntervalIndex(sections: sections)
+        let accepted = RouteSolver.solveOfficialInterval(
+            .init(from: "A", to: "B", lineNames: ["L"], lineIDs: ["cn-guangshengan-hsr"]),
+            segmentIndex: 0, train: .init(), country: "cn", allowedCodes: ["1"],
+            intervalIndex: intervals, stations: stations)
+        XCTAssertEqual(accepted?.coordinates, [a, b])
+        XCTAssertEqual(accepted?.hints.solveMode, "source_interval_exact")
+        let rejected = RouteSolver.solveOfficialInterval(
+            .init(from: "A", to: "B", lineNames: ["L"], lineIDs: ["cn-another-line"]),
+            segmentIndex: 0, train: .init(), country: "cn", allowedCodes: ["1"],
+            intervalIndex: intervals, stations: stations)
+        XCTAssertNil(rejected)
     }
 
     private func connectorGraph(_ stations: [Stations.Feature]) -> RouteGraph.Graph {

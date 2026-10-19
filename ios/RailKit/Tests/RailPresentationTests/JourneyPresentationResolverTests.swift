@@ -447,76 +447,52 @@ struct JourneyPresentationResolverTests {
         #expect(presentation.subtitle == .value("trains[3].stops[1].name is empty"))
     }
 
-    // MARK: - Route state derived from what the store can observe
+    // MARK: - Per-journey status feeds presentation
 
-    @Test("Route state derived from RiddenRouteStore's observable signals")
+    @Test("The per-journey status bridge uses recorded outcomes during a store reload")
     func routeStateDerivation() {
-        #expect(
-            JourneyRouteState.resolve(loadPhase: .idle, drawnSegmentCount: nil) == .unknown)
-        #expect(
-            JourneyRouteState.resolve(loadPhase: .loading, drawnSegmentCount: nil)
-                == .resolving(completed: nil, total: nil))
-        // Already drawn: a reload of the rest of the store does not un-draw it.
-        #expect(
-            JourneyRouteState.resolve(loadPhase: .loading, drawnSegmentCount: 4) == .resolved)
-        #expect(
-            JourneyRouteState.resolve(loadPhase: .loaded, drawnSegmentCount: 4) == .resolved)
-        #expect(
-            JourneyRouteState.resolve(loadPhase: .loaded, drawnSegmentCount: 0, reason: "r")
-                == .unavailable(reason: "r"))
-        #expect(
-            JourneyRouteState.resolve(loadPhase: .loaded, drawnSegmentCount: nil, reason: "r")
-                == .unavailable(reason: "r"))
-        #expect(
-            JourneyRouteState.resolve(loadPhase: .failed("bundle missing"), drawnSegmentCount: nil)
-                == .unavailable(reason: "bundle missing"))
-    }
-
-    /// The honest half of the model.
-    ///
-    /// `RiddenRouteStore` today keeps one store-wide `LoadState` and a
-    /// `[DrawnRide]`; a journey that failed to solve is simply absent from the
-    /// array, and a journey that solved 4 of its 6 sections is present with 4
-    /// segments and no record that 2 are missing. So with the data the app can
-    /// actually supply at Slice 1 — `expectedSectionCount == nil` — the
-    /// derivation can never reach `needsReview`, and this test pins that rather
-    /// than papering over it. Slice 3 gives the store the section count; this
-    /// assertion is what should change then.
-    @Test("needsReview is unreachable until the store reports the expected section count")
-    func needsReviewNeedsDataTheStoreDoesNotHaveYet() {
-        for drawn in 1...8 {
-            let state = JourneyRouteState.resolve(
-                loadPhase: .loaded, drawnSegmentCount: drawn, expectedSectionCount: nil)
-            #expect(state == .resolved)
+        let id = "journey"
+        func status(_ phase: RouteLoadPhase, entries: [String: RouteStatusEntry] = [:]) -> RideRouteStatus {
+            RouteStatusResolver.status(id: id, resolvingIDs: [], entries: entries, phase: phase)
         }
-        // With the count, the partial case resolves correctly.
-        #expect(
-            JourneyRouteState.resolve(
-                loadPhase: .loaded, drawnSegmentCount: 4, expectedSectionCount: 6,
-                reason: "大船 → 藤沢") == .needsReview(reason: "大船 → 藤沢"))
-        #expect(
-            JourneyRouteState.resolve(
-                loadPhase: .loaded, drawnSegmentCount: 6, expectedSectionCount: 6) == .resolved)
-        #expect(
-            JourneyRouteState.resolve(
-                loadPhase: .loaded, drawnSegmentCount: 0, expectedSectionCount: 6, reason: "x")
-                == .unavailable(reason: "x"))
+        #expect(status(.idle).journeyRouteState() == .unknown)
+        #expect(status(.loading).journeyRouteState() == .resolving(completed: nil, total: nil))
+        #expect(status(.loaded) == .noRoute)
+        #expect(status(.failed("bundle missing")).journeyRouteState() == .unavailable(reason: "bundle missing"))
+        let resolved = [id: RouteStatusEntry(outcome: .resolved, drawnSegments: 4)]
+        #expect(status(.loading, entries: resolved).journeyRouteState() == .resolved)
+        #expect(status(.loaded, entries: resolved).journeyRouteState() == .resolved)
+        #expect(status(.failed("other dataset"), entries: resolved).journeyRouteState() == .resolved)
+        #expect(RouteStatusResolver.status(id: id, resolvingIDs: [id], entries: resolved, phase: .loaded)
+            .journeyRouteState() == .resolving(completed: nil, total: nil))
     }
 
-    @Test("A derived state feeds the resolver without ever unblocking playback wrongly")
+    @Test("Partial route facts and gap names survive into the presentation bridge")
+    func partialRouteGapsReachPresentation() {
+        let gap = SectionGap(segmentIndex: 3, from: "大船", to: "藤沢")
+        let status = RouteStatusResolver.status(
+            id: "journey", resolvingIDs: [], entries: ["journey": RouteStatusEntry(
+                outcome: .partial(solved: 4, expected: 6, unsolved: [gap]), drawnSegments: 9)], phase: .loaded)
+        #expect(status == .needsReview(solved: 4, expected: 6, gaps: [gap]))
+        let route = status.journeyRouteState(reason: "大船 → 藤沢")
+        #expect(route == .needsReview(reason: "大船 → 藤沢"))
+        let presentation = JourneyPresentationResolver.selected(train: Self.train(), route: route, phase: nil)
+        #expect(presentation.blocksPlayback)
+        #expect(presentation.subtitle == .value("大船 → 藤沢"))
+    }
+
+    @Test("The production status bridge unblocks playback only for a whole route")
     func derivationAndResolverAgree() {
-        let phases: [RouteLoadPhase] = [.idle, .loading, .loaded, .failed("bundle missing")]
-        for phase in phases {
-            for drawn in [nil, 0, 3] as [Int?] {
-                for expected in [nil, 3, 6] as [Int?] {
-                    let route = JourneyRouteState.resolve(
-                        loadPhase: phase, drawnSegmentCount: drawn, expectedSectionCount: expected)
-                    let presentation = JourneyPresentationResolver.selected(
-                        train: Self.train(), route: route, phase: nil)
-                    #expect(presentation.blocksPlayback == (route != .resolved))
-                    #expect(presentation.prominentActions.count <= 1)
-                }
-            }
+        let statuses: [RideRouteStatus] = [
+            .unknown, .resolving, .pendingConfirmation, .noRoute,
+            .resolved(sections: 3), .needsReview(solved: 3, expected: 6, gaps: []),
+            .unavailable(expected: 6, reason: "failure"),
+        ]
+        for status in statuses {
+            let presentation = JourneyPresentationResolver.selected(
+                train: Self.train(), route: status.journeyRouteState(), phase: nil)
+            #expect(presentation.blocksPlayback == status.blocksPlayback)
+            #expect(presentation.prominentActions.count <= 1)
         }
     }
 }

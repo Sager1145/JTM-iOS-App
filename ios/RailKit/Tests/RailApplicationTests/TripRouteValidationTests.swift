@@ -23,6 +23,8 @@ struct TripRouteValidationTests {
             resolve: { try await resolver.resolve($0) })
         #expect(result.retainedIDs == ["first", "missing", "unproven"])
         #expect(result.physicallyResolvedIDs == ["first"])
+        #expect(result.unprovenReason == nil)
+        #expect(!result.physicallyResolvedIDs.isSuperset(of: result.retainedIDs))
         let calls = await resolver.calls
         #expect(calls.count == 1)
         #expect(calls.first?.map(\.id) == ["first", "closed", "unproven"])
@@ -35,6 +37,7 @@ struct TripRouteValidationTests {
             resolve: { _ in [.init(datedResolved: true, undatedResolved: false)] })
         #expect(result.retainedIDs == ["dated"])
         #expect(result.physicallyResolvedIDs == ["dated"])
+        #expect(result.unprovenReason == nil)
     }
 
     @Test func pendingInputIsConfirmedOnlyInResolverSnapshot() async throws {
@@ -59,6 +62,7 @@ struct TripRouteValidationTests {
             resolve: { try await resolver.resolve($0) })
         #expect(result.retainedIDs == (empty ? [] : ["missing"]))
         #expect(result.physicallyResolvedIDs.isEmpty)
+        #expect(result.unprovenReason == nil)
         #expect(await resolver.calls.isEmpty)
     }
 
@@ -72,6 +76,8 @@ struct TripRouteValidationTests {
             resolve: { _ in replies })
         #expect(result.retainedIDs == ["one", "missing", "two"])
         #expect(result.physicallyResolvedIDs.isEmpty)
+        #expect(result.unprovenReason != nil)
+        #expect(result.physicallyResolvedIDs.isDisjoint(with: result.retainedIDs))
     }
 
     @Test func ordinaryFailurePreservesEntireSnapshot() async throws {
@@ -80,6 +86,8 @@ struct TripRouteValidationTests {
             resolve: { _ in throw Resolver.Failure.unavailable })
         #expect(result.retainedIDs == ["one", "missing"])
         #expect(result.physicallyResolvedIDs.isEmpty)
+        #expect(result.unprovenReason != nil)
+        #expect(result.physicallyResolvedIDs.isDisjoint(with: result.retainedIDs))
     }
 
     @Test func resolverCancellationIsRethrown() async throws {

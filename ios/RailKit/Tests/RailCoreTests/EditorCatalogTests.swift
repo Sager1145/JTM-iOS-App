@@ -272,6 +272,108 @@ struct EditorCatalogTests {
             "jp|yamanote|S1|0",
         ])
     }
+
+    @Test func sameDisplayNameStaysTwoStationIdentities() {
+        let catalog = EditorCatalogBuilder.build([
+            sourceLine("line-a", name: "東北本線", operatorName: "JR East", stations: [
+                station("S1", name: "大宮", longitude: 139.6, latitude: 35.9),
+            ]),
+            sourceLine("line-b", name: "東海道本線", operatorName: "JR West", stations: [
+                station("S2", name: "大宮", longitude: 135.5, latitude: 35.0),
+            ]),
+        ])
+        let result = catalog.searchStations(StationSearchQuery(
+            regionCode: "jp", needle: "大宮", eligibility: .current))
+        let codes = result.suggestions.map(\.currentCode)
+        #expect(codes == ["S1", "S2"])
+        #expect(Set(result.lines.flatMap(\.hits).map(\.currentCode)) == ["S1", "S2"])
+    }
+
+    @Test func oneStationOnTwoLinesIsOneSuggestion() {
+        let shared = station("S1", name: "中央", longitude: 139.7, latitude: 35.7)
+        let catalog = EditorCatalogBuilder.build([
+            sourceLine("line-a", name: "山手線", operatorName: "JR East", stations: [shared]),
+            sourceLine("line-b", name: "中央線", operatorName: "JR East", stations: [shared]),
+        ])
+        let result = catalog.searchStations(StationSearchQuery(
+            regionCode: "jp", needle: "中央", eligibility: .current))
+        #expect(result.suggestions.map(\.currentCode) == ["S1"])
+        #expect(result.lines.map(\.id).sorted() == ["line-a", "line-b"])
+    }
+
+    @Test func retiredStationStaysDistinctAndRequiresAnOpenDate() {
+        let catalog = EditorCatalogBuilder.build([
+            sourceLine("line-a", name: "東北本線", operatorName: "JR East", stations: [
+                station("S1", name: "大宮", longitude: 139.6, latitude: 35.9),
+            ]),
+        ])
+        let retired = RetiredStation(
+            id: "history:omiya",
+            name: "大宮",
+            lineName: "東北本線",
+            operatorName: "JR East",
+            longitude: 139.6,
+            latitude: 35.9,
+            periods: [RetiredStation.Period(validFrom: "1900-01-01", validTo: "1980-01-01")],
+            certifiedCode: nil)
+        let open = catalog.searchStations(StationSearchQuery(
+            regionCode: "jp", needle: "大宮", rideDate: "1970-06-01",
+            eligibility: [.current, .retired]), retired: [retired])
+        #expect(open.suggestions.map(\.currentCode) == ["S1"])
+        #expect(open.retired.map(\.retiredID) == ["history:omiya"])
+
+        let closed = catalog.searchStations(StationSearchQuery(
+            regionCode: "jp", needle: "大宮", rideDate: "2024-01-01",
+            eligibility: [.current, .retired]), retired: [retired])
+        #expect(closed.retired.isEmpty)
+        #expect(closed.suggestions.map(\.currentCode) == ["S1"])
+
+        let undated = catalog.searchStations(StationSearchQuery(
+            regionCode: "jp", needle: "大宮", rideDate: nil,
+            eligibility: .retired), retired: [retired])
+        #expect(undated.retired.isEmpty)
+        #expect(undated.suggestions.isEmpty)
+    }
+
+    @Test func retiredLineFilterKeepsTheOpenSetWhenCatalogNamesDoNotMatch() {
+        let catalog = EditorCatalogBuilder.build([
+            sourceLine("line-a", name: "山手線", operatorName: "JR East", stations: [
+                station("S1", name: "東京", longitude: 139.7, latitude: 35.7),
+            ]),
+        ])
+        let retired = RetiredStation(
+            id: "history:rumoi",
+            name: "留萌",
+            lineName: "留萌本線",
+            operatorName: "JR",
+            longitude: 141.6,
+            latitude: 43.9,
+            periods: [RetiredStation.Period(validFrom: "1910-01-01", validTo: "2023-04-01")],
+            certifiedCode: nil)
+        let index = catalog.stationSearchIndex(regionCode: "jp")
+        let unmatched = index.eligibleRetired([retired], rideDate: "2000-01-01", lineIDs: ["line-a"])
+        #expect(unmatched.map(\.id) == ["history:rumoi"])
+        let dated = index.search(StationSearchQuery(
+            regionCode: "jp", needle: "留萌", rideDate: "2000-01-01",
+            eligibility: .retired, lineIDs: ["line-a"]), retired: [retired])
+        #expect(dated.retired.map(\.retiredID) == ["history:rumoi"])
+        let currentOnly = index.search(StationSearchQuery(
+            regionCode: "jp", needle: "留萌", rideDate: "2000-01-01",
+            eligibility: .current, lineIDs: ["line-a"]), retired: [retired])
+        #expect(currentOnly.retired.isEmpty)
+    }
+}
+
+private extension StationSearchHit {
+    var currentCode: String {
+        if case .current(let key, _) = subject { return key.sourceCode }
+        return ""
+    }
+
+    var retiredID: String {
+        if case .retired(let id) = subject { return id }
+        return ""
+    }
 }
 
 private func sourceLine(

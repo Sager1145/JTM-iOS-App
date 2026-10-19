@@ -3,6 +3,34 @@ import Testing
 @testable import RailCore
 
 struct RailwayRouteEditingTests {
+    @Test("Partial correction and undo preserve exact outside source boundaries and repeated visits")
+    func partialSourceBoundaryUndo() throws {
+        var original = train(["A", "C", "A", "E"])
+        original.routeSections = [sourceBoundary("A", "B", "earlier"),
+            sourceBoundary("B", "C", "earlier"), sourceBoundary("C", "D", "return"),
+            sourceBoundary("D", "A", "return"), sourceBoundary("A", "F", "last"),
+            sourceBoundary("F", "E", "last")]
+        let plan = try #require(RailwayRouteEditing.plan(train: original,
+            choice: choice(["A", "X", "E"]), fromVisitID: original.stops[2].routeEditing?.visitID,
+            toVisitID: original.stops[3].routeEditing?.visitID))
+        #expect(Array(plan.updatedTrain.routeSections!.prefix(4)) == Array(original.routeSections!.prefix(4)))
+        #expect(plan.updatedTrain.routeSections?.suffix(2).map(\.number) == ["last", "last"])
+        var later = plan.updatedTrain
+        later.notes = "Unrelated change"
+        later.routeSections?[0].number = "Outside edit"
+        let restored = try #require(plan.undo.restore(in: later))
+        var expected = original
+        expected.notes = later.notes
+        expected.routeSections?[0].number = "Outside edit"
+        #expect(restored == expected)
+    }
+
+    private func sourceBoundary(_ from: String, _ to: String, _ number: String) -> RouteSection {
+        .init(from: from, to: to, fromN02StationCode: from, toN02StationCode: to,
+              lineNames: ["Source"], operatorNames: ["Operator"], lineIDs: ["source"],
+              sectionCodes: [from + ">" + to], number: number)
+    }
+
     private func choice(_ codes: [String], intervals: [String]? = nil) -> RailwayRouteChoices.Choice {
         let edges = intervals ?? zip(codes, codes.dropFirst()).map { "\($0)>\($1)" }
         let sections = edges.indices.map { index in
@@ -21,6 +49,17 @@ struct RailwayRouteEditingTests {
             id: "ride", number: "Local", origin: codes[0], destination: codes.last!,
             routeSections: route.routeSections,
             stops: codes.map { Stop(name: $0, n02StationCode: $0, rideSegment: true) }))
+    }
+
+    @Test("cross-row route selection stays pending without junction proof")
+    func crossRowSelectionStaysPending() throws {
+        var route = choice(["A", "J", "D"])
+        route.lineIDs = ["first", "second"]
+        route.routeSections[0].lineIDs = ["first"]
+        route.routeSections[1].lineIDs = ["second"]
+        let plan = try #require(RailwayRouteEditing.plan(train: train(["A", "D"]), choice: route))
+        #expect(plan.updatedTrain.routeConfirmation == .pending)
+        #expect(plan.updatedTrain.routeSections?.map(\.lineIDs) == [["first"], ["second"]])
     }
 
     @Test("Independent divergences use exact physical intervals even with identical station lists")

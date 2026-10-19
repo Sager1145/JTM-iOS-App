@@ -26,6 +26,30 @@ struct TrainServiceBrandingTests {
         #expect(services.allSatisfy { $0.region.isEmpty == false && $0.names.isEmpty == false })
     }
 
+    @Test("service logos resolve by inclusive version dates and otherwise use the default")
+    func datedLogoVersions() {
+        let service = TrainServiceBranding.Service(
+            id: "dated", region: "jp", names: ["Dated"], logoPath: "new.png",
+            logos: [
+                .init(path: "old.png", validFrom: "2000", validUntil: "2017-12"),
+                .init(path: "new.png", validFrom: "2017-12-23"),
+            ])
+
+        #expect(service.logoPath(on: "1999-12-31") == "new.png")
+        #expect(service.logoPath(on: "2000-01-01") == "old.png")
+        #expect(service.logoPath(on: "2016-05-01") == "old.png")
+        #expect(service.logoPath(on: "2016-05-01T08:00") == "old.png")
+        #expect(service.logoPath(on: "2017-12-22") == "old.png")
+        #expect(service.logoPath(on: "2017-12-23") == "new.png")
+        #expect(service.logoPath(on: "2026-01-01") == "new.png")
+        #expect(service.logoPath(on: nil) == "new.png")
+        #expect(service.logoPath(on: "not-a-date") == "new.png")
+
+        let unversioned = TrainServiceBranding.Service(
+            id: "plain", region: "jp", names: ["Plain"], logoPath: "plain.png")
+        #expect(unversioned.logoPath(on: "2016-05-01") == "plain.png")
+    }
+
     @Test(arguments: [
         ("はるか38号（1038M）", nil, "haruka"),
         ("はるか号", nil, "haruka"),
@@ -68,6 +92,18 @@ struct TrainServiceBrandingTests {
             number: "Mystery 1", trainType: "Special")) == false)
         #expect(TrainServiceBranding.isLimitedExpress(Self.train(
             number: "中央線", trainType: "特別快速")) == false)
+    }
+
+    @Test("type-only classification preserves regional meanings without caption service lookup")
+    func typeOnlyLimitedExpressClassification() {
+        #expect(TrainServiceBranding.isLimitedExpress(trainType: "特急", country: "jp"))
+        #expect(TrainServiceBranding.isLimitedExpress(trainType: " Ｌｉｍｉｔｅｄ  Ｅｘｐｒｅｓｓ ", country: "jp"))
+        #expect(TrainServiceBranding.isLimitedExpress(trainType: "特快", country: "tw"))
+        #expect(!TrainServiceBranding.isLimitedExpress(trainType: "特快", country: "jp"))
+        #expect(!TrainServiceBranding.isLimitedExpress(trainType: "あずさ", country: "jp"))
+        #expect(!TrainServiceBranding.isLimitedExpress(trainType: nil, country: "jp"))
+        // The full journey still resolves its named service from the caption.
+        #expect(TrainServiceBranding.isLimitedExpress(Self.train(number: "あずさ5号")))
     }
 
     @Test("express and explicitly through-running services use detected lines")

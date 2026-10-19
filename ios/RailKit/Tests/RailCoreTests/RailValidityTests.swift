@@ -31,7 +31,8 @@ final class RailValidityTests: XCTestCase {
         let graphStore = RouteGraph.RouteGraphStore(
             sections: sections, policy: .physicalRailway,
             junctions: registry.junctions(for: "jp"),
-            cachePolicy: .bounded(maximumNodes: 100_000))
+            cachePolicy: .bounded(maximumNodes: 100_000),
+            identityPeriods: overlay.identityPeriods)
         return CodedHistoryEnvironment(
             graphStore: graphStore, stations: Stations.Index(collection))
     }()

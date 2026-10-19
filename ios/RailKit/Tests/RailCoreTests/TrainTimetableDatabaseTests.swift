@@ -50,8 +50,9 @@ struct TrainTimetableDatabaseTests {
 
     @Test func bundledArtifactColdQueryIsLazyAndIndexed() throws {
         let clock = ContinuousClock()
+        let url = try #require(TrainTimetableDatabase.bundledURL(in: .module))
         let start = clock.now
-        let database = try #require(TrainTimetableDatabase.bundled())
+        let database = try TrainTimetableDatabase(url: url)
         let trips = try database.trips(on: "2026-05-16")
         let elapsed = start.duration(to: clock.now)
         #expect(!trips.isEmpty)
@@ -61,7 +62,7 @@ struct TrainTimetableDatabaseTests {
     }
 
     @Test func bundled2013ShinanoFootnoteKeepsItsDateAndReadOnlyStatus() throws {
-        let database = try #require(TrainTimetableDatabase.bundled())
+        let database = try TrainTimetableDatabase.bundled(bundle: .module)
         let id = "jr-central.shinano.81.2013-summer"
         let earlyQuery = try database.trip(id: id, on: "2013-08-12")
         let early = try #require(earlyQuery)
@@ -79,7 +80,7 @@ struct TrainTimetableDatabaseTests {
     }
 
     @Test func printedNumericPlatformsSurviveEditorProjection() throws {
-        let database = try #require(TrainTimetableDatabase.bundled())
+        let database = try TrainTimetableDatabase.bundled(bundle: .module)
         let draft = Train(id: "platform-check", date: nil, number: "", origin: "",
                           destination: "", stops: [], region: "jp")
         let hokutoQuery = try database.trip(
@@ -95,7 +96,7 @@ struct TrainTimetableDatabaseTests {
     }
 
     @Test func publishedSymbolsRemainSeparateFromPassengerStops() throws {
-        let database = try #require(TrainTimetableDatabase.bundled())
+        let database = try TrainTimetableDatabase.bundled(bundle: .module)
         let hokutoQuery = try database.trip(
             id: "jr-hokkaido.hokuto.1.exact-2026-09-30", on: "2026-09-30")
         let hokuto = try #require(hokutoQuery)
@@ -124,7 +125,7 @@ struct TrainTimetableDatabaseTests {
     }
 
     @Test func bundledPlannedFormationPreservesDateAndCarOrder() throws {
-        let database = try #require(TrainTimetableDatabase.bundled())
+        let database = try TrainTimetableDatabase.bundled(bundle: .module)
         let ibusukiQuery = try database.trip(
             id: "jr-kyushu.ibusuki-no-tamatebako.1.2026-07-01", on: "2026-09-30")
         let ibusuki = try #require(ibusukiQuery)
@@ -154,7 +155,7 @@ struct TrainTimetableDatabaseTests {
     }
 
     @Test func bundledEastVariantsAndKyushuSummerDatesSelectExactOccurrences() throws {
-        let database = try #require(TrainTimetableDatabase.bundled())
+        let database = try TrainTimetableDatabase.bundled(bundle: .module)
         let saturday = try database.trips(for: "azusa", on: "2026-09-26")
         let sunday = try database.trips(for: "azusa", on: "2026-09-27")
         #expect(saturday.count == 1 && sunday.count == 1)
@@ -239,7 +240,7 @@ struct TrainTimetableDatabaseTests {
     }
 
     @Test func bundledGingaNightUsesOriginalServiceDateAcrossWakayamaDwell() throws {
-        let database = try #require(TrainTimetableDatabase.bundled())
+        let database = try TrainTimetableDatabase.bundled(bundle: .module)
         let queried = try database.trip(
             id: "jr-west.west-express-ginga.kumano-night.2026-07-03", on: "2026-09-28")
         let trip = try #require(queried)
@@ -544,6 +545,73 @@ struct TrainTimetableDatabaseTests {
         let coverage = try TrainTimetableDatabase(url: fixture.url).coverage(on: "1945-01-01")
         #expect(coverage.status == .verified)
         #expect(coverage.timetableVersionIDs.isEmpty)
+    }
+
+    @Test func bundledDatabaseSharesOneConnectionForTheSelectedBundle() throws {
+        let first = try TrainTimetableDatabase.bundled(bundle: .module)
+        let second = try TrainTimetableDatabase.bundled(bundle: .module)
+        #expect(first === second)
+    }
+
+    @Test func missingSelectedBundleDoesNotOpenPackageCopy() throws {
+        let directory = FileManager.default.temporaryDirectory
+            .appending(path: "timetable-missing-\(UUID().uuidString).bundle")
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let bundle = try #require(Bundle(url: directory))
+        #expect(TrainTimetableDatabase.bundledURL(in: bundle) == nil)
+        #expect(throws: TrainTimetableDatabase.OpenFailure.missingResource) {
+            try TrainTimetableDatabase.bundled(bundle: bundle)
+        }
+    }
+
+    @Test func damagedBundleReportsDamagedInsteadOfAnotherCopy() throws {
+        let directory = FileManager.default.temporaryDirectory
+            .appending(path: "timetable-damaged-\(UUID().uuidString).bundle")
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        try Data("not a sqlite database".utf8).write(to: directory.appending(path: "train-service-timetable.sqlite"))
+        let bundle = try #require(Bundle(url: directory))
+        do {
+            _ = try TrainTimetableDatabase.bundled(bundle: bundle)
+            Issue.record("damaged timetable artifact opened")
+        } catch let failure as TrainTimetableDatabase.OpenFailure {
+            guard case .damaged = failure else {
+                Issue.record("expected damaged, got \(failure)")
+                return
+            }
+        } catch {
+            Issue.record("expected OpenFailure.damaged, got \(error)")
+        }
+    }
+
+    @Test func verifiedZeroKeepsPatternsAndExcerptsOutOfOccurrences() throws {
+        let fixture = try FixtureDatabase(nationalZeroInterval: true)
+        defer { fixture.remove() }
+        let database = try TrainTimetableDatabase(url: fixture.url)
+        let pattern = TrainServicePatterns.Pattern(
+            id: "pattern-only", serviceId: "fixture", name: "Pattern", company: "私鉄",
+            label: "A → B", origin: "A", destination: "B", stopRefs: [], optionalStopRefs: [],
+            via: [], confidence: nil, source: nil, lines: [])
+        let excerpt = LineServiceCatalog.TimetableTrip(
+            id: "wartime-excerpt", trainNumber: "102C", trainType: "普通",
+            operatorName: "JR西日本", lineIDs: ["line"], serviceDates: ["1945-01-01"],
+            sourceURL: "https://example.invalid", coverage: .unknown, note: "", stops: [],
+            previousTrainIDs: nil, nextTrainIDs: nil, sourceOperatorID: nil,
+            sourceRailwayID: nil, sourceTrainTypeID: nil, sourceCalendarID: nil)
+        let otherDay = LineServiceCatalog.TimetableTrip(
+            id: "other-day", trainNumber: "1", trainType: "普通", operatorName: "JR西日本",
+            lineIDs: ["line"], serviceDates: ["1945-01-02"], sourceURL: "https://example.invalid",
+            coverage: .unknown, note: "", stops: [], previousTrainIDs: nil, nextTrainIDs: nil,
+            sourceOperatorID: nil, sourceRailwayID: nil, sourceTrainTypeID: nil, sourceCalendarID: nil)
+        let classified = TimetableKnowledgeQuery.sources(
+            country: "jp", serviceDate: "1945-01-01", database: .success(database),
+            patterns: .success([pattern]), excerpts: [excerpt, otherDay])
+        #expect(classified.isLegalZero)
+        #expect(classified.availability == .ready(.verified))
+        #expect(classified.occurrences.isEmpty)
+        #expect(classified.patterns.map(\.id) == ["pattern-only"])
+        #expect(classified.excerpts.map(\.id) == ["wartime-excerpt"])
     }
 }
 

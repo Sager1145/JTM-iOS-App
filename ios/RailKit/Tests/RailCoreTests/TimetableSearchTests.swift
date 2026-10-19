@@ -30,7 +30,7 @@ struct TimetableSearchTests {
     }
 
     @Test func bundledEnglishNameTimeAndRouteDiscovery() throws {
-        let database = try #require(TrainTimetableDatabase.bundled())
+        let database = try TrainTimetableDatabase.bundled(bundle: .module)
         let trips = try database.trips(on: "2026-09-30")
         let azusa = trips.filter { TimetableSearch("AZUSA 松本").matches($0) }
         #expect(!azusa.isEmpty)

@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "coverageFrom": "2005-01-01",
   "checkedAt": "2026-10-02",
-  "scope": "Every scheduled passenger service in Japan that continues from one package line to another (cross-operator through running, third-sector continuations, mini-shinkansen, non-terminal cross-line services and JR operational aliases), dated from 2005-01-01 (the earliest N02 release) to the check date. Changes are stored as validFrom/validTo deltas on patterns and legs. Corridors that cannot be encoded on the current package are listed in coverage notes; per-leg confidence below high is noted in each pattern.",
+  "scope": "Researched passenger through-service corridors and operational aliases on the current physical package. Regional checked labels describe listed records, not national completeness. Historical review targets the oldest locally documented N02 observation, 1996-12-31; coverageFrom remains the separately declared 2005-01-01 inventory floor. Missing starts and historical endpoint variants remain unknown. Half-open pattern/leg windows and source-attributed legVariants reuse unchanged physical data; through-running does not prove a dated departure or physical track connection.",
   "connectors": [
     {
       "id": "matsuda-link",
@@ -10,7 +10,12 @@
       "fromStationCode": "004981",
       "toLineID": "jp-東海旅客鉄道-御殿場線",
       "toStationCode": "004977",
-      "notes": "松田連絡線。物理接続は physical-rail-junctions.json の matsuda-east-15。"
+      "notes": "松田連絡線。物理接続は physical-rail-junctions.json の matsuda-east-15。",
+      "sourceURLs": [
+        "https://www.odakyu.jp/company/history/"
+      ],
+      "physicalJunctionID": "matsuda-east-15",
+      "sourceScope": "既存の直通サービス・physical-rail-junctions.jsonの出典を表示接続に関連付けたもの。駅コード間の折線を作らず、物理接続や未検証の歴史期間をこの表示レコードのみから認定しない。"
     },
     {
       "id": "seibu-chichibu-link",
@@ -18,7 +23,12 @@
       "fromStationCode": "002771",
       "toLineID": "jp-秩父鉄道-秩父本線",
       "toStationCode": "002768",
-      "notes": "西武秩父・横瀬側から御花畑へ入る秩父連絡線。物理接続は seibu-chichibu-connector。"
+      "notes": "西武秩父・横瀬側から御花畑へ入る秩父連絡線。物理接続は seibu-chichibu-connector。",
+      "sourceURLs": [
+        "https://www.seiburailway.jp/railway/reservedtrain/chichibu/"
+      ],
+      "physicalJunctionID": "seibu-chichibu-connector",
+      "sourceScope": "既存の直通サービス・physical-rail-junctions.jsonの出典を表示接続に関連付けたもの。駅コード間の折線を作らず、物理接続や未検証の歴史期間をこの表示レコードのみから認定しない。"
     },
     {
       "id": "senseki-tohoku-link",
@@ -27,7 +37,13 @@
       "toLineID": "jp-東日本旅客鉄道-仙石線",
       "toStationCode": "001102",
       "validFrom": "2015-05-30",
-      "notes": "仙石東北ライン接続線。物理接続も2015-05-30から有効。"
+      "notes": "仙石東北ライン接続線。物理接続も2015-05-30から有効。",
+      "sourceURLs": [
+        "https://www.jreast.co.jp/press/2015/20150105.pdf",
+        "https://www.jreast.co.jp/railway/train/local/sensekitohoku.html"
+      ],
+      "physicalJunctionID": "senseki-tohoku-connector",
+      "sourceScope": "既存の直通サービス・physical-rail-junctions.jsonの出典を表示接続に関連付けたもの。駅コード間の折線を作らず、物理接続や未検証の歴史期間をこの表示レコードのみから認定しない。"
     }
   ],
   "patterns": [
@@ -123,9 +139,16 @@
       ],
       "sourceURLs": [
         "https://ja.wikipedia.org/wiki/%E6%B9%98%E5%8D%97%E6%96%B0%E5%AE%BF%E3%83%A9%E3%82%A4%E3%83%B3",
-        "https://www.jreast.co.jp/"
+        "https://www.jreast.co.jp/",
+        "https://www.jreast.co.jp/press/2001_1/20010914/06.html"
       ],
-      "notes": "宇都宮–逗子。2001-12-01に運転開始し、2004-10-16に終日の南北直通へ拡大した。どちらも2005-01-01より前なので validFrom は付けない。一部は小金井・大船発着。黒磯直通の設定は2004年3月改正で宇都宮折返しになり、カバレッジ期間外。"
+      "notes": "宇都宮–逗子。2001-12-01に運転開始し、2004-10-16に終日の南北直通へ拡大した。一部は小金井・大船発着。黒磯直通の設定は2004年3月改正で宇都宮折返しになり、カバレッジ期間外。 開始日は公式資料による下限。現在の外側端点・全歴史経路が開業初日から同一だったことは別途確認を要する。",
+      "validFrom": "2001-12-01",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "supportedScope": "湘南新宿サービスの開始。現行の全停車駅・外側端点が初日から同一だったとは証明しない。",
+        "sourceURL": "https://www.jreast.co.jp/press/2001_1/20010914/06.html"
+      }
     },
     {
       "id": "JS-takasaki-odawara",
@@ -184,9 +207,16 @@
       ],
       "sourceURLs": [
         "https://ja.wikipedia.org/wiki/%E6%B9%98%E5%8D%97%E6%96%B0%E5%AE%BF%E3%83%A9%E3%82%A4%E3%83%B3",
-        "https://www.jreast.co.jp/"
+        "https://www.jreast.co.jp/",
+        "https://www.jreast.co.jp/press/2001_1/20010914/06.html"
       ],
-      "notes": "高崎–小田原。宇都宮側と同じく2001-12-01開始、2004-10-16に本格化（特別快速を含む）で、いずれもカバレッジ開始前。一部は籠原・平塚・国府津発着。熱海・沼津方面の直通は上野東京ライン側。"
+      "notes": "高崎–小田原。宇都宮側と同じく2001-12-01開始、2004-10-16に本格化（特別快速を含む）で、いずれもカバレッジ開始前。一部は籠原・平塚・国府津発着。熱海・沼津方面の直通は上野東京ライン側。 開始日は公式資料による下限。現在の外側端点・全歴史経路が開業初日から同一だったことは別途確認を要する。",
+      "validFrom": "2001-12-01",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "supportedScope": "湘南新宿サービスの開始。現行の全停車駅・外側端点が初日から同一だったとは証明しない。",
+        "sourceURL": "https://www.jreast.co.jp/press/2001_1/20010914/06.html"
+      }
     },
     {
       "id": "JO-sobu-yokosuka",
@@ -270,9 +300,21 @@
       "sourceURLs": [
         "https://www.twr.co.jp/",
         "https://www.tokyometro.jp/corporate/ir/library/factbook/pdf/factbook_2025.pdf",
-        "https://ja.wikipedia.org/wiki/埼京線"
+        "https://ja.wikipedia.org/wiki/埼京線",
+        "https://www.jreast.co.jp/press/2002_1/20020911/index.html",
+        "https://www.jreast.co.jp/press/2002_1/20020911/pdf/syutoken.pdf"
       ],
-      "notes": "新木場から川越まで直通し、埼京線区間はパッケージ上は山手線・赤羽線・東北線-5である。大崎直通は2002-12-01開始で、2005年以前から現行。"
+      "notes": "新木場から川越まで直通し、埼京線区間はパッケージ上は山手線・赤羽線・東北線-5である。大崎直通は2002-12-01開始で、2005年以前から現行。",
+      "validFrom": "2002-12-01",
+      "historicalReview": {
+        "status": "onsetAndOuterEndpoints",
+        "reviewedAt": "2026-10-10",
+        "sourceURLs": [
+          "https://www.jreast.co.jp/press/2002_1/20020911/index.html",
+          "https://www.jreast.co.jp/press/2002_1/20020911/pdf/syutoken.pdf"
+        ],
+        "supportedScope": "2002-12-01改正発表の実列車時刻に新木場–川越を明記。全日の班次や歴史物理形状は未証明。"
+      }
     },
     {
       "id": "asakusa-keisei-keikyu",
@@ -316,9 +358,16 @@
       ],
       "sourceURLs": [
         "https://www.kotsu.metro.tokyo.jp/subway/map/asakusa_sogo.html",
-        "https://ja.wikipedia.org/wiki/都営地下鉄浅草線"
+        "https://ja.wikipedia.org/wiki/都営地下鉄浅草線",
+        "https://www.keikyu.co.jp/history/chronology07.html"
       ],
-      "notes": "京成本線経由の成田空港–浅草線–京急空港線（羽田空港第1・第2ターミナル）で、2005年以前から現行。スカイアクセス・浦賀・三崎口・逗子線は別パターン。"
+      "notes": "成田空港–羽田空港の空港間直通は1998-11-18から。京成/浅草/京急の他端点の開始日や当時の全停車駅はこの日付では証明しない。",
+      "validFrom": "1998-11-18",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "supportedScope": "成田空港–羽田空港の空港間直通は1998-11-18から。京成/浅草/京急の他端点の開始日や当時の全停車駅はこの日付では証明しない。",
+        "sourceURL": "https://www.keikyu.co.jp/history/chronology07.html"
+      }
     },
     {
       "id": "asakusa-access-keikyu",
@@ -447,9 +496,50 @@
       ],
       "sourceURLs": [
         "https://www.tokyometro.jp/corporate/ir/library/factbook/pdf/factbook_2025.pdf",
-        "https://ja.wikipedia.org/wiki/東京メトロ日比谷線"
+        "https://ja.wikipedia.org/wiki/東京メトロ日比谷線",
+        "https://www.tokyu.co.jp/history/pdf/tokyu100th_data_14_sotyoku.pdf",
+        "https://www.tobu.co.jp/corporation/history/fhistory05.html",
+        "https://www.tokyometro.jp/news/2013/pdf/metroNews20130214_3.16newdia.pdf"
       ],
-      "notes": "東横線菊名–中目黒は2013-03-16改正で終了し、同日に東武側の定期区間が東武動物公園から日光線南栗橋へ延びた。久喜のTHライナーは別パターン。"
+      "notes": "東横線菊名–中目黒は2013-03-16改正で終了し、同日に東武側の定期区間が東武動物公園から日光線南栗橋へ延びた。久喜のTHライナーは別パターン。",
+      "validFrom": "1988-08-09",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "reviewedAt": "2026-10-10",
+        "sourceURLs": [
+          "https://www.tokyu.co.jp/history/pdf/tokyu100th_data_14_sotyoku.pdf",
+          "https://www.tobu.co.jp/corporation/history/fhistory05.html",
+          "https://www.tokyometro.jp/news/2013/pdf/metroNews20130214_3.16newdia.pdf"
+        ],
+        "supportedScope": "菊名側は1988-08-09延伸、東武動物公園側は1981-03-16延伸。旧結合コリドーの成立下限を示すが、菊名–東武動物公園を一列車で運転することを保証しない。2013-03-16以降は中目黒–南栗橋。"
+      },
+      "legVariants": [
+        {
+          "validFrom": "1988-08-09",
+          "validTo": "2013-03-16",
+          "legIndices": [
+            0,
+            1,
+            2
+          ],
+          "sourceURLs": [
+            "https://www.tokyu.co.jp/history/pdf/tokyu100th_data_14_sotyoku.pdf"
+          ],
+          "notes": "菊名–中目黒–北千住–東武動物公園の旧結合コリドー。"
+        },
+        {
+          "validFrom": "2013-03-16",
+          "legIndices": [
+            1,
+            2,
+            3
+          ],
+          "sourceURLs": [
+            "https://www.tokyometro.jp/news/2013/pdf/metroNews20130214_3.16newdia.pdf"
+          ],
+          "notes": "東横線直通を終了し、中目黒–南栗橋を選択。"
+        }
+      ]
     },
     {
       "id": "hanzomon-denentoshi-nikko",
@@ -491,9 +581,17 @@
       ],
       "sourceURLs": [
         "https://www.tokyometro.jp/corporate/ir/library/factbook/pdf/factbook_2025.pdf",
-        "https://ja.wikipedia.org/wiki/東京メトロ半蔵門線"
+        "https://ja.wikipedia.org/wiki/東京メトロ半蔵門線",
+        "https://www.tokyu.co.jp/image/news/pdf/020829.pdf",
+        "https://www.tokyometro.jp/corporate/profile/history/index.html"
       ],
-      "notes": "中央林間から押上・東武動物公園経由で日光線南栗橋まで直通し、東武日光駅までの定期地下鉄直通はない。押上直通は2003-03-19開始で2005年以前から現行。"
+      "notes": "中央林間–半蔵門線–伊勢崎線–日光線南栗橋の直通は2003-03-19から。東急事前公表と東京メトロ沿革で確認。",
+      "validFrom": "2003-03-19",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "supportedScope": "中央林間–半蔵門線–伊勢崎線–日光線南栗橋の直通は2003-03-19から。東急事前公表と東京メトロ沿革で確認。",
+        "sourceURL": "https://www.tokyu.co.jp/image/news/pdf/020829.pdf"
+      }
     },
     {
       "id": "hanzomon-denentoshi-kuki",
@@ -530,9 +628,16 @@
       ],
       "sourceURLs": [
         "https://www.tokyometro.jp/corporate/ir/library/factbook/pdf/factbook_2025.pdf",
-        "https://ja.wikipedia.org/wiki/東武伊勢崎線"
+        "https://ja.wikipedia.org/wiki/東武伊勢崎線",
+        "https://www.tobu.co.jp/corporation/history/fhistory07.html"
       ],
-      "notes": "中央林間から半蔵門線・伊勢崎線を久喜まで直通し、東武動物公園で日光線には入らない。押上直通は2003-03-19開始で2005年以前から現行。"
+      "notes": "中央林間–半蔵門線–伊勢崎線久喜。2003-03-19の押上接続と久喜延伸を区別し、久喜直通は2006-03-18から。逐站停車や個別列車の保証ではない。",
+      "validFrom": "2006-03-18",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "supportedScope": "中央林間–半蔵門線–伊勢崎線久喜。2003-03-19の押上接続と久喜延伸を区別し、久喜直通は2006-03-18から。逐站停車や個別列車の保証ではない。",
+        "sourceURL": "https://www.tobu.co.jp/corporation/history/fhistory07.html"
+      }
     },
     {
       "id": "chiyoda-joban-odakyu",
@@ -560,14 +665,22 @@
         {
           "lineID": "jp-小田急電鉄-小田原線",
           "fromStationCode": "003847",
-          "toStationCode": "004844"
+          "toStationCode": "004715"
+        },
+        {
+          "lineID": "jp-小田急電鉄-小田原線",
+          "fromStationCode": "004715",
+          "toStationCode": "004844",
+          "validFrom": "2018-03-17"
         }
       ],
       "sourceURLs": [
         "https://www.tokyometro.jp/corporate/ir/library/factbook/pdf/factbook_2025.pdf",
-        "https://ja.wikipedia.org/wiki/東京メトロ千代田線"
+        "https://ja.wikipedia.org/wiki/東京メトロ千代田線",
+        "https://www.odakyu.jp/news/o5oaa10000005s29-att/o5oaa10000005s2g.pdf",
+        "https://www.tokyometro.jp/news/2017/190856.html"
       ],
-      "notes": "取手–綾瀬–代々木上原–伊勢原の通勤直通で、2005年以前から現行。多摩線と2008-03-15開始のロマンスカーは別パターン。"
+      "notes": "常磐線–千代田線–小田原線直通。本厚木までの区段と2018-03-17に新設した伊勢原行き急行の延長区段を分離する。全歴史の起点・停車駅・運休日は未確認。"
     },
     {
       "id": "tozai-toyo",
@@ -601,9 +714,21 @@
       ],
       "sourceURLs": [
         "https://www.tokyometro.jp/corporate/ir/library/factbook/pdf/factbook_2025.pdf",
-        "https://ja.wikipedia.org/wiki/東葉高速鉄道"
+        "https://ja.wikipedia.org/wiki/東葉高速鉄道",
+        "https://www.tokyometro.jp/corporate/profile/history/index.html",
+        "https://www.tokyometro.jp/news/2016/157391.html"
       ],
-      "notes": "三鷹–中野は中央線各駅停車、西船橋から東葉勝田台で、どちらも2005年以前から東西線に直通する。津田沼方面は別パターン。"
+      "notes": "三鷹–中野は中央線各駅停車、西船橋から東葉勝田台で、どちらも2005年以前から東西線に直通する。津田沼方面は別パターン。",
+      "validFrom": "1996-04-27",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "reviewedAt": "2026-10-10",
+        "sourceURLs": [
+          "https://www.tokyometro.jp/corporate/profile/history/index.html",
+          "https://www.tokyometro.jp/news/2016/157391.html"
+        ],
+        "supportedScope": "西船橋–東葉勝田台の東西線・東葉高速相互直通開始。開業当初の三鷹外側端点までの同一全経路は未証明。"
+      }
     },
     {
       "id": "tozai-sobu",
@@ -637,9 +762,19 @@
       ],
       "sourceURLs": [
         "https://www.tokyometro.jp/corporate/ir/library/factbook/pdf/factbook_2025.pdf",
-        "https://ja.wikipedia.org/wiki/東京メトロ東西線"
+        "https://ja.wikipedia.org/wiki/東京メトロ東西線",
+        "https://www.tokyometro.jp/corporate/profile/history/index.html"
       ],
-      "notes": "西側は中央線各駅停車の三鷹–中野、東側は総武線各駅停車の西船橋–津田沼で、2005年以前から現行。快速は東西線に入らず、東葉高速は別パターン。"
+      "notes": "西側は中央線各駅停車の三鷹–中野、東側は総武線各駅停車の西船橋–津田沼で、2005年以前から現行。快速は東西線に入らず、東葉高速は別パターン。",
+      "validFrom": "1969-04-08",
+      "historicalReview": {
+        "status": "onsetAndOuterEndpoints",
+        "reviewedAt": "2026-10-10",
+        "sourceURLs": [
+          "https://www.tokyometro.jp/corporate/profile/history/index.html"
+        ],
+        "supportedScope": "公式年表は三鷹–東西線–津田沼の相互直通開始を明記。1969年の全停車駅や現在のJR東日本・東京地下鉄という事業者IDを当時に遡及しない。"
+      }
     },
     {
       "id": "yurakucho-tobu",
@@ -722,9 +857,53 @@
       ],
       "sourceURLs": [
         "https://www.tokyometro.jp/corporate/ir/library/factbook/pdf/factbook_2025.pdf",
-        "https://ja.wikipedia.org/wiki/東京メトロ副都心線"
+        "https://ja.wikipedia.org/wiki/東京メトロ副都心線",
+        "https://www.tokyometro.jp/news/2008/2008-17_1.html",
+        "https://www.tokyu.co.jp/image/news/pdf/120724-1.pdf",
+        "https://www.tokyu.co.jp/history/pdf/tokyu100th_data_14_sotyoku.pdf"
       ],
-      "notes": "副都心線開業2008-06-14に東上線–和光市–小竹向原–渋谷が開始。東横線・みなとみらい（元町・中華街）への直通は2013-03-16開始。相鉄方面は日吉で分岐する別パターン。"
+      "notes": "副都心線開業2008-06-14に東上線–和光市–小竹向原–渋谷が開始。東横線・みなとみらい（元町・中華街）への直通は2013-03-16開始。相鉄方面は日吉で分岐する別パターン。",
+      "validFrom": "2008-06-14",
+      "historicalReview": {
+        "status": "onsetAndOuterEndpoints",
+        "reviewedAt": "2026-10-10",
+        "sourceURLs": [
+          "https://www.tokyometro.jp/news/2008/2008-17_1.html",
+          "https://www.tokyu.co.jp/image/news/pdf/120724-1.pdf",
+          "https://www.tokyu.co.jp/history/pdf/tokyu100th_data_14_sotyoku.pdf"
+        ],
+        "supportedScope": "2008-06-14の森林公園–渋谷から2013-03-16の元町・中華街延伸を区別。現在の物理IDは歴史の事業者・駅設備の同一性を証明しない。"
+      },
+      "legVariants": [
+        {
+          "validFrom": "2008-06-14",
+          "validTo": "2013-03-16",
+          "legIndices": [
+            0,
+            1,
+            2
+          ],
+          "sourceURLs": [
+            "https://www.tokyometro.jp/news/2008/2008-17_1.html"
+          ],
+          "notes": "森林公園–渋谷の旧直通範囲。"
+        },
+        {
+          "validFrom": "2013-03-16",
+          "legIndices": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "sourceURLs": [
+            "https://www.tokyu.co.jp/image/news/pdf/120724-1.pdf",
+            "https://www.tokyu.co.jp/history/pdf/tokyu100th_data_14_sotyoku.pdf"
+          ],
+          "notes": "元町・中華街への延伸後の有序区段。"
+        }
+      ]
     },
     {
       "id": "yurakucho-seibu",
@@ -757,9 +936,16 @@
       ],
       "sourceURLs": [
         "https://www.tokyometro.jp/corporate/ir/library/factbook/pdf/factbook_2025.pdf",
-        "https://ja.wikipedia.org/wiki/西武有楽町線"
+        "https://ja.wikipedia.org/wiki/西武有楽町線",
+        "https://www.tokyometro.jp/corporate/profile/history/index.html"
       ],
-      "notes": "飯能–練馬–西武有楽町線–新木場で、2005年以前から現行。平日S-TRAIN（2017-03-25～、所沢–豊洲）はこの経路の一部で、秩父方面は別パターン。"
+      "notes": "西武池袋線飯能との相互直通は1998-03-26から。現行の全停車パターンを当日に遡及させない。",
+      "validFrom": "1998-03-26",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "supportedScope": "西武池袋線飯能との相互直通は1998-03-26から。現行の全停車パターンを当日に遡及させない。",
+        "sourceURL": "https://www.tokyometro.jp/corporate/profile/history/index.html"
+      }
     },
     {
       "id": "fukutoshin-seibu-minatomirai",
@@ -808,9 +994,53 @@
       ],
       "sourceURLs": [
         "https://www.tokyometro.jp/corporate/ir/library/factbook/pdf/factbook_2025.pdf",
-        "https://ja.wikipedia.org/wiki/東京メトロ副都心線"
+        "https://ja.wikipedia.org/wiki/東京メトロ副都心線",
+        "https://www.tokyometro.jp/news/2008/2008-17_1.html",
+        "https://www.tokyu.co.jp/image/news/pdf/120724-1.pdf",
+        "https://www.tokyu.co.jp/history/pdf/tokyu100th_data_14_sotyoku.pdf"
       ],
-      "notes": "2008-06-14に飯能方面–西武有楽町線–副都心線渋谷が開始。東横線・みなとみらい直通は2013-03-16開始。相鉄新横浜線との直通は行わない。"
+      "notes": "2008-06-14に飯能方面–西武有楽町線–副都心線渋谷が開始。東横線・みなとみらい直通は2013-03-16開始。相鉄新横浜線との直通は行わない。",
+      "validFrom": "2008-06-14",
+      "historicalReview": {
+        "status": "onsetAndOuterEndpoints",
+        "reviewedAt": "2026-10-10",
+        "sourceURLs": [
+          "https://www.tokyometro.jp/news/2008/2008-17_1.html",
+          "https://www.tokyu.co.jp/image/news/pdf/120724-1.pdf",
+          "https://www.tokyu.co.jp/history/pdf/tokyu100th_data_14_sotyoku.pdf"
+        ],
+        "supportedScope": "2008-06-14の飯能–渋谷から2013-03-16の元町・中華街延伸を区別。現在の物理IDは歴史の事業者・駅設備の同一性を証明しない。"
+      },
+      "legVariants": [
+        {
+          "validFrom": "2008-06-14",
+          "validTo": "2013-03-16",
+          "legIndices": [
+            0,
+            1,
+            2
+          ],
+          "sourceURLs": [
+            "https://www.tokyometro.jp/news/2008/2008-17_1.html"
+          ],
+          "notes": "飯能–渋谷の旧直通範囲。"
+        },
+        {
+          "validFrom": "2013-03-16",
+          "legIndices": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "sourceURLs": [
+            "https://www.tokyu.co.jp/image/news/pdf/120724-1.pdf",
+            "https://www.tokyu.co.jp/history/pdf/tokyu100th_data_14_sotyoku.pdf"
+          ],
+          "notes": "元町・中華街への延伸後の有序区段。"
+        }
+      ]
     },
     {
       "id": "namboku-saitama-meguro",
@@ -854,9 +1084,16 @@
       ],
       "sourceURLs": [
         "https://www.tokyometro.jp/corporate/ir/library/factbook/pdf/factbook_2025.pdf",
-        "https://railf.jp/news/2008/04/18/232500.html"
+        "https://railf.jp/news/2008/04/18/232500.html",
+        "https://www.tokyu.co.jp/company/news/pdf/010221.pdf"
       ],
-      "notes": "浦和美園–目黒–田園調布で、武蔵小杉–日吉は2008-06-22開業（以前は武蔵小杉折返し）。パッケージの目黒線は田園調布までなので田園調布–日吉は東横線ID。"
+      "notes": "浦和美園–赤羽岩淵–目黒–武蔵小杉の三線直通は2001-03-28から。日吉延伸は別の区段有効期2008-06-22。",
+      "validFrom": "2001-03-28",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "supportedScope": "浦和美園–赤羽岩淵–目黒–武蔵小杉の三線直通は2001-03-28から。日吉延伸は別の区段有効期2008-06-22。",
+        "sourceURL": "https://www.tokyu.co.jp/company/news/pdf/010221.pdf"
+      }
     },
     {
       "id": "mita-meguro",
@@ -895,9 +1132,16 @@
       ],
       "sourceURLs": [
         "https://www.kotsu.metro.tokyo.jp/",
-        "https://railf.jp/news/2008/04/18/232500.html"
+        "https://railf.jp/news/2008/04/18/232500.html",
+        "https://www.tokyu.co.jp/company/news/pdf/010221.pdf"
       ],
-      "notes": "西高島平–目黒–田園調布で、武蔵小杉–日吉は2008-06-22延伸（以前は武蔵小杉折返し）。田園調布–日吉はパッケージ上東横線ID。"
+      "notes": "西高島平–目黒–武蔵小杉の直通は2000-09-26から。日吉延伸は別の区段有効期2008-06-22。",
+      "validFrom": "2000-09-26",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "supportedScope": "西高島平–目黒–武蔵小杉の直通は2000-09-26から。日吉延伸は別の区段有効期2008-06-22。",
+        "sourceURL": "https://www.tokyu.co.jp/company/news/pdf/010221.pdf"
+      }
     },
     {
       "id": "sotetsu-tokyu-namboku",
@@ -985,9 +1229,21 @@
       ],
       "sourceURLs": [
         "https://www.kotsu.city.nagoya.jp/jp/pc/subway/",
-        "https://ja.wikipedia.org/wiki/名古屋市営地下鉄鶴舞線"
+        "https://ja.wikipedia.org/wiki/名古屋市営地下鉄鶴舞線",
+        "https://prd.kotsu.city.nagoya.jp/rp/about/trp0004819.htm",
+        "https://prd.kotsu.city.nagoya.jp/rp/about/trp0004818.htm"
       ],
-      "notes": "Subway trains between Kami-Otai and Toyotashi via Akaike and Umetsubo. Toyota-line through-running began 1979-07-29, before 2005. Inuyama-line trains that continue past Kami-Otai are the separate nagoya-inuyama-tsurumai corridor."
+      "notes": "Subway trains between Kami-Otai and Toyotashi via Akaike and Umetsubo. Toyota-line through-running began 1979-07-29, before 2005. Inuyama-line trains that continue past Kami-Otai are the separate nagoya-inuyama-tsurumai corridor.",
+      "validFrom": "1993-08-12",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "reviewedAt": "2026-10-10",
+        "sourceURLs": [
+          "https://prd.kotsu.city.nagoya.jp/rp/about/trp0004819.htm",
+          "https://prd.kotsu.city.nagoya.jp/rp/about/trp0004818.htm"
+        ],
+        "supportedScope": "上小田井は1993-08-12開業。1979-07-29開始時は伏見–豊田市であり、現在の上小田井・新鵜沼外側端点に転用しない。新鵜沼–豊田市を含む全期間の外側端点は別途確認。"
+      }
     },
     {
       "id": "nagoya-inuyama-tsurumai",
@@ -1024,9 +1280,21 @@
       ],
       "sourceURLs": [
         "https://www.meitetsu.co.jp/train/timetable/",
-        "https://ja.wikipedia.org/wiki/名鉄犬山線"
+        "https://ja.wikipedia.org/wiki/名鉄犬山線",
+        "https://prd.kotsu.city.nagoya.jp/rp/about/trp0004819.htm",
+        "https://prd.kotsu.city.nagoya.jp/rp/about/trp0004818.htm"
       ],
-      "notes": "Regular trains run Shin-Unuma–Toyotashi. Kami-Otai through-running began 1993-08-12, before 2005. Shin-Unuma is a terminal of both the Inuyama and Kakamigahara lines, so Meitetsu-Gifu trips are the same-operator terminal continuation and are not a separate leg."
+      "notes": "Regular trains run Shin-Unuma–Toyotashi. Kami-Otai through-running began 1993-08-12, before 2005. Shin-Unuma is a terminal of both the Inuyama and Kakamigahara lines, so Meitetsu-Gifu trips are the same-operator terminal continuation and are not a separate leg.",
+      "validFrom": "1993-08-12",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "reviewedAt": "2026-10-10",
+        "sourceURLs": [
+          "https://prd.kotsu.city.nagoya.jp/rp/about/trp0004819.htm",
+          "https://prd.kotsu.city.nagoya.jp/rp/about/trp0004818.htm"
+        ],
+        "supportedScope": "上小田井は1993-08-12開業。1979-07-29開始時は伏見–豊田市であり、現在の上小田井・新鵜沼外側端点に転用しない。新鵜沼–豊田市を含む全期間の外側端点は別途確認。"
+      }
     },
     {
       "id": "nagoya-komaki-kamiiida",
@@ -1053,9 +1321,16 @@
       ],
       "sourceURLs": [
         "https://www.meitetsu.co.jp/train/timetable/",
-        "https://ja.wikipedia.org/wiki/名古屋市営地下鉄上飯田線"
+        "https://ja.wikipedia.org/wiki/名古屋市営地下鉄上飯田線",
+        "https://www.kotsu.city.nagoya.jp/rp/about/trp0004819.htm"
       ],
-      "notes": "All-day through service Inuyama–Heian-dori. The Kamiiida line opened and through-running started 2003-03-27, before 2005, and it still runs. No through service onto the Meijo line at Heian-dori."
+      "notes": "上飯田線開業と小牧線相互直通は2003-03-27から。現行犬山端点の開業初日設定は別途確認が必要。平安通で名城線に直通しない。",
+      "validFrom": "2003-03-27",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "supportedScope": "上飯田線開業と小牧線相互直通は2003-03-27から。現行犬山端点の開業初日設定は別途確認が必要。平安通で名城線に直通しない。",
+        "sourceURL": "https://www.kotsu.city.nagoya.jp/rp/about/trp0004819.htm"
+      }
     },
     {
       "id": "osaka-midosuji-kita",
@@ -1227,9 +1502,16 @@
       ],
       "sourceURLs": [
         "https://www.city.kyoto.lg.jp/kotsu/page/0000204847.html",
-        "https://www.kintetsu.co.jp/"
+        "https://www.kintetsu.co.jp/",
+        "https://www.city.kyoto.lg.jp/kotsu/page/0000219240.html"
       ],
-      "notes": "竹田直通は1988-08-28から。地下鉄側の直通先は急行近鉄奈良と普通新田辺で、新田辺は同一経路の途中折り返し。橿原神宮前行きは地下鉄に入らない。"
+      "notes": "国際会館–近鉄奈良の完整な直通範囲は2000-03-15から。1988-08-28開始の北大路–新田辺旧範囲は本パターンの現在の外側端点を証明しない。旧範囲は別途追加が必要。",
+      "validFrom": "2000-03-15",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "supportedScope": "国際会館–近鉄奈良の完整な直通範囲は2000-03-15から。1988-08-28開始の北大路–新田辺旧範囲は本パターンの現在の外側端点を証明しない。旧範囲は別途追加が必要。",
+        "sourceURL": "https://www.city.kyoto.lg.jp/kotsu/page/0000219240.html"
+      }
     },
     {
       "id": "kyoto-tozai-keishin",
@@ -1246,6 +1528,12 @@
         {
           "lineID": "jp-京都市-東西線",
           "fromStationCode": "005959",
+          "toStationCode": "005960",
+          "validFrom": "2008-01-16"
+        },
+        {
+          "lineID": "jp-京都市-東西線",
+          "fromStationCode": "005960",
           "toStationCode": "006026"
         },
         {
@@ -1256,9 +1544,12 @@
       ],
       "sourceURLs": [
         "https://www.city.kyoto.lg.jp/kotsu/page/0000204847.html",
-        "https://ja.wikipedia.org/wiki/京津線"
+        "https://ja.wikipedia.org/wiki/京津線",
+        "https://www.city.kyoto.lg.jp/kotsu/page/0000024682.html",
+        "https://www.city.kyoto.lg.jp/kotsu/cmsfiles/contents/0000073/73257/05_sonota03.pdf"
       ],
-      "notes": "御陵直通は1997-10-12から、太秦天神川までの西側は2004-11-26から。浜大津は2018-03-17にびわ湖浜大津へ改称（同一コード）。京津直通は御陵より東の醍醐・六地蔵には入らない。"
+      "notes": "京津線の地下鉄直通は1997-10-12から京都市役所前折返し。太秦天神川への乗入れ延長は2008-01-16（2004-11-26は醍醐–六地蔵延伸であり京津直通の西端ではない）。市役所前で区段を分割し、未開業の西側を過去に表示しない。浜大津は2018-03-17にびわ湖浜大津へ改称。",
+      "validFrom": "1997-10-12"
     },
     {
       "id": "fukuoka-kuko-chikuhi",
@@ -1291,9 +1582,19 @@
       ],
       "sourceURLs": [
         "https://subway.city.fukuoka.lg.jp/subway/about/pdf/subway_all.pdf",
-        "https://ja.wikipedia.org/wiki/%E7%AF%89%E8%82%A5%E7%B7%9A"
+        "https://ja.wikipedia.org/wiki/%E7%AF%89%E8%82%A5%E7%B7%9A",
+        "https://subway.city.fukuoka.lg.jp/subway/about/histry.php"
       ],
-      "notes": "空港線と筑肥線の姪浜直通は1983-03-22から。地下鉄車両の多くは筑前前原まで、JR車両は空港まで入り、一部は唐津から唐津線で西唐津まで直通する。2026-03-14改正後も西唐津直通はある。筑肥線の伊万里方面（山本–伊万里）には入らない。"
+      "notes": "空港線と筑肥線の姪浜直通は1983-03-22から。地下鉄車両の多くは筑前前原まで、JR車両は空港まで入り、一部は唐津から唐津線で西唐津まで直通する。2026-03-14改正後も西唐津直通はある。筑肥線の伊万里方面（山本–伊万里）には入らない。",
+      "validFrom": "1993-03-03",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "reviewedAt": "2026-10-10",
+        "sourceURLs": [
+          "https://subway.city.fukuoka.lg.jp/subway/about/histry.php"
+        ],
+        "supportedScope": "現在の外側端点である福岡空港は1993-03-03開業。1983-03-22の筑肥線直通開始を空港発着の開始日に転用しない。西唐津までの全期間・運休・各外側端点の開始は未確認。"
+      }
     },
     {
       "id": "hanshin-sanyo",
@@ -1326,9 +1627,16 @@
       "sourceURLs": [
         "https://www.sanyo-railway.co.jp/railway/express.html",
         "https://www.hanshin.co.jp/company/division/",
-        "https://ja.wikipedia.org/wiki/直通特急"
+        "https://ja.wikipedia.org/wiki/直通特急",
+        "https://www.sanyo-railway.co.jp/company/history.html"
       ],
-      "notes": "神戸高速経由の直通は1968-04-07から、大阪梅田–山陽姫路の直通特急は1998-02-15から現行。2010-10-01に神戸高速の第二種鉄道事業を整理したが経路は同じ。網干線への定期直通は確認していない。"
+      "notes": "姫路–阪神梅田の直通特急は1998-02-15から。1968年開始の旧直通と、この完全な外側端点を区別する。",
+      "validFrom": "1998-02-15",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "supportedScope": "姫路–阪神梅田の直通特急は1998-02-15から。1968年開始の旧直通と、この完全な外側端点を区別する。",
+        "sourceURL": "https://www.sanyo-railway.co.jp/company/history.html"
+      }
     },
     {
       "id": "hanshin-kintetsu-nara",
@@ -1615,9 +1923,20 @@
       ],
       "sourceURLs": [
         "https://www.jr-shikoku.co.jp/01_trainbus/vehicle-info/marine.html",
-        "https://ja.wikipedia.org/wiki/%E3%83%9E%E3%83%AA%E3%83%B3%E3%83%A9%E3%82%A4%E3%83%8A%E3%83%BC"
+        "https://ja.wikipedia.org/wiki/%E3%83%9E%E3%83%AA%E3%83%B3%E3%83%A9%E3%82%A4%E3%83%8A%E3%83%BC",
+        "https://www.toretabi.jp/train/vol67/01.html"
       ],
-      "notes": "瀬戸大橋線経由の岡山–高松快速。本四備讃線の会社境界は児島。1988-04-10からで、2005年以前から2026年も運転。しおかぜ・南風・サンライズ瀬戸は別コリドー。"
+      "notes": "瀬戸大橋線経由の岡山–高松快速。本四備讃線の会社境界は児島。1988-04-10からで、2005年以前から2026年も運転。しおかぜ・南風・サンライズ瀬戸は別コリドー。",
+      "validFrom": "1988-04-10",
+      "historicalReview": {
+        "status": "onsetAndOuterEndpoints",
+        "reviewedAt": "2026-10-10",
+        "sourceURLs": [
+          "https://www.toretabi.jp/train/vol67/01.html",
+          "https://www.jr-shikoku.co.jp/01_trainbus/vehicle-info/marine.html"
+        ],
+        "supportedScope": "交通新聞社の列車紹介は1988-04-10から岡山–高松のマリンライナー運転を明記。JR四国の現行案内も同じ外側端点を支持。全日の班次、過去の駅設備・物理形状・災害運休を証明しない。"
+      }
     },
     {
       "id": "shikoku-naruto-tokushima",
@@ -1677,9 +1996,21 @@
       ],
       "sourceURLs": [
         "https://www.jrkyushu.co.jp/byarea/kagoshima/info/__icsFiles/afieldfile/2026/03/12/nippo.miyazakiairport.pdf",
-        "https://ja.wikipedia.org/wiki/%E5%AE%AE%E5%B4%8E%E7%A9%BA%E6%B8%AF%E7%B7%9A"
+        "https://ja.wikipedia.org/wiki/%E5%AE%AE%E5%B4%8E%E7%A9%BA%E6%B8%AF%E7%B7%9A",
+        "https://www.miyazaki-airport.co.jp/topics/airport/5733.html",
+        "https://www.mlit.go.jp/common/000227427.pdf"
       ],
-      "notes": "宮崎空港線は1996-07-18開業時から日南線田吉・日豊線へ直通。2026-03-14改正でも特急は大分・延岡発着が空港に入り、普通も延岡方面へ揃う。博多・小倉から空港へ入る定期は2026年の安定した外端ではないので大分を外端にした。日南線の志布志方面は南宮崎が日南線の端。"
+      "notes": "宮崎空港線は1996-07-18開業時から日南線田吉・日豊線へ直通。2026-03-14改正でも特急は大分・延岡発着が空港に入り、普通も延岡方面へ揃う。博多・小倉から空港へ入る定期は2026年の安定した外端ではないので大分を外端にした。日南線の志布志方面は南宮崎が日南線の端。",
+      "validFrom": "1996-07-18",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "reviewedAt": "2026-10-10",
+        "sourceURLs": [
+          "https://www.miyazaki-airport.co.jp/topics/airport/5733.html",
+          "https://www.mlit.go.jp/common/000227427.pdf"
+        ],
+        "supportedScope": "宮崎空港線は1996-07-18開通。この日より前の空港直通は成立しない。現在の大分外側端点・全期間の特急／普通運転は開業資料だけでは証明しない。"
+      }
     },
     {
       "id": "jr-ise-mie",
@@ -2228,9 +2559,16 @@
       ],
       "sourceURLs": [
         "https://www.hokuhoku.co.jp/",
-        "https://ja.wikipedia.org/wiki/はくたか_(列車)"
+        "https://ja.wikipedia.org/wiki/はくたか_(列車)",
+        "https://www.hokuhoku.co.jp/hakutaka.html"
       ],
-      "notes": "Conventional Limited Express Hakutaka ran Echigo-Yuzawa–Kanazawa, with some trips to Fukui, until it ended on 2015-03-14 (last day 2015-03-13). Naoetsu–Fukui was then the JR West Hokuriku Main Line; today's Hisui, Ainokaze, IR, and Hapi-line IDs are used. Wakura Onsen trips are hakutaka-wakura."
+      "notes": "Conventional Limited Express Hakutaka ran Echigo-Yuzawa–Kanazawa, with some trips to Fukui, until it ended on 2015-03-14 (last day 2015-03-13). Naoetsu–Fukui was then the JR West Hokuriku Main Line; today's Hisui, Ainokaze, IR, and Hapi-line IDs are used. Wakura Onsen trips are hakutaka-wakura. 開始日は公式資料による下限。現在の外側端点・全歴史経路が開業初日から同一だったことは別途確認を要する。",
+      "validFrom": "1997-03-22",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "supportedScope": "ほくほく線経由はくたかの開始。福井延長・和倉温泉系統は別途確認。",
+        "sourceURL": "https://www.hokuhoku.co.jp/hakutaka.html"
+      }
     },
     {
       "id": "hakutaka-wakura",
@@ -2670,9 +3008,21 @@
       ],
       "sourceURLs": [
         "https://www.kotsu.city.kobe.lg.jp/",
-        "https://ja.wikipedia.org/wiki/北神線"
+        "https://ja.wikipedia.org/wiki/北神線",
+        "https://kotsu.city.kobe.lg.jp/wp-content/uploads/19chronologicaltable.pdf",
+        "https://kotsu.city.kobe.lg.jp/wp-content/uploads/kobekotsu100pamf.pdf"
       ],
-      "notes": "谷上–新神戸–西神中央の直通は北神線開業の1988-04-02から。北神急行は2020-06-01に神戸市へ移管され、パッケージは現在の神戸市北神線ID。"
+      "notes": "谷上–新神戸–西神中央の直通は北神線開業の1988-04-02から。北神急行は2020-06-01に神戸市へ移管され、パッケージは現在の神戸市北神線ID。",
+      "validFrom": "1988-04-02",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "reviewedAt": "2026-10-10",
+        "sourceURLs": [
+          "https://kotsu.city.kobe.lg.jp/wp-content/uploads/19chronologicaltable.pdf",
+          "https://kotsu.city.kobe.lg.jp/wp-content/uploads/kobekotsu100pamf.pdf"
+        ],
+        "supportedScope": "谷上–新神戸の北神線開業と相互直通開始。西神中央までの初日各列車は年表だけでは証明しない。2020-06-01以前の北神線事業者は北神急行、現在の神戸市IDは物理ベース。"
+      }
     },
     {
       "id": "nose-nissei-express",
@@ -2705,9 +3055,16 @@
       "sourceURLs": [
         "https://noseden.hankyu.co.jp/",
         "https://www.hankyu.co.jp/",
-        "https://ja.wikipedia.org/wiki/日生エクスプレス"
+        "https://ja.wikipedia.org/wiki/日生エクスプレス",
+        "https://noseden.hankyu.co.jp/100th/history.html"
       ],
-      "notes": "日生エクスプレスは1997-11-17から平日に日生中央–大阪梅田。外側端は日生中央と大阪梅田。能勢線内のみの日生急行は含めない。"
+      "notes": "日生中央–阪急梅田の平日直通特急は1997-11-17から。能勢線内のみの日生急行は含めない。",
+      "validFrom": "1997-11-17",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "supportedScope": "日生中央–阪急梅田の平日直通特急は1997-11-17から。能勢線内のみの日生急行は含めない。",
+        "sourceURL": "https://noseden.hankyu.co.jp/100th/history.html"
+      }
     },
     {
       "id": "nankai-koya-semboku",
@@ -2739,9 +3096,21 @@
       ],
       "sourceURLs": [
         "https://www.nankai.co.jp/",
-        "https://ja.wikipedia.org/wiki/泉北線"
+        "https://ja.wikipedia.org/wiki/泉北線",
+        "https://www.nankai.co.jp/company/history/chronicle/books/pdf140/nankai_140th_07.pdf",
+        "https://www.nankai.co.jp/community/station/izumichuo.html"
       ],
-      "notes": "和泉中央–難波の直通は和泉中央開業（1995）以来。泉北高速鉄道は2025-04-01に南海へ合併し、パッケージは現在の南海泉北線ID。泉北ライナーも同じ経路。"
+      "notes": "和泉中央は1995-04-01開業。難波との初日直通・全期間は未確認。泉北高速鉄道は2025-04-01に南海へ合併し、現在の南海泉北線IDを物理ベースとして使用。泉北ライナーも同じ経路。",
+      "validFrom": "1995-04-01",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "reviewedAt": "2026-10-10",
+        "sourceURLs": [
+          "https://www.nankai.co.jp/company/history/chronicle/books/pdf140/nankai_140th_07.pdf",
+          "https://www.nankai.co.jp/community/station/izumichuo.html"
+        ],
+        "supportedScope": "和泉中央の開業下限。1971年の泉北直通開始を現在の和泉中央外側端点に転用しない。難波との初日直通は未証明、2025-04-01以前の事業者は泉北高速鉄道。"
+      }
     },
     {
       "id": "nankai-main-airport",
@@ -2768,9 +3137,21 @@
       ],
       "sourceURLs": [
         "https://www.nankai.co.jp/",
-        "https://ja.wikipedia.org/wiki/南海電気鉄道空港線"
+        "https://ja.wikipedia.org/wiki/南海電気鉄道空港線",
+        "https://www.nankai.co.jp/company/history/chronicle/brief/period_03.html",
+        "https://www.nankai.co.jp/lib/company/news/pdf/240802.pdf"
       ],
-      "notes": "空港急行とラピートの難波–関西空港は1994-06-15から。泉佐野より和歌山市方面への定期直通はない。"
+      "notes": "空港線は1994-06-15開業。難波–関西空港のラピートは1994-09-04運転開始。空港急行の初日の全端点・全期間は未確認。泉佐野より和歌山市方面への定期直通はここに含めない。",
+      "validFrom": "1994-06-15",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "reviewedAt": "2026-10-10",
+        "sourceURLs": [
+          "https://www.nankai.co.jp/company/history/chronicle/brief/period_03.html",
+          "https://www.nankai.co.jp/lib/company/news/pdf/240802.pdf"
+        ],
+        "supportedScope": "空港線は1994-06-15開業、ラピートは1994-09-04開始。開業当日の難波直通全端点は開業日だけでは証明しない。"
+      }
     },
     {
       "id": "kintetsu-kyoto-kashihara-shima",
@@ -2968,9 +3349,16 @@
       ],
       "sourceURLs": [
         "https://www.westjr.co.jp/",
-        "https://ja.wikipedia.org/wiki/JR東西線"
+        "https://ja.wikipedia.org/wiki/JR東西線",
+        "https://www.kr-railway.co.jp/corporate/"
       ],
-      "notes": "JR東西線開業の1997-03-08から学研都市線と直通し、外側は木津と西明石。日中の塚口折り返しは同一経路の途中駅。"
+      "notes": "JR東西線開業の1997-03-08から学研都市線と直通し、外側は木津と西明石。日中の塚口折り返しは同一経路の途中駅。 開始日は公式資料による下限。現在の外側端点・全歴史経路が開業初日から同一だったことは別途確認を要する。",
+      "validFrom": "1997-03-08",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "supportedScope": "JR東西線開業と学研都市・神戸・宝塚線の接続。現行外側端点の初日運転は別途確認。",
+        "sourceURL": "https://www.kr-railway.co.jp/corporate/"
+      }
     },
     {
       "id": "gakkentoshi-tozai-takarazuka",
@@ -3007,9 +3395,16 @@
       ],
       "sourceURLs": [
         "https://www.westjr.co.jp/",
-        "https://ja.wikipedia.org/wiki/学研都市線"
+        "https://ja.wikipedia.org/wiki/学研都市線",
+        "https://www.kr-railway.co.jp/corporate/"
       ],
-      "notes": "JR東西線経由で福知山線へ入る列車の外側端は新三田。奈良始発は大和路線経由で、JR奈良線ではない。朝晩の篠山口行きは注記のみ。こうのとりは福知山まででこの経路ではない。 [confidence: medium]"
+      "notes": "JR東西線経由で福知山線へ入る列車の外側端は新三田。奈良始発は大和路線経由で、JR奈良線ではない。朝晩の篠山口行きは注記のみ。こうのとりは福知山まででこの経路ではない。 [confidence: medium] 開始日は公式資料による下限。現在の外側端点・全歴史経路が開業初日から同一だったことは別途確認を要する。",
+      "validFrom": "1997-03-08",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "supportedScope": "JR東西線開業と学研都市・神戸・宝塚線の接続。現行外側端点の初日運転は別途確認。",
+        "sourceURL": "https://www.kr-railway.co.jp/corporate/"
+      }
     },
     {
       "id": "kansai-airport-rapid",
@@ -3026,7 +3421,12 @@
         {
           "lineID": "jp-西日本旅客鉄道-大阪環状線",
           "fromStationCode": "007093",
-          "toStationCode": "007439"
+          "toStationCode": "007439",
+          "loopTraversal": "forward",
+          "loopTraversalSourceURLs": [
+            "https://www.westjr.co.jp/press/article/items/141219_00_honsya.pdf"
+          ],
+          "loopTraversalScope": "現在の物理ベースの内回り・西九条側を選ぶ表示区段。過去の物理線形、貨物線、全日の運転の証明ではない。"
         },
         {
           "lineID": "jp-西日本旅客鉄道-阪和線",
@@ -3095,7 +3495,12 @@
         {
           "lineID": "jp-西日本旅客鉄道-大阪環状線",
           "fromStationCode": "007093",
-          "toStationCode": "007439"
+          "toStationCode": "007439",
+          "loopTraversal": "forward",
+          "loopTraversalSourceURLs": [
+            "https://www.westjr.co.jp/press/article/items/141219_00_honsya.pdf"
+          ],
+          "loopTraversalScope": "現在の物理ベースの内回り・西九条側を選ぶ表示区段。過去の物理線形、貨物線、全日の運転の証明ではない。"
         },
         {
           "lineID": "jp-西日本旅客鉄道-阪和線",
@@ -3141,7 +3546,12 @@
         {
           "lineID": "jp-西日本旅客鉄道-大阪環状線",
           "fromStationCode": "007068",
-          "toStationCode": "007439"
+          "toStationCode": "007439",
+          "loopTraversal": "forward",
+          "loopTraversalSourceURLs": [
+            "https://www.westjr.co.jp/press/article/items/221209_00_press_senrokirikae.pdf"
+          ],
+          "loopTraversalScope": "現在の物理ベースの内回り・西九条側を選ぶ表示区段。過去の物理線形、貨物線、全日の運転の証明ではない。"
         },
         {
           "lineID": "jp-西日本旅客鉄道-阪和線",
@@ -3156,9 +3566,74 @@
       ],
       "sourceURLs": [
         "https://www.westjr.co.jp/",
-        "https://ja.wikipedia.org/wiki/はるか_(列車)"
+        "https://ja.wikipedia.org/wiki/はるか_(列車)",
+        "https://www.westjr.co.jp/press/article/items/201218_00_keihanshin.pdf"
       ],
-      "notes": "1994-09-04から。米原発着（2003-06-01、2往復）は2020-04-24に運休し、2021-03-13改正で野洲発着に短縮。2023-03-18から大阪駅うめきた地下に停車。貨物線IDはなく新大阪–大阪は東海道線、大阪–天王寺は環状線。山科延伸は未開業。 physically discontinuous in the package: the 梅田貨物線 is absent, leaving a 74 m gap between the 東海道線 and 大阪環状線 Osaka anchors. [confidence: medium]"
+      "notes": "1994-09-04運転開始。米原発着は2019年公式資料に存在。2020年運休の米原個別適用範囲は未確認、2021-03-13改正で野洲発着区段を選択。2023-02-12は工事のため全区間全列車運休。2023-03-18から大阪駅うめきた地下に停車。貨物線IDはなく東海道線・環状線を表示代理として使用。梅田貨物線不在による74mのギャップは残る。 [confidence: medium]",
+      "legVariants": [
+        {
+          "validFrom": "2005-01-01",
+          "validTo": "2021-03-13",
+          "legIndices": [
+            0,
+            2,
+            3,
+            4,
+            5
+          ],
+          "sourceURLs": [
+            "https://www.westjr.co.jp/",
+            "https://ja.wikipedia.org/wiki/はるか_(列車)",
+            "https://www.westjr.co.jp/press/article/items/201218_00_keihanshin.pdf"
+          ],
+          "notes": "既存の米原側区段と共通区段を明示的に選択する。2005より前の範囲と2020年運休の詳細は未確認で、全日運行を保証しない。"
+        },
+        {
+          "validFrom": "2021-03-13",
+          "legIndices": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "sourceURLs": [
+            "https://www.westjr.co.jp/press/article/items/201218_00_keihanshin.pdf"
+          ],
+          "notes": "2021年改正の野洲発着区段と共通区段を選択。梅田貨物線の不在など物理幾何の制限は残る。",
+          "validTo": "2023-02-12"
+        },
+        {
+          "validFrom": "2023-02-12",
+          "validTo": "2023-02-13",
+          "legIndices": [],
+          "sourceURLs": [
+            "https://www.westjr.co.jp/press/article/items/221209_00_press_senrokirikae.pdf"
+          ],
+          "notes": "線路切換工事による全区間全列車の終日運休。",
+          "suspended": true
+        },
+        {
+          "validFrom": "2023-02-13",
+          "legIndices": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "sourceURLs": [
+            "https://www.westjr.co.jp/press/article/items/221209_00_press_senrokirikae.pdf",
+            "https://www.westjr.co.jp/press/article/items/201218_00_keihanshin.pdf"
+          ],
+          "notes": "終日運休の翌日から通常の区段選択。個別日班次は保証しない。"
+        }
+      ],
+      "historicalReview": {
+        "status": "periodsUnresolved",
+        "supportedScope": "明示的な区段選択。米原延長の開始日と2020年運休を含む全歴史は未確認。",
+        "sourceURL": "https://www.westjr.co.jp/press/article/items/201218_00_keihanshin.pdf"
+      }
     },
     {
       "id": "kuroshio",
@@ -3180,7 +3655,12 @@
         {
           "lineID": "jp-西日本旅客鉄道-大阪環状線",
           "fromStationCode": "007068",
-          "toStationCode": "007439"
+          "toStationCode": "007439",
+          "loopTraversal": "forward",
+          "loopTraversalSourceURLs": [
+            "https://www.westjr.co.jp/press/article/items/221209_00_press_senrokirikae.pdf"
+          ],
+          "loopTraversalScope": "現在の物理ベースの内回り・西九条側を選ぶ表示区段。過去の物理線形、貨物線、全日の運転の証明ではない。"
         },
         {
           "lineID": "jp-西日本旅客鉄道-阪和線",
@@ -3197,7 +3677,48 @@
         "https://www.westjr.co.jp/",
         "https://ja.wikipedia.org/wiki/くろしお_(列車)"
       ],
-      "notes": "京都・新大阪–新宮。梅田貨物線経由は1989年からで、2023-03-18から大阪駅うめきた地下に停車。貨物線IDはなく東海道線と環状線で表す。白浜止まりは同一経路の途中駅。WEST EXPRESS 銀河も季節運行で同経路。 [confidence: medium]"
+      "notes": "京都・新大阪–新宮。梅田貨物線経由は1989年からで、2023-03-18から大阪駅うめきた地下に停車。貨物線IDはなく東海道線と環状線で表す。白浜止まりは同一経路の途中駅。WEST EXPRESS 銀河も季節運行で同経路。 [confidence: medium]",
+      "legVariants": [
+        {
+          "validFrom": null,
+          "validTo": "2023-02-12",
+          "legIndices": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "sourceURLs": [
+            "https://www.westjr.co.jp/press/article/items/221209_00_press_senrokirikae.pdf"
+          ],
+          "notes": "既存の通常区段。開始日は未確認、coverageFrom以前は未証明。"
+        },
+        {
+          "validFrom": "2023-02-12",
+          "validTo": "2023-02-13",
+          "legIndices": [
+            2,
+            3
+          ],
+          "sourceURLs": [
+            "https://www.westjr.co.jp/press/article/items/221209_00_press_senrokirikae.pdf"
+          ],
+          "notes": "京都・新大阪–天王寺は全列車運休。天王寺折返しで和歌山方面は運転。"
+        },
+        {
+          "validFrom": "2023-02-13",
+          "legIndices": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "sourceURLs": [
+            "https://www.westjr.co.jp/press/article/items/221209_00_press_senrokirikae.pdf"
+          ],
+          "notes": "工事の終日運休を除いた通常区段選択。"
+        }
+      ]
     },
     {
       "id": "hashidate",
@@ -3237,7 +3758,16 @@
         "https://www.westjr.co.jp/",
         "https://ja.wikipedia.org/wiki/はしだて_(列車)"
       ],
-      "notes": "京都–天橋立は1996-03-16から。豊岡直通は2010-03-13に1往復、定期の外側端としたのは2011-03-12。北近畿タンゴ鉄道は2015-04-01にWILLER TRAINSへ移管され、現在の宮福線・宮津線ID。2025-03-15以降、特急区間は夕日ヶ浦木津温泉までに短くなるが豊岡までは快速で入る。 [confidence: medium]"
+      "notes": "京都–天橋立は1996-03-16から。豊岡直通は2010-03-13に1往復、定期の外側端としたのは2011-03-12。北近畿タンゴ鉄道は2015-04-01にWILLER TRAINSへ移管され、現在の宮福線・宮津線ID。2025-03-15以降、特急区間は夕日ヶ浦木津温泉までに短くなるが豊岡までは快速で入る。 [confidence: medium]",
+      "historicalReview": {
+        "status": "periodsUnresolved",
+        "reviewedAt": "2026-10-10",
+        "sourceURLs": [
+          "https://www.westjr.co.jp/company/info/issue/data/pdf/data2018_10.pdf",
+          "https://trains.willer.co.jp/wp-content/uploads/2025/03/2f7e4daee10f2ef957da66d4b2cc5085.pdf"
+        ],
+        "supportedScope": "名称開始1996-03と再編2011-03は月精度。現在の豊岡までの快速継続は2025時刻表に存在するが既存2011-03-12延伸境界の正確な一次資料は未確認。"
+      }
     },
     {
       "id": "super-hakuto",
@@ -3285,9 +3815,21 @@
       "sourceURLs": [
         "https://www.chizukyu.co.jp/",
         "https://www.westjr.co.jp/",
-        "https://ja.wikipedia.org/wiki/スーパーはくと"
+        "https://ja.wikipedia.org/wiki/スーパーはくと",
+        "https://www.chizukyu.co.jp/chizukyu/president/q905/",
+        "https://www.chizukyu.co.jp/chizukyu/30th/history/"
       ],
-      "notes": "智頭急行開業の1994-12-03から京都・大阪–鳥取・倉吉。2024-03-16に多くを大阪始発へ短縮したが1・3・14・16号は京都のまま。2025-03-15時点で1日8往復、2026-03-14も継続。大阪始発は同一経路の途中駅。"
+      "notes": "スーパーはくとは1994-12-03運転開始。現在は京都・大阪–鳥取・倉吉のコリドーだが京都外側端点の初日適用は未確認。智頭急行線、因美線経由。",
+      "validFrom": "1994-12-03",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "reviewedAt": "2026-10-10",
+        "sourceURLs": [
+          "https://www.chizukyu.co.jp/chizukyu/president/q905/",
+          "https://www.chizukyu.co.jp/chizukyu/30th/history/"
+        ],
+        "supportedScope": "スーパーはくとの運転開始を支持。現在の京都外側端点が初日に存在したことは未確認。"
+      }
     },
     {
       "id": "super-inaba",
@@ -3320,9 +3862,18 @@
       "sourceURLs": [
         "https://www.chizukyu.co.jp/",
         "https://www.westjr.co.jp/",
-        "https://ja.wikipedia.org/wiki/スーパーいなば"
+        "https://ja.wikipedia.org/wiki/スーパーいなば",
+        "https://www.chizukyu.co.jp/chizukyu/30th/history/"
       ],
-      "notes": "岡山–鳥取は智頭急行開業の1994-12-03から。倉吉へは入らず、津山経由の旧因美線も使わない。2025–2026も1日6往復。"
+      "notes": "岡山–鳥取の「いなば」は1997年11月新設、「スーパーいなば」は2003年10月開始。智頭急行開業1994-12-03に同列車が存在したとはしない。正確な開始日と全期間は未確認。智頭急行線、因美線経由。",
+      "historicalReview": {
+        "status": "periodsUnresolved",
+        "reviewedAt": "2026-10-10",
+        "sourceURLs": [
+          "https://www.chizukyu.co.jp/chizukyu/30th/history/"
+        ],
+        "supportedScope": "事業者年表は前身1997-11と改称2003-10を月精度で確認。月初日を正確な開始日に代入しない。"
+      }
     },
     {
       "id": "utl-utsunomiya-numazu",
@@ -3466,21 +4017,24 @@
           "toStationCode": "003547"
         },
         {
-          "lineID": "jp-東日本旅客鉄道-京葉線-2",
+          "lineID": "jp-東日本旅客鉄道-京葉線-3",
           "fromStationCode": "003547",
-          "toStationCode": "003682"
+          "toStationCode": "003870"
         },
         {
           "lineID": "jp-東日本旅客鉄道-京葉線",
-          "fromStationCode": "003682",
+          "fromStationCode": "003870",
           "toStationCode": "003785"
         }
       ],
       "sourceURLs": [
         "https://ja.wikipedia.org/wiki/%E6%AD%A6%E8%94%B5%E9%87%8E%E7%B7%9A",
-        "https://ja.wikipedia.org/wiki/%E4%BA%AC%E8%91%89%E7%B7%9A"
+        "https://ja.wikipedia.org/wiki/%E4%BA%AC%E8%91%89%E7%B7%9A",
+        "https://www.jreast.co.jp/youran/pdf/jre_youran_group_p30_35.pdf",
+        "https://timetables.jreast.co.jp/2610/train/130/134601.html",
+        "https://timetables.jreast.co.jp/2610/train/165/166961.html"
       ],
-      "notes": "府中本町–西船橋–京葉線二俣新町経由で東京（京葉線ホーム、駅コード003785）へ直通。京葉線の東京開業（1990-03-10）以来の運行で、2005年以降も継続。一部列車は西船橋止まり。"
+      "notes": "府中本町–西船橋から市川塩浜経由で東京（京葉線ホーム、003785）へ直通。二俣新町はこの支線の停車駅・接続駅ではない。京葉線東京開業は1990-03-10。既存の2005年以降の収録範囲は維持する。"
     },
     {
       "id": "musashino-keiyo-makuhari",
@@ -3503,19 +4057,22 @@
         {
           "lineID": "jp-東日本旅客鉄道-京葉線-2",
           "fromStationCode": "003547",
-          "toStationCode": "003682"
+          "toStationCode": "003761"
         },
         {
           "lineID": "jp-東日本旅客鉄道-京葉線",
-          "fromStationCode": "003682",
+          "fromStationCode": "003761",
           "toStationCode": "003984"
         }
       ],
       "sourceURLs": [
         "https://ja.wikipedia.org/wiki/%E6%AD%A6%E8%94%B5%E9%87%8E%E7%B7%9A",
-        "https://ja.wikipedia.org/wiki/%E4%BA%AC%E8%91%89%E7%B7%9A"
+        "https://ja.wikipedia.org/wiki/%E4%BA%AC%E8%91%89%E7%B7%9A",
+        "https://www.jreast.co.jp/youran/pdf/jre_youran_group_p30_35.pdf",
+        "https://timetables.jreast.co.jp/2610/train/130/132751.html",
+        "https://timetables.jreast.co.jp/2610/train/165/166891.html"
       ],
-      "notes": "武蔵野線から二俣新町で京葉線の蘇我方へ入り海浜幕張まで走る系統。東京方面とは二俣新町で分かれる。2005年以前からある運用で、現在も設定がある。外端は海浜幕張（蘇我まで行く定期直通は京葉線本線側の別系統）。 [confidence: medium]"
+      "notes": "西船橋から南船橋経由で京葉線蘇我方へ入り海浜幕張まで走る客運系統。二俣新町はこの支線の停車駅・接続駅ではない。JR東日本会社要覧は海浜幕張乗り入れ開始を2000-12-02と記録する。既存の2005年以降の収録範囲は維持する。"
     },
     {
       "id": "jo-narita-airport",
@@ -4409,9 +4966,19 @@
       ],
       "sourceURLs": [
         "https://ja.wikipedia.org/wiki/%E8%B8%8A%E3%82%8A%E5%AD%90_(%E5%88%97%E8%BB%8A)",
-        "https://www.izukyu.co.jp/"
+        "https://www.izukyu.co.jp/",
+        "https://www.izukyu.co.jp/company/history.php"
       ],
-      "notes": "東京–熱海–伊東–伊豆急下田。伊東（006117）は伊東線と伊豆急行線で共通。特急踊り子と伊東線普通の直通は2005年以前から継続。スーパービュー踊り子は2020-03-13で終了し、サフィール踊り子が2020-03-14に同じ経路で開始。新宿・池袋発着は別パターン。"
+      "notes": "東京–熱海–伊東–伊豆急下田。伊東（006117）は伊東線と伊豆急行線で共通。特急踊り子と伊東線普通の直通は2005年以前から継続。スーパービュー踊り子は2020-03-13で終了し、サフィール踊り子が2020-03-14に同じ経路で開始。新宿・池袋発着は別パターン。",
+      "validFrom": "1981-10-01",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "reviewedAt": "2026-10-10",
+        "sourceURLs": [
+          "https://www.izukyu.co.jp/company/history.php"
+        ],
+        "supportedScope": "踊り子の名称での運転開始。初日の東京–下田全端点・全停車駅は短い年表だけでは未確認。サフィールは2020-03-14以降で、1981年に遡及しない。"
+      }
     },
     {
       "id": "odoriko-shinjuku-shimoda",
@@ -4495,9 +5062,19 @@
       ],
       "sourceURLs": [
         "https://ja.wikipedia.org/wiki/%E8%B8%8A%E3%82%8A%E5%AD%90_(%E5%88%97%E8%BB%8A)",
-        "https://ja.wikipedia.org/wiki/%E9%A7%BF%E8%B1%86%E7%B7%9A"
+        "https://ja.wikipedia.org/wiki/%E9%A7%BF%E8%B1%86%E7%B7%9A",
+        "https://www.izuhakone.co.jp/sunzudaiyu/sunzudaiyu-news/p000280_d/fil/railway_news_20201112.pdf"
       ],
-      "notes": "東京–熱海からJR東海の東海道線で三島へ入り、伊豆箱根鉄道駿豆線で修善寺へ。三島（005601）はJR東海と駿豆線で共通。特急踊り子のみの片乗り入れで、普通電車は直通しない。2005年以前から、2026年の時刻にも残る。伊豆急下田系統とは熱海で分かれる。"
+      "notes": "東京–熱海からJR東海の東海道線で三島へ入り、伊豆箱根鉄道駿豆線で修善寺へ。三島（005601）はJR東海と駿豆線で共通。特急踊り子のみの片乗り入れで、普通電車は直通しない。2005年以前から、2026年の時刻にも残る。伊豆急下田系統とは熱海で分かれる。",
+      "validFrom": "1981-10-01",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "reviewedAt": "2026-10-10",
+        "sourceURLs": [
+          "https://www.izuhakone.co.jp/sunzudaiyu/sunzudaiyu-news/p000280_d/fil/railway_news_20201112.pdf"
+        ],
+        "supportedScope": "踊り子の駿豆線乗入れは1981-10-01開始。2020年資料は東京–修善寺の範囲を支持するが初日の全停車駅・全期間の運行を保証しない。"
+      }
     },
     {
       "id": "odoriko-shinjuku-shuzenji",
@@ -5072,9 +5649,16 @@
       ],
       "sourceURLs": [
         "https://www.tokyometro.jp/corporate/ir/library/factbook/pdf/factbook_2025.pdf",
-        "https://ja.wikipedia.org/wiki/小田急多摩線"
+        "https://ja.wikipedia.org/wiki/小田急多摩線",
+        "https://www.tokyometro.jp/news/images_h/metroNews20171215_143.pdf",
+        "https://www.odakyu.jp/news/h3de7600000005ka-att/h3de7600000005kh.pdf"
       ],
-      "notes": "取手方面から新百合ヶ丘経由で唐木田へ直通する通勤列車で、2005年以前から現行。2008-03-15以降の一部ロマンスカー（メトロホームウェイ）もこの区間を使う。"
+      "notes": "常磐線–千代田線–新百合ヶ丘–唐木田の参照経路。2018年・2025年の公式改正資料は日中の系統変更を示すが、全時間帯の連続運行・全面運休や取手–唐木田の全外側端点組合せを証明しない。2005以前から現行という旧断定を撤回し、未確認の全停運期間を追加しない。",
+      "historicalReview": {
+        "status": "periodsUnresolved",
+        "supportedScope": "常磐線–千代田線–新百合ヶ丘–唐木田の参照経路。2018年・2025年の公式改正資料は日中の系統変更を示すが、全時間帯の連続運行・全面運休や取手–唐木田の全外側端点組合せを証明しない。2005以前から現行という旧断定を撤回し、未確認の全停運期間を追加しない。",
+        "sourceURL": "https://www.odakyu.jp/news/h3de7600000005ka-att/h3de7600000005kh.pdf"
+      }
     },
     {
       "id": "chiyoda-odakyu-romancecar-hakone",
@@ -5832,9 +6416,16 @@
       ],
       "sourceURLs": [
         "https://ja.wikipedia.org/wiki/%E7%A7%8B%E7%94%B0%E6%96%B0%E5%B9%B9%E7%B7%9A",
-        "https://ja.wikipedia.org/wiki/%E3%81%93%E3%81%BE%E3%81%A1_(%E5%88%97%E8%BB%8A)"
+        "https://ja.wikipedia.org/wiki/%E3%81%93%E3%81%BE%E3%81%A1_(%E5%88%97%E8%BB%8A)",
+        "https://www.jreast.co.jp/press/2021/akita/20220127_a01.pdf"
       ],
-      "notes": "秋田新幹線「こまち」は盛岡で東北新幹線から田沢湖線に入り、大曲から奥羽線で秋田まで直通する。1997-03-22開業の経路で、2005年より前から現在も運転する。"
+      "notes": "秋田新幹線「こまち」は盛岡で東北新幹線から田沢湖線に入り、大曲から奥羽線で秋田まで直通する。1997-03-22開業の経路で、2005年より前から現在も運転する。 開始日は公式資料による下限。現在の外側端点・全歴史経路が開業初日から同一だったことは別途確認を要する。",
+      "validFrom": "1997-03-22",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "supportedScope": "秋田新幹線こまちの開始。個々の歴史的停車パターンは未収録。",
+        "sourceURL": "https://www.jreast.co.jp/press/2021/akita/20220127_a01.pdf"
+      }
     },
     {
       "id": "aizu-tadami-wakamatsu",
@@ -6088,9 +6679,19 @@
       ],
       "sourceURLs": [
         "https://ja.wikipedia.org/wiki/%E4%BA%95%E5%8E%9F%E9%89%84%E9%81%93%E4%BA%95%E5%8E%9F%E7%B7%9A",
-        "https://www.ibara-railway.co.jp/"
+        "https://www.ibara-railway.co.jp/",
+        "https://www.ibara-railway.co.jp/company/"
       ],
-      "notes": "1999-01-11の開業当日から清音–総社は伯備線との共用（JR第一種・井原鉄道第二種）で、神辺–福山の福塩線片乗り入れも同日から。2026年も総社直通が基本で、福山直通は一部（1日数往復）。運賃は別計算。"
+      "notes": "井原鉄道は1999-01-11に総社–神辺開業。現在の神辺–福山直通は公式時刻表にあるが初日適用は未確認。総社–清音は伯備線の共用インフラ、井原列車をJR運営とする意味ではない。",
+      "validFrom": "1999-01-11",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "reviewedAt": "2026-10-10",
+        "sourceURLs": [
+          "https://www.ibara-railway.co.jp/company/"
+        ],
+        "supportedScope": "井原鉄道の総社–神辺中核開業下限。神辺–福山への初日直通・全期間は未確認。"
+      }
     },
     {
       "id": "nishikigawa-gantoku",
@@ -6114,9 +6715,21 @@
         }
       ],
       "sourceURLs": [
-        "https://ja.wikipedia.org/wiki/%E9%8C%A6%E5%B7%9D%E9%89%84%E9%81%93%E9%8C%A6%E5%B7%9D%E6%B8%85%E6%B5%81%E7%B7%9A"
+        "https://ja.wikipedia.org/wiki/%E9%8C%A6%E5%B7%9D%E9%89%84%E9%81%93%E9%8C%A6%E5%B7%9D%E6%B8%85%E6%B5%81%E7%B7%9A",
+        "https://nishikigawa.com/topix/39years/",
+        "https://nishikigawa.com/company/"
       ],
-      "notes": "1987-07-25の第三セクター移管時から川西で岩徳線に入り岩国まで直通する。山陽線には入らない。2005年以前から2026年も同じ形態。"
+      "notes": "1987-07-25の第三セクター移管時から川西で岩徳線に入り岩国まで直通する。山陽線には入らない。2005年以前から2026年も同じ形態。",
+      "validFrom": "1987-07-25",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "reviewedAt": "2026-10-10",
+        "sourceURLs": [
+          "https://nishikigawa.com/topix/39years/",
+          "https://nishikigawa.com/company/"
+        ],
+        "supportedScope": "現在の錦川鉄道開業下限。2019年資料は全列車岩国乗入れを支持するが1987年初日の全端点は未確認。"
+      }
     },
     {
       "id": "wakasa-inbi-tottori",
@@ -6140,9 +6753,19 @@
         }
       ],
       "sourceURLs": [
-        "https://ja.wikipedia.org/wiki/%E8%8B%A5%E6%A1%9C%E9%89%84%E9%81%93%E8%8B%A5%E6%A1%9C%E7%B7%9A"
+        "https://ja.wikipedia.org/wiki/%E8%8B%A5%E6%A1%9C%E9%89%84%E9%81%93%E8%8B%A5%E6%A1%9C%E7%B7%9A",
+        "https://wakatetsu.co.jp/about"
       ],
-      "notes": "若桜–鳥取の直通は第三セクター化以前からあり、2026-03-14改正の時刻表でも郡家–鳥取を因美線として直通する列車がある。全列車ではなく、郡家乗り換えの列車も残る。乗務員交代（2010-03-13）は経路の変更ではない。"
+      "notes": "若桜–鳥取の直通は第三セクター化以前からあり、2026-03-14改正の時刻表でも郡家–鳥取を因美線として直通する列車がある。全列車ではなく、郡家乗り換えの列車も残る。乗務員交代（2010-03-13）は経路の変更ではない。",
+      "validFrom": "1987-10-14",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "reviewedAt": "2026-10-10",
+        "sourceURLs": [
+          "https://wakatetsu.co.jp/about"
+        ],
+        "supportedScope": "現在の若桜鉄道の運行開始下限。前身国鉄の線路と鳥取外側端点の初日直通は別途未確認。"
+      }
     },
     {
       "id": "seto-shiokaze",
@@ -6288,7 +6911,16 @@
       "sourceURLs": [
         "https://ja.wikipedia.org/wiki/%E3%82%B5%E3%83%B3%E3%83%A9%E3%82%A4%E3%82%BA%E7%80%AC%E6%88%B8%E3%83%BB%E5%87%BA%E9%9B%B2"
       ],
-      "notes": "1998-07-10開始の東京–高松寝台特急。下りは浜松の次が姫路、上りは大阪と三ノ宮に停まる。2026年も毎日1往復。金・休前日の高松–琴平延長（多度津・善通寺）は季節的な延長のため脚にはしていない。会社境界は児島。"
+      "notes": "1998-07-10開始の東京–高松寝台特急。下りは浜松の次が姫路、上りは大阪と三ノ宮に停まる。2026年も毎日1往復。金・休前日の高松–琴平延長（多度津・善通寺）は季節的な延長のため脚にはしていない。会社境界は児島。",
+      "historicalReview": {
+        "status": "periodsUnresolved",
+        "reviewedAt": "2026-10-10",
+        "sourceURLs": [
+          "https://www.westjr.co.jp/press/article/items/180322_00_setouchi.pdf",
+          "https://www.jr-shikoku.co.jp/04_company/brochure/corporate_profile.pdf"
+        ],
+        "supportedScope": "公式資料の検索索引で1998-07-10と1998-07-11の開始／改正記載が競合。本文・始発日の意味を未解決のため開始日は補わない。"
+      }
     },
     {
       "id": "chizu-super-hakuto",
@@ -6644,7 +7276,16 @@
         "https://www.odakyu.jp/company/history/",
         "https://railway.jr-central.co.jp/"
       ],
-      "notes": "新松田から松田連絡線を通りJR東海御殿場線へ入り沼津まで運転。1991-03-16からの相互直通は2012-03-17改正で沼津乗り入れを終了した。"
+      "notes": "新松田から松田連絡線を通りJR東海御殿場線へ入り沼津まで運転。1991-03-16からの相互直通は2012-03-17改正で沼津乗り入れを終了した。",
+      "validFrom": "1991-03-16",
+      "historicalReview": {
+        "status": "onsetAndOuterEndpoints",
+        "reviewedAt": "2026-10-10",
+        "sourceURLs": [
+          "https://www.odakyu.jp/company/history/"
+        ],
+        "supportedScope": "小田急公式略年表の1991-03-16条が新宿–沼津間の相互直通開始を明記。外側端点と開始日の根拠であり、全停車駅、毎日の班次や物理連絡線形を証明するものではない。既存の2012-03-17終了境界は今回変更しない。"
+      }
     },
     {
       "id": "odakyu-jr-fujisan-gotemba",
@@ -6795,5 +7436,6 @@
       "level": "checked",
       "notes": "No through running."
     }
-  ]
+  ],
+  "historicalTargetFrom": "1996-12-31"
 }
