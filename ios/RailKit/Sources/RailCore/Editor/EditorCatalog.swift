@@ -707,6 +707,14 @@ public struct StationSearchHit: Hashable, Sendable, Identifiable {
     public var subject: Subject
     /// 0 exact folded field, 1 prefix, 2 other match, 3 included because the line matched.
     public var rank: Int
+    /// Set when the source code is exactly one registry company station.
+    public var stationID: String?
+    /// Set when that station belongs to a registry complex. Suggestions group on it.
+    public var complexID: String?
+    /// §11.5 small text for a grouped complex. Line rows leave this nil.
+    public var qualifier: String?
+    /// Company stations represented by a grouped suggestion. A line row carries one.
+    public var stationIDs: [String]
 
     public var id: String {
         switch subject {
@@ -717,9 +725,16 @@ public struct StationSearchHit: Hashable, Sendable, Identifiable {
         }
     }
 
-    public init(subject: Subject, rank: Int) {
+    public init(
+        subject: Subject, rank: Int, stationID: String? = nil, complexID: String? = nil,
+        qualifier: String? = nil, stationIDs: [String] = []
+    ) {
         self.subject = subject
         self.rank = rank
+        self.stationID = stationID
+        self.complexID = complexID
+        self.qualifier = qualifier
+        self.stationIDs = stationIDs
     }
 }
 
@@ -799,11 +814,17 @@ public struct StationSearchIndex: Sendable {
                     let stationRank = browsing ? 0 : Self.rank(prepared, fields: station.matchFields)
                     guard browsing || lineMatched || stationRank != nil else { continue }
                     let rank = stationRank ?? 3
+                    let ids = station.stationID.map { [$0] } ?? []
                     hits.append(StationSearchHit(
-                        subject: .current(station.key, lineID: line.id), rank: rank))
+                        subject: .current(station.key, lineID: line.id), rank: rank,
+                        stationID: station.stationID, complexID: station.complexID,
+                        stationIDs: ids))
                     if !browsing, let stationRank, seenSuggestion.insert(station.key).inserted {
                         suggestionPool.append((
-                            StationSearchHit(subject: .current(station.key, lineID: nil), rank: stationRank),
+                            StationSearchHit(
+                                subject: .current(station.key, lineID: nil), rank: stationRank,
+                                stationID: station.stationID, complexID: station.complexID,
+                                qualifier: station.qualifier, stationIDs: ids),
                             station.name,
                             station.key.sourceCode))
                     }
@@ -821,15 +842,15 @@ public struct StationSearchIndex: Sendable {
             }
         }
 
-        suggestionPool.sort { lhs, rhs in
+        let grouped = browsing
+            ? []
+            : Self.groupSuggestions(suggestionPool, idsByComplex: Self.stationIDsByComplex(lines))
+        let suggestions = grouped.sorted { lhs, rhs in
             if lhs.hit.rank != rhs.hit.rank { return lhs.hit.rank < rhs.hit.rank }
             let order = lhs.name.localizedStandardCompare(rhs.name)
             if order != .orderedSame { return order == .orderedAscending }
             return lhs.code < rhs.code
-        }
-        let suggestions = browsing
-            ? []
-            : suggestionPool.prefix(max(0, query.suggestionLimit)).map(\.hit)
+        }.prefix(max(0, query.suggestionLimit)).map(\.hit)
 
         let retiredHits = query.eligibility.contains(.retired)
             ? Self.retiredHits(
@@ -862,6 +883,54 @@ public struct StationSearchIndex: Sendable {
         }
     }
 
+    /// Every company station of a complex, including ones this query did not spell.
+    /// A reading of one member still names the whole complex.
+    private static func stationIDsByComplex(_ lines: [IndexedLine]) -> [String: [String]] {
+        var sets: [String: Set<String>] = [:]
+        for line in lines {
+            for station in line.stations {
+                guard let complex = station.complexID, let id = station.stationID else { continue }
+                sets[complex, default: []].insert(id)
+            }
+        }
+        return sets.mapValues { $0.sorted() }
+    }
+
+    /// One suggestion per registry complex. Stations with no complex stay separate,
+    /// so two catalog rows that share a display name remain two hits.
+    private static func groupSuggestions(
+        _ pool: [(hit: StationSearchHit, name: String, code: String)],
+        idsByComplex: [String: [String]]
+    ) -> [(hit: StationSearchHit, name: String, code: String)] {
+        var order: [String] = []
+        var buckets: [String: [(hit: StationSearchHit, name: String, code: String)]] = [:]
+        for item in pool {
+            let key = item.hit.complexID ?? "station:\(item.code)"
+            if buckets[key] == nil { order.append(key) }
+            buckets[key, default: []].append(item)
+        }
+        return order.compactMap { key in
+            guard var items = buckets[key] else { return nil }
+            items.sort { lhs, rhs in
+                if lhs.hit.rank != rhs.hit.rank { return lhs.hit.rank < rhs.hit.rank }
+                let order = lhs.name.localizedStandardCompare(rhs.name)
+                if order != .orderedSame { return order == .orderedAscending }
+                return lhs.code < rhs.code
+            }
+            guard let best = items.first else { return nil }
+            let matched = Array(Set(items.flatMap(\.hit.stationIDs))).sorted()
+            var hit = best.hit
+            if let complex = best.hit.complexID, let all = idsByComplex[complex], !all.isEmpty {
+                hit.stationIDs = all
+            } else {
+                hit.stationIDs = matched
+            }
+            hit.stationID = hit.stationIDs.count == 1 ? hit.stationIDs[0] : nil
+            hit.qualifier = items.compactMap(\.hit.qualifier).first { !$0.isEmpty }
+            return (hit, best.name, best.code)
+        }
+    }
+
     private static func matches(_ prepared: SearchFold.PreparedQuery, fields: [String]) -> Bool {
         rank(prepared, fields: fields) != nil
     }
@@ -878,8 +947,10 @@ public struct StationSearchIndex: Sendable {
     fileprivate struct IndexedStation: Sendable {
         var key: StationKey
         var name: String
-        var aliases: [String]
-        var matchFields: [String] { [name, key.sourceCode] + aliases }
+        var matchFields: [String]
+        var stationID: String?
+        var complexID: String?
+        var qualifier: String?
     }
 
     fileprivate struct IndexedLine: Sendable {
@@ -896,8 +967,15 @@ public struct StationSearchIndex: Sendable {
 }
 
 extension EditorCatalog {
-    /// Build the region index once, then query it. The index does not merge stations by name.
-    public func stationSearchIndex(regionCode: String) -> StationSearchIndex {
+    /// Build the region index once, then query it. The index does not merge stations by name
+    /// unless a registry complex says they are the same place.
+    ///
+    /// `extraNames` adds readings and other language spellings keyed by source code.
+    public func stationSearchIndex(
+        regionCode: String, extraNames: [String: [String]] = [:]
+    ) -> StationSearchIndex {
+        let identity = RegistryIdentityCache.identity(forRegion: regionCode)
+        let registryReady = identity.map { !$0.bundle.stations.isEmpty } ?? false
         let operatorsByID = Dictionary(
             operators(in: regionCode).map { ($0.id, $0) },
             uniquingKeysWith: { first, _ in first })
@@ -913,8 +991,9 @@ extension EditorCatalog {
             for member in memberships(lineID: line.id, regionCode: regionCode) {
                 guard seen.insert(member.stationKey.sourceCode).inserted,
                       let station = station(member.stationKey) else { continue }
-                stations.append(StationSearchIndex.IndexedStation(
-                    key: station.key, name: station.name, aliases: station.aliases))
+                stations.append(Self.indexedStation(
+                    station, identity: registryReady ? identity : nil,
+                    extraNames: extraNames[station.key.sourceCode] ?? []))
             }
             guard !stations.isEmpty else { continue }
             let operatorID = line.operatorIDs.first ?? ""
@@ -933,6 +1012,37 @@ extension EditorCatalog {
                 stations: stations))
         }
         return StationSearchIndex(regionCode: regionCode, lines: indexed)
+    }
+
+    private static func indexedStation(
+        _ station: CatalogStation, identity: RegistryIdentity?, extraNames: [String]
+    ) -> StationSearchIndex.IndexedStation {
+        var fields = [station.name, station.key.sourceCode] + station.aliases
+        var stationID: String?
+        var complexID: String?
+        var qualifier: String?
+        if let identity,
+           let identifier = identity.stationID(forCode: station.key.sourceCode, operator: nil),
+           let record = identity.station(identifier) {
+            stationID = identifier
+            complexID = record.cx
+            qualifier = identity.searchQualifier(complexID: record.cx)
+            appendSearch(&fields, record.name)
+            if let base = record.parts?.base { appendSearch(&fields, base) }
+            if let bracket = record.parts?.bracket { appendSearch(&fields, bracket) }
+            for code in record.codes { appendSearch(&fields, code) }
+            if let complex = identity.complex(of: identifier) { appendSearch(&fields, complex.name) }
+        }
+        for name in extraNames { appendSearch(&fields, name) }
+        return StationSearchIndex.IndexedStation(
+            key: station.key, name: station.name, matchFields: fields,
+            stationID: stationID, complexID: complexID, qualifier: qualifier)
+    }
+
+    private static func appendSearch(_ fields: inout [String], _ value: String) {
+        let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty, !fields.contains(trimmed) else { return }
+        fields.append(trimmed)
     }
 
     public func searchStations(

@@ -289,16 +289,33 @@ public enum SolverRegistryInput {
     }
 
     public static func assignEndpoint(
-        _ section: inout RouteSection, from: Bool, name: String?, code: String?
+        _ section: inout RouteSection, from: Bool, name: String?, code: String?,
+        regionCode: String? = nil, stationID: String? = nil
     ) {
+        var resolvedName = name
+        var resolvedCode = code
+        var resolvedID: String?
+        if let regionCode {
+            if let stationID,
+               let written = RegistryStationSelection.written(stationID: stationID, regionCode: regionCode) {
+                resolvedID = written.stationID
+                resolvedName = written.name
+                resolvedCode = written.code ?? code
+            } else if let code,
+                      let written = RegistryStationSelection.written(sourceCode: code, regionCode: regionCode) {
+                resolvedID = written.stationID
+                resolvedName = written.name
+                resolvedCode = written.code ?? code
+            }
+        }
         if from {
-            section.from = name
-            section.fromN02StationCode = code
-            section.fromStationID = nil
+            section.from = resolvedName
+            section.fromN02StationCode = resolvedCode
+            section.fromStationID = resolvedID
         } else {
-            section.to = name
-            section.toN02StationCode = code
-            section.toStationID = nil
+            section.to = resolvedName
+            section.toN02StationCode = resolvedCode
+            section.toStationID = resolvedID
         }
     }
 }

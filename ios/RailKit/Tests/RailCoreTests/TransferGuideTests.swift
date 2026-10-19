@@ -949,3 +949,83 @@ struct JREastGuideTests {
         #expect(TransferGuide.Text.matchKey("力丸") == TransferGuide.Text.matchKey("カ丸"))
     }
 }
+
+@Suite("Transfer guide registry input")
+struct TransferGuideRegistryInputTests {
+    private func index() -> StationIndex {
+        let east = StationIndex.LineRef(name: "山手線", operatorName: "東日本旅客鉄道")
+        let central = StationIndex.LineRef(name: "東海道線", operatorName: "東海旅客鉄道")
+        return StationIndex([
+            StationIndex.Entry(code: "TOK", name: "東京", coordinate: Coordinate(lon: 139.7, lat: 35.6), line: east),
+            StationIndex.Entry(code: "TOK", name: "東京", coordinate: Coordinate(lon: 139.7, lat: 35.6), line: central),
+            StationIndex.Entry(code: "OSA", name: "新大阪", coordinate: Coordinate(lon: 135.5, lat: 34.7), line: east),
+            StationIndex.Entry(code: "OSA", name: "新大阪", coordinate: Coordinate(lon: 135.5, lat: 34.7), line: central),
+            StationIndex.Entry(code: "OMI-A", name: "大宮", coordinate: Coordinate(lon: 139.6, lat: 35.9), line: east),
+            StationIndex.Entry(code: "OMI-B", name: "大宮", coordinate: Coordinate(lon: 135.5, lat: 35.0), line: central),
+        ])
+    }
+
+    private func identity() -> RegistryIdentity {
+        RegistryIdentity(bundle: RegistryBundle(
+            region: "jp", run: 1,
+            stationCodes: ["TOK": "st:jp:1", "OSA": "st:jp:2", "OMI-A": "st:jp:3", "OMI-B": "st:jp:4"],
+            operatorRecords: [
+                "op:jp:1": RegistryOperatorRecord(
+                    names: ["東日本旅客鉄道", "JR東日本"], label: "JR東日本", identity: "jp.jr-east"),
+                "op:jp:2": RegistryOperatorRecord(
+                    names: ["東海旅客鉄道", "JR東海"], label: "JR東海", identity: "jp.jr-central"),
+            ],
+            stations: [
+                "st:jp:1": RegistryStationRecord(
+                    cx: "cx:1", group: "TOK", codes: ["TOK"], op: "op:jp:1", name: "東京", lines: ["lp:1"]),
+                "st:jp:2": RegistryStationRecord(
+                    cx: "cx:2", group: "OSA", codes: ["OSA"], op: "op:jp:2", name: "新大阪", lines: ["lp:2"]),
+                "st:jp:3": RegistryStationRecord(
+                    cx: "cx:3", group: "OMI", codes: ["OMI-A"], op: "op:jp:1", name: "大宮", lines: ["lp:1"]),
+                "st:jp:4": RegistryStationRecord(
+                    cx: "cx:4", group: "OMI2", codes: ["OMI-B"], op: "op:jp:2", name: "大宮", lines: ["lp:2"]),
+            ],
+            lineParts: [
+                "lp:1": RegistryLinePartRecord(packageLine: "yamanote", name: "山手線", op: "op:jp:1", rank: 1),
+                "lp:2": RegistryLinePartRecord(packageLine: "tokaido", name: "東海道線", op: "op:jp:2", rank: 2),
+            ]))
+    }
+
+    private func route(from: String, to: String, service: String = "JR山手線") -> TransferGuide.Route {
+        TransferGuide.Route(legs: [
+            TransferGuide.Leg(service: service, calls: [
+                TransferGuide.Call(name: from, departure: "09:00"),
+                TransferGuide.Call(name: to, arrival: "10:00"),
+            ]),
+        ])
+    }
+
+    @Test func uniqueNamesWriteStationIDsAndExactOperators() {
+        RegistryIdentityTestGate.withProvider({ region in region == "jp" ? identity() : nil }) {
+            let result = TransferGuide.build(
+                route: route(from: "東京", to: "新大阪", service: "普通"),
+                options: TransferGuide.BuildOptions(), stations: index())
+            let train = result.trains.first
+            #expect(train?.stops.map(\.stationID) == ["st:jp:1", "st:jp:2"])
+            #expect(train?.stops.map(\.n02StationCode) == ["TOK", "OSA"])
+            #expect(train?.stops.map(\.name) == ["東京", "新大阪"])
+            #expect(result.ambiguous.isEmpty)
+            #expect(train?.operatorIDs == ["op:jp:1", "op:jp:2"])
+            #expect(train?.company == "JR東日本/JR東海")
+            #expect(train?.routePolicy?.preferredOperatorNames == ["東日本旅客鉄道", "東海旅客鉄道"])
+        }
+    }
+
+    @Test func homonymsStayUnresolved() {
+        RegistryIdentityTestGate.withProvider({ region in region == "jp" ? identity() : nil }) {
+            let result = TransferGuide.build(
+                route: route(from: "大宮", to: "東京"),
+                options: TransferGuide.BuildOptions(), stations: index())
+            #expect(result.trains.first?.stops.first?.stationID == nil)
+            #expect(result.trains.first?.stops.first?.n02StationCode == nil)
+            #expect(result.unresolved == ["大宮"])
+            #expect(result.ambiguous["大宮"] == ["st:jp:3", "st:jp:4"])
+            #expect(result.trains.first?.stops.last?.stationID == "st:jp:1")
+        }
+    }
+}

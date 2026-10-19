@@ -359,8 +359,8 @@ struct StationReferenceResolutionTests {
         #expect(Set(ambiguous.stops.first?.candidates.map(\.key.sourceCode) ?? []) == ["EAST", "SHIMA"])
     }
 
-    @Test("a stored official name missing from the catalog still finds a contained station")
-    func missingStoredNameFallsThroughToContainedMatch() {
+    @Test("a bracket tail is a span resolved by exact name, not a legacy fallback")
+    func bracketTailIsAResolvedSpan() {
         let directory = StationNameDirectory(
             bracketedNames: [
                 "特異（前）": StationNameRecord(
@@ -375,6 +375,17 @@ struct StationReferenceResolutionTests {
             text: "特異（前） 博多", catalog: catalog, regionCode: "jp", seed: Self.seed(),
             directory: directory)
         #expect(draft.stops.first?.automaticSelection?.sourceCode == "HAKATA")
+        let both = EditorCatalogBuilder.build([
+            Self.line("yamanote", "山手線", "東日本旅客鉄道", rank: 1, stations: [
+                ("HAKATA", "博多", 130.42, 33.59),
+                ("TOK", "東京", 139.7, 35.6),
+            ]),
+        ])
+        let two = JourneyCompletion.rawDraft(
+            text: "博多 東京", catalog: both, regionCode: "jp", seed: Self.seed(),
+            directory: directory)
+        #expect(two.stops.first?.automaticSelection == nil)
+        #expect(two.stops.first?.ambiguous == true)
     }
 
     @Test("two same-name stations that share a line round-trip on a line of their own")

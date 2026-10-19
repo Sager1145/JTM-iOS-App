@@ -278,4 +278,77 @@ struct RegistryIdentityTests {
             #expect(ready.primary == "東京")
         }
     }
+
+    @Test func exactOfficialNameWinsOverABase() {
+        let plain = RegistryStationRecord(
+            cx: "cx:jp:1", group: "G1", codes: ["ISA"], op: "op:jp:1", name: "諫早", lines: ["lp:1"])
+        let bracket = StationNameRecord(
+            base: "諫早", bracket: "雲仙・島原口", kind: .subname, position: .suffix)
+        let island = RegistryStationRecord(
+            cx: "cx:jp:2", group: "G2", codes: ["SHIMA"], op: "op:jp:2",
+            name: "諫早（雲仙・島原口）", parts: bracket, lines: ["lp:2"])
+        let identity = RegistryIdentity(bundle: RegistryBundle(
+            region: "jp", run: 1,
+            stationCodes: ["ISA": "st:jp:1", "SHIMA": "st:jp:2"],
+            stations: ["st:jp:1": plain, "st:jp:2": island],
+            complexes: [
+                "cx:jp:1": RegistryComplexRecord(group: "G1", name: "諫早", stations: ["st:jp:1"], lon: 0, lat: 0),
+                "cx:jp:2": RegistryComplexRecord(group: "G2", name: "諫早（雲仙・島原口）", stations: ["st:jp:2"], lon: 0, lat: 0),
+            ],
+            lineParts: [
+                "lp:1": RegistryLinePartRecord(packageLine: "a", name: "長崎本線", op: "op:jp:1", rank: 1),
+                "lp:2": RegistryLinePartRecord(packageLine: "b", name: "島原鉄道線", op: "op:jp:2", rank: 2),
+            ],
+            baseNameCounts: ["諫早": 2]))
+        #expect(identity.stationIDs(named: "諫早") == ["st:jp:1"])
+        #expect(identity.stations(for: StationReference(name: "諫早")).map(\.stationID) == ["st:jp:1"])
+        #expect(identity.stations(for: StationReference(name: "諫早", line: "島原鉄道線")).map(\.stationID) == [])
+        #expect(identity.stations(for: StationReference(name: "諫早", country: "TW")).isEmpty)
+    }
+
+    @Test func uniqueBaseSelectsTheBracketedStation() {
+        let bracket = StationNameRecord(base: "西鉄福岡", bracket: "天神", kind: .subname, position: .suffix)
+        let identity = RegistryIdentity(bundle: RegistryBundle(
+            region: "jp", run: 1,
+            stationCodes: ["NFT": "st:jp:1"],
+            stations: [
+                "st:jp:1": RegistryStationRecord(
+                    cx: "cx:jp:1", group: "NFT", codes: ["NFT"], op: "op:jp:1",
+                    name: "西鉄福岡（天神）", parts: bracket, lines: ["lp:1"]),
+            ],
+            baseNameCounts: ["西鉄福岡": 1]))
+        #expect(identity.stationIDs(named: "西鉄福岡") == ["st:jp:1"])
+        #expect(identity.stationIDs(named: "西鉄福岡（天神）") == ["st:jp:1"])
+    }
+
+    @Test func containedSpansProposeNamesAndDoNotChoose() {
+        let identity = RegistryIdentity(bundle: tokyoBundle())
+        #expect(identity.containedNameSpans(in: "09:00 東京発") == ["東京"])
+        let spans = identity.containedNameSpans(in: "東京 新大阪")
+        #expect(spans == ["東京"])
+    }
+
+    @Test func operatorCommitIsExactAndJoint() {
+        let identity = RegistryIdentity(bundle: tokyoBundle())
+        let one = identity.operatorCommit(forExactText: "JR東日本")
+        #expect(one?.ids == ["op:jp:1"])
+        #expect(one?.company == "JR東日本")
+        #expect(one?.preferredNames == ["JR East"])
+        let joint = identity.operatorCommit(forExactText: "JR東日本/JR東海")
+        #expect(joint?.ids == ["op:jp:1", "op:jp:2"])
+        #expect(joint?.company == "JR東日本/JR東海")
+        #expect(identity.operatorCommit(forExactText: "JR東日本/missing") == nil)
+        #expect(identity.operatorCommit(forExactText: "not-a-company") == nil)
+
+        var train = Train(id: "t", number: "", origin: "", destination: "", stops: [], region: "jp")
+        RegistryIdentityTestGate.withProvider({ region in
+            region == "jp" ? identity : nil
+        }) {
+            #expect(RegistryOperatorCommit.apply(text: "JR東日本・JR東海", region: "jp", to: &train))
+            #expect(train.operatorIDs == ["op:jp:1", "op:jp:2"])
+            #expect(train.operatorID == nil)
+            #expect(train.company == "JR東日本/JR東海")
+            #expect(RegistryOperatorCommit.preferredNames(from: ["JR東海", "typed"], region: "jp") == ["JR東海", "typed"])
+        }
+    }
 }

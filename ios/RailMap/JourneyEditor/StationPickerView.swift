@@ -65,13 +65,13 @@ struct StationPickerView: View {
     @Environment(AppLocalization.self) private var localization
     let regionCode: String
     var selectedLineIDs: Set<String> = []
-    var onSelect: ((CatalogStation) -> Void)? = nil
+    var onSelect: ((CatalogStation, String?) -> Void)? = nil
     var rideDate: String? = nil
     var onSelectRetired: ((RetiredStation) -> Void)? = nil
     var sourceCatalog: EditorCatalog? = nil
     var sourcePackage: CompactPackage? = nil
     var companyFilter: String? = nil
-    var onSelectWithLine: ((CatalogStation, CatalogLine?) -> Void)? = nil
+    var onSelectWithLine: ((CatalogStation, CatalogLine?, String?) -> Void)? = nil
     /// A stop keeps free text; only its suggestions use the shared picker.
     var inlineQuery: Binding<String>? = nil
     var showsSuggestions = true
@@ -118,7 +118,7 @@ struct StationPickerView: View {
                 return CatalogStationRow(
                     station: station, subtitle: caption,
                     detail: StationCatalogText.detailBeyondQualifier(legacy, qualifier: caption),
-                    copyText: copy)
+                    copyText: copy, stationID: hit.stationID)
             }
             guard !rows.isEmpty,
                   let catalogLine = catalog.line(id: line.id, regionCode: regionCode) else { return nil }
@@ -128,13 +128,40 @@ struct StationPickerView: View {
     }
     private var suggestions: [CatalogStationRow] {
         guard let catalog else { return [] }
-        return search.output.suggestions.compactMap { hit in
+        return search.output.suggestions.flatMap { hit -> [CatalogStationRow] in
+            if hit.stationIDs.count > 1 {
+                return rows(stationIDs: Set(hit.stationIDs), qualifier: hit.qualifier)
+            }
             guard case .current(let key, _) = hit.subject,
-                  let station = catalog.station(key) else { return nil }
-            return CatalogStationRow(
-                station: station, subtitle: subtitleByCode[key.sourceCode] ?? "",
-                copyText: copyByCode[key.sourceCode] ?? "")
+                  let station = catalog.station(key) else { return [] }
+            return [CatalogStationRow(
+                station: station,
+                subtitle: hit.qualifier ?? subtitleByCode[key.sourceCode] ?? "",
+                copyText: copyByCode[key.sourceCode] ?? "",
+                stationID: hit.stationID)]
         }
+    }
+
+    /// Line rows for a complex that contains more than one company station.
+    /// The grouped suggestion stays one row in the index; the picker lists each id.
+    private func rows(stationIDs: Set<String>, qualifier: String?) -> [CatalogStationRow] {
+        guard let catalog else { return [] }
+        var seen: Set<String> = []
+        var rows: [CatalogStationRow] = []
+        for line in search.output.lines {
+            for hit in line.hits {
+                guard let stationID = hit.stationID, stationIDs.contains(stationID),
+                      seen.insert(stationID).inserted,
+                      case .current(let key, _) = hit.subject,
+                      let station = catalog.station(key) else { continue }
+                rows.append(CatalogStationRow(
+                    station: station,
+                    subtitle: qualifier ?? subtitleByCode[key.sourceCode] ?? "",
+                    copyText: copyByCode[key.sourceCode] ?? "",
+                    stationID: stationID))
+            }
+        }
+        return rows
     }
     private var retiredStations: [RetiredStation] {
         search.output.retired.compactMap { hit in
@@ -241,8 +268,8 @@ struct StationPickerView: View {
                             ForEach(company.lines) { group in
                                 NavigationLink {
                                     StationLinePickerView(title: group.line.name, rows: group.rows,
-                                                          accessibilityPrefix: accessibilityPrefix) { station in
-                                        select(station, line: group.line)
+                                                          accessibilityPrefix: accessibilityPrefix) { row in
+                                        select(row, line: group.line)
                                     }
                                 } label: {
                                     Text(group.line.name).frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
@@ -281,6 +308,7 @@ struct StationPickerView: View {
             loadError = EditorCatalogLoadError.missingResource(regionCode).localizedDescription
             return
         }
+        let readings = localization.stationSearchNames(region: region)
         let request = StationPickerSearchController.Request(
             regionCode: regionCode, rideDate: rideDate, lineIDs: lineIDs, includesRetired: includesRetired)
         do {
@@ -290,7 +318,7 @@ struct StationPickerView: View {
                 else if let sourcePackage {
                     catalog = EditorCatalogBuilder.build(EditorCatalogBuilder.sources(regionCode: regionCode, package: sourcePackage))
                 } else { catalog = try loadCatalog(for: region) }
-                let index = catalog.stationSearchIndex(regionCode: regionCode)
+                let index = catalog.stationSearchIndex(regionCode: regionCode, extraNames: readings)
                 let directory = includesRetired ? RiddenRouteStore.retiredStations(region: regionCode) : []
                 let output = index.search(StationSearchQuery(regionCode: regionCode, rideDate: rideDate,
                     eligibility: includesRetired ? [.current, .retired] : .current, lineIDs: lineIDs), retired: directory)
@@ -324,7 +352,7 @@ struct StationPickerView: View {
     }
 
     private func stationButton(_ row: CatalogStationRow, line: CatalogLine? = nil) -> some View {
-        Button { select(row.station, line: line) } label: { CatalogStationLabel(row: row) }
+        Button { select(row, line: line) } label: { CatalogStationLabel(row: row) }
             .buttonStyle(RailRowPressStyle(cornerRadius: 0))
             .accessibilityIdentifier(stationIdentifier(row.station, line: line))
     }
@@ -341,9 +369,9 @@ struct StationPickerView: View {
             .buttonStyle(RailRowPressStyle(cornerRadius: 0))
             .accessibilityIdentifier("stationPickerRetired-\(station.id)")
     }
-    private func select(_ station: CatalogStation, line: CatalogLine? = nil) {
-        if let onSelectWithLine { onSelectWithLine(station, line) }
-        else { onSelect?(station) }
+    private func select(_ row: CatalogStationRow, line: CatalogLine? = nil) {
+        if let onSelectWithLine { onSelectWithLine(row.station, line, row.stationID) }
+        else { onSelect?(row.station, row.stationID) }
         if inlineQuery == nil { dismiss() }
     }
 }
@@ -454,11 +482,11 @@ private struct StationLinePickerView: View {
     let title: String
     let rows: [CatalogStationRow]
     let accessibilityPrefix: String
-    let onSelect: (CatalogStation) -> Void
+    let onSelect: (CatalogStationRow) -> Void
 
     var body: some View {
         List(rows) { row in
-            Button { onSelect(row.station) } label: {
+            Button { onSelect(row) } label: {
                 CatalogStationLabel(row: row)
             }
             .buttonStyle(RailRowPressStyle(cornerRadius: 0))

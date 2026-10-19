@@ -35,10 +35,16 @@ public enum LocalJourneyAutofill {
                     retained.insert(index)
                     cursor = index + 1
                 } else if position == 0 || position == choice.stations.count - 1 {
-                    visits.append(Stop(name: visit.name, n02StationCode: visit.code,
+                    var stop = Stop(name: visit.name, n02StationCode: visit.code,
                         stopType: position == 0 ? "origin" : "destination",
                         rideSegment: train.stops.first?.rideSegment ?? false,
-                        routeEditing: .init()))
+                        routeEditing: .init())
+                    RegistryStationSelection.fill(
+                        &stop, regionCode: train.region ?? "", sourceCode: visit.code,
+                        catalogName: visit.name)
+                    stop.stopType = position == 0 ? "origin" : "destination"
+                    stop.rideSegment = train.stops.first?.rideSegment ?? false
+                    visits.append(stop)
                 }
             }
             removed = prepared.stops.indices.filter { !retained.contains($0) }.map { prepared.stops[$0] }

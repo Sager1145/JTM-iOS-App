@@ -58,6 +58,14 @@ public enum StationReferenceResolution {
         }
     }
 
+    /// The same grammar resolved against one region's registry station records.
+    /// Every hit is returned. An empty list is "no station", not a guess.
+    public static func resolve(
+        _ reference: StationReference, identity: RegistryIdentity
+    ) -> [RegistryIdentity.StationInputMatch] {
+        identity.stations(for: reference)
+    }
+
     /// A bracket group is a qualifier when it names a supported country, a line
     /// alias in that country, or both. An unknown line, a platform, or `US`/`CA`
     /// is not a qualifier.

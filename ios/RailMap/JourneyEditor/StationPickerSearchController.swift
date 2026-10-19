@@ -9,6 +9,9 @@ struct CatalogStationRow: Identifiable, Hashable, Sendable {
     var detail: String = ""
     /// `name (CC, lineLabel)` for copy and share. Empty falls back to the subtitle.
     var copyText: String = ""
+    /// Registry company station this row writes. Nil when the row is a complex
+    /// with more than one station, or when no registry is installed.
+    var stationID: String? = nil
     var id: String { station.key.sourceCode }
 }
 

@@ -245,7 +245,18 @@ public struct Localization: Sendable {
                 names[JSStringKey(Localization.normalizedReadingKey(key))] = row
             }
             self.byName = names
+            var searchable: [String: [String]] = [:]
+            for (code, row) in byCode {
+                let fields = [row.kana, row.katakana, row.romaji, row.zhHant, row.zhHans, row.ja, row.en]
+                    .compactMap { $0?.trimmingCharacters(in: .whitespacesAndNewlines) }
+                    .filter { !$0.isEmpty }
+                if !fields.isEmpty { searchable[code] = fields }
+            }
+            self.searchNamesByCode = searchable
         }
+
+        /// Readings and translated names keyed by the table's station code.
+        public let searchNamesByCode: [String: [String]]
 
         /// The state before any table is injected: no rows, and Japan, so
         /// names are annotated rather than replaced.

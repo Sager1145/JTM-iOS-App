@@ -29,6 +29,8 @@ struct NewTripView: View {
     @State private var destination: CatalogStation?
     @State private var originLine: CatalogLine?
     @State private var destinationLine: CatalogLine?
+    @State private var originStationID: String?
+    @State private var destinationStationID: String?
     @State private var trainType: String
     @State private var timetableTrain: Train?
     @State private var timetableRideSpan: ClosedRange<Int>?
@@ -135,7 +137,7 @@ struct NewTripView: View {
                         regionCode: region.code,
                         sourceCatalog: catalog,
                         companyFilter: companyName.isEmpty ? nil : companyName,
-                        onSelectWithLine: { [generation = draftGeneration] station, line in
+                        onSelectWithLine: { [generation = draftGeneration] station, line, stationID in
                             guard generation == draftGeneration else {
                                 picking = nil
                                 return
@@ -145,9 +147,11 @@ struct NewTripView: View {
                             case .origin:
                                 origin = station
                                 originLine = line
+                                originStationID = stationID
                             case .destination:
                                 destination = station
                                 destinationLine = line
+                                destinationStationID = stationID
                             }
                             picking = nil
                         })
@@ -198,6 +202,8 @@ struct NewTripView: View {
             destination = nil
             originLine = nil
             destinationLine = nil
+            originStationID = nil
+            destinationStationID = nil
             companyName = ""
             catalog = nil
             package = nil
@@ -405,8 +411,9 @@ struct NewTripView: View {
         base.date = dayString(departure)
         base.stops = [origin, destination].enumerated().compactMap { index, station in
             guard let station else { return nil }
-            return Stop(name: station.name, n02StationCode: station.key.sourceCode,
-                        stopType: index == 0 ? "origin" : "destination", rideSegment: false)
+            return endpointStop(
+                station, stationID: index == 0 ? originStationID : destinationStationID,
+                stopType: index == 0 ? "origin" : "destination", ridden: false)
         }
         base.origin = origin?.name ?? ""
         base.destination = destination?.name ?? ""
@@ -532,12 +539,14 @@ struct NewTripView: View {
                let station = catalog?.station(StationKey(regionCode: region.code, sourceCode: code)) {
                 origin = station
                 originLine = nil
+                originStationID = applied.stops.first?.stationID
             }
             if destination == nil,
                let code = applied.stops.last?.n02StationCode,
                let station = catalog?.station(StationKey(regionCode: region.code, sourceCode: code)) {
                 destination = station
                 destinationLine = nil
+                destinationStationID = applied.stops.last?.stationID
             }
         }
         applyingTimetable = true
@@ -1062,6 +1071,32 @@ struct NewTripView: View {
         originLine = destinationLine
         destination = previous
         destinationLine = previousLine
+        let previousID = originStationID
+        originStationID = destinationStationID
+        destinationStationID = previousID
+    }
+
+    private func endpointStop(
+        _ station: CatalogStation, stationID: String?, stopType: String, ridden: Bool
+    ) -> Stop {
+        var stop = Stop(
+            name: station.name, n02StationCode: station.key.sourceCode,
+            stopType: stopType, rideSegment: ridden)
+        RegistryStationSelection.fill(
+            &stop, regionCode: region.code, sourceCode: station.key.sourceCode,
+            catalogName: station.name, stationID: stationID)
+        stop.stopType = stopType
+        stop.rideSegment = ridden
+        return stop
+    }
+
+    private func commitCompany(_ text: String, on train: inout Train) {
+        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmed.isEmpty {
+            RegistryIdentityUpgrade.reassignCompany(nil, on: &train)
+        } else if !RegistryOperatorCommit.apply(text: trimmed, region: region.code, to: &train) {
+            RegistryIdentityUpgrade.reassignCompany(trimmed, on: &train)
+        }
     }
 
     private func loadRegion() async {
@@ -1232,7 +1267,7 @@ struct NewTripView: View {
                 draft.stops[span.upperBound].arrival = pickerArrival
             }
             if !companyName.isEmpty {
-                RegistryIdentityUpgrade.reassignCompany(companyName, on: &draft)
+                commitCompany(companyName, on: &draft)
             }
             let number = trainNumber.trimmingCharacters(in: .whitespacesAndNewlines)
             draft.number = [number, draft.number, limitedExpressName,
@@ -1268,16 +1303,8 @@ struct NewTripView: View {
         draft.region = region.code
         // Same mapping StationPickerView uses: CatalogStation.key.sourceCode.
         draft.stops = [
-            Stop(
-                name: origin.name,
-                n02StationCode: origin.key.sourceCode,
-                stopType: "origin",
-                rideSegment: isRidden),
-            Stop(
-                name: destination.name,
-                n02StationCode: destination.key.sourceCode,
-                stopType: "destination",
-                rideSegment: isRidden),
+            endpointStop(origin, stationID: originStationID, stopType: "origin", ridden: isRidden),
+            endpointStop(destination, stationID: destinationStationID, stopType: "destination", ridden: isRidden),
         ]
         // Only endpoint stops are replaced here. Physical confirmation comes
         // from the resolver result for this exact planning input.
@@ -1298,9 +1325,9 @@ struct NewTripView: View {
             : typedNumber
         if companyName.isEmpty {
             let joined = corridor.operatorNames.filter { !$0.isEmpty }.joined(separator: "・")
-            RegistryIdentityUpgrade.reassignCompany(joined.isEmpty ? nil : joined, on: &draft)
+            commitCompany(joined, on: &draft)
         } else {
-            RegistryIdentityUpgrade.reassignCompany(companyName, on: &draft)
+            commitCompany(companyName, on: &draft)
         }
         draft.origin = origin.name
         draft.destination = destination.name

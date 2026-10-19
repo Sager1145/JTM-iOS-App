@@ -111,6 +111,15 @@ public struct StationReference: Hashable, Sendable {
         return name.isEmpty ? nil : name
     }
 
+    /// Text after the first closed bracket. `特異（前） 博多` yields `博多`.
+    /// Bracket contents stay out of station-name spans.
+    static func tail(afterFirstBracketIn text: String) -> String {
+        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard let bracket = firstBracket(in: trimmed) else { return "" }
+        let after = trimmed.index(after: bracket.close)
+        return trimmed[after...].trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
     /// The portion of `text` a catalog name may be found in. Bracket contents
     /// are a country or a line, never a second station.
     static func nameScope(in text: String) -> String {
@@ -122,6 +131,7 @@ public struct StationReference: Hashable, Sendable {
 
     private struct Bracket {
         var open: String.Index
+        var close: String.Index
         var inside: String
     }
 
@@ -140,7 +150,8 @@ public struct StationReference: Hashable, Sendable {
                     else if next == closer {
                         depth -= 1
                         if depth == 0 {
-                            return Bracket(open: index, inside: String(text[insideStart..<cursor]))
+                            return Bracket(
+                                open: index, close: cursor, inside: String(text[insideStart..<cursor]))
                         }
                     }
                     cursor = text.index(after: cursor)

@@ -852,9 +852,53 @@ struct JourneyCompletionTests {
         #expect(result.train.stops[1].n02StationCode == nil)
         #expect(train.stops[0].n02StationCode == nil)
         #expect(result.isEligible)
+        let pasted = JourneyCompletion.rawDraft(
+            text: "09:00 東京発", catalog: catalog, regionCode: "jp", seed: Self.train())
+        #expect(pasted.stops.first?.automaticSelection?.sourceCode == "TOK")
+        let both = JourneyCompletion.rawDraft(
+            text: "東京 新大阪", catalog: Self.catalog(), regionCode: "jp", seed: Self.train())
+        #expect(both.stops.first?.automaticSelection == nil)
+        #expect(both.stops.first?.ambiguous == true)
         train.stops[0].departure = nil
         train.stops[1].arrival = "10:00"
         #expect(JourneyCompletion.requestEligibility(train: train, catalogs: ["jp": catalog]).denial == .timeNotOnThatStation)
+    }
+
+    @Test("a registry station id is written and an ambiguous name is not picked")
+    func registryInputWritesStationID() {
+        let identity = RegistryIdentity(bundle: RegistryBundle(
+            region: "jp", run: 1,
+            stationCodes: ["TOK": "st:jp:1", "OSA": "st:jp:2"],
+            stations: [
+                "st:jp:1": RegistryStationRecord(
+                    cx: "cx:jp:1", group: "TOK", codes: ["TOK"], op: "op:jp:1", name: "東京", lines: []),
+                "st:jp:2": RegistryStationRecord(
+                    cx: "cx:jp:2", group: "OSA", codes: ["OSA"], op: "op:jp:1", name: "新大阪", lines: []),
+            ]))
+        RegistryIdentityTestGate.withProvider({ region in region == "jp" ? identity : nil }) {
+            var train = Self.train(date: "2026-09-29", number: "特急 1")
+            train.stops[0].name = "東京"
+            train.stops[0].n02StationCode = nil
+            train.stops[1].name = "中央"
+            train.stops[1].n02StationCode = nil
+            let resolved = JourneyCompletion.resolvingUniqueStationNames(
+                in: train, catalogs: ["jp": Self.catalog()])
+            #expect(resolved.stops[0].stationID == "st:jp:1")
+            #expect(resolved.stops[0].n02StationCode == "TOK")
+            #expect(resolved.stops[0].name == "東京")
+            #expect(resolved.stops[1].stationID == nil)
+            #expect(resolved.stops[1].n02StationCode == nil)
+            let draft = JourneyCompletion.rawDraft(
+                text: "東京 09:03\n新大阪 11:27", catalog: Self.catalog(), regionCode: "jp", seed: train)
+            let selections = Dictionary(uniqueKeysWithValues: draft.stops.compactMap { stop in
+                stop.automaticSelection.map { (stop.id, $0) }
+            })
+            let built = draft.train(seed: train, selections: selections, catalog: Self.catalog())
+            #expect(built?.stops.first?.stationID == "st:jp:1")
+            #expect(built?.stops.first?.name == "東京")
+            #expect(built?.stops.last?.stationID == "st:jp:2")
+            #expect(built?.stops.last?.name == "新大阪")
+        }
     }
 
     @Test("date, two named timed stations, and vehicle type can start completion")

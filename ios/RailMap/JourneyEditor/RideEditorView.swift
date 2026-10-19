@@ -882,8 +882,16 @@ struct RideEditorView: View {
             guard let index = stopIDs.firstIndex(of: id), draft.stops.indices.contains(index) else { return }
             var updated = value
             let previous = draft.stops[index]
-            if updated.name != previous.name || updated.n02StationCode != previous.n02StationCode {
-                updated.stationID = nil
+            let identityChanged = updated.stationID != previous.stationID && updated.stationID != nil
+            if !identityChanged,
+               updated.name != previous.name || updated.n02StationCode != previous.n02StationCode {
+                let region = draft.region ?? Region.resolved(draft).code
+                if let code = updated.n02StationCode,
+                   !RegistryStationSelection.apply(sourceCode: code, regionCode: region, to: &updated) {
+                    updated.stationID = nil
+                } else if updated.n02StationCode == nil {
+                    updated.stationID = nil
+                }
             }
             if updated != previous {
                 if updated.routeEditing == nil { updated.routeEditing = Stop.RouteEditingMetadata(visitID: id) }
@@ -1283,7 +1291,9 @@ struct RideEditorView: View {
                     selectedCatalogLineIDs = Set(lineIDs)
                     var policy = routePolicy.wrappedValue
                     policy.preferredLineNames = lineNames.isEmpty ? nil : lineNames
-                    policy.preferredOperatorNames = operatorNames.isEmpty ? nil : operatorNames
+                    let names = RegistryOperatorCommit.preferredNames(
+                        from: operatorNames, region: Region.resolved(draft).code)
+                    policy.preferredOperatorNames = names.isEmpty ? nil : names
                     draft.routePolicy = policy
                 })
         } label: {
@@ -1815,7 +1825,15 @@ struct RideEditorView: View {
     private var routePolicy: Binding<RoutePolicy> {
         Binding(
             get: { draft.routePolicy ?? Self.canonicalPolicy },
-            set: { draft.routePolicy = $0 }
+            set: { value in
+                var policy = value
+                if let names = policy.preferredOperatorNames {
+                    let rewritten = RegistryOperatorCommit.preferredNames(
+                        from: names, region: Region.resolved(draft).code)
+                    policy.preferredOperatorNames = rewritten.isEmpty ? nil : rewritten
+                }
+                draft.routePolicy = policy
+            }
         )
     }
 
@@ -2055,7 +2073,13 @@ struct RideEditorView: View {
         Binding(
             get: { draft.company ?? "" },
             set: { value in
-                RegistryIdentityUpgrade.reassignCompany(value.isEmpty ? nil : value, on: &draft)
+                let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
+                let region = Region.resolved(draft).code
+                if trimmed.isEmpty {
+                    RegistryIdentityUpgrade.reassignCompany(nil, on: &draft)
+                } else if !RegistryOperatorCommit.apply(text: trimmed, region: region, to: &draft) {
+                    RegistryIdentityUpgrade.reassignCompany(trimmed, on: &draft)
+                }
             }
         )
     }

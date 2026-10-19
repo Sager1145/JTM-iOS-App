@@ -32,6 +32,12 @@ public struct RegistryIdentity: Equatable, Sendable {
     /// Folded name, label, alias, or identity display name, paired with its operator.
     /// The raw identity code is not a query key.
     private var queryHaystacks: [(haystack: String, identifier: String)]
+    /// Bracket-folded official name → station ids. An exact name wins over a base.
+    private var stationIDsByOfficialName: [String: [String]]
+    /// Bracket-folded base → station ids whose stored parts use that base.
+    private var stationIDsByBase: [String: [String]]
+    /// Official names and bases, longest first, for free-text span proposals.
+    private var stationNameNeedles: [String]
 
     public init(bundle: RegistryBundle) {
         self.bundle = bundle
@@ -40,6 +46,10 @@ public struct RegistryIdentity: Equatable, Sendable {
         self.operatorByIdentityCode = maps.byCode
         self.lineNameCounts = maps.lineNames
         self.queryHaystacks = maps.haystacks
+        let names = Self.stationNameMaps(bundle)
+        self.stationIDsByOfficialName = names.official
+        self.stationIDsByBase = names.base
+        self.stationNameNeedles = names.needles
     }
 
     public static func == (lhs: RegistryIdentity, rhs: RegistryIdentity) -> Bool {
@@ -165,6 +175,147 @@ public struct RegistryIdentity: Equatable, Sendable {
         return (exact, byCode, lineNames, haystacks)
     }
 
+    /// One company station a typed, pasted, or guide name resolved to.
+    public struct StationInputMatch: Hashable, Sendable {
+        public var stationID: String
+        public var name: String
+        public var codes: [String]
+        public var complexID: String
+        public var label: String
+
+        public init(
+            stationID: String, name: String, codes: [String], complexID: String, label: String
+        ) {
+            self.stationID = stationID
+            self.name = name
+            self.codes = codes
+            self.complexID = complexID
+            self.label = label
+        }
+    }
+
+    /// ADR 0013 §11.2 against this region's station records.
+    ///
+    /// An exact official name wins, including a bracket-folded spelling.
+    /// A bare base matches only when `baseNameCounts` is 1 and no station is
+    /// officially named that base. A line keeps stations that line serves.
+    /// Several hits stay a list. Nothing here returns the first of several.
+    public func stations(for reference: StationReference) -> [StationInputMatch] {
+        if reference.unsupportedCountry || reference.name.isEmpty { return [] }
+        if let country = reference.country,
+           country.lowercased() != bundle.region.lowercased() {
+            return []
+        }
+        let identified = stationIDs(named: reference.name)
+        let lined: [String]
+        if let line = reference.line {
+            lined = identified.filter { !matchingLineIDs($0, query: line).isEmpty }
+        } else {
+            lined = identified
+        }
+        return lined.compactMap { stationID in
+            let requested = reference.line.flatMap { matchingLineIDs(stationID, query: $0).first }
+            return inputMatch(stationID, lineID: requested)
+        }
+    }
+
+    /// Station ids whose official name is `name`, or the unique base when no
+    /// official name is exactly `name`. Several exact names, or a shared base,
+    /// stay a list.
+    public func stationIDs(named name: String) -> [String] {
+        let key = Self.stationNameKey(name)
+        guard !key.isEmpty else { return [] }
+        if let exact = stationIDsByOfficialName[key], !exact.isEmpty {
+            return exact
+        }
+        let count = baseCount(name, key: key)
+        guard count > 0 else { return [] }
+        return stationIDsByBase[key] ?? []
+    }
+
+    /// Longest official names and bases that occur in `text`, without overlap.
+    /// Each returned string is a span for ``stations(for:)``, not a chosen station.
+    public func containedNameSpans(in text: String) -> [String] {
+        let haystack = Self.spanKey(text)
+        guard !haystack.isEmpty else { return [] }
+        var claimed: [Range<String.Index>] = []
+        var spans: [String] = []
+        for needle in stationNameNeedles {
+            let folded = Self.spanKey(needle)
+            guard !folded.isEmpty else { continue }
+            var search = haystack.startIndex
+            while let range = haystack.range(of: folded, range: search..<haystack.endIndex) {
+                let overlaps = claimed.contains { $0.overlaps(range) }
+                if !overlaps {
+                    claimed.append(range)
+                    spans.append(needle)
+                }
+                search = range.upperBound
+                if search >= haystack.endIndex { break }
+            }
+        }
+        return spans
+    }
+
+    /// §11.5 caption for one complex: up to two line labels, then ` +N`.
+    public func searchQualifier(complexID: String) -> String? {
+        guard let complex = bundle.complexes[complexID] else { return nil }
+        var choices: [StationLabel.LineChoice] = []
+        var seen: Set<String> = []
+        for stationID in complex.stations {
+            guard let station = bundle.stations[stationID] else { continue }
+            for lineID in station.lines {
+                guard seen.insert(lineID).inserted, let part = bundle.lineParts[lineID] else { continue }
+                let caption = lineLabel(for: lineID) ?? part.name
+                choices.append(StationLabel.LineChoice(
+                    id: lineID, label: caption, rank: part.rank, name: part.name))
+            }
+        }
+        let full = StationLabel.search(
+            name: complex.name, countryCode: bundle.region.uppercased(),
+            lines: choices, contextLineIDs: [])
+        let prefix = complex.name + " "
+        guard full.hasPrefix(prefix) else { return nil }
+        return String(full.dropFirst(prefix.count))
+    }
+
+    /// Exact operator text, including a joint `A/B` or `A・B` whose every part converts.
+    /// A part that does not convert rejects the whole string.
+    public func operatorCommit(forExactText text: String) -> RegistryOperatorCommit.Choice? {
+        let trimmed = JSString.trim(text)
+        guard !trimmed.isEmpty else { return nil }
+        if let whole = operatorID(forExactName: trimmed) {
+            return operatorChoice(ids: [whole])
+        }
+        let parts = trimmed.components(separatedBy: CharacterSet(charactersIn: "/／・"))
+            .map { JSString.trim($0) }
+            .filter { !$0.isEmpty }
+        guard parts.count > 1 else { return nil }
+        var ids: [String] = []
+        var seen: Set<String> = []
+        for part in parts {
+            guard let identifier = operatorID(forExactName: part) else { return nil }
+            if seen.insert(identifier).inserted { ids.append(identifier) }
+        }
+        guard !ids.isEmpty else { return nil }
+        return operatorChoice(ids: ids)
+    }
+
+    private func operatorChoice(ids: [String]) -> RegistryOperatorCommit.Choice {
+        let official = ids.map { identifier -> String in
+            if let name = bundle.operatorRecords[identifier]?.names.first, !name.isEmpty { return name }
+            return operatorLabel(identifier) ?? identifier
+        }
+        let display = ids.enumerated().map { index, identifier -> String in
+            if let label = operatorLabel(identifier), !label.isEmpty { return label }
+            return official[index]
+        }
+        return RegistryOperatorCommit.Choice(
+            ids: ids,
+            company: display.joined(separator: "/"),
+            preferredNames: official)
+    }
+
     public func station(_ identifier: String) -> RegistryStationRecord? {
         bundle.stations[identifier]
     }
@@ -233,6 +384,90 @@ public struct RegistryIdentity: Equatable, Sendable {
         return RegistryStationLabel(presentation: presentation, text: text, lineID: lineID)
     }
 
+    private static func stationNameKey(_ value: String) -> String {
+        spanKey(JSString.trim(value))
+    }
+
+    /// Bracket fold plus NFKC. Length is not stable, so callers use it as a search key.
+    private static func spanKey(_ value: String) -> String {
+        StationNameDirectory.foldBrackets(value.precomposedStringWithCompatibilityMapping)
+    }
+
+    private static func stationNameMaps(
+        _ bundle: RegistryBundle
+    ) -> (official: [String: [String]], base: [String: [String]], needles: [String]) {
+        var official: [String: [String]] = [:]
+        var base: [String: [String]] = [:]
+        var needleSet: [String: Int] = [:]
+        for (identifier, record) in bundle.stations {
+            let nameKey = stationNameKey(record.name)
+            if !nameKey.isEmpty {
+                var list = official[nameKey] ?? []
+                if !list.contains(identifier) { list.append(identifier) }
+                official[nameKey] = list
+                needleSet[record.name] = max(needleSet[record.name] ?? 0, nameKey.count)
+            }
+            if let baseName = record.parts?.base {
+                let key = stationNameKey(baseName)
+                if !key.isEmpty {
+                    var list = base[key] ?? []
+                    if !list.contains(identifier) { list.append(identifier) }
+                    base[key] = list
+                    needleSet[baseName] = max(needleSet[baseName] ?? 0, key.count)
+                }
+            }
+        }
+        for key in official.keys { official[key]?.sort() }
+        for key in base.keys { base[key]?.sort() }
+        for (baseName, _) in bundle.baseNameCounts {
+            let key = stationNameKey(baseName)
+            guard !key.isEmpty else { continue }
+            needleSet[baseName] = max(needleSet[baseName] ?? 0, key.count)
+        }
+        let needles = needleSet.keys.sorted { lhs, rhs in
+            let left = needleSet[lhs] ?? 0
+            let right = needleSet[rhs] ?? 0
+            if left != right { return left > right }
+            return lhs < rhs
+        }
+        return (official, base, needles)
+    }
+
+    private func baseCount(_ name: String, key: String) -> Int {
+        if let count = bundle.baseNameCounts[name] { return count }
+        if let count = bundle.baseNameCounts[key] { return count }
+        let folded = bundle.baseNameCounts.first { Self.stationNameKey($0.key) == key }
+        return folded?.value ?? 0
+    }
+
+    private func matchingLineIDs(_ stationID: String, query: String) -> [String] {
+        guard let station = bundle.stations[stationID] else { return [] }
+        let needle = StationReferenceResolution.fold(query)
+        guard !needle.isEmpty else { return [] }
+        return station.lines.filter { lineID in
+            guard let part = bundle.lineParts[lineID] else { return false }
+            var raw = [part.name]
+            if let network = part.ln, !network.isEmpty { raw.append(network) }
+            if let record = bundle.operatorRecords[part.op] {
+                raw.append(contentsOf: record.names)
+                if !record.label.isEmpty { raw.append(record.label) }
+                let source = record.label.isEmpty ? record.names.first : record.label
+                if let source, !source.isEmpty {
+                    raw.append(StationLabel.qualifiedLineName(part.name, operatorName: source))
+                }
+            }
+            return raw.contains { StationReferenceResolution.fold($0) == needle }
+        }
+    }
+
+    private func inputMatch(_ stationID: String, lineID: String?) -> StationInputMatch? {
+        guard let record = bundle.stations[stationID] else { return nil }
+        let label = label(for: stationID, line: lineID, country: bundle.region)?.text.full ?? record.name
+        return StationInputMatch(
+            stationID: stationID, name: record.name, codes: record.codes,
+            complexID: record.cx, label: label)
+    }
+
     private func chosenLineID(station: RegistryStationRecord, requested: String?) -> String? {
         if let requested, station.lines.contains(requested), bundle.lineParts[requested] != nil {
             return requested
@@ -270,6 +505,124 @@ public struct RegistryIdentity: Equatable, Sendable {
             return exact
         }
         return stored
+    }
+}
+
+/// Company text the editor stores after an exact operator match.
+public enum RegistryOperatorCommit {
+    public struct Choice: Equatable, Sendable {
+        public var ids: [String]
+        public var company: String
+        public var preferredNames: [String]
+
+        public init(ids: [String], company: String, preferredNames: [String]) {
+            self.ids = ids
+            self.company = company
+            self.preferredNames = preferredNames
+        }
+    }
+
+    public static func choice(forExactText text: String, region: String) -> Choice? {
+        RegistryIdentityCache.identity(forRegion: region)?.operatorCommit(forExactText: text)
+    }
+
+    /// Writes `company`, operator ids, and `preferred_operator_names` from the ids.
+    /// A text that is not an exact operator name leaves the train unchanged.
+    @discardableResult
+    public static func apply(text: String, region: String, to train: inout Train) -> Bool {
+        guard let choice = choice(forExactText: text, region: region) else { return false }
+        if train.company != choice.company {
+            RegistryIdentityUpgrade.reassignCompany(choice.company, on: &train)
+        }
+        train.company = choice.company
+        if choice.ids.count == 1 {
+            train.operatorID = choice.ids[0]
+            train.operatorIDs = nil
+        } else {
+            train.operatorID = nil
+            train.operatorIDs = choice.ids
+        }
+        if train.routePolicy != nil {
+            train.routePolicy?.preferredOperatorNames = choice.preferredNames
+        }
+        return true
+    }
+
+    /// Each token that exactly names an operator is replaced by that operator's official name.
+    /// A token that does not convert is left as typed so a partial word is not eaten.
+    public static func preferredNames(from names: [String], region: String) -> [String] {
+        guard let identity = RegistryIdentityCache.identity(forRegion: region) else { return names }
+        return names.map { name in
+            guard let choice = identity.operatorCommit(forExactText: name) else { return name }
+            return choice.preferredNames.joined(separator: "/")
+        }
+    }
+}
+
+/// A picker or guide selection written as `station_id` plus the code and official name.
+public enum RegistryStationSelection {
+    public struct Written: Equatable, Sendable {
+        public var stationID: String
+        public var name: String
+        public var code: String?
+
+        public init(stationID: String, name: String, code: String?) {
+            self.stationID = stationID
+            self.name = name
+            self.code = code
+        }
+    }
+
+    /// Nil when the code is not exactly one company station. A shared group code stays nil.
+    public static func written(stationID: String, regionCode: String) -> Written? {
+        guard let identity = RegistryIdentityCache.identity(forRegion: regionCode),
+              let record = identity.station(stationID) else { return nil }
+        let codes = identity.codes(of: stationID)
+        return Written(stationID: stationID, name: record.name, code: codes.first)
+    }
+
+    /// Nil when the code is not exactly one company station. A shared group code stays nil.
+    public static func written(sourceCode: String, regionCode: String) -> Written? {
+        let code = sourceCode.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !code.isEmpty,
+              let identity = RegistryIdentityCache.identity(forRegion: regionCode),
+              let stationID = identity.stationID(forCode: code, operator: nil),
+              let record = identity.station(stationID) else { return nil }
+        let codes = identity.codes(of: stationID)
+        return Written(stationID: stationID, name: record.name, code: codes.first ?? code)
+    }
+
+    @discardableResult
+    public static func apply(sourceCode: String, regionCode: String, to stop: inout Stop) -> Bool {
+        guard let written = written(sourceCode: sourceCode, regionCode: regionCode) else { return false }
+        write(written, to: &stop)
+        return true
+    }
+
+    @discardableResult
+    public static func apply(stationID: String, regionCode: String, to stop: inout Stop) -> Bool {
+        guard let written = written(stationID: stationID, regionCode: regionCode) else { return false }
+        write(written, to: &stop)
+        return true
+    }
+
+    /// A known station id wins. Otherwise the source code must name exactly one station.
+    /// A code the registry cannot map keeps the catalog name and code and clears `station_id`.
+    public static func fill(
+        _ stop: inout Stop, regionCode: String, sourceCode: String, catalogName: String,
+        stationID: String? = nil
+    ) {
+        if let stationID, apply(stationID: stationID, regionCode: regionCode, to: &stop) { return }
+        if apply(sourceCode: sourceCode, regionCode: regionCode, to: &stop) { return }
+        stop.stationID = nil
+        stop.name = catalogName
+        stop.n02StationCode = sourceCode
+    }
+
+    private static func write(_ written: Written, to stop: inout Stop) {
+        stop.stationID = written.stationID
+        stop.name = written.name
+        if let code = written.code { stop.n02StationCode = code }
     }
 }
 

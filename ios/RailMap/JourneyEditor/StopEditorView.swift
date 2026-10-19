@@ -118,6 +118,16 @@ struct StopEditorView: View {
         return catalog.memberships(stationKey: key).allSatisfy { !selectedLineIDs.contains($0.lineID) }
     }
 
+    private func applyStation(_ station: CatalogStation, stationID: String?) {
+        var next = stop
+        RegistryStationSelection.fill(
+            &next, regionCode: region.code, sourceCode: station.key.sourceCode,
+            catalogName: station.name, stationID: stationID)
+        stop.stationID = next.stationID
+        stop.name = next.name
+        stop.n02StationCode = next.n02StationCode
+    }
+
     private var stationName: Binding<String> {
         Binding(get: { stop.name }, set: { name in
             if name != stop.name {
@@ -148,10 +158,8 @@ struct StopEditorView: View {
                 .accessibilityIdentifier("rideEditorStopName")
                 StationPickerView(
                     regionCode: region.code, selectedLineIDs: selectedLineIDs,
-                    onSelect: { station in
-                        stop.stationID = nil
-                        stop.name = station.name
-                        stop.n02StationCode = station.key.sourceCode
+                    onSelect: { station, stationID in
+                        applyStation(station, stationID: stationID)
                         stationNameFocused = false
                     },
                     rideDate: journeyDate,
@@ -224,10 +232,8 @@ struct StopEditorView: View {
                 NavigationLink {
                     StationPickerView(
                         regionCode: region.code, selectedLineIDs: selectedLineIDs,
-                        onSelect: { station in
-                            stop.stationID = nil
-                            stop.name = station.name
-                            stop.n02StationCode = station.key.sourceCode
+                        onSelect: { station, stationID in
+                            applyStation(station, stationID: stationID)
                         },
                         rideDate: journeyDate,
                         onSelectRetired: { station in

@@ -37,9 +37,10 @@ struct RouteSectionEditorView: View {
                 NavigationLink {
                     StationPickerView(
                         regionCode: region.code,
-                        onSelect: { station in
+                        onSelect: { station, stationID in
                             SolverRegistryInput.assignEndpoint(
-                                &section, from: true, name: station.name, code: station.key.sourceCode)
+                                &section, from: true, name: station.name, code: station.key.sourceCode,
+                                regionCode: region.code, stationID: stationID)
                         },
                         rideDate: rideDate,
                         onSelectRetired: { station in
@@ -58,9 +59,10 @@ struct RouteSectionEditorView: View {
                 NavigationLink {
                     StationPickerView(
                         regionCode: region.code,
-                        onSelect: { station in
+                        onSelect: { station, stationID in
                             SolverRegistryInput.assignEndpoint(
-                                &section, from: false, name: station.name, code: station.key.sourceCode)
+                                &section, from: false, name: station.name, code: station.key.sourceCode,
+                                regionCode: region.code, stationID: stationID)
                         },
                         rideDate: rideDate,
                         onSelectRetired: { station in

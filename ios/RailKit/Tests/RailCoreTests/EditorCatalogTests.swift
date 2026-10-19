@@ -388,6 +388,53 @@ struct EditorCatalogTests {
             #expect(unknown.lines.isEmpty)
         }
     }
+
+    @Test func registryComplexIsOneSuggestionWithStationIDs() {
+        let catalog = EditorCatalogBuilder.build([
+            sourceLine("line-a", name: "南海本線", operatorName: "南海", stations: [
+                station("N1", name: "住吉", longitude: 135.5, latitude: 34.6),
+            ]),
+            sourceLine("line-b", name: "六甲ライナー", operatorName: "神戸新交通", stations: [
+                station("K1", name: "住吉", longitude: 135.3, latitude: 34.7),
+            ]),
+        ])
+        let bundle = RegistryBundle(
+            region: "jp", run: 1,
+            stationCodes: ["N1": "st:jp:1", "K1": "st:jp:2"],
+            operatorRecords: [
+                "op:jp:1": RegistryOperatorRecord(names: ["南海"], label: "南海"),
+                "op:jp:2": RegistryOperatorRecord(names: ["神戸新交通"], label: "神戸新交通"),
+            ],
+            stations: [
+                "st:jp:1": RegistryStationRecord(
+                    cx: "cx:jp:1", group: "G", codes: ["N1"], op: "op:jp:1", name: "住吉", lines: ["lp:1"]),
+                "st:jp:2": RegistryStationRecord(
+                    cx: "cx:jp:1", group: "G", codes: ["K1"], op: "op:jp:2", name: "住吉", lines: ["lp:2"]),
+            ],
+            complexes: [
+                "cx:jp:1": RegistryComplexRecord(
+                    group: "G", name: "住吉", stations: ["st:jp:1", "st:jp:2"], lon: 135.5, lat: 34.6),
+            ],
+            lineParts: [
+                "lp:1": RegistryLinePartRecord(packageLine: "line-a", name: "南海本線", op: "op:jp:1", rank: 1),
+                "lp:2": RegistryLinePartRecord(packageLine: "line-b", name: "六甲ライナー", op: "op:jp:2", rank: 2),
+            ])
+        RegistryIdentityTestGate.withProvider({ region in
+            region == "jp" ? RegistryIdentity(bundle: bundle) : nil
+        }) {
+            let index = catalog.stationSearchIndex(
+                regionCode: "jp", extraNames: ["N1": ["すみよし"]])
+            let result = index.search(StationSearchQuery(regionCode: "jp", needle: "住吉"))
+            #expect(result.suggestions.count == 1)
+            #expect(result.suggestions[0].stationID == nil)
+            #expect(result.suggestions[0].stationIDs == ["st:jp:1", "st:jp:2"])
+            #expect(result.suggestions[0].qualifier == "(JP, 南海本線・六甲ライナー)")
+            #expect(Set(result.lines.flatMap(\.hits).compactMap(\.stationID)) == ["st:jp:1", "st:jp:2"])
+            let reading = index.search(StationSearchQuery(regionCode: "jp", needle: "すみよし"))
+            #expect(reading.suggestions.count == 1)
+            #expect(reading.suggestions[0].stationIDs == ["st:jp:1", "st:jp:2"])
+        }
+    }
 }
 
 private extension StationSearchHit {

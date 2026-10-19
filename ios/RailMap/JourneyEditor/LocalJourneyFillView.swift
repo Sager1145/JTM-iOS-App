@@ -71,7 +71,7 @@ struct LocalJourneyFillView: View {
                     NavigationLink {
                         StationPickerView(
                             regionCode: package.country.lowercased(),
-                            onSelect: { station in
+                            onSelect: { station, _ in
                                 let code = station.key.sourceCode
                                 if !requiredStationCodes.contains(code) { requiredStationCodes.append(code) }
                             },
@@ -218,7 +218,7 @@ struct LocalJourneyFillView: View {
         NavigationLink {
             StationPickerView(
                 regionCode: package.country.lowercased(),
-                onSelect: { selection.wrappedValue = $0.key.sourceCode },
+                onSelect: { station, _ in selection.wrappedValue = station.key.sourceCode },
                 sourcePackage: package, accessibilityPrefix: "localJourneyStation")
         } label: {
             LabeledContent(localization.text(key), value: stationName(selection.wrappedValue))
@@ -301,8 +301,13 @@ struct LocalJourneyFillView: View {
                     return recorded
                 }
                 let name = package.lines.lazy.flatMap(\.stations).first { $0.id == code }?.name ?? code
-                return Stop(name: name, n02StationCode: code,
+                var stop = Stop(name: name, n02StationCode: code,
                     stopType: index == 0 ? "origin" : (index == codes.count - 1 ? "destination" : "pass_through"))
+                RegistryStationSelection.fill(
+                    &stop, regionCode: package.country.lowercased(), sourceCode: code,
+                    catalogName: name)
+                stop.stopType = index == 0 ? "origin" : (index == codes.count - 1 ? "destination" : "pass_through")
+                return stop
             }
             value.routeSections = nil
             value.origin = value.stops.first?.name ?? ""

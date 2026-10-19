@@ -179,10 +179,16 @@ public enum JourneyCompletion {
     ) -> Train {
         var resolved = train
         let directory = nameDirectory(train: train, catalogs: catalogs, names: names)
+        let identity = inputIdentity(train: train, catalogs: catalogs)
         for index in resolved.stops.indices {
             let stop = resolved.stops[index]
             guard nonempty(stop.n02StationCode) == nil,
                   let name = nonempty(stop.name) else { continue }
+            if let identity {
+                applyRegistryStation(
+                    name, identity: identity, directory: directory, to: &resolved.stops[index])
+                continue
+            }
             // An exact catalog name wins, even when that spelling is also the base of a
             // bracketed station. One exact station is selected. Several exact stations
             // stay unresolved. Base-only matching runs only when nothing is named the input.
@@ -226,6 +232,35 @@ public enum JourneyCompletion {
             }
         }
         return resolved
+    }
+
+    /// One registry station is written. Zero or several leave the stop unnamed by id.
+    private static func applyRegistryStation(
+        _ name: String, identity: RegistryIdentity, directory: StationNameDirectory?,
+        to stop: inout Stop
+    ) {
+        let names = directory ?? StationNameDirectory(bundle: identity.bundle)
+        guard let reference = StationReference.parse(name, names: names) else { return }
+        let matches = StationReferenceResolution.resolve(reference, identity: identity)
+        guard matches.count == 1, let hit = matches.first else { return }
+        stop.stationID = hit.stationID
+        stop.name = hit.name
+        stop.n02StationCode = hit.codes.first
+    }
+
+    private static func inputIdentity(
+        train: Train, catalogs: [String: EditorCatalog]
+    ) -> RegistryIdentity? {
+        var regions: [String] = []
+        if let region = train.region { regions.append(region) }
+        for key in catalogs.keys.sorted() where !regions.contains(key) { regions.append(key) }
+        for region in regions {
+            if let identity = RegistryIdentityCache.identity(forRegion: region),
+               !identity.bundle.stations.isEmpty {
+                return identity
+            }
+        }
+        return nil
     }
 
     private enum BaseCode {

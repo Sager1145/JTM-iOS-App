@@ -195,6 +195,11 @@ final class AppLocalization {
     /// with kana/romaji sublines. The three reading toggles do nothing at all
     /// in those regions, and the settings panel says so rather than offering
     /// switches that cannot change anything.
+    /// Readings and translated names for station search, keyed by source code.
+    func stationSearchNames(region: Region) -> [String: [String]] {
+        namingEngines[region]?.stationReadings.searchNamesByCode ?? [:]
+    }
+
     func localizesStationNames(in region: Region) -> Bool {
         guard let naming = namingEngines[region] else { return false }
         return Localization.localizedNameCountries.contains(naming.stationReadings.country)

@@ -129,15 +129,19 @@ extension TransferGuide {
         public var unresolved: [String]
         public var resolvedCalls: Int
         public var totalCalls: Int
+        /// Station text that matched more than one registry station. The value
+        /// is the station ids. The importer does not pick one.
+        public var ambiguous: [String: [String]]
 
         public init(
             trains: [Train] = [], unresolved: [String] = [], resolvedCalls: Int = 0,
-            totalCalls: Int = 0
+            totalCalls: Int = 0, ambiguous: [String: [String]] = [:]
         ) {
             self.trains = trains
             self.unresolved = unresolved
             self.resolvedCalls = resolvedCalls
             self.totalCalls = totalCalls
+            self.ambiguous = ambiguous
         }
     }
 
@@ -157,6 +161,8 @@ extension TransferGuide {
         // station belongs to two legs, and resolving each leg on its own would
         // let 大宮 be one complex arriving and another leaving.
         var names: [String] = []
+        var qualifiers: [String?] = []
+        var rawNames: [String] = []
         var hints: [[String]] = []
         var spans: [Range<Int>] = []
         for leg in legs {
@@ -170,15 +176,18 @@ extension TransferGuide {
             if isShinkansen(leg), !legHints.contains("新幹線") { legHints.append("新幹線") }
             for call in leg.calls {
                 names.append(call.name)
+                qualifiers.append(call.qualifier)
+                rawNames.append(call.rawName)
                 hints.append(legHints)
             }
             spans.append(start..<names.count)
         }
-        var places = StationIndex.resolve(names: names, hints: hints, index: stations)
-        StationIndex.fill(names: names, places: &places, index: stations)
+        let resolved = resolveCalls(
+            names: names, qualifiers: qualifiers, rawNames: rawNames, hints: hints,
+            stations: stations, region: options.region)
 
         var unresolved: [String] = []
-        for (name, place) in zip(names, places) where place == nil {
+        for (name, call) in zip(names, resolved.calls) where call.place == nil && call.stationID == nil {
             if !unresolved.contains(name) { unresolved.append(name) }
         }
 
@@ -186,18 +195,71 @@ extension TransferGuide {
         var trains: [Train] = []
         for (index, leg) in legs.enumerated() {
             let span = spans[index]
-            let legPlaces = Array(places[span])
+            let legCalls = Array(resolved.calls[span])
             let id = uniqueID(options: options, ordinal: index + 1, used: &used)
             trains.append(
                 train(
-                    leg: leg, places: legPlaces, id: id, options: options, stations: stations))
+                    leg: leg, calls: legCalls, id: id, options: options, stations: stations))
         }
 
         return BuildResult(
             trains: trains,
             unresolved: unresolved,
-            resolvedCalls: places.reduce(0) { $0 + ($1 == nil ? 0 : 1) },
-            totalCalls: places.count)
+            resolvedCalls: resolved.calls.reduce(0) { $0 + (($1.place == nil && $1.stationID == nil) ? 0 : 1) },
+            totalCalls: resolved.calls.count,
+            ambiguous: resolved.ambiguous)
+    }
+
+    /// One call after name resolution. `place` is the package complex used by
+    /// the code-level line graph. The station id comes from the registry.
+    private struct ResolvedCall: Sendable {
+        var place: StationIndex.Place?
+        var stationID: String?
+        var officialName: String?
+        var code: String?
+    }
+
+    /// Registry station records answer the names. The package index is only
+    /// asked for a place by code, so shared lines can still be drawn.
+    /// With no station records, the legacy Viterbi chain stays.
+    private static func resolveCalls(
+        names: [String], qualifiers: [String?], rawNames: [String], hints: [[String]],
+        stations: StationIndex, region: String
+    ) -> (calls: [ResolvedCall], ambiguous: [String: [String]]) {
+        guard let identity = RegistryIdentityCache.identity(forRegion: region),
+              !identity.bundle.stations.isEmpty else {
+            var places = StationIndex.resolve(names: names, hints: hints, index: stations)
+            StationIndex.fill(names: names, places: &places, index: stations)
+            return (places.map { ResolvedCall(place: $0, stationID: nil, officialName: nil, code: nil) }, [:])
+        }
+        let directory = StationNameDirectory(bundle: identity.bundle)
+        var calls: [ResolvedCall] = []
+        var ambiguous: [String: [String]] = [:]
+        for index in names.indices {
+            let name = names[index]
+            let text = rawNames[index].isEmpty ? name : rawNames[index]
+            let parsed = StationReference.parse(text, names: directory) ?? StationReference(name: name)
+            var matches = identity.stations(for: parsed)
+            if let qualifier = qualifiers[index]?.trimmingCharacters(in: .whitespacesAndNewlines),
+               !qualifier.isEmpty {
+                let lined = identity.stations(for: StationReference(
+                    name: parsed.name, country: parsed.country, line: qualifier,
+                    unsupportedCountry: parsed.unsupportedCountry))
+                if !lined.isEmpty { matches = lined }
+            }
+            if matches.count == 1, let match = matches.first {
+                let code = match.codes.first
+                calls.append(ResolvedCall(
+                    place: code.flatMap { stations.place(code: $0) },
+                    stationID: match.stationID, officialName: match.name, code: code))
+            } else {
+                calls.append(ResolvedCall(place: nil, stationID: nil, officialName: nil, code: nil))
+                if matches.count > 1, ambiguous[name] == nil {
+                    ambiguous[name] = matches.map(\.stationID)
+                }
+            }
+        }
+        return (calls, ambiguous)
     }
 
     /// A resolved place's `n02_station_code`, or nil where that code is one
@@ -228,13 +290,14 @@ extension TransferGuide {
     }
 
     private static func train(
-        leg: Leg, places: [StationIndex.Place?], id: String, options: BuildOptions,
+        leg: Leg, calls: [ResolvedCall], id: String, options: BuildOptions,
         stations: StationIndex
     ) -> Train {
         let hints = lineHints(for: leg)
         let shinkansen = isShinkansen(leg)
+        let places = calls.map(\.place)
 
-        let stops = trainStops(leg: leg, places: places, ridden: options.ridden)
+        let stops = trainStops(leg: leg, calls: calls, ridden: options.ridden)
 
         var sections: [RouteSection] = []
         var lineNamesSeen: [String] = []
@@ -243,17 +306,18 @@ extension TransferGuide {
         appendTrainSections(leg: leg, places: places, shinkansen: shinkansen, hints: hints,
             sections: &sections, lineNamesSeen: &lineNamesSeen,
             operatorsSeen: &operatorsSeen, colorHex: &colorHex)
+        let identity = operatorIdentity(operatorsSeen: operatorsSeen, service: leg.service, region: options.region)
         let policy = trainRoutePolicy(leg: leg, shinkansen: shinkansen,
-            lineNamesSeen: lineNamesSeen, operatorsSeen: operatorsSeen)
+            lineNamesSeen: lineNamesSeen, operatorsSeen: identity.preferred)
 
-        let origin = leg.calls.first?.name ?? ""
-        let destination = leg.calls.last?.name ?? ""
+        let origin = calls.first?.officialName ?? leg.calls.first?.name ?? ""
+        let destination = calls.last?.officialName ?? leg.calls.last?.name ?? ""
         return Train(
             id: id,
             date: options.date,
             number: number(for: leg),
             trainType: trainType(for: leg),
-            company: company(from: operatorsSeen, service: leg.service),
+            company: identity.company,
             origin: origin,
             destination: destination,
             direction: leg.destination ?? destination,
@@ -262,27 +326,50 @@ extension TransferGuide {
             routePolicy: policy,
             routeSections: sections.isEmpty ? nil : sections,
             stops: stops,
-            region: options.region)
+            region: options.region,
+            operatorID: identity.operatorID,
+            operatorIDs: identity.operatorIDs)
     }
 
-    private static func trainStops(leg: Leg, places: [StationIndex.Place?], ridden: Bool) -> [Stop] {
+    private static func trainStops(leg: Leg, calls: [ResolvedCall], ridden: Bool) -> [Stop] {
         var stops: [Stop] = []
         for (index, call) in leg.calls.enumerated() {
             let isFirst = index == 0
             let isLast = index == leg.calls.count - 1
+            let resolved = calls.indices.contains(index) ? calls[index] : nil
             let stop = Stop(
-                name: call.name,
-                n02StationCode: liveCode(places[index]),
+                name: resolved?.officialName ?? call.name,
+                n02StationCode: liveCode(resolved?.place) ?? resolved?.code,
                 platformNumber: isFirst
                     ? leg.departurePlatform : (isLast ? leg.arrivalPlatform : nil),
                 arrival: call.arrival,
                 departure: call.departure,
                 stopType: isFirst ? "origin" : (isLast ? "destination" : "passenger_stop"),
-                rideSegment: ridden)
+                rideSegment: ridden,
+                stationID: resolved?.stationID)
             stops.append(stop)
         }
 
         return stops
+    }
+
+    /// Exact operator text becomes operator ids. A registry with station
+    /// records does not fold names through the legacy company label.
+    private static func operatorIdentity(
+        operatorsSeen: [String], service: String, region: String
+    ) -> (company: String, operatorID: String?, operatorIDs: [String]?, preferred: [String]) {
+        let registry = RegistryIdentityCache.identity(forRegion: region)
+        if let registry, !registry.bundle.stations.isEmpty {
+            let joined = operatorsSeen.joined(separator: "/")
+            let choice = registry.operatorCommit(forExactText: joined)
+            if let choice {
+                let single = choice.ids.count == 1 ? choice.ids[0] : nil
+                let many = choice.ids.count > 1 ? choice.ids : nil
+                return (choice.company, single, many, choice.preferredNames)
+            }
+            return ("", nil, nil, [])
+        }
+        return (company(from: operatorsSeen, service: service), nil, nil, operatorsSeen)
     }
 
     private static func appendTrainSections(
