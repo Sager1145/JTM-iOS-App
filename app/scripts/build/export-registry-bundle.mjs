@@ -6,6 +6,12 @@ import { DatabaseSync } from "node:sqlite";
 import { fileURLToPath } from "node:url";
 
 import { REGIONS, compareId, compareText, readLedger, splitBracketName } from "./rail-database/registry.mjs";
+import { searchFold } from "./search-fold.mjs";
+
+const IDENTITY_PATH = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  "../../../ios/RailKit/Sources/RailCore/Resources/operator-identities.json",
+);
 
 function parseArgs(argv) {
   const options = {
@@ -99,6 +105,70 @@ function operatorList(packageValues, shorts, aliases) {
   return list;
 }
 
+function tableColumns(db, name) {
+  if (!db || !hasTable(db, name)) return new Set();
+  return new Set(db.prepare(`PRAGMA table_info(${name})`).all().map((row) => row.name));
+}
+
+function round5(value) {
+  return Number(Number(value).toFixed(5));
+}
+
+function entryNames(entry) {
+  const names = [entry.legal, entry.label];
+  const localized = entry.names && typeof entry.names === "object" ? entry.names : {};
+  for (const key of Object.keys(localized).sort(compareText)) {
+    const values = localized[key];
+    if (Array.isArray(values)) names.push(...values);
+  }
+  if (Array.isArray(entry.aliases)) names.push(...entry.aliases);
+  return names.filter((name) => name != null && name !== "");
+}
+
+let identityEntries = null;
+
+function loadIdentityEntries() {
+  if (identityEntries) return identityEntries;
+  const document = JSON.parse(fs.readFileSync(IDENTITY_PATH, "utf8"));
+  identityEntries = (document.operators ?? []).map((entry) => ({
+    code: entry.code,
+    folded: new Set(entryNames(entry).map((name) => searchFold(name)).filter(Boolean)),
+  }));
+  return identityEntries;
+}
+
+// One identity code when exactly one operator-identities entry shares a
+// SearchFold-equal name. Zero or several entries → null.
+export function identityFor(names, entries = loadIdentityEntries()) {
+  const folded = new Set(names.map((name) => searchFold(name)).filter(Boolean));
+  const hits = [];
+  for (const entry of entries) {
+    let matched = false;
+    for (const key of folded) {
+      if (entry.folded.has(key)) {
+        matched = true;
+        break;
+      }
+    }
+    if (matched) hits.push(entry.code);
+  }
+  const unique = [...new Set(hits)];
+  return unique.length === 1 ? unique[0] : null;
+}
+
+function bracketParts(name) {
+  const split = splitBracketName(name);
+  if (!split) return null;
+  const entry = {
+    base: split.base,
+    bracket: split.bracket,
+    kind: split.kind,
+    position: split.position,
+  };
+  if (split.kind === "status") entry.status = split.status;
+  return entry;
+}
+
 export function canonicalJson(value) {
   if (Array.isArray(value)) return `[${value.map((item) => canonicalJson(item)).join(",")}]`;
   if (value && typeof value === "object") {
@@ -156,17 +226,24 @@ export function bundleDocument(db, ledger, region) {
   }
   const shorts = new Map();
   const aliases = new Map();
+  const byName = new Map();
+  let operatorRows = [];
   if (db && hasTable(db, "operator")) {
     const country = region.toUpperCase();
-    const rows = db.prepare("SELECT name, short_name, display_label FROM operator WHERE country_code = ?").all(country);
-    const byName = new Map();
+    const columns = tableColumns(db, "operator");
+    const selected = ["name", "short_name"];
+    if (columns.has("display_label")) selected.push("display_label");
+    if (columns.has("logo_path")) selected.push("logo_path");
+    operatorRows = db.prepare(
+      `SELECT ${selected.join(", ")} FROM operator WHERE country_code = ? ORDER BY name`,
+    ).all(country);
     for (const [id, names] of packageNames) {
       for (const name of names) {
         if (!byName.has(name)) byName.set(name, id);
         else if (byName.get(name) !== id) byName.set(name, null);
       }
     }
-    for (const row of rows) {
+    for (const row of operatorRows) {
       const id = byName.get(row.name);
       if (!id) continue;
       if (row.short_name) {
@@ -178,7 +255,7 @@ export function bundleDocument(db, ledger, region) {
       const aliasRows = db.prepare("SELECT alias, label FROM operator_alias WHERE scope = ? ORDER BY alias").all(country);
       for (const alias of aliasRows) {
         const label = normText(alias.label);
-        const matches = rows.filter((row) => [row.display_label, row.name, row.short_name].some((value) => normText(value) === label));
+        const matches = operatorRows.filter((row) => [row.display_label, row.name, row.short_name].some((value) => normText(value) === label));
         if (matches.length !== 1) continue;
         const id = byName.get(matches[0].name);
         if (!id) continue;
@@ -187,9 +264,23 @@ export function bundleDocument(db, ledger, region) {
       }
     }
   }
+  const profiles = new Map();
+  for (const row of operatorRows) {
+    const id = byName.get(row.name);
+    if (!id || profiles.has(id)) continue;
+    const logo = row.logo_path ? String(row.logo_path) : null;
+    profiles.set(id, { label: row.display_label == null ? "" : String(row.display_label), logo });
+  }
   const operators = {};
   for (const [id, names] of packageNames) {
-    operators[id] = operatorList(names, shorts.get(id) ?? [], aliases.get(id) ?? []);
+    const list = operatorList(names, shorts.get(id) ?? [], aliases.get(id) ?? []);
+    const profile = profiles.get(id);
+    operators[id] = {
+      names: list,
+      label: profile?.label ?? "",
+      logo: profile?.logo ?? null,
+      identity: identityFor(list),
+    };
   }
   const stationOperator = {};
   for (const [st, op] of stOp) stationOperator[st] = op;
@@ -199,8 +290,11 @@ export function bundleDocument(db, ledger, region) {
   }
   const run = ledger.runs.reduce((max, item) => Math.max(max, Number(item.run) || 0), 0);
   const brackets = bracketFields(db, region);
+  const reversed = reverseTables(db, ledger, region, {
+    live, packageNames, stOp, childrenByParent, stationCodes,
+  });
   return {
-    schema: "jtm-registry-bundle/1",
+    schema: "jtm-registry-bundle/2",
     region,
     run,
     stationCodes,
@@ -208,9 +302,151 @@ export function bundleDocument(db, ledger, region) {
     operators,
     stationOperator,
     lines,
+    stations: reversed.stations,
+    complexes: reversed.complexes,
+    lineParts: reversed.lineParts,
     bracketedNames: brackets.bracketedNames,
     baseNameCounts: brackets.baseNameCounts,
   };
+}
+
+function reverseTables(db, ledger, region, { live, packageNames, stOp, childrenByParent, stationCodes }) {
+  const country = region.toUpperCase();
+  const groupOfCx = new Map();
+  const codesOfStation = new Map();
+  const linesOfStation = new Map();
+  const packageLineOfLp = new Map();
+  for (const ref of ledger.refs) {
+    if (!live(ref.id)) continue;
+    if (ref.scheme === "group-code" && !ref.from && String(ref.id).startsWith("cx:")) {
+      if (!groupOfCx.has(ref.id)) groupOfCx.set(ref.id, []);
+      pushUnique(groupOfCx.get(ref.id), ref.value);
+    } else if (ref.scheme === "station-code" && String(ref.id).startsWith("st:") && stationCodes[ref.value] === ref.id) {
+      if (!codesOfStation.has(ref.id)) codesOfStation.set(ref.id, []);
+      pushUnique(codesOfStation.get(ref.id), ref.value);
+    } else if (ref.scheme === "package-line" && !ref.from && String(ref.id).startsWith("lp:")) {
+      if (!packageLineOfLp.has(ref.id)) packageLineOfLp.set(ref.id, []);
+      pushUnique(packageLineOfLp.get(ref.id), ref.value);
+    }
+  }
+  for (const entity of ledger.entities.values()) {
+    if (!live(entity.id) || !String(entity.id).startsWith("ls:")) continue;
+    if (!entity.parent || !entity.part || !live(entity.parent) || !live(entity.part)) continue;
+    if (!linesOfStation.has(entity.parent)) linesOfStation.set(entity.parent, []);
+    pushUnique(linesOfStation.get(entity.parent), entity.part);
+  }
+  const lnOfLp = new Map();
+  for (const event of ledger.events) {
+    if (event.event !== "line" || !event.id || !event.value) continue;
+    if (!String(event.id).startsWith("lp:") || !live(event.id)) continue;
+    if (!live(event.value)) lnOfLp.delete(event.id);
+    else lnOfLp.set(event.id, event.value);
+  }
+  const stationByCode = new Map();
+  if (db && hasTable(db, "station")) {
+    for (const row of db.prepare(
+      "SELECT code, name, lon, lat FROM station WHERE country_code = ?",
+    ).all(country)) {
+      stationByCode.set(row.code, row);
+    }
+  }
+  const stopNames = new Map();
+  if (db && hasTable(db, "line_station") && hasTable(db, "line") && hasTable(db, "station") && hasTable(db, "operator")) {
+    const rows = db.prepare(`
+      SELECT s.code AS code, o.name AS operator_name, ls.name AS stop_name
+        FROM line_station ls
+        JOIN line l ON l.id = ls.line_id
+        JOIN station s ON s.id = ls.station_id
+        JOIN operator o ON o.id = l.operator_id
+       WHERE l.country_code = ?
+    `).all(country);
+    for (const row of rows) {
+      const key = `${row.code}\0${row.operator_name}`;
+      if (!stopNames.has(key)) stopNames.set(key, new Set());
+      stopNames.get(key).add(String(row.stop_name));
+    }
+  }
+  const lineRow = new Map();
+  if (db && hasTable(db, "line") && hasTable(db, "operator")) {
+    const rank = tableColumns(db, "line").has("rank") ? "l.rank" : "NULL";
+    const rows = db.prepare(`
+      SELECT l.id AS id, l.name AS name, ${rank} AS rank, o.name AS operator_name
+        FROM line l
+        JOIN operator o ON o.id = l.operator_id
+       WHERE l.country_code = ?
+    `).all(country);
+    for (const row of rows) lineRow.set(row.id, row);
+  }
+  const chosenGroup = (cx) => {
+    const values = [...(groupOfCx.get(cx) ?? [])].sort(compareText);
+    return values.find((code) => stationByCode.has(code)) ?? values[0] ?? "";
+  };
+  const stations = {};
+  for (const entity of ledger.entities.values()) {
+    if (!live(entity.id) || !String(entity.id).startsWith("st:")) continue;
+    const cx = entity.parent;
+    const op = stOp.get(entity.id);
+    if (!cx || !op || !live(cx)) continue;
+    const group = chosenGroup(cx);
+    const names = new Set();
+    for (const operatorName of packageNames.get(op) ?? []) {
+      const hit = stopNames.get(`${group}\0${operatorName}`);
+      if (hit) for (const name of hit) names.add(name);
+    }
+    const complexName = stationByCode.get(group)?.name;
+    const name = names.size === 1 ? [...names][0] : (complexName == null ? "" : String(complexName));
+    const record = {
+      cx,
+      group,
+      codes: [...(codesOfStation.get(entity.id) ?? [])].sort(compareText),
+      op,
+      name,
+      lines: [...(linesOfStation.get(entity.id) ?? [])].sort(compareId),
+    };
+    const parts = bracketParts(name);
+    if (parts) record.parts = parts;
+    const networks = [...new Set(record.lines.map((lp) => lnOfLp.get(lp)).filter(Boolean))].sort(compareId);
+    if (networks.length) record.ln = networks;
+    stations[entity.id] = record;
+  }
+  const complexes = {};
+  for (const entity of ledger.entities.values()) {
+    if (!live(entity.id) || !String(entity.id).startsWith("cx:")) continue;
+    const group = chosenGroup(entity.id);
+    const row = stationByCode.get(group);
+    if (!row || row.lon == null || row.lat == null) continue;
+    const members = [...(childrenByParent.get(entity.id) ?? [])].filter((id) => live(id)).sort(compareId);
+    complexes[entity.id] = {
+      group,
+      name: String(row.name),
+      stations: members,
+      lon: round5(row.lon),
+      lat: round5(row.lat),
+    };
+  }
+  const lineParts = {};
+  for (const entity of ledger.entities.values()) {
+    if (!live(entity.id) || !String(entity.id).startsWith("lp:")) continue;
+    const packageLines = packageLineOfLp.get(entity.id) ?? [];
+    if (packageLines.length !== 1) continue;
+    const row = lineRow.get(packageLines[0]);
+    if (!row) continue;
+    const holders = new Set();
+    for (const [id, names] of packageNames) {
+      if (names.includes(row.operator_name)) holders.add(id);
+    }
+    if (holders.size !== 1) continue;
+    const record = {
+      packageLine: packageLines[0],
+      name: String(row.name),
+      op: [...holders][0],
+      rank: row.rank == null ? 0 : Number(row.rank),
+    };
+    const network = lnOfLp.get(entity.id);
+    if (network) record.ln = network;
+    lineParts[entity.id] = record;
+  }
+  return { stations, complexes, lineParts };
 }
 
 export function bundleText(db, ledger, region) {

@@ -76,4 +76,25 @@ struct BundledRegistryDecodeCacheTests {
         #expect(loads == 1)
         #expect(cache.logCount == 0)
     }
+
+    @Test func schema1DropsReverseMapsAndSchema2KeepsOperatorRecords() throws {
+        var cache = BundledRegistry.DecodeCache()
+        let legacy = Data("""
+        {"schema":"jtm-registry-bundle/1","region":"jp","run":1,"stationCodes":{},"groupCodes":{},"operators":{"op:jp:1":["JR東日本"]},"stationOperator":{},"lines":{},"stations":{"st:jp:1":{"cx":"cx:jp:1","group":"G","codes":[],"op":"op:jp:1","name":"東京","lines":[]}}}
+        """.utf8)
+        let old = cache.lookup(region: "jp") { legacy }
+        #expect(old?.schema == RegistryBundle.legacySchema)
+        #expect(old?.stations.isEmpty == true)
+        #expect(old?.operators["op:jp:1"] == ["JR東日本"])
+
+        var fresh = BundledRegistry.DecodeCache()
+        let current = Data("""
+        {"schema":"jtm-registry-bundle/2","region":"tw","run":2,"stationCodes":{},"groupCodes":{},"operators":{"op:tw:1":{"names":["台鐵"],"label":"台鐵","logo":null,"identity":null}},"stationOperator":{},"lines":{},"stations":{},"complexes":{},"lineParts":{}}
+        """.utf8)
+        let decoded = try #require(fresh.lookup(region: "tw") { current })
+        #expect(decoded.operatorRecords["op:tw:1"]?.label == "台鐵")
+        #expect(decoded.operatorRecords["op:tw:1"]?.logo == nil)
+        #expect(decoded.operators["op:tw:1"] == ["台鐵"])
+        #expect(RegistryIdentity(bundle: decoded).`operator`(for: "op:tw:1")?.label == "台鐵")
+    }
 }

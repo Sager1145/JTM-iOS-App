@@ -43,6 +43,16 @@ enum BundledRegistry {
             guard let bundle = bundle(for: region) else { return nil }
             return StationNameDirectory(bundle: bundle)
         }
+        RegistryIdentityLookup.install { region in
+            guard let bundle = bundle(for: region) else { return nil }
+            return RegistryIdentity(bundle: bundle)
+        }
+    }
+
+    /// Registry identity for one region. Nil when that file is missing or failed to decode.
+    static func identity(for region: String) -> RegistryIdentity? {
+        guard let bundle = bundle(for: region) else { return nil }
+        return RegistryIdentity(bundle: bundle)
     }
 
     /// Decode path: the ride's own region, never the session country.

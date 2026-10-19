@@ -23,7 +23,8 @@ function applySchema(db) {
       country_code TEXT NOT NULL,
       name TEXT NOT NULL,
       short_name TEXT,
-      display_label TEXT
+      display_label TEXT,
+      logo_path TEXT
     );
     CREATE TABLE line (
       id TEXT PRIMARY KEY,
@@ -32,7 +33,8 @@ function applySchema(db) {
       name TEXT NOT NULL,
       line_code TEXT,
       railway_identity TEXT,
-      interval_count INTEGER NOT NULL DEFAULT 0
+      interval_count INTEGER NOT NULL DEFAULT 0,
+      rank INTEGER NOT NULL DEFAULT 1
     );
     CREATE TABLE station (
       id INTEGER PRIMARY KEY,
@@ -824,6 +826,14 @@ test("registry bundle is deterministic and drops conflicted or retired ids", () 
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`).run("JP", 5, "SHARED", "200", 2, "新宿", "山手線", "JR東日本", 139.7, 35.689);
     fixture.db.exec("CREATE TABLE operator_alias (id INTEGER PRIMARY KEY, scope TEXT, alias TEXT, label TEXT)");
     fixture.db.prepare("INSERT INTO operator_alias (scope, alias, label) VALUES (?, ?, ?)").run("JP", "JR East", "JR東日本");
+    fixture.db.prepare("UPDATE operator SET logo_path = ? WHERE name = ?").run("/logos/jr-east.svg", "JR東日本");
+    fixture.db.prepare("UPDATE line SET rank = ? WHERE id = ?").run(4, "jp-jr-yamanote");
+    fixture.db.prepare("UPDATE line_station SET name = ? WHERE line_id = ?").run("新宿駅", "jp-jr-chuo");
+    fixture.db.prepare("UPDATE station SET name = ?, lon = ? WHERE code = ?").run("東京（丸の内）", 139.767126, "100");
+    fixture.db.prepare("UPDATE line_station SET name = ? WHERE station_id = ?").run("東京（丸の内）", 1);
+    fixture.db.prepare(
+      "INSERT INTO operator (id, country_code, name, short_name, display_label, logo_path) VALUES (?, ?, ?, ?, ?, ?)",
+    ).run(3, "JP", "架空鉄道", null, "架空", null);
     freeze(fixture.root);
     const first = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
     assert.equal(first.status, 0, first.stdout + first.stderr);
@@ -838,15 +848,49 @@ test("registry bundle is deterministic and drops conflicted or retired ids", () 
     const check = runNode(EXPORT, ["--db", fixture.dbPath, "--root", fixture.root, "--out", out, "--check"]);
     assert.equal(check.status, 0, check.stdout + check.stderr);
     const bundle = JSON.parse(text.toString("utf8"));
-    assert.equal(bundle.schema, "jtm-registry-bundle/1");
+    assert.equal(bundle.schema, "jtm-registry-bundle/2");
     assert.equal(bundle.stationCodes.SHARED, undefined);
     assert.equal(bundle.stationCodes["200A"], "st:jp:2");
     assert.equal(bundle.lines["jp-jr-yamanote"], "lp:jp:1");
     assert.deepEqual(bundle.groupCodes["200"], ["st:jp:2", "st:jp:3"]);
     assert.equal(bundle.stationOperator["st:jp:1"], "op:jp:1");
-    assert.ok(bundle.operators["op:jp:1"].includes("JR東日本"));
-    assert.ok(bundle.operators["op:jp:1"].includes("JR東"));
-    assert.ok(bundle.operators["op:jp:1"].includes("JR East"));
+    assert.ok(bundle.operators["op:jp:1"].names.includes("JR東日本"));
+    assert.ok(bundle.operators["op:jp:1"].names.includes("JR東"));
+    assert.ok(bundle.operators["op:jp:1"].names.includes("JR East"));
+    assert.equal(bundle.operators["op:jp:1"].label, "JR東日本");
+    assert.equal(bundle.operators["op:jp:1"].logo, "/logos/jr-east.svg");
+    assert.equal(bundle.operators["op:jp:1"].identity, "jp.jr-east");
+    assert.equal(bundle.operators["op:jp:2"].identity, "jp.keio");
+    assert.equal(bundle.operators["op:jp:3"].identity, null);
+    assert.equal(bundle.operators["op:jp:3"].label, "架空");
+    assert.equal(bundle.operators["op:jp:3"].logo, null);
+    assert.deepEqual(bundle.stations["st:jp:2"].codes, ["200A", "200B"]);
+    for (const station of Object.values(bundle.stations)) {
+      assert.equal(station.codes.includes("SHARED"), false);
+    }
+    assert.equal(bundle.stations["st:jp:1"].name, "東京（丸の内）");
+    assert.deepEqual(bundle.stations["st:jp:1"].parts, {
+      base: "東京", bracket: "丸の内", kind: "subname", position: "suffix",
+    });
+    assert.equal(bundle.stations["st:jp:1"].cx, "cx:jp:1");
+    assert.equal(bundle.stations["st:jp:1"].group, "100");
+    assert.equal(bundle.stations["st:jp:1"].op, "op:jp:1");
+    assert.deepEqual(bundle.stations["st:jp:1"].lines, ["lp:jp:1"]);
+    assert.equal(bundle.stations["st:jp:1"].ln, undefined);
+    assert.equal(bundle.stations["st:jp:2"].name, "新宿");
+    assert.equal(bundle.stations["st:jp:2"].parts, undefined);
+    assert.deepEqual(bundle.stations["st:jp:2"].lines, ["lp:jp:1", "lp:jp:2"]);
+    assert.equal(bundle.complexes["cx:jp:1"].name, "東京（丸の内）");
+    assert.deepEqual(bundle.complexes["cx:jp:1"].stations, ["st:jp:1"]);
+    assert.equal(bundle.complexes["cx:jp:1"].lon, Number((139.767126).toFixed(5)));
+    assert.notEqual(bundle.complexes["cx:jp:1"].lon, 139.767126);
+    assert.equal(bundle.complexes["cx:jp:1"].lat, 35.681);
+    assert.deepEqual(bundle.complexes["cx:jp:2"].stations, ["st:jp:2", "st:jp:3"]);
+    assert.equal(bundle.lineParts["lp:jp:1"].packageLine, "jp-jr-yamanote");
+    assert.equal(bundle.lineParts["lp:jp:1"].name, "山手線");
+    assert.equal(bundle.lineParts["lp:jp:1"].op, "op:jp:1");
+    assert.equal(bundle.lineParts["lp:jp:1"].rank, 4);
+    assert.equal(bundle.lineParts["lp:jp:1"].ln, undefined);
     assert.equal(/[:,]\s/.test(text.toString("utf8")), false);
     fs.writeFileSync(file, text.toString("utf8").replace("JR東", "JR西"));
     const drifted = runNode(EXPORT, ["--db", fixture.dbPath, "--root", fixture.root, "--out", out, "--check"]);
@@ -864,6 +908,12 @@ test("registry bundle is deterministic and drops conflicted or retired ids", () 
     assert.equal(next.lines["jp-jr-yamanote"], "lp:jp:1");
     assert.equal(Object.values(next.stationOperator).includes("st:jp:1"), false);
     assert.equal(Object.values(next.groupCodes).some((ids) => ids.includes("st:jp:1")), false);
+    assert.equal(next.stations["st:jp:1"], undefined);
+    assert.equal((next.complexes["cx:jp:1"]?.stations ?? []).includes("st:jp:1"), false);
+    assert.equal(next.lineParts["lp:jp:1"].packageLine, "jp-jr-yamanote");
+    for (const station of Object.values(next.stations)) {
+      assert.equal(station.codes.includes("100A"), false);
+    }
   } finally {
     fixture.db.close();
     fs.rmSync(fixture.dir, { recursive: true, force: true });

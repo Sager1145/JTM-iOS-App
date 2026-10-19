@@ -8,8 +8,80 @@ import Foundation
 /// id. An ambiguous row keeps an id only when that id is still one of the
 /// bundle's answers for the current text. A missing bundle leaves the ride
 /// alone (ADR 0013).
+public struct RegistryOperatorRecord: Equatable, Sendable, Decodable {
+    public var names: [String]
+    public var label: String
+    public var logo: String?
+    public var identity: String?
+
+    public init(names: [String], label: String = "", logo: String? = nil, identity: String? = nil) {
+        self.names = names
+        self.label = label
+        self.logo = logo
+        self.identity = identity
+    }
+}
+
+public struct RegistryStationRecord: Equatable, Sendable, Decodable {
+    public var cx: String
+    public var group: String
+    public var codes: [String]
+    public var op: String
+    public var name: String
+    public var parts: StationNameRecord?
+    public var lines: [String]
+    public var ln: [String]?
+
+    public init(
+        cx: String, group: String, codes: [String], op: String, name: String,
+        parts: StationNameRecord? = nil, lines: [String], ln: [String]? = nil
+    ) {
+        self.cx = cx
+        self.group = group
+        self.codes = codes
+        self.op = op
+        self.name = name
+        self.parts = parts
+        self.lines = lines
+        self.ln = ln
+    }
+}
+
+public struct RegistryComplexRecord: Equatable, Sendable, Decodable {
+    public var group: String
+    public var name: String
+    public var stations: [String]
+    public var lon: Double
+    public var lat: Double
+
+    public init(group: String, name: String, stations: [String], lon: Double, lat: Double) {
+        self.group = group
+        self.name = name
+        self.stations = stations
+        self.lon = lon
+        self.lat = lat
+    }
+}
+
+public struct RegistryLinePartRecord: Equatable, Sendable, Decodable {
+    public var packageLine: String
+    public var name: String
+    public var op: String
+    public var ln: String?
+    public var rank: Int
+
+    public init(packageLine: String, name: String, op: String, ln: String? = nil, rank: Int) {
+        self.packageLine = packageLine
+        self.name = name
+        self.op = op
+        self.ln = ln
+        self.rank = rank
+    }
+}
+
 public struct RegistryBundle: Decodable, Equatable, Sendable {
-    public static let currentSchema = "jtm-registry-bundle/1"
+    public static let currentSchema = "jtm-registry-bundle/2"
+    public static let legacySchema = "jtm-registry-bundle/1"
 
     public var schema: String
     public var region: String
@@ -20,11 +92,23 @@ public struct RegistryBundle: Decodable, Equatable, Sendable {
     /// to copy; more than one is safe only when the operator narrows it to one.
     public var groupCodes: [String: [String]]
     /// `op:<region>:<seq>` → the company's names, compared exactly.
+    /// Schema 2 stores these inside ``operatorRecords``; this stays the name list.
     public var operators: [String: [String]]
+    /// Schema 2 operator row. A schema 1 bundle fills names and leaves the rest empty.
+    public var operatorRecords: [String: RegistryOperatorRecord]
     /// Company station → the one operator that serves it.
     public var stationOperator: [String: String]
     /// Package line id → `lp:<region>:<seq>`. Unused by the ride upgrade.
     public var lines: [String: String]
+    /// Company station → complex, codes, name, and the lines that serve it.
+    /// Empty when the file is schema 1.
+    public var stations: [String: RegistryStationRecord]
+    /// Complex → group, name, member stations, and the rounded anchor.
+    /// Empty when the file is schema 1.
+    public var complexes: [String: RegistryComplexRecord]
+    /// Line part → package line, name, operator, optional network, and rank.
+    /// Empty when the file is schema 1.
+    public var lineParts: [String: RegistryLinePartRecord]
     /// Official station or line-station name → the stored bracket split.
     /// Absent in a bundle written before the field existed.
     public var bracketedNames: [String: StationNameRecord]
@@ -39,8 +123,12 @@ public struct RegistryBundle: Decodable, Equatable, Sendable {
         stationCodes: [String: String] = [:],
         groupCodes: [String: [String]] = [:],
         operators: [String: [String]] = [:],
+        operatorRecords: [String: RegistryOperatorRecord] = [:],
         stationOperator: [String: String] = [:],
         lines: [String: String] = [:],
+        stations: [String: RegistryStationRecord] = [:],
+        complexes: [String: RegistryComplexRecord] = [:],
+        lineParts: [String: RegistryLinePartRecord] = [:],
         bracketedNames: [String: StationNameRecord] = [:],
         baseNameCounts: [String: Int] = [:]
     ) {
@@ -49,9 +137,17 @@ public struct RegistryBundle: Decodable, Equatable, Sendable {
         self.run = run
         self.stationCodes = stationCodes
         self.groupCodes = groupCodes
-        self.operators = operators
+        self.operatorRecords = operatorRecords.isEmpty
+            ? operators.mapValues { RegistryOperatorRecord(names: $0) }
+            : operatorRecords
+        self.operators = operators.isEmpty && !self.operatorRecords.isEmpty
+            ? self.operatorRecords.mapValues(\.names)
+            : operators
         self.stationOperator = stationOperator
         self.lines = lines
+        self.stations = stations
+        self.complexes = complexes
+        self.lineParts = lineParts
         self.bracketedNames = bracketedNames
         self.baseNameCounts = baseNameCounts
     }
@@ -59,7 +155,7 @@ public struct RegistryBundle: Decodable, Equatable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let schema = try container.decode(String.self, forKey: .schema)
-        guard schema == Self.currentSchema else {
+        guard schema == Self.currentSchema || schema == Self.legacySchema else {
             throw DecodingError.dataCorruptedError(
                 forKey: .schema, in: container,
                 debugDescription: "Unsupported registry bundle schema \(schema).")
@@ -69,16 +165,62 @@ public struct RegistryBundle: Decodable, Equatable, Sendable {
         run = try container.decode(Int.self, forKey: .run)
         stationCodes = try container.decode([String: String].self, forKey: .stationCodes)
         groupCodes = try container.decode([String: [String]].self, forKey: .groupCodes)
-        operators = try container.decode([String: [String]].self, forKey: .operators)
+        let decodedOperators = try container.decode([String: OperatorField].self, forKey: .operators)
+        var names: [String: [String]] = [:]
+        var records: [String: RegistryOperatorRecord] = [:]
+        for (identifier, field) in decodedOperators {
+            let record = field.record
+            names[identifier] = record.names
+            records[identifier] = record
+        }
+        operators = names
+        operatorRecords = records
         stationOperator = try container.decode([String: String].self, forKey: .stationOperator)
         lines = try container.decode([String: String].self, forKey: .lines)
+        if schema == Self.legacySchema {
+            stations = [:]
+            complexes = [:]
+            lineParts = [:]
+        } else {
+            stations = try container.decodeIfPresent([String: RegistryStationRecord].self, forKey: .stations) ?? [:]
+            complexes = try container.decodeIfPresent([String: RegistryComplexRecord].self, forKey: .complexes) ?? [:]
+            lineParts = try container.decodeIfPresent([String: RegistryLinePartRecord].self, forKey: .lineParts) ?? [:]
+        }
         bracketedNames = try container.decodeIfPresent([String: StationNameRecord].self, forKey: .bracketedNames) ?? [:]
         baseNameCounts = try container.decodeIfPresent([String: Int].self, forKey: .baseNameCounts) ?? [:]
     }
 
     private enum CodingKeys: String, CodingKey {
         case schema, region, run, stationCodes, groupCodes, operators, stationOperator, lines
-        case bracketedNames, baseNameCounts
+        case stations, complexes, lineParts, bracketedNames, baseNameCounts
+    }
+
+    private enum OperatorField: Decodable {
+        case legacy([String])
+        case record(RegistryOperatorRecord)
+
+        var record: RegistryOperatorRecord {
+            switch self {
+            case .legacy(let names):
+                return RegistryOperatorRecord(names: names)
+            case .record(let record):
+                return record
+            }
+        }
+
+        init(from decoder: Decoder) throws {
+            // An array is schema 1. A failed unkeyed decode leaves the keyed
+            // object unread, so the schema 2 record can still be decoded.
+            if var names = try? decoder.unkeyedContainer() {
+                var list: [String] = []
+                while !names.isAtEnd {
+                    list.append(try names.decode(String.self))
+                }
+                self = .legacy(list)
+                return
+            }
+            self = .record(try RegistryOperatorRecord(from: decoder))
+        }
     }
 }
 
@@ -196,15 +338,7 @@ public enum RegistryIdentityUpgrade {
     private static func uniqueStation(
         code: String, operatorID: String?, bundle: RegistryBundle
     ) -> String? {
-        if let stationID = bundle.stationCodes[code] { return stationID }
-        guard let candidates = bundle.groupCodes[code], !candidates.isEmpty else { return nil }
-        if candidates.count == 1 { return candidates[0] }
-        guard let operatorID else { return nil }
-        let matched = candidates.filter { candidate in
-            guard let owner = bundle.stationOperator[candidate] else { return false }
-            return sameCodeUnits(owner, operatorID)
-        }
-        return matched.count == 1 ? matched[0] : nil
+        RegistryIdentity(bundle: bundle).stationID(forCode: code, operator: operatorID)
     }
 
     /// Not unique. Keep an id only when the bundle still lists it for this code.

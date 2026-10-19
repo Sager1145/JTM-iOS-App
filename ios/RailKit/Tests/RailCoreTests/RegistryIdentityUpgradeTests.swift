@@ -60,15 +60,21 @@ struct RegistryIdentityUpgradeTests {
         {"schema":"jtm-registry-bundle/1","region":"jp","run":3,\
         "stationCodes":{"003700":"st:jp:1"},"groupCodes":{"G":["st:jp:2"]},\
         "operators":{"op:jp:1":["JR東日本"]},"stationOperator":{"st:jp:2":"op:jp:1"},\
-        "lines":{"yamanote":"lp:jp:1"}}
+        "lines":{"yamanote":"lp:jp:1"},\
+        "stations":{"st:jp:9":{"cx":"cx:jp:1","group":"G","codes":["9"],"op":"op:jp:1","name":"ignored","lines":[]}}}
         """
         let decoded = try JSONDecoder().decode(RegistryBundle.self, from: Data(json.utf8))
-        #expect(decoded.schema == RegistryBundle.currentSchema)
+        #expect(decoded.schema == RegistryBundle.legacySchema)
         #expect(decoded.region == "jp")
         #expect(decoded.run == 3)
         #expect(decoded.stationCodes["003700"] == "st:jp:1")
         #expect(decoded.groupCodes["G"] == ["st:jp:2"])
         #expect(decoded.operators["op:jp:1"] == ["JR東日本"])
+        #expect(decoded.operatorRecords["op:jp:1"]?.label == "")
+        #expect(decoded.operatorRecords["op:jp:1"]?.identity == nil)
+        #expect(decoded.stations.isEmpty)
+        #expect(decoded.complexes.isEmpty)
+        #expect(decoded.lineParts.isEmpty)
         #expect(decoded.lines["yamanote"] == "lp:jp:1")
 
         let rejected = """
@@ -78,6 +84,25 @@ struct RegistryIdentityUpgradeTests {
         #expect(throws: DecodingError.self) {
             _ = try JSONDecoder().decode(RegistryBundle.self, from: Data(rejected.utf8))
         }
+    }
+
+    @Test func schema2OperatorObjectStillMatchesTheCompany() throws {
+        let json = """
+        {"schema":"jtm-registry-bundle/2","region":"jp","run":1,\
+        "stationCodes":{"003700":"st:jp:1"},"groupCodes":{},\
+        "operators":{"op:jp:1":{"names":["JR East","JR東日本"],"label":"JR東日本","logo":"/logos/jr-east.svg","identity":"jp.jr-east"}},\
+        "stationOperator":{},"lines":{},"stations":{},"complexes":{},"lineParts":{}}
+        """
+        let decoded = try JSONDecoder().decode(RegistryBundle.self, from: Data(json.utf8))
+        #expect(decoded.schema == RegistryBundle.currentSchema)
+        #expect(decoded.operators["op:jp:1"] == ["JR East", "JR東日本"])
+        #expect(decoded.operatorRecords["op:jp:1"]?.label == "JR東日本")
+        #expect(decoded.operatorRecords["op:jp:1"]?.logo == "/logos/jr-east.svg")
+        #expect(decoded.operatorRecords["op:jp:1"]?.identity == "jp.jr-east")
+        let upgraded = RegistryIdentityUpgrade.apply(
+            ride(company: "JR東日本", stops: pair("003700")), bundle: decoded)
+        #expect(upgraded.operatorID == "op:jp:1")
+        #expect(upgraded.stops[0].stationID == "st:jp:1")
     }
 
     @Test func uniqueStationCodeAndCompany() {
