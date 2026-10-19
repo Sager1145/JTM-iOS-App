@@ -178,7 +178,57 @@ export function canonicalJson(value) {
   return JSON.stringify(value);
 }
 
-export function bundleDocument(db, ledger, region) {
+function reviewedAliasTexts(root, region) {
+  const byOp = new Map();
+  if (!root) return byOp;
+  const file = path.join(root, region, "operator-aliases.json");
+  if (!fs.existsSync(file)) return byOp;
+  const doc = JSON.parse(fs.readFileSync(file, "utf8"));
+  for (const alias of doc.aliases ?? []) {
+    if (!alias.op || !alias.text) continue;
+    if (!byOp.has(alias.op)) byOp.set(alias.op, []);
+    pushUnique(byOp.get(alias.op), alias.text);
+  }
+  return byOp;
+}
+
+function bundleFacilities(ledger, region, live) {
+  const members = new Map();
+  const managers = new Map();
+  for (const event of ledger.events) {
+    if (event.event === "facility" && live(event.value) && live(event.id)) {
+      if (!members.has(event.value)) members.set(event.value, []);
+      pushUnique(members.get(event.value), event.id);
+    } else if (event.event === "manager" && live(event.id) && String(event.id).split(":")[1] === region) {
+      managers.set(event.id, event.value);
+    }
+  }
+  const facilities = {};
+  for (const [id, stations] of members) {
+    if (String(id).split(":")[1] !== region) continue;
+    const slug = ledger.entities.get(id)?.slug;
+    facilities[id] = {
+      stations: [...stations].sort(compareId),
+      manager: managers.get(id) ?? null,
+      kind: slug === "boundary" ? "boundary" : "shared",
+    };
+  }
+  const links = [];
+  const seen = new Set();
+  for (const event of ledger.events) {
+    if (event.event !== "link" || !live(event.id) || !live(event.value)) continue;
+    if (String(event.id).split(":")[1] !== region) continue;
+    const pair = [event.id, event.value].sort(compareId);
+    const key = `${pair[0]}\0${pair[1]}\0${event.why ?? ""}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    links.push([pair[0], pair[1], event.why === "street_transfer" ? "street_transfer" : "gate_transfer"]);
+  }
+  links.sort((a, b) => compareId(a[0], b[0]) || compareId(a[1], b[1]) || compareText(a[2], b[2]));
+  return { facilities, links };
+}
+
+export function bundleDocument(db, ledger, region, root = null) {
   const retired = new Set(ledger.events.filter((event) => event.event === "retire").map((event) => event.id));
   const live = (id) => ledger.entities.has(id) && !retired.has(id) && String(id).split(":")[1] === region;
   const stationCodeIds = new Map();
@@ -271,9 +321,12 @@ export function bundleDocument(db, ledger, region) {
     const logo = row.logo_path ? String(row.logo_path) : null;
     profiles.set(id, { label: row.display_label == null ? "" : String(row.display_label), logo });
   }
+  const reviewedAliases = reviewedAliasTexts(root, region);
   const operators = {};
   for (const [id, names] of packageNames) {
-    const list = operatorList(names, shorts.get(id) ?? [], aliases.get(id) ?? []);
+    const aliasTexts = [...(aliases.get(id) ?? [])];
+    for (const text of reviewedAliases.get(id) ?? []) pushUnique(aliasTexts, text);
+    const list = operatorList(names, shorts.get(id) ?? [], aliasTexts);
     const profile = profiles.get(id);
     operators[id] = {
       names: list,
@@ -293,6 +346,7 @@ export function bundleDocument(db, ledger, region) {
   const reversed = reverseTables(db, ledger, region, {
     live, packageNames, stOp, childrenByParent, stationCodes,
   });
+  const places = bundleFacilities(ledger, region, live);
   return {
     schema: "jtm-registry-bundle/2",
     region,
@@ -305,6 +359,8 @@ export function bundleDocument(db, ledger, region) {
     stations: reversed.stations,
     complexes: reversed.complexes,
     lineParts: reversed.lineParts,
+    facilities: places.facilities,
+    links: places.links,
     bracketedNames: brackets.bracketedNames,
     baseNameCounts: brackets.baseNameCounts,
   };
@@ -449,8 +505,8 @@ function reverseTables(db, ledger, region, { live, packageNames, stOp, childrenB
   return { stations, complexes, lineParts };
 }
 
-export function bundleText(db, ledger, region) {
-  return `${canonicalJson(bundleDocument(db, ledger, region))}\n`;
+export function bundleText(db, ledger, region, root = null) {
+  return `${canonicalJson(bundleDocument(db, ledger, region, root))}\n`;
 }
 
 function regionsPresent(root, requested) {
@@ -474,7 +530,7 @@ function main() {
     const regions = regionsPresent(options.root, options.regions);
     if (!options.check) fs.mkdirSync(options.out, { recursive: true });
     for (const region of regions) {
-      const text = bundleText(db, ledger, region);
+      const text = bundleText(db, ledger, region, options.root);
       const file = path.join(options.out, `${region}.json`);
       if (options.check) {
         const current = fs.existsSync(file) ? fs.readFileSync(file, "utf8") : null;

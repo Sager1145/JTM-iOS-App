@@ -9,7 +9,7 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 export const APP_DIR = path.resolve(HERE, "..", "..", "..");
 
 export const SCHEMA_ID = "jtm-registry/1";
-export const KINDS = ["op", "lp", "cx", "st", "ls", "rp"];
+export const KINDS = ["op", "lp", "cx", "st", "ls", "rp", "fc"];
 export const REGIONS = ["jp", "tw", "hk", "mo", "kr", "cn"];
 const FILE_KINDS = ["op", "ln", "lp", "cx", "st", "ls", "rp", "fc"];
 const COUNTRY_CODES = ["jp", "tw", "hk", "mo", "kr", "cn"];
@@ -34,6 +34,7 @@ const DERIV_SCHEME = {
   st: "derivation",
   ls: "derivation",
   rp: "route-pattern",
+  fc: "facility",
 };
 
 const KEY_SCHEME = {
@@ -528,6 +529,12 @@ function readHistoryCrosswalk(root, region) {
   return readReviewed(root, region, "history-crosswalk.json", "jtm-history-crosswalk/1", "entries");
 }
 
+function readStationFacilities(root, region) {
+  const doc = readReviewed(root, region, "station-facilities.json", "jtm-station-facilities/1", "facilities");
+  if (doc && !Array.isArray(doc.links)) throw new Error(`bad station-facilities.json ${region}`);
+  return doc;
+}
+
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 
 function datedBound(value) {
@@ -554,13 +561,21 @@ export function withdrawnOperationPairs(events) {
     prefixes.add(prefix);
     starts.add(`${prefix}\0${event.on ?? ""}`);
   }
-  return { starts, prefixes };
+  const surviving = new Set();
+  for (const event of events) {
+    if (event.event !== "operation") continue;
+    const prefix = operationPairPrefix(event);
+    if (!starts.has(`${prefix}\0${event.on ?? ""}`)) surviving.add(prefix);
+  }
+  return { starts, prefixes, surviving };
 }
 
 export function operationEventWithdrawn(event, withdrawn) {
   if (event.event !== "operation" && event.event !== "operation-end") return false;
   const prefix = operationPairPrefix(event);
   if (event.event === "operation") return withdrawn.starts.has(`${prefix}\0${event.on ?? ""}`);
+  // A replaced start keeps the same why. The end stays while any start of that pair survives.
+  if (withdrawn.surviving?.has(prefix)) return false;
   return withdrawn.prefixes.has(prefix);
 }
 
@@ -601,7 +616,8 @@ export function planHistoryCrosswalk(entries) {
       unresolved.push(historyReportRow(entry));
       continue;
     }
-    if (entry.kind !== "identity_period" || status !== "unique") continue;
+    if (entry.kind !== "identity_period") continue;
+    if (status !== "unique" && status !== "reviewed") continue;
     const validFrom = datedBound(entry.valid_from);
     const validTo = datedBound(entry.valid_to);
     if (!validFrom && !validTo) {
@@ -609,13 +625,19 @@ export function planHistoryCrosswalk(entries) {
       continue;
     }
     const lpIds = Array.isArray(entry.lp) ? entry.lp.map(String) : [];
-    if (lpIds.length !== 1) {
+    if (status === "reviewed" && lpIds.length === 0) {
+      unresolved.push(historyReportRow(entry, "unmatched"));
+      continue;
+    }
+    if (status !== "reviewed" && lpIds.length !== 1) {
       unresolved.push(historyReportRow(entry, "multiple"));
       continue;
     }
-    candidates.push({
-      entry, lp: lpIds[0], op, validFrom, validTo, interval: { from: validFrom, to: validTo },
-    });
+    for (const lp of lpIds) {
+      candidates.push({
+        entry, lp, op, validFrom, validTo, interval: { from: validFrom, to: validTo },
+      });
+    }
   }
   const blocked = new Set();
   for (let i = 0; i < candidates.length; i += 1) {
@@ -700,7 +722,7 @@ export function mint(db, ledger, { region, runId, at, root } = {}) {
     if (parts[1] !== region || !KEY_SCHEME[parts[0]]) continue;
     if (keyRefCount.get(id) !== 1) throw new Error(`ledger incomplete: ${id} key ref`);
   }
-  const inputs = { op: new Set(), lp: new Set(), cx: new Set(), st: new Set(), ls: new Set(), rp: new Set() };
+  const inputs = { op: new Set(), lp: new Set(), cx: new Set(), st: new Set(), ls: new Set(), rp: new Set(), fc: new Set() };
   const seq = Object.fromEntries(KINDS.map((kind) => [kind, nextSeq(entities, region, kind)]));
   const seenReappeared = new Set();
 
@@ -938,6 +960,56 @@ export function mint(db, ledger, { region, runId, at, root } = {}) {
     }
   }
 
+  const facilityDoc = readStationFacilities(root, region);
+  if (facilityDoc) {
+    const seenEvent = new Set();
+    const remember = (rec) => {
+      if (rec.event === "facility" || rec.event === "manager" || rec.event === "link") {
+        seenEvent.add(`${rec.event}\0${rec.id}\0${rec.value ?? ""}`);
+      }
+    };
+    for (const event of ledger.events) remember(event);
+    for (const item of additions.events) remember(item.rec);
+    const pushEvent = (rec) => {
+      const key = `${rec.event}\0${rec.id}\0${rec.value ?? ""}`;
+      if (seenEvent.has(key)) return;
+      seenEvent.add(key);
+      additions.events.push({ region, rec });
+    };
+    const facilities = [...facilityDoc.facilities].sort((a, b) => compareId(String(a.cx ?? ""), String(b.cx ?? ""))
+      || compareText([...(a.stations ?? [])].map(String).sort(compareId).join(","), [...(b.stations ?? [])].map(String).sort(compareId).join(",")));
+    for (const facility of facilities) {
+      const cx = String(facility.cx ?? "");
+      const stations = Array.isArray(facility.stations) ? facility.stations.map(String).sort(compareId) : [];
+      const kind = facility.kind === "boundary" ? "boundary" : "shared";
+      if (!cx.startsWith(`cx:${region}:`) || !stations.length) continue;
+      const value = `${cx}|${stations.join(",")}`;
+      const existing = refIndex.get(`facility\0${value}`) ?? null;
+      const id = ensureEntity("fc", "facility", value, { parent: cx });
+      if (!id) continue;
+      if (!existing) {
+        const created = additions.entities.find((item) => item.rec.id === id);
+        if (created) {
+          created.rec.slug = kind;
+          entities.set(id, created.rec);
+        }
+      }
+      for (const stId of stations) pushEvent({ id: stId, event: "facility", value: id, run: runId });
+      const manager = String(facility.manager ?? "");
+      if (manager) pushEvent({ id, event: "manager", value: manager, run: runId });
+    }
+    const linkRows = [...facilityDoc.links].sort((a, b) => compareId(String(a.a ?? ""), String(b.a ?? ""))
+      || compareId(String(a.b ?? ""), String(b.b ?? "")));
+    for (const link of linkRows) {
+      let left = String(link.a ?? "");
+      let right = String(link.b ?? "");
+      if (!left || !right || compareId(left, right) === 0) continue;
+      if (compareId(left, right) > 0) [left, right] = [right, left];
+      const why = link.kind === "street_transfer" ? "street_transfer" : "gate_transfer";
+      pushEvent({ id: left, event: "link", value: right, why, run: runId });
+    }
+  }
+
   const retireIds = [];
   for (const id of entities.keys()) {
     const match = ID_RE.exec(id);
@@ -1033,6 +1105,16 @@ export function mint(db, ledger, { region, runId, at, root } = {}) {
     const { lp, op, validFrom, validTo } = planned;
     if (!entities.has(lp) || retired.has(lp) || !entities.has(op) || retired.has(op)) continue;
     const why = String(planned.entry.history_id ?? "");
+    const newOn = validFrom ?? "";
+    for (const event of ledger.events) {
+      if (event.event !== "operation" || event.id !== lp || (event.value ?? "") !== op || (event.why ?? "") !== why) continue;
+      if ((event.on ?? "") === newOn) continue;
+      const withdrawn = { id: lp, event: "operation-withdrawn", value: op, why, run: runId };
+      if (event.on != null && event.on !== "") withdrawn.on = event.on;
+      if (seenOperation.has(operationEventKey(withdrawn))) continue;
+      seenOperation.add(operationEventKey(withdrawn));
+      queued.push(withdrawn);
+    }
     const start = { id: lp, event: "operation", value: op, why, run: runId };
     if (validFrom) start.on = validFrom;
     const pair = [start];
@@ -1836,9 +1918,110 @@ export function loadRegistryTables(db, root) {
       }
     }
   }
+  fillStationFacilities(db, ledger, root, tally);
   fillLineOperation(db, ledger, tally);
   fillNames(db, ledger, tally);
   return counts;
+}
+
+function facilityReviewIndex(root) {
+  const byFacility = new Map();
+  const byLink = new Map();
+  for (const region of REGIONS) {
+    const file = path.join(root, region, "station-facilities.json");
+    if (!fs.existsSync(file)) continue;
+    const doc = JSON.parse(fs.readFileSync(file, "utf8"));
+    for (const facility of doc.facilities ?? []) {
+      const stations = [...(facility.stations ?? [])].map(String).sort(compareId);
+      byFacility.set(`${facility.cx}|${stations.join(",")}`, (facility.sources ?? []).join(" "));
+    }
+    for (const link of doc.links ?? []) {
+      const pair = [String(link.a), String(link.b)].sort(compareId);
+      byLink.set(pair.join("\0"), (link.sources ?? []).join(" "));
+    }
+  }
+  return { byFacility, byLink };
+}
+
+function fillStationFacilities(db, ledger, root, tally) {
+  if (!hasTable(db, "station_facility") || !hasTable(db, "station_facility_member") || !hasTable(db, "station_link")) return;
+  const retired = new Set();
+  for (const event of ledger.events) {
+    if (event.event === "retire") retired.add(event.id);
+  }
+  const live = (id) => ledger.entities.has(id) && !retired.has(id);
+  const review = facilityReviewIndex(root);
+  const facilityValue = new Map();
+  for (const ref of ledger.refs) {
+    if (ref.scheme === "facility") facilityValue.set(ref.id, ref.value);
+  }
+  const members = new Map();
+  const managers = new Map();
+  for (const event of ledger.events) {
+    if (event.event === "facility" && live(event.value) && live(event.id)) {
+      if (!members.has(event.value)) members.set(event.value, []);
+      if (!members.get(event.value).includes(event.id)) members.get(event.value).push(event.id);
+    } else if (event.event === "manager" && live(event.id) && live(event.value)) {
+      managers.set(event.id, event.value);
+    }
+  }
+  const insertFacility = db.prepare(`
+    INSERT INTO station_facility (id, complex_id, manager_operator_id, kind, source)
+    VALUES (?, ?, ?, ?, ?)
+  `);
+  const insertMember = db.prepare(`
+    INSERT INTO station_facility_member (facility_id, station_id) VALUES (?, ?)
+  `);
+  const insertManager = db.prepare(`
+    INSERT INTO station_operator (station_id, operator_id, role, valid_from, valid_to)
+    VALUES (?, ?, 'manager', NULL, NULL)
+  `);
+  const facilityIds = [...ledger.entities.values()]
+    .map((entity) => entity.id)
+    .filter((id) => id.startsWith("fc:") && live(id))
+    .sort(compareId);
+  for (const id of facilityIds) {
+    const entity = ledger.entities.get(id);
+    const kind = entity.slug === "boundary" ? "boundary" : "shared";
+    const value = facilityValue.get(id) ?? "";
+    const source = review.byFacility.get(value) ?? null;
+    const manager = managers.get(id) ?? null;
+    insertFacility.run(id, textOrNull(entity.parent), manager, kind, source || null);
+    tally("station_facility");
+    const stationIds = (members.get(id) ?? []).sort(compareId);
+    for (const stationId of stationIds) {
+      if (!live(stationId)) continue;
+      insertMember.run(id, stationId);
+      tally("station_facility_member");
+      if (manager) {
+        insertManager.run(stationId, manager);
+        tally("station_operator");
+      }
+    }
+  }
+  const insertLink = db.prepare(`
+    INSERT INTO station_link (a_station_id, b_station_id, kind, source) VALUES (?, ?, ?, ?)
+  `);
+  const seenLink = new Set();
+  const linkRows = [];
+  for (const event of ledger.events) {
+    if (event.event !== "link" || !live(event.id) || !live(event.value)) continue;
+    const pair = [event.id, event.value].sort(compareId);
+    const key = pair.join("\0");
+    if (seenLink.has(key)) continue;
+    seenLink.add(key);
+    linkRows.push({
+      a: pair[0],
+      b: pair[1],
+      kind: event.why === "street_transfer" ? "street_transfer" : "gate_transfer",
+      source: review.byLink.get(key) ?? null,
+    });
+  }
+  linkRows.sort((a, b) => compareId(a.a, b.a) || compareId(a.b, b.b) || compareText(a.kind, b.kind));
+  for (const row of linkRows) {
+    insertLink.run(row.a, row.b, row.kind, row.source || null);
+    tally("station_link");
+  }
 }
 
 /**
@@ -1864,7 +2047,6 @@ export function planLineOperationRows(ledger, currents) {
     if (event.event !== "operation-end" || operationEventWithdrawn(event, withdrawn)) continue;
     endByKey.set(operationPairPrefix(event), event.on ?? null);
   }
-  const datedByLp = new Map();
   const seenPair = new Set();
   const rows = [];
   for (const event of ledger.events) {
@@ -1884,22 +2066,37 @@ export function planLineOperationRows(ledger, currents) {
       validTo: endByKey.has(key) ? endByKey.get(key) : null,
     };
     rows.push(row);
-    if (!datedByLp.has(event.id)) datedByLp.set(event.id, []);
-    datedByLp.get(event.id).push(row);
   }
+  // Currents are bounded per line id. Grouped package lines share one ln, so a
+  // sibling's undated current must not sit on top of another part's closed interval.
   const omitted = [];
+  const datedByLine = new Map();
+  for (const row of rows) {
+    if (!datedByLine.has(row.lineId)) datedByLine.set(row.lineId, []);
+    datedByLine.get(row.lineId).push(row);
+  }
+  const currentsByLine = new Map();
   for (const current of currents) {
-    const dated = datedByLp.get(current.lp) ?? [];
-    const bound = boundCurrentOperator(dated, current.operatorId);
+    if (!currentsByLine.has(current.lineId)) currentsByLine.set(current.lineId, []);
+    currentsByLine.get(current.lineId).push(current);
+  }
+  for (const lineId of [...currentsByLine.keys()].sort(compareId)) {
+    const members = currentsByLine.get(lineId).slice().sort((a, b) => compareId(a.lp, b.lp));
+    const operators = [...new Set(members.map((member) => member.operatorId))].sort(compareId);
+    if (operators.length !== 1) {
+      for (const member of members) omitted.push(member.lp);
+      continue;
+    }
+    const bound = boundCurrentOperator(datedByLine.get(lineId) ?? [], operators[0]);
     if (bound.omit) {
-      omitted.push(current.lp);
+      for (const member of members) omitted.push(member.lp);
       continue;
     }
     if (!bound.row) continue;
     rows.push({
-      lp: current.lp,
-      lineId: current.lineId,
-      operatorId: current.operatorId,
+      lp: members[0].lp,
+      lineId,
+      operatorId: operators[0],
       role: "operator",
       validFrom: bound.row.validFrom,
       validTo: bound.row.validTo,

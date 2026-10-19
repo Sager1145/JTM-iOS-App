@@ -134,13 +134,14 @@
           37.17106001
         ]
       },
+      "valid_from": "2015-03-14",
       "valid_to": "2015-03-14",
       "lp": [
         "lp:jp:8",
         "lp:jp:9"
       ],
       "op": "op:jp:6",
-      "status": "multiple"
+      "status": "reviewed"
     },
     {
       "history_id": "jp-id-echigo-hisui-transfer-2015.identity.period0.stations",
@@ -155,13 +156,14 @@
           37.17106001
         ]
       },
+      "valid_from": "2015-03-14",
       "valid_to": "2015-03-14",
       "lp": [
         "lp:jp:8",
         "lp:jp:9"
       ],
       "op": "op:jp:6",
-      "status": "multiple"
+      "status": "reviewed"
     },
     {
       "history_id": "jp-id-echigo-myoko-transfer-2015.current.sections",
@@ -677,9 +679,11 @@
         ]
       },
       "valid_from": "2008-06-14",
-      "lp": [],
-      "op": null,
-      "status": "unmatched"
+      "lp": [
+        "lp:jp:292"
+      ],
+      "op": "op:jp:101",
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part1",
@@ -695,9 +699,11 @@
         ]
       },
       "valid_from": "2008-06-14",
-      "lp": [],
-      "op": null,
-      "status": "unmatched"
+      "lp": [
+        "lp:jp:292"
+      ],
+      "op": "op:jp:101",
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part10",
@@ -713,9 +719,11 @@
         ]
       },
       "valid_from": "2008-06-14",
-      "lp": [],
-      "op": null,
-      "status": "unmatched"
+      "lp": [
+        "lp:jp:292"
+      ],
+      "op": "op:jp:101",
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part11",
@@ -731,9 +739,11 @@
         ]
       },
       "valid_from": "2008-06-14",
-      "lp": [],
-      "op": null,
-      "status": "unmatched"
+      "lp": [
+        "lp:jp:292"
+      ],
+      "op": "op:jp:101",
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part12",
@@ -749,9 +759,11 @@
         ]
       },
       "valid_from": "2008-06-14",
-      "lp": [],
-      "op": null,
-      "status": "unmatched"
+      "lp": [
+        "lp:jp:292"
+      ],
+      "op": "op:jp:101",
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part2",
@@ -767,9 +779,11 @@
         ]
       },
       "valid_from": "2008-06-14",
-      "lp": [],
-      "op": null,
-      "status": "unmatched"
+      "lp": [
+        "lp:jp:292"
+      ],
+      "op": "op:jp:101",
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part3",
@@ -785,9 +799,11 @@
         ]
       },
       "valid_from": "2008-06-14",
-      "lp": [],
-      "op": null,
-      "status": "unmatched"
+      "lp": [
+        "lp:jp:292"
+      ],
+      "op": "op:jp:101",
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part4",
@@ -803,9 +819,11 @@
         ]
       },
       "valid_from": "2008-06-14",
-      "lp": [],
-      "op": null,
-      "status": "unmatched"
+      "lp": [
+        "lp:jp:292"
+      ],
+      "op": "op:jp:101",
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part5",
@@ -821,9 +839,11 @@
         ]
       },
       "valid_from": "2008-06-14",
-      "lp": [],
-      "op": null,
-      "status": "unmatched"
+      "lp": [
+        "lp:jp:292"
+      ],
+      "op": "op:jp:101",
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part6",
@@ -839,9 +859,11 @@
         ]
       },
       "valid_from": "2008-06-14",
-      "lp": [],
-      "op": null,
-      "status": "unmatched"
+      "lp": [
+        "lp:jp:292"
+      ],
+      "op": "op:jp:101",
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part7",
@@ -857,9 +879,11 @@
         ]
       },
       "valid_from": "2008-06-14",
-      "lp": [],
-      "op": null,
-      "status": "unmatched"
+      "lp": [
+        "lp:jp:292"
+      ],
+      "op": "op:jp:101",
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part8",
@@ -875,9 +899,11 @@
         ]
       },
       "valid_from": "2008-06-14",
-      "lp": [],
-      "op": null,
-      "status": "unmatched"
+      "lp": [
+        "lp:jp:292"
+      ],
+      "op": "op:jp:101",
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part9",
@@ -893,9 +919,11 @@
         ]
       },
       "valid_from": "2008-06-14",
-      "lp": [],
-      "op": null,
-      "status": "unmatched"
+      "lp": [
+        "lp:jp:292"
+      ],
+      "op": "op:jp:101",
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.stations",
@@ -911,9 +939,11 @@
         ]
       },
       "valid_from": "2008-06-14",
-      "lp": [],
-      "op": null,
-      "status": "unmatched"
+      "lp": [
+        "lp:jp:292"
+      ],
+      "op": "op:jp:101",
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h1.hanshin-namba-extension.current.sections",
@@ -2822,10 +2852,13 @@
           34.760710010000004
         ]
       },
+      "valid_from": "2018-04-01",
       "valid_to": "2018-04-01",
-      "lp": [],
-      "op": null,
-      "status": "unmatched"
+      "lp": [
+        "lp:jp:234"
+      ],
+      "op": "op:jp:75",
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h2.osaka-metro-imazatosuji-transfer.identity.period0.stations",
@@ -2840,10 +2873,13 @@
           34.760710010000004
         ]
       },
+      "valid_from": "2018-04-01",
       "valid_to": "2018-04-01",
-      "lp": [],
-      "op": null,
-      "status": "unmatched"
+      "lp": [
+        "lp:jp:234"
+      ],
+      "op": "op:jp:75",
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h2.osaka-metro-midosuji-transfer.identity.period0.sections",
@@ -2858,10 +2894,13 @@
           34.75961001
         ]
       },
+      "valid_from": "2018-04-01",
       "valid_to": "2018-04-01",
-      "lp": [],
-      "op": null,
-      "status": "unmatched"
+      "lp": [
+        "lp:jp:227"
+      ],
+      "op": "op:jp:75",
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h2.osaka-metro-midosuji-transfer.identity.period0.stations",
@@ -2876,10 +2915,13 @@
           34.75961001
         ]
       },
+      "valid_from": "2018-04-01",
       "valid_to": "2018-04-01",
-      "lp": [],
-      "op": null,
-      "status": "unmatched"
+      "lp": [
+        "lp:jp:227"
+      ],
+      "op": "op:jp:75",
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h2.osaka-metro-nagahori-transfer.identity.period0.sections",
@@ -2894,10 +2936,13 @@
           34.71706001
         ]
       },
+      "valid_from": "2018-04-01",
       "valid_to": "2018-04-01",
-      "lp": [],
-      "op": null,
-      "status": "unmatched"
+      "lp": [
+        "lp:jp:233"
+      ],
+      "op": "op:jp:75",
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h2.osaka-metro-nagahori-transfer.identity.period0.stations",
@@ -2912,10 +2957,13 @@
           34.71706001
         ]
       },
+      "valid_from": "2018-04-01",
       "valid_to": "2018-04-01",
-      "lp": [],
-      "op": null,
-      "status": "unmatched"
+      "lp": [
+        "lp:jp:233"
+      ],
+      "op": "op:jp:75",
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h2.osaka-metro-newtram-transfer.identity.period0.sections",
@@ -2930,10 +2978,13 @@
           34.64272001
         ]
       },
+      "valid_from": "2018-04-01",
       "valid_to": "2018-04-01",
-      "lp": [],
-      "op": null,
-      "status": "unmatched"
+      "lp": [
+        "lp:jp:235"
+      ],
+      "op": "op:jp:75",
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h2.osaka-metro-newtram-transfer.identity.period0.stations",
@@ -2948,10 +2999,13 @@
           34.64272001
         ]
       },
+      "valid_from": "2018-04-01",
       "valid_to": "2018-04-01",
-      "lp": [],
-      "op": null,
-      "status": "unmatched"
+      "lp": [
+        "lp:jp:235"
+      ],
+      "op": "op:jp:75",
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h2.osaka-metro-sakaisuji-transfer.identity.period0.sections",
@@ -2966,10 +3020,13 @@
           34.71094001
         ]
       },
+      "valid_from": "2018-04-01",
       "valid_to": "2018-04-01",
-      "lp": [],
-      "op": null,
-      "status": "unmatched"
+      "lp": [
+        "lp:jp:232"
+      ],
+      "op": "op:jp:75",
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h2.osaka-metro-sakaisuji-transfer.identity.period0.stations",
@@ -2984,10 +3041,13 @@
           34.71094001
         ]
       },
+      "valid_from": "2018-04-01",
       "valid_to": "2018-04-01",
-      "lp": [],
-      "op": null,
-      "status": "unmatched"
+      "lp": [
+        "lp:jp:232"
+      ],
+      "op": "op:jp:75",
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h2.osaka-metro-sennichimae-transfer.identity.period0.sections",
@@ -3002,10 +3062,13 @@
           34.69490001
         ]
       },
+      "valid_from": "2018-04-01",
       "valid_to": "2018-04-01",
-      "lp": [],
-      "op": null,
-      "status": "unmatched"
+      "lp": [
+        "lp:jp:231"
+      ],
+      "op": "op:jp:75",
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h2.osaka-metro-sennichimae-transfer.identity.period0.stations",
@@ -3020,10 +3083,13 @@
           34.69490001
         ]
       },
+      "valid_from": "2018-04-01",
       "valid_to": "2018-04-01",
-      "lp": [],
-      "op": null,
-      "status": "unmatched"
+      "lp": [
+        "lp:jp:231"
+      ],
+      "op": "op:jp:75",
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h2.osaka-metro-tanimachi-transfer.identity.period0.sections",
@@ -3038,10 +3104,13 @@
           34.74997001
         ]
       },
+      "valid_from": "2018-04-01",
       "valid_to": "2018-04-01",
-      "lp": [],
-      "op": null,
-      "status": "unmatched"
+      "lp": [
+        "lp:jp:228"
+      ],
+      "op": "op:jp:75",
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h2.osaka-metro-tanimachi-transfer.identity.period0.stations",
@@ -3056,10 +3125,13 @@
           34.74997001
         ]
       },
+      "valid_from": "2018-04-01",
       "valid_to": "2018-04-01",
-      "lp": [],
-      "op": null,
-      "status": "unmatched"
+      "lp": [
+        "lp:jp:228"
+      ],
+      "op": "op:jp:75",
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h2.osaka-metro-yotsubashi-transfer.identity.period0.sections",
@@ -3074,10 +3146,13 @@
           34.70032001
         ]
       },
+      "valid_from": "2018-04-01",
       "valid_to": "2018-04-01",
-      "lp": [],
-      "op": null,
-      "status": "unmatched"
+      "lp": [
+        "lp:jp:229"
+      ],
+      "op": "op:jp:75",
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h2.osaka-metro-yotsubashi-transfer.identity.period0.stations",
@@ -3092,10 +3167,13 @@
           34.70032001
         ]
       },
+      "valid_from": "2018-04-01",
       "valid_to": "2018-04-01",
-      "lp": [],
-      "op": null,
-      "status": "unmatched"
+      "lp": [
+        "lp:jp:229"
+      ],
+      "op": "op:jp:75",
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h2.ryutetsu-rename.identity.period0.sections",
@@ -6518,7 +6596,7 @@
         "lp:jp:615"
       ],
       "op": "op:jp:158",
-      "status": "unique"
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h4.rename-016.identity.period0.stations",
@@ -6798,7 +6876,7 @@
         "lp:jp:104"
       ],
       "op": "op:jp:37",
-      "status": "unique"
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h4.rename-030.identity.period0.stations",
@@ -6818,7 +6896,7 @@
         "lp:jp:236"
       ],
       "op": "op:jp:76",
-      "status": "unique"
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h4.rename-031.identity.period0.stations",
@@ -6898,7 +6976,7 @@
         "lp:jp:104"
       ],
       "op": "op:jp:37",
-      "status": "unique"
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h4.rename-035.identity.period0.stations",
@@ -6938,7 +7016,7 @@
         "lp:jp:487"
       ],
       "op": "op:jp:133",
-      "status": "unique"
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h4.rename-037.identity.period0.stations",
@@ -7279,7 +7357,7 @@
         "lp:jp:493"
       ],
       "op": "op:jp:136",
-      "status": "unique"
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h4.rename-054.identity.period0.stations",
@@ -7439,7 +7517,7 @@
         "lp:jp:262"
       ],
       "op": "op:jp:86",
-      "status": "unique"
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h4.rename-062.identity.period0.stations",
@@ -7600,7 +7678,7 @@
         "lp:jp:96"
       ],
       "op": "op:jp:35",
-      "status": "unique"
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h4.rename-070.identity.period0.stations",
@@ -7840,7 +7918,7 @@
         "lp:jp:487"
       ],
       "op": "op:jp:133",
-      "status": "unique"
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h4.rename-082.identity.period0.stations",
@@ -7880,7 +7958,7 @@
         "lp:jp:415"
       ],
       "op": "op:jp:106",
-      "status": "unique"
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h4.rename-084.identity.period0.stations",
@@ -8080,7 +8158,7 @@
         "lp:jp:487"
       ],
       "op": "op:jp:133",
-      "status": "unique"
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h4.rename-094.identity.period0.stations",
@@ -8140,7 +8218,7 @@
         "lp:jp:487"
       ],
       "op": "op:jp:133",
-      "status": "unique"
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h4.rename-097.identity.period0.stations",
@@ -8200,7 +8278,7 @@
         "lp:jp:615"
       ],
       "op": "op:jp:158",
-      "status": "unique"
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h4.rename-100.identity.period0.stations",
@@ -8320,7 +8398,7 @@
         "lp:jp:262"
       ],
       "op": "op:jp:86",
-      "status": "unique"
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h4.rename-106.identity.period0.stations",
@@ -8381,7 +8459,7 @@
         "lp:jp:488"
       ],
       "op": "op:jp:133",
-      "status": "multiple"
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h4.rename-109.identity.period0.stations",
@@ -8421,7 +8499,7 @@
         "lp:jp:610"
       ],
       "op": "op:jp:154",
-      "status": "unique"
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h4.rename-111.identity.period0.stations",
@@ -8641,7 +8719,7 @@
         "lp:jp:610"
       ],
       "op": "op:jp:154",
-      "status": "unique"
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h4.rename-123.identity.period0.stations",
@@ -8661,7 +8739,7 @@
         "lp:jp:610"
       ],
       "op": "op:jp:154",
-      "status": "unique"
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h4.rename-124.identity.period0.stations",
@@ -8881,7 +8959,7 @@
         "lp:jp:464"
       ],
       "op": "op:jp:123",
-      "status": "unique"
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h4.rename-136.identity.period0.stations",
@@ -8956,12 +9034,13 @@
           32.78359001
         ]
       },
+      "valid_from": "2011-03-01",
       "valid_to": "2019-10-01",
       "lp": [
         "lp:jp:460"
       ],
       "op": "op:jp:122",
-      "status": "unique"
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h4.rename-140.identity.period0.stations",
@@ -9062,7 +9141,7 @@
         "lp:jp:487"
       ],
       "op": "op:jp:133",
-      "status": "unique"
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h4.rename-145.identity.period0.stations",
@@ -9077,12 +9156,13 @@
           34.654940010000004
         ]
       },
+      "valid_from": "2011-07-01",
       "valid_to": "2021-06-19",
       "lp": [
         "lp:jp:479"
       ],
       "op": "op:jp:131",
-      "status": "unique"
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h4.rename-146.identity.period0.stations",
@@ -9223,7 +9303,7 @@
         "lp:jp:617"
       ],
       "op": "op:jp:158",
-      "status": "unique"
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h4.rename-153.current.stations",
@@ -9300,12 +9380,13 @@
           36.69583807
         ]
       },
+      "valid_from": "2015-03-14",
       "valid_to": "2021-01-01",
       "lp": [
         "lp:jp:242"
       ],
       "op": "op:jp:79",
-      "status": "unique"
+      "status": "reviewed"
     },
     {
       "history_id": "jp.h2005.h4.rename-157.identity.period0.stations",
@@ -11921,7 +12002,7 @@
         "lp:jp:630"
       ],
       "op": "op:jp:163",
-      "status": "unique"
+      "status": "reviewed"
     },
     {
       "history_id": "jp.station-rename.hankyu.hk86.kyoto-kawaramachi.identity.period0.stations",

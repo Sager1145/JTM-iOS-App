@@ -1,1 +1,660 @@
-{"schema":"jtm-line-crosswalk/1","groups":[]}
+{
+  "schema": "jtm-line-crosswalk/1",
+  "groups": [
+    {
+      "slug": "echigo-tokimeki/nihonkai-hisui",
+      "lp": [
+        "lp:jp:8",
+        "lp:jp:9"
+      ],
+      "why": "市振–直江津59.3kmの一路線。-p1は図面分割",
+      "source": "https://ja.wikipedia.org/wiki/えちごトキめき鉄道日本海ひすいライン",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/えちごトキめき鉄道日本海ひすいライン"
+      ],
+      "note": "市振–直江津59.3kmの一路線。-p1は図面分割",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "fukui-railway/fukubu",
+      "lp": [
+        "lp:jp:487",
+        "lp:jp:488"
+      ],
+      "why": "たけふ新–田原町と福井駅支線の一路線",
+      "source": "https://ja.wikipedia.org/wiki/福井鉄道福武線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/福井鉄道福武線"
+      ],
+      "note": "たけふ新–田原町と福井駅支線の一路線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "hankyu/imazu",
+      "lp": [
+        "lp:jp:626",
+        "lp:jp:627"
+      ],
+      "why": "宝塚–今津の一路線。北線・南線は運転上の通称",
+      "source": "https://ja.wikipedia.org/wiki/阪急今津線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/阪急今津線"
+      ],
+      "note": "宝塚–今津の一路線。北線・南線は運転上の通称",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "jr-central/tokaido",
+      "lp": [
+        "lp:jp:434",
+        "lp:jp:435",
+        "lp:jp:436"
+      ],
+      "why": "熱海–米原の東海道線。支線と図面分割を含み御殿場線ではない",
+      "source": "https://ja.wikipedia.org/wiki/東海道本線 https://ja.wikipedia.org/wiki/御殿場線 https://www.weblio.jp/content/本線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/東海道本線",
+        "https://ja.wikipedia.org/wiki/御殿場線",
+        "https://www.weblio.jp/content/本線"
+      ],
+      "note": "熱海–米原の東海道線。支線と図面分割を含み御殿場線ではない",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "jr-east/chuo",
+      "lp": [
+        "lp:jp:324",
+        "lp:jp:325",
+        "lp:jp:326"
+      ],
+      "why": "みどり湖経由と辰野支線はともに中央線。要覧名は中央線",
+      "source": "https://ja.wikipedia.org/wiki/中央本線 https://www.weblio.jp/content/本線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/中央本線",
+        "https://www.weblio.jp/content/本線"
+      ],
+      "note": "みどり湖経由と辰野支線はともに中央線。要覧名は中央線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "jr-east/joetsu",
+      "lp": [
+        "lp:jp:319",
+        "lp:jp:320",
+        "lp:jp:321",
+        "lp:jp:322"
+      ],
+      "why": "高崎–宮内と越後湯沢–ガーラ湯沢支線の一路線",
+      "source": "https://ja.wikipedia.org/wiki/上越線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/上越線"
+      ],
+      "note": "高崎–宮内と越後湯沢–ガーラ湯沢支線の一路線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "jr-east/keiyo",
+      "lp": [
+        "lp:jp:330",
+        "lp:jp:331",
+        "lp:jp:332"
+      ],
+      "why": "東京–蘇我、西船橋–南船橋、市川塩浜–西船橋の一路線",
+      "source": "https://ja.wikipedia.org/wiki/京葉線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/京葉線"
+      ],
+      "note": "東京–蘇我、西船橋–南船橋、市川塩浜–西船橋の一路線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "jr-east/nambu",
+      "lp": [
+        "lp:jp:344",
+        "lp:jp:345"
+      ],
+      "why": "川崎–立川と尻手–浜川崎支線の一路線",
+      "source": "https://ja.wikipedia.org/wiki/南武線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/南武線"
+      ],
+      "note": "川崎–立川と尻手–浜川崎支線の一路線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "jr-east/narita",
+      "lp": [
+        "lp:jp:361",
+        "lp:jp:362",
+        "lp:jp:363"
+      ],
+      "why": "佐倉–松岸、我孫子–成田、成田空港支線の一路線",
+      "source": "https://ja.wikipedia.org/wiki/成田線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/成田線"
+      ],
+      "note": "佐倉–松岸、我孫子–成田、成田空港支線の一路線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "jr-east/ou",
+      "lp": [
+        "lp:jp:352",
+        "lp:jp:353"
+      ],
+      "why": "福島–青森の一路線。-p1は図面分割。要覧名は奥羽線",
+      "source": "https://ja.wikipedia.org/wiki/奥羽本線 https://www.weblio.jp/content/本線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/奥羽本線",
+        "https://www.weblio.jp/content/本線"
+      ],
+      "note": "福島–青森の一路線。-p1は図面分割。要覧名は奥羽線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "jr-east/shinetsu",
+      "lp": [
+        "lp:jp:336",
+        "lp:jp:337",
+        "lp:jp:338"
+      ],
+      "why": "直江津–新潟、高崎–横川、篠ノ井–長野の不連続一路線",
+      "source": "https://ja.wikipedia.org/wiki/信越本線 https://www.weblio.jp/content/本線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/信越本線",
+        "https://www.weblio.jp/content/本線"
+      ],
+      "note": "直江津–新潟、高崎–横川、篠ノ井–長野の不連続一路線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "jr-east/sobu",
+      "lp": [
+        "lp:jp:395",
+        "lp:jp:396",
+        "lp:jp:397"
+      ],
+      "why": "東京–銚子と錦糸町–御茶ノ水支線等の一路線。要覧名は総武線",
+      "source": "https://ja.wikipedia.org/wiki/総武本線 https://www.weblio.jp/content/本線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/総武本線",
+        "https://www.weblio.jp/content/本線"
+      ],
+      "note": "東京–銚子と錦糸町–御茶ノ水支線等の一路線。要覧名は総武線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "jr-east/suigun",
+      "lp": [
+        "lp:jp:382",
+        "lp:jp:383"
+      ],
+      "why": "水戸–安積永盛と上菅谷–常陸太田支線の一路線",
+      "source": "https://ja.wikipedia.org/wiki/水郡線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/水郡線"
+      ],
+      "note": "水戸–安積永盛と上菅谷–常陸太田支線の一路線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "jr-east/tohoku",
+      "lp": [
+        "lp:jp:366",
+        "lp:jp:367",
+        "lp:jp:368",
+        "lp:jp:369",
+        "lp:jp:370",
+        "lp:jp:371",
+        "lp:jp:372"
+      ],
+      "why": "要覧名は東北線。支線・貨物線・図面分割を含む一路線",
+      "source": "https://ja.wikipedia.org/wiki/東北本線 https://www.weblio.jp/content/本線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/東北本線",
+        "https://www.weblio.jp/content/本線"
+      ],
+      "note": "要覧名は東北線。支線・貨物線・図面分割を含む一路線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "jr-east/tokaido",
+      "lp": [
+        "lp:jp:373",
+        "lp:jp:374"
+      ],
+      "why": "東京–熱海の東海道線。-3は支線の図面分割",
+      "source": "https://ja.wikipedia.org/wiki/東海道本線 https://www.weblio.jp/content/本線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/東海道本線",
+        "https://www.weblio.jp/content/本線"
+      ],
+      "note": "東京–熱海の東海道線。-3は支線の図面分割",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "jr-east/tsurumi",
+      "lp": [
+        "lp:jp:410",
+        "lp:jp:411",
+        "lp:jp:412"
+      ],
+      "why": "鶴見–扇町、浅野–海芝浦、武蔵白石–大川の一路線",
+      "source": "https://ja.wikipedia.org/wiki/鶴見線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/鶴見線"
+      ],
+      "note": "鶴見–扇町、浅野–海芝浦、武蔵白石–大川の一路線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "jr-east/uetsu",
+      "lp": [
+        "lp:jp:398",
+        "lp:jp:399",
+        "lp:jp:400"
+      ],
+      "why": "新津–秋田の一路線。-p1/-p2は図面分割。要覧名は羽越線",
+      "source": "https://ja.wikipedia.org/wiki/羽越本線 https://www.weblio.jp/content/本線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/羽越本線",
+        "https://www.weblio.jp/content/本線"
+      ],
+      "note": "新津–秋田の一路線。-p1/-p2は図面分割。要覧名は羽越線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "jr-east/yamanote",
+      "lp": [
+        "lp:jp:657",
+        "lp:jp:658"
+      ],
+      "why": "大崎支線は通称。大崎駅構内で正式路線は山手線",
+      "source": "https://ja.wikipedia.org/wiki/大崎支線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/大崎支線"
+      ],
+      "note": "大崎支線は通称。大崎駅構内で正式路線は山手線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "jr-hokkaido/chitose",
+      "lp": [
+        "lp:jp:139",
+        "lp:jp:140"
+      ],
+      "why": "沼ノ端–白石56.6kmと南千歳–新千歳空港2.6kmの一路線",
+      "source": "https://ja.wikipedia.org/wiki/千歳線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/千歳線"
+      ],
+      "note": "沼ノ端–白石56.6kmと南千歳–新千歳空港2.6kmの一路線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "jr-hokkaido/hakodate",
+      "lp": [
+        "lp:jp:135",
+        "lp:jp:136",
+        "lp:jp:137"
+      ],
+      "why": "函館–旭川と砂原支線を含む一路線。-p1は図面分割",
+      "source": "https://ja.wikipedia.org/wiki/函館本線 https://www.weblio.jp/content/本線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/函館本線",
+        "https://www.weblio.jp/content/本線"
+      ],
+      "note": "函館–旭川と砂原支線を含む一路線。-p1は図面分割",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "jr-hokkaido/muroran",
+      "lp": [
+        "lp:jp:142",
+        "lp:jp:143"
+      ],
+      "why": "長万部–岩見沢と東室蘭–室蘭を含む一路線。要覧名は室蘭線",
+      "source": "https://ja.wikipedia.org/wiki/室蘭本線 https://www.weblio.jp/content/本線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/室蘭本線",
+        "https://www.weblio.jp/content/本線"
+      ],
+      "note": "長万部–岩見沢と東室蘭–室蘭を含む一路線。要覧名は室蘭線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "jr-hokkaido/nemuro",
+      "lp": [
+        "lp:jp:147",
+        "lp:jp:148"
+      ],
+      "why": "滝川–富良野と新得–根室の不連続一路線。要覧名は根室線",
+      "source": "https://ja.wikipedia.org/wiki/根室本線 https://www.weblio.jp/content/本線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/根室本線",
+        "https://www.weblio.jp/content/本線"
+      ],
+      "note": "滝川–富良野と新得–根室の不連続一路線。要覧名は根室線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "jr-kyushu/chikuhi",
+      "lp": [
+        "lp:jp:61",
+        "lp:jp:62"
+      ],
+      "why": "姪浜–唐津と山本–伊万里の不連続な一路線",
+      "source": "https://ja.wikipedia.org/wiki/筑肥線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/筑肥線"
+      ],
+      "note": "姪浜–唐津と山本–伊万里の不連続な一路線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "jr-kyushu/kagoshima",
+      "lp": [
+        "lp:jp:71",
+        "lp:jp:72",
+        "lp:jp:73",
+        "lp:jp:74"
+      ],
+      "why": "門司港–八代と川内–鹿児島の不連続一路線。短区間は図面分割",
+      "source": "https://ja.wikipedia.org/wiki/鹿児島本線 https://www.weblio.jp/content/本線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/鹿児島本線",
+        "https://www.weblio.jp/content/本線"
+      ],
+      "note": "門司港–八代と川内–鹿児島の不連続一路線。短区間は図面分割",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "jr-kyushu/nagasaki",
+      "lp": [
+        "lp:jp:68",
+        "lp:jp:69"
+      ],
+      "why": "鳥栖–長崎と喜々津–長与–浦上を含む一路線。要覧名は長崎線",
+      "source": "https://ja.wikipedia.org/wiki/長崎本線 https://www.weblio.jp/content/本線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/長崎本線",
+        "https://www.weblio.jp/content/本線"
+      ],
+      "note": "鳥栖–長崎と喜々津–長与–浦上を含む一路線。要覧名は長崎線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "jr-kyushu/nippo",
+      "lp": [
+        "lp:jp:59",
+        "lp:jp:60"
+      ],
+      "why": "日豊本線は要覧で日豊線。小倉–鹿児島。-p1は図面分割",
+      "source": "https://ja.wikipedia.org/wiki/日豊本線 https://www.weblio.jp/content/本線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/日豊本線",
+        "https://www.weblio.jp/content/本線"
+      ],
+      "note": "日豊本線は要覧で日豊線。小倉–鹿児島。-p1は図面分割",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "jr-shikoku/yosan",
+      "lp": [
+        "lp:jp:204",
+        "lp:jp:205",
+        "lp:jp:206"
+      ],
+      "why": "高松–宇和島、向井原–内子、新谷–伊予大洲を含む一路線",
+      "source": "https://ja.wikipedia.org/wiki/予讃線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/予讃線"
+      ],
+      "note": "高松–宇和島、向井原–内子、新谷–伊予大洲を含む一路線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "jr-west/hanwa",
+      "lp": [
+        "lp:jp:561",
+        "lp:jp:562"
+      ],
+      "why": "天王寺–和歌山と鳳–東羽衣の一路線。羽衣線は通称",
+      "source": "https://ja.wikipedia.org/wiki/阪和線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/阪和線"
+      ],
+      "note": "天王寺–和歌山と鳳–東羽衣の一路線。羽衣線は通称",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "jr-west/hokuriku",
+      "lp": [
+        "lp:jp:512",
+        "lp:jp:513"
+      ],
+      "why": "米原–敦賀の一路線。-p1は図面分割。要覧名は北陸線",
+      "source": "https://ja.wikipedia.org/wiki/北陸本線 https://www.weblio.jp/content/本線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/北陸本線",
+        "https://www.weblio.jp/content/本線"
+      ],
+      "note": "米原–敦賀の一路線。-p1は図面分割。要覧名は北陸線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "jr-west/onoda",
+      "lp": [
+        "lp:jp:529",
+        "lp:jp:530"
+      ],
+      "why": "居能–小野田と雀田–長門本山支線の一路線",
+      "source": "https://ja.wikipedia.org/wiki/小野田線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/小野田線"
+      ],
+      "note": "居能–小野田と雀田–長門本山支線の一路線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "jr-west/sanin",
+      "lp": [
+        "lp:jp:532",
+        "lp:jp:533"
+      ],
+      "why": "京都–幡生と長門市–仙崎支線の一路線。要覧名は山陰線",
+      "source": "https://ja.wikipedia.org/wiki/山陰本線 https://www.weblio.jp/content/本線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/山陰本線",
+        "https://www.weblio.jp/content/本線"
+      ],
+      "note": "京都–幡生と長門市–仙崎支線の一路線。要覧名は山陰線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "jr-west/sanyo",
+      "lp": [
+        "lp:jp:535",
+        "lp:jp:536",
+        "lp:jp:537"
+      ],
+      "why": "和田岬支線を含む山陽線。要覧名は山陽線",
+      "source": "https://ja.wikipedia.org/wiki/山陽本線 https://www.weblio.jp/content/本線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/山陽本線",
+        "https://www.weblio.jp/content/本線"
+      ],
+      "note": "和田岬支線を含む山陽線。要覧名は山陽線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "jr-west/tokaido",
+      "lp": [
+        "lp:jp:542",
+        "lp:jp:543"
+      ],
+      "why": "米原–神戸の東海道線。短区間は図面分割",
+      "source": "https://ja.wikipedia.org/wiki/東海道本線 https://www.weblio.jp/content/本線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/東海道本線",
+        "https://www.weblio.jp/content/本線"
+      ],
+      "note": "米原–神戸の東海道線。短区間は図面分割",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "kobe-new-transit/port-island",
+      "lp": [
+        "lp:jp:479",
+        "lp:jp:480"
+      ],
+      "why": "空港線とループを合わせた一路線",
+      "source": "https://ja.wikipedia.org/wiki/神戸新交通ポートアイランド線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/神戸新交通ポートアイランド線"
+      ],
+      "note": "空港線とループを合わせた一路線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "nankai/koya",
+      "lp": [
+        "lp:jp:167",
+        "lp:jp:168"
+      ],
+      "why": "汐見橋–極楽橋の一路線。汐見橋線は通称",
+      "source": "https://ja.wikipedia.org/wiki/南海高野線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/南海高野線"
+      ],
+      "note": "汐見橋–極楽橋の一路線。汐見橋線は通称",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "tateyama-kurobe/cable",
+      "lp": [
+        "lp:jp:495"
+      ],
+      "why": "1.3kmは立山側、0.8kmは黒部側。正式名はどちらも鋼索線で別路線",
+      "source": "https://ja.wikipedia.org/wiki/立山黒部貫光立山ケーブルカー https://ja.wikipedia.org/wiki/立山黒部貫光黒部ケーブルカー",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/立山黒部貫光立山ケーブルカー",
+        "https://ja.wikipedia.org/wiki/立山黒部貫光黒部ケーブルカー"
+      ],
+      "note": "1.3kmは立山側、0.8kmは黒部側。正式名はどちらも鋼索線で別路線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "tateyama-kurobe/cable-2",
+      "lp": [
+        "lp:jp:496"
+      ],
+      "why": "1.3kmは立山側、0.8kmは黒部側。正式名はどちらも鋼索線で別路線",
+      "source": "https://ja.wikipedia.org/wiki/立山黒部貫光立山ケーブルカー https://ja.wikipedia.org/wiki/立山黒部貫光黒部ケーブルカー",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/立山黒部貫光立山ケーブルカー",
+        "https://ja.wikipedia.org/wiki/立山黒部貫光黒部ケーブルカー"
+      ],
+      "note": "1.3kmは立山側、0.8kmは黒部側。正式名はどちらも鋼索線で別路線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "tobu/isesaki",
+      "lp": [
+        "lp:jp:415",
+        "lp:jp:416"
+      ],
+      "why": "浅草–伊勢崎。押上–曳舟も伊勢崎線の一部",
+      "source": "https://ja.wikipedia.org/wiki/東武伊勢崎線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/東武伊勢崎線"
+      ],
+      "note": "浅草–伊勢崎。押上–曳舟も伊勢崎線の一部",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "tobu/koizumi",
+      "lp": [
+        "lp:jp:420",
+        "lp:jp:421"
+      ],
+      "why": "館林–西小泉と太田–東小泉支線の一路線",
+      "source": "https://ja.wikipedia.org/wiki/東武小泉線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/東武小泉線"
+      ],
+      "note": "館林–西小泉と太田–東小泉支線の一路線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "toei/oedo",
+      "lp": [
+        "lp:jp:303",
+        "lp:jp:304"
+      ],
+      "why": "要覧名称は12号線大江戸線。放射部と環状部の一路線",
+      "source": "https://ja.wikipedia.org/wiki/都営地下鉄大江戸線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/都営地下鉄大江戸線"
+      ],
+      "note": "要覧名称は12号線大江戸線。放射部と環状部の一路線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "toyama-chiho/main",
+      "lp": [
+        "lp:jp:248"
+      ],
+      "why": "53.3kmは鉄道の本線、3.6kmは軌道線の本線で別路線",
+      "source": "https://ja.wikipedia.org/wiki/富山地方鉄道本線 https://ja.wikipedia.org/wiki/富山地方鉄道富山軌道線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/富山地方鉄道本線",
+        "https://ja.wikipedia.org/wiki/富山地方鉄道富山軌道線"
+      ],
+      "note": "53.3kmは鉄道の本線、3.6kmは軌道線の本線で別路線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "toyama-chiho/main-2",
+      "lp": [
+        "lp:jp:249"
+      ],
+      "why": "53.3kmは鉄道の本線、3.6kmは軌道線の本線で別路線",
+      "source": "https://ja.wikipedia.org/wiki/富山地方鉄道本線 https://ja.wikipedia.org/wiki/富山地方鉄道富山軌道線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/富山地方鉄道本線",
+        "https://ja.wikipedia.org/wiki/富山地方鉄道富山軌道線"
+      ],
+      "note": "53.3kmは鉄道の本線、3.6kmは軌道線の本線で別路線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "toyohashi-railway/azumada",
+      "lp": [
+        "lp:jp:580",
+        "lp:jp:581"
+      ],
+      "why": "駅前–赤岩口と井原–運動公園前支線の一路線",
+      "source": "https://ja.wikipedia.org/wiki/豊橋鉄道東田本線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/豊橋鉄道東田本線"
+      ],
+      "note": "駅前–赤岩口と井原–運動公園前支線の一路線",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "slug": "yamaman/yukarigaoka",
+      "lp": [
+        "lp:jp:257",
+        "lp:jp:258"
+      ],
+      "why": "全長4.1kmの一路線。ラケット状を図面分割",
+      "source": "https://ja.wikipedia.org/wiki/山万ユーカリが丘線",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/山万ユーカリが丘線"
+      ],
+      "note": "全長4.1kmの一路線。ラケット状を図面分割",
+      "reviewedBy": "web-research 2026-10-19"
+    }
+  ]
+}

@@ -14635,7 +14635,16 @@
       "metres": 127
     }
   ],
-  "unmapped-source": [],
+  "unmapped-source": [
+    {
+      "ord": 21574,
+      "station_code": "CN-12306-PSW",
+      "group_code": "cn-official-12306-psw",
+      "name": "彭山",
+      "line_name": "成昆线",
+      "operator": "中国铁路成都局集团"
+    }
+  ],
   "ambiguous-company-text": [],
   "identity-not-a-railway": [],
   "history-unmatched": [],
@@ -24229,6 +24238,12 @@
       "candidates": [
         "st:cn:5809",
         "st:cn:5810"
+      ]
+    },
+    {
+      "value": "CN-12306-XCE",
+      "candidates": [
+        "st:cn:5301"
       ]
     },
     {

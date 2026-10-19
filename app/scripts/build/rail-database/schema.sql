@@ -700,6 +700,29 @@ CREATE TABLE station_operator (
 CREATE INDEX station_operator_station ON station_operator(station_id);
 CREATE INDEX station_operator_operator ON station_operator(operator_id);
 
+-- Facilities and links are reviewed identity facts, not physical edges (ADR 0013 invariant 9).
+CREATE TABLE station_facility (
+  id TEXT PRIMARY KEY,
+  complex_id TEXT NOT NULL,
+  manager_operator_id TEXT,
+  kind TEXT NOT NULL,
+  source TEXT
+) STRICT;
+
+CREATE TABLE station_facility_member (
+  facility_id TEXT,
+  station_id TEXT,
+  PRIMARY KEY(facility_id, station_id)
+) STRICT;
+
+CREATE TABLE station_link (
+  a_station_id TEXT,
+  b_station_id TEXT,
+  kind TEXT NOT NULL,
+  source TEXT,
+  PRIMARY KEY(a_station_id, b_station_id)
+) STRICT;
+
 CREATE TABLE homonym_group (
   region        TEXT NOT NULL,
   kind          TEXT NOT NULL,

@@ -7,7 +7,7 @@ import { execFileSync } from "node:child_process";
 import { DatabaseSync } from "node:sqlite";
 import { fileURLToPath } from "node:url";
 
-import { ID_RE, REGIONS, classifyLedgerName, operationEventWithdrawn, operationIntervalsOverlap, parseLedger, withdrawnOperationPairs } from "../build/rail-database/registry.mjs";
+import { ID_RE, REGIONS, classifyLedgerName, compareId, operationEventWithdrawn, operationIntervalsOverlap, parseLedger, withdrawnOperationPairs } from "../build/rail-database/registry.mjs";
 
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
 
@@ -47,6 +47,7 @@ const KEY_SCHEME = {
   ls: "derivation",
   ln: "crosswalk",
   rp: "route-pattern",
+  fc: "facility",
 };
 
 function pushMap(map, key, value) {
@@ -340,12 +341,115 @@ function freezeViolations(root) {
   return violations;
 }
 
+function facilityViolations(ledger) {
+  const violations = [];
+  const retired = new Set(ledger.events.filter((event) => event.event === "retire").map((event) => event.id));
+  const live = (id) => ledger.entities.has(id) && !retired.has(id);
+  const derivation = new Map();
+  for (const ref of ledger.refs) {
+    if (ref.scheme === "derivation" && String(ref.id).startsWith("st:") && !ref.from) derivation.set(ref.id, ref.value);
+  }
+  const facilityOf = new Map();
+  const membersOf = new Map();
+  const managerOf = new Map();
+  for (const event of ledger.events) {
+    if (event.event === "facility" && live(event.value)) {
+      if (!membersOf.has(event.value)) membersOf.set(event.value, []);
+      membersOf.get(event.value).push(event.id);
+      if (facilityOf.has(event.id) && facilityOf.get(event.id) !== event.value) violations.push(`facility station ${event.id}`);
+      else facilityOf.set(event.id, event.value);
+    } else if (event.event === "manager" && live(event.id)) {
+      if (managerOf.has(event.id) && managerOf.get(event.id) !== event.value) violations.push(`facility manager ${event.id}`);
+      managerOf.set(event.id, event.value);
+    }
+  }
+  for (const entity of ledger.entities.values()) {
+    if (!String(entity.id).startsWith("fc:") || !live(entity.id)) continue;
+    const parent = entity.parent ?? "";
+    if (!live(parent) || kindOf(parent) !== "cx") violations.push(`facility parent ${entity.id}`);
+    const members = membersOf.get(entity.id) ?? [];
+    if (!members.length) violations.push(`facility member ${entity.id}`);
+    const operators = new Set();
+    for (const stationId of members) {
+      const station = ledger.entities.get(stationId);
+      if (!live(stationId) || kindOf(stationId) !== "st" || station?.parent !== parent) {
+        violations.push(`facility member ${stationId}`);
+        continue;
+      }
+      const op = String(derivation.get(stationId) ?? "").split("|")[1] ?? "";
+      if (!live(op) || kindOf(op) !== "op") violations.push(`facility member ${stationId}`);
+      else if (operators.has(op)) violations.push(`facility operators ${entity.id}`);
+      else operators.add(op);
+    }
+    const manager = managerOf.get(entity.id) ?? "";
+    if (!live(manager) || kindOf(manager) !== "op") violations.push(`facility manager ${entity.id}`);
+  }
+  const seenLink = new Set();
+  for (const event of ledger.events) {
+    if (event.event !== "link") continue;
+    const left = event.id;
+    const right = event.value ?? "";
+    if (compareId(left, right) >= 0) violations.push(`link order ${left}`);
+    if (!live(left) || kindOf(left) !== "st" || !live(right) || kindOf(right) !== "st") {
+      violations.push(`link endpoint ${left}`);
+      continue;
+    }
+    const leftParent = ledger.entities.get(left)?.parent ?? "";
+    const rightParent = ledger.entities.get(right)?.parent ?? "";
+    if (!leftParent || leftParent !== rightParent || kindOf(leftParent) !== "cx") violations.push(`link complex ${left}`);
+    const leftFacility = facilityOf.get(left) ?? null;
+    const rightFacility = facilityOf.get(right) ?? null;
+    if (leftFacility && leftFacility === rightFacility) violations.push(`link facility ${left}`);
+    const key = `${left}\0${right}`;
+    if (seenLink.has(key)) violations.push(`link duplicate ${left}`);
+    else seenLink.add(key);
+    if (event.why !== "gate_transfer" && event.why !== "street_transfer") violations.push(`link kind ${left}`);
+  }
+  return violations;
+}
+
+function aliasViolations(root, ledger) {
+  const violations = [];
+  if (!root || !fs.existsSync(root)) return violations;
+  const retired = new Set(ledger.events.filter((event) => event.event === "retire").map((event) => event.id));
+  const live = (id) => ledger.entities.has(id) && !retired.has(id);
+  const packageNames = new Map();
+  for (const ref of ledger.refs) {
+    if (ref.scheme !== "package-operator" || !live(ref.id)) continue;
+    if (!packageNames.has(ref.id)) packageNames.set(ref.id, new Set());
+    packageNames.get(ref.id).add(ref.value);
+  }
+  for (const region of fs.readdirSync(root)) {
+    const file = path.join(root, region, "operator-aliases.json");
+    if (!fs.existsSync(file) || !fs.statSync(file).isFile()) continue;
+    const doc = JSON.parse(fs.readFileSync(file, "utf8"));
+    if (!doc || doc.schema !== "jtm-operator-aliases/1" || !Array.isArray(doc.aliases)) {
+      violations.push(`alias schema ${region}`);
+      continue;
+    }
+    const seen = new Map();
+    for (const alias of doc.aliases) {
+      const text = String(alias.text ?? "");
+      const op = String(alias.op ?? "");
+      if (!live(op) || kindOf(op) !== "op") violations.push(`alias op ${text}`);
+      if (seen.has(text) && seen.get(text) !== op) violations.push(`alias text ${text}`);
+      else seen.set(text, op);
+      for (const [id, names] of packageNames) {
+        if (id !== op && names.has(text)) violations.push(`alias name ${text}`);
+      }
+    }
+  }
+  return violations;
+}
+
 export function collectViolations({ root, db, base, freeze }) {
   const violations = [];
   if (!fs.existsSync(root)) violations.push(`ledger root missing ${root}`);
   const parsed = fs.existsSync(root) ? parseLedger(root) : { ledger: { entities: new Map(), refs: [], events: [], aliases: [] }, violations: [] };
   violations.push(...parsed.violations);
   violations.push(...referenceViolations(parsed.ledger));
+  violations.push(...facilityViolations(parsed.ledger));
+  violations.push(...aliasViolations(root, parsed.ledger));
   if (db) violations.push(...coverageViolations(db, parsed.ledger));
   if (base) violations.push(...baseViolations(root, base));
   if (freeze) violations.push(...freezeViolations(root));

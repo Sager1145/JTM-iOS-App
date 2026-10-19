@@ -6143,30 +6143,6 @@
       "op": "op:jp:167"
     },
     {
-      "history_id": "jp-id-echigo-hisui-transfer-2015.identity.period0.sections",
-      "kind": "identity_period",
-      "status": "multiple",
-      "line_name": "日本海ひすいライン",
-      "operator": "えちごトキめき鉄道",
-      "lp": [
-        "lp:jp:8",
-        "lp:jp:9"
-      ],
-      "op": "op:jp:6"
-    },
-    {
-      "history_id": "jp-id-echigo-hisui-transfer-2015.identity.period0.stations",
-      "kind": "identity_period",
-      "status": "multiple",
-      "line_name": "日本海ひすいライン",
-      "operator": "えちごトキめき鉄道",
-      "lp": [
-        "lp:jp:8",
-        "lp:jp:9"
-      ],
-      "op": "op:jp:6"
-    },
-    {
       "history_id": "jp-id-jr-tohoku-hachinohe-aomori-2010.identity.period0.sections",
       "kind": "identity_period",
       "status": "overlap",
@@ -6176,132 +6152,6 @@
         "lp:jp:642"
       ],
       "op": "op:jp:167"
-    },
-    {
-      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part0",
-      "kind": "retirement",
-      "status": "unmatched",
-      "line_name": "13号線副都心線",
-      "operator": "東京地下鉄",
-      "lp": [],
-      "op": null
-    },
-    {
-      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part1",
-      "kind": "retirement",
-      "status": "unmatched",
-      "line_name": "13号線副都心線",
-      "operator": "東京地下鉄",
-      "lp": [],
-      "op": null
-    },
-    {
-      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part10",
-      "kind": "retirement",
-      "status": "unmatched",
-      "line_name": "13号線副都心線",
-      "operator": "東京地下鉄",
-      "lp": [],
-      "op": null
-    },
-    {
-      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part11",
-      "kind": "retirement",
-      "status": "unmatched",
-      "line_name": "13号線副都心線",
-      "operator": "東京地下鉄",
-      "lp": [],
-      "op": null
-    },
-    {
-      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part12",
-      "kind": "retirement",
-      "status": "unmatched",
-      "line_name": "13号線副都心線",
-      "operator": "東京地下鉄",
-      "lp": [],
-      "op": null
-    },
-    {
-      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part2",
-      "kind": "retirement",
-      "status": "unmatched",
-      "line_name": "13号線副都心線",
-      "operator": "東京地下鉄",
-      "lp": [],
-      "op": null
-    },
-    {
-      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part3",
-      "kind": "retirement",
-      "status": "unmatched",
-      "line_name": "13号線副都心線",
-      "operator": "東京地下鉄",
-      "lp": [],
-      "op": null
-    },
-    {
-      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part4",
-      "kind": "retirement",
-      "status": "unmatched",
-      "line_name": "13号線副都心線",
-      "operator": "東京地下鉄",
-      "lp": [],
-      "op": null
-    },
-    {
-      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part5",
-      "kind": "retirement",
-      "status": "unmatched",
-      "line_name": "13号線副都心線",
-      "operator": "東京地下鉄",
-      "lp": [],
-      "op": null
-    },
-    {
-      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part6",
-      "kind": "retirement",
-      "status": "unmatched",
-      "line_name": "13号線副都心線",
-      "operator": "東京地下鉄",
-      "lp": [],
-      "op": null
-    },
-    {
-      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part7",
-      "kind": "retirement",
-      "status": "unmatched",
-      "line_name": "13号線副都心線",
-      "operator": "東京地下鉄",
-      "lp": [],
-      "op": null
-    },
-    {
-      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part8",
-      "kind": "retirement",
-      "status": "unmatched",
-      "line_name": "13号線副都心線",
-      "operator": "東京地下鉄",
-      "lp": [],
-      "op": null
-    },
-    {
-      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part9",
-      "kind": "retirement",
-      "status": "unmatched",
-      "line_name": "13号線副都心線",
-      "operator": "東京地下鉄",
-      "lp": [],
-      "op": null
-    },
-    {
-      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.stations",
-      "kind": "retirement",
-      "status": "unmatched",
-      "line_name": "13号線副都心線",
-      "operator": "東京地下鉄",
-      "lp": [],
-      "op": null
     },
     {
       "history_id": "jp.h2005.h1.osaka-chuo-yumeshima.current.sections",
@@ -6359,150 +6209,6 @@
       "kind": "identity_period",
       "status": "unmatched",
       "line_name": "4号線(中央線)",
-      "operator": "大阪市高速電気軌道",
-      "lp": [],
-      "op": null
-    },
-    {
-      "history_id": "jp.h2005.h2.osaka-metro-imazatosuji-transfer.identity.period0.sections",
-      "kind": "identity_period",
-      "status": "unmatched",
-      "line_name": "8号線(今里筋線)",
-      "operator": "大阪市高速電気軌道",
-      "lp": [],
-      "op": null
-    },
-    {
-      "history_id": "jp.h2005.h2.osaka-metro-imazatosuji-transfer.identity.period0.stations",
-      "kind": "identity_period",
-      "status": "unmatched",
-      "line_name": "8号線(今里筋線)",
-      "operator": "大阪市高速電気軌道",
-      "lp": [],
-      "op": null
-    },
-    {
-      "history_id": "jp.h2005.h2.osaka-metro-midosuji-transfer.identity.period0.sections",
-      "kind": "identity_period",
-      "status": "unmatched",
-      "line_name": "1号線(御堂筋線)",
-      "operator": "大阪市高速電気軌道",
-      "lp": [],
-      "op": null
-    },
-    {
-      "history_id": "jp.h2005.h2.osaka-metro-midosuji-transfer.identity.period0.stations",
-      "kind": "identity_period",
-      "status": "unmatched",
-      "line_name": "1号線(御堂筋線)",
-      "operator": "大阪市高速電気軌道",
-      "lp": [],
-      "op": null
-    },
-    {
-      "history_id": "jp.h2005.h2.osaka-metro-nagahori-transfer.identity.period0.sections",
-      "kind": "identity_period",
-      "status": "unmatched",
-      "line_name": "7号線(長堀鶴見緑地線)",
-      "operator": "大阪市高速電気軌道",
-      "lp": [],
-      "op": null
-    },
-    {
-      "history_id": "jp.h2005.h2.osaka-metro-nagahori-transfer.identity.period0.stations",
-      "kind": "identity_period",
-      "status": "unmatched",
-      "line_name": "7号線(長堀鶴見緑地線)",
-      "operator": "大阪市高速電気軌道",
-      "lp": [],
-      "op": null
-    },
-    {
-      "history_id": "jp.h2005.h2.osaka-metro-newtram-transfer.identity.period0.sections",
-      "kind": "identity_period",
-      "status": "unmatched",
-      "line_name": "南港ポートタウン線",
-      "operator": "大阪市高速電気軌道",
-      "lp": [],
-      "op": null
-    },
-    {
-      "history_id": "jp.h2005.h2.osaka-metro-newtram-transfer.identity.period0.stations",
-      "kind": "identity_period",
-      "status": "unmatched",
-      "line_name": "南港ポートタウン線",
-      "operator": "大阪市高速電気軌道",
-      "lp": [],
-      "op": null
-    },
-    {
-      "history_id": "jp.h2005.h2.osaka-metro-sakaisuji-transfer.identity.period0.sections",
-      "kind": "identity_period",
-      "status": "unmatched",
-      "line_name": "6号線(堺筋線)",
-      "operator": "大阪市高速電気軌道",
-      "lp": [],
-      "op": null
-    },
-    {
-      "history_id": "jp.h2005.h2.osaka-metro-sakaisuji-transfer.identity.period0.stations",
-      "kind": "identity_period",
-      "status": "unmatched",
-      "line_name": "6号線(堺筋線)",
-      "operator": "大阪市高速電気軌道",
-      "lp": [],
-      "op": null
-    },
-    {
-      "history_id": "jp.h2005.h2.osaka-metro-sennichimae-transfer.identity.period0.sections",
-      "kind": "identity_period",
-      "status": "unmatched",
-      "line_name": "5号線(千日前線)",
-      "operator": "大阪市高速電気軌道",
-      "lp": [],
-      "op": null
-    },
-    {
-      "history_id": "jp.h2005.h2.osaka-metro-sennichimae-transfer.identity.period0.stations",
-      "kind": "identity_period",
-      "status": "unmatched",
-      "line_name": "5号線(千日前線)",
-      "operator": "大阪市高速電気軌道",
-      "lp": [],
-      "op": null
-    },
-    {
-      "history_id": "jp.h2005.h2.osaka-metro-tanimachi-transfer.identity.period0.sections",
-      "kind": "identity_period",
-      "status": "unmatched",
-      "line_name": "2号線(谷町線)",
-      "operator": "大阪市高速電気軌道",
-      "lp": [],
-      "op": null
-    },
-    {
-      "history_id": "jp.h2005.h2.osaka-metro-tanimachi-transfer.identity.period0.stations",
-      "kind": "identity_period",
-      "status": "unmatched",
-      "line_name": "2号線(谷町線)",
-      "operator": "大阪市高速電気軌道",
-      "lp": [],
-      "op": null
-    },
-    {
-      "history_id": "jp.h2005.h2.osaka-metro-yotsubashi-transfer.identity.period0.sections",
-      "kind": "identity_period",
-      "status": "unmatched",
-      "line_name": "3号線(四つ橋線)",
-      "operator": "大阪市高速電気軌道",
-      "lp": [],
-      "op": null
-    },
-    {
-      "history_id": "jp.h2005.h2.osaka-metro-yotsubashi-transfer.identity.period0.stations",
-      "kind": "identity_period",
-      "status": "unmatched",
-      "line_name": "3号線(四つ橋線)",
       "operator": "大阪市高速電気軌道",
       "lp": [],
       "op": null
@@ -6716,17 +6422,6 @@
       "op": "op:jp:163"
     },
     {
-      "history_id": "jp.h2005.h4.rename-041.identity.period0.stations",
-      "kind": "identity_period",
-      "status": "overlap",
-      "line_name": "健軍線",
-      "operator": "熊本市",
-      "lp": [
-        "lp:jp:460"
-      ],
-      "op": "op:jp:122"
-    },
-    {
       "history_id": "jp.h2005.h4.rename-045.identity.period0.stations",
       "kind": "identity_period",
       "status": "overlap",
@@ -6916,7 +6611,19 @@
     {
       "history_id": "jp.h2005.h4.rename-108.identity.period0.stations",
       "kind": "identity_period",
-      "status": "multiple",
+      "status": "overlap",
+      "line_name": "福武線",
+      "operator": "福井鉄道",
+      "lp": [
+        "lp:jp:487",
+        "lp:jp:488"
+      ],
+      "op": "op:jp:133"
+    },
+    {
+      "history_id": "jp.h2005.h4.rename-108.identity.period0.stations",
+      "kind": "identity_period",
+      "status": "overlap",
       "line_name": "福武線",
       "operator": "福井鉄道",
       "lp": [
@@ -6946,17 +6653,6 @@
         "lp:jp:610"
       ],
       "op": "op:jp:154"
-    },
-    {
-      "history_id": "jp.h2005.h4.rename-111.identity.period0.stations",
-      "kind": "identity_period",
-      "status": "overlap",
-      "line_name": "ポートアイランド線",
-      "operator": "神戸新交通",
-      "lp": [
-        "lp:jp:479"
-      ],
-      "op": "op:jp:131"
     },
     {
       "history_id": "jp.h2005.h4.rename-112.identity.period0.stations",
@@ -7025,26 +6721,15 @@
       "op": "op:jp:123"
     },
     {
-      "history_id": "jp.h2005.h4.rename-138.identity.period0.stations",
+      "history_id": "jp.h2005.h4.rename-137.identity.period0.stations",
       "kind": "identity_period",
       "status": "overlap",
-      "line_name": "ポートアイランド線",
-      "operator": "神戸新交通",
+      "line_name": "福武線",
+      "operator": "福井鉄道",
       "lp": [
-        "lp:jp:479"
+        "lp:jp:488"
       ],
-      "op": "op:jp:131"
-    },
-    {
-      "history_id": "jp.h2005.h4.rename-139.identity.period0.stations",
-      "kind": "identity_period",
-      "status": "overlap",
-      "line_name": "健軍線",
-      "operator": "熊本市",
-      "lp": [
-        "lp:jp:460"
-      ],
-      "op": "op:jp:122"
+      "op": "op:jp:133"
     },
     {
       "history_id": "jp.h2005.h4.rename-144.identity.period0.stations",
@@ -7056,17 +6741,6 @@
         "lp:jp:487"
       ],
       "op": "op:jp:133"
-    },
-    {
-      "history_id": "jp.h2005.h4.rename-145.identity.period0.stations",
-      "kind": "identity_period",
-      "status": "overlap",
-      "line_name": "ポートアイランド線",
-      "operator": "神戸新交通",
-      "lp": [
-        "lp:jp:479"
-      ],
-      "op": "op:jp:131"
     },
     {
       "history_id": "jp.h2005.h4.rename-152.identity.period0.stations",

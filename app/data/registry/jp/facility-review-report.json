@@ -1,0 +1,312 @@
+{
+  "facility-unresolved": [
+    {
+      "cx": "cx:jp:93",
+      "name": "上総中野",
+      "decision": "boundary",
+      "reason": "missing name"
+    },
+    {
+      "cx": "cx:jp:118",
+      "name": "田原町",
+      "decision": "boundary",
+      "reason": "missing name"
+    },
+    {
+      "cx": "cx:jp:500",
+      "name": "釜石",
+      "decision": "shared-facility",
+      "reason": "missing name"
+    },
+    {
+      "cx": "cx:jp:501",
+      "name": "久慈",
+      "decision": "shared-facility",
+      "reason": "missing name"
+    },
+    {
+      "cx": "cx:jp:642",
+      "name": "川内",
+      "decision": "boundary",
+      "reason": "missing name"
+    },
+    {
+      "cx": "cx:jp:644",
+      "name": "佐世保",
+      "decision": "shared-facility",
+      "reason": "missing name"
+    },
+    {
+      "cx": "cx:jp:649",
+      "name": "有田",
+      "decision": "shared-facility",
+      "reason": "missing name"
+    },
+    {
+      "cx": "cx:jp:1007",
+      "name": "立野",
+      "decision": "shared-facility",
+      "reason": "missing name"
+    },
+    {
+      "cx": "cx:jp:1159",
+      "name": "総社",
+      "decision": "shared-facility",
+      "reason": "missing name"
+    },
+    {
+      "cx": "cx:jp:1202",
+      "name": "押上",
+      "decision": "shared-facility",
+      "reason": "missing name"
+    },
+    {
+      "cx": "cx:jp:1645",
+      "name": "津",
+      "decision": "boundary",
+      "reason": "missing name"
+    },
+    {
+      "cx": "cx:jp:2119",
+      "name": "十日町",
+      "decision": "shared-facility",
+      "reason": "missing name"
+    },
+    {
+      "cx": "cx:jp:3250",
+      "name": "大月",
+      "decision": "boundary",
+      "reason": "missing name"
+    },
+    {
+      "cx": "cx:jp:3460",
+      "name": "大和",
+      "decision": "shared-facility",
+      "reason": "missing name"
+    },
+    {
+      "cx": "cx:jp:3477",
+      "name": "赤湯",
+      "decision": "shared-facility",
+      "reason": "missing name"
+    },
+    {
+      "cx": "cx:jp:3802",
+      "name": "智頭",
+      "decision": "boundary",
+      "reason": "missing name"
+    },
+    {
+      "cx": "cx:jp:3874",
+      "name": "九段下",
+      "decision": "shared-facility",
+      "reason": "missing name"
+    },
+    {
+      "cx": "cx:jp:3913",
+      "name": "北千住",
+      "decision": "shared-facility",
+      "reason": "missing name"
+    },
+    {
+      "cx": "cx:jp:4155",
+      "name": "新横浜",
+      "decision": "boundary",
+      "reason": "missing name"
+    },
+    {
+      "cx": "cx:jp:4457",
+      "name": "熱海",
+      "decision": "boundary",
+      "reason": "missing name"
+    },
+    {
+      "cx": "cx:jp:4843",
+      "name": "福島",
+      "decision": "shared-facility",
+      "reason": "missing name"
+    },
+    {
+      "cx": "cx:jp:5539",
+      "name": "羽後本荘",
+      "decision": "shared-facility",
+      "reason": "missing name"
+    }
+  ],
+  "facility-transfer-mixed": [
+    {
+      "cx": "cx:jp:99",
+      "name": "上越妙高",
+      "decision": "boundary",
+      "note": "新幹線はJR東管理の境界。在来は自由通路向かいのトキめき別改札。"
+    },
+    {
+      "cx": "cx:jp:112",
+      "name": "糸魚川",
+      "decision": "shared-facility",
+      "note": "在来線構内はトキめき管轄で共用。新幹線のみJR西日本の別改札。"
+    },
+    {
+      "cx": "cx:jp:200",
+      "name": "長野",
+      "decision": "shared-facility",
+      "note": "在来はJR東管理でしなのと共同。長野電鉄は別駅で連絡改札一覧にない。"
+    },
+    {
+      "cx": "cx:jp:633",
+      "name": "博多",
+      "decision": "boundary",
+      "note": "新幹線はJR西日本管轄の共同使用。在来線とは連絡改札。地下鉄は別コードの駅。"
+    },
+    {
+      "cx": "cx:jp:796",
+      "name": "小倉",
+      "decision": "separate-stations",
+      "note": "在来線と新幹線は乗換改札。モノレールは別改札で公共連絡通路。"
+    },
+    {
+      "cx": "cx:jp:1194",
+      "name": "新鎌ヶ谷",
+      "decision": "shared-facility",
+      "note": "北総と京成空港線は北総管轄で共用。松戸線と東武は別改札・別駅舎。"
+    },
+    {
+      "cx": "cx:jp:1195",
+      "name": "東松戸",
+      "decision": "shared-facility",
+      "note": "北総・京成は同一ホームで北総管理。JRは別駅舎。"
+    },
+    {
+      "cx": "cx:jp:1202",
+      "name": "押上",
+      "decision": "shared-facility",
+      "note": "京成・都営は京成管轄、メトロ・東武はメトロ管轄。組ごとの改札共用。"
+    },
+    {
+      "cx": "cx:jp:1238",
+      "name": "日暮里",
+      "decision": "separate-stations",
+      "note": "JR・京成は連絡改札節。舎人ライナーは別駅で同節にない。"
+    },
+    {
+      "cx": "cx:jp:1304",
+      "name": "横浜",
+      "decision": "boundary",
+      "note": "東急と横浜高速のみ共同使用（東急管轄）。JR東と京急は連絡改札。"
+    },
+    {
+      "cx": "cx:jp:1332",
+      "name": "天空橋",
+      "decision": "separate-stations",
+      "note": "京急からモノレールは乗換専用改札。モノレールから京急は一旦改札外。"
+    },
+    {
+      "cx": "cx:jp:1354",
+      "name": "渋谷",
+      "decision": "shared-facility",
+      "note": "東急と半蔵門・副都心は東急管轄で共用。銀座線・JR・京王は別。"
+    },
+    {
+      "cx": "cx:jp:1355",
+      "name": "新宿",
+      "decision": "boundary",
+      "note": "京王新線と都営新宿線は京王管理。JR・小田急は連絡改札、メトロは別。"
+    },
+    {
+      "cx": "cx:jp:1452",
+      "name": "京都",
+      "decision": "separate-stations",
+      "note": "在来線と新幹線はのりかえ口。近鉄改札は1997年に分離。地下鉄は八条東口が最寄り。"
+    },
+    {
+      "cx": "cx:jp:1682",
+      "name": "小田原",
+      "decision": "boundary",
+      "note": "小田急と小田急箱根は同一改札（小田急管轄）。JRと伊豆箱根は別階。"
+    },
+    {
+      "cx": "cx:jp:1732",
+      "name": "貴生川",
+      "decision": "shared-facility",
+      "note": "JRと信楽は改札不要（JR西管轄）。近江は橋上自由通路の改札外。"
+    },
+    {
+      "cx": "cx:jp:2334",
+      "name": "金山",
+      "decision": "separate-stations",
+      "note": "JRと名鉄は連絡改札。地下鉄は公共通路で結ぶ。共同使用ではない。"
+    },
+    {
+      "cx": "cx:jp:3092",
+      "name": "新大阪",
+      "decision": "boundary",
+      "note": "新幹線はJR東海管轄の境界。在来線はJR西の別改札。地下鉄は改札外。"
+    },
+    {
+      "cx": "cx:jp:3468",
+      "name": "藤沢",
+      "decision": "separate-stations",
+      "note": "JR・小田急は連絡改札。江ノ電は同節になく別駅。"
+    },
+    {
+      "cx": "cx:jp:3913",
+      "name": "北千住",
+      "decision": "shared-facility",
+      "note": "JR・メトロ・東武は同一改札内。つくばエクスプレスのみ独立改札。"
+    },
+    {
+      "cx": "cx:jp:3933",
+      "name": "東京",
+      "decision": "separate-stations",
+      "note": "駅頁は共同使用駅（境界駅）ではない。新幹線は北乗換改札、丸ノ内線は別。"
+    },
+    {
+      "cx": "cx:jp:3948",
+      "name": "西船橋",
+      "decision": "shared-facility",
+      "note": "メトロと東葉はメトロ管轄で共用。隣接するJR駅は別改札。"
+    },
+    {
+      "cx": "cx:jp:3964",
+      "name": "高田馬場",
+      "decision": "separate-stations",
+      "note": "JR・西武は連絡改札節。東西線は同節にない別駅。"
+    },
+    {
+      "cx": "cx:jp:3967",
+      "name": "目黒",
+      "decision": "shared-facility",
+      "note": "東急・メトロ・都営は東急管轄の共同使用。JRは別駅。"
+    },
+    {
+      "cx": "cx:jp:3998",
+      "name": "西日暮里",
+      "decision": "separate-stations",
+      "note": "JRとメトロは連絡改札。舎人ライナーは別改札。共同使用ではない。"
+    },
+    {
+      "cx": "cx:jp:4155",
+      "name": "新横浜",
+      "decision": "boundary",
+      "note": "相鉄・東急は共同管轄の境界。JR同士は連絡改札、市営は別駅。"
+    },
+    {
+      "cx": "cx:jp:4527",
+      "name": "八戸",
+      "decision": "shared-facility",
+      "note": "在来線構内は青い森鉄道管轄。新幹線乗換口は2010年に休止。"
+    },
+    {
+      "cx": "cx:jp:6007",
+      "name": "米原",
+      "decision": "boundary",
+      "note": "在来線構内はJR西、新幹線構内はJR東海。近江鉄道は東口隣の別駅。"
+    },
+    {
+      "cx": "cx:jp:6169",
+      "name": "桑名",
+      "decision": "separate-stations",
+      "note": "2020年にJRと近鉄を改札分離。近鉄と養老は連絡改札。"
+    }
+  ]
+}

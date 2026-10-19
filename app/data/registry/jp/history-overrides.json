@@ -1,0 +1,766 @@
+{
+  "schema": "jtm-history-overrides/1",
+  "overrides": [
+    {
+      "history_id": "jp-id-echigo-hisui-transfer-2015.identity.period0.sections",
+      "lp": [
+        "lp:jp:8",
+        "lp:jp:9"
+      ],
+      "op": "op:jp:6",
+      "valid_from": "2015-03-14",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E3%81%88%E3%81%A1%E3%81%94%E3%83%88%E3%82%AD%E3%82%81%E3%81%8D%E9%89%84%E9%81%93%E6%97%A5%E6%9C%AC%E6%B5%B7%E3%81%B2%E3%81%99%E3%81%84%E3%83%A9%E3%82%A4%E3%83%B3"
+      ],
+      "note": "2015-03-14にJR西日本北陸本線市振–直江津を移管。同一線の並列断片なので両lpを同日開始。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp-id-echigo-hisui-transfer-2015.identity.period0.stations",
+      "lp": [
+        "lp:jp:8",
+        "lp:jp:9"
+      ],
+      "op": "op:jp:6",
+      "valid_from": "2015-03-14",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E3%81%88%E3%81%A1%E3%81%94%E3%83%88%E3%82%AD%E3%82%81%E3%81%8D%E9%89%84%E9%81%93%E6%97%A5%E6%9C%AC%E6%B5%B7%E3%81%B2%E3%81%99%E3%81%84%E3%83%A9%E3%82%A4%E3%83%B3"
+      ],
+      "note": "2015-03-14にJR西日本北陸本線市振–直江津を移管。同一線の並列断片なので両lpを同日開始。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part0",
+      "lp": [
+        "lp:jp:292"
+      ],
+      "op": "op:jp:101",
+      "valid_from": "2008-06-14",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E4%BA%AC%E3%83%A1%E3%83%88%E3%83%AD%E5%89%AF%E9%83%BD%E5%BF%83%E7%B7%9A",
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E4%BA%AC%E5%9C%B0%E4%B8%8B%E9%89%84"
+      ],
+      "note": "鉄道要覧の13号線副都心線は小竹向原–渋谷（11駅）でlp:jp:292と一致。この線名の開始は2008-06-14。事業者名の不一致は東京地下鉄=東京メトロ。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part1",
+      "lp": [
+        "lp:jp:292"
+      ],
+      "op": "op:jp:101",
+      "valid_from": "2008-06-14",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E4%BA%AC%E3%83%A1%E3%83%88%E3%83%AD%E5%89%AF%E9%83%BD%E5%BF%83%E7%B7%9A",
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E4%BA%AC%E5%9C%B0%E4%B8%8B%E9%89%84"
+      ],
+      "note": "鉄道要覧の13号線副都心線は小竹向原–渋谷（11駅）でlp:jp:292と一致。この線名の開始は2008-06-14。事業者名の不一致は東京地下鉄=東京メトロ。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part10",
+      "lp": [
+        "lp:jp:292"
+      ],
+      "op": "op:jp:101",
+      "valid_from": "2008-06-14",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E4%BA%AC%E3%83%A1%E3%83%88%E3%83%AD%E5%89%AF%E9%83%BD%E5%BF%83%E7%B7%9A",
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E4%BA%AC%E5%9C%B0%E4%B8%8B%E9%89%84"
+      ],
+      "note": "鉄道要覧の13号線副都心線は小竹向原–渋谷（11駅）でlp:jp:292と一致。この線名の開始は2008-06-14。事業者名の不一致は東京地下鉄=東京メトロ。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part11",
+      "lp": [
+        "lp:jp:292"
+      ],
+      "op": "op:jp:101",
+      "valid_from": "2008-06-14",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E4%BA%AC%E3%83%A1%E3%83%88%E3%83%AD%E5%89%AF%E9%83%BD%E5%BF%83%E7%B7%9A",
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E4%BA%AC%E5%9C%B0%E4%B8%8B%E9%89%84"
+      ],
+      "note": "鉄道要覧の13号線副都心線は小竹向原–渋谷（11駅）でlp:jp:292と一致。この線名の開始は2008-06-14。事業者名の不一致は東京地下鉄=東京メトロ。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part12",
+      "lp": [
+        "lp:jp:292"
+      ],
+      "op": "op:jp:101",
+      "valid_from": "2008-06-14",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E4%BA%AC%E3%83%A1%E3%83%88%E3%83%AD%E5%89%AF%E9%83%BD%E5%BF%83%E7%B7%9A",
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E4%BA%AC%E5%9C%B0%E4%B8%8B%E9%89%84"
+      ],
+      "note": "鉄道要覧の13号線副都心線は小竹向原–渋谷（11駅）でlp:jp:292と一致。この線名の開始は2008-06-14。事業者名の不一致は東京地下鉄=東京メトロ。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part2",
+      "lp": [
+        "lp:jp:292"
+      ],
+      "op": "op:jp:101",
+      "valid_from": "2008-06-14",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E4%BA%AC%E3%83%A1%E3%83%88%E3%83%AD%E5%89%AF%E9%83%BD%E5%BF%83%E7%B7%9A",
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E4%BA%AC%E5%9C%B0%E4%B8%8B%E9%89%84"
+      ],
+      "note": "鉄道要覧の13号線副都心線は小竹向原–渋谷（11駅）でlp:jp:292と一致。この線名の開始は2008-06-14。事業者名の不一致は東京地下鉄=東京メトロ。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part3",
+      "lp": [
+        "lp:jp:292"
+      ],
+      "op": "op:jp:101",
+      "valid_from": "2008-06-14",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E4%BA%AC%E3%83%A1%E3%83%88%E3%83%AD%E5%89%AF%E9%83%BD%E5%BF%83%E7%B7%9A",
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E4%BA%AC%E5%9C%B0%E4%B8%8B%E9%89%84"
+      ],
+      "note": "鉄道要覧の13号線副都心線は小竹向原–渋谷（11駅）でlp:jp:292と一致。この線名の開始は2008-06-14。事業者名の不一致は東京地下鉄=東京メトロ。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part4",
+      "lp": [
+        "lp:jp:292"
+      ],
+      "op": "op:jp:101",
+      "valid_from": "2008-06-14",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E4%BA%AC%E3%83%A1%E3%83%88%E3%83%AD%E5%89%AF%E9%83%BD%E5%BF%83%E7%B7%9A",
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E4%BA%AC%E5%9C%B0%E4%B8%8B%E9%89%84"
+      ],
+      "note": "鉄道要覧の13号線副都心線は小竹向原–渋谷（11駅）でlp:jp:292と一致。この線名の開始は2008-06-14。事業者名の不一致は東京地下鉄=東京メトロ。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part5",
+      "lp": [
+        "lp:jp:292"
+      ],
+      "op": "op:jp:101",
+      "valid_from": "2008-06-14",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E4%BA%AC%E3%83%A1%E3%83%88%E3%83%AD%E5%89%AF%E9%83%BD%E5%BF%83%E7%B7%9A",
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E4%BA%AC%E5%9C%B0%E4%B8%8B%E9%89%84"
+      ],
+      "note": "鉄道要覧の13号線副都心線は小竹向原–渋谷（11駅）でlp:jp:292と一致。この線名の開始は2008-06-14。事業者名の不一致は東京地下鉄=東京メトロ。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part6",
+      "lp": [
+        "lp:jp:292"
+      ],
+      "op": "op:jp:101",
+      "valid_from": "2008-06-14",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E4%BA%AC%E3%83%A1%E3%83%88%E3%83%AD%E5%89%AF%E9%83%BD%E5%BF%83%E7%B7%9A",
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E4%BA%AC%E5%9C%B0%E4%B8%8B%E9%89%84"
+      ],
+      "note": "鉄道要覧の13号線副都心線は小竹向原–渋谷（11駅）でlp:jp:292と一致。この線名の開始は2008-06-14。事業者名の不一致は東京地下鉄=東京メトロ。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part7",
+      "lp": [
+        "lp:jp:292"
+      ],
+      "op": "op:jp:101",
+      "valid_from": "2008-06-14",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E4%BA%AC%E3%83%A1%E3%83%88%E3%83%AD%E5%89%AF%E9%83%BD%E5%BF%83%E7%B7%9A",
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E4%BA%AC%E5%9C%B0%E4%B8%8B%E9%89%84"
+      ],
+      "note": "鉄道要覧の13号線副都心線は小竹向原–渋谷（11駅）でlp:jp:292と一致。この線名の開始は2008-06-14。事業者名の不一致は東京地下鉄=東京メトロ。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part8",
+      "lp": [
+        "lp:jp:292"
+      ],
+      "op": "op:jp:101",
+      "valid_from": "2008-06-14",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E4%BA%AC%E3%83%A1%E3%83%88%E3%83%AD%E5%89%AF%E9%83%BD%E5%BF%83%E7%B7%9A",
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E4%BA%AC%E5%9C%B0%E4%B8%8B%E9%89%84"
+      ],
+      "note": "鉄道要覧の13号線副都心線は小竹向原–渋谷（11駅）でlp:jp:292と一致。この線名の開始は2008-06-14。事業者名の不一致は東京地下鉄=東京メトロ。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part9",
+      "lp": [
+        "lp:jp:292"
+      ],
+      "op": "op:jp:101",
+      "valid_from": "2008-06-14",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E4%BA%AC%E3%83%A1%E3%83%88%E3%83%AD%E5%89%AF%E9%83%BD%E5%BF%83%E7%B7%9A",
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E4%BA%AC%E5%9C%B0%E4%B8%8B%E9%89%84"
+      ],
+      "note": "鉄道要覧の13号線副都心線は小竹向原–渋谷（11駅）でlp:jp:292と一致。この線名の開始は2008-06-14。事業者名の不一致は東京地下鉄=東京メトロ。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.stations",
+      "lp": [
+        "lp:jp:292"
+      ],
+      "op": "op:jp:101",
+      "valid_from": "2008-06-14",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E4%BA%AC%E3%83%A1%E3%83%88%E3%83%AD%E5%89%AF%E9%83%BD%E5%BF%83%E7%B7%9A",
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E4%BA%AC%E5%9C%B0%E4%B8%8B%E9%89%84"
+      ],
+      "note": "鉄道要覧の13号線副都心線は小竹向原–渋谷（11駅）でlp:jp:292と一致。この線名の開始は2008-06-14。事業者名の不一致は東京地下鉄=東京メトロ。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h2.osaka-metro-imazatosuji-transfer.identity.period0.sections",
+      "lp": [
+        "lp:jp:234"
+      ],
+      "op": "op:jp:75",
+      "valid_from": "2018-04-01",
+      "sources": [
+        "https://www.osakametro.co.jp/company/company_profile/kaisya_gaiyou.php"
+      ],
+      "note": "大阪市から大阪市高速電気軌道へ2018-04-01に事業移管。名簿のOsaka Metroと同一。線区全体の事業者変更。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h2.osaka-metro-imazatosuji-transfer.identity.period0.stations",
+      "lp": [
+        "lp:jp:234"
+      ],
+      "op": "op:jp:75",
+      "valid_from": "2018-04-01",
+      "sources": [
+        "https://www.osakametro.co.jp/company/company_profile/kaisya_gaiyou.php"
+      ],
+      "note": "大阪市から大阪市高速電気軌道へ2018-04-01に事業移管。名簿のOsaka Metroと同一。線区全体の事業者変更。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h2.osaka-metro-midosuji-transfer.identity.period0.sections",
+      "lp": [
+        "lp:jp:227"
+      ],
+      "op": "op:jp:75",
+      "valid_from": "2018-04-01",
+      "sources": [
+        "https://www.osakametro.co.jp/company/company_profile/kaisya_gaiyou.php"
+      ],
+      "note": "大阪市から大阪市高速電気軌道へ2018-04-01に事業移管。名簿のOsaka Metroと同一。線区全体の事業者変更。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h2.osaka-metro-midosuji-transfer.identity.period0.stations",
+      "lp": [
+        "lp:jp:227"
+      ],
+      "op": "op:jp:75",
+      "valid_from": "2018-04-01",
+      "sources": [
+        "https://www.osakametro.co.jp/company/company_profile/kaisya_gaiyou.php"
+      ],
+      "note": "大阪市から大阪市高速電気軌道へ2018-04-01に事業移管。名簿のOsaka Metroと同一。線区全体の事業者変更。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h2.osaka-metro-nagahori-transfer.identity.period0.sections",
+      "lp": [
+        "lp:jp:233"
+      ],
+      "op": "op:jp:75",
+      "valid_from": "2018-04-01",
+      "sources": [
+        "https://www.osakametro.co.jp/company/company_profile/kaisya_gaiyou.php"
+      ],
+      "note": "大阪市から大阪市高速電気軌道へ2018-04-01に事業移管。名簿のOsaka Metroと同一。線区全体の事業者変更。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h2.osaka-metro-nagahori-transfer.identity.period0.stations",
+      "lp": [
+        "lp:jp:233"
+      ],
+      "op": "op:jp:75",
+      "valid_from": "2018-04-01",
+      "sources": [
+        "https://www.osakametro.co.jp/company/company_profile/kaisya_gaiyou.php"
+      ],
+      "note": "大阪市から大阪市高速電気軌道へ2018-04-01に事業移管。名簿のOsaka Metroと同一。線区全体の事業者変更。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h2.osaka-metro-newtram-transfer.identity.period0.sections",
+      "lp": [
+        "lp:jp:235"
+      ],
+      "op": "op:jp:75",
+      "valid_from": "2018-04-01",
+      "sources": [
+        "https://www.osakametro.co.jp/company/company_profile/kaisya_gaiyou.php"
+      ],
+      "note": "大阪市から大阪市高速電気軌道へ2018-04-01に事業移管。名簿のOsaka Metroと同一。線区全体の事業者変更。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h2.osaka-metro-newtram-transfer.identity.period0.stations",
+      "lp": [
+        "lp:jp:235"
+      ],
+      "op": "op:jp:75",
+      "valid_from": "2018-04-01",
+      "sources": [
+        "https://www.osakametro.co.jp/company/company_profile/kaisya_gaiyou.php"
+      ],
+      "note": "大阪市から大阪市高速電気軌道へ2018-04-01に事業移管。名簿のOsaka Metroと同一。線区全体の事業者変更。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h2.osaka-metro-sakaisuji-transfer.identity.period0.sections",
+      "lp": [
+        "lp:jp:232"
+      ],
+      "op": "op:jp:75",
+      "valid_from": "2018-04-01",
+      "sources": [
+        "https://www.osakametro.co.jp/company/company_profile/kaisya_gaiyou.php"
+      ],
+      "note": "大阪市から大阪市高速電気軌道へ2018-04-01に事業移管。名簿のOsaka Metroと同一。線区全体の事業者変更。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h2.osaka-metro-sakaisuji-transfer.identity.period0.stations",
+      "lp": [
+        "lp:jp:232"
+      ],
+      "op": "op:jp:75",
+      "valid_from": "2018-04-01",
+      "sources": [
+        "https://www.osakametro.co.jp/company/company_profile/kaisya_gaiyou.php"
+      ],
+      "note": "大阪市から大阪市高速電気軌道へ2018-04-01に事業移管。名簿のOsaka Metroと同一。線区全体の事業者変更。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h2.osaka-metro-sennichimae-transfer.identity.period0.sections",
+      "lp": [
+        "lp:jp:231"
+      ],
+      "op": "op:jp:75",
+      "valid_from": "2018-04-01",
+      "sources": [
+        "https://www.osakametro.co.jp/company/company_profile/kaisya_gaiyou.php"
+      ],
+      "note": "大阪市から大阪市高速電気軌道へ2018-04-01に事業移管。名簿のOsaka Metroと同一。線区全体の事業者変更。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h2.osaka-metro-sennichimae-transfer.identity.period0.stations",
+      "lp": [
+        "lp:jp:231"
+      ],
+      "op": "op:jp:75",
+      "valid_from": "2018-04-01",
+      "sources": [
+        "https://www.osakametro.co.jp/company/company_profile/kaisya_gaiyou.php"
+      ],
+      "note": "大阪市から大阪市高速電気軌道へ2018-04-01に事業移管。名簿のOsaka Metroと同一。線区全体の事業者変更。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h2.osaka-metro-tanimachi-transfer.identity.period0.sections",
+      "lp": [
+        "lp:jp:228"
+      ],
+      "op": "op:jp:75",
+      "valid_from": "2018-04-01",
+      "sources": [
+        "https://www.osakametro.co.jp/company/company_profile/kaisya_gaiyou.php"
+      ],
+      "note": "大阪市から大阪市高速電気軌道へ2018-04-01に事業移管。名簿のOsaka Metroと同一。線区全体の事業者変更。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h2.osaka-metro-tanimachi-transfer.identity.period0.stations",
+      "lp": [
+        "lp:jp:228"
+      ],
+      "op": "op:jp:75",
+      "valid_from": "2018-04-01",
+      "sources": [
+        "https://www.osakametro.co.jp/company/company_profile/kaisya_gaiyou.php"
+      ],
+      "note": "大阪市から大阪市高速電気軌道へ2018-04-01に事業移管。名簿のOsaka Metroと同一。線区全体の事業者変更。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h2.osaka-metro-yotsubashi-transfer.identity.period0.sections",
+      "lp": [
+        "lp:jp:229"
+      ],
+      "op": "op:jp:75",
+      "valid_from": "2018-04-01",
+      "sources": [
+        "https://www.osakametro.co.jp/company/company_profile/kaisya_gaiyou.php"
+      ],
+      "note": "大阪市から大阪市高速電気軌道へ2018-04-01に事業移管。名簿のOsaka Metroと同一。線区全体の事業者変更。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h2.osaka-metro-yotsubashi-transfer.identity.period0.stations",
+      "lp": [
+        "lp:jp:229"
+      ],
+      "op": "op:jp:75",
+      "valid_from": "2018-04-01",
+      "sources": [
+        "https://www.osakametro.co.jp/company/company_profile/kaisya_gaiyou.php"
+      ],
+      "note": "大阪市から大阪市高速電気軌道へ2018-04-01に事業移管。名簿のOsaka Metroと同一。線区全体の事業者変更。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h4.rename-014.identity.period0.stations",
+      "lp": [
+        "lp:jp:615"
+      ],
+      "op": "op:jp:158",
+      "valid_to": "2024-10-01",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E3%82%B9%E3%82%BF%E3%82%B8%E3%82%A2%E3%83%A0%E3%82%B7%E3%83%86%E3%82%A3%E3%83%8E%E3%83%BC%E3%82%B9%E5%81%9C%E7%95%99%E5%A0%B4"
+      ],
+      "note": "銭座町からスタジアムシティノースへ2024-10-01改称。本線の当該停留場の旧称終了日。線区全体には掛けない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h4.rename-029.identity.period0.stations",
+      "lp": [
+        "lp:jp:104"
+      ],
+      "op": "op:jp:37",
+      "valid_to": "2008-10-19",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E7%A5%87%E5%9C%92%E5%9B%9B%E6%9D%A1%E9%A7%85"
+      ],
+      "note": "四条から祇園四条へ2008-10-19改称。清水五条と日付が同じでも別駅。各駅の旧称期間が正しい。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h4.rename-030.identity.period0.stations",
+      "lp": [
+        "lp:jp:236"
+      ],
+      "op": "op:jp:76",
+      "valid_to": "2013-04-01",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E5%B8%B8%E8%91%89%E5%A4%A7%E5%AD%A6%E5%89%8D%E9%A7%85"
+      ],
+      "note": "浜松大学前から常葉大学前へ2013-04-01改称。天竜浜名湖線の当該駅の旧称終了日。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h4.rename-034.identity.period0.stations",
+      "lp": [
+        "lp:jp:104"
+      ],
+      "op": "op:jp:37",
+      "valid_to": "2008-10-19",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%B8%85%E6%B0%B4%E4%BA%94%E6%9D%A1%E9%A7%85"
+      ],
+      "note": "五条から清水五条へ2008-10-19改称。祇園四条と日付が同じでも別駅。各駅の旧称期間が正しい。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h4.rename-036.identity.period0.stations",
+      "lp": [
+        "lp:jp:487"
+      ],
+      "op": "op:jp:133",
+      "valid_to": "2010-03-25",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E4%BB%81%E6%84%9B%E5%A5%B3%E5%AD%90%E9%AB%98%E6%A0%A1%E9%A7%85"
+      ],
+      "note": "裁判所前から仁愛女子高校へ2010-03-25改称。同日の福武線他駅とは別停留場。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h4.rename-053.identity.period0.stations",
+      "lp": [
+        "lp:jp:493"
+      ],
+      "op": "op:jp:136",
+      "valid_to": "2020-03-14",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E7%B8%84%E6%96%87%E5%B0%8F%E3%83%B6%E7%94%B0%E9%A7%85"
+      ],
+      "note": "小ヶ田から縄文小ヶ田へ2020-03-14改称。秋田内陸線の当該駅の旧称終了日。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h4.rename-061.identity.period0.stations",
+      "lp": [
+        "lp:jp:262"
+      ],
+      "op": "op:jp:86",
+      "valid_to": "2023-04-27",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E8%A5%BF%E5%A4%A7%E5%AF%BA%E7%94%BA%E3%83%BB%E5%B2%A1%E5%B1%B1%E8%8A%B8%E8%A1%93%E5%89%B5%E9%80%A0%E5%8A%87%E5%A0%B4%E3%83%8F%E3%83%AC%E3%83%8E%E3%83%AF%E5%89%8D%E5%81%9C%E7%95%99%E5%A0%B4"
+      ],
+      "note": "西大寺町から西大寺町・岡山芸術創造劇場ハレノワ前へ2023-04-27改称。東山本線の当該停留場。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h4.rename-069.identity.period0.stations",
+      "lp": [
+        "lp:jp:96"
+      ],
+      "op": "op:jp:35",
+      "valid_to": "2020-03-20",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E7%AD%89%E6%8C%81%E9%99%A2%E3%83%BB%E7%AB%8B%E5%91%BD%E9%A4%A8%E5%A4%A7%E5%AD%A6%E8%A1%A3%E7%AC%A0%E3%82%AD%E3%83%A3%E3%83%B3%E3%83%91%E3%82%B9%E5%89%8D%E9%A7%85"
+      ],
+      "note": "等持院から等持院・立命館大学衣笠キャンパス前へ2020-03-20改称。北野線の当該駅。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h4.rename-081.identity.period0.stations",
+      "lp": [
+        "lp:jp:487"
+      ],
+      "op": "op:jp:133",
+      "valid_to": "2010-03-25",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E8%B5%A4%E5%8D%81%E5%AD%97%E5%89%8D%E9%A7%85"
+      ],
+      "note": "福井新から赤十字前へ2010-03-25改称。同日の福武線他駅とは別駅。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h4.rename-083.identity.period0.stations",
+      "lp": [
+        "lp:jp:415"
+      ],
+      "op": "op:jp:106",
+      "valid_to": "2017-04-01",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E7%8D%A8%E5%8D%94%E5%A4%A7%E5%AD%A6%E5%89%8D%E9%A7%85"
+      ],
+      "note": "松原団地から獨協大学前へ2017-04-01改称。伊勢崎線の当該駅。伊勢崎線-2には含めない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h4.rename-093.identity.period0.stations",
+      "lp": [
+        "lp:jp:487"
+      ],
+      "op": "op:jp:133",
+      "valid_to": "2010-03-25",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E3%82%B5%E3%83%B3%E3%83%89%E3%83%BC%E3%83%A0%E8%A5%BF%E9%A7%85"
+      ],
+      "note": "上鯖江からサンドーム西へ2010-03-25改称。同日の福武線他駅とは別駅。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h4.rename-096.identity.period0.stations",
+      "lp": [
+        "lp:jp:487"
+      ],
+      "op": "op:jp:133",
+      "valid_to": "2010-03-25",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E5%8C%97%E5%BA%9C%E9%A7%85"
+      ],
+      "note": "西武生から北府へ2010-03-25改称。同日の福武線他駅とは別駅。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h4.rename-099.identity.period0.stations",
+      "lp": [
+        "lp:jp:615"
+      ],
+      "op": "op:jp:158",
+      "valid_to": "2024-10-01",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E3%82%B9%E3%82%BF%E3%82%B8%E3%82%A2%E3%83%A0%E3%82%B7%E3%83%86%E3%82%A3%E3%82%B5%E3%82%A6%E3%82%B9%E5%81%9C%E7%95%99%E5%A0%B4"
+      ],
+      "note": "宝町からスタジアムシティサウスへ2024-10-01改称。ノース停留場とは別。本線の当該停留場。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h4.rename-105.identity.period0.stations",
+      "lp": [
+        "lp:jp:262"
+      ],
+      "op": "op:jp:86",
+      "valid_to": "2017-04-01",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E5%B1%B1%E3%83%BB%E3%81%8A%E3%81%8B%E3%81%A7%E3%82%93%E3%83%9F%E3%83%A5%E3%83%BC%E3%82%B8%E3%82%A2%E3%83%A0%E9%A7%85%E5%81%9C%E7%95%99%E5%A0%B4"
+      ],
+      "note": "東山から東山・おかでんミュージアムへ2017-04-01改称。要覧名は「駅」を含まない。当該停留場。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h4.rename-108.identity.period0.stations",
+      "lp": [
+        "lp:jp:487",
+        "lp:jp:488"
+      ],
+      "op": "op:jp:133",
+      "valid_to": "2018-03-24",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E7%A6%8F%E4%BA%95%E5%9F%8E%E5%9D%80%E5%A4%A7%E5%90%8D%E7%94%BA%E9%A7%85"
+      ],
+      "note": "市役所前から福井城址大名町へ2018-03-24改称。本線と福井駅支線の分岐で両lpに駅がある。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h4.rename-110.identity.period0.stations",
+      "lp": [
+        "lp:jp:610"
+      ],
+      "op": "op:jp:154",
+      "valid_to": "2012-11-24",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%9B%B3%E9%A6%AC%E9%A7%85"
+      ],
+      "note": "遠州曳馬から曳馬へ2012-11-24の高架化時に改称。鉄道線の当該駅。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h4.rename-122.identity.period0.stations",
+      "lp": [
+        "lp:jp:610"
+      ],
+      "op": "op:jp:154",
+      "valid_to": "2012-11-24",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E4%B8%8A%E5%B3%B6%E9%A7%85"
+      ],
+      "note": "遠州上島から上島へ2012-11-24の高架化時に改称。曳馬とは別駅。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h4.rename-123.identity.period0.stations",
+      "lp": [
+        "lp:jp:610"
+      ],
+      "op": "op:jp:154",
+      "valid_to": "2007-08-01",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E7%BE%8E%E8%96%97%E4%B8%AD%E5%A4%AE%E5%85%AC%E5%9C%92%E9%A7%85"
+      ],
+      "note": "北浜中学校前から美薗中央公園へ2007-08-01改称。鉄道線の当該駅。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h4.rename-135.identity.period0.stations",
+      "lp": [
+        "lp:jp:464"
+      ],
+      "op": "op:jp:123",
+      "valid_to": "2019-10-01",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E5%86%8D%E6%98%A5%E5%8C%BB%E7%99%82%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC%E5%89%8D%E9%A7%85"
+      ],
+      "note": "再春荘前から再春医療センター前へ2019-10-01改称。菊池線の当該駅。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h4.rename-139.identity.period0.stations",
+      "lp": [
+        "lp:jp:460"
+      ],
+      "op": "op:jp:122",
+      "valid_from": "2011-03-01",
+      "valid_to": "2019-10-01",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E7%A5%9E%E6%B0%B4%E4%BA%A4%E5%B7%AE%E7%82%B9%E5%81%9C%E7%95%99%E5%A0%B4"
+      ],
+      "note": "神水・市民病院前は2011-03-01開始、2019-10-01に神水交差点へ改称。健軍線の当該停留場。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h4.rename-144.identity.period0.stations",
+      "lp": [
+        "lp:jp:487"
+      ],
+      "op": "op:jp:133",
+      "valid_to": "2023-02-25",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E3%81%9F%E3%81%91%E3%81%B5%E6%96%B0%E9%A7%85"
+      ],
+      "note": "越前武生からたけふ新へ2023-02-25改称。福武線の当該駅。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h4.rename-145.identity.period0.stations",
+      "lp": [
+        "lp:jp:479"
+      ],
+      "op": "op:jp:131",
+      "valid_from": "2011-07-01",
+      "valid_to": "2021-06-19",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E8%A8%88%E7%AE%97%E7%A7%91%E5%AD%A6%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC%E9%A7%85"
+      ],
+      "note": "京コンピュータ前は2011-07-01から。2021-06-19に計算科学センターへ。2006年開業時の名はポートアイランド南。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h4.rename-152.identity.period0.stations",
+      "lp": [
+        "lp:jp:617"
+      ],
+      "op": "op:jp:158",
+      "valid_to": "2023-01-04",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E5%B8%82%E5%BD%B9%E6%89%80%E5%81%9C%E7%95%99%E5%A0%B4"
+      ],
+      "note": "市民会館から市役所へ2023-01-04改称。蛍茶屋支線の当該停留場。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.h2005.h4.rename-156.identity.period0.stations",
+      "lp": [
+        "lp:jp:242"
+      ],
+      "op": "op:jp:79",
+      "valid_from": "2015-03-14",
+      "valid_to": "2021-01-01",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E5%AF%8C%E5%B1%B1%E3%83%88%E3%83%A8%E3%83%9A%E3%83%83%E3%83%88%E6%9C%AC%E7%A4%BE%E5%89%8D%EF%BC%88%E4%BA%94%E7%A6%8F%E6%9C%AB%E5%BA%83%E7%94%BA%EF%BC%89%E5%81%9C%E7%95%99%E5%A0%B4"
+      ],
+      "note": "富山トヨペット本社前（五福末広町）は2015-03-14開始、2021-01-01に現行名へ。呉羽線の当該停留場。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "history_id": "jp.station-rename.hankyu.hk01.osaka-umeda.takarazuka.identity.period0.stations",
+      "lp": [
+        "lp:jp:630"
+      ],
+      "op": "op:jp:163",
+      "valid_to": "2019-10-01",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E5%A4%A7%E9%98%AA%E6%A2%85%E7%94%B0%E9%A7%85_(%E9%98%AA%E6%80%A5)"
+      ],
+      "note": "梅田から大阪梅田へ2019-10-01改称。この行は宝塚線。神戸本線・京都本線は別行。",
+      "reviewedBy": "web-research 2026-10-19"
+    }
+  ]
+}

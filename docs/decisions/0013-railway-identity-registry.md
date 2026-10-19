@@ -513,9 +513,11 @@ P0 之后各期（准备文档 L96）：
    编辑器改站点或公司时先清除再推导。缺少该地区 bundle 时不做任何改动。
 7. 修正 TW 两处站群归属（§11.4）。
 
+2026-10-19 的有来源网页研究已写入 P1 审定输入：`line-crosswalk.json`、`station-facilities.json`、`operator-aliases.json`、`history-overrides.json`。每条保留 `sources`（URL）与 `note`，并标 `reviewedBy` 为 `web-research 2026-10-19`。`station_facility` 与 `station_link` 仍不是物理拓扑（不变量 9）。
+
 P1b（不在身份迁移关键路径上）：§11 的导入语法、解析顺序与界面小字标签。
 
-P2（本仓库数据侧，已落地）：`app/scripts/railway/registry-history-crosswalk.mjs` 生成 `app/data/registry/jp/history-crosswalk.json`（schema `jtm-history-crosswalk/1`）。铸造只把 status 为 unique、op 非空、且至少有一个日期的 `identity_period` 写成 `operation` / `operation-end`，由 `line_operation` 承接带日期的 operator 区间；每条活 lp 另有一行当前包运营者（无日期）。retirement 仍由历史叠加持有（0011），不写成 retire。同一 lp 上与已接受区间相交、且起止不同的周期不追加，在 `history-unresolved` 里标 `overlap`；区段与车站两条引用若起止相同，视为同一区间。运行时把历史匹配从名字 + bbox 改成注册表 id 放到 P5：N02 区段上没有注册表 id，要等网站仓库的包构建器在区段上写出 lp。
+P2（本仓库数据侧，已落地）：`app/scripts/railway/registry-history-crosswalk.mjs` 生成 `app/data/registry/jp/history-crosswalk.json`（schema `jtm-history-crosswalk/1`）。铸造把 status 为 unique 或 reviewed、op 非空、且至少有一个日期的 `identity_period` 写成 `operation` / `operation-end`，由 `line_operation` 承接带日期的 operator 区间；reviewed 可列出多条 lp，每条各写一个区间，unique 列出多条 lp 时仍标 multiple 且不写。审定改了起点时先追加 `operation-withdrawn` 撤回旧起点，再写新区间；只改终点则追加较晚的 `operation-end`。每条活 lp 另有一行当前包运营者（无日期）。retirement 仍由历史叠加持有（0011），不写成 retire。同一 lp 上与已接受区间相交、且起止不同的周期不追加，在 `history-unresolved` 里标 `overlap`；区段与车站两条引用若起止相同，视为同一区间。运行时把历史匹配从名字 + bbox 改成注册表 id 放到 P5：N02 区段上没有注册表 id，要等网站仓库的包构建器在区段上写出 lp。
 
 ## 11. 行程导入（所有受支持地区；CN 的唯一性保证在 P3 后）
 

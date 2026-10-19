@@ -1,0 +1,2826 @@
+{
+  "schema": "jtm-station-facilities/1",
+  "facilities": [
+    {
+      "cx": "cx:jp:1",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:1",
+        "st:jp:2"
+      ],
+      "manager": "op:jp:1",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E5%80%B6%E5%88%A9%E4%BC%BD%E7%BE%85%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "会社境界の共同使用駅。改札共用でIRいしかわ鉄道が管轄。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:2",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:3",
+        "st:jp:4"
+      ],
+      "manager": "op:jp:1",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "七尾線の境界。共同使用でIRいしかわ鉄道が管理。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:19",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:24",
+        "st:jp:25"
+      ],
+      "manager": "op:jp:1",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "IRとハピラインの境界。共同使用でIRいしかわ鉄道が管理。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:20",
+      "kind": "shared",
+      "stations": [
+        "st:jp:26",
+        "st:jp:27"
+      ],
+      "manager": "op:jp:107",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/枇杷島駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧"
+      ],
+      "note": "共同使用（JR東海が管轄）で改札を共用。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:66",
+      "kind": "shared",
+      "stations": [
+        "st:jp:77",
+        "st:jp:78"
+      ],
+      "manager": "op:jp:4",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "在来はあいの風管理の共同使用。新幹線改札はJR西単独。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:79",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:92",
+        "st:jp:93"
+      ],
+      "manager": "op:jp:6",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "会社境界の共同使用駅。えちごトキめき鉄道が管轄。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:94",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:110",
+        "st:jp:111"
+      ],
+      "manager": "op:jp:6",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E5%A6%99%E9%AB%98%E9%AB%98%E5%8E%9F%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "会社境界の共同使用駅。えちごトキめき鉄道が管轄。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:99",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:117",
+        "st:jp:118"
+      ],
+      "manager": "op:jp:105",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E4%B8%8A%E8%B6%8A%E5%A6%99%E9%AB%98%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "新幹線はJR東管理の境界。在来は自由通路向かいのトキめき別改札。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:103",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:122",
+        "st:jp:123"
+      ],
+      "manager": "op:jp:6",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/直江津駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧",
+        "https://ja.wikipedia.org/wiki/境界駅"
+      ],
+      "note": "共同使用（えちごトキめき鉄道の管轄）。信越本線との境界。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:112",
+      "kind": "shared",
+      "stations": [
+        "st:jp:132",
+        "st:jp:133"
+      ],
+      "manager": "op:jp:6",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E7%B3%B8%E9%AD%9A%E5%B7%9D%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "在来線構内はトキめき管轄で共用。新幹線のみJR西日本の別改札。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:175",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:199",
+        "st:jp:200"
+      ],
+      "manager": "op:jp:105",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/篠ノ井駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧",
+        "https://ja.wikipedia.org/wiki/境界駅"
+      ],
+      "note": "共同使用（JR東日本が管轄）。しなの鉄道線との境界。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:188",
+      "kind": "shared",
+      "stations": [
+        "st:jp:215",
+        "st:jp:216"
+      ],
+      "manager": "op:jp:10",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E5%B0%8F%E8%AB%B8%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "共同使用でしなの鉄道が管轄。改札を通らず乗換可。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:197",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:226",
+        "st:jp:227"
+      ],
+      "manager": "op:jp:10",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "北しなの線と飯山線の境界。しなの鉄道管轄の共同使用。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:200",
+      "kind": "shared",
+      "stations": [
+        "st:jp:230",
+        "st:jp:231"
+      ],
+      "manager": "op:jp:105",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E9%95%B7%E9%87%8E%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "在来はJR東管理でしなのと共同。長野電鉄は別駅で連絡改札一覧にない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:277",
+      "kind": "shared",
+      "stations": [
+        "st:jp:313",
+        "st:jp:314"
+      ],
+      "manager": "op:jp:147",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/七尾駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧",
+        "https://ja.wikipedia.org/wiki/境界駅"
+      ],
+      "note": "共同使用（JR西が管轄）。営業上の境界は和倉温泉。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:278",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:315",
+        "st:jp:316"
+      ],
+      "manager": "op:jp:147",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "七尾線の営業境界。JR西日本管轄の共同使用駅。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:312",
+      "kind": "shared",
+      "stations": [
+        "st:jp:356",
+        "st:jp:357"
+      ],
+      "manager": "op:jp:105",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%A1%90%E7%94%9F%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "共同使用駅。管轄はJR東日本。境界駅一覧にはない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:329",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:375",
+        "st:jp:376"
+      ],
+      "manager": "op:jp:167",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/目時駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧",
+        "https://ja.wikipedia.org/wiki/境界駅"
+      ],
+      "note": "共同使用（青い森鉄道の管轄）。IGRとの境界。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:340",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:389",
+        "st:jp:390"
+      ],
+      "manager": "op:jp:16",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/好摩駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧",
+        "https://ja.wikipedia.org/wiki/境界駅"
+      ],
+      "note": "共同使用（IGRいわて銀河鉄道の管轄）。花輪線との境界。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:347",
+      "kind": "shared",
+      "stations": [
+        "st:jp:398",
+        "st:jp:399"
+      ],
+      "manager": "op:jp:105",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%9D%BE%E6%9C%AC%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "共同使用駅。管轄はJR東日本。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:361",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:413",
+        "st:jp:414"
+      ],
+      "manager": "op:jp:147",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/敦賀駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧"
+      ],
+      "note": "在来線は同一改札でJR西管理。新幹線は中間改札（類型2）。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:458",
+      "kind": "shared",
+      "stations": [
+        "st:jp:514",
+        "st:jp:515"
+      ],
+      "manager": "op:jp:152",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E8%BF%91%E9%89%84%E5%AF%8C%E7%94%B0%E9%A7%85"
+      ],
+      "note": "同一改札で一部ホーム共用。近鉄管轄、西改札のみ三岐。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:486",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:543",
+        "st:jp:544"
+      ],
+      "manager": "op:jp:25",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/宮古駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧"
+      ],
+      "note": "共同使用（三陸鉄道の管轄）。改札はJR山田線のみ。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:553",
+      "kind": "shared",
+      "stations": [
+        "st:jp:614",
+        "st:jp:615"
+      ],
+      "manager": "op:jp:27",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/赤城駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧"
+      ],
+      "note": "共同使用（上毛電気鉄道の管轄）。改札内は両社共通。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:633",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:695",
+        "st:jp:697"
+      ],
+      "manager": "op:jp:147",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E5%8D%9A%E5%A4%9A%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "新幹線はJR西日本管轄の共同使用。在来線とは連絡改札。地下鉄は別コードの駅。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:705",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:774",
+        "st:jp:775"
+      ],
+      "manager": "op:jp:147",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/下関駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧",
+        "https://ja.wikipedia.org/wiki/境界駅"
+      ],
+      "note": "共同使用（JR西が管轄）。山陽本線の会社境界。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:711",
+      "kind": "shared",
+      "stations": [
+        "st:jp:781",
+        "st:jp:782"
+      ],
+      "manager": "op:jp:30",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E7%94%B0%E5%B7%9D%E5%BE%8C%E8%97%A4%E5%AF%BA%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "改札は両社共用でJR職員が担当。共同使用駅。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:922",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:997",
+        "st:jp:998"
+      ],
+      "manager": "op:jp:134",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "空港線と筑肥線の境界。福岡市交通局が管理。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:967",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:1045",
+        "st:jp:1046"
+      ],
+      "manager": "op:jp:30",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "鹿児島線との境界。1番線を共用しホーム上に連絡改札。JR九州管轄。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1160",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:1246",
+        "st:jp:1247"
+      ],
+      "manager": "op:jp:147",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%B8%85%E9%9F%B3%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "伯備線と井原線の境界。記事は共同使用。JR中間改札あり。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1173",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:1260",
+        "st:jp:1261"
+      ],
+      "manager": "op:jp:147",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E7%A5%9E%E8%BE%BA%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "境界駅。直通は福塩線ホーム発着でJR西が管理。乗換改札あり。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1192",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:1282",
+        "st:jp:1283"
+      ],
+      "manager": "op:jp:52",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "北総線の端の共同使用駅。管理は北総鉄道。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1193",
+      "kind": "shared",
+      "stations": [
+        "st:jp:1284",
+        "st:jp:1285"
+      ],
+      "manager": "op:jp:52",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/千葉ニュータウン中央駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧",
+        "https://ja.wikipedia.org/wiki/境界駅"
+      ],
+      "note": "共同使用（北総鉄道の管轄）。北総の境界は京成高砂。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1194",
+      "kind": "shared",
+      "stations": [
+        "st:jp:1286",
+        "st:jp:1287"
+      ],
+      "manager": "op:jp:52",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%96%B0%E9%8E%8C%E3%83%B6%E8%B0%B7%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "北総と京成空港線は北総管轄で共用。松戸線と東武は別改札・別駅舎。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1195",
+      "kind": "shared",
+      "stations": [
+        "st:jp:1289",
+        "st:jp:1290"
+      ],
+      "manager": "op:jp:52",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E6%9D%BE%E6%88%B8%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "北総・京成は同一ホームで北総管理。JRは別駅舎。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1196",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:1292",
+        "st:jp:1293"
+      ],
+      "manager": "op:jp:32",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/京成高砂駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧",
+        "https://ja.wikipedia.org/wiki/境界駅"
+      ],
+      "note": "共同使用（京成が管轄）。北総の起点。金町線は同社の別改札。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1240",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:1344",
+        "st:jp:1345"
+      ],
+      "manager": "op:jp:32",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/東成田駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧",
+        "https://ja.wikipedia.org/wiki/境界駅"
+      ],
+      "note": "共同使用（京成の管轄）。芝山鉄道との境界。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1304",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:1414",
+        "st:jp:1417"
+      ],
+      "manager": "op:jp:104",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/横浜駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧",
+        "https://ja.wikipedia.org/wiki/境界駅"
+      ],
+      "note": "東急と横浜高速のみ共同使用（東急管轄）。JR東と京急は連絡改札。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1314",
+      "kind": "shared",
+      "stations": [
+        "st:jp:1428",
+        "st:jp:1429"
+      ],
+      "manager": "op:jp:33",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "共同使用駅。京浜急行電鉄が管轄。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1328",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:1445",
+        "st:jp:1446"
+      ],
+      "manager": "op:jp:103",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "京急と都営浅草線の境界。東京都交通局が管理。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1354",
+      "kind": "shared",
+      "stations": [
+        "st:jp:1477",
+        "st:jp:1478"
+      ],
+      "manager": "op:jp:104",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "東急と半蔵門・副都心は東急管轄で共用。銀座線・JR・京王は別。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1355",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:1480",
+        "st:jp:1483"
+      ],
+      "manager": "op:jp:34",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "京王新線と都営新宿線は京王管理。JR・小田急は連絡改札、メトロは別。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1440",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:1577",
+        "st:jp:1578"
+      ],
+      "manager": "op:jp:36",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "京津線と地下鉄東西線の直通境界。京都市管轄の共同使用。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1448",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:1588",
+        "st:jp:1589"
+      ],
+      "manager": "op:jp:36",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "烏丸線と近鉄京都線の境界。京都市交通局が管理。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1579",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:1735",
+        "st:jp:1736"
+      ],
+      "manager": "op:jp:105",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "仙台空港線の境界。共同使用でJR東日本が管理。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1654",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:1813",
+        "st:jp:1814"
+      ],
+      "manager": "op:jp:107",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "関西線と伊勢鉄道の境界。JR東海管轄の共同使用。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1655",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:1815",
+        "st:jp:1816"
+      ],
+      "manager": "op:jp:105",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "伊東線と伊豆急行の境界。JR東日本が管理。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1682",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:1844",
+        "st:jp:1845"
+      ],
+      "manager": "op:jp:82",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/小田原駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧",
+        "https://ja.wikipedia.org/wiki/境界駅"
+      ],
+      "note": "小田急と小田急箱根は同一改札（小田急管轄）。JRと伊豆箱根は別階。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1696",
+      "kind": "shared",
+      "stations": [
+        "st:jp:1862",
+        "st:jp:1863"
+      ],
+      "manager": "op:jp:147",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E4%BC%8A%E8%B3%80%E4%B8%8A%E9%87%8E%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "共同使用駅。管轄はJR西日本。境界駅一覧にはない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1710",
+      "kind": "shared",
+      "stations": [
+        "st:jp:1877",
+        "st:jp:1878"
+      ],
+      "manager": "op:jp:152",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/伊賀神戸駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧"
+      ],
+      "note": "両社で構内を共用し近鉄が管理。境界駅一覧にあるのは伊賀上野。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1711",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:1879",
+        "st:jp:1880"
+      ],
+      "manager": "op:jp:45",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E8%A5%BF%E8%8B%A5%E6%9D%BE%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "改札共用。改札業務は会津鉄道。只見線へ全列車が直通。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1731",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:1900",
+        "st:jp:1901"
+      ],
+      "manager": "op:jp:45",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "会津線と会津鬼怒川線の境界。会津鉄道が管理。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1732",
+      "kind": "shared",
+      "stations": [
+        "st:jp:1902",
+        "st:jp:1903"
+      ],
+      "manager": "op:jp:147",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/貴生川駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧"
+      ],
+      "note": "JRと信楽は改札不要（JR西管轄）。近江は橋上自由通路の改札外。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1776",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:1948",
+        "st:jp:1949"
+      ],
+      "manager": "op:jp:75",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "御堂筋線と北急の直通境界。Osaka Metro管轄。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1789",
+      "kind": "shared",
+      "stations": [
+        "st:jp:1962",
+        "st:jp:1963",
+        "st:jp:1964"
+      ],
+      "manager": "op:jp:147",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "3社共同使用。神戸電鉄のみ中間改札。管理はJR西。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1791",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:1966",
+        "st:jp:1967"
+      ],
+      "manager": "op:jp:51",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/五稜郭駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧",
+        "https://ja.wikipedia.org/wiki/境界駅"
+      ],
+      "note": "共同使用（JR北海道が管轄）。道南いさりび鉄道との境界。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1874",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:2051",
+        "st:jp:2052"
+      ],
+      "manager": "op:jp:105",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "新幹線の境界でJR東が管理。在来線改札はJR東単独。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:2112",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:2290",
+        "st:jp:2291"
+      ],
+      "manager": "op:jp:105",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/犀潟駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧",
+        "https://ja.wikipedia.org/wiki/境界駅"
+      ],
+      "note": "共同使用（JR東日本が管轄）。北越急行との境界。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:2233",
+      "kind": "shared",
+      "stations": [
+        "st:jp:2422",
+        "st:jp:2423"
+      ],
+      "manager": "op:jp:57",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "共同使用駅。管理は南海。並行線で境界駅一覧にはない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:2350",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:2555",
+        "st:jp:2556"
+      ],
+      "manager": "op:jp:61",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "鶴舞線と名鉄豊田線の境界。名古屋市交通局が管理。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:2367",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:2574",
+        "st:jp:2575"
+      ],
+      "manager": "op:jp:63",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/上小田井駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧",
+        "https://ja.wikipedia.org/wiki/境界駅"
+      ],
+      "note": "共同使用（名古屋鉄道の管轄）。市営地下鉄鶴舞線との境界。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:2396",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:2604",
+        "st:jp:2605"
+      ],
+      "manager": "op:jp:63",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "小牧線と上飯田線の直通境界。名古屋鉄道管轄。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:2504",
+      "kind": "shared",
+      "stations": [
+        "st:jp:2714",
+        "st:jp:2715"
+      ],
+      "manager": "op:jp:107",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E8%B1%8A%E6%A9%8B%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "在来・名鉄はJR東海管轄の共同使用。新幹線は別改札。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:2538",
+      "kind": "shared",
+      "stations": [
+        "st:jp:2749",
+        "st:jp:2750"
+      ],
+      "manager": "op:jp:107",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/弥富駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧"
+      ],
+      "note": "共同使用（JR東海の管轄）。改札を出ずに乗換できる。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:2691",
+      "kind": "shared",
+      "stations": [
+        "st:jp:2904",
+        "st:jp:2905"
+      ],
+      "manager": "op:jp:147",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E5%92%8C%E6%AD%8C%E5%B1%B1%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "JR西日本管轄の共同使用。貴志川線側に中間改札。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:2694",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:2908",
+        "st:jp:2909"
+      ],
+      "manager": "op:jp:68",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "中村線と予土線の境界。土佐くろしお鉄道が管理。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:2837",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:3052",
+        "st:jp:3053"
+      ],
+      "manager": "op:jp:66",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/後免駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧",
+        "https://ja.wikipedia.org/wiki/境界駅"
+      ],
+      "note": "共同使用（JR四国が管轄）。ごめん・なはり線との境界。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:2866",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:3082",
+        "st:jp:3083"
+      ],
+      "manager": "op:jp:66",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "土讃線と中村線の境界。JR四国管轄の共同使用。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:2890",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:3107",
+        "st:jp:3108"
+      ],
+      "manager": "op:jp:147",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "本四備讃線の境界。共同使用でJR西日本が管理。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3020",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:3242",
+        "st:jp:3243"
+      ],
+      "manager": "op:jp:101",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "南北線と埼玉高速線の直通境界。東京メトロ管轄。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3092",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:3322",
+        "st:jp:3323"
+      ],
+      "manager": "op:jp:107",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/新大阪駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧",
+        "https://ja.wikipedia.org/wiki/境界駅"
+      ],
+      "note": "新幹線はJR東海管轄の境界。在来線はJR西の別改札。地下鉄は改札外。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3114",
+      "kind": "shared",
+      "stations": [
+        "st:jp:3347",
+        "st:jp:3348"
+      ],
+      "manager": "op:jp:75",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "Osaka Metro管轄の共同使用。阪急千里線と改札内で直通。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3139",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:3374",
+        "st:jp:3375"
+      ],
+      "manager": "op:jp:75",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "中央線とけいはんな線の境界。Osaka Metroが管理。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3212",
+      "kind": "shared",
+      "stations": [
+        "st:jp:3458",
+        "st:jp:3459"
+      ],
+      "manager": "op:jp:154",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "共同使用駅。遠州鉄道が管轄。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3373",
+      "kind": "shared",
+      "stations": [
+        "st:jp:3623",
+        "st:jp:3624"
+      ],
+      "manager": "op:jp:105",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "共同使用駅。JR東日本が管轄し小湊鐵道と改札共用。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3416",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:3667",
+        "st:jp:3668"
+      ],
+      "manager": "op:jp:82",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "小田原線と千代田線の境界。小田急が管理。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3483",
+      "kind": "shared",
+      "stations": [
+        "st:jp:3747",
+        "st:jp:3748"
+      ],
+      "manager": "op:jp:105",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "共同使用駅。JR東日本が管轄。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3494",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:3759",
+        "st:jp:3760"
+      ],
+      "manager": "op:jp:85",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "山陽本線と阪神神戸高速線の境界。山陽が管理。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3761",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:4033",
+        "st:jp:4034"
+      ],
+      "manager": "op:jp:107",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/高蔵寺駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧",
+        "https://ja.wikipedia.org/wiki/境界駅"
+      ],
+      "note": "共同使用（JR東海が管轄）。愛知環状鉄道との境界。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3783",
+      "kind": "shared",
+      "stations": [
+        "st:jp:4057",
+        "st:jp:4058"
+      ],
+      "manager": "op:jp:107",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "共同使用駅。JR東海が管轄。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3811",
+      "kind": "shared",
+      "stations": [
+        "st:jp:4088",
+        "st:jp:4089"
+      ],
+      "manager": "op:jp:147",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "共同使用駅。JR西日本が管轄し智頭急行と改札共用。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3815",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:4093",
+        "st:jp:4094"
+      ],
+      "manager": "op:jp:147",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "智頭急行との境界で共同使用。境界記事はJR西がホーム管理。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3891",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:4180",
+        "st:jp:4181"
+      ],
+      "manager": "op:jp:101",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "有楽町・副都心線と西武有楽町線の直通境界。東京メトロ管轄。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3892",
+      "kind": "shared",
+      "stations": [
+        "st:jp:4182",
+        "st:jp:4183"
+      ],
+      "manager": "op:jp:104",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "共同使用駅。管轄は東急。境界駅一覧にはない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3948",
+      "kind": "shared",
+      "stations": [
+        "st:jp:4267",
+        "st:jp:4269"
+      ],
+      "manager": "op:jp:101",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "メトロと東葉はメトロ管轄で共用。隣接するJR駅は別改札。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3966",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:4292",
+        "st:jp:4293"
+      ],
+      "manager": "op:jp:105",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/中野駅_(東京都)",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧",
+        "https://ja.wikipedia.org/wiki/境界駅"
+      ],
+      "note": "共同使用（JR東日本が管轄）。東西線との境界で、のりばと改札を共用。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3967",
+      "kind": "shared",
+      "stations": [
+        "st:jp:4294",
+        "st:jp:4295",
+        "st:jp:4296"
+      ],
+      "manager": "op:jp:104",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E7%9B%AE%E9%BB%92%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "東急・メトロ・都営は東急管轄の共同使用。JRは別駅。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3968",
+      "kind": "shared",
+      "stations": [
+        "st:jp:4298",
+        "st:jp:4299"
+      ],
+      "manager": "op:jp:101",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "南北線・三田線の共用区間駅。管理は東京メトロ。境界は目黒・白金高輪。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3969",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:4300",
+        "st:jp:4301"
+      ],
+      "manager": "op:jp:101",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/白金高輪駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧",
+        "https://ja.wikipedia.org/wiki/境界駅"
+      ],
+      "note": "共同使用（東京メトロの管轄）。南北線と都営三田線の境界。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3980",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:4317",
+        "st:jp:4318"
+      ],
+      "manager": "op:jp:106",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "東上線と有楽町・副都心線の直通境界。東武鉄道管轄。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3997",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:4339",
+        "st:jp:4340"
+      ],
+      "manager": "op:jp:101",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/綾瀬駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧",
+        "https://ja.wikipedia.org/wiki/境界駅"
+      ],
+      "note": "共同使用（東京メトロの管轄）。千代田線と常磐線の境界。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:4007",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:4352",
+        "st:jp:4353"
+      ],
+      "manager": "op:jp:105",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "埼京線とりんかい線の境界。JR東日本が管理。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:4269",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:4644",
+        "st:jp:4645"
+      ],
+      "manager": "op:jp:105",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E5%A1%A9%E5%B0%BB%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "中央本線の境界。共同使用でJR東日本が管轄。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:4325",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:4704",
+        "st:jp:4705"
+      ],
+      "manager": "op:jp:105",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "中央線と飯田線の境界。JR東日本管轄の共同使用。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:4527",
+      "kind": "shared",
+      "stations": [
+        "st:jp:4909",
+        "st:jp:4910"
+      ],
+      "manager": "op:jp:167",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E5%85%AB%E6%88%B8%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "在来線構内は青い森鉄道管轄。新幹線乗換口は2010年に休止。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:4538",
+      "kind": "shared",
+      "stations": [
+        "st:jp:4923",
+        "st:jp:4924"
+      ],
+      "manager": "op:jp:106",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "共同使用駅。東武鉄道が管轄。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:4541",
+      "kind": "shared",
+      "stations": [
+        "st:jp:4927",
+        "st:jp:4928",
+        "st:jp:4929"
+      ],
+      "manager": "op:jp:137",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "3社の共同使用駅。管理は秩父鉄道。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:4693",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:5081",
+        "st:jp:5082"
+      ],
+      "manager": "op:jp:167",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/野辺地駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧",
+        "https://ja.wikipedia.org/wiki/境界駅"
+      ],
+      "note": "共同使用（青い森鉄道が管理）。大湊線との境界。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:4704",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:5093",
+        "st:jp:5094"
+      ],
+      "manager": "op:jp:105",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "大糸線のJR東日本・JR西日本境界。JR東日本管轄。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:4750",
+      "kind": "shared",
+      "stations": [
+        "st:jp:5140",
+        "st:jp:5141"
+      ],
+      "manager": "op:jp:105",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "共同使用駅。管理はJR東日本。境界駅一覧にはない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:4954",
+      "kind": "shared",
+      "stations": [
+        "st:jp:5348",
+        "st:jp:5349"
+      ],
+      "manager": "op:jp:105",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "共同使用駅。管理はJR東日本。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:5093",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:5493",
+        "st:jp:5494"
+      ],
+      "manager": "op:jp:105",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "東北線と阿武隈急行の境界。JR東日本が管理。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:5167",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:5570",
+        "st:jp:5571"
+      ],
+      "manager": "op:jp:105",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/国府津駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧",
+        "https://ja.wikipedia.org/wiki/境界駅"
+      ],
+      "note": "共同使用（JR東日本の管轄）。御殿場線の会社境界。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:5174",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:5578",
+        "st:jp:5579"
+      ],
+      "manager": "op:jp:127",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "相鉄・JR直通の境界。相模鉄道管轄の共同使用。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:5239",
+      "kind": "shared",
+      "stations": [
+        "st:jp:5650",
+        "st:jp:5651",
+        "st:jp:5652"
+      ],
+      "manager": "op:jp:105",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E4%B8%8B%E9%A4%A8%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "3社共同使用。駅記事はJR東日本が管理駅。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:5489",
+      "kind": "shared",
+      "stations": [
+        "st:jp:5905",
+        "st:jp:5906"
+      ],
+      "manager": "op:jp:105",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "共同使用駅。管理はJR東日本。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:5735",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:6153",
+        "st:jp:6154"
+      ],
+      "manager": "op:jp:105",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "鹿島線と鹿島臨海鉄道の境界。JR東日本管轄。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:5924",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:6345",
+        "st:jp:6346"
+      ],
+      "manager": "op:jp:155",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/新藤原駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧",
+        "https://ja.wikipedia.org/wiki/境界駅"
+      ],
+      "note": "共同使用（野岩鉄道の管轄）。東武鬼怒川線との境界。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:6007",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:6433",
+        "st:jp:6434"
+      ],
+      "manager": "op:jp:147",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/米原駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧",
+        "https://ja.wikipedia.org/wiki/境界駅"
+      ],
+      "note": "在来線構内はJR西、新幹線構内はJR東海。近江鉄道は東口隣の別駅。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:6073",
+      "kind": "shared",
+      "stations": [
+        "st:jp:6502",
+        "st:jp:6503"
+      ],
+      "manager": "op:jp:107",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E5%A4%A7%E5%9E%A3%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "JR東海と樽見は共同使用でJRが管理駅。養老へは連絡改札。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:6090",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:6521",
+        "st:jp:6522"
+      ],
+      "manager": "op:jp:147",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "紀勢本線の境界。共同使用でJR西日本が管理。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:6127",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:6559",
+        "st:jp:6560"
+      ],
+      "manager": "op:jp:107",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/亀山駅_(三重県)",
+        "https://ja.wikipedia.org/wiki/境界駅"
+      ],
+      "note": "関西本線の会社境界駅で、JR東海の管轄駅。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:6270",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:6705",
+        "st:jp:6706"
+      ],
+      "manager": "op:jp:147",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "高山本線の境界。共同使用でJR西日本が管理。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:6623",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:7061",
+        "st:jp:7062"
+      ],
+      "manager": "op:jp:132",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/谷上駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧"
+      ],
+      "note": "駅頁は共同使用で神戸電鉄が管轄。一覧の太字は神戸市交通局。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:6690",
+      "kind": "shared",
+      "stations": [
+        "st:jp:7135",
+        "st:jp:7136",
+        "st:jp:7137"
+      ],
+      "manager": "op:jp:164",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/新開地駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧"
+      ],
+      "note": "3社の共同使用（阪神の管轄）。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:6866",
+      "kind": "shared",
+      "stations": [
+        "st:jp:7315",
+        "st:jp:7316"
+      ],
+      "manager": "op:jp:147",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/御坊駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧"
+      ],
+      "note": "共同使用（JR西日本の管轄）。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:6895",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:7345",
+        "st:jp:7346"
+      ],
+      "manager": "op:jp:163",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "宝塚線と妙見線の直通境界。阪急電鉄管轄。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:6915",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:7366",
+        "st:jp:7367"
+      ],
+      "manager": "op:jp:147",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "因美線と若桜線の境界。共同使用でJR西日本が管理。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:7094",
+      "kind": "shared",
+      "stations": [
+        "st:jp:7546",
+        "st:jp:7547"
+      ],
+      "manager": "op:jp:147",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/吉野口駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧"
+      ],
+      "note": "共同使用（JR西日本の管轄）。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:7576",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:8032",
+        "st:jp:8033"
+      ],
+      "manager": "op:jp:147",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "岩徳線と錦川鉄道の境界。JR西日本管轄の共同使用。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:8485",
+      "kind": "boundary",
+      "stations": [
+        "st:jp:8949",
+        "st:jp:8950"
+      ],
+      "manager": "op:jp:152",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "近鉄難波線と阪神なんば線の境界。近鉄が管理。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:8783",
+      "kind": "shared",
+      "stations": [
+        "st:jp:9251",
+        "st:jp:9252"
+      ],
+      "manager": "op:jp:164",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/高速神戸駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧",
+        "https://ja.wikipedia.org/wiki/境界駅"
+      ],
+      "note": "共同使用（阪神の管轄）。線路の境界は西代。",
+      "reviewedBy": "web-research 2026-10-19"
+    }
+  ],
+  "links": [
+    {
+      "cx": "cx:jp:5",
+      "a": "st:jp:7",
+      "b": "st:jp:8",
+      "kind": "gate_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/金沢駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧"
+      ],
+      "note": "2024-03-16以降、在来線はIR単独、新幹線はJR西の別改札。連絡改札は残る。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:15",
+      "a": "st:jp:18",
+      "b": "st:jp:19",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E5%B0%8F%E6%9D%BE%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "新幹線はJR西日本、在来線はIRへ移管。別節の駅で連絡改札一覧に無い。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:26",
+      "a": "st:jp:33",
+      "b": "st:jp:34",
+      "kind": "gate_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E8%A5%BF%E8%88%9E%E9%B6%B4%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "一覧は共同使用ではないが連絡改札。丹鉄改札経由で平面乗換。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:70",
+      "a": "st:jp:82",
+      "b": "st:jp:83",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/滑川駅"
+      ],
+      "note": "分離後、両者を結んでいた跨線橋は廃止され、改札外の地下道で連絡。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:80",
+      "a": "st:jp:94",
+      "b": "st:jp:95",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E5%A4%A7%E5%8E%9F%E9%A7%85_(%E5%8D%83%E8%91%89%E7%9C%8C)"
+      ],
+      "note": "駅舎は隣接。連絡改札はなくSuica乗換は改札外。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:183",
+      "a": "st:jp:208",
+      "b": "st:jp:209",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E4%B8%8A%E7%94%B0%E9%A7%85"
+      ],
+      "note": "新幹線・しなの鉄道・上田電鉄は各自改札。自由通路で連絡。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:183",
+      "a": "st:jp:208",
+      "b": "st:jp:210",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E4%B8%8A%E7%94%B0%E9%A7%85"
+      ],
+      "note": "新幹線・しなの鉄道・上田電鉄は各自改札。自由通路で連絡。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:183",
+      "a": "st:jp:209",
+      "b": "st:jp:210",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E4%B8%8A%E7%94%B0%E9%A7%85"
+      ],
+      "note": "新幹線・しなの鉄道・上田電鉄は各自改札。自由通路で連絡。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:193",
+      "a": "st:jp:221",
+      "b": "st:jp:222",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/軽井沢駅"
+      ],
+      "note": "北側にしなの鉄道、南側に新幹線の改札。南北自由通路で連絡。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:332",
+      "a": "st:jp:379",
+      "b": "st:jp:380",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E4%BA%8C%E6%88%B8%E9%A7%85"
+      ],
+      "note": "新幹線はJR、在来線はIGR。各社が自駅を管理する別改札。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:338",
+      "a": "st:jp:386",
+      "b": "st:jp:387",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E3%81%84%E3%82%8F%E3%81%A6%E6%B2%BC%E5%AE%AE%E5%86%85%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "新幹線とIGRは各改札がコンコースに面する。共同使用一覧にない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:346",
+      "a": "st:jp:396",
+      "b": "st:jp:397",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E7%9B%9B%E5%B2%A1%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7",
+        "https://ja.wikipedia.org/wiki/%E5%A2%83%E7%95%8C%E9%A7%85"
+      ],
+      "note": "会社境界だがIGR改札とJR改札は別。自由通路で連絡。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:376",
+      "a": "st:jp:430",
+      "b": "st:jp:431",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E8%8A%A6%E5%8E%9F%E6%B8%A9%E6%B3%89%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "新幹線はJR西日本直営、在来線はハピラインへ移管。連絡改札一覧に無い。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:641",
+      "a": "st:jp:706",
+      "b": "st:jp:707",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E5%87%BA%E6%B0%B4%E9%A7%85"
+      ],
+      "note": "新幹線とおれんじ鉄道は別改札。跨線橋は自由通路。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:786",
+      "a": "st:jp:857",
+      "b": "st:jp:858",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E7%94%B0%E5%B7%9D%E4%BC%8A%E7%94%B0%E9%A7%85"
+      ],
+      "note": "改札もホームも各社別。改札内共同の一覧にはない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:804",
+      "a": "st:jp:878",
+      "b": "st:jp:879",
+      "kind": "gate_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E8%A1%8C%E6%A9%8B%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "乗換改札あり。一覧は共同使用に非算入。平成筑豊側階段はJR改札外。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:932",
+      "a": "st:jp:1008",
+      "b": "st:jp:1009",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/伊万里駅"
+      ],
+      "note": "2002-03-01に道路を挟む東西の駅舎へ分かれ、線路も分断。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1088",
+      "a": "st:jp:1169",
+      "b": "st:jp:1170",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E4%B8%8A%E7%86%8A%E6%9C%AC%E9%A7%85"
+      ],
+      "note": "市電停留場・JR駅舎・熊本電鉄駅舎が並ぶ別施設。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1088",
+      "a": "st:jp:1169",
+      "b": "st:jp:1171",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E4%B8%8A%E7%86%8A%E6%9C%AC%E9%A7%85"
+      ],
+      "note": "市電停留場・JR駅舎・熊本電鉄駅舎が並ぶ別施設。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1088",
+      "a": "st:jp:1170",
+      "b": "st:jp:1171",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E4%B8%8A%E7%86%8A%E6%9C%AC%E9%A7%85"
+      ],
+      "note": "市電停留場・JR駅舎・熊本電鉄駅舎が並ぶ別施設。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1112",
+      "a": "st:jp:1196",
+      "b": "st:jp:1197",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E5%9F%BA%E5%B1%B1%E9%A7%85"
+      ],
+      "note": "連絡改札なし。甘木鉄道へは自由通路から改札外。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1189",
+      "a": "st:jp:1277",
+      "b": "st:jp:1278",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/成田空港駅"
+      ],
+      "note": "改札内で京成とJRのホーム間を行き来できない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1190",
+      "a": "st:jp:1279",
+      "b": "st:jp:1280",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E7%A9%BA%E6%B8%AF%E7%AC%AC2%E3%83%93%E3%83%AB%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "京成とJRの改札が隣接。共同使用一覧には無い。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1241",
+      "a": "st:jp:1346",
+      "b": "st:jp:1347",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "1994年にJRと新京成の改札を分離し共同使用を解除。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1258",
+      "a": "st:jp:1364",
+      "b": "st:jp:1365",
+      "kind": "gate_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E5%8C%97%E7%BF%92%E5%BF%97%E9%87%8E%E9%A7%85"
+      ],
+      "note": "のりかえ専用改札がある。改札内共同の一覧にはない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1386",
+      "a": "st:jp:1517",
+      "b": "st:jp:1518",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/下高井戸駅"
+      ],
+      "note": "京王の駅と東急の停留場。改札内連絡の記載なし。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1514",
+      "a": "st:jp:1664",
+      "b": "st:jp:1665",
+      "kind": "gate_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "改札分離済み。一覧は共同使用ではないが連絡改札あり。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1695",
+      "a": "st:jp:1860",
+      "b": "st:jp:1861",
+      "kind": "gate_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "共同使用ではなく、JR東海と伊豆箱根の連絡改札がある駅。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:1872",
+      "a": "st:jp:2048",
+      "b": "st:jp:2049",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%9C%A8%E5%8F%A4%E5%86%85%E9%A7%85"
+      ],
+      "note": "新幹線駅舎と道南いさりび駅舎を自由通路で連絡。別改札。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:2155",
+      "a": "st:jp:2336",
+      "b": "st:jp:2337",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E5%8D%83%E8%91%89%E3%81%BF%E3%81%AA%E3%81%A8%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "各社の改札節が別。共同使用・連絡改札の一覧にない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:2185",
+      "a": "st:jp:2370",
+      "b": "st:jp:2371",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/天下茶屋駅"
+      ],
+      "note": "駅舎は共用だが南海と堺筋線の入口は向かい合う。共同使用一覧にない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:2222",
+      "a": "st:jp:2409",
+      "b": "st:jp:2410",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "2017年の改修で改札分離し共同使用を解除。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:2234",
+      "a": "st:jp:2424",
+      "b": "st:jp:2425",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/関西空港駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧"
+      ],
+      "note": "一覧は共同使用だが、駅頁はエリア完全分離で共同使用とは言い難い。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:2256",
+      "a": "st:jp:2448",
+      "b": "st:jp:2449",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%B2%B3%E5%86%85%E9%95%B7%E9%87%8E%E9%A7%85"
+      ],
+      "note": "橋上駅舎は共用だが南海と近鉄の改札は分離。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:2264",
+      "a": "st:jp:2457",
+      "b": "st:jp:2458",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "2011年に改札分離して共同使用を解除。連絡改札節にない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:2305",
+      "a": "st:jp:2502",
+      "b": "st:jp:2503",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/砂田橋駅"
+      ],
+      "note": "地下鉄の駅とガイドウェイバスの停留場。改札内連絡の記載なし。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:2919",
+      "a": "st:jp:3137",
+      "b": "st:jp:3138",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/阿波海南駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧"
+      ],
+      "note": "阿佐海岸側はJR駅前のDMV停留所で、共同使用駅とはならない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3052",
+      "a": "st:jp:3276",
+      "b": "st:jp:3277",
+      "kind": "gate_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "共同使用ではない連絡改札。二つの改札の間は外に出られない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3192",
+      "a": "st:jp:3437",
+      "b": "st:jp:3438",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/新所原駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧"
+      ],
+      "note": "2015-02-08以降、駅舎は別々。それまでの連絡改札はない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3230",
+      "a": "st:jp:3477",
+      "b": "st:jp:3478",
+      "kind": "gate_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%8E%9B%E5%B7%9D%E9%A7%85"
+      ],
+      "note": "天浜線は別改札。駅舎内からJR1番線への簡易改札がある。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3464",
+      "a": "st:jp:3723",
+      "b": "st:jp:3724",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%B9%98%E5%8D%97%E5%8F%B0%E9%A7%85"
+      ],
+      "note": "3社の改札は地下1階の市管理の自由通路に別々にある。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3464",
+      "a": "st:jp:3723",
+      "b": "st:jp:3725",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%B9%98%E5%8D%97%E5%8F%B0%E9%A7%85"
+      ],
+      "note": "3社の改札は地下1階の市管理の自由通路に別々にある。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3464",
+      "a": "st:jp:3724",
+      "b": "st:jp:3725",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%B9%98%E5%8D%97%E5%8F%B0%E9%A7%85"
+      ],
+      "note": "3社の改札は地下1階の市管理の自由通路に別々にある。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3635",
+      "a": "st:jp:3903",
+      "b": "st:jp:3904",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/本通停留場",
+        "https://ja.wikipedia.org/wiki/本通駅"
+      ],
+      "note": "広電停留場の地下にアストラム本通駅があり、連絡は可能。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3729",
+      "a": "st:jp:3999",
+      "b": "st:jp:4000",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%96%B0%E7%99%BD%E5%B3%B6%E9%A7%85"
+      ],
+      "note": "ホーム間約120mの別駅を連絡通路で結ぶ。連絡改札の記載なし。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3801",
+      "a": "st:jp:4076",
+      "b": "st:jp:4077",
+      "kind": "gate_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "共同使用ではない連絡改札の節にJR東海と明知鉄道が載る。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3871",
+      "a": "st:jp:4151",
+      "b": "st:jp:4152",
+      "kind": "gate_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/青山一丁目駅"
+      ],
+      "note": "半蔵門線と大江戸線の間に連絡改札（都営管轄）。施設の共同使用ではない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3875",
+      "a": "st:jp:4157",
+      "b": "st:jp:4158",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E7%A5%9E%E4%BF%9D%E7%94%BA%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "メトロと都営は路線別に改札。共同使用・連絡改札一覧にない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3880",
+      "a": "st:jp:4165",
+      "b": "st:jp:4166",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/住吉駅_(東京都)"
+      ],
+      "note": "地下1階は改札外コンコース。改札内でのホーム間移動はできない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3905",
+      "a": "st:jp:4201",
+      "b": "st:jp:4202",
+      "kind": "gate_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/人形町駅"
+      ],
+      "note": "都営浅草線への乗換専用改札がある（東京メトロ管理）。施設は別。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3926",
+      "a": "st:jp:4235",
+      "b": "st:jp:4236",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%B1%A0%E8%A2%8B%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "4社は別事業者の駅。共同使用・連絡改札の一覧にない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3926",
+      "a": "st:jp:4235",
+      "b": "st:jp:4237",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%B1%A0%E8%A2%8B%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "4社は別事業者の駅。共同使用・連絡改札の一覧にない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3926",
+      "a": "st:jp:4235",
+      "b": "st:jp:4238",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%B1%A0%E8%A2%8B%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "4社は別事業者の駅。共同使用・連絡改札の一覧にない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3926",
+      "a": "st:jp:4236",
+      "b": "st:jp:4237",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%B1%A0%E8%A2%8B%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "4社は別事業者の駅。共同使用・連絡改札の一覧にない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3926",
+      "a": "st:jp:4236",
+      "b": "st:jp:4238",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%B1%A0%E8%A2%8B%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "4社は別事業者の駅。共同使用・連絡改札の一覧にない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3926",
+      "a": "st:jp:4237",
+      "b": "st:jp:4238",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%B1%A0%E8%A2%8B%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "4社は別事業者の駅。共同使用・連絡改札の一覧にない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3995",
+      "a": "st:jp:4335",
+      "b": "st:jp:4336",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%96%B0%E6%9C%A8%E5%A0%B4%E9%A7%85"
+      ],
+      "note": "コンコースは共用だが改札は各社が隣接。改札外乗換。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3995",
+      "a": "st:jp:4335",
+      "b": "st:jp:4337",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%96%B0%E6%9C%A8%E5%A0%B4%E9%A7%85"
+      ],
+      "note": "コンコースは共用だが改札は各社が隣接。改札外乗換。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:3995",
+      "a": "st:jp:4336",
+      "b": "st:jp:4337",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%96%B0%E6%9C%A8%E5%A0%B4%E9%A7%85"
+      ],
+      "note": "コンコースは共用だが改札は各社が隣接。改札外乗換。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:4008",
+      "a": "st:jp:4354",
+      "b": "st:jp:4355",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/大井町駅"
+      ],
+      "note": "連絡改札はなくなり、りんかい線とJRは改札内で乗り換えできない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:4008",
+      "a": "st:jp:4354",
+      "b": "st:jp:4356",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/大井町駅"
+      ],
+      "note": "連絡改札はなくなり、りんかい線とJRは改札内で乗り換えできない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:4008",
+      "a": "st:jp:4355",
+      "b": "st:jp:4356",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/大井町駅"
+      ],
+      "note": "連絡改札はなくなり、りんかい線とJRは改札内で乗り換えできない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:4046",
+      "a": "st:jp:4400",
+      "b": "st:jp:4401",
+      "kind": "gate_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%96%B0%E5%BE%A1%E5%BE%92%E7%94%BA%E9%A7%85"
+      ],
+      "note": "大江戸線とTXの改札は別。地下3階に乗換専用改札。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:4212",
+      "a": "st:jp:4583",
+      "b": "st:jp:4584",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/熊谷駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧"
+      ],
+      "note": "JRと秩父の改札は別で連絡改札はない。東武との旧共同使用は1983年終了。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:4257",
+      "a": "st:jp:4630",
+      "b": "st:jp:4631",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E4%BD%90%E9%87%8E%E9%A7%85"
+      ],
+      "note": "橋上駅でJRと東武の改札は分離。自由通路で連絡。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:4312",
+      "a": "st:jp:4689",
+      "b": "st:jp:4690",
+      "kind": "gate_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/国分寺駅"
+      ],
+      "note": "改札内西側コンコースにJR東日本と西武の乗り換え改札がある。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:4341",
+      "a": "st:jp:4721",
+      "b": "st:jp:4722",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "2007年改札分離。JR・西武の連絡通路も2008年に終了。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:4533",
+      "a": "st:jp:4916",
+      "b": "st:jp:4917",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "1999年の橋上化で改札分離し共同使用を解除。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:4536",
+      "a": "st:jp:4920",
+      "b": "st:jp:4921",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/越生駅"
+      ],
+      "note": "2019-03-16にJRと東武の改札が分離し、共同使用ではなくなった。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:4894",
+      "a": "st:jp:5287",
+      "b": "st:jp:5288",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E5%B7%9D%E8%B6%8A%E9%A7%85"
+      ],
+      "note": "かつては改札共用。1989年に委託をやめ橋上化後は各自の駅。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:4974",
+      "a": "st:jp:5370",
+      "b": "st:jp:5371",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/柏駅"
+      ],
+      "note": "JRと東武の改札内は完全に分離され、連絡改札はない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:5043",
+      "a": "st:jp:5441",
+      "b": "st:jp:5442",
+      "kind": "gate_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "共同使用ではなく、JRと東武の連絡改札がある駅。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:5325",
+      "a": "st:jp:5738",
+      "b": "st:jp:5739",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/角館駅",
+        "https://ja.wikipedia.org/wiki/日本の共同使用駅一覧"
+      ],
+      "note": "秋田内陸とJRの駅舎は並立。内陸線の共同使用駅は鷹ノ巣。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:5465",
+      "a": "st:jp:5880",
+      "b": "st:jp:5881",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E8%88%B9%E6%A9%8B%E9%A7%85"
+      ],
+      "note": "東武の改札はJRと別で、連絡改札はない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:5761",
+      "a": "st:jp:6180",
+      "b": "st:jp:6181",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E7%BE%BD%E7%94%9F%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "2004年橋上化で東武と秩父の改札を分離。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:5966",
+      "a": "st:jp:6389",
+      "b": "st:jp:6390",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "2020年にJR・近鉄の乗換連絡通路を閉鎖し共同使用を解除。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:5988",
+      "a": "st:jp:6413",
+      "b": "st:jp:6414",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E7%BE%8E%E6%BF%83%E5%A4%AA%E7%94%B0%E9%A7%85"
+      ],
+      "note": "自由通路の南北に各改札。改札内ではつながっていない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:6073",
+      "a": "st:jp:6502",
+      "b": "st:jp:6504",
+      "kind": "gate_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E5%A4%A7%E5%9E%A3%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "JR東海と樽見は共同使用でJRが管理駅。養老へは連絡改札。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:6073",
+      "a": "st:jp:6503",
+      "b": "st:jp:6504",
+      "kind": "gate_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E5%A4%A7%E5%9E%A3%E9%A7%85",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "JR東海と樽見は共同使用でJRが管理駅。養老へは連絡改札。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:6663",
+      "a": "st:jp:7106",
+      "b": "st:jp:7107",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E4%BD%8F%E5%90%89%E9%A7%85%20%28JR%E8%A5%BF%E6%97%A5%E6%9C%AC%E3%83%BB%E7%A5%9E%E6%88%B8%E6%96%B0%E4%BA%A4%E9%80%9A%29"
+      ],
+      "note": "六甲ライナー改札はJR改札の真横。切符売場を挟む別改札。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:6664",
+      "a": "st:jp:7108",
+      "b": "st:jp:7109",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E4%B8%89%E7%94%B0%E9%A7%85_(%E5%85%B5%E5%BA%AB%E7%9C%8C)",
+        "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%A7%85%E4%B8%80%E8%A6%A7"
+      ],
+      "note": "JRと神戸電鉄は各社の駅構造。共同使用・連絡改札一覧にない。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:6749",
+      "a": "st:jp:7196",
+      "b": "st:jp:7197",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E8%B2%9D%E5%A1%9A%E9%A7%85%20%28%E7%A6%8F%E5%B2%A1%E7%9C%8C%29"
+      ],
+      "note": "地下鉄と西鉄の改札が向かい合い、改札を挟んで乗換。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:6753",
+      "a": "st:jp:7201",
+      "b": "st:jp:7202",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E8%96%AC%E9%99%A2%E9%A7%85"
+      ],
+      "note": "七隈線の改札階と西鉄の改札階をエレベーターで連絡。別改札。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:7624",
+      "a": "st:jp:8081",
+      "b": "st:jp:8082",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E5%BD%A6%E6%A0%B9%E9%A7%85"
+      ],
+      "note": "2001年にJRと近江鉄道の改札を分離。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:7630",
+      "a": "st:jp:8088",
+      "b": "st:jp:8089",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/近江八幡駅"
+      ],
+      "note": "線路は接続せず連絡改札もない。乗換は一旦改札を出る。",
+      "reviewedBy": "web-research 2026-10-19"
+    },
+    {
+      "cx": "cx:jp:7671",
+      "a": "st:jp:8131",
+      "b": "st:jp:8132",
+      "kind": "street_transfer",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/%E6%A1%9C%E4%BA%95%E9%A7%85%20%28%E5%A5%88%E8%89%AF%E7%9C%8C%29"
+      ],
+      "note": "1995年の橋上化で近鉄と改札分離。跨線橋で接続。",
+      "reviewedBy": "web-research 2026-10-19"
+    }
+  ]
+}

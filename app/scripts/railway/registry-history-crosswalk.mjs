@@ -151,13 +151,40 @@ function resolveEntry(index, entry, kind) {
   };
 }
 
-export function buildHistoryCrosswalk(db, history) {
+export function applyHistoryOverrides(doc, overrides) {
+  const byId = new Map();
+  for (const item of overrides?.overrides ?? []) byId.set(String(item.history_id ?? ""), item);
+  let reviewed = 0;
+  const entries = (doc.entries ?? []).map((entry) => {
+    const item = byId.get(entry.history_id);
+    if (!item) return entry;
+    reviewed += 1;
+    const validFrom = item.valid_from ? String(item.valid_from) : entry.valid_from;
+    const validTo = item.valid_to ? String(item.valid_to) : entry.valid_to;
+    const next = {
+      history_id: entry.history_id,
+      kind: entry.kind,
+      match: entry.match,
+    };
+    if (validFrom) next.valid_from = String(validFrom);
+    if (validTo) next.valid_to = String(validTo);
+    next.lp = Array.isArray(item.lp) ? item.lp.map(String).sort(compareId) : [];
+    next.op = item.op ?? entry.op;
+    next.status = "reviewed";
+    return next;
+  });
+  return { doc: { schema: doc.schema, entries }, reviewed };
+}
+
+export function buildHistoryCrosswalk(db, history, overrides = null) {
   const index = loadIndex(db);
   const entries = [];
   for (const entry of history?.retirements ?? []) entries.push(resolveEntry(index, entry, "retirement"));
   for (const entry of history?.identity_periods ?? []) entries.push(resolveEntry(index, entry, "identity_period"));
   entries.sort((a, b) => compareText(a.history_id, b.history_id) || compareText(a.kind, b.kind));
-  return { schema: HISTORY_CROSSWALK_SCHEMA, entries };
+  const doc = { schema: HISTORY_CROSSWALK_SCHEMA, entries };
+  if (!overrides) return doc;
+  return applyHistoryOverrides(doc, overrides).doc;
 }
 
 export function historyCrosswalkText(doc) {
@@ -169,6 +196,7 @@ function parseArgs(argv) {
     db: path.join(APP_DIR, "data", "rail.db"),
     history: path.join(APP_DIR, "data", "rail-history.json"),
     out: path.join(APP_DIR, "data", "registry", "jp", "history-crosswalk.json"),
+    overrides: path.join(APP_DIR, "data", "registry", "jp", "history-overrides.json"),
     check: false,
   };
   for (let index = 0; index < argv.length; index += 1) {
@@ -176,6 +204,7 @@ function parseArgs(argv) {
     if (argument === "--db") options.db = path.resolve(argv[++index]);
     else if (argument === "--history") options.history = path.resolve(argv[++index]);
     else if (argument === "--out") options.out = path.resolve(argv[++index]);
+    else if (argument === "--overrides") options.overrides = path.resolve(argv[++index]);
     else if (argument === "--check") options.check = true;
     else throw new Error(`unknown option: ${argument}`);
   }
@@ -183,7 +212,7 @@ function parseArgs(argv) {
 }
 
 function statusCounts(doc) {
-  const counts = { unique: 0, multiple: 0, unmatched: 0 };
+  const counts = { unique: 0, multiple: 0, unmatched: 0, reviewed: 0 };
   for (const entry of doc.entries) counts[entry.status] = (counts[entry.status] ?? 0) + 1;
   return counts;
 }
@@ -191,27 +220,31 @@ function statusCounts(doc) {
 function main() {
   const options = parseArgs(process.argv.slice(2));
   const history = JSON.parse(fs.readFileSync(options.history, "utf8"));
+  const overrides = fs.existsSync(options.overrides) ? JSON.parse(fs.readFileSync(options.overrides, "utf8")) : null;
   const db = new DatabaseSync(options.db, { readOnly: true });
-  let doc;
+  let built;
   try {
-    doc = buildHistoryCrosswalk(db, history);
+    built = buildHistoryCrosswalk(db, history);
   } finally {
     db.close();
   }
+  const applied = overrides ? applyHistoryOverrides(built, overrides) : { doc: built, reviewed: 0 };
+  const doc = applied.doc;
   const text = historyCrosswalkText(doc);
   const counts = statusCounts(doc);
+  const summary = `unique=${counts.unique} multiple=${counts.multiple} unmatched=${counts.unmatched} reviewed=${applied.reviewed}`;
   if (options.check) {
     const current = fs.existsSync(options.out) ? fs.readFileSync(options.out, "utf8") : null;
     if (current !== text) {
       console.log("history-crosswalk differs");
       process.exit(1);
     }
-    console.log(`history-crosswalk ok unique=${counts.unique} multiple=${counts.multiple} unmatched=${counts.unmatched}`);
+    console.log(`history-crosswalk ok ${summary}`);
     return;
   }
   fs.mkdirSync(path.dirname(options.out), { recursive: true });
   fs.writeFileSync(options.out, text);
-  console.log(`history-crosswalk ${doc.entries.length} unique=${counts.unique} multiple=${counts.multiple} unmatched=${counts.unmatched}`);
+  console.log(`history-crosswalk ${doc.entries.length} ${summary}`);
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) main();

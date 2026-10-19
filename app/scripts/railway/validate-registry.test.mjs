@@ -7,7 +7,7 @@ import { DatabaseSync } from "node:sqlite";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
 
-import { BRACKET_STATUS_MARKERS, KEY_ORDERS, appendLedger, bracketNameRows, canonical, mint, nextSeq, operationIntervalsOverlap, planLineOperationRows, readLedger, reports, splitBracketName } from "../build/rail-database/registry.mjs";
+import { BRACKET_STATUS_MARKERS, KEY_ORDERS, appendLedger, bracketNameRows, canonical, loadRegistryTables, mint, nextSeq, operationIntervalsOverlap, planHistoryCrosswalk, planLineOperationRows, readLedger, reports, splitBracketName } from "../build/rail-database/registry.mjs";
 import { buildHistoryCrosswalk } from "./registry-history-crosswalk.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -1318,7 +1318,36 @@ test("line_operation bounds the current operator and rejects overlaps", () => {
     ],
   }, [{ lp: "lp:jp:1", lineId: "ln:jp:1", operatorId: "op:jp:1" }]);
   assert.deepEqual(withdrawn.rows.map((row) => [row.validFrom, row.validTo]), [[null, null]]);
-  for (const planned of [changed, same, bare, withdrawn]) {
+  const grouped = planLineOperationRows(ledger, [
+    { lp: "lp:jp:1", lineId: "ln:jp:1", operatorId: "op:jp:1" },
+    { lp: "lp:jp:2", lineId: "ln:jp:1", operatorId: "op:jp:1" },
+  ]);
+  assert.deepEqual(grouped.omitted, []);
+  assert.deepEqual(grouped.rows.map((row) => [row.lineId, row.operatorId, row.validFrom, row.validTo]), [
+    ["ln:jp:1", "op:jp:1", "2001-01-01", "2010-01-01"],
+  ]);
+  const moved = planLineOperationRows(ledger, [
+    { lp: "lp:jp:1", lineId: "ln:jp:1", operatorId: "op:jp:2" },
+    { lp: "lp:jp:2", lineId: "ln:jp:1", operatorId: "op:jp:2" },
+  ]);
+  assert.deepEqual(moved.rows.map((row) => [row.operatorId, row.validFrom, row.validTo]), [
+    ["op:jp:1", "2001-01-01", "2010-01-01"],
+    ["op:jp:2", "2010-01-01", null],
+  ]);
+  const splitOps = planLineOperationRows({
+    entities: new Map([...entities, "lp:jp:2"].map((id) => [id, { id }])),
+    refs: [],
+    events: [
+      { id: "lp:jp:1", event: "line", value: "ln:jp:1" },
+      { id: "lp:jp:2", event: "line", value: "ln:jp:1" },
+    ],
+  }, [
+    { lp: "lp:jp:1", lineId: "ln:jp:1", operatorId: "op:jp:1" },
+    { lp: "lp:jp:2", lineId: "ln:jp:1", operatorId: "op:jp:2" },
+  ]);
+  assert.deepEqual(splitOps.rows, []);
+  assert.deepEqual(splitOps.omitted, ["lp:jp:1", "lp:jp:2"]);
+  for (const planned of [changed, same, bare, withdrawn, grouped, moved]) {
     const intervals = planned.rows.map((row) => ({ from: row.validFrom, to: row.validTo }));
     for (let i = 0; i < intervals.length; i += 1) {
       for (let j = i + 1; j < intervals.length; j += 1) {
@@ -1531,6 +1560,290 @@ test("bracketed names export deterministically and unsplit names are reported", 
     assert.equal(bundle.baseNameCounts["上環 總站"], 0);
     assert.equal(Object.keys(bundle.baseNameCounts).includes("西鉄福岡"), true);
     assert.equal(bundle.baseNameCounts["東京"], undefined);
+  } finally {
+    fixture.db.close();
+    fs.rmSync(fixture.dir, { recursive: true, force: true });
+  }
+});
+
+function addKeioAtShinjuku(db) {
+  db.prepare("INSERT INTO line (id, country_code, operator_id, name, line_code, railway_identity, interval_count) VALUES (?, ?, ?, ?, ?, ?, ?)")
+    .run("jp-keio-line", "JP", 2, "京王線", "KO", null, 1);
+  db.prepare("INSERT INTO line_station (line_id, seq, station_id, name, lon, lat) VALUES (?, ?, ?, ?, ?, ?)")
+    .run("jp-keio-line", 0, 2, "新宿", 139.7, 35.689);
+}
+
+function writeFacilities(root, doc) {
+  fs.mkdirSync(path.join(root, "jp"), { recursive: true });
+  fs.writeFileSync(path.join(root, "jp", "station-facilities.json"), `${JSON.stringify(doc, null, 2)}\n`);
+}
+
+test("a reviewed facility mints once and loads facility rows", () => {
+  const fixture = openFixture();
+  try {
+    addKeioAtShinjuku(fixture.db);
+    freeze(fixture.root);
+    const first = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(first.status, 0, first.stdout + first.stderr);
+    writeFacilities(fixture.root, {
+      schema: "jtm-station-facilities/1",
+      facilities: [{
+        cx: "cx:jp:2",
+        kind: "shared",
+        stations: ["st:jp:3", "st:jp:2"],
+        manager: "op:jp:1",
+        sources: ["https://example.test/facility"],
+        note: "共用",
+        reviewedBy: "web-research 2026-10-19",
+      }],
+      links: [],
+    });
+    const minted = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(minted.status, 0, minted.stdout + minted.stderr);
+    assert.equal(minted.stdout.includes("retire refused"), false);
+    const ledger = readLedger(fixture.root);
+    assert.equal(ledger.entities.get("fc:jp:1").slug, "shared");
+    assert.equal(ledger.entities.get("fc:jp:1").parent, "cx:jp:2");
+    assert.equal(refId(ledger, "facility", "cx:jp:2|st:jp:2,st:jp:3"), "fc:jp:1");
+    assert.deepEqual(
+      ledger.events.filter((event) => event.event === "facility").map((event) => event.id).sort(),
+      ["st:jp:2", "st:jp:3"],
+    );
+    assert.equal(ledger.events.find((event) => event.event === "manager").value, "op:jp:1");
+    const before = snapshot(fixture.root);
+    const again = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(again.status, 0, again.stdout + again.stderr);
+    assert.match(again.stdout, /no changes/);
+    sameSnapshot(before, snapshot(fixture.root));
+    const passed = runNode(VALIDATE, ["--root", fixture.root, "--db", fixture.dbPath, "--no-base"]);
+    assert.equal(passed.status, 0, passed.stdout + passed.stderr);
+    const out = path.join(fixture.dir, "bundle");
+    const exported = runNode(EXPORT, ["--db", fixture.dbPath, "--root", fixture.root, "--out", out, "--region", "jp"]);
+    assert.equal(exported.status, 0, exported.stdout + exported.stderr);
+    const bundle = JSON.parse(fs.readFileSync(path.join(out, "jp.json"), "utf8"));
+    assert.deepEqual(bundle.facilities["fc:jp:1"], {
+      stations: ["st:jp:2", "st:jp:3"],
+      manager: "op:jp:1",
+      kind: "shared",
+    });
+    assert.deepEqual(bundle.links, []);
+    const sql = fs.readFileSync(path.resolve(HERE, "../build/rail-database/schema.sql"), "utf8");
+    const slice = sql.slice(sql.indexOf("-- Identity registry")).replace(/CREATE VIEW[\s\S]*/, "");
+    const db = new DatabaseSync(":memory:");
+    db.exec(slice);
+    loadRegistryTables(db, fixture.root);
+    assert.equal(db.prepare("SELECT COUNT(*) AS n FROM station_facility").get().n, 1);
+    assert.equal(db.prepare("SELECT COUNT(*) AS n FROM station_facility_member").get().n, 2);
+    assert.equal(db.prepare("SELECT COUNT(*) AS n FROM station_link").get().n, 0);
+    assert.equal(db.prepare("SELECT COUNT(*) AS n FROM station_operator WHERE role = 'manager'").get().n, 2);
+    assert.equal(db.prepare("SELECT source FROM station_facility").get().source, "https://example.test/facility");
+    db.close();
+  } finally {
+    fixture.db.close();
+    fs.rmSync(fixture.dir, { recursive: true, force: true });
+  }
+});
+
+test("facility and link violations are rejected", () => {
+  const fixture = openFixture();
+  try {
+    addKeioAtShinjuku(fixture.db);
+    freeze(fixture.root);
+    const first = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(first.status, 0, first.stdout + first.stderr);
+    const clean = path.join(fixture.dir, "clean");
+    fs.cpSync(fixture.root, clean, { recursive: true });
+    const reviewed = "web-research 2026-10-19";
+    const base = {
+      sources: ["https://example.test/facility"],
+      note: "共用",
+      reviewedBy: reviewed,
+    };
+    const linked = path.join(fixture.dir, "linked");
+    fs.cpSync(clean, linked, { recursive: true });
+    writeFacilities(linked, {
+      schema: "jtm-station-facilities/1",
+      facilities: [{
+        cx: "cx:jp:2", kind: "shared", stations: ["st:jp:2", "st:jp:3"], manager: "op:jp:1", ...base,
+      }],
+      links: [{
+        cx: "cx:jp:2", a: "st:jp:3", b: "st:jp:2", kind: "gate_transfer", ...base,
+      }],
+    });
+    const sameFacility = runNode(MINT, ["--db", fixture.dbPath, "--root", linked, "--region", "jp", "--at", AT]);
+    assert.equal(sameFacility.status, 0, sameFacility.stdout + sameFacility.stderr);
+    const rejected = runNode(VALIDATE, ["--root", linked, "--db", fixture.dbPath, "--no-base"]);
+    assert.equal(rejected.status, 1);
+    assert.match(rejected.stdout, /link facility st:jp:2/);
+
+    const duplicate = path.join(fixture.dir, "duplicate-link");
+    fs.cpSync(linked, duplicate, { recursive: true });
+    const again = canonical({
+      id: "st:jp:2", event: "link", value: "st:jp:3", why: "gate_transfer", run: 3,
+    }, KEY_ORDERS.event);
+    fs.appendFileSync(path.join(duplicate, "jp", "events.jsonl"), `${again}\n`);
+    const dup = runNode(VALIDATE, ["--root", duplicate, "--db", fixture.dbPath, "--no-base"]);
+    assert.equal(dup.status, 1);
+    assert.match(dup.stdout, /link duplicate st:jp:2/);
+
+    const reversed = path.join(fixture.dir, "reversed-link");
+    fs.cpSync(linked, reversed, { recursive: true });
+    const backwards = canonical({
+      id: "st:jp:3", event: "link", value: "st:jp:2", why: "gate_transfer", run: 3,
+    }, KEY_ORDERS.event);
+    fs.appendFileSync(path.join(reversed, "jp", "events.jsonl"), `${backwards}\n`);
+    const order = runNode(VALIDATE, ["--root", reversed, "--db", fixture.dbPath, "--no-base"]);
+    assert.equal(order.status, 1);
+    assert.match(order.stdout, /link order st:jp:3/);
+
+    const parent = path.join(fixture.dir, "bad-parent");
+    fs.cpSync(clean, parent, { recursive: true });
+    fs.writeFileSync(path.join(parent, "jp", "station-facilities.json"), `${JSON.stringify({
+      schema: "jtm-station-facilities/1",
+      facilities: [{
+        cx: "cx:jp:1", kind: "boundary", stations: ["st:jp:2", "st:jp:3"], manager: "op:jp:2", ...base,
+      }],
+      links: [],
+    }, null, 2)}\n`);
+    const parentMint = runNode(MINT, ["--db", fixture.dbPath, "--root", parent, "--region", "jp", "--at", AT]);
+    assert.equal(parentMint.status, 0, parentMint.stdout + parentMint.stderr);
+    const parentBad = runNode(VALIDATE, ["--root", parent, "--db", fixture.dbPath, "--no-base"]);
+    assert.equal(parentBad.status, 1);
+    assert.match(parentBad.stdout, /facility member st:jp:2/);
+
+    const twice = path.join(fixture.dir, "two-facilities");
+    fs.cpSync(clean, twice, { recursive: true });
+    fs.writeFileSync(path.join(twice, "jp", "station-facilities.json"), `${JSON.stringify({
+      schema: "jtm-station-facilities/1",
+      facilities: [
+        { cx: "cx:jp:2", kind: "shared", stations: ["st:jp:2", "st:jp:3"], manager: "op:jp:1", ...base },
+        { cx: "cx:jp:2", kind: "boundary", stations: ["st:jp:2"], manager: "op:jp:2", ...base },
+      ],
+      links: [],
+    }, null, 2)}\n`);
+    const twiceMint = runNode(MINT, ["--db", fixture.dbPath, "--root", twice, "--region", "jp", "--at", AT]);
+    assert.equal(twiceMint.status, 0, twiceMint.stdout + twiceMint.stderr);
+    const twiceBad = runNode(VALIDATE, ["--root", twice, "--db", fixture.dbPath, "--no-base"]);
+    assert.equal(twiceBad.status, 1);
+    assert.match(twiceBad.stdout, /facility station st:jp:2/);
+  } finally {
+    fixture.db.close();
+    fs.rmSync(fixture.dir, { recursive: true, force: true });
+  }
+});
+
+test("operator alias text is exported and must not name another operator", () => {
+  const fixture = openFixture();
+  try {
+    freeze(fixture.root);
+    const first = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(first.status, 0, first.stdout + first.stderr);
+    const file = path.join(fixture.root, "jp", "operator-aliases.json");
+    const write = (text, op) => {
+      fs.writeFileSync(file, `${JSON.stringify({
+        schema: "jtm-operator-aliases/1",
+        aliases: [{ text, op, sources: ["https://example.test/alias"], note: "旧称", reviewedBy: "web-research 2026-10-19" }],
+        multiple: [{ text: "JR東日本/京王電鉄", ops: ["op:jp:1", "op:jp:2"], sources: ["https://example.test/joint"], note: "併記", reviewedBy: "web-research 2026-10-19" }],
+      }, null, 2)}\n`);
+    };
+    write("JR東別名", "op:jp:1");
+    const out = path.join(fixture.dir, "bundle");
+    const exported = runNode(EXPORT, ["--db", fixture.dbPath, "--root", fixture.root, "--out", out, "--region", "jp"]);
+    assert.equal(exported.status, 0, exported.stdout + exported.stderr);
+    const bundle = JSON.parse(fs.readFileSync(path.join(out, "jp.json"), "utf8"));
+    assert.ok(bundle.operators["op:jp:1"].names.includes("JR東別名"));
+    assert.equal(bundle.operators["op:jp:1"].names.includes("JR東日本/京王電鉄"), false);
+    assert.equal(bundle.operators["op:jp:2"].names.includes("JR東日本/京王電鉄"), false);
+    const passed = runNode(VALIDATE, ["--root", fixture.root, "--db", fixture.dbPath, "--no-base"]);
+    assert.equal(passed.status, 0, passed.stdout + passed.stderr);
+    write("京王電鉄", "op:jp:1");
+    const collided = runNode(VALIDATE, ["--root", fixture.root, "--db", fixture.dbPath, "--no-base"]);
+    assert.equal(collided.status, 1);
+    assert.match(collided.stdout, /alias name 京王電鉄/);
+  } finally {
+    fixture.db.close();
+    fs.rmSync(fixture.dir, { recursive: true, force: true });
+  }
+});
+
+test("reviewed history periods mint one operation per line and a changed start is withdrawn", () => {
+  const unmatched = planHistoryCrosswalk([{
+    history_id: "empty",
+    kind: "identity_period",
+    status: "reviewed",
+    lp: [],
+    op: "op:jp:1",
+    valid_from: "2001-01-01",
+  }]);
+  assert.deepEqual(unmatched.unresolved.map((row) => [row.history_id, row.status]), [["empty", "unmatched"]]);
+
+  const fixture = openFixture();
+  try {
+    freeze(fixture.root);
+    const first = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(first.status, 0, first.stdout + first.stderr);
+    const match = { line_name: "山手線", operator: "JR東日本", bbox: [139, 35, 140, 36] };
+    const write = (entries) => {
+      fs.writeFileSync(path.join(fixture.root, "jp", "history-crosswalk.json"), `${JSON.stringify({
+        schema: "jtm-history-crosswalk/1", entries,
+      }, null, 2)}\n`);
+    };
+    write([{
+      history_id: "rename",
+      kind: "identity_period",
+      match,
+      valid_to: "2012-01-01",
+      lp: ["lp:jp:1"],
+      op: "op:jp:1",
+      status: "unique",
+    }]);
+    const opened = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(opened.status, 0, opened.stdout + opened.stderr);
+    write([
+      {
+        history_id: "rename",
+        kind: "identity_period",
+        match,
+        valid_from: "2011-03-01",
+        valid_to: "2012-01-01",
+        lp: ["lp:jp:1"],
+        op: "op:jp:1",
+        status: "reviewed",
+      },
+      {
+        history_id: "both",
+        kind: "identity_period",
+        match,
+        valid_from: "2015-03-14",
+        valid_to: "2015-03-14",
+        lp: ["lp:jp:1", "lp:jp:2"],
+        op: "op:jp:1",
+        status: "reviewed",
+      },
+      {
+        history_id: "still-multi",
+        kind: "identity_period",
+        match,
+        valid_from: "1990-01-01",
+        lp: ["lp:jp:1", "lp:jp:2"],
+        op: "op:jp:1",
+        status: "unique",
+      },
+    ]);
+    const reviewed = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(reviewed.status, 0, reviewed.stdout + reviewed.stderr);
+    assert.equal(reviewed.stdout.includes("retire refused"), false);
+    const ledger = readLedger(fixture.root);
+    const withdrawn = ledger.events.filter((event) => event.event === "operation-withdrawn" && event.why === "rename");
+    assert.equal(withdrawn.length, 1);
+    assert.equal(withdrawn[0].on, undefined);
+    const operations = ledger.events.filter((event) => event.event === "operation" && event.why === "both");
+    assert.deepEqual(operations.map((event) => event.id).sort(), ["lp:jp:1", "lp:jp:2"]);
+    assert.equal(ledger.events.some((event) => event.why === "still-multi"), false);
+    const report = JSON.parse(fs.readFileSync(path.join(fixture.root, "jp", "station-derivation-exceptions.json"), "utf8"));
+    assert.deepEqual(report["history-unresolved"].map((row) => [row.history_id, row.status]), [["still-multi", "multiple"]]);
+    const passed = runNode(VALIDATE, ["--root", fixture.root, "--db", fixture.dbPath, "--no-base"]);
+    assert.equal(passed.status, 0, passed.stdout + passed.stderr);
   } finally {
     fixture.db.close();
     fs.rmSync(fixture.dir, { recursive: true, force: true });
